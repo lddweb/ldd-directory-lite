@@ -541,23 +541,23 @@ div.lddbd_input_holder{
 		
 		
 
-#lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:first-child{
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder strong:first-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:first-child{
 	float: left;
 	margin-left: 50px;
 }
 
-#lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:last-child{
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder strong:last-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:last-child{
 	float: right;
 	margin-right: 50px;
 }
 
-#lddbd_business_directory div.lddbd_input_holder.file_input_holder input:first-child{
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder input:first-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder input:first-child{
 	margin-right: 0px;
 	float: left;
 	width: 250px;
 }
 
-#lddbd_business_directory div.lddbd_input_holder.file_input_holder input:last-child{
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder input:last-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder input:last-child{
 	margin-right: 0px;
 	float: right;
 }
@@ -570,14 +570,14 @@ div.lddbd_input_holder{
 	content: "";
 }
 
-form#lddbd_edit_business_form div.lddbd_input_holder{
+form.lddbd_edit_business_form div.lddbd_input_holder{
 	width: 100%;
 }
 
-form#lddbd_edit_business_form div.lddbd_input_holder input[type="text"]{
+form.lddbd_edit_business_form div.lddbd_input_holder input[type="text"]{
 	width: 300px;
 }
 
-form#lddbd_edit_business_form div.lddbd_input_holder textarea{
+form.lddbd_edit_business_form div.lddbd_input_holder textarea{
 	width: 298px;
 }
