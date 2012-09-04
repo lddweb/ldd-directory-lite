@@ -278,7 +278,7 @@ function lddbd_setting_information_sections(){
 				
 			});
 		</script>";
-	echo "<script type='text/javascript' src='".plugins_url()."/lddbd/scripts.js'></script>";	
+	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts.js'></script>";	
 	
 }
 
@@ -294,7 +294,7 @@ function lddbd_setting_categorization(){
 	}
 	echo "<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='No' {$noChecked} />No";
 	
-	echo "<script type='text/javascript' src='".plugins_url()."/lddbd/scripts.js'></script>";
+	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts.js'></script>";
 }
 
 /*
@@ -938,7 +938,7 @@ function lddbd_edit_business_page(){
 			</div>
 			
 			<div class="lddbd_input_holder">
-				<img src="<?php echo plugins_url().'/lddbd/'.$business->logo; ?>"/>
+				<img src="<?php echo plugins_url().'/ldd-business-directory/'.$business->logo; ?>"/>
 			</div>
 			
 			<div class="lddbd_input_holder">
@@ -1320,9 +1320,9 @@ global $lddbd_state_dropdown;
 global $main_table_name, $doc_table_name, $cat_table_name;
 
 echo "<script type='text/javascript'>
-		lddbd_file_pathway = '".plugins_url()."/lddbd/';
+		lddbd_file_pathway = '".plugins_url()."/ldd-business-directory/';
 	</script>
-	<script type='text/javascript' src='".plugins_url()."/lddbd/scripts.js'></script>
+	<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts.js'></script>
 	";
 
 if($_GET['business']){
@@ -1361,7 +1361,7 @@ if($_GET['business']){
 	$doc_list = '';
 	if($documents){
 		foreach($documents as $document){
-			$doc_list.="<li><a target='_blank' href='".plugins_url()."/lddbd/{$document->doc_path}'>{$document->doc_description}</a></li>";
+			$doc_list.="<li><a target='_blank' href='".plugins_url()."/ldd-business-directory/{$document->doc_path}'>{$document->doc_description}</a></li>";
 		}
 	}
 	
@@ -1401,7 +1401,7 @@ if($_GET['business']){
 	}
 	if(!empty($business->name)){$name = "<h4>{$business->name}</h4>";}
 	if($business->promo=='true'){ 
-		$special_offer_logo="<img id='lddbd_special_offer_logo' src='".plugins_url()."/lddbd/images/special-offer.png' />";
+		$special_offer_logo="<img id='lddbd_special_offer_logo' src='".plugins_url()."/ldd-business-directory/images/special-offer.png' />";
 		
 	}
 	if(!empty($business->description)){ $description="<p>{$business->description}</p>"; }
@@ -1430,29 +1430,29 @@ if($_GET['business']){
 	if(!empty($business->url)){ 
 		if(strstr($business->url, 'http://')){$business_url = $business->url;}
 		else{$business_url = 'http://'.$business->url;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url()."/lddbd/images/website.png' /</a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url()."/ldd-business-directory/images/website.png' /</a>"; 
 	}
 	if(!empty($business->facebook)){ 
 		if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
 		else{$business_facebook = 'http://'.$business->facebook;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url()."/lddbd/images/facebook.png' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url()."/ldd-business-directory/images/facebook.png' /></a>"; 
 	}
 	if(!empty($business->twitter)){ 
 		if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
 		else{$business_twitter = 'http://'.$business->twitter;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url()."/lddbd/images/twitter.png' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url()."/ldd-business-directory/images/twitter.png' /></a>"; 
 	}
 	if(!empty($business->linkedin)){ 
 		if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
 		else{$business_linkedin = 'http://'.$business->linkedin;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url()."/lddbd/images/linkedin.png' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url()."/ldd-business-directory/images/linkedin.png' /></a>"; 
 	}
 	if(!empty($business->email)){ 
-		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$business->name}');\"><img src='".plugins_url()."/lddbd/images/email.png' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$business->name}');\"><img src='".plugins_url()."/ldd-business-directory/images/email.png' /></a>"; 
 	}
 	
 	
-	if(!empty($business->logo)){$logo_html = '<img src="'.plugins_url().'/lddbd/'.$business->logo.'"/>'; }
+	if(!empty($business->logo)){$logo_html = '<img src="'.plugins_url().'/ldd-business-directory/'.$business->logo.'"/>'; }
 	
 	
 
@@ -1650,7 +1650,7 @@ if($_GET['business']){
 	}
 	
 	return "
-		<link rel='stylesheet' href='".plugins_url()."/lddbd/style.css' type='text/css' media='screen' />
+		<link rel='stylesheet' href='".plugins_url()."/ldd-business-directory/style.css' type='text/css' media='screen' />
 		<div id='lddbd_business_directory'>
 	 		<div id='lddbd_business_directory_head'>
 	 			<h2>Business Directory</h2>
@@ -1916,7 +1916,7 @@ else{
 	}
 	
 	 return "
-	 	<link rel='stylesheet' href='".plugins_url()."/lddbd/style.css' type='text/css' media='screen' />
+	 	<link rel='stylesheet' href='".plugins_url()."/ldd-business-directory/style.css' type='text/css' media='screen' />
 	 	<div id='lddbd_business_directory'>
 	 		<div id='lddbd_business_directory_head'>
 	 			<h2>Business Directory</h2>
