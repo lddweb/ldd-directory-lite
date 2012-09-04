@@ -429,7 +429,7 @@ function lddbd_html_page(){
 							</tr>
 							<tr class="lddbd_edit_business_row">
 								<td colspan="4">
-								<form class="lddbd_edit_business_form" method="post" action="<?php echo plugins_url(); ?>/lddbd/lddbd_ajax.php" enctype='multipart/form-data'>
+								<form class="lddbd_edit_business_form" method="post" action="<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php" enctype='multipart/form-data'>
 									<div class="lddbd_input_holder">
 										<label for="name">Business Name</label>
 										<input class="name required" type="text" name="name" value="<?php echo $business->name;?>"/>
@@ -496,7 +496,7 @@ echo '
 			jQuery(this).closest("tr").fadeOut(400);
 			var business_id = jQuery(this).closest("tr").attr("id");
 			business_id = business_id.substring(9);
-			jQuery.post("'.plugins_url().'/lddbd/lddbd_ajax.php", {id:business_id, action:"delete"});
+			jQuery.post("'.plugins_url().'/ldd-business-directory/lddbd_ajax.php", {id:business_id, action:"delete"});
 		});
 		
 		jQuery(".business_approval").click(function(){
@@ -505,13 +505,13 @@ echo '
 				jQuery(this).closest("td").siblings("th.approval").children(\'input[type="checkbox"]\').attr("checked", "checked");
 				var business_id = jQuery(this).closest("tr").attr("id");
 				business_id = business_id.substring(9);
-				jQuery.post("'.plugins_url().'/lddbd/lddbd_ajax.php", {id:business_id, action:"approve"});
+				jQuery.post("'.plugins_url().'/ldd-business-directory/lddbd_ajax.php", {id:business_id, action:"approve"});
 			} else if(jQuery(this).hasClass("revoke_business")){
 				jQuery(this).html("Approve").removeClass("revoke_business").addClass("approve_business");
 				jQuery(this).closest("td").siblings("th.approval").children(\'input[type="checkbox"]\').removeAttr("checked");
 				var business_id = jQuery(this).closest("tr").attr("id");
 				business_id = business_id.substring(9);
-				jQuery.post("'.plugins_url().'/lddbd/lddbd_ajax.php", {id:business_id, action:"revoke"});
+				jQuery.post("'.plugins_url().'/ldd-business-directory/lddbd_ajax.php", {id:business_id, action:"revoke"});
 			}
 		});
 		
@@ -611,7 +611,7 @@ function lddbd_add_business_page(){
 	<div class="wrap">
 		<h2>Add Business to Directory</h2>
 		
-		<form id="lddbd_add_business_form" method="post" action="<?php echo plugins_url(); ?>/lddbd/lddbd_ajax.php" enctype='multipart/form-data'>
+		<form id="lddbd_add_business_form" method="post" action="<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php" enctype='multipart/form-data'>
 			<div class="lddbd_input_holder">
 				<label for="name">Business Name</label>
 				<input class="required" type="text" id="lddbd_name" name="name"/>
@@ -849,7 +849,7 @@ function lddbd_edit_business_page(){
 	<div class="wrap">
 		<h2>Edit Business</h2>
 		
-		<form class="lddbd_edit_business_form" method="post" action="<?php echo plugins_url(); ?>/lddbd/lddbd_ajax.php" enctype='multipart/form-data'>
+		<form class="lddbd_edit_business_form" method="post" action="<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php" enctype='multipart/form-data'>
 			<div class="lddbd_input_holder">
 				<label for="name">Business Name</label>
 				<input class="required" type="text" id="lddbd_name" name="name" value="<?php echo $business->name;?>"/>
@@ -1064,7 +1064,7 @@ function lddbd_edit_business_page(){
 					doc_id = parseInt(doc_id);
 					jQuery.ajax({
 					type: 'POST',
-					url: '<?php echo plugins_url(); ?>/lddbd/lddbd_ajax.php',
+					url: '<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php',
 					data: {doc_id: doc_id, action: 'delete_doc'},
 					success: function(data){
 						this_placeholder.parent().slideUp('200');
@@ -1174,7 +1174,7 @@ function lddbd_business_categories_page(){
 							</tr>
 							<tr class="lddbd_edit_category_row">
 								<td colspan="3">
-									<form class="lddbd_edit_category_form" method="post" action="<?php echo plugins_url(); ?>/lddbd/lddbd_ajax.php">
+									<form class="lddbd_edit_category_form" method="post" action="<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php">
 										<input type="text" name="cat_name" value="<?php echo $cat->name; ?>" />
 										<input type="hidden" name="id" value="<?php echo $cat->id; ?>"/>
 							   			<p class="submit">
@@ -1189,7 +1189,7 @@ function lddbd_business_categories_page(){
 				?>
 				<tr id="lddbd_add_category_row">
 					<td colspan="3">
-						<form id="lddbd_add_category_form" method="post" action="<?php echo plugins_url(); ?>/lddbd/lddbd_ajax.php">
+						<form id="lddbd_add_category_form" method="post" action="<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php">
 							<input class="name" type="text" name="name">
 							<input class="action" type="hidden" name="action" value="add_category">
 				   			<p class="submit">
@@ -1222,10 +1222,10 @@ echo '
 				var cat_id = jQuery(this).closest("tr").attr("id");
 				cat_id = cat_id.substring(4);
 				
-				jQuery.post("'.plugins_url().'/lddbd/lddbd_ajax.php", {id:cat_id, action:"delete_category"});
+				jQuery.post("'.plugins_url().'/ldd-business-directory/lddbd_ajax.php", {id:cat_id, action:"delete_category"});
 				jQuery.ajax({
 					type: "POST",
-					url: "'.plugins_url().'/lddbd/lddbd_ajax.php",
+					url: "'.plugins_url().'/ldd-business-directory/lddbd_ajax.php",
 					data: {id:cat_id, action:"delete_category"},
 					success: function(data){
 						jQuery(this).closest("tr").fadeOut(400);
@@ -1527,7 +1527,7 @@ if($_GET['business']){
 		
 		$submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
 		$add_business_holder = "<div id='lddbd_add_business_holder'>
-		 			<form id='add_business_form' action='".plugins_url()."/lddbd/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
+		 			<form id='add_business_form' action='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
 						<div class='lddbd_input_holder'>
 							<label for='name'>Business Name</label>
 							<input class='required' type='text' id='lddbd_name' name='name'/>
@@ -1636,7 +1636,7 @@ if($_GET['business']){
 						    <input type='submit' class='button-primary' value='Add Business' />
 					    </p>
 		 			</form>
-		 			<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='".plugins_url()."/lddbd/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
+		 			<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
 		 		</div>";
 	} else {
 		$submit_button = '';
@@ -1794,7 +1794,7 @@ else{
 	
 		$submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
 		 $add_business_holder = "<div id='lddbd_add_business_holder'>
-		 			<form id='add_business_form' action='".plugins_url()."/lddbd/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
+		 			<form id='add_business_form' action='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
 						<div class='lddbd_input_holder'>
 							<label for='name'>Business Name</label>
 							<input class='required' type='text' id='lddbd_name' name='name'/>
@@ -1902,7 +1902,7 @@ else{
 						    <input type='submit' class='button-primary' value='Add Business' />
 					    </p>
 		 			</form>
-		 			<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='".plugins_url()."/lddbd/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
+		 			<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
 		 		</div>";
 	} else {
 		$submit_button = '';

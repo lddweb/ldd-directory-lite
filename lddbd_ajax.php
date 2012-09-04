@@ -382,27 +382,27 @@ else if($action == 'search'){
 			if(!empty($business->url)){ 
 				if(strstr($business->url, 'http://')){$business_url = $business->url;}
 				else{$business_url = 'http://'.$business->url;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url()."/lddbd/images/website.png' /</a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url()."/ldd-business-directory/images/website.png' /</a>"; 
 			}
 			if(!empty($business->facebook)){ 
 				if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
 				else{$business_facebook = 'http://'.$business->facebook;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url()."/lddbd/images/facebook.png' /></a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url()."/ldd-business-directory/images/facebook.png' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
 				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
 				else{$business_twitter = 'http://'.$business->twitter;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url()."/lddbd/images/twitter.png' /></a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url()."/ldd-business-directory/images/twitter.png' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
 				if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
 				else{$business_linkedin = 'http://'.$business->linkedin;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url()."/lddbd/images/linkedin.png' /></a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url()."/ldd-business-directory/images/linkedin.png' /></a>"; 
 			}
-			if(!empty($business->email)){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$business->name}');\"><img src='".plugins_url()."/lddbd/images/email.png' /></a>"; }
-			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url()."/lddbd/images/special-offer.png' /></a>"; }
+			if(!empty($business->email)){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$business->name}');\"><img src='".plugins_url()."/ldd-business-directory/images/email.png' /></a>"; }
+			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url()."/ldd-business-directory/images/special-offer.png' /></a>"; }
 			
-			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url()."/lddbd/{$business->logo}'/></div>"; }
+			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url()."/ldd-business-directory/{$business->logo}'/></div>"; }
 			
 			if(strstr($business->url, 'http://')){$business_url = $business->url;}
 			else{$business_url = 'http://'.$business->url;}
@@ -501,27 +501,27 @@ else if($action == 'category_filter'){
 			if(!empty($business->url)){ 
 				if(strstr($business->url, 'http://')){$business_url = $business->url;}
 				else{$business_url = 'http://'.$business->url;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url()."/lddbd/images/website.png' /</a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url()."/ldd-business-directory/images/website.png' /</a>"; 
 			}
 			if(!empty($business->facebook)){ 
 				if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
 				else{$business_facebook = 'http://'.$business->facebook;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url()."/lddbd/images/facebook.png' /></a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url()."/ldd-business-directory/images/facebook.png' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
 				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
 				else{$business_twitter = 'http://'.$business->twitter;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url()."/lddbd/images/twitter.png' /></a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url()."/ldd-business-directory/images/twitter.png' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
 				if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
 				else{$business_linkedin = 'http://'.$business->linkedin;}
-				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url()."/lddbd/images/linkedin.png' /></a>"; 
+				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url()."/ldd-business-directory/images/linkedin.png' /></a>"; 
 			}
-			if(!empty($business->email)){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$business->name}');\"><img src='".plugins_url()."/lddbd/images/email.png' /></a>"; }
-			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url()."/lddbd/images/special-offer.png' /></a>"; }
+			if(!empty($business->email)){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$business->name}');\"><img src='".plugins_url()."/ldd-business-directory/images/email.png' /></a>"; }
+			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url()."/ldd-business-directory/images/special-offer.png' /></a>"; }
 			
-			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url()."/lddbd/{$business->logo}'/></div>"; }
+			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url()."/ldd-business-directory/{$business->logo}'/></div>"; }
 			
 			
 		
@@ -575,7 +575,7 @@ else if($action == 'add_category'){
 		"</tr>".
 		"<tr class='lddbd_edit_category_row'>".
 			"<td colspan='3'>".
-				"<form class='lddbd_edit_category_form' method='post' action='".plugins_url()."/lddbd/lddbd_ajax.php'>".
+				"<form class='lddbd_edit_category_form' method='post' action='".plugins_url()."/ldd-business-directory/lddbd_ajax.php'>".
 					"<input type='text' name='cat_name' value='{$_POST['name']}'>".
 					"<input type='hidden' name='action' value='edit_category'/>".
 					"<input type='hidden' name='id' value='{$wpdb->insert_id}'/>".
@@ -675,7 +675,7 @@ else if($action == 'login'){
 			}
 		}
 	
-		echo "<form id='lddbd_edit_business_form' action='".plugins_url()."/lddbd/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
+		echo "<form id='lddbd_edit_business_form' action='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
 			<div class='lddbd_input_holder'>
 				<label for='name'>Business Name</label>
 				<input class='required' type='text' id='lddbd_name' name='name' value='{$business->name}'/>
@@ -762,7 +762,7 @@ else if($action == 'login'){
 			</div>
 			
 			<div class='lddbd_input_holder'>
-				<img src='".plugins_url()."/lddbd/{$business->logo}'/>
+				<img src='".plugins_url()."/ldd-business-directory/{$business->logo}'/>
 			</div>
 			
 			<div class='lddbd_input_holder'>
@@ -809,7 +809,7 @@ else if($action == 'login'){
 			    <input type='submit' class='button-primary' value='Submit Changes' />
 		    </p>
 			</form>
-			<iframe id='lddbd_edit_submission_target' name='lddbd_edit_submission_target' src='".plugins_url()."/lddbd/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
+			<iframe id='lddbd_edit_submission_target' name='lddbd_edit_submission_target' src='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
 			
 			<script type='text/javascript'>
 				jQuery(document).ready(function(){
@@ -851,7 +851,7 @@ else if($action == 'login'){
  					doc_id = parseInt(doc_id);
  					jQuery.ajax({
 						type: 'POST',
-						url: '".plugins_url()."/lddbd/lddbd_ajax.php',
+						url: '".plugins_url()."/ldd-business-directory/lddbd_ajax.php',
 						data: {doc_id: doc_id, action: 'delete_doc'},
 						success: function(data){
 							this_placeholder.parent().slideUp('200');
