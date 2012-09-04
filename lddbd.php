@@ -148,7 +148,7 @@ function lddbd_install_data() {
    $welcome_password = "1234";
    
 
-   $rows_affected = $wpdb->insert( $main_table_name, array( 'createDate' => current_time('mysql'), 'name' => $welcome_name, 'description' => $welcome_text, 'login'=>$welcome_login, 'password'=>$welcome_password ) );
+   //$rows_affected = $wpdb->insert( $main_table_name, array( 'createDate' => current_time('mysql'), 'name' => $welcome_name, 'description' => $welcome_text, 'login'=>$welcome_login, 'password'=>$welcome_password ) );
 }
 
 register_activation_hook(__FILE__,'lddbd_install');
