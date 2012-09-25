@@ -1227,7 +1227,7 @@ echo '
 					type: "POST",
 					url: "'.plugins_url().'/ldd-business-directory/lddbd_ajax.php",
 					data: {id:cat_id, action:"delete_category"},
-					success: function(data){
+					complete: function(data){
 						jQuery(this).closest("tr").fadeOut(400);
 					}
 				});
@@ -1260,7 +1260,7 @@ echo '
 				type: "POST",
 				url: action, 
 				data: quick_data,
-				complete: function(data){
+				success: function(data){
 					this_row.fadeOut(400);
 					jQuery("#cat-"+cat_id+" td strong").html(new_name);
 					jQuery("#cat-"+cat_id+" td div.row-actions a.edit_category").html("Edit").removeClass("close").addClass("open");
