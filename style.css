@@ -165,6 +165,7 @@ div.lddbd_input_holder{
 				display: block;
 				float: left;
 				color: black;
+				text-decoration: none;
 				padding: 0px 5px;
 				border-left: 1px solid #efefef;
 				border-right: 1px solid #aaa;
