@@ -1211,8 +1211,8 @@ function lddbd_business_categories_page(){
 
 echo '
 <script type="text/javascript">
-	jQuery(document).ready(function(){
 		
+	function lddbd_category_wrapper(){
 		jQuery(".delete_category").click(function(){
 			var cat_count = jQuery(this).closest("tr").children("td.cat_count").html();
 			if(cat_count > 0){
@@ -1221,14 +1221,15 @@ echo '
 			else{
 				var cat_id = jQuery(this).closest("tr").attr("id");
 				cat_id = cat_id.substring(4);
+				var this_row = jQuery(this).closest("tr");
 				
 				jQuery.post("'.plugins_url().'/ldd-business-directory/lddbd_ajax.php", {id:cat_id, action:"delete_category"});
 				jQuery.ajax({
 					type: "POST",
 					url: "'.plugins_url().'/ldd-business-directory/lddbd_ajax.php",
 					data: {id:cat_id, action:"delete_category"},
-					complete: function(data){
-						jQuery(this).closest("tr").fadeOut(400);
+					success: function(data){
+						this_row.fadeOut(400);
 					}
 				});
 			}	
@@ -1269,6 +1270,7 @@ echo '
 			
 			return false;
 		});
+	}
 		
 		jQuery("#lddbd_add_category_button").click(function(){
 			jQuery("#lddbd_add_category_row").fadeIn(400);
@@ -1291,13 +1293,17 @@ echo '
 					return_data = return_data.replace("</table>", "");
 					jQuery("#lddbd_add_category_row").before(return_data);
 					jQuery("#lddbd_add_category_row").fadeOut(400);
+					lddbd_category_wrapper();
 				}	
 			});
 			return false;
 		});
 		
-		
+	jQuery(document).ready(function(){
+		lddbd_category_wrapper();
 	});
+		
+		
 </script>
 ';
 }
