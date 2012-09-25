@@ -1193,7 +1193,7 @@ function lddbd_business_categories_page(){
 							<input class="name" type="text" name="name">
 							<input class="action" type="hidden" name="action" value="add_category">
 				   			<p class="submit">
-							    <input type="submit" class="button-secondary" value="<?php _e('Submit') ?>" />
+							    <input type="submit" class="button-secondary" value="<?php _e('Add') ?>" />
 						    </p>
 				   		</form>
 					</td>
@@ -1260,7 +1260,7 @@ echo '
 				type: "POST",
 				url: action, 
 				data: quick_data,
-				success: function(data){
+				complete: function(data){
 					this_row.fadeOut(400);
 					jQuery("#cat-"+cat_id+" td strong").html(new_name);
 					jQuery("#cat-"+cat_id+" td div.row-actions a.edit_category").html("Edit").removeClass("close").addClass("open");
@@ -1272,7 +1272,7 @@ echo '
 		
 		jQuery("#lddbd_add_category_button").click(function(){
 			jQuery("#lddbd_add_category_row").fadeIn(400);
-			jQuery("#lddbd_add_category_form input.name").val('');
+			jQuery("#lddbd_add_category_form input.name").val("");
 		});
 		
 		jQuery("#lddbd_add_category_form").submit(function(){
