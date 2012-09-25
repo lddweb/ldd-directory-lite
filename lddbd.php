@@ -938,7 +938,12 @@ function lddbd_edit_business_page(){
 			</div>
 			
 			<div class="lddbd_input_holder">
-				<img src="<?php echo plugins_url().'/ldd-business-directory/'.$business->logo; ?>"/>
+				<?php if(!empty($business->logo)){ ?>
+					<img src="<?php echo plugins_url().'/ldd-business-directory/'.$business->logo; ?>" alt="<?php echo $business->name;?> Logo"/>
+					<input id="lddbd_remove_logo" type="button" value="Remove Logo" />
+				<?php }else{ ?>
+					<em>No Logo on File</em>
+				<?php } ?>
 			</div>
 			
 			<div class="lddbd_input_holder">
@@ -1063,11 +1068,26 @@ function lddbd_edit_business_page(){
 					var doc_id = jQuery(this).attr('id');
 					doc_id = parseInt(doc_id);
 					jQuery.ajax({
+						type: 'POST',
+						url: '<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php',
+						data: {doc_id: doc_id, action: 'delete_doc'},
+						success: function(data){
+							this_placeholder.parent().slideUp('200');
+						}
+					});
+			});
+			
+			jQuery('input#lddbd_remove_logo').click(function(){
+				var this_placeholder = jQuery(this);
+				var this_id = jQuery('#lddbd_id').val();
+				var logo_path = jQuery('#lddbd_current_logo').val();
+				jQuery.ajax({
 					type: 'POST',
 					url: '<?php echo plugins_url(); ?>/ldd-business-directory/lddbd_ajax.php',
-					data: {doc_id: doc_id, action: 'delete_doc'},
+					data: {id: this_id, action: 'delete_logo', 'logo_path': logo_path},
 					success: function(data){
-						this_placeholder.parent().slideUp('200');
+						this_placeholder.parent().html('<em>No Logo on File</em>');
+						jQuery('#lddbd_current_logo').val('');
 					}
 				});
 			});
