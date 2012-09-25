@@ -228,7 +228,6 @@ else if($action == 'edit'){
 	if(!empty($_POST['categories'])){$update_array['categories'] = $_POST['categories'];}
 	
 	
-	
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
@@ -239,6 +238,7 @@ else if($action == 'edit'){
 		}
 		
 		if(move_uploaded_file($_FILES['logo']['tmp_name'], $logo_path)) {
+			unlink($_POST['current_logo']);
 	    	$update_array['logo'] = $logo_path;
 	   	}
 	}
