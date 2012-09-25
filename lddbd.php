@@ -1193,7 +1193,7 @@ function lddbd_business_categories_page(){
 							<input class="name" type="text" name="name">
 							<input class="action" type="hidden" name="action" value="add_category">
 				   			<p class="submit">
-							    <input type="submit" class="button-secondary" value="<?php _e('Add Category') ?>" />
+							    <input type="submit" class="button-secondary" value="<?php _e('Submit') ?>" />
 						    </p>
 				   		</form>
 					</td>
@@ -1272,6 +1272,7 @@ echo '
 		
 		jQuery("#lddbd_add_category_button").click(function(){
 			jQuery("#lddbd_add_category_row").fadeIn(400);
+			jQuery("#lddbd_add_category_form input.name").val('');
 		});
 		
 		jQuery("#lddbd_add_category_form").submit(function(){
