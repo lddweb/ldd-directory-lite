@@ -1,4 +1,4 @@
-.lddbd_edit_business_form br, .lddbd_add_business_form br{
+.lddbd_edit_business_form br, #lddbd_add_business_form br{
 	clear: both;
 }
 
