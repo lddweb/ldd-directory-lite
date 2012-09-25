@@ -674,7 +674,16 @@ else if($action == 'login'){
 				
 			}
 		}
-	
+		
+		if(!empty($business->logo)){
+
+			$logo_text = "<img src='".plugins_url()."/ldd-business-directory/".$business->logo."' alt='".$business->name." Logo'/>".
+				"<input id='lddbd_remove_logo' type='button' value='Remove Logo' />";
+				
+		}else{
+			$logo_text = "<em>No Logo on File</em>";
+		}
+		
 		echo "<form id='lddbd_edit_business_form' action='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
 			<div class='lddbd_input_holder'>
 				<label for='name'>Business Name</label>
@@ -762,7 +771,7 @@ else if($action == 'login'){
 			</div>
 			
 			<div class='lddbd_input_holder'>
-				<img src='".plugins_url()."/ldd-business-directory/{$business->logo}'/>
+				{$logo_text}
 			</div>
 			
 			<div class='lddbd_input_holder'>
@@ -858,6 +867,21 @@ else if($action == 'login'){
 						}
 					});
  				});
+				
+				jQuery('input#lddbd_remove_logo').click(function(){
+					var this_placeholder = jQuery(this);
+					var this_id = jQuery('#lddbd_id').val();
+					var logo_path = jQuery('#lddbd_current_logo').val();
+					jQuery.ajax({
+						type: 'POST',
+						url: '".plugins_url()."/ldd-business-directory/lddbd_ajax.php',
+						data: {id: this_id, action: 'delete_logo', 'logo_path': logo_path},
+						success: function(data){
+							this_placeholder.parent().html('<em>No Logo on File</em>');
+							jQuery('#lddbd_current_logo').val('');
+						}
+					});
+				});
  				
  				jQuery('#lddbd_login_cancel').click(function(){
  					window.location.reload();
@@ -882,6 +906,23 @@ else if($action == 'delete_doc'){
 		"
 	);
 }
+
+else if($action == 'delete_logo'){
+	global $main_table_name, $doc_table_name, $cat_table_name;
+	$id = $_POST['id'];
+	$logo_path = $_POST['logo_path'];
+	unlink($logo_path);
+	$wpdb->update(
+			$main_table_name,
+			array(
+				'logo'=>''
+			),
+			array('id'=>$id),
+			array('%s'),
+			array('%d')
+		);
+}
+
 else if($action == 'email'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$email = $_POST['email'];
