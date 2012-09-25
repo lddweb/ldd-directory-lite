@@ -1,3 +1,7 @@
+.lddbd_edit_business_form br, .lddbd_add_business_form br{
+	clear: both;
+}
+
 #lddbd_business_table th{
 	padding: 5px 10px;
 }
@@ -570,11 +574,11 @@ form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder input:las
 	content: "";
 }
 
-form.lddbd_edit_business_form div.lddbd_input_holder{
+#lddbd_business_directory div.lddbd_input_holder{
 	width: 100%;
 }
 
-form.lddbd_edit_business_form div.lddbd_input_holder input[type="text"]{
+#lddbd_business_directory div.lddbd_input_holder input[type="text"]{
 	width: 300px;
 }
 
