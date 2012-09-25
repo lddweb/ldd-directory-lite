@@ -33,7 +33,9 @@ The LDD Business Directory plugin allows a user to easily import, manage, and di
 
 == Changelog ==
 
-= 1.0 =
+= 1.1 =
+
+Added ability to remove a logo, fixed some javascript bugs and updated styling.
 
 
 == Upgrade Notice ==
