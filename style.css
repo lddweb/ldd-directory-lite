@@ -365,8 +365,8 @@ div.lddbd_input_holder{
 				}
 				
 				#lddbd_add_business_holder div.lddbd_input_holder select{
-					width: 100px;
-					margin-right: 200px;
+					width: 250px;
+					margin-right: 40px;
 				}
 				
 				#lddbd_add_business_holder div.lddbd_input_holder textarea{
@@ -578,10 +578,14 @@ form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder input:las
 	width: 100%;
 }
 
-#lddbd_business_directory div.lddbd_input_holder input[type="text"]{
+form#lddbd_edit_business_form div.lddbd_input_holder input[type="text"]{
 	width: 300px;
 }
 
-form.lddbd_edit_business_form div.lddbd_input_holder textarea{
+form#lddbd_edit_business_form div.lddbd_input_holder textarea{
 	width: 298px;
+}
+
+form#lddbd_edit_business_form div.lddbd_input_holder select{
+	margin-right: 253px;
 }
