@@ -190,11 +190,12 @@ function register_mysettings() {
 	add_settings_section('lddbd_main', 'Business Directory Settings', 'lddbd_section_text', 'business_directory_settings');
 	add_settings_field('lddbd_setting_one', 'Display "Submit Listing" Button', 'lddbd_setting_submit_button', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_two', 'Display "Login" Button', 'lddbd_setting_login_field', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_three', 'Welcome Message', 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_four', 'Additional Information Sections', 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_five', 'Categorize Entries', 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_six', 'Allow User Categorization', 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_seven', 'Directory Title', 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_three', 'Display "Only Include Businesses with Special Offers" Search Option', 'lddbd_setting_promo_search', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_four', 'Directory Title', 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_five', 'Welcome Message', 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_six', 'Additional Information Sections', 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_seven', 'Categorize Entries', 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_eight', 'Allow User Categorization', 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main');
 }
 
 function lddbd_section_text() {
@@ -225,6 +226,26 @@ function lddbd_setting_login_field() {
 		$noChecked = 'checked';
 	}
 	echo "<input name='lddbd_options[display_login]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[display_login]' type='radio' value='No' {$noChecked} />No";
+}
+
+function lddbd_setting_login_field() {
+	$options = get_option('lddbd_options');
+	$option_value = $options['promo_search'];
+	if($option_value=='Yes'){
+		$yesChecked = 'checked';
+		$noChecked = '';
+	} else {
+		$yesChecked = '';
+		$noChecked = 'checked';
+	}
+	echo "<input name='lddbd_options[promo_search]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[promo_search]' type='radio' value='No' {$noChecked} />No";
+}
+
+function lddbd_setting_directory_title() {
+	$options = get_option('lddbd_options');
+	$option_value = $options['directory_title'];
+	
+	echo "<input name='lddbd_options[directory_title]' value='{$options['directory_title']}'/>";
 }
 
 function lddbd_setting_welcome_message() {
@@ -343,18 +364,15 @@ function lddbd_setting_user_categorization(){
 	
 }
 
-function lddbd_setting_welcome_message() {
-	$options = get_option('lddbd_options');
-	$option_value = $options['directory_title'];
-	
-	echo "<input name='lddbd_options[directory_title]' value='{$options['directory_title']}'/>";
-}
+
 
 
 // validate our options
 function lddbd_options_validate($input) {
 	$newinput['display_button'] = trim($input['display_button']);
 	$newinput['display_login'] = trim($input['display_login']);
+	$newinput['promo_search'] = trim($input['promo_search']);
+	$newinput['directory_title'] = trim($input['directory_title']);
 	$newinput['welcome_message'] = trim($input['welcome_message']);
 	
 	$section_array = array();
@@ -373,7 +391,6 @@ function lddbd_options_validate($input) {
 	$newinput['information_sections'] = serialize($section_array);
 	$newinput['categorization'] = trim($input['categorization']);
 	$newinput['user_categorization'] = trim($input['user_categorization']);
-	$newinput['directory_title'] = trim($input['directory_title']);
 	
 	/*
 if(!preg_match('/^[a-z0-9]{32}$/i', $newinput['text_string'])) {
@@ -1360,6 +1377,205 @@ echo "<script type='text/javascript'>
 	</script>
 	<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts.js'></script>
 	";
+	
+$options = get_option('lddbd_options');
+$user_categorization_query = $options['user_categorization'];
+if($user_categorization_query=='Yes'){
+	$categories_list = $wpdb->get_results(
+		"
+		SELECT *
+		FROM $cat_table_name
+		"
+	);
+
+	$business_categories = "<div class='lddbd_input_holder'>";
+	$business_categories .= "<label for='categories_multiselect'>Categories</label>";
+	$business_categories .= "<select id='lddbd_categories_multiselect' name='categories_multiselect' multiple='multiple'>";
+	
+	foreach($categories_list as $category){
+		$business_categories .= "<option value='x{$category->id}x'>{$category->name}</option>";
+	}
+	
+	$business_categories .= "</select>";
+	$business_categories .= "<input id='lddbd_categories' type='hidden' name='categories'/>";
+	$business_categories .= "</div>";
+}
+
+$submit_button_query = $options['display_button'];
+
+if($submit_button_query=='Yes'){
+
+	$section_array = unserialize($options['information_sections']);
+	if(!empty($section_array)){
+		$other_sections = '';
+		foreach($section_array as $number=>$attributes){
+			$type = $attributes['type'];
+			if($type=='bool'){
+				$input = "<div class='lddbd_radio_holder'><input type='radio' name='{$attributes['name']}' value='Yes' />Yes&nbsp;<input type='radio' name='{$attributes['name']}' value='No' />No</div>";
+			} else {
+				$input = "<input type='{$type}' name='{$attributes['name']}'/>";
+			}
+			
+			
+			$other_sections.= "<div class='lddbd_input_holder'>
+					<label for='{$attributes['name']}'>{$attributes['title']}</label>
+					{$input}
+				</div>
+			";
+			
+		}
+	}
+	
+	$submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
+	$add_business_holder = "<div id='lddbd_add_business_holder'>
+				<form id='add_business_form' action='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
+					<div class='lddbd_input_holder'>
+						<label for='name'>Business Name</label>
+						<input class='required' type='text' id='lddbd_name' name='name'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='description'>Business Description</label>
+						<textarea id='lddbd_description' name='description'></textarea>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='address_street'>Street</label>
+						<input type='text' id='lddbd_address_street' name='address_street'>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='address'>City</label>
+						<input type='text' id='lddbd_address_city' name='address_city'>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='lddbd_address_state'>State</label>
+						{$lddbd_state_dropdown}
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='address'>Zip</label>
+						<input type='text' id='lddbd_address_zip' name='address_zip'>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='phone'>Contact Phone</label>
+						<input class='' type='text' id='lddbd_phone' name='phone'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='fax'>Contact Fax</label>
+						<input type='text' id='lddbd_fax' name='fax'>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='email'>Contact Email</label>
+						<input class='required' type='text' id='lddbd_email' name='email'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='contact'>Contact Name</label>
+						<input class='' type='text' id='lddbd_contact' name='contact'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='url'>Website</label>
+						<input type='text' id='lddbd_url' name='url'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='facebook'>Facebook Page</label>
+						<input type='text' id='lddbd_facebook' name='facebook'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='twitter'>Twitter Handle</label>
+						<input type='text' id='lddbd_twitter' name='twitter'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='linkedin'>Linked In Profile</label>
+						<input type='text' id='lddbd_linkedin' name='linkedin'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='promo'>Special Offer</label>
+						<div class='lddbd_radio_holder'>
+							<input type='checkbox' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='checkbox' id='promo' name='promo' value='false'/>No
+						</div>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='promo_description'>Special Offer Description</label>
+						<input type='text' id='lddbd_promo_description' name='promo_description'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='logo'>Logo Image</label>
+						<input class='' type='file' id='lddbd_logo' name='logo'/>
+					</div>
+					
+					{$other_sections}
+					
+					{$business_categories}
+					
+					<div class='lddbd_input_holder'>
+						<label for='login'>Login</label>
+						<input class='' type='text' id='lddbd_login' name='login'/>
+					</div>
+					
+					<div class='lddbd_input_holder'>
+						<label for='password'>Password</label>
+						<input class='' type='text' id='lddbd_password' name='password'/>
+					</div>
+					
+					<input type='hidden' id='action' name='action' value='add'/>
+					
+					<p class='submit'>
+						<input id='lddbd_cancel_listing' type='button' class='button-primary' value='Cancel' />
+						<input type='submit' class='button-primary' value='Add Business' />
+					</p>
+				</form>
+				<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
+			</div>";
+} else {
+	$submit_button = '';
+	$add_business_holder = '';
+}
+$login_form_query = $options['display_login'];
+if($login_form_query=='Yes'){
+	$login_button = "<a href='javascript:void(0);' id='lddbd_business_login_button' class='lddbd_navigation_button'>Login</a>";
+} else {
+	$login_button = '';
+}
+$promo_search_query = $options['promo_search'];
+if($promo_search_query=='Yes'){
+	$promo_search = "<input type='checkbox' id='lddbd_promo_filter' name='promo_filter' value='promo'/><label id='lddbd_promo_filter_label' for='promo_filter'>Only Include Businesses with Special Offers</label>";
+} else {
+	$promo_search = '';
+}
+
+$directory_title = !empty($options['directory_title']) ? $options['directory_title'] : 'Business Directory';
+	
+$business_directory_head = "<div id='lddbd_business_directory_head'>
+	 			<h2>$directory_title</h2>
+	 			<form id='lddbd_business_search' action='' method='GET'>
+	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the Business Directory'/>
+	 				<input type='submit' value='search' />
+	 				<br/>
+	 				{$promo_search}
+	 			</form>
+	 			<p>{$options['welcome_message']}</p>
+	 			<div id='lddbd_navigation_holder'>
+		 			<a href='javascript:void(0);' id='lddbd_listings_category_button' class='lddbd_navigation_button'>Categories</a>
+		 			<a href='javascript:void(0);' id='lddbd_all_listings_button' class='lddbd_navigation_button'>All Listings</a>
+		 			{$login_button}
+		 			{$submit_button}
+		 		</div>	
+	 		</div>";
+			
+			
 
 if($_GET['business']){
 
@@ -1513,201 +1729,13 @@ if($_GET['business']){
 			{$map}
 			";
 			
-	$options = get_option('lddbd_options');
-	$user_categorization_query = $options['user_categorization'];
-	if($user_categorization_query=='Yes'){
-		$categories_list = $wpdb->get_results(
-			"
-			SELECT *
-			FROM $cat_table_name
-			"
-		);
-
-		$business_categories = "<div class='lddbd_input_holder'>";
-		$business_categories .= "<label for='categories_multiselect'>Categories</label>";
-		$business_categories .= "<select id='lddbd_categories_multiselect' name='categories_multiselect' multiple='multiple'>";
-		
-		foreach($categories_list as $category){
-			$business_categories .= "<option value='x{$category->id}x'>{$category->name}</option>";
-		}
-		
-		$business_categories .= "</select>";
-		$business_categories .= "<input id='lddbd_categories' type='hidden' name='categories'/>";
-		$business_categories .= "</div>";
-	}
 	
-	$submit_button_query = $options['display_button'];
-	
-	if($submit_button_query=='Yes'){
-	
-		$section_array = unserialize($options['information_sections']);
-		if(!empty($section_array)){
-			$other_sections = '';
-			foreach($section_array as $number=>$attributes){
-				$type = $attributes['type'];
-				if($type=='bool'){
-					$input = "<div class='lddbd_radio_holder'><input type='radio' name='{$attributes['name']}' value='Yes' />Yes&nbsp;<input type='radio' name='{$attributes['name']}' value='No' />No</div>";
-				} else {
-					$input = "<input type='{$type}' name='{$attributes['name']}'/>";
-				}
-				
-				
-				$other_sections.= "<div class='lddbd_input_holder'>
-						<label for='{$attributes['name']}'>{$attributes['title']}</label>
-						{$input}
-					</div>
-				";
-				
-			}
-		}
-		
-		$submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
-		$add_business_holder = "<div id='lddbd_add_business_holder'>
-		 			<form id='add_business_form' action='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
-						<div class='lddbd_input_holder'>
-							<label for='name'>Business Name</label>
-							<input class='required' type='text' id='lddbd_name' name='name'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='description'>Business Description</label>
-							<textarea id='lddbd_description' name='description'></textarea>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='address_street'>Street</label>
-							<input type='text' id='lddbd_address_street' name='address_street'>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='address'>City</label>
-							<input type='text' id='lddbd_address_city' name='address_city'>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='lddbd_address_state'>State</label>
-							{$lddbd_state_dropdown}
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='address'>Zip</label>
-							<input type='text' id='lddbd_address_zip' name='address_zip'>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='phone'>Contact Phone</label>
-							<input class='' type='text' id='lddbd_phone' name='phone'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='fax'>Contact Fax</label>
-							<input type='text' id='lddbd_fax' name='fax'>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='email'>Contact Email</label>
-							<input class='required' type='text' id='lddbd_email' name='email'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='contact'>Contact Name</label>
-							<input class='' type='text' id='lddbd_contact' name='contact'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='url'>Website</label>
-							<input type='text' id='lddbd_url' name='url'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='facebook'>Facebook Page</label>
-							<input type='text' id='lddbd_facebook' name='facebook'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='twitter'>Twitter Handle</label>
-							<input type='text' id='lddbd_twitter' name='twitter'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='linkedin'>Linked In Profile</label>
-							<input type='text' id='lddbd_linkedin' name='linkedin'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='promo'>Special Offer</label>
-							<div class='lddbd_radio_holder'>
-								<input type='checkbox' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='checkbox' id='promo' name='promo' value='false'/>No
-							</div>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='promo_description'>Special Offer Description</label>
-							<input type='text' id='lddbd_promo_description' name='promo_description'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='logo'>Logo Image</label>
-							<input class='' type='file' id='lddbd_logo' name='logo'/>
-						</div>
-						
-						{$other_sections}
-						
-						{$business_categories}
-						
-						<div class='lddbd_input_holder'>
-							<label for='login'>Login</label>
-							<input class='' type='text' id='lddbd_login' name='login'/>
-						</div>
-						
-						<div class='lddbd_input_holder'>
-							<label for='password'>Password</label>
-							<input class='' type='text' id='lddbd_password' name='password'/>
-						</div>
-						
-						<input type='hidden' id='action' name='action' value='add'/>
-						
-			   			<p class='submit'>
-			   				<input id='lddbd_cancel_listing' type='button' class='button-primary' value='Cancel' />
-						    <input type='submit' class='button-primary' value='Add Business' />
-					    </p>
-		 			</form>
-		 			<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='".plugins_url()."/ldd-business-directory/lddbd_ajax.php' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
-		 		</div>";
-	} else {
-		$submit_button = '';
-		$add_business_holder = '';
-	}
-	$login_form_query = $options['display_login'];
-	if($login_form_query=='Yes'){
-		$login_button = "<a href='javascript:void(0);' id='lddbd_business_login_button' class='lddbd_navigation_button'>Login</a>";
-	} else {
-		$login_button = '';
-	}
-	
-	$directory_title = !empty($options['directory_title']) ? $options['directory_title'] : 'Business Directory';
 	
 	return "
 		<link rel='stylesheet' href='".plugins_url()."/ldd-business-directory/style.css' type='text/css' media='screen' />
-		<div id='lddbd_business_directory'>
-	 		<div id='lddbd_business_directory_head'>
-	 			<h2>$directory_title</h2>
-	 			<form id='lddbd_business_search' action='' method='GET'>
-	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the Business Directory'/>
-	 				<input type='submit' value='search' />
-	 				<br/>
-	 				<input type='checkbox' id='lddbd_promo_filter' name='promo_filter' value='promo'/>
-	 				<label id='lddbd_promo_filter_label' for='promo_filter'>Only Include Businesses with Special Offers</label>
-	 			</form>
-	 			<p>{$options['welcome_message']}</p>
-	 			<div id='lddbd_navigation_holder'>
-		 			<a href='javascript:void(0);' id='lddbd_listings_category_button' class='lddbd_navigation_button'>Categories</a>
-		 			<a href='javascript:void(0);' id='lddbd_all_listings_button' class='lddbd_navigation_button'>All Listings</a>
-		 			{$login_button}
-		 			{$submit_button}
-		 		</div>	
-	 		</div>
-	 		<div id='lddbd_business_directory_body'>
+		<div id='lddbd_business_directory'>".
+			$business_directory_head.
+	 		"<div id='lddbd_business_directory_body'>
 	 			<div id='lddbd_business_directory_list'></div>
 	 			<div id='lddbd_business_directory_single'>
 		 			<h3>
@@ -1955,25 +1983,9 @@ else{
 	
 	 return "
 	 	<link rel='stylesheet' href='".plugins_url()."/ldd-business-directory/style.css' type='text/css' media='screen' />
-	 	<div id='lddbd_business_directory'>
-	 		<div id='lddbd_business_directory_head'>
-	 			<h2>Business Directory</h2>
-	 			
-	 			<form id='lddbd_business_search' action='' method='GET'>
-	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the Business Directory'/>
-	 				<input type='submit' value='search' />
-	 				<br/>
-	 				<input type='checkbox' id='lddbd_promo_filter' name='promo_filter' value='promo'/>
-	 				<label id='lddbd_promo_filter_label' for='promo_filter'>Only Include Businesses with Special Offers</label>
-	 			</form>
-	 			<div id='lddbd_navigation_holder'>
-		 			<a href='javascript:void(0);' id='lddbd_listings_category_button' class='lddbd_navigation_button'>Categories</a>
-		 			<a href='javascript:void(0);' id='lddbd_all_listings_button' class='lddbd_navigation_button'>All Listings</a>
-		 			{$login_button}
-		 			{$submit_button}
-		 		</div>	
-	 		</div>
-	 		<div id='lddbd_business_directory_body'>
+	 	<div id='lddbd_business_directory'>".
+			$business_directory_head.
+	 		"<div id='lddbd_business_directory_body'>
 	 			<div id='lddbd_business_directory_list'>
 	 				<div id='lddbd_categories_left'>
 			 			{$categories}
