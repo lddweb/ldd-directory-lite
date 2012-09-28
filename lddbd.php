@@ -228,7 +228,7 @@ function lddbd_setting_login_field() {
 	echo "<input name='lddbd_options[display_login]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[display_login]' type='radio' value='No' {$noChecked} />No";
 }
 
-function lddbd_setting_login_field() {
+function lddbd_setting_promo_search() {
 	$options = get_option('lddbd_options');
 	$option_value = $options['promo_search'];
 	if($option_value=='Yes'){
