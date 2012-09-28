@@ -194,10 +194,11 @@ function register_mysettings() {
 	add_settings_field('lddbd_setting_four', 'Additional Information Sections', 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_five', 'Categorize Entries', 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_six', 'Allow User Categorization', 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_seven', 'Directory Title', 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main');
 }
 
 function lddbd_section_text() {
-	echo '<p>Main description of this section here.</p>';
+	echo '<p>Edit the settings for your directory.</p>';
 }
 
 function lddbd_setting_submit_button() {
@@ -342,6 +343,13 @@ function lddbd_setting_user_categorization(){
 	
 }
 
+function lddbd_setting_welcome_message() {
+	$options = get_option('lddbd_options');
+	$option_value = $options['directory_title'];
+	
+	echo "<input name='lddbd_options[directory_title]' value='{$options['directory_title']}'/>";
+}
+
 
 // validate our options
 function lddbd_options_validate($input) {
@@ -365,6 +373,7 @@ function lddbd_options_validate($input) {
 	$newinput['information_sections'] = serialize($section_array);
 	$newinput['categorization'] = trim($input['categorization']);
 	$newinput['user_categorization'] = trim($input['user_categorization']);
+	$newinput['directory_title'] = trim($input['directory_title']);
 	
 	/*
 if(!preg_match('/^[a-z0-9]{32}$/i', $newinput['text_string'])) {
@@ -1676,11 +1685,13 @@ if($_GET['business']){
 		$login_button = '';
 	}
 	
+	$directory_title = !empty($options['directory_title']) ? $options['directory_title'] : 'Business Directory';
+	
 	return "
 		<link rel='stylesheet' href='".plugins_url()."/ldd-business-directory/style.css' type='text/css' media='screen' />
 		<div id='lddbd_business_directory'>
 	 		<div id='lddbd_business_directory_head'>
-	 			<h2>Business Directory</h2>
+	 			<h2>$directory_title</h2>
 	 			<form id='lddbd_business_search' action='' method='GET'>
 	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the Business Directory'/>
 	 				<input type='submit' value='search' />
