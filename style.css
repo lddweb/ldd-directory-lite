@@ -340,10 +340,10 @@ div.lddbd_input_holder{
 				}
 				
 		#lddbd_add_business_holder{
-			height: 790px;
+			height: 860px;
 			width: 100%;
 			padding: 5px 10px;
-			top: -800px;
+			top: -870px;
 			left: 0px;
 			display: block;
 			overflow: hidden;
@@ -353,7 +353,7 @@ div.lddbd_input_holder{
 		}
 		
 			#lddbd_add_business_holder .lddbd_input_holder{
-				margin: 5px 0px;
+				margin: 2px 0px;
 				width: 100%;
 				display: block;
 				overflow: hidden;

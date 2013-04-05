@@ -3,8 +3,8 @@ Contributors: suffrage
 Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
-Tested up to: 3.4.1
-Stable tag: 1.1.3
+Tested up to: 3.5.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ The LDD Business Directory plugin allows a user to easily import, manage, and di
 
 == Installation ==
 
-1. Install from the WordPress plugins utility or simply move the `lddbd` folder to your plugins directory (`/wp-content/plugins`)
+1. Install from the WordPress plugins utility or simply move the `ldd-business-directory` folder to your plugins directory (`/wp-content/plugins`)
 1. Make sure you activate the plugin on your plugins page
 1. Now you should have a “Businesses” menu item on your dashboard
 1. From here you can alter your settings, add businesses, edit business information, and customize your categories
