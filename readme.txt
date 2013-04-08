@@ -4,7 +4,7 @@ Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,10 @@ The LDD Business Directory plugin allows a user to easily import, manage, and di
 
 == Changelog ==
 
+= 1.2.1 =
+
+Modified form(s) to allow for entry of international addresses, separated plugin out in to multiple config files for easier code maintenence, added function reference spreadsheet, and a process flow diagram.
+
 = 1.1.2 =
 
 Added options for directory title, and whether to display the promo filter in the search box.
@@ -43,6 +47,8 @@ Added ability to remove a logo, fixed some javascript bugs and updated styling.
 
 
 == Upgrade Notice ==
+
+= 1.2.1 =
 
 = 1.0 =
 

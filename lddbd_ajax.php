@@ -659,12 +659,12 @@ else if($action == 'login'){
 			</div>
 			
 			<div class='lddbd_input_holder'>
-				<label for='address_state'>State</label>
+				<label for='address_state'>State/Country</label>
 				<input type='text' id='lddbd_address_state' name='address_state' value='{$business->address_state}' />
 			</div>
 			
 			<div class='lddbd_input_holder'>
-				<label for='address'>Zip</label>
+				<label for='address'>Zip/Postal Code</label>
 				<input type='text' id='lddbd_address_zip' name='address_zip' value='{$business->address_zip}'>
 			</div>
 			
