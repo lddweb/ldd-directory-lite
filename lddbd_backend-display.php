@@ -209,8 +209,6 @@ function lddbd_settings_page(){
 			    <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 		    </p>
    		</form>
-   		
-   		<hr style="color: #fff; width: 525px; margin: 0 auto 0 0;" />
 	</div>
 <?php
 }
@@ -644,7 +642,8 @@ function lddbd_edit_business_page(){
 			</div>
 			
 			<div class="lddbd_input_holder">
-				<img src="<?php echo plugins_url().'/ldd-business-directory/'.$business->logo; ?>"/>
+				<img src="<?php echo plugins_url( '/' ) . $business->logo; ?>"/><br />
+				<?php echo $business->logo; ?>
 			</div>
 			
 			<div class="lddbd_input_holder">
@@ -915,6 +914,7 @@ function lddbd_business_categories_page(){
 				</tr>
 			</tbody>
 		</table>
+
 <script type="text/javascript">
 	jQuery(document).ready(function(){
 		

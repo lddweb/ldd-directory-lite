@@ -52,7 +52,7 @@ if($_GET['business']){
 	$doc_list = '';
 	if($documents){
 		foreach($documents as $document){
-			$doc_list.="<li><a target='_blank' href='".plugins_url( 'ldd-business-directory/' )."{$document->doc_path}'>{$document->doc_description}</a></li>";
+			$doc_list.="<li><a target='_blank' href='".plugins_url( '/' )."{$document->doc_path}'>{$document->doc_description}</a></li>";
 		}
 	}
 	
@@ -149,7 +149,7 @@ if($_GET['business']){
 	}
 	
 	
-	if(!empty($business->logo)){$logo_html = '<img src="'.plugins_url().'/ldd-business-directory/'.$business->logo.'"/>'; }
+	if(!empty($business->logo)){$logo_html = '<img src="'.plugins_url().'/'.$business->logo.'"/>'; }
 	
 	if( !empty( $business->other_info )) {
 	$other_info = unserialize( $business->other_info );

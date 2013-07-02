@@ -8,6 +8,13 @@ $main_table_name = $wpdb->prefix.'lddbusinessdirectory';
 $cat_table_name = $wpdb->prefix.'lddbusinessdirectory_cats';
 $doc_table_name = $wpdb->prefix.'lddbusinessdirectory_docs';
 
+if ( !file_exists( '../lddbd-logos' )) {
+    mkdir( '../lddbd-logos', 0755, true );
+}
+
+if ( !file_exists( '../lddbd-files' )) {
+    mkdir( '../lddbd-files', 0755, true );
+}
 
 // The basis for all the AJAX actions that control facets of the back end and the front end.
 $action = $_POST['action'];
@@ -94,13 +101,13 @@ else if($action == 'add'){
 
 	$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 	preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-	$logo_path = 'logos/'.$login.'_logo.'.$fileExt[1];
+	$logo_path = 'lddbd-logos/'.$login.'_logo.'.$fileExt[1];
 	while (file_exists($logo_path)) {
 		$modifier = rand(0, 1000);
-		$logo_path = 'logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
+		$logo_path = 'lddbd-logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
 	}
 
-	if(move_uploaded_file($_FILES['logo']['tmp_name'], $logo_path)) {
+	if(move_uploaded_file($_FILES['logo']['tmp_name'], "../" . $logo_path)) {
     	// echo 'file uploaded';
    	}
 
@@ -185,13 +192,13 @@ else if($action == 'edit'){
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-		$logo_path = 'logos/'.$_POST['login'].'_logo.'.$fileExt[1];
+		$logo_path = 'lddbd-logos/'.$_POST['login'].'_logo.'.$fileExt[1];
 		while (file_exists($logo_path)) {
 			$modifier = rand(0, 1000);
-			$logo_path = 'logos/'.$_POST['login'].'_logo'.$modifier.'.'.$fileExt[1];
+			$logo_path = 'lddbd-logos/'.$_POST['login'].'_logo'.$modifier.'.'.$fileExt[1];
 		}
 
-		if(move_uploaded_file($_FILES['logo']['tmp_name'], $logo_path)) {
+		if(move_uploaded_file($_FILES['logo']['tmp_name'], "../" . $logo_path)) {
 	    	$update_array['logo'] = $logo_path;
 	   	}
 	}
@@ -200,13 +207,13 @@ else if($action == 'edit'){
 		if(!empty($_FILES['file'.$i]['name'])){
 			$allowedExtensions = array('jpg', 'jpeg', 'pdf', 'xls', 'xslx', 'doc', 'docx');
 			preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['file'.$i]['name'], $fileExt);
-			$file_path = 'files/'.$_POST['login'].'_'.$i.'.'.$fileExt[1];
+			$file_path = 'lddbd-files/'.$_POST['login'].'_'.$i.'.'.$fileExt[1];
 			while (file_exists($logo_path)) {
 				$modifier = rand(0, 1000);
-				$file_path = 'files/'.$_POST['login'].'_'.$i.'_'.$modifier.'.'.$fileExt[1];
+				$file_path = 'lddbd-files/'.$_POST['login'].'_'.$i.'_'.$modifier.'.'.$fileExt[1];
 			}
 
-			if(move_uploaded_file($_FILES['file'.$i]['tmp_name'], $file_path)) {
+			if(move_uploaded_file($_FILES['file'.$i]['tmp_name'], "../" . $file_path)) {
 		    	// echo 'file uploaded';
 		   	}
 
@@ -266,14 +273,14 @@ else if($action == 'quick_edit'){
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-		$logo_path = 'logos/'.$login.'_logo.'.$fileExt[1];
+		$logo_path = 'lddbd-logos/'.$login.'_logo.'.$fileExt[1];
 		while (file_exists($logo_path)) {
 			$modifier = rand(0, 1000);
-			$logo_path = 'logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
+			$logo_path = 'lddbd-logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
 		}
 
 		$update_array['logo'] = $logo_path;
-		if(move_uploaded_file($_FILES['logo']['tmp_name'], $logo_path)) {
+		if(move_uploaded_file($_FILES['logo']['tmp_name'], "../" . $logo_path)) { 
 	    	// echo 'file uploaded';
 	   	}
 	} else if(!empty($_POST['current_logo'])){
@@ -354,7 +361,7 @@ else if($action == 'search'){
 			$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
 
-			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( 'ldd-business-directory/' )."{$business->logo}' /></div>"; }
+			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}' /></div>"; }
 
 			if(strstr($business->url, 'http:// ')){$business_url = $business->url;}
 			else{$business_url = 'http:// '.$business->url;}
@@ -478,7 +485,7 @@ else if($action == 'category_filter'){
 			$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
 
-			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( 'ldd-business-directory/' )."{$business->logo}'/></div>"; }
+			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}'/></div>"; }
 
 			echo "<div class='lddbd_business_listing'>
 						{$logo_html}
@@ -753,7 +760,7 @@ echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-d
 	</div>
 
 	<div class='lddbd_input_holder'>
-		<img src='".plugins_url( 'ldd-business-directory/' )."{$business->logo}'/>
+		<img src='".plugins_url( '/' )."{$business->logo}'/>
 	</div>
 
 	<div class='lddbd_input_holder'>

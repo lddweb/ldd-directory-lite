@@ -3,17 +3,14 @@ Contributors: suffrage
 Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
-Tested up to: 3.5.1
-Stable tag: 1.3.3
+Tested up to: 3.5.2
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-Creates a business directory with a simple shortcode. Businesses can provide contact information, logos, documents, and web promotions. Easy backend management allows custom information fields and control over businesses' ability to submit and edit listings.
 
 == Description ==
 
 The LDD Business Directory plugin allows a user to easily manage and display businesses and their information on a WordPress site. Simply use the shortcode [business_directory] on any wordpress page and the directory is displayed, allowing visitors to search through the directory and submit a listing of their own. If the user has a listing on the directory, they can easily sign in and edit their information. From the WordPress backend, it’s easy to categorize businesses and edit their information, as well as add any custom information fields that may be needed. Plus the settings allow for a greater range of customization of the functionality.
-
 
 == Installation ==
 
@@ -24,7 +21,7 @@ The LDD Business Directory plugin allows a user to easily manage and display bus
 5. Decide which page you wish to display it on or create a page and enter the shortcode `[business_directory]` in the content area of your page
 6. You can also use the php function `<?php display_business_directory(); ?>` directly in your template file
 
-NOTE: Make sure your permalinks are set to "Post name" for the plugin to work properly!
+PLUGIN NOTICE: Make sure your permalinks are set to "Post name" for the plugin to work properly!
 
 == Frequently Asked Questions ==
 
@@ -32,8 +29,11 @@ NOTE: Make sure your permalinks are set to "Post name" for the plugin to work pr
 == Screenshots ==
 
 
-
 == Changelog ==
+
+= 1.3.4 =
+
+- Revised how logos and files are handled by the business directory.
 
 = 1.3.2 =
 
@@ -62,10 +62,3 @@ Added ability to remove a logo, fixed some javascript bugs and updated styling.
 == Upgrade Notice ==
 
 = 1.0 =
-
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
