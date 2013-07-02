@@ -4,7 +4,7 @@ Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.2.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,17 +12,19 @@ Creates a business directory with a simple shortcode. Businesses can provide con
 
 == Description ==
 
-The LDD Business Directory plugin allows a user to easily import, manage, and display businesses and their information on a WordPress site. Simply use the shortcode [business_directory] on any wordpress page and the directory is displayed, allowing visitors to search through the directory and submit a listing of their own. If the user has a listing on the directory, they can easily sign in and edit their information. From the WordPress backend, it’s easy to categorize businesses and edit their information, as well as add any custom information fields that may be needed. Plus the settings allow for a greater range of customization of the functionality.
+The LDD Business Directory plugin allows a user to easily manage and display businesses and their information on a WordPress site. Simply use the shortcode [business_directory] on any wordpress page and the directory is displayed, allowing visitors to search through the directory and submit a listing of their own. If the user has a listing on the directory, they can easily sign in and edit their information. From the WordPress backend, it’s easy to categorize businesses and edit their information, as well as add any custom information fields that may be needed. Plus the settings allow for a greater range of customization of the functionality.
 
 
 == Installation ==
 
-1. Install from the WordPress plugins utility or simply move the `ldd-business-directory` folder to your plugins directory (`/wp-content/plugins`)
-1. Make sure you activate the plugin on your plugins page
-1. Now you should have a “Businesses” menu item on your dashboard
-1. From here you can alter your settings, add businesses, edit business information, and customize your categories
-1. Decide which page you wish to display it on or create a page and enter the shortcode `[business_directory]` in the content area of your page
-1. You can also use the php function `<?php display_business_directory(); ?>` directly in your template file
+1. Install from the WordPress plugins utility or simply move the `lddbd` folder to your plugins directory (`/wp-content/plugins`)
+2. Make sure you activate the plugin on your plugins page
+3. Now you should have a “Businesses” menu item on your dashboard
+4. From here you can alter your settings, add businesses, edit business information, and customize your categories
+5. Decide which page you wish to display it on or create a page and enter the shortcode `[business_directory]` in the content area of your page
+6. You can also use the php function `<?php display_business_directory(); ?>` directly in your template file
+
+NOTE: Make sure your permalinks are set to "Post name" for the plugin to work properly!
 
 == Frequently Asked Questions ==
 
@@ -33,9 +35,20 @@ The LDD Business Directory plugin allows a user to easily import, manage, and di
 
 == Changelog ==
 
+= 1.3.2 =
+
+- Welcome message now displays on the front end.
+- Added international address support for specific countries.
+- Fixed error that contained warning message about headers already being sent when adding a new business.
+- Added the ability to disable Google Maps from all businesses.
+- Added ability to change the directory title from "Business Directory" to anything else.
+- Welcome message appears above directory like it should.
+- Additional Information sections have a small area to be displayed on the front end.
+
 = 1.2.1 =
 
-Modified form(s) to allow for entry of international addresses, separated plugin out in to multiple config files for easier code maintenence, added function reference spreadsheet, and a process flow diagram.
+- Modified form(s) to allow a workaround for international addresses.
+- Separated plugin out in to multiple config files for easier code maintenence.
 
 = 1.1.2 =
 
@@ -47,8 +60,6 @@ Added ability to remove a logo, fixed some javascript bugs and updated styling.
 
 
 == Upgrade Notice ==
-
-= 1.2.1 =
 
 = 1.0 =
 

@@ -2,6 +2,13 @@
 
 /* -------------- Settings Menu Backend Display | HTML/jQuery -------------- */
 
+// Load up jQuery 1.9.1 to get specific jQuery functions working.
+if( is_admin() ) {
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', plugins_url( 'ldd-business-directory/scripts/jquery-1.9.1.min.js' ), false, 'latest', false);
+    wp_enqueue_script('jquery');
+}
+
 // Generates the Business Directory List HTML page, populates it with businesses registered in the database, and formats how they're displayed.
 function lddbd_html_page(){ 
 	if (!current_user_can('manage_options'))  {
@@ -116,7 +123,6 @@ function lddbd_html_page(){
 				?>
 			</tbody>
 		</table>
-
 	</div>
 
 <script type="text/javascript">
@@ -202,7 +208,9 @@ function lddbd_settings_page(){
    			<p class="submit">
 			    <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 		    </p>
-   		</form>	
+   		</form>
+   		
+   		<hr style="color: #fff; width: 525px; margin: 0 auto 0 0;" />
 	</div>
 <?php
 }
@@ -237,9 +245,8 @@ function lddbd_add_business_page(){
 	
 	$options = get_option('lddbd_options');
 	$section_array = unserialize($options['information_sections']);
-		
-	
-	?>
+			
+?>
 	<div class="wrap">
 		<h2>Add Business to Directory</h2>
 		
@@ -260,6 +267,38 @@ function lddbd_add_business_page(){
 			</div>
 			
 			<div class="lddbd_input_holder">
+				<label for="address_country">Country</label>
+				<?php
+					$lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) . 'scripts/countries.txt';
+					
+					if( file_exists( $lddbd_countryTxtFile ) ) {
+						// Text file containing list of supported countries
+						$countryList = fopen( $lddbd_countryTxtFile, "r" );
+				?>
+				<select id="lddbd_address_country" name="address_country">
+				<?php		
+					while( !feof ( $countryList ) ) {
+						$textLine = fgets( $countryList );
+						$textLine = trim( $textLine );
+				?>
+				
+				<option><?php echo $textLine; ?></option>
+				
+				<?php	
+					}
+					fclose( $countryList );
+				?>
+				</select>
+				<?php
+					} else {
+						echo "<p>This file does not exist!</p>";
+					}
+				?>
+			</div>
+			<div id="selectedCountryForm"></div>
+			
+			<!-- /*
+			<div class="lddbd_input_holder">
 				<label for="address_city">City</label>
 				<input type="text" id="lddbd_address_city" name="address_city">
 			</div>
@@ -273,6 +312,7 @@ function lddbd_add_business_page(){
 				<label for="address_zip">Zip/Postal Code</label>
 				<input type="text" id="lddbd_address_zip" name="address_zip">
 			</div>
+			*/ -->
 			
 			<div class="lddbd_input_holder">
 				<label for="phone">Contact Phone</label>
@@ -350,14 +390,11 @@ function lddbd_add_business_page(){
 						} else {
 							$input = "<input type='{$type}' name='{$attributes['name']}' />";
 						}
-						
-						
+												
 						echo "<div class='lddbd_input_holder'>
 								<label for='{$attributes['name']}'>{$attributes['title']}</label>
 								{$input}
-							</div>
-						";
-						
+							</div>";
 					}
 				}
 			?>
@@ -390,6 +427,7 @@ function lddbd_add_business_page(){
 		    </p>
    		</form>
    		
+   		<?php include( 'scripts/countrySelector.php' ); ?>
    		<script type="text/javascript">
    			jQuery(document).ready(function(){
 	 			var business_logins = new Array(<?php echo substr($logins, 2); ?>);
@@ -469,13 +507,11 @@ function lddbd_edit_business_page(){
 		"
 	);
 	
-	// Separates out each element pulled into the variable by removing the comma and assigning them a value in the
-	// array (not 100% certain on this).
+	// Separates out each element pulled into the variable by removing the comma and assigning them a value in the array.
 	$categories_array = explode(',', str_replace('x', '', substr($business->categories, 1)));
 	if(empty($categories_array)){$categories_array=array();}
 	
-	// Performs a SELECT query on $doc_table_name. Used in a loop for the purpose of deleting an item (not sure where
-	// item is located in frontend or backend).
+	// Performs a SELECT query on $doc_table_name. Used in a loop for the purpose of deleting an item.
 	$files = $wpdb->get_results("SELECT * FROM $doc_table_name WHERE bus_id = '$id'");
 	$files_list = '';
 	
@@ -504,6 +540,38 @@ function lddbd_edit_business_page(){
 			</div>
 			
 			<div class="lddbd_input_holder">
+				<label for="address_country">Country</label>
+				<?php
+					$lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) . 'scripts/countries.txt';
+					
+					if( file_exists( $lddbd_countryTxtFile ) ) {
+						// Text file containing list of supported countries
+						$countryList = fopen( $lddbd_countryTxtFile, "r" );
+				?>
+				<select id="lddbd_address_country" name="address_country">
+				<?php		
+					while( !feof ( $countryList ) ) {
+						$textLine = fgets( $countryList );
+						$textLine = trim( $textLine );
+				?>
+				
+				<option <?php if( $business->address_country == $textLine ) echo "selected='selected'"; ?> ><?php echo $textLine; ?></option>
+				
+				<?php	
+					}
+					fclose( $countryList );
+				?>
+				</select>
+				<?php
+					} else {
+						echo "<p>This file does not exist!</p>";
+					}
+				?>
+			</div>
+			<div id="selectedCountryForm"></div>
+			
+			<!-- /*
+			<div class="lddbd_input_holder">
 				<label for="address_city">City</label>
 				<input type="text" id="lddbd_address_city" name="address_city" value="<?php echo $business->address_city;?>"/>
 			</div>
@@ -516,7 +584,7 @@ function lddbd_edit_business_page(){
 			<div class="lddbd_input_holder">
 				<label for="address_zip">Zip/Postal Code</label>
 				<input type="text" id="lddbd_address_zip" name="address_zip" value="<?php echo $business->address_zip;?>"/>
-			</div>
+			</div> */ -->
 			
 			<div class="lddbd_input_holder">
 				<label for="phone">Contact Phone</label>
@@ -674,6 +742,8 @@ function lddbd_edit_business_page(){
 		</form>
 
 	</div>
+	
+	<?php include( 'scripts/countryEditor.php' ); ?>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
 						
@@ -845,9 +915,6 @@ function lddbd_business_categories_page(){
 				</tr>
 			</tbody>
 		</table>
-
-
-
 <script type="text/javascript">
 	jQuery(document).ready(function(){
 		

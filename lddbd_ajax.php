@@ -12,7 +12,7 @@ $doc_table_name = $wpdb->prefix.'lddbusinessdirectory_docs';
 // The basis for all the AJAX actions that control facets of the back end and the front end.
 $action = $_POST['action'];
 
-//If the item is approved then make the business listing viewable on the front end.
+// If the item is approved then make the business listing viewable on the front end.
 if($action == 'approve'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$id = $_POST['id'];
@@ -26,7 +26,7 @@ if($action == 'approve'){
 		array('%d')
 	);
 }
-//If the item is presently viewable on the front end then remove its approval so that it is hidden.
+// If the item is presently viewable on the front end then remove its approval so that it is hidden.
 else if($action == 'revoke'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$id = $_POST['id'];
@@ -39,7 +39,7 @@ else if($action == 'revoke'){
 		array('%s'),
 		array('%d')
 	);
-	
+
 }
 // Remove the business from the table in the database.
 else if($action == 'delete'){
@@ -52,24 +52,26 @@ else if($action == 'delete'){
 		"
 	);
 }
-//Add the business and all the corresponding elements assigned to it into the database.
- else if($action == 'add'){
+// Add the business and all the corresponding elements assigned to it into the database.
+else if($action == 'add'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$options = get_option('lddbd_options');
 	$section_array = unserialize($options['information_sections']);
 	$save_additional_sections = array();
-	foreach($section_array as $section){
-		$name = $section['name'];
-		$value = stripslashes($_POST[$name]);
-		$save_additional_sections[$name]=$value;
+	if( is_array( $section_array ) ) {
+		foreach($section_array as $section){
+			$name = $section['name'];
+			$value = stripslashes($_POST[$name]);
+			$save_additional_sections[$name]=$value;
+		}
 	}
-
 	$name = stripslashes($_POST['name']);
 	$description = stripslashes($_POST['description']);
 	$address_street = $_POST['address_street'];
 	$address_city = $_POST['address_city'];
 	$address_state = $_POST['address_state'];
 	$address_zip = $_POST['address_zip'];
+	$address_country = $_POST['address_country'];
 	$categories = stripslashes($_POST['categories']);
 	$phone = $_POST['phone'];
 	$fax = $_POST['fax'];
@@ -89,7 +91,7 @@ else if($action == 'delete'){
 	$approved = $_POST['approved'];
 		if($approved=='true'){$approved='true';}
 		else{$approved='false';}
-	
+
 	$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 	preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
 	$logo_path = 'logos/'.$login.'_logo.'.$fileExt[1];
@@ -97,14 +99,13 @@ else if($action == 'delete'){
 		$modifier = rand(0, 1000);
 		$logo_path = 'logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
 	}
-	
+
 	if(move_uploaded_file($_FILES['logo']['tmp_name'], $logo_path)) {
-    	//echo 'file uploaded';
+    	// echo 'file uploaded';
    	}
-   
-	
-	//$wpdb->show_errors();
-	
+
+	// $wpdb->show_errors();
+
 	$row_added = $wpdb->insert(
 		$main_table_name,
 		array(
@@ -115,6 +116,7 @@ else if($action == 'delete'){
 			'address_city' => $address_city,
 			'address_state' => $address_state,
 			'address_zip' => $address_zip,
+			'address_country' => $address_country,
 			'categories' => $categories,
 			'phone' => $phone,
 			'fax' => $fax,
@@ -135,19 +137,20 @@ else if($action == 'delete'){
 	);
 	
 	header('Location: '.get_bloginfo('url').'/wp-admin/admin.php?page=business_directory');
-	//echo $wpdb->insert_id;
+	// echo $wpdb->insert_id;
 }
 else if($action == 'edit'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$options = get_option('lddbd_options');
 	$section_array = unserialize($options['information_sections']);
 	$save_additional_sections = array();
-	foreach($section_array as $section){
-		$name = $section['name'];
-		$value = stripslashes($_POST[$name]);
-		$save_additional_sections[$name]=$value;
+	if( is_array( $section_array ) ) {
+		foreach($section_array as $section){
+			$name = $section['name'];
+			$value = stripslashes($_POST[$name]);
+			$save_additional_sections[$name]=$value;
+		}
 	}
-
 	$update_array = array();
 	if(!empty($_POST['name'])){$update_array['name'] = stripslashes($_POST['name']);}
 	if(!empty($_POST['description'])){$update_array['description'] = stripslashes($_POST['description']);}
@@ -155,6 +158,7 @@ else if($action == 'edit'){
 	if(!empty($_POST['address_city'])){$update_array['address_city'] = $_POST['address_city'];}
 	if(!empty($_POST['address_state'])){$update_array['address_state'] = $_POST['address_state'];}
 	if(!empty($_POST['address_zip'])){$update_array['address_zip'] = $_POST['address_zip'];}
+	if(!empty($_POST['address_country'])){$update_array['address_country'] = $_POST['address_country'];}
 	if(!empty($_POST['phone'])){$update_array['phone'] = $_POST['phone'];}
 	if(!empty($_POST['fax'])){$update_array['fax'] = $_POST['fax'];}
 	if(!empty($_POST['email'])){$update_array['email'] = $_POST['email'];}
@@ -177,9 +181,7 @@ else if($action == 'edit'){
 	}
 	if(!empty($save_additional_sections)){$update_array['other_info'] = serialize($save_additional_sections);}
 	if(!empty($_POST['categories'])){$update_array['categories'] = stripslashes($_POST['categories']);}
-	
-	
-	
+
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
@@ -188,12 +190,12 @@ else if($action == 'edit'){
 			$modifier = rand(0, 1000);
 			$logo_path = 'logos/'.$_POST['login'].'_logo'.$modifier.'.'.$fileExt[1];
 		}
-		
+
 		if(move_uploaded_file($_FILES['logo']['tmp_name'], $logo_path)) {
 	    	$update_array['logo'] = $logo_path;
 	   	}
 	}
-	
+
 	for($i=1; $i<6; $i++){
 		if(!empty($_FILES['file'.$i]['name'])){
 			$allowedExtensions = array('jpg', 'jpeg', 'pdf', 'xls', 'xslx', 'doc', 'docx');
@@ -203,11 +205,11 @@ else if($action == 'edit'){
 				$modifier = rand(0, 1000);
 				$file_path = 'files/'.$_POST['login'].'_'.$i.'_'.$modifier.'.'.$fileExt[1];
 			}
-			
+
 			if(move_uploaded_file($_FILES['file'.$i]['tmp_name'], $file_path)) {
-		    	//echo 'file uploaded';
+		    	// echo 'file uploaded';
 		   	}
-		   	
+
 		   	$row_added = $wpdb->insert(
 				$doc_table_name,
 				array(
@@ -219,8 +221,8 @@ else if($action == 'edit'){
 		}
 		
 	}
-	
-	//$wpdb->show_errors();
+
+	// $wpdb->show_errors();
 	$row_updated = $wpdb->update(
 		$main_table_name,
 		$update_array,
@@ -228,12 +230,12 @@ else if($action == 'edit'){
 		array('%s'),
 		array('%d')
 	);
-	
+
 	if($_POST['from']=='frontend'){
 		echo "Your information has been updated.";
 	} else {
 		header('Location: '.get_bloginfo('url').'/wp-admin/admin.php?page=business_directory');
-	}	
+	}
 }
 else if($action == 'quick_edit'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
@@ -260,8 +262,7 @@ else if($action == 'quick_edit'){
 		if($_POST['approved']=='true'){$update_array['approved']='true';}
 		else{$update_array['approved']='false';}
 	}
-	
-	
+
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
@@ -270,17 +271,17 @@ else if($action == 'quick_edit'){
 			$modifier = rand(0, 1000);
 			$logo_path = 'logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
 		}
-		
+
 		$update_array['logo'] = $logo_path;
 		if(move_uploaded_file($_FILES['logo']['tmp_name'], $logo_path)) {
-	    	//echo 'file uploaded';
+	    	// echo 'file uploaded';
 	   	}
 	} else if(!empty($_POST['current_logo'])){
 		$update_array['logo'] = $_POST['current_logo'];
 	}
-	
-	//print_r($update_array);	
-	//$wpdb->show_errors();
+
+	// print_r($update_array);	
+	// $wpdb->show_errors();
 	$row_updated = $wpdb->update(
 		$main_table_name,
 		$update_array,
@@ -289,7 +290,6 @@ else if($action == 'quick_edit'){
 		array('%d')
 	);
 }
-
 else if($action == 'search'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$search = $_POST['query'];
@@ -325,43 +325,42 @@ else if($action == 'search'){
 			$contact = '';
 			$logo_html = '';
 			$contact_right = '';
-			
-			
+
 			if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
 			if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
-			
+
 			if(!empty($business->url)){ 
-				if(strstr($business->url, 'http://')){$business_url = $business->url;}
-				else{$business_url = 'http://'.$business->url;}
+				if(strstr($business->url, 'http:// ')){$business_url = $business->url;}
+				else{$business_url = 'http:// '.$business->url;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url( 'ldd-business-directory/images/website.png' )."' /></a>"; 
 			}
 			if(!empty($business->facebook)){ 
-				if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
-				else{$business_facebook = 'http://'.$business->facebook;}
+				if(strstr($business->facebook, 'http:// ')){$business_facebook = $business->facebook;}
+				else{$business_facebook = 'http:// '.$business->facebook;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
-				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
-				else{$business_twitter = 'http://'.$business->twitter;}
+				if(strstr($business->twitter, 'http:// ')){$business_twitter = $business->twitter;}
+				else{$business_twitter = 'http:// '.$business->twitter;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
-				if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
-				else{$business_linkedin = 'http://'.$business->linkedin;}
+				if(strstr($business->linkedin, 'http:// ')){$business_linkedin = $business->linkedin;}
+				else{$business_linkedin = 'http:// '.$business->linkedin;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url( 'ldd-business-directory/images/linkedin.png' )."' /></a>"; 
 			}
 			if(!empty($business->email)){
 			$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
 			$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
-			
+
 			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( 'ldd-business-directory/' )."{$business->logo}' /></div>"; }
-			
-			if(strstr($business->url, 'http://')){$business_url = $business->url;}
-			else{$business_url = 'http://'.$business->url;}
-		
+
+			if(strstr($business->url, 'http:// ')){$business_url = $business->url;}
+			else{$business_url = 'http:// '.$business->url;}
+
 		$biz_name = stripslashes($business->name);
-		
+
 			echo "<div class='lddbd_business_listing'>
 						{$logo_html}
 						<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$biz_name}</a>
@@ -373,9 +372,8 @@ else if($action == 'search'){
 						</div>
 					</div>";
 		}
-	}	
+	}
 }
-
 else if($action == 'categories_list'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$business_list = $wpdb->get_results(
@@ -390,9 +388,9 @@ else if($action == 'categories_list'){
 		ORDER BY name ASC
 		"
 	);
-	
+
 	$category_number = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $cat_table_name" ) );
-	
+
 	if($category_list){
 		$i = 0;
 		foreach($category_list as $category){
@@ -403,7 +401,7 @@ else if($action == 'categories_list'){
 					$cat_count++;
 				}
 			}
-			
+
 			$cat_name = stripslashes($category->name);
 			
 			$row_updated = $wpdb->update(
@@ -424,7 +422,6 @@ else if($action == 'categories_list'){
  			{$categories}
  		</div>";
 }
-
 else if($action == 'category_filter'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$category_results = $wpdb->get_results(
@@ -443,49 +440,46 @@ else if($action == 'category_filter'){
 		WHERE id = '{$_POST['cat_id']}'
 		"
 	);
-	
+
 	$cat_name = stripslashes($category->name);
-	
+
 	echo "<h3><a href='javascript:void(0);' id='lddbd_back_to_categories' onclick='javascript: backToCategories();'>&larr; Categories</a>{$cat_name}</h3>";
 	if($category_results){
 		foreach($category_results as $business){
 			$contact = '';
 			$logo_html = '';
 			$contact_right = '';
-			
-			
+
 			if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
 			if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
 			
 			if(!empty($business->url)){ 
-				if(strstr($business->url, 'http://')){$business_url = $business->url;}
-				else{$business_url = 'http://'.$business->url;}
+				if(strstr($business->url, 'http:// ')){$business_url = $business->url;}
+				else{$business_url = 'http:// '.$business->url;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url( 'ldd-business-directory/images/website.png' )."' /></a>"; 
 			}
 			if(!empty($business->facebook)){ 
-				if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
-				else{$business_facebook = 'http://'.$business->facebook;}
+				if(strstr($business->facebook, 'http:// ')){$business_facebook = $business->facebook;}
+				else{$business_facebook = 'http:// '.$business->facebook;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
-				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
-				else{$business_twitter = 'http://'.$business->twitter;}
+				if(strstr($business->twitter, 'http:// ')){$business_twitter = $business->twitter;}
+				else{$business_twitter = 'http:// '.$business->twitter;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
-				if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
-				else{$business_linkedin = 'http://'.$business->linkedin;}
+				if(strstr($business->linkedin, 'http:// ')){$business_linkedin = $business->linkedin;}
+				else{$business_linkedin = 'http:// '.$business->linkedin;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url( 'ldd-business-directory/images/linkedin.png' )."' /></a>"; 
 			}
 			if(!empty($business->email)){
 			$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
 			$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
-			
+
 			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( 'ldd-business-directory/' )."{$business->logo}'/></div>"; }
-			
-			
-		
+
 			echo "<div class='lddbd_business_listing'>
 						{$logo_html}
 						<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$business->name}</a>
@@ -502,7 +496,7 @@ else if($action == 'category_filter'){
 else if($action == 'edit_category'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$id = $_POST['id'];
-	//$wpdb->show_errors();
+	// $wpdb->show_errors();
 	$wpdb->update(
 		$cat_table_name,
 		array(
@@ -560,24 +554,24 @@ else if($action == 'delete_category'){
 else if($action == 'login'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$login = $_POST['login'];
-	//$wpdb->show_errors();
+	// $wpdb->show_errors();
 	$business = $wpdb->get_row("SELECT * FROM $main_table_name WHERE login = '{$login}'");
 
 	if($business){
 		if($business->password == $_POST['password']){
-		
+
 		$files = $wpdb->get_results("SELECT * FROM $doc_table_name WHERE bus_id = '{$business->id}'");
 		$files_list = '';
-		
+
 		foreach($files as $file){
 			$files_list .="<li><em>{$file->doc_description}</em><input type='button' value='delete' class='file_delete' id='{$file->doc_id}_delete'/></li>";
 		}
-		
+
 		$promo = '';
 		if($business->promo == 'true'){
 			$promo = 'checked';
 		}
-		
+
 		$options = get_option('lddbd_options');
 		$user_categorization_query = $options['user_categorization'];
 		if($user_categorization_query=='Yes'){
@@ -587,13 +581,13 @@ else if($action == 'login'){
 				FROM $cat_table_name
 				"
 			);
-			
+
 			$categories_array = explode(',', str_replace('x', '', substr($business->categories, 1)));
 			if(empty($categories_array)){$categories_array=array();}
-	
+
 			$business_categories = "<div class='lddbd_input_holder'>";
 			$business_categories .= "<strong>Categories</strong>";
-			
+
 			foreach($categories_list as $category){
 				$cat_name = stripslashes($category->name);
 				$checked = '';
@@ -603,11 +597,11 @@ else if($action == 'login'){
 				$business_categories .= "<label for='category_{$category->id}'>{$cat_name}</label>";
 				$business_categories .= "</div>";
 			}
-			
+
 			$business_categories .= "<input id='lddbd_categories' type='hidden' name='categories' value='{$business->categories}'/>";
 			$business_categories .= "</div>";
 		}
-		
+
 		$section_array = unserialize($options['information_sections']);
 		if(!empty($section_array)){
 			$other_sections = '';
@@ -626,151 +620,187 @@ else if($action == 'login'){
 				} else {
 					$input = "<input type='{$type}' name='{$attributes['name']}' value='{$business_section_array[$attributes['name']]}'/>";
 				}
-				
-				
+
 				$other_sections.= "<div class='lddbd_input_holder'>
 						<label for='{$attributes['name']}'>{$attributes['title']}</label>
 						{$input}
 					</div>
 				";
-				
+
 			}
 		}
+
+$lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) .  'scripts/countries.txt';
+
+	// Text file containing list of supported countries
+	$countryList = fopen( $lddbd_countryTxtFile, "r" );
+
+$optionLine = "";
+
+while( !feof ( $countryList ) ) {
+	$textLine = fgets( $countryList );
+	$textLine = trim( $textLine );
 	
-		echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-directory/lddbd_ajax.php' )."' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
-			<div class='lddbd_input_holder'>
-				<label for='name'>Business Name</label>
-				<input class='required' type='text' id='lddbd_name' name='name' value='{$business->name}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='description'>Business Description</label>
-				<textarea id='lddbd_description' name='description'>{$business->description}</textarea>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='address_street'>Street</label>
-				<input type='text' id='lddbd_address_street' name='address_street' value='{$business->address_street}'>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='address_city'>City</label>
-				<input type='text' id='lddbd_address_city' name='address_city' value='{$business->address_city}'>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='address_state'>State/Country</label>
-				<input type='text' id='lddbd_address_state' name='address_state' value='{$business->address_state}' />
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='address'>Zip/Postal Code</label>
-				<input type='text' id='lddbd_address_zip' name='address_zip' value='{$business->address_zip}'>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='phone'>Contact Phone</label>
-				<input class='' type='text' id='lddbd_phone' name='phone' value='{$business->phone}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='fax'>Contact Fax</label>
-				<input type='text' id='lddbd_fax' name='fax' value='{$business->fax}'>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='email'>Contact Email</label>
-				<input class='required' type='text' id='lddbd_email' name='email' value='{$business->email}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='contact'>Contact Name</label>
-				<input class='' type='text' id='lddbd_contact' name='contact' value='{$business->contact}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='url'>Website</label>
-				<input class='' type='text' id='lddbd_url' name='url' value='{$business->url}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='facebook'>Facebook Page</label>
-				<input type='text' id='lddbd_facebook' name='facebook' value='{$business->facebook}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='twitter'>Twitter Handle</label>
-				<input type='text' id='lddbd_twitter' name='twitter' value='{$business->twitter}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='linkedin'>Linked In Profile</label>
-				<input type='text' id='lddbd_linkedin' name='linkedin' value='{$business->linkedin}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='promo'>Special Offer</label>
-				<input type='checkbox' id='lddbd_promo' name='promo' value='true' {$promo}/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='promo_description'>Special Offer Description</label>
-				<input type='text' id='lddbd_promo_description' name='promo_description' value='{$business->promoDescription}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='current_logo'>Current Logo</label>
-				<input type='hidden' id='lddbd_current_logo' name='current_logo' value='{$business->logo}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<img src='".plugins_url( 'ldd-business-directory/' )."{$business->logo}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<label for='logo'>Upload New Logo</label>
-				<input class='' type='file' id='lddbd_logo' name='logo'/>
-			</div>
-			
-			{$other_sections}
-			
-			{$business_categories}
-						
-			<div class='lddbd_input_holder'>
-				<label for='password'>Password</label>
-				<input class='required' type='text' id='lddbd_password' name='password' value='{$business->password}'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<strong>Files</strong>
-				<ul>
-				{$files_list}
-				</ul>
-			</div>
-			
-			<div class='lddbd_input_holder file_input_holder'>
-			<strong>File</strong>
-			<strong>Description</strong>
-			</div>
-			
-			<div class='lddbd_input_holder file_input_holder'>
-				<input type='file' id='lddbd_file1' name='file1'/>
-				<input type='text' id='lddbd_file1_description' name='file1_description'/>
-			</div>
-			
-			<div class='lddbd_input_holder'>
-				<input type='button' id='lddbd_add_file_upload' value='Add File Upload' />
-			</div>
-			
-			<input type='hidden' id='lddbd_id' name='id' value='{$business->id}'/>
-			<input type='hidden' id='lddbd_action' name='action' value='edit'/>
-			<input type='hidden' id='lddbd_from' name='from' value='frontend'/>
-			
-			<p class='submit'>
-				<input type='button' id='lddbd_login_cancel' value='Cancel' />
-			    <input type='submit' class='button-primary' value='Submit Changes' />
-		    </p>
-			</form>
+	$optionLine .= "<option>$textLine</option>\n";
+	
+	if( $business->address_country == $textLine ) {
+		$optionLine .= "<option selected='selected'>$textLine</option>\n";
+	}
+}
+fclose( $countryList );
+
+// Call the script file with the jQuery controls for displaying form elements for specific countries
+ob_start();
+include( 'scripts/countryEditor.php' );
+$countryEditor = ob_get_clean();
+
+echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-directory/lddbd_ajax.php' )."' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
+	<div class='lddbd_input_holder'>
+		<label for='name'>Business Name</label>
+		<input class='required' type='text' id='lddbd_name' name='name' value='{$business->name}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='description'>Business Description</label>
+		<textarea id='lddbd_description' name='description'>{$business->description}</textarea>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='address_street'>Street</label>
+		<input type='text' id='lddbd_address_street' name='address_street' value='{$business->address_street}'>
+	</div>
+	
+	<div class='lddbd_input_holder'>
+	<label for='address_country'>Country</label>
+
+	<select id='lddbd_address_country' name='address_country'>
+		{$optionLine}
+	</select>
+	
+	</div>
+	<div id='selectedCountryForm'></div>
+	
+	<!-- /*
+	<div class='lddbd_input_holder'>
+		<label for='address_city'>City</label>
+		<input type='text' id='lddbd_address_city' name='address_city' value='{$business->address_city}'>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='address_state'>State/Country</label>
+		<input type='text' id='lddbd_address_state' name='address_state' value='{$business->address_state}' />
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='address'>Zip/Postal Code</label>
+		<input type='text' id='lddbd_address_zip' name='address_zip' value='{$business->address_zip}'>
+	</div>
+	*/ -->
+
+	<div class='lddbd_input_holder'>
+		<label for='phone'>Contact Phone</label>
+		<input class='' type='text' id='lddbd_phone' name='phone' value='{$business->phone}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='fax'>Contact Fax</label>
+		<input type='text' id='lddbd_fax' name='fax' value='{$business->fax}'>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='email'>Contact Email</label>
+		<input class='required' type='text' id='lddbd_email' name='email' value='{$business->email}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='contact'>Contact Name</label>
+		<input class='' type='text' id='lddbd_contact' name='contact' value='{$business->contact}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='url'>Website</label>
+		<input class='' type='text' id='lddbd_url' name='url' value='{$business->url}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='facebook'>Facebook Page</label>
+		<input type='text' id='lddbd_facebook' name='facebook' value='{$business->facebook}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='twitter'>Twitter Handle</label>
+		<input type='text' id='lddbd_twitter' name='twitter' value='{$business->twitter}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='linkedin'>Linked In Profile</label>
+		<input type='text' id='lddbd_linkedin' name='linkedin' value='{$business->linkedin}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='promo'>Special Offer</label>
+		<input type='checkbox' id='lddbd_promo' name='promo' value='true' {$promo}/>
+	</div>
+	
+	<div class='lddbd_input_holder'>
+		<label for='promo_description'>Special Offer Description</label>
+		<input type='text' id='lddbd_promo_description' name='promo_description' value='{$business->promoDescription}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='current_logo'>Current Logo</label>
+		<input type='hidden' id='lddbd_current_logo' name='current_logo' value='{$business->logo}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<img src='".plugins_url( 'ldd-business-directory/' )."{$business->logo}'/>
+	</div>
+
+	<div class='lddbd_input_holder'>
+		<label for='logo'>Upload New Logo</label>
+		<input class='' type='file' id='lddbd_logo' name='logo'/>
+	</div>
+
+	{$other_sections}
+	
+	{$business_categories}
+
+	<div class='lddbd_input_holder'>
+		<label for='password'>Password</label>
+		<input class='required' type='text' id='lddbd_password' name='password' value='{$business->password}'/>
+	</div>
+	
+	<div class='lddbd_input_holder'>
+		<strong>Files</strong>
+		<ul>
+		{$files_list}
+		</ul>
+	</div>
+	
+	<div class='lddbd_input_holder file_input_holder'>
+	<strong>File</strong>
+	<strong>Description</strong>
+	</div>
+	
+	<div class='lddbd_input_holder file_input_holder'>
+		<input type='file' id='lddbd_file1' name='file1'/>
+		<input type='text' id='lddbd_file1_description' name='file1_description'/>
+	</div>
+	
+	<div class='lddbd_input_holder'>
+		<input type='button' id='lddbd_add_file_upload' value='Add File Upload' />
+	</div>
+	
+	<input type='hidden' id='lddbd_id' name='id' value='{$business->id}'/>
+	<input type='hidden' id='lddbd_action' name='action' value='edit'/>
+	<input type='hidden' id='lddbd_from' name='from' value='frontend'/>
+	
+	<p class='submit'>
+		<input type='button' id='lddbd_login_cancel' value='Cancel' />
+	    <input type='submit' class='button-primary' value='Submit Changes' />
+   	 </p>
+	</form>
+	{$countryEditor}
 			<iframe id='lddbd_edit_submission_target' name='lddbd_edit_submission_target' src='".plugins_url( 'ldd-business-directory/lddbd_ajax.php' )."' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
 			
 			<script type='text/javascript'>
@@ -784,9 +814,9 @@ else if($action == 'login'){
 	 				});
 	 				jQuery('#lddbd_categories').val(category_string);
 	 			});
- 			
+
 				jQuery('#lddbd_edit_business_form').submit(function(){
-					//jQuery('#lddbd_edit_business_form').contents().fadeTo(200, 0.1);
+					// jQuery('#lddbd_edit_business_form').contents().fadeTo(200, 0.1);
 					jQuery('.button-primary').attr('disabled', 'disabled');
 					jQuery('#lddbd_edit_submission_target').load(function(){
 						jQuery('#lddbd_edit_business_form').html('Your information has been updated.');
@@ -795,7 +825,7 @@ else if($action == 'login'){
 	 					window.location.href = page+'?business={$business->id}';
 	 				});
  				});
- 				
+
  				var file_input_count = 1;
  				jQuery('#lddbd_add_file_upload').click(function(){
  					if(file_input_count<5){
@@ -803,7 +833,7 @@ else if($action == 'login'){
 	 					jQuery('.file_input_holder').last().after('<div class=\'lddbd_input_holder file_input_holder\'><input type=\'file\' id=\'lddbd_file'+file_input_count+'\' name=\'file'+file_input_count+'\'/><input type=\'text\' id=\'lddbd_file'+file_input_count+'_description\' name=\'file'+file_input_count+'_description\'/></div>');
 	 				}	
  				});
- 				
+
  				jQuery('input.file_delete').click(function(){
  					var this_placeholder = jQuery(this);
  					var doc_id = jQuery(this).attr('id');
@@ -817,17 +847,16 @@ else if($action == 'login'){
 						}
 					});
  				});
- 				
+
  				jQuery('#lddbd_login_cancel').click(function(){
  					window.location.reload();
  				});
  			});
-			</script>
-			";
+			</script>";
 		}
 		else {
 			echo "Sorry, the password you entered was incorrect, please try again.";
-		}	
+		}
 	}else{
 		echo "Sorry, the login you entered was not on file, please try again.";
 	}
@@ -857,7 +886,6 @@ else if($action == 'email'){
 	
 	$mail = mail($email, $subject, $message, $headers);
 }
-
 else if($action == 'recover_password'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$login = $_POST['login'];
@@ -893,5 +921,4 @@ else if($action == 'recover_password'){
 		echo 'success';
 	}
 }
-
 ?>

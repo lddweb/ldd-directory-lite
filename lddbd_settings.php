@@ -33,7 +33,7 @@ function register_mysettings() {
 	add_settings_section('lddbd_main', 'Business Directory Settings', 'lddbd_section_text', 'business_directory_settings');
 	add_settings_field('lddbd_setting_one', 'Display "Submit Listing" Button', 'lddbd_setting_submit_button', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_two', 'Display "Login" Button', 'lddbd_setting_login_field', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_three', 'Display "Only Include Businesses with Special Offers" Search Option', 'lddbd_setting_promo_search', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_three', 'Display "Google Maps" Map', 'lddbd_setting_google_maps', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_four', 'Directory Title', 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_five', 'Welcome Message', 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_six', 'Additional Information Sections', 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main');
@@ -45,7 +45,7 @@ function lddbd_section_text() {
 	echo '<p>Edit the settings for your directory.</p>';
 }
 
-// Controls the display of the "Submit Listing" radio buttons on the settings page and performs a check to see which one is selected.
+// Controls the display of the "Submit Listing" buttons on the front end.
 function lddbd_setting_submit_button() {
 	$options = get_option('lddbd_options');
 	$option_value = $options['display_button'];
@@ -59,7 +59,7 @@ function lddbd_setting_submit_button() {
 	echo "<input name='lddbd_options[display_button]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[display_button]' type='radio' value='No' {$noChecked} />No";
 }
 
-// Controls the display of the "Login" radio buttons on the settings page and performs a check to see which one is selected.
+// Controls the display of the "Login" buttons on the front end.
 function lddbd_setting_login_field() {
 	$options = get_option('lddbd_options');
 	$option_value = $options['display_login'];
@@ -73,10 +73,10 @@ function lddbd_setting_login_field() {
 	echo "<input name='lddbd_options[display_login]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[display_login]' type='radio' value='No' {$noChecked} />No";
 }
 
-// Controls the display of the "Only Include Businesses with Special Offers" radio buttons and performs a check to see which one is selected.
-function lddbd_setting_promo_search() {
+// Controls the display of the "Google Maps" map on the front end.
+function lddbd_setting_google_maps() {
 	$options = get_option('lddbd_options');
-	$option_value = $options['promo_search'];
+	$option_value = $options['google_map'];
 	if($option_value=='Yes'){
 		$yesChecked = 'checked';
 		$noChecked = '';
@@ -84,10 +84,10 @@ function lddbd_setting_promo_search() {
 		$yesChecked = '';
 		$noChecked = 'checked';
 	}
-	echo "<input name='lddbd_options[promo_search]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[promo_search]' type='radio' value='No' {$noChecked} />No";
+	echo "<input name='lddbd_options[google_map]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[google_map]' type='radio' value='No' {$noChecked} />No";
 }
 
-// Controls the display of the Directory Title input text box on the settings page and checks what has been input.
+// Controls the display of the Directory Title on the front end. If left empty, the front end will display "Business Directory".
 function lddbd_setting_directory_title() {
 	$options = get_option('lddbd_options');
 	$option_value = $options['directory_title'];
@@ -95,7 +95,7 @@ function lddbd_setting_directory_title() {
 	echo "<input name='lddbd_options[directory_title]' value='{$options['directory_title']}'/>";
 }
 
-// Controls the display of the Welcome Message textarea input on the settings page and checks what has been input.
+// Controls the display of the Welcome Message on the front end.
 function lddbd_setting_welcome_message() {
 	$options = get_option('lddbd_options');
 	$option_value = $options['welcome_message'];
@@ -103,8 +103,7 @@ function lddbd_setting_welcome_message() {
 	echo "<textarea name='lddbd_options[welcome_message]' rows='5' cols='50'>{$options['welcome_message']}</textarea>";
 }
 
-// Controls the display of the Additional Information Sections input text box, selection, and add/remove buttons and checks what has been
-// input/selected.
+// Controls the display of the Additional Information Sections.
 function lddbd_setting_information_sections(){
 	$options = get_option('lddbd_options');
 	$section_array = unserialize($options['information_sections']);
@@ -118,45 +117,42 @@ function lddbd_setting_information_sections(){
 			if($attributes['type']=='text'){$text_selected = 'selected';}
 			if($attributes['type']=='textarea'){$textarea_selected = 'selected';}
 			if($attributes['type']=='bool'){$bool_selected = 'selected';}
-			if($attributes['type']=='file'){$file_selected = 'selected';}
 			
 			echo "<div id='lddbd_information_section_{$i}' class='lddbd_information_section'>
 				<h3>Section $i</h3>
 				<label for='lddbd_options[section{$i}_title]'>Title</label>
-				<input type='text' name='lddbd_options[section{$i}_title]' value='{$attributes['title']}'/>
+				<input type='text' name='lddbd_options[section{$i}_title]' value='{$attributes['title']}'/><br />
 				<label for='lddbd_options[section{$i}_type]'>Type</label>
 				<select name='lddbd_options[section{$i}_type]'>
 					<option value='text' {$text_selected}>Single Line Text</option>
 					<option value='textarea' {$textarea_selected}>Text Area</option>
 					<option value='bool' {$bool_selected}>Yes or No</option>
-					<option value='file' {$file_selected}>File Upload</option>
 				</select>
 				<input type='button' value='Remove Section' class='lddbd_remove_info_section' onclick='javascript:removeInfoSection(this);'/>
-				</div>
-				";
+				</div>";
 		}
 	}	
 	
 	echo "<input type='button' value='Add Section' id='lddbd_add_info_section'/>";
 
 
-// Includes some jQuery to generate a new set of inputs if the plugin user adds a new Information Section.	
+// jQuery that creates the inputs for each Information Section the user has added and the ability to remove them.	
 	echo "<script type='text/javascript'>
 			jQuery(document).ready(function(){
 				
 				jQuery('#lddbd_add_info_section').click(function(){
 					var section_count = jQuery('.lddbd_information_section').length;
-					jQuery(this).before('<div id=\'lddbd_information_section_'+(section_count+1)+'\' class=\'lddbd_information_section\'><h3>Section '+(section_count+1)+'</h3><label for=\'lddbd_options[section'+(section_count+1)+'_title]\'>Title</label><input type=\'text\' name=\'lddbd_options[section'+(section_count+1)+'_title]\'/><label for=\'lddbd_options[section'+(section_count+1)+'_type]\'>Type</label><select name=\'lddbd_options[section'+(section_count+1)+'_type]\'><option value=\'text\'>Single Line Text</option><option value=\'textarea\'>Text Area</option><option value=\'bool\'>Yes or No</option><option value=\'file\'>File Upload</option></select><input type=\'button\' value=\'Remove Section\' class=\'lddbd_remove_info_section\' onclick=\'javascript:removeInfoSection(this);\'/></div>');
+					jQuery(this).before('<div id=\'lddbd_information_section_'+(section_count+1)+'\' class=\'lddbd_information_section\'><h3>Section '+(section_count+1)+'</h3><label for=\'lddbd_options[section'+(section_count+1)+'_title]\'>Title</label><input type=\'text\' name=\'lddbd_options[section'+(section_count+1)+'_title]\'/><br /><label for=\'lddbd_options[section'+(section_count+1)+'_type]\'>Type</label><select name=\'lddbd_options[section'+(section_count+1)+'_type]\'><option value=\'text\'>Single Line Text</option><option value=\'textarea\'>Text Area</option><option value=\'bool\'>Yes or No</option></select><input type=\'button\' value=\'Remove Section\' class=\'lddbd_remove_info_section\' onclick=\'javascript:removeInfoSection(this);\'/></div>');
 				});
 				
 				
 			});
 		</script>";
-	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts.js'></script>";	
+	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/scripts.js'></script>";	
 	
 }
 
-// Controls the display of the Categorize Entries radio buttons and performs a check to see which one is selected.
+// Controls the display of the Categorize Entries radio buttons and allows entries to be categorized.
 function lddbd_setting_categorization(){
 	$options = get_option('lddbd_options');
 	$option_value = $options['categorization'];
@@ -169,10 +165,10 @@ function lddbd_setting_categorization(){
 	}
 	echo "<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='No' {$noChecked} />No";
 	
-	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts.js'></script>";
+	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/scripts.js'></script>";
 }
 
-// Controls the display of the Categorize Entries radio buttons and performs a check to see which one is selected.
+// Controls the display of the Categorize Entries radio buttons and allows for user categorization.
 function lddbd_setting_user_categorization(){
 	$options = get_option('lddbd_options');
 	$option_value = $options['user_categorization'];
@@ -191,7 +187,7 @@ function lddbd_setting_user_categorization(){
 function lddbd_options_validate($input) {
 	$newinput['display_button'] = trim($input['display_button']);
 	$newinput['display_login'] = trim($input['display_login']);
-	$newinput['promo_search'] = trim($input['promo_search']);
+	$newinput['google_map'] = trim($input['google_map']);
 	$newinput['directory_title'] = trim($input['directory_title']);
 	$newinput['welcome_message'] = trim($input['welcome_message']);
 	
@@ -212,7 +208,7 @@ function lddbd_options_validate($input) {
 	$newinput['categorization'] = trim($input['categorization']);
 	$newinput['user_categorization'] = trim($input['user_categorization']);
 	
-	/*
+/*
 if(!preg_match('/^[a-z0-9]{32}$/i', $newinput['text_string'])) {
 		$newinput['text_string'] = '';
 	}

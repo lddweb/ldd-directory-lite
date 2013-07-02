@@ -340,10 +340,10 @@ div.lddbd_input_holder{
 				}
 				
 		#lddbd_add_business_holder{
-			height: 860px;
+			height: 930px;
 			width: 100%;
 			padding: 5px 10px;
-			top: -870px;
+			top: -940px;
 			left: 0px;
 			display: block;
 			overflow: hidden;
@@ -589,4 +589,16 @@ form#lddbd_edit_business_form div.lddbd_input_holder textarea{
 
 form#lddbd_edit_business_form div.lddbd_input_holder select{
 	margin-right: 253px;
+}
+
+.lddbd-business-info-type {
+	width: 35%;
+	margin: 0 auto;
+	display: inline-block;
+}
+
+.lddbd-business-info-data {
+	width: 50%;
+	margin: 0 0 0 20px;
+	display: inline-block;
 }
