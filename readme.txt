@@ -25,9 +25,11 @@ PLUGIN NOTICE: Make sure your permalinks are set to "Post name" for the plugin t
 
 == Frequently Asked Questions ==
 
+Q. Nothing is displayed when I click on a business entry! How can I fix this?
+A. Try changing your Permalink settings to 'Post name' and refresh your page.
 
-== Screenshots ==
-
+Q. Does the Login feature connect with my Wordpress login?
+A. No. It is strictly for anyone who has submitted a business listing and would like to make changes to their entry.
 
 == Changelog ==
 
