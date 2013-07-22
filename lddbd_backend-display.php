@@ -130,20 +130,6 @@ function lddbd_html_page(){
 		?>
 		</tbody>
 		</table>
-	<!-- #CODE BLOCK# Export/Import - Businesses #CODE BLOCK# -->
-		<p>
-   		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_csvExport-business.php' ); ?>" method="get">
-   			<input type="submit" class="button-primary" value="Export Listing(s)" />
-	   	</form>
-   		</p>
-   		
-   		<p>
-		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_csvImport-business.php' ); ?>" method="post" enctype="multipart/form-data">
-			<input type="file" name="uploaded" />
-			<input type="submit" class="button-primary" name="upfile" value="Import Listing(s) (CSV File)" />
-		</form>
-		</p>
-   	<!-- #CODE BLOCK# Export/Import - Businesses #CODE BLOCK# -->
 
 	</div>
 
@@ -239,15 +225,7 @@ function lddbd_settings_page(){
 			    <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 		    </p>
    		</form>
-   	
-   	<!-- #CODE BLOCK# HTML Report - Settings Page #CODE BLOCK# -->
-   		<hr style="color: #fff; width: 525px; margin: 0 auto 0 0;" />
-   		<p>
-   		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_htmlReport.php' ); ?>" method="get">
-   			<input type="submit" class="button-primary" value="Generate HTML Printable Directory List" style="float: left;" />
-	   	</form>
-   		</p>
-   	<!-- #CODE BLOCK# HTML Report - Settings Page #CODE BLOCK# -->
+
 	</div>
 <?php
 }
@@ -962,20 +940,7 @@ jQuery(document).ready(function() {
 	});
 });
 </script>			
-	<!-- #CODE BLOCK# Export/Import - Categories #CODE BLOCK# -->
-		<p>
-   		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_csvExport-category.php' ); ?>" method="get">
-   			<input type="submit" class="button-primary" value="Export Categories" />
-	   	</form>
-   		</p>
-   		
-   		<p>
-		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_csvImport-category.php' ); ?>" method="post" enctype="multipart/form-data">
-			<input type="file" name="uploaded" />
-			<input type="submit" class="button-primary" name="upfile" value="Import Categories (CSV File)" />
-		</form>
-		</p>
-   	<!-- #CODE BLOCK# Export/Import - Categories #CODE BLOCK# -->
+
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
