@@ -31,7 +31,16 @@ A. Try changing your Permalink settings to 'Post name' and refresh your page.
 Q. Does the Login feature connect with my Wordpress login?
 A. No. It is strictly for anyone who has submitted a business listing and would like to make changes to their entry.
 
+Q. I would like to use this plugin for community organizations but need to change the text in places where it says business. Is this possible?
+A. There is now a text field on the Settings page called "Directory Label" where you can change this text. 
+
 == Changelog ==
+
+= 1.3.6 =
+
+- Added the ability to change the directory label from "Business" to whatever the user chooses and have this change reflected across the entire plugin.
+- Fixed some bugs in the process of adding/removing categories.
+- Fixed bug involving jQuery that broke some functionality in the back end.
 
 = 1.3.4 =
 

@@ -144,6 +144,7 @@ else if($action == 'add'){
 	);
 	
 	header('Location: '.get_bloginfo('url').'/wp-admin/admin.php?page=business_directory');
+	
 	// echo $wpdb->insert_id;
 }
 else if($action == 'edit'){
@@ -524,11 +525,12 @@ else if($action == 'add_category'){
 			'count' => 0
 		)
 	);
+	
 	echo "<table><tr id='cat-{$wpdb->insert_id}'>".
 			"<td>".
 				"<strong>{$_POST['name']}</strong>".
 				"<div class='row-actions'>".
-					"<a class='delete_category' href='javascript:void(0);'>Delete</a>".
+					"<a class='delete_category' href='javascript:void(0)'>Delete</a>".
 					"<a class='edit_category open' href='javascript:void(0);'>Edit</a>".
 				"</div>".
 			"</td>".
@@ -542,11 +544,59 @@ else if($action == 'add_category'){
 					"<input type='hidden' name='action' value='edit_category'/>".
 					"<input type='hidden' name='id' value='{$wpdb->insert_id}'/>".
 		   			"<p class='submit'>".
-					    "<input type='submit' class='button-secondary' value='Save Category' />".
+					    "<input type='submit' class='button-secondary' value='Save Changes' />".
 				    "</p>".
 		   		"</form>".
 	   		"</td>".
 		"</tr></table>";
+
+echo "
+<script type='text/javascript'>
+jQuery('.delete_category').click(function(){
+	jQuery(this).closest('tr').fadeOut(400, function() {
+		jQuery(this).remove();
+	});
+	var cat_id = jQuery(this).closest('tr').attr('id');
+	cat_id = cat_id.substring(4);
+	jQuery.post('" . plugins_url( 'ldd-business-directory/lddbd_ajax.php' ) . "', {id:cat_id, action:'delete_category'});
+});
+
+jQuery('.edit_category').click(function(){
+	if(jQuery(this).hasClass('open')){
+		jQuery(this).html('Done Editing').removeClass('open').addClass('close');
+		jQuery(this).closest('tr').next('tr.lddbd_edit_category_row').fadeIn(400);
+	} else if(jQuery(this).hasClass('close')){
+		jQuery(this).html('Edit').removeClass('close').addClass('open');
+		jQuery(this).closest('tr').next('tr.lddbd_edit_category_row').fadeOut(400);
+	}	
+});
+
+jQuery('.lddbd_edit_category_form').submit(function(){
+	var this_row = jQuery(this).closest('tr.lddbd_edit_category_row');
+	var action = jQuery(this).attr('action');
+	var cat_id = jQuery(this).find('input[name=\"id\"]').val();
+	var new_name = jQuery(this).find('input[name=\"cat_name\"]').val();
+	
+	var quick_data = {
+		name: new_name,
+		id: cat_id,
+		action: 'edit_category'
+	};
+	
+	jQuery.ajax({
+		type: 'POST',
+		url: action, 
+		data: quick_data,
+		success: function(data){
+			this_row.fadeOut(400);
+			jQuery('#cat-'+cat_id+' td strong').html(new_name);
+			jQuery('#cat-'+cat_id+' td div.row-actions a.edit_category').html('Edit').removeClass('close').addClass('open');
+		}	
+	});
+	return false;
+});
+</script>
+";
 }
 else if($action == 'delete_category'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
@@ -661,14 +711,20 @@ ob_start();
 include( 'scripts/countryEditor.php' );
 $countryEditor = ob_get_clean();
 
+	if( !empty ( $options['directory_label'] ) ) {
+		$directory_label = $options['directory_label'];
+	} else {
+		$directory_label = 'Business';
+	}
+
 echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-directory/lddbd_ajax.php' )."' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
 	<div class='lddbd_input_holder'>
-		<label for='name'>Business Name</label>
+		<label for='name'>{$directory_label} Name</label>
 		<input class='required' type='text' id='lddbd_name' name='name' value='{$business->name}'/>
 	</div>
 
 	<div class='lddbd_input_holder'>
-		<label for='description'>Business Description</label>
+		<label for='description'>{$directory_label} Description</label>
 		<textarea id='lddbd_description' name='description'>{$business->description}</textarea>
 	</div>
 
@@ -686,23 +742,6 @@ echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-d
 	
 	</div>
 	<div id='selectedCountryForm'></div>
-	
-	<!-- /*
-	<div class='lddbd_input_holder'>
-		<label for='address_city'>City</label>
-		<input type='text' id='lddbd_address_city' name='address_city' value='{$business->address_city}'>
-	</div>
-
-	<div class='lddbd_input_holder'>
-		<label for='address_state'>State/Country</label>
-		<input type='text' id='lddbd_address_state' name='address_state' value='{$business->address_state}' />
-	</div>
-
-	<div class='lddbd_input_holder'>
-		<label for='address'>Zip/Postal Code</label>
-		<input type='text' id='lddbd_address_zip' name='address_zip' value='{$business->address_zip}'>
-	</div>
-	*/ -->
 
 	<div class='lddbd_input_holder'>
 		<label for='phone'>Contact Phone</label>

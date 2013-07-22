@@ -2,7 +2,7 @@
 	clear: both;
 }
 
-#lddbd_business_table th{
+#lddbd_business_table th, #lddbd_category_table th {
 	padding: 5px 10px;
 }
 

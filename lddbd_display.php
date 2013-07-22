@@ -2,6 +2,11 @@
 
 /* -------------- Display Page -------------- */
 
+// Enqueue jQuery if, for whatever reason, it's not running by default in Wordpress
+if ( !wp_script_is( 'jquery' ) ) {
+	wp_enqueue_script('jquery');
+}
+
 // Generates and controls all the behavior and business logic for the actual display page that a client will see.
 function display_business_directory( $atts ){
 
@@ -161,7 +166,7 @@ if($_GET['business']){
 		}
 	}
 	
-	if( !empty( $business_info )) {
+	if( !empty( $type ) && !empty( $data )) {
 		$other_info_area = "<hr /> $business_info <hr />";
 	}
 		
@@ -257,19 +262,25 @@ ob_start();
 include( 'scripts/countrySelector.php' );
 $countrySelector = ob_get_clean();
 
-$formActionCall = plugins_url( 'ldd-business-directory/lddbd_ajax.php' );
-		
+$formActionCall = plugins_url( 'ldd-business-directory/lddbd_ajax.php' );	
 $submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
+
+	if( !empty ( $options['directory_label'] ) ) {
+		$directory_label = $options['directory_label'];
+	} else {
+		$directory_label = 'Business';
+	}
+
 $add_business_holder = <<<ABH
 <div id='lddbd_add_business_holder'>
 	<form id='add_business_form' action='{$formActionCall}' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
 		<div class='lddbd_input_holder'>
-			<label for='name'>Business Name</label>
+			<label for='name'>{$directory_label} Name</label>
 			<input class='required' type='text' id='lddbd_name' name='name'/>
 		</div>
 		
 		<div class='lddbd_input_holder'>
-			<label for='description'>Business Description</label>
+			<label for='description'>{$directory_label} Description</label>
 			<textarea id='lddbd_description' name='description'></textarea>
 		</div>
 		
@@ -287,23 +298,6 @@ $add_business_holder = <<<ABH
 			
 		</div>
 		<div id='selectedCountryForm'></div>
-		
-		<!-- /*
-		<div class='lddbd_input_holder'>
-			<label for='address_city'>City</label>
-			<input type='text' id='lddbd_address_city' name='address_city'>
-		</div>
-		
-		<div class='lddbd_input_holder'>
-			<label for='address_state'>State/Country</label>
-			<input type='text' id='lddbd_address_state' name='address_state'>
-		</div>
-		
-		<div class='lddbd_input_holder'>
-			<label for='address_zip'>Zip/Postal Code</label>
-			<input type='text' id='lddbd_address_zip' name='address_zip'>
-		</div>
-		*/ -->
 		
 		<div class='lddbd_input_holder'>
 			<label for='phone'>Contact Phone</label>
@@ -377,6 +371,7 @@ $add_business_holder = <<<ABH
 		</div>
 		
 		<input type='hidden' id='action' name='action' value='add'/>
+		<input type='hidden' id='lddbd_from' name='from' value='frontend'/>
 		
 		<div class='submit'>
 			<input id='lddbd_cancel_listing' type='button' class='button-primary' value='Cancel' />
@@ -409,6 +404,13 @@ ABH;
 		$directory_name = 'Business Directory';
 	}
 	
+	// Show the new label for the directory. If there isn't one entered then default to "Business".
+	if( !empty ( $options['directory_label'] ) ) {
+		$directory_label = $options['directory_label'];
+	} else {
+		$directory_label = 'Business';
+	}
+	
 	return "
 		<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/style.css' )."' type='text/css' media='screen' />
 		<div id='lddbd_business_directory'>
@@ -416,7 +418,7 @@ ABH;
 	 			<p>{$options['welcome_message']}</p>
 	 			<h2>{$directory_name}</h2>
 	 			<form id='lddbd_business_search' action='' method='GET'>
-	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the Business Directory'/>
+	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the {$directory_label} Directory'/>
 	 				<input type='submit' value='search' />
 	 			</form>
 	 			<p>{$options['welcome_message']}</p>
@@ -573,18 +575,24 @@ include 'scripts/countrySelector.php';
 $countrySelector = ob_get_clean();
 
 $formActionCall = plugins_url( 'ldd-business-directory/lddbd_ajax.php' );
-
 $submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
+
+	if( !empty ( $options['directory_label'] ) ) {
+		$directory_label = $options['directory_label'];
+	} else {
+		$directory_label = 'Business';
+	}
+
 $add_business_holder = <<<ABH
 <div id='lddbd_add_business_holder'>
 	<form id='add_business_form' action='{$formActionCall}' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
 		<div class='lddbd_input_holder'>
-			<label for='name'>Business Name</label>
+			<label for='name'>{$directory_label} Name</label>
 			<input class='required' type='text' id='lddbd_name' name='name'/>
 		</div>
 		
 		<div class='lddbd_input_holder'>
-			<label for='description'>Business Description</label>
+			<label for='description'>{$directory_label} Description</label>
 			<textarea id='lddbd_description' name='description'></textarea>
 		</div>
 		
@@ -602,23 +610,6 @@ $add_business_holder = <<<ABH
 			
 		</div>
 		<div id='selectedCountryForm'></div>
-		
-		<!-- /*
-		<div class='lddbd_input_holder'>
-			<label for='address_city'>City</label>
-			<input type='text' id='lddbd_address_city' name='address_city'>
-		</div>
-		
-		<div class='lddbd_input_holder'>
-			<label for='address_state'>State/Country</label>
-			<input type='text' id='lddbd_address_state' name='address_state'>
-		</div>
-		
-		<div class='lddbd_input_holder'>
-			<label for='address_zip'>Zip/Postal Code</label>
-			<input type='text' id='lddbd_address_zip' name='address_zip'>
-		</div>
-		*/ -->
 		
 		<div class='lddbd_input_holder'>
 			<label for='phone'>Contact Phone</label>
@@ -694,9 +685,32 @@ $add_business_holder = <<<ABH
 		
 		<div class='submit'>
 			<input id='lddbd_cancel_listing' type='button' class='button-primary' value='Cancel' />
-		    	<input type='submit' class='button-primary' value='Add Business' />
+		    	<input type='submit' id='ldd_add_business' class='button-primary' value='Add Business' />
 	  	</div>
 	</form>
+<script type="text/javascript">
+// The following jQuery is used to reset reset the form after a business has been submitted
+// and to notify a client that their business was submitted and pending approval.
+
+var submitted = false;
+
+jQuery('#add_business_form').submit(function(e) {
+	e.preventDefault();
+	this.submit();
+});
+
+jQuery('#ldd_add_business').click(function() {
+	jQuery('#add_business_form').submit();
+	submitted = true;
+	
+	if(submitted && jQuery('#add_business_form').submit()) {
+		setTimeout(function() {
+			alert('Your business entry has been submitted. Please wait for administrative approval.');
+			jQuery('input[type="text"], input[type="file"], textarea').val('');
+		}, 400);
+	}
+});
+</script>
 	{$countrySelector}
 	<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='{$formActionCall}' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
 </div>
@@ -719,6 +733,13 @@ ABH;
 		$directory_name = 'Business Directory';
 	}
 	
+	// Show the new label for the directory. If there isn't one entered then default to "Business".
+	if( !empty ( $options['directory_label'] ) ) {
+		$directory_label = $options['directory_label'];
+	} else {
+		$directory_label = 'Business';
+	}
+	
 	 return "
 	 	<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/style.css' )."' type='text/css' media='screen' />
 	 	<div id='lddbd_business_directory'>
@@ -727,7 +748,7 @@ ABH;
 	 			<h2>{$directory_name}</h2>
 	 			
 	 			<form id='lddbd_business_search' action='' method='GET'>
-	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the Business Directory'/>
+	 				<input type='text' id='lddbd_search_directory' name='search_directory' value='Search the {$directory_label} Directory'/>
 	 				<input type='submit' value='search' />	 				
 	 			</form>
 	 			<div id='lddbd_navigation_holder'>
@@ -752,5 +773,4 @@ ABH;
 	}
 }
 add_shortcode( 'business_directory', 'display_business_directory' );
-
 ?>

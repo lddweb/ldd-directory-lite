@@ -21,7 +21,7 @@ function lddbd_admin_init() {
 }
 
 global $lddbd_db_version;
-$lddbd_db_version = "1.1";
+$lddbd_db_version = "1.2";
 
 global $wpdb;
 
@@ -34,6 +34,7 @@ $cat_table_name = $wpdb->prefix . "lddbusinessdirectory_cats";
 				
 // Installation function for LDD Business Directory plugin. Sets up the tables in the database for main, documents, and categories.
 function lddbd_install() {
+
 	global $wpdb;
 	global $lddbd_db_version;
 	global $main_table_name, $doc_table_name, $cat_table_name;
@@ -43,7 +44,6 @@ function lddbd_install() {
 	id BIGINT(20) NOT NULL AUTO_INCREMENT,
 	createDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	updateDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-	expiresDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	name TINYTEXT NOT NULL,
 	description TEXT NOT NULL,
 	categories TEXT NOT NULL,
@@ -109,7 +109,6 @@ if( $installed_ver != $lddbd_db_version ) {
 		id BIGINT(20) NOT NULL AUTO_INCREMENT,
 		createDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		updateDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		expiresDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		name TINYTEXT NOT NULL,
 		description TEXT NOT NULL,
 		categories TEXT NOT NULL,
@@ -164,20 +163,7 @@ if( $installed_ver != $lddbd_db_version ) {
 	}
 }
 
-function lddbd_install_data() {
-   global $wpdb;
-   global $main_table_name, $doc_table_name, $cat_table_name;
-   $welcome_name = "Test Business";
-   $welcome_text = "We sell widgets!";
-   $welcome_login = "test_business";
-   $welcome_password = "1234";
-   
-
-   //$rows_affected = $wpdb->insert( $main_table_name, array( 'createDate' => current_time('mysql'), 'name' => $welcome_name, 'description' => $welcome_text, 'login'=>$welcome_login, 'password'=>$welcome_password ) );
-}
-
 register_activation_hook(__FILE__,'lddbd_install');
-register_activation_hook(__FILE__,'lddbd_install_data');
 
 function lddbd_update_db_check() {
 	global $lddbd_db_version;

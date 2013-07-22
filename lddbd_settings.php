@@ -8,11 +8,11 @@ add_action('admin_menu', 'lddbd_admin_menu');
 
 //Build our administration menu in the backend.
 function lddbd_admin_menu() {
-	$lddbd_menu_page = add_menu_page( 'Business Directory', 'Businesses', 'manage_options', 'business_directory', 'lddbd_html_page');
-	$lddbd_settings_page = add_submenu_page('business_directory', 'Business Directory Settings', 'Settings', 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
-	$lddbd_add_business_page = add_submenu_page('business_directory', 'Add Business to Directory', 'Add Business', 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
-	$lddbd_edit_business_page = add_submenu_page('business_directory', 'Edit Business', 'Edit Business', 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
+	$lddbd_menu_page = add_menu_page( 'Business Directory', 'Directory Listings', 'manage_options', 'business_directory', 'lddbd_html_page');
 	$lddbd_business_categories_page = add_submenu_page('business_directory', 'Business Directory Categories', 'Categories', 'manage_options', 'business_categories', 'lddbd_business_categories_page');
+	$lddbd_add_business_page = add_submenu_page('business_directory', 'Add Business to Directory', 'Add Listing', 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
+	$lddbd_edit_business_page = add_submenu_page('business_directory', 'Edit Business', 'Edit Listing', 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
+	$lddbd_settings_page = add_submenu_page('business_directory', 'Business Directory Settings', 'Settings', 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
 	//add_options_page('Business Directory', 'Business Directory', 'manage_options', 'business_directory', 'lddbd_html_page');
 	
 	add_action( 'admin_init', 'register_mysettings' );
@@ -30,15 +30,16 @@ function lddbd_styles(){
 function register_mysettings() {
 	//Register our settings
 	register_setting( 'lddbd_settings_group', 'lddbd_options', 'lddbd_options_validate');
-	add_settings_section('lddbd_main', 'Business Directory Settings', 'lddbd_section_text', 'business_directory_settings');
+	add_settings_section('lddbd_main', '', 'lddbd_section_text', 'business_directory_settings');
 	add_settings_field('lddbd_setting_one', 'Display "Submit Listing" Button', 'lddbd_setting_submit_button', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_two', 'Display "Login" Button', 'lddbd_setting_login_field', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_three', 'Display "Google Maps" Map', 'lddbd_setting_google_maps', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_four', 'Directory Title', 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main');
 	add_settings_field('lddbd_setting_five', 'Welcome Message', 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_six', 'Additional Information Sections', 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_seven', 'Categorize Entries', 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_eight', 'Allow User Categorization', 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_six', 'Directory Label', 'lddbd_setting_directory_label', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_seven', 'Additional Information Sections', 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_eight', 'Categorize Entries', 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main');
+	add_settings_field('lddbd_setting_nine', 'Allow User Categorization', 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main');
 }
 
 function lddbd_section_text() {
@@ -103,6 +104,15 @@ function lddbd_setting_welcome_message() {
 	echo "<textarea name='lddbd_options[welcome_message]' rows='5' cols='50'>{$options['welcome_message']}</textarea>";
 }
 
+// Controls the display of the word "Business" through the plugin. If someone wants to change it to another label such
+// as "Organization" or some other term they will be able to.
+function lddbd_setting_directory_label() {
+	$options = get_option('lddbd_options');
+	$option_value = $options['directory_label'];
+	
+	echo "<input name='lddbd_options[directory_label]' value='{$options['directory_label']}'/>";
+}
+
 // Controls the display of the Additional Information Sections.
 function lddbd_setting_information_sections(){
 	$options = get_option('lddbd_options');
@@ -144,8 +154,6 @@ function lddbd_setting_information_sections(){
 					var section_count = jQuery('.lddbd_information_section').length;
 					jQuery(this).before('<div id=\'lddbd_information_section_'+(section_count+1)+'\' class=\'lddbd_information_section\'><h3>Section '+(section_count+1)+'</h3><label for=\'lddbd_options[section'+(section_count+1)+'_title]\'>Title</label><input type=\'text\' name=\'lddbd_options[section'+(section_count+1)+'_title]\'/><br /><label for=\'lddbd_options[section'+(section_count+1)+'_type]\'>Type</label><select name=\'lddbd_options[section'+(section_count+1)+'_type]\'><option value=\'text\'>Single Line Text</option><option value=\'textarea\'>Text Area</option><option value=\'bool\'>Yes or No</option></select><input type=\'button\' value=\'Remove Section\' class=\'lddbd_remove_info_section\' onclick=\'javascript:removeInfoSection(this);\'/></div>');
 				});
-				
-				
 			});
 		</script>";
 	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/scripts.js'></script>";	
@@ -168,7 +176,7 @@ function lddbd_setting_categorization(){
 	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/scripts.js'></script>";
 }
 
-// Controls the display of the Categorize Entries radio buttons and allows for user categorization.
+// Controls the display of the Allow User Categorization radio buttons and allows for user categorization.
 function lddbd_setting_user_categorization(){
 	$options = get_option('lddbd_options');
 	$option_value = $options['user_categorization'];
@@ -190,6 +198,7 @@ function lddbd_options_validate($input) {
 	$newinput['google_map'] = trim($input['google_map']);
 	$newinput['directory_title'] = trim($input['directory_title']);
 	$newinput['welcome_message'] = trim($input['welcome_message']);
+	$newinput['directory_label'] = trim($input['directory_label']);
 	
 	$section_array = array();
 	
