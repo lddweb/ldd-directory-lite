@@ -55,7 +55,7 @@ A. There is now a text field on the Settings page called `Directory Label` where
 - Added international address support for specific countries.
 - Fixed error that contained warning message about headers already being sent when adding a new business.
 - Added the ability to disable Google Maps from all businesses.
-- Added ability to change the directory title from "Business Directory" to anything else.
+- Added ability to change the directory title from `Business Directory` to anything else.
 - Welcome message appears above directory like it should.
 - Additional Information sections have a small area to be displayed on the front end.
 
