@@ -337,48 +337,46 @@ else if($action == 'search'){
 			if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
 			if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
 
-			if(!empty($business->url)){ 
-				if(strstr($business->url, 'http:// ')){$business_url = $business->url;}
-				else{$business_url = 'http:// '.$business->url;}
+			if(!empty($business->url)){
+				if(strstr($business->url, 'http://')){$business_url = $business->url;}
+				else{$business_url = 'http://'.$business->url;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url( 'ldd-business-directory/images/website.png' )."' /></a>"; 
 			}
-			if(!empty($business->facebook)){ 
-				if(strstr($business->facebook, 'http:// ')){$business_facebook = $business->facebook;}
-				else{$business_facebook = 'http:// '.$business->facebook;}
+			if(!empty($business->facebook)){
+				if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
+				else{$business_facebook = 'http://'.$business->facebook;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
-				if(strstr($business->twitter, 'http:// ')){$business_twitter = $business->twitter;}
-				else{$business_twitter = 'http:// '.$business->twitter;}
+				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
+				else{$business_twitter = 'http://'.$business->twitter;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
-				if(strstr($business->linkedin, 'http:// ')){$business_linkedin = $business->linkedin;}
-				else{$business_linkedin = 'http:// '.$business->linkedin;}
+				if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
+				else{$business_linkedin = 'http://'.$business->linkedin;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url( 'ldd-business-directory/images/linkedin.png' )."' /></a>"; 
 			}
 			if(!empty($business->email)){
-			$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-			$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
-			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
-
-			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}' /></div>"; }
-
-			if(strstr($business->url, 'http:// ')){$business_url = $business->url;}
-			else{$business_url = 'http:// '.$business->url;}
+				$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
+				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
+			if($business->promo=='true'){
+				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
+			if(!empty($business->logo)){
+				$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}' /></div>"; }
 
 		$biz_name = stripslashes($business->name);
 
 			echo "<div class='lddbd_business_listing'>
-						{$logo_html}
-						<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$biz_name}</a>
-						<ul class='lddbd_business_contact'>
-							{$contact}
-						</ul>
-						<div class='lddbd_business_contact'>
-							{$contact_right}
-						</div>
-					</div>";
+					{$logo_html}
+					<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$biz_name}</a>
+					<ul class='lddbd_business_contact'>
+						{$contact}
+					</ul>
+					<div class='lddbd_business_contact'>
+						{$contact_right}
+					</div>
+				</div>";
 		}
 	}
 }
@@ -461,45 +459,46 @@ else if($action == 'category_filter'){
 			if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
 			if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
 			
-			if(!empty($business->url)){ 
-				if(strstr($business->url, 'http:// ')){$business_url = $business->url;}
-				else{$business_url = 'http:// '.$business->url;}
+			if(!empty($business->url)){
+				if(strstr($business->url, 'http://')){$business_url = $business->url;}
+				else{$business_url = 'http://'.$business->url;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url( 'ldd-business-directory/images/website.png' )."' /></a>"; 
 			}
 			if(!empty($business->facebook)){ 
-				if(strstr($business->facebook, 'http:// ')){$business_facebook = $business->facebook;}
-				else{$business_facebook = 'http:// '.$business->facebook;}
+				if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
+				else{$business_facebook = 'http://'.$business->facebook;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
-				if(strstr($business->twitter, 'http:// ')){$business_twitter = $business->twitter;}
-				else{$business_twitter = 'http:// '.$business->twitter;}
+				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
+				else{$business_twitter = 'http://'.$business->twitter;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
-				if(strstr($business->linkedin, 'http:// ')){$business_linkedin = $business->linkedin;}
-				else{$business_linkedin = 'http:// '.$business->linkedin;}
+				if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
+				else{$business_linkedin = 'http://'.$business->linkedin;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url( 'ldd-business-directory/images/linkedin.png' )."' /></a>"; 
 			}
 			if(!empty($business->email)){
-			$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-			$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
-			if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
-
-			if(!empty($business->logo)){$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}'/></div>"; }
+				$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
+				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
+			if($business->promo=='true'){
+				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
+			if(!empty($business->logo)){
+				$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}'/></div>"; }
 
 			echo "<div class='lddbd_business_listing'>
-						{$logo_html}
-						<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$business->name}</a>
-						<ul class='lddbd_business_contact'>
-							{$contact}
-						</ul>
-						<div class='lddbd_business_contact'>
-							{$contact_right}
-						</div>
-					</div>";
+					{$logo_html}
+					<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$business->name}</a>
+					<ul class='lddbd_business_contact'>
+						{$contact}
+					</ul>
+					<div class='lddbd_business_contact'>
+						{$contact_right}
+					</div>
+				</div>";
 		}
-	}else{echo "<div class='lddbd_business_listing'>Sorry, this category is empty.</div>";}
+	} else { echo "<div class='lddbd_business_listing'>Sorry, this category is empty.</div>"; }
 }
 else if($action == 'edit_category'){
 	global $main_table_name, $doc_table_name, $cat_table_name;

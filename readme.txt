@@ -4,7 +4,7 @@ Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
 Tested up to: 3.5.2
-Stable tag: 1.3.6
+Stable tag: 1.3.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,10 @@ A. There is now a text field on the Settings page called `Directory Label` where
 
 == Changelog ==
 
+= 1.3.6.1 =
+
+- Fixed bug that prevented Web, Facebook, Twitter, and LinkedIn icons from working.
+
 = 1.3.6 =
 
 - Added the ability to change the directory label from `Business` to whatever the user chooses and have this change reflected across the entire plugin.
@@ -55,7 +59,7 @@ A. There is now a text field on the Settings page called `Directory Label` where
 - Added international address support for specific countries.
 - Fixed error that contained warning message about headers already being sent when adding a new business.
 - Added the ability to disable Google Maps from all businesses.
-- Added ability to change the directory title from `Business Directory` to anything else.
+- Added ability to change the directory title from "Business Directory" to anything else.
 - Welcome message appears above directory like it should.
 - Additional Information sections have a small area to be displayed on the front end.
 
