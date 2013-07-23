@@ -4,7 +4,7 @@ Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
 Tested up to: 3.5.2
-Stable tag: 1.3.6.1
+Stable tag: 1.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ A. There is now a text field on the Settings page called `Directory Label` where
 
 == Changelog ==
 
-= 1.3.6.1 =
+= 1.3.7 =
 
 - Fixed bug that prevented Web, Facebook, Twitter, and LinkedIn icons from working.
 

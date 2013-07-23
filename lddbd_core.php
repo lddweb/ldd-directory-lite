@@ -4,7 +4,7 @@
 Plugin Name: LDD Business Directory
 Plugin URI: http://www.LDDWebDesign.com
 Description: Creates a Business Directory for your site
-Version: 1.3.6.1
+Version: 1.3.7
 Author: LDD Web Design
 Author URI: http://www.LDDWebDesign.com
 License: LDDBD
