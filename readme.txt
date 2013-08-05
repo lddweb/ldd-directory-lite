@@ -14,14 +14,12 @@ The LDD Business Directory plugin allows a user to easily manage and display bus
 
 == Installation ==
 
-1. Install from the WordPress plugins utility or simply move the `lddbd` folder to your plugins directory (`/wp-content/plugins`)
+1. Install from the WordPress plugins utility or simply move the `ldd-business-directory` folder to your plugins directory (`/wp-content/plugins`)
 2. Make sure you activate the plugin on your plugins page
 3. Now you should have a `Directory Listings` menu item on your dashboard
 4. From here you can alter your settings, add businesses, edit business information, and customize your categories
 5. Decide which page you wish to display it on or create a page and enter the shortcode `[business_directory]` in the content area of your page
 6. You can also use the php function `<?php display_business_directory(); ?>` directly in your template file
-
-PLUGIN NOTICE: Make sure your permalinks are set to **Post name** for the plugin to work properly!
 
 == Frequently Asked Questions ==
 
