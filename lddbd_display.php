@@ -70,6 +70,7 @@ if($_GET['business']){
 	$business_address = '';
 	$business_info = '';
 	
+	if(!empty($business->contact)){ $contact_left.="<p><strong>Contact:</strong></p><p>{$business->contact}</p>"; }
 	if(!empty($business->address_street)){ $contact_left.="<strong>Address:</strong><p>{$business->address_street}</p>"; $business_address.=$business->address_street;}
 	if(!empty($business->address_city) || !empty($business->address_state) || !empty($business->address_zip)){
 		$contact_left.="<p>{$business->address_city}, {$business->address_state} {$business->address_zip}</p>";
@@ -154,7 +155,8 @@ if($_GET['business']){
 	}
 	
 	
-	if(!empty($business->logo)){$logo_html = '<img src="'.plugins_url().'/'.$business->logo.'"/>'; }
+	//if(!empty($business->logo)){$logo_html = '<img src="'.plugins_url().'/'.$business->logo.'"/>'; }
+	if(!empty($business->logo)){$logo_html = '<img src="'.site_url('/wp-content/uploads/').$business->logo.'"/>'; }
 	
 	if( !empty( $business->other_info )) {
 	$other_info = unserialize( $business->other_info );
@@ -311,7 +313,7 @@ $add_business_holder = <<<ABH
 		
 		<div class='lddbd_input_holder'>
 			<label for='email'>Contact Email</label>
-			<input class='required' type='text' id='lddbd_email' name='email'/>
+			<input class='' type='text' id='lddbd_email' name='email'/>
 		</div>
 		
 		<div class='lddbd_input_holder'>
@@ -375,7 +377,7 @@ $add_business_holder = <<<ABH
 		
 		<div class='submit'>
 			<input id='lddbd_cancel_listing' type='button' class='button-primary' value='Cancel' />
-			<input type='submit' class='button-primary' value='Add Business' />
+			<input type='submit' class='button-primary' value='Submit Listing' />
 		</div>
 	</form>
 	{$countrySelector}
@@ -468,7 +470,7 @@ else {
 		"
 	);
 	
-	$category_number = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $cat_table_name" ) );
+	$category_number = $wpdb->get_var( $wpdb->prepare( "SELECT * FROM $cat_table_name WHERE id = %d", $id ) );
 	
 	$logins = '';
 	
@@ -623,7 +625,7 @@ $add_business_holder = <<<ABH
 		
 		<div class='lddbd_input_holder'>
 			<label for='email'>Contact Email</label>
-			<input class='required' type='text' id='lddbd_email' name='email'/>
+			<input class='' type='text' id='lddbd_email' name='email'/>
 		</div>
 		
 		<div class='lddbd_input_holder'>

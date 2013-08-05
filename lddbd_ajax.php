@@ -8,12 +8,54 @@ $main_table_name = $wpdb->prefix.'lddbusinessdirectory';
 $cat_table_name = $wpdb->prefix.'lddbusinessdirectory_cats';
 $doc_table_name = $wpdb->prefix.'lddbusinessdirectory_docs';
 
-if ( !file_exists( '../lddbd-logos' )) {
-    mkdir( '../lddbd-logos', 0755, true );
+// Copy all logos from the existing LDD BD logo directory, move them into the new one, and then remove the old directory.
+if ( file_exists( '../lddbd-logos' ) ) {
+	$lddbd_logos_olddir = '../lddbd-logos/';
+	$lddbd_logos_newdir = '../../uploads/lddbd-logos/';
+	$lddbd_logos = scandir( $lddbd_logos_olddir ); // Scan the directory for files then create an array of them.
+	
+	foreach( $lddbd_logos as $lddbd_logo ) {
+		// Check the array for . (current) and .. (previous), skip them, then continue to copy files over.
+		if( in_array( $lddbd_logo, array( '.', '..' ) ) ) continue;
+		if( copy( $lddbd_logos_olddir.$lddbd_logo, $lddbd_logos_newdir.$lddbd_logo) ) {
+			$lddbd_delete_logos[] = $lddbd_logos_olddir.$lddbd_logo;
+		}
+	}
+	foreach( $lddbd_delete_logos as $lddbd_del_logo ) {
+		unlink( $lddbd_del_logo );
+	}	
+	// If only 2 items remain in the directory ( . and .. ) remove the directory
+	if( count( $lddbd_logos ) <= 2 ) {
+		rmdir( $lddbd_logos_olddir );
+	}
 }
 
-if ( !file_exists( '../lddbd-files' )) {
-    mkdir( '../lddbd-files', 0755, true );
+// Copy all files from the existing LDD BD file directory, move them into the new one, and then remove the old directory.
+if ( file_exists( '../lddbd-files' ) ) {
+	$lddbd_files_olddir = '../lddbd-files/';
+	$lddbd_files_newdir = '../../uploads/lddbd-files/';
+	$lddbd_files = scandir( $lddbd_files_olddir ); // Scan the directory for files then create an array of them.
+	
+	foreach( $lddbd_files as $lddbd_file ) {
+		// Check the array for . (current) and .. (previous), skip them, then continue to copy files over.
+		if( in_array( $lddbd_file, array( '.', '..' ) ) ) continue;
+		if( copy( $lddbd_files_olddir.$lddbd_file, $lddbd_files_newdir.$lddbd_file) ) {
+			$lddbd_delete_files[] = $lddbd_files_olddir.$lddbd_file;
+		}
+	}
+	foreach( $lddbd_delete_files as $lddbd_del_file ) {
+		unlink( $lddbd_del_file );
+	}
+	// If only 2 items remain in the directory ( . and .. ) remove the directory
+	if( count( $lddbd_files ) <= 2 ) {
+		rmdir( $lddbd_files_olddir );
+	}
+}
+
+// If the LDD BD logo or file directories do not exist then create them and grant them the appropriate privileges.
+if ( !file_exists( '../../uploads/lddbd-logos' ) || !file_exists( '../../uploads/lddbd-files' ) ) {
+	mkdir( '../../uploads/lddbd-logos', 0755, true );
+	mkdir( '../../uploads/lddbd-files', 0755, true );
 }
 
 // The basis for all the AJAX actions that control facets of the back end and the front end.
@@ -107,7 +149,7 @@ else if($action == 'add'){
 		$logo_path = 'lddbd-logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
 	}
 
-	if(move_uploaded_file($_FILES['logo']['tmp_name'], "../" . $logo_path)) {
+	if(move_uploaded_file($_FILES['logo']['tmp_name'], "../../uploads/" . $logo_path)) {
     	// echo 'file uploaded';
    	}
 
@@ -199,7 +241,7 @@ else if($action == 'edit'){
 			$logo_path = 'lddbd-logos/'.$_POST['login'].'_logo'.$modifier.'.'.$fileExt[1];
 		}
 
-		if(move_uploaded_file($_FILES['logo']['tmp_name'], "../" . $logo_path)) {
+		if(move_uploaded_file($_FILES['logo']['tmp_name'], "../../uploads/" . $logo_path)) {
 	    	$update_array['logo'] = $logo_path;
 	   	}
 	}
@@ -363,7 +405,7 @@ else if($action == 'search'){
 			if($business->promo=='true'){
 				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
 			if(!empty($business->logo)){
-				$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}' /></div>"; }
+				$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}' /></div>"; }
 
 		$biz_name = stripslashes($business->name);
 
@@ -395,7 +437,7 @@ else if($action == 'categories_list'){
 		"
 	);
 
-	$category_number = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $cat_table_name" ) );
+	$category_number = $wpdb->get_var( $wpdb->prepare( "SELECT * FROM $cat_table_name WHERE id = %d", $id ) );
 
 	if($category_list){
 		$i = 0;
@@ -485,7 +527,7 @@ else if($action == 'category_filter'){
 			if($business->promo=='true'){
 				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
 			if(!empty($business->logo)){
-				$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".plugins_url( '/' )."{$business->logo}'/></div>"; }
+				$logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}'/></div>"; }
 
 			echo "<div class='lddbd_business_listing'>
 					{$logo_html}
@@ -754,7 +796,7 @@ echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-d
 
 	<div class='lddbd_input_holder'>
 		<label for='email'>Contact Email</label>
-		<input class='required' type='text' id='lddbd_email' name='email' value='{$business->email}'/>
+		<input class='' type='text' id='lddbd_email' name='email' value='{$business->email}'/>
 	</div>
 
 	<div class='lddbd_input_holder'>

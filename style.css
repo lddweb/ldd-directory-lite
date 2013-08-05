@@ -23,7 +23,7 @@ tr.lddbd_edit_business_row, tr.lddbd_edit_category_row, tr#lddbd_add_category_ro
 div.lddbd_input_holder{
 	display: block;
 	margin: 20px 0px;
-	width: 700px;
+	width: 50rem;
 	overflow: hidden;
 	position: relative;
 }
@@ -32,12 +32,16 @@ div.lddbd_input_holder{
 		float: left;
 		font-size: 16px;
 		height: auto;
-		margin: 0px;
+		margin: 0 10px 0 0;
 		line-height: normal;
 	}
 	
 	div.lddbd_radio_holder, #lddbd_business_directory div.lddbd_radio_holder{
 		text-align: left;
+	}
+	
+	div.lddbd_radio_holder input[name="promo"] {
+		margin: 0 5px 0;
 	}
 	
 	div.lddbd_input_holder input[type="text"], div.lddbd_input_holder input[type="file"], div.lddbd_input_holder .lddbd_radio_holder, div.lddbd_input_holder textarea{
@@ -62,7 +66,7 @@ div.lddbd_input_holder{
 	}
 	
 	.lddbd_input_holder textarea, #lddbd_business_directory .lddbd_input_holder textarea{
-		height: 100px;
+		height: 100px !important;
 		width: 398px;
 	}
 	
@@ -108,7 +112,6 @@ div.lddbd_input_holder{
 		display: inline-block;
 		font-size: 13px;
 		margin: 2px;
-		height: 16px;
 		border: 1px solid #bbb;
 		outline: none;
 	}
@@ -223,7 +226,7 @@ div.lddbd_input_holder{
 				text-align: center;
 			}
 			
-			/*
+/*
 #lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form label{
 				float: left;
 				clear: left;
@@ -431,7 +434,7 @@ div.lddbd_input_holder{
 	
 	#lddbd_business_directory_single .single_business_right{
 		display: table-cell;
-		padding: 10px 5px;
+		padding: 10px 0 0 20px;
 		border-top: 1px solid #fff;
 	}
 	
@@ -548,12 +551,12 @@ div.lddbd_input_holder{
 
 form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder strong:first-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:first-child{
 	float: left;
-	margin-left: 50px;
+	/*margin-left: 50px;*/
 }
 
 form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder strong:last-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:last-child{
 	float: right;
-	margin-right: 50px;
+	margin-right: 220px;
 }
 
 form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder input:first-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder input:first-child{

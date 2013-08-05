@@ -8,11 +8,11 @@ add_action('admin_menu', 'lddbd_admin_menu');
 
 //Build our administration menu in the backend.
 function lddbd_admin_menu() {
-	$lddbd_menu_page = add_menu_page( 'Business Directory', 'Directory Listings', 'manage_options', 'business_directory', 'lddbd_html_page');
-	$lddbd_business_categories_page = add_submenu_page('business_directory', 'Business Directory Categories', 'Categories', 'manage_options', 'business_categories', 'lddbd_business_categories_page');
-	$lddbd_add_business_page = add_submenu_page('business_directory', 'Add Business to Directory', 'Add Listing', 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
-	$lddbd_edit_business_page = add_submenu_page('business_directory', 'Edit Business', 'Edit Listing', 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
-	$lddbd_settings_page = add_submenu_page('business_directory', 'Business Directory Settings', 'Settings', 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
+	$lddbd_menu_page = add_menu_page( 'Directory Listings', 'Directory Listings', 'manage_options', 'business_directory', 'lddbd_html_page');
+	$lddbd_business_categories_page = add_submenu_page('business_directory', 'Directory Categories', 'Directory Categories', 'manage_options', 'business_categories', 'lddbd_business_categories_page');
+	$lddbd_add_business_page = add_submenu_page('business_directory', 'Add Listing to Directory', 'Add Listing', 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
+	$lddbd_edit_business_page = add_submenu_page('business_directory', 'Edit Listing in Directory', 'Edit Listing', 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
+	$lddbd_settings_page = add_submenu_page('business_directory', 'Directory Settings', 'Settings', 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
 	//add_options_page('Business Directory', 'Business Directory', 'manage_options', 'business_directory', 'lddbd_html_page');
 	
 	add_action( 'admin_init', 'register_mysettings' );

@@ -22,7 +22,7 @@ function lddbd_html_page(){
 	?>
 	<div class="wrap">
 	
-		<h2><?php echo $directory_label; ?> Directory List</h2>
+		<h2><?php echo $directory_label; ?> Directory Listings</h2>
 		
 		<table id="lddbd_business_table" class="wp-list-table widefat fixed" cellspacing="0">
 		<thead>
@@ -119,7 +119,7 @@ function lddbd_html_page(){
 			<input type="hidden" class="id" name="id" value="<?php echo $business->id; ?>"/>
 			
    			<p class="submit">
-			    <input type="submit" class="button-primary" value="<?php _e('Update Business') ?>" />
+			    <input type="submit" class="button-primary" value="<?php _e('Update Listing') ?>" />
 			</p>
 	   		</form>
 	   		</td>
@@ -130,6 +130,25 @@ function lddbd_html_page(){
 		?>
 		</tbody>
 		</table>
+	<!-- #CODE BLOCK# Export/Import - Businesses #CODE BLOCK# -->
+	<?php
+	$reports_dir = plugin_dir_path( __FILE__ ) . 'scripts/lddbd_reports/';
+	if( file_exists( $reports_dir ) ) {
+	?>
+		<p>
+   		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_reports/lddbd_csvExport-business.php' ); ?>" method="get">
+   			<input type="submit" class="button-primary" value="Export Listing(s)" />
+	   	</form>
+   		</p>
+   		
+   		<p>
+		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_reports/lddbd_csvImport-business.php' ); ?>" method="post" enctype="multipart/form-data">
+			<input type="file" name="uploaded" />
+			<input type="submit" class="button-primary" name="upfile" value="Import Listing(s) (CSV File)" />
+		</form>
+		</p>
+	<?php } ?>
+   	<!-- #CODE BLOCK# Export/Import - Businesses #CODE BLOCK# -->
 
 	</div>
 
@@ -225,7 +244,20 @@ function lddbd_settings_page(){
 			    <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 		    </p>
    		</form>
-
+   	
+   	<!-- #CODE BLOCK# HTML Report - Settings Page #CODE BLOCK# -->
+   	<?php
+	$reports_dir = plugin_dir_path( __FILE__ ) . 'scripts/lddbd_reports/';
+	if( file_exists( $reports_dir ) ) {
+	?>
+   		<hr style="color: #fff; width: 525px; margin: 0 auto 0 0;" />
+   		<p>
+   		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_reports/lddbd_htmlReport.php' ); ?>" target="_blank" method="get">
+   			<input type="submit" class="button-primary" value="Generate Printable Directory List" style="float: left;" />
+	   	</form>
+   		</p>
+   	<?php } ?>
+   	<!-- #CODE BLOCK# HTML Report - Settings Page #CODE BLOCK# -->
 	</div>
 <?php
 }
@@ -330,7 +362,7 @@ function lddbd_add_business_page(){
 		
 		<div class="lddbd_input_holder">
 			<label for="email">Contact Email</label>
-			<input class="required" type="text" id="lddbd_email" name="email"/>
+			<input class="" type="text" id="lddbd_email" name="email"/>
 		</div>
 		
 		<div class="lddbd_input_holder">
@@ -427,7 +459,7 @@ if(!empty($section_array)){
 		<input type="hidden" id="lddbd_action" name="action" value="add"/>
 		
 		<p class="submit">
-		    <input type="submit" class="button-primary" value="<?php _e('Add Business') ?>" />
+		    <input type="submit" class="button-primary" value="<?php _e('Add Listing') ?>" />
 	    </p>
 	</form>
    		
@@ -592,7 +624,7 @@ if( !empty ( $options['directory_label'] ) ) {
 		
 		<div class="lddbd_input_holder">
 			<label for="email">Contact Email</label>
-			<input class="required" type="text" id="lddbd_email" name="email" value="<?php echo $business->email;?>"/>
+			<input class="" type="text" id="lddbd_email" name="email" value="<?php echo $business->email;?>"/>
 		</div>
 		
 		<div class="lddbd_input_holder">
@@ -647,7 +679,7 @@ if( !empty ( $options['directory_label'] ) ) {
 		</div>
 		
 		<div class='lddbd_input_holder'>
-			<strong>Files</strong>
+			<label for="files">Files</label>
 			<ul>
 			<?php echo $files_list; ?>
 			</ul>
@@ -731,7 +763,7 @@ if( !empty ( $options['directory_label'] ) ) {
 		<input type="hidden" id="lddbd_id" name="id" value="<?php echo $business->id; ?>"/>
 		
 		<p class="submit">
-		    <input type="submit" class="button-primary" value="<?php _e('Update Business') ?>" />
+		    <input type="submit" class="button-primary" value="<?php _e('Update Listing') ?>" />
 	    </p>
 	</form>
 
@@ -809,7 +841,7 @@ if( !empty ( $options['directory_label'] ) ) {
 			</select>
 			
 			<p class="submit">
-		    	<input type="submit" class="button-primary" value="<?php _e('Find Business') ?>" />
+		    	<input type="submit" class="button-primary" value="<?php _e('Find Listing') ?>" />
 	   		</p>
 		</form>
 		
@@ -822,9 +854,16 @@ if( !empty ( $options['directory_label'] ) ) {
 
 // Checks the database for all categories available (if there are any) and generates a table listing them.
 function lddbd_business_categories_page(){
+
+$options = get_option('lddbd_options');
+	if( !empty ( $options['directory_label'] ) ) {
+		$directory_label = $options['directory_label'];
+	} else {
+		$directory_label = 'Business';
+	}
 ?>
 <div class="wrap">
-<h2>Categories</h2>
+<h2><?php echo $directory_label; ?> Directory Categories</h2>
 
 <table id="lddbd_category_table" class="wp-list-table widefat fixed" cellspacing="0">
 <thead>
@@ -940,7 +979,25 @@ jQuery(document).ready(function() {
 	});
 });
 </script>			
-
+	<!-- #CODE BLOCK# Export/Import - Categories #CODE BLOCK# -->
+	<?php
+	$reports_dir = plugin_dir_path( __FILE__ ) . 'scripts/lddbd_reports/';
+	if( file_exists( $reports_dir ) ) {
+	?>
+		<p>
+   		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_reports/lddbd_csvExport-category.php' ); ?>" method="get">
+   			<input type="submit" class="button-primary" value="Export Categories" />
+	   	</form>
+   		</p>
+   		
+   		<p>
+		<form action="<?php echo plugins_url( 'ldd-business-directory/scripts/lddbd_reports/lddbd_csvImport-category.php' ); ?>" method="post" enctype="multipart/form-data">
+			<input type="file" name="uploaded" />
+			<input type="submit" class="button-primary" name="upfile" value="Import Categories (CSV File)" />
+		</form>
+		</p>
+	<?php } ?>
+   	<!-- #CODE BLOCK# Export/Import - Categories #CODE BLOCK# -->
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
