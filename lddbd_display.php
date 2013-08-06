@@ -154,8 +154,6 @@ if($_GET['business']){
 		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; 
 	}
 	
-	
-	//if(!empty($business->logo)){$logo_html = '<img src="'.plugins_url().'/'.$business->logo.'"/>'; }
 	if(!empty($business->logo)){$logo_html = '<img src="'.site_url('/wp-content/uploads/').$business->logo.'"/>'; }
 	
 	if( !empty( $business->other_info )) {

@@ -46,7 +46,7 @@ function lddbd_html_page(){
 		);
 		
 		// Checks if any business has been selected to edit. If not then it generates the
-		// drop down list containing all the businesses stored in the database.
+		// list containing all the businesses stored in the database.
 		if($business_list){
 			foreach($business_list as $business){ ?>
 			<tr id="business-<?php echo $business->id; ?>">
@@ -666,11 +666,11 @@ if( !empty ( $options['directory_label'] ) ) {
 		
 		<div class="lddbd_input_holder">
 			<label for="current_logo">Current Logo</label>
-			<input type="hidden" id="lddbd_current_logo" name="current_logo" value="<?php echo $business->logo; ?>"/>
+			<input type="hidden" id="lddbd_current_logo" name="current_logo" value="<?php echo site_url('/wp-content/uploads/') . $business->logo; ?>"/>
 		</div>
 		
 		<div class="lddbd_input_holder">
-			<img src="<?php echo plugins_url( '/' ) . $business->logo; ?>"/><br />
+			<img src="<?php echo site_url('/wp-content/uploads/') . $business->logo; ?>"/><br />
 		</div>
 		
 		<div class="lddbd_input_holder">

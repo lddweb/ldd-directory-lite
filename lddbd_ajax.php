@@ -8,11 +8,18 @@ $main_table_name = $wpdb->prefix.'lddbusinessdirectory';
 $cat_table_name = $wpdb->prefix.'lddbusinessdirectory_cats';
 $doc_table_name = $wpdb->prefix.'lddbusinessdirectory_docs';
 
-// Copy all logos from the existing LDD BD logo directory, move them into the new one, and then remove the old directory.
-if ( file_exists( '../lddbd-logos' ) ) {
+/* 
+* For older versions of the plugin images, documents, and other files were stored inside the plugin directory.
+* These are being moved into the uploads directory for standardization purposes. For this reason the old
+* directories need to have their contents copied to the new locations and then the old directories and files
+* need to be removed.
+*/
+if ( file_exists( '../lddbd-logos' ) || file_exists( '../lddbd-files' ) ) {
+	// MOVE LOGOS
+	// Copy all logos from the existing LDD BD logo directory, move them into the new one, and then remove the old logos.
 	$lddbd_logos_olddir = '../lddbd-logos/';
 	$lddbd_logos_newdir = '../../uploads/lddbd-logos/';
-	$lddbd_logos = scandir( $lddbd_logos_olddir ); // Scan the directory for files then create an array of them.
+	$lddbd_logos = scandir( $lddbd_logos_olddir ); // Scan the directory then create an array of any files contained within.	
 	
 	foreach( $lddbd_logos as $lddbd_logo ) {
 		// Check the array for . (current) and .. (previous), skip them, then continue to copy files over.
@@ -21,20 +28,17 @@ if ( file_exists( '../lddbd-logos' ) ) {
 			$lddbd_delete_logos[] = $lddbd_logos_olddir.$lddbd_logo;
 		}
 	}
-	foreach( $lddbd_delete_logos as $lddbd_del_logo ) {
-		unlink( $lddbd_del_logo );
-	}	
-	// If only 2 items remain in the directory ( . and .. ) remove the directory
-	if( count( $lddbd_logos ) <= 2 ) {
-		rmdir( $lddbd_logos_olddir );
+	if( is_array( $lddbd_delete_logos ) ) {
+		foreach( $lddbd_delete_logos as $lddbd_del_logo ) {
+			unlink( $lddbd_del_logo );
+		}
 	}
-}
-
-// Copy all files from the existing LDD BD file directory, move them into the new one, and then remove the old directory.
-if ( file_exists( '../lddbd-files' ) ) {
+	
+	// MOVE FILES
+	// Copy all files from the existing LDD BD file directory, move them into the new one, and then remove the old files.
 	$lddbd_files_olddir = '../lddbd-files/';
 	$lddbd_files_newdir = '../../uploads/lddbd-files/';
-	$lddbd_files = scandir( $lddbd_files_olddir ); // Scan the directory for files then create an array of them.
+	$lddbd_files = scandir( $lddbd_files_olddir ); // Scan the directory then create an array of any files contained within.
 	
 	foreach( $lddbd_files as $lddbd_file ) {
 		// Check the array for . (current) and .. (previous), skip them, then continue to copy files over.
@@ -43,16 +47,22 @@ if ( file_exists( '../lddbd-files' ) ) {
 			$lddbd_delete_files[] = $lddbd_files_olddir.$lddbd_file;
 		}
 	}
-	foreach( $lddbd_delete_files as $lddbd_del_file ) {
-		unlink( $lddbd_del_file );
+	if( is_array( $lddbd_delete_files ) ) {
+		foreach( $lddbd_delete_files as $lddbd_del_file ) {
+			unlink( $lddbd_del_file );
+		}
 	}
-	// If only 2 items remain in the directory ( . and .. ) remove the directory
-	if( count( $lddbd_files ) <= 2 ) {
+	
+	// REMOVE OLD DIRECTORIES
+	// If only 2 items remain in either directory ( . and .. ) remove the directories
+	if( count( $lddbd_logos ) <= 2 || count( $lddbd_files ) <= 2 ) {
+		rmdir( $lddbd_logos_olddir );
 		rmdir( $lddbd_files_olddir );
 	}
 }
 
 // If the LDD BD logo or file directories do not exist then create them and grant them the appropriate privileges.
+// This should only be executed in the event that this is the first time using this plugin (and not upgrading).
 if ( !file_exists( '../../uploads/lddbd-logos' ) || !file_exists( '../../uploads/lddbd-files' ) ) {
 	mkdir( '../../uploads/lddbd-logos', 0755, true );
 	mkdir( '../../uploads/lddbd-files', 0755, true );
@@ -152,9 +162,7 @@ else if($action == 'add'){
 	if(move_uploaded_file($_FILES['logo']['tmp_name'], "../../uploads/" . $logo_path)) {
     	// echo 'file uploaded';
    	}
-
-	// $wpdb->show_errors();
-
+   	
 	$row_added = $wpdb->insert(
 		$main_table_name,
 		array(
@@ -186,8 +194,6 @@ else if($action == 'add'){
 	);
 	
 	header('Location: '.get_bloginfo('url').'/wp-admin/admin.php?page=business_directory');
-	
-	// echo $wpdb->insert_id;
 }
 else if($action == 'edit'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
@@ -272,7 +278,6 @@ else if($action == 'edit'){
 		
 	}
 
-	// $wpdb->show_errors();
 	$row_updated = $wpdb->update(
 		$main_table_name,
 		$update_array,
@@ -330,8 +335,6 @@ else if($action == 'quick_edit'){
 		$update_array['logo'] = $_POST['current_logo'];
 	}
 
-	// print_r($update_array);	
-	// $wpdb->show_errors();
 	$row_updated = $wpdb->update(
 		$main_table_name,
 		$update_array,
@@ -567,29 +570,29 @@ else if($action == 'add_category'){
 		)
 	);
 	
-	echo "<table><tr id='cat-{$wpdb->insert_id}'>".
-			"<td>".
-				"<strong>{$_POST['name']}</strong>".
-				"<div class='row-actions'>".
-					"<a class='delete_category' href='javascript:void(0)'>Delete</a>".
-					"<a class='edit_category open' href='javascript:void(0);'>Edit</a>".
-				"</div>".
-			"</td>".
-			"<td>0</td>".
-			"<td>{$wpdb->insert_id}</td>".
-		"</tr>".
-		"<tr class='lddbd_edit_category_row'>".
-			"<td colspan='3'>".
-				"<form class='lddbd_edit_category_form' method='post' action='".plugins_url( 'ldd-business-directory/lddbd_ajax.php' )."'>".
-					"<input type='text' name='cat_name' value='{$_POST['name']}'>".
-					"<input type='hidden' name='action' value='edit_category'/>".
-					"<input type='hidden' name='id' value='{$wpdb->insert_id}'/>".
-		   			"<p class='submit'>".
-					    "<input type='submit' class='button-secondary' value='Save Changes' />".
-				    "</p>".
-		   		"</form>".
-	   		"</td>".
-		"</tr></table>";
+echo "<table><tr id='cat-{$wpdb->insert_id}'>".
+		"<td>".
+			"<strong>{$_POST['name']}</strong>".
+			"<div class='row-actions'>".
+				"<a class='delete_category' href='javascript:void(0)'>Delete</a>".
+				"<a class='edit_category open' href='javascript:void(0);'>Edit</a>".
+			"</div>".
+		"</td>".
+		"<td>0</td>".
+		"<td>{$wpdb->insert_id}</td>".
+	"</tr>".
+	"<tr class='lddbd_edit_category_row'>".
+		"<td colspan='3'>".
+			"<form class='lddbd_edit_category_form' method='post' action='".plugins_url( 'ldd-business-directory/lddbd_ajax.php' )."'>".
+				"<input type='text' name='cat_name' value='{$_POST['name']}'>".
+				"<input type='hidden' name='action' value='edit_category'/>".
+				"<input type='hidden' name='id' value='{$wpdb->insert_id}'/>".
+	   			"<p class='submit'>".
+				    "<input type='submit' class='button-secondary' value='Save Changes' />".
+			    "</p>".
+	   		"</form>".
+   		"</td>".
+	"</tr></table>";
 
 echo "
 <script type='text/javascript'>
@@ -652,7 +655,6 @@ else if($action == 'delete_category'){
 else if($action == 'login'){
 	global $main_table_name, $doc_table_name, $cat_table_name;
 	$login = $_POST['login'];
-	// $wpdb->show_errors();
 	$business = $wpdb->get_row("SELECT * FROM $main_table_name WHERE login = '{$login}'");
 
 	if($business){
@@ -734,7 +736,7 @@ $lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) .  'scripts/countries.txt';
 	$countryList = fopen( $lddbd_countryTxtFile, "r" );
 
 $optionLine = "";
-
+// Open the text file and build our select list of countries
 while( !feof ( $countryList ) ) {
 	$textLine = fgets( $countryList );
 	$textLine = trim( $textLine );
@@ -840,7 +842,7 @@ echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-d
 	</div>
 
 	<div class='lddbd_input_holder'>
-		<img src='".plugins_url( '/' )."{$business->logo}'/>
+		<img src='wp-content/uploads/{$business->logo}'/>
 	</div>
 
 	<div class='lddbd_input_holder'>
