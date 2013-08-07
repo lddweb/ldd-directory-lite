@@ -666,7 +666,7 @@ if( !empty ( $options['directory_label'] ) ) {
 		
 		<div class="lddbd_input_holder">
 			<label for="current_logo">Current Logo</label>
-			<input type="hidden" id="lddbd_current_logo" name="current_logo" value="<?php echo site_url('/wp-content/uploads/') . $business->logo; ?>"/>
+			<input type="hidden" id="lddbd_current_logo" name="current_logo" value="<?php echo $business->logo; ?>"/>
 		</div>
 		
 		<div class="lddbd_input_holder">

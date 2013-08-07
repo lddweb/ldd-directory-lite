@@ -4,7 +4,7 @@ Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
 Tested up to: 3.6
-Stable tag: 1.3.8.1
+Stable tag: 1.3.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,9 +37,13 @@ A. The filename of the logo used for each listing is based upon the *username* t
 
 == Changelog ==
 
+= 1.3.8.2 =
+
+- Fixed a bug that removed client logo when editing a listing in the back end. (Thanks to user iBusinessLogic for reporting this!)
+
 = 1.3.8.1 =
 
-- Patched logo/file migration code to fix issue from warning message.
+- Patched logo/file migration code to fix issue from warning message
 
 = 1.3.8 =
 
