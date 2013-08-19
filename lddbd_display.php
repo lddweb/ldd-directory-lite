@@ -57,7 +57,7 @@ if($_GET['business']){
 	$doc_list = '';
 	if($documents){
 		foreach($documents as $document){
-			$doc_list.="<li><a target='_blank' href='".plugins_url( '/' )."{$document->doc_path}'>{$document->doc_description}</a></li>";
+			$doc_list.="<li><a target='_blank' href='".site_url('/wp-content/uploads/').$document->doc_path."'>{$document->doc_description}</a></li>";
 		}
 	}
 	
@@ -459,6 +459,7 @@ else {
 		"
 		SELECT *
 		FROM $main_table_name WHERE approved = true
+		ORDER BY name ASC
 		"
 	);
 	$category_list = $wpdb->get_results(
@@ -740,6 +741,62 @@ ABH;
 		$directory_label = 'Business';
 	}
 	
+	// We want to make the All Listings view be the default when a user visits the Business Directory.
+	foreach($business_list as $business) {
+		$logo_html = '';
+		$contact = '';
+		$contact_right = '';
+	
+		// Check if there is a logo for this particular business listing.
+		if(!empty($business->logo)){ $logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}'/></div>"; }
+		
+		// Check if there is a phone and/or fax number for this business listing.
+		if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
+		if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
+		
+		// Check if there is a website URL assigned to this business listing.
+		if(!empty($business->url)){
+			if(strstr($business->url, 'http://')) {$business_url = $business->url; }
+			else{$business_url = 'http://'.$business->url;}
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url( 'ldd-business-directory/images/website.png' )."' /></a>"; 
+		}
+		// Check if there is a Facebook account assigned to this business listing.
+		if(!empty($business->facebook)){ 
+			if(strstr($business->facebook, 'http://')) {$business_facebook = $business->facebook;}
+			else{$business_facebook = 'http://'.$business->facebook;}
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
+		}
+		// Check if there is a Twitter account assigned to this business listing.
+		if(!empty($business->twitter)){ 
+			if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
+			else{$business_twitter = 'http://'.$business->twitter;}
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
+		}
+		// Check if there is a LinkedIn account assigned to this business listing.
+		if(!empty($business->linkedin)){ 
+			if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
+			else{$business_linkedin = 'http://'.$business->linkedin;}
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url( 'ldd-business-directory/images/linkedin.png' )."' /></a>"; 
+		}
+		// Check if there is an email address assigned to this business listing.
+		if(!empty($business->email)){
+			$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
+		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
+		// Check if there is a promotion available for this business listing.
+		if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
+		
+		$business_div .= "<div class='lddbd_business_listing'>
+			{$logo_html}
+			<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$business->name}</a>
+			<ul class='lddbd_business_contact'>
+				{$contact}
+			</ul>
+			<div class='lddbd_business_contact'>
+				{$contact_right}
+			</div>
+		</div>";
+	}
+	
 	 return "
 	 	<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/style.css' )."' type='text/css' media='screen' />
 	 	<div id='lddbd_business_directory'>
@@ -756,13 +813,17 @@ ABH;
 		 			<a href='javascript:void(0);' id='lddbd_all_listings_button' class='lddbd_navigation_button'>All Listings</a>
 		 			{$login_button}
 		 			{$submit_button}
-		 		</div>	
+		 		</div>
 	 		</div>
 	 		<div id='lddbd_business_directory_body'>
 	 			<div id='lddbd_business_directory_list'>
-	 				<div id='lddbd_categories_left'>
-			 			{$categories}
-			 		</div>
+	 				{$business_div}
+		<!--
+			** We want to keep the following code just for ease of switching back to the old format if we want to.
+		-->
+	 				<!--	<div id='lddbd_categories_left'>	-->
+			 		<!--	{$categories}				-->
+			 		<!--	</div>					-->
 			 	</div>
 		 		{$add_business_holder}
 		 	</div>

@@ -252,17 +252,17 @@ else if($action == 'edit'){
 	   	}
 	}
 
-	for($i=1; $i<6; $i++){
+	for($i=1; $i<8; $i++){
 		if(!empty($_FILES['file'.$i]['name'])){
-			$allowedExtensions = array('jpg', 'jpeg', 'pdf', 'xls', 'xslx', 'doc', 'docx');
+			$allowedExtensions = array('jpg', 'jpeg', 'pdf', 'xls', 'xslx', 'doc', 'docx', 'txt');
 			preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['file'.$i]['name'], $fileExt);
 			$file_path = 'lddbd-files/'.$_POST['login'].'_'.$i.'.'.$fileExt[1];
-			while (file_exists($logo_path)) {
+			while (file_exists($file_path)) {
 				$modifier = rand(0, 1000);
 				$file_path = 'lddbd-files/'.$_POST['login'].'_'.$i.'_'.$modifier.'.'.$fileExt[1];
 			}
 
-			if(move_uploaded_file($_FILES['file'.$i]['tmp_name'], "../" . $file_path)) {
+			if(move_uploaded_file($_FILES['file'.$i]['tmp_name'], "../../uploads/" . $file_path)) {
 		    	// echo 'file uploaded';
 		   	}
 

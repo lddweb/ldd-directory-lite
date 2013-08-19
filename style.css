@@ -434,7 +434,7 @@ div.lddbd_input_holder{
 	
 	#lddbd_business_directory_single .single_business_right{
 		display: table-cell;
-		padding: 10px 0 0 20px;
+		padding: 10px 0 15px 20px;
 		border-top: 1px solid #fff;
 	}
 	

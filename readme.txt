@@ -4,7 +4,7 @@ Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, business
 Requires at least: 2.0.2
 Tested up to: 3.6
-Stable tag: 1.3.8.2
+Stable tag: 1.3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,13 @@ A. There is now a text field on the Settings page called `Directory Label` where
 A. The filename of the logo used for each listing is based upon the *username* that has been entered for each individual listing. If all the listings have no username then whatever logo you upload for any one of them will be applied to all of them (same goes if multiple listings have the same username). Each listing should have a unique username.
 
 == Changelog ==
+
+= 1.3.9 =
+
+- Added Malaysia to the country list.
+- Added Malaysian states/provinces dropdown when selecting Malaysia in the country selector.
+- All Listings is now the default view instead of Categories.
+- Fixed bug where uploaded documents lead to 404 error pages.
 
 = 1.3.8.2 =
 

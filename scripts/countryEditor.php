@@ -113,6 +113,29 @@ function formElemCountry() {
 			"<label for='name'>Province:</label> <input type='text' id='lddbd_address_state' name='address_state' />" +
 			"</div>"
 		);
+	} else if ( selectedCountry == "Malaysia" ) {
+		jQuery("#selectedCountryForm").html(
+			"<div class='lddbd_input_holder'>" +
+			"<label for='name'>City / Town:</label> <input type='text' id='lddbd_address_city' name='address_city' value='<?php echo $business->address_city; ?>' /><br />" +
+			"</div>" +
+			"<div class='lddbd_input_holder'>" +
+			"<label for='name'>State / Province:</label>" +
+			"<select id='lddbd_address_state' name='address_state'>" +
+	// Start the loop that generates the list of Malaysian states
+		<?php $statesMAL_TextFile = plugin_dir_path( __FILE__ ) . 'states_MAL.txt'; ?>
+		<?php $statesMAL_List = fopen( $statesMAL_TextFile, 'r' ); ?>
+		<?php while( !feof ( $statesMAL_List ) ) { ?>
+		<?php $textLine = fgets( $statesMAL_List ); $textLine = trim( $textLine ); ?>
+		"<option <?php if( $business->address_state == $textLine ) echo 'selected=\"selected\"'; ?> ><?php echo $textLine; ?></option>" +
+		<?php } ?>
+		<?php fclose( $statesMAL_List ); ?>
+	// End the loop that generates the list of Malaysian states
+			"</select><br />" +
+			"</div>" +
+			"<div class='lddbd_input_holder'>" +
+			"<label for='name'>Postal Code:</label> <input type='text' id='lddbd_address_zip' name='address_zip' value='<?php echo $business->address_zip; ?>' />" +
+			"</div>"
+		);
 	} else if ( selectedCountry == "Mexico" ) {
 		jQuery("#selectedCountryForm").html(
 			"<div class='lddbd_input_holder'>" +
