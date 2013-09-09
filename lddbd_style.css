@@ -40,6 +40,10 @@ div.lddbd_input_holder{
 		text-align: left;
 	}
 	
+	div.lddbd_input_holder input[name="lddbd_license_key"] {
+		margin-right: 240px !important;
+	}
+	
 	div.lddbd_radio_holder input[name="promo"] {
 		margin: 0 5px 0;
 	}
@@ -130,7 +134,7 @@ div.lddbd_input_holder{
 		line-height: normal;
 		padding: 1px 6px;
 		text-align: center;
-		margin: 0px;
+		margin: 0px 5px;
 		float: none;
 		clear: none;
 		display: inline-block;
@@ -258,7 +262,7 @@ div.lddbd_input_holder{
 	#lddbd_business_directory_body{
 		position: relative;
 		overflow: hidden;
-		/* min-height: 500px; */
+		max-height: 2000px !important;	
 	}
 	
 		#lddbd_business_directory_body h3 {
@@ -343,7 +347,6 @@ div.lddbd_input_holder{
 				}
 				
 		#lddbd_add_business_holder{
-			height: 930px;
 			width: 100%;
 			padding: 5px 10px;
 			top: -940px;
@@ -353,6 +356,7 @@ div.lddbd_input_holder{
 			position: absolute;
 			margin: 0px;
 			background-color: #fff;
+			visibility: hidden;
 		}
 		
 			#lddbd_add_business_holder .lddbd_input_holder{
@@ -418,7 +422,12 @@ div.lddbd_input_holder{
 	
 	#lddbd_business_directory_single div.lddbd_business_contact{
 		display: block;
-		padding: 0px;
+		padding: 0;
+	}
+	
+	.lddbd_business_listing div.lddbd_business_contact{
+		display: block;
+		padding: 10px 0 0;
 	}
 	
 		#lddbd_business_directory_single ul li{
@@ -536,14 +545,14 @@ div.lddbd_input_holder{
 			display: block;
 			margin: 10px 0px 0px 0px;
 			width: 200px;
-			height: 13px;
+			height: auto;
 		}
 		
 		#lddbd_business_directory form#lddbd_mail_to_business_form textarea{
 			width: 200px;
 			height: 100px;
 			display: block;
-			margin: 10px 0px 0px 0px;
+			margin: 10px 0px;
 		}
 		
 		
@@ -595,6 +604,7 @@ form#lddbd_edit_business_form div.lddbd_input_holder select{
 }
 
 .lddbd-business-info-type {
+	font-weight: bold;
 	width: 35%;
 	margin: 0 auto;
 	display: inline-block;
@@ -602,6 +612,6 @@ form#lddbd_edit_business_form div.lddbd_input_holder select{
 
 .lddbd-business-info-data {
 	width: 50%;
-	margin: 0 0 0 20px;
+	margin: 0 0 0 30px;
 	display: inline-block;
 }

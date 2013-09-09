@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: LDD Business Directory
-Plugin URI: http://www.LDDWebDesign.com
-Description: Creates a Business Directory for your site
-Version: 1.3.9
+Plugin URI: http://www.lddwebdesign.com
+Description: Create a directory of businesses and listings for your WordPress website.
+Version: 1.3.10
 Author: LDD Web Design
-Author URI: http://www.LDDWebDesign.com
+Author URI: http://www.lddwebdesign.com
 License: LDDBD
 */
 
@@ -17,7 +17,7 @@ add_action( 'admin_init', 'lddbd_admin_init' );
 // Where the stylesheet for the plugin is registered and initialized.
 function lddbd_admin_init() {
    /* Register our stylesheet. */
-   wp_register_style( 'lddbd_stylesheet', plugins_url('style.css', __FILE__) );
+   wp_register_style( 'lddbd_stylesheet', plugins_url('lddbd_style.css', __FILE__) );
 }
 
 global $lddbd_db_version;
@@ -173,6 +173,6 @@ function lddbd_update_db_check() {
 }
 add_action( 'plugins_loaded', 'lddbd_update_db_check' );
 
-include('lddbd_settings.php');
+include( 'lddbd_settings.php' );
 
 ?>

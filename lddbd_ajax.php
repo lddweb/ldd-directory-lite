@@ -153,10 +153,10 @@ else if($action == 'add'){
 
 	$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 	preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-	$logo_path = 'lddbd-logos/'.$login.'_logo.'.$fileExt[1];
+	$logo_path = 'lddbd-logos/'.$name.'_logo.'.$fileExt[1];
 	while (file_exists($logo_path)) {
 		$modifier = rand(0, 1000);
-		$logo_path = 'lddbd-logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
+		$logo_path = 'lddbd-logos/'.$name.'_logo'.$modifier.'.'.$fileExt[1];
 	}
 
 	if(move_uploaded_file($_FILES['logo']['tmp_name'], "../../uploads/" . $logo_path)) {
@@ -241,10 +241,10 @@ else if($action == 'edit'){
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-		$logo_path = 'lddbd-logos/'.$_POST['login'].'_logo.'.$fileExt[1];
+		$logo_path = 'lddbd-logos/'.$_POST['name'].'_logo.'.$fileExt[1];
 		while (file_exists($logo_path)) {
 			$modifier = rand(0, 1000);
-			$logo_path = 'lddbd-logos/'.$_POST['login'].'_logo'.$modifier.'.'.$fileExt[1];
+			$logo_path = 'lddbd-logos/'.$_POST['name'].'_logo'.$modifier.'.'.$fileExt[1];
 		}
 
 		if(move_uploaded_file($_FILES['logo']['tmp_name'], "../../uploads/" . $logo_path)) {
@@ -256,10 +256,10 @@ else if($action == 'edit'){
 		if(!empty($_FILES['file'.$i]['name'])){
 			$allowedExtensions = array('jpg', 'jpeg', 'pdf', 'xls', 'xslx', 'doc', 'docx', 'txt');
 			preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['file'.$i]['name'], $fileExt);
-			$file_path = 'lddbd-files/'.$_POST['login'].'_'.$i.'.'.$fileExt[1];
+			$file_path = 'lddbd-files/'.$_POST['name'].'_'.$i.'.'.$fileExt[1];
 			while (file_exists($file_path)) {
 				$modifier = rand(0, 1000);
-				$file_path = 'lddbd-files/'.$_POST['login'].'_'.$i.'_'.$modifier.'.'.$fileExt[1];
+				$file_path = 'lddbd-files/'.$_POST['name'].'_'.$i.'_'.$modifier.'.'.$fileExt[1];
 			}
 
 			if(move_uploaded_file($_FILES['file'.$i]['tmp_name'], "../../uploads/" . $file_path)) {
@@ -321,10 +321,10 @@ else if($action == 'quick_edit'){
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-		$logo_path = 'lddbd-logos/'.$login.'_logo.'.$fileExt[1];
+		$logo_path = 'lddbd-logos/'.$name.'_logo.'.$fileExt[1];
 		while (file_exists($logo_path)) {
 			$modifier = rand(0, 1000);
-			$logo_path = 'lddbd-logos/'.$login.'_logo'.$modifier.'.'.$fileExt[1];
+			$logo_path = 'lddbd-logos/'.$name.'_logo'.$modifier.'.'.$fileExt[1];
 		}
 
 		$update_array['logo'] = $logo_path;
@@ -379,8 +379,9 @@ else if($action == 'search'){
 			$logo_html = '';
 			$contact_right = '';
 
-			if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
-			if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
+			if(!empty($business->contact)){ $contact.="<li><em>{$business->contact}</em></li>"; }
+			if(!empty($business->phone)){ $contact.="<li><strong>Phone:</strong> {$business->phone}</li>"; }
+			if(!empty($business->fax)){ $contact.="<li><strong>Fax:</strong> {$business->fax}</li>"; }
 
 			if(!empty($business->url)){
 				if(strstr($business->url, 'http://')){$business_url = $business->url;}
@@ -501,8 +502,9 @@ else if($action == 'category_filter'){
 			$logo_html = '';
 			$contact_right = '';
 
-			if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
-			if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
+			if(!empty($business->contact)){ $contact.="<li><em>{$business->contact}</em></li>"; }
+			if(!empty($business->phone)){ $contact.="<li><strong>Phone:</strong> {$business->phone}</li>"; }
+			if(!empty($business->fax)){ $contact.="<li><strong>Fax:</strong> {$business->fax}</li>"; }
 			
 			if(!empty($business->url)){
 				if(strstr($business->url, 'http://')){$business_url = $business->url;}
@@ -886,7 +888,7 @@ echo "<form id='lddbd_edit_business_form' action='".plugins_url( 'ldd-business-d
 	
 	<p class='submit'>
 		<input type='button' id='lddbd_login_cancel' value='Cancel' />
-	    <input type='submit' class='button-primary' value='Submit Changes' />
+		<input type='submit' class='button-primary' value='Submit Changes' />
    	 </p>
 	</form>
 	{$countryEditor}

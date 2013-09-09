@@ -12,11 +12,30 @@ jQuery(document).ready(function(){
 	});
 	
 	var add_business_top = jQuery('#lddbd_add_business_holder').css('top');
-
+	var input_holder = jQuery('div.lddbd_input_holder'); // There are 21 of these DIVs by default
+	
+	if( input_holder.length > 21 ) {
+		var incr = (-1* parseInt(add_business_top));
+		for( var i = 21; i < input_holder.length; i++ ) {
+			var increment_height = incr += 30;
+		}
+	}
+	
+	jQuery('#lddbd_listings_category_button, #lddbd_all_listings_button, #lddbd_business_login_button').click(function(){
+		jQuery('#lddbd_add_business_holder').css('visibility', 'hidden');
+	});
+	 
 	jQuery('#lddbd_add_business_button, #lddbd_cancel_listing').click(function(){
+		jQuery('#lddbd_add_business_holder').css('visibility', 'visible');
 		if(jQuery('#lddbd_add_business_holder').css('top')==add_business_top){
-			if(jQuery('#lddbd_business_directory_body').height() < -1* parseInt(add_business_top)){
-				jQuery('#lddbd_business_directory_body').animate({'height': -1* parseInt(add_business_top)+'px'}, 400);
+			if( input_holder.length > 21 ) {	
+				if(jQuery('#lddbd_business_directory_body').height() < -1* parseInt(add_business_top)){
+					jQuery('#lddbd_business_directory_body').animate({'height': increment_height+'px'}, 400);
+				}
+			} else {
+				if(jQuery('#lddbd_business_directory_body').height() < -1* parseInt(add_business_top)){
+					jQuery('#lddbd_business_directory_body').animate({'height': -1* parseInt(add_business_top)+'px'}, 400);
+				}
 			}
 			jQuery('#lddbd_add_business_holder').animate({'top': '0px'}, 400);
 		} else {
@@ -220,14 +239,14 @@ function businessLogin(){
 }
 
 function mailToBusiness(email, element, business){
-	var click_position = 0;
+	var click_position;
 	if(jQuery(element).closest('div.lddbd_business_listing').length){
 		click_position = jQuery(element).closest('div.lddbd_business_listing').position();
 		click_position = click_position.top;
 	} else {
-		click_position = 200;
+		click_position = 5;
 	}
-	jQuery('#lddbd_business_directory').append('<div style="position: absolute; width: 100%; height: 100%; top:0px; left: 0px; background: #000; opacity: 0.5; z-index: 400;" id="lddbd_mail_shader"></div><form id="lddbd_mail_to_business_form" style="top: '+click_position+'px"><strong>Send message to '+business+'</strong><input type="hidden" readonly id="email" name="email" value="'+email+'" /><label for="name">Name:</label><input type="text" id="name" name="name" /><label for="from">Email:</label><input type="text" id="from" name="from" /><label for="phone">Phone:</label><input type="text" id="phone" name="phone" /><label for="message">Message:</label><textarea id="message" name="message"></textarea><input type="button" value="Cancel"><input type="submit" value="Send"></form>');
+	jQuery('#lddbd_business_directory').append('<div style="position: absolute; width: 100%; height: 100%; top:0px; left: 0px; background: #000; opacity: 0.5; z-index: 400;" id="lddbd_mail_shader"></div><form id="lddbd_mail_to_business_form" style="top: '+click_position+'%"><strong>Send message to '+business+'</strong><input type="hidden" readonly id="email" name="email" value="'+email+'" /><label for="name">Name:</label><input type="text" id="name" name="name" /><label for="from">Email:</label><input type="text" id="from" name="from" /><label for="phone">Phone:</label><input type="text" id="phone" name="phone" /><label for="message">Message:</label><textarea id="message" name="message"></textarea><input type="button" value="Cancel"><input type="submit" value="Send"></form>');
 	jQuery('#lddbd_mail_to_business_form input:button').click(function(){
 		jQuery('#lddbd_mail_to_business_form, #lddbd_mail_shader').remove();
 	});

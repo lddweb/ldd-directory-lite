@@ -2,48 +2,53 @@
 
 /* -------------- Settings Menu -------------- */
 
+add_action( 'plugins_load', 'lddText' );
+function lddText() {
+	$lddbd_plugin_dir = basename( dirname( __FILE__ ) ) . '/languages/';
+	load_plugin_textdomain( 'ldd-text', '$lddbd_plugin_dir' );
+}
 
-/* Call the html code */
+// Build our administration menu in the backend.
 add_action('admin_menu', 'lddbd_admin_menu');
-
-//Build our administration menu in the backend.
 function lddbd_admin_menu() {
-	$lddbd_menu_page = add_menu_page( 'Directory Listings', 'Directory Listings', 'manage_options', 'business_directory', 'lddbd_html_page');
-	$lddbd_business_categories_page = add_submenu_page('business_directory', 'Directory Categories', 'Directory Categories', 'manage_options', 'business_categories', 'lddbd_business_categories_page');
-	$lddbd_add_business_page = add_submenu_page('business_directory', 'Add Listing to Directory', 'Add Listing', 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
-	$lddbd_edit_business_page = add_submenu_page('business_directory', 'Edit Listing in Directory', 'Edit Listing', 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
-	$lddbd_settings_page = add_submenu_page('business_directory', 'Directory Settings', 'Settings', 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
-	//add_options_page('Business Directory', 'Business Directory', 'manage_options', 'business_directory', 'lddbd_html_page');
+	$lddbd_menu_page = add_menu_page( __('LDD Business Directory', 'lddbd-text'), __('Directory', 'lddbd-text'), 'manage_options', 'business_directory', 'lddbd_html_page' );
+	$lddbd_business_directory_page = add_submenu_page( 'business_directory', __('Directory Listings', 'lddbd-text'), __('Directory Listings', 'lddbd-text'), 'manage_options', 'business_directory' );
+	$lddbd_business_categories_page = add_submenu_page('business_directory', __('Directory Categories', 'lddbd-text'), __('Directory Categories'), 'manage_options', 'business_categories', 'lddbd_business_categories_page');
+	$lddbd_add_business_page = add_submenu_page('business_directory', __('Add Listing to Directory', 'lddbd-text'), __('Add Listing', 'lddbd-text'), 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
+	$lddbd_edit_business_page = add_submenu_page('business_directory', __('Edit Listing in Directory', 'lddbd-text'), __('Edit Listing', 'lddbd-text'), 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
+	$lddbd_settings_page = add_submenu_page('business_directory', __('Directory Settings', 'lddbd-text'), __('Settings', 'lddbd-text'), 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
 	
 	add_action( 'admin_init', 'register_mysettings' );
 	add_action( 'admin_print_styles-' . $lddbd_menu_page, 'lddbd_styles' );
 	add_action( 'admin_print_styles-' . $lddbd_settings_page, 'lddbd_styles' );
 	add_action( 'admin_print_styles-' . $lddbd_add_business_page, 'lddbd_styles' );
 	add_action( 'admin_print_styles-' . $lddbd_edit_business_page, 'lddbd_styles' );
+	add_action( 'admin_print_styles-' . $lddbd_business_directory_page, 'lddbd_styles' );
 	add_action( 'admin_print_styles-' . $lddbd_business_categories_page, 'lddbd_styles' );
 }
 
-function lddbd_styles(){
+function lddbd_styles() {
 	wp_enqueue_style( 'lddbd_stylesheet' );
 }
 
+// Register our settings
 function register_mysettings() {
-	//Register our settings
-	register_setting( 'lddbd_settings_group', 'lddbd_options', 'lddbd_options_validate');
-	add_settings_section('lddbd_main', '', 'lddbd_section_text', 'business_directory_settings');
-	add_settings_field('lddbd_setting_one', 'Display "Submit Listing" Button', 'lddbd_setting_submit_button', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_two', 'Display "Login" Button', 'lddbd_setting_login_field', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_three', 'Display "Google Maps" Map', 'lddbd_setting_google_maps', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_four', 'Directory Title', 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_five', 'Welcome Message', 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_six', 'Directory Label', 'lddbd_setting_directory_label', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_seven', 'Additional Information Sections', 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_eight', 'Categorize Entries', 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main');
-	add_settings_field('lddbd_setting_nine', 'Allow User Categorization', 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main');
+	register_setting( 'lddbd_settings_group', 'lddbd_options', 'lddbd_options_validate' );
+	add_settings_section( 'lddbd_main', '', 'lddbd_section_text', 'business_directory_settings' );
+	add_settings_field( 'lddbd_setting_one', __('Display "Submit Listing" Button', 'lddbd-text'), 'lddbd_setting_submit_button', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_two', __('Display "Login" Button', 'lddbd-text'), 'lddbd_setting_login_field', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_three', __('Display "Google Maps" Map', 'lddbd-text'), 'lddbd_setting_google_maps', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_four', __('Default Directory View', 'lddbd-text'), 'lddbd_setting_default_view', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_five', __('Directory Title', 'lddbd-text'), 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_six', __('Welcome Message', 'lddbd-text'), 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_seven', __('Directory Label', 'lddbd-text'), 'lddbd_setting_directory_label', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_eight', __('Additional Information Sections', 'lddbd-text'), 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_nine', __('Categorize Entries', 'lddbd-text'), 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_ten', __('Allow User Categorization', 'lddbd-text'), 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main' );
 }
 
 function lddbd_section_text() {
-	echo '<p>Edit the settings for your directory.</p>';
+	//echo '<p>Edit the settings for your directory.</p>';
 }
 
 // Controls the display of the "Submit Listing" buttons on the front end.
@@ -57,7 +62,7 @@ function lddbd_setting_submit_button() {
 		$yesChecked = '';
 		$noChecked = 'checked';
 	}
-	echo "<input name='lddbd_options[display_button]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[display_button]' type='radio' value='No' {$noChecked} />No";
+	echo "<input name='lddbd_options[display_button]' type='radio' value='Yes' {$yesChecked} />&nbsp;Yes&nbsp;<input name='lddbd_options[display_button]' type='radio' value='No' {$noChecked} />&nbsp;No";
 }
 
 // Controls the display of the "Login" buttons on the front end.
@@ -71,7 +76,7 @@ function lddbd_setting_login_field() {
 		$yesChecked = '';
 		$noChecked = 'checked';
 	}
-	echo "<input name='lddbd_options[display_login]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[display_login]' type='radio' value='No' {$noChecked} />No";
+	echo "<input name='lddbd_options[display_login]' type='radio' value='Yes' {$yesChecked} />&nbsp;Yes&nbsp;<input name='lddbd_options[display_login]' type='radio' value='No' {$noChecked} />&nbsp;No";
 }
 
 // Controls the display of the "Google Maps" map on the front end.
@@ -85,7 +90,21 @@ function lddbd_setting_google_maps() {
 		$yesChecked = '';
 		$noChecked = 'checked';
 	}
-	echo "<input name='lddbd_options[google_map]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[google_map]' type='radio' value='No' {$noChecked} />No";
+	echo "<input name='lddbd_options[google_map]' type='radio' value='Yes' {$yesChecked} />&nbsp;Yes&nbsp;<input name='lddbd_options[google_map]' type='radio' value='No' {$noChecked} />&nbsp;No";
+}
+
+// Controls the what the default display of the front end: Categories or Listings.
+function lddbd_setting_default_view() {
+	$options = get_option('lddbd_options');
+	$option_value = $options['default_view'];
+	if($option_value=='Listings'){
+		$listChecked = 'checked';
+		$catChecked = '';
+	} else {
+		$listChecked = '';
+		$catChecked = 'checked';
+	}
+	echo "<input name='lddbd_options[default_view]' type='radio' value='Listings' {$listChecked} />&nbsp;Listings&nbsp;<br /><input name='lddbd_options[default_view]' type='radio' value='Categories' {$catChecked} />&nbsp;Categories";
 }
 
 // Controls the display of the Directory Title on the front end. If left empty, the front end will display "Business Directory".
@@ -156,7 +175,7 @@ function lddbd_setting_information_sections(){
 				});
 			});
 		</script>";
-	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/scripts.js'></script>";	
+	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/lddbd_scripts.js'></script>";	
 	
 }
 
@@ -171,9 +190,9 @@ function lddbd_setting_categorization(){
 		$yesChecked = '';
 		$noChecked = 'checked';
 	}
-	echo "<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='No' {$noChecked} />No";
+	echo "<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='Yes' {$yesChecked} />&nbsp;Yes&nbsp;<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='No' {$noChecked} />&nbsp;No";
 	
-	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/scripts.js'></script>";
+	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/lddbd_scripts.js'></script>";
 }
 
 // Controls the display of the Allow User Categorization radio buttons and allows for user categorization.
@@ -187,7 +206,7 @@ function lddbd_setting_user_categorization(){
 		$yesChecked = '';
 		$noChecked = 'checked';
 	}
-	echo "<input name='lddbd_options[user_categorization]' type='radio' value='Yes' {$yesChecked} />Yes&nbsp;<input name='lddbd_options[user_categorization]' type='radio' value='No' {$noChecked} />No";
+	echo "<input name='lddbd_options[user_categorization]' type='radio' value='Yes' {$yesChecked} />&nbsp;Yes&nbsp;<input name='lddbd_options[user_categorization]' type='radio' value='No' {$noChecked} />&nbsp;No";
 	
 }
 
@@ -196,6 +215,7 @@ function lddbd_options_validate($input) {
 	$newinput['display_button'] = trim($input['display_button']);
 	$newinput['display_login'] = trim($input['display_login']);
 	$newinput['google_map'] = trim($input['google_map']);
+	$newinput['default_view'] = trim($input['default_view']);
 	$newinput['directory_title'] = trim($input['directory_title']);
 	$newinput['welcome_message'] = trim($input['welcome_message']);
 	$newinput['directory_label'] = trim($input['directory_label']);

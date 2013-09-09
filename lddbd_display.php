@@ -17,7 +17,7 @@ global $main_table_name, $doc_table_name, $cat_table_name;
 echo "<script type='text/javascript'>
 	lddbd_file_pathway = '".plugins_url( 'ldd-business-directory/' )."';
 	</script>
-	<script type='text/javascript' src='".plugins_url( 'ldd-business-directory/scripts/scripts.js' )."'></script>";
+	<script type='text/javascript' src='".plugins_url( 'ldd-business-directory/scripts/lddbd_scripts.js' )."'></script>";
 
 // When a business is selected from the list of businesses it generates the display document containing the
 // description, logo, and links for the business.
@@ -162,7 +162,7 @@ if($_GET['business']){
 			$type = str_replace( '_', ' ', $type );
 			$type = ucwords( $type );
 			$business_info .= '<span class="lddbd-business-info-type">' . $type . '</span>';
-			$business_info .= '=> <span class="lddbd-business-info-data">' . $data . '</span><br />';
+			$business_info .= '<span class="lddbd-business-info-data">' . $data . '</span><br />';
 		}
 	}
 	
@@ -342,7 +342,7 @@ $add_business_holder = <<<ABH
 		<div class='lddbd_input_holder'>
 			<label for='promo'>Special Offer</label>
 			<div class='lddbd_radio_holder'>
-				<input type='checkbox' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='checkbox' id='promo' name='promo' value='false'/>No
+				<input type='radio' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='radio' id='promo' name='promo' value='false'/>No
 			</div>
 		</div>
 		
@@ -362,7 +362,7 @@ $add_business_holder = <<<ABH
 		
 		<div class='lddbd_input_holder'>
 			<label for='login'>Login</label>
-			<input class='' type='text' id='lddbd_login' name='login'/>
+			<input class='required' type='text' id='lddbd_login' name='login'/>
 		</div>
 		
 		<div class='lddbd_input_holder'>
@@ -412,7 +412,7 @@ ABH;
 	}
 	
 	return "
-		<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/style.css' )."' type='text/css' media='screen' />
+		<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/lddbd_style.css' )."' type='text/css' media='screen' />
 		<div id='lddbd_business_directory'>
 	 		<div id='lddbd_business_directory_head'>
 	 			<p>{$options['welcome_message']}</p>
@@ -589,7 +589,7 @@ $add_business_holder = <<<ABH
 	<form id='add_business_form' action='{$formActionCall}' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
 		<div class='lddbd_input_holder'>
 			<label for='name'>{$directory_label} Name</label>
-			<input class='required' type='text' id='lddbd_name' name='name'/>
+			<input class='' type='text' id='lddbd_name' name='name'/>
 		</div>
 		
 		<div class='lddbd_input_holder'>
@@ -655,7 +655,7 @@ $add_business_holder = <<<ABH
 		<div class='lddbd_input_holder'>
 			<label for='promo'>Special Offer</label>
 			<div class='lddbd_radio_holder'>
-				<input type='checkbox' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='checkbox' id='promo' name='promo' value='false'/>No
+				<input type='radio' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='radio' id='promo' name='promo' value='false'/>No
 			</div>
 		</div>
 		
@@ -686,25 +686,44 @@ $add_business_holder = <<<ABH
 		
 		<div class='submit'>
 			<input id='lddbd_cancel_listing' type='button' class='button-primary' value='Cancel' />
-		    	<input type='submit' id='ldd_add_business' class='button-primary' value='Add Business' />
+		    	<input type='submit' id='ldd_add_business' class='button-primary' value='Submit Listing' />
 	  	</div>
 	</form>
 <script type="text/javascript">
-// The following jQuery is used to reset reset the form after a business has been submitted
-// and to notify a client that their business was submitted and pending approval.
+// The following jQuery is used to reset the form after a business has been submitted
+// and to notify a client that their business was submitted and is pending approval.
 
-var submitted = false;
+var lddbd_name = jQuery('#lddbd_name');
+var lddbd_login = jQuery('#lddbd_login');
+var submitted;
 
 jQuery('#add_business_form').submit(function(e) {
 	e.preventDefault();
-	this.submit();
-});
-
-jQuery('#ldd_add_business').click(function() {
-	jQuery('#add_business_form').submit();
-	submitted = true;
 	
-	if(submitted && jQuery('#add_business_form').submit()) {
+	if( lddbd_name.val() == '' ) {		// Check if a valid business name is entered.
+		lddbd_name.addClass('required');	// Add the 'required' class if no value is entered.
+		alert('Please enter a valid listing name.');
+	} else {
+		lddbd_name.removeClass('required');	// Remove the 'required' class if a value is entered.
+	}
+
+	if( lddbd_login.val() == '' ) {		// Check if a valid business login is entered.
+		lddbd_login.addClass('required');	// Add the 'required' class if no value is entered.
+		alert('Please enter a valid login name.');
+	} else {
+		lddbd_login.removeClass('required');	// Remove the 'required' class if a value is entered.
+	}
+
+	// The form can be submitted if both fields have a valid entry.
+	if( !lddbd_name.hasClass('required') && !lddbd_login.hasClass('required') ) {
+		submitted = true;
+	} else {
+		submitted = false;
+	}
+
+	// If everything goes alright then we'll submit the listing, notify the user, and clear the form.
+	if( submitted ) {
+		this.submit();
 		setTimeout(function() {
 			alert('Your business entry has been submitted. Please wait for administrative approval.');
 			jQuery('input[type="text"], input[type="file"], textarea').val('');
@@ -713,7 +732,7 @@ jQuery('#ldd_add_business').click(function() {
 });
 </script>
 	{$countrySelector}
-	<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='{$formActionCall}' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
+	<iframe id='lddbd_submission_target' name='lddbd_submission_target' src='{$formActionCall}' style='width: 0px; height: 0px; border: 0px solid #fff;'></iframe>
 </div>
 ABH;
 	} else {
@@ -741,18 +760,18 @@ ABH;
 		$directory_label = 'Business';
 	}
 	
-	// We want to make the All Listings view be the default when a user visits the Business Directory.
 	foreach($business_list as $business) {
 		$logo_html = '';
 		$contact = '';
 		$contact_right = '';
-	
+
 		// Check if there is a logo for this particular business listing.
 		if(!empty($business->logo)){ $logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}'/></div>"; }
 		
-		// Check if there is a phone and/or fax number for this business listing.
-		if(!empty($business->phone)){ $contact.="<li>Phone: {$business->phone}</li>"; }
-		if(!empty($business->fax)){ $contact.="<li>Fax: {$business->fax}</li>"; }
+		// Check if there is a name, phone, and/or fax number for this business listing.
+		if(!empty($business->contact)){ $contact.="<li><strong>Contact:</strong> {$business->contact}</li>";}
+		if(!empty($business->phone)){ $contact.="<li><strong>Phone:</strong> {$business->phone}</li>"; }
+		if(!empty($business->fax)){ $contact.="<li><strong>Fax:</strong> {$business->fax}</li>"; }
 		
 		// Check if there is a website URL assigned to this business listing.
 		if(!empty($business->url)){
@@ -784,21 +803,38 @@ ABH;
 		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 		// Check if there is a promotion available for this business listing.
 		if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
+		/*
+		$listing_logo = wp_get_image_editor( $logo_html );
+		if( !is_wp_error( $logo_html ) ) {
+			$listing_logo->resize( 200, 200, true );
+			$listing_logo->save( $resized_logo );
+		}
+		*/
 		
-		$business_div .= "<div class='lddbd_business_listing'>
-			{$logo_html}
-			<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$business->name}</a>
-			<ul class='lddbd_business_contact'>
-				{$contact}
-			</ul>
-			<div class='lddbd_business_contact'>
-				{$contact_right}
-			</div>
-		</div>";
+		// The user can switch between Categories or All Listings as their default front-end view.
+		// $business_div is set to NOT concatenate on Categories so it won't display the same categories multiple times.
+		// $business_div is set to concatenate on All Listings so that all the listings will show.
+		$lddbd_default_view = $options['default_view'];
+		if( $lddbd_default_view == 'Categories' ) {
+			$business_div = "<div id='lddbd_categories_left'>
+					{$categories}
+					</div>";
+		} else {
+			$business_div .= "<div class='lddbd_business_listing'>
+				{$logo_html}
+				<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$business->name}</a>
+				<ul class='lddbd_business_contact'>
+					{$contact}
+				</ul>
+				<div class='lddbd_business_contact'>
+					{$contact_right}
+				</div>
+			</div>";
+		}
 	}
 	
 	 return "
-	 	<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/style.css' )."' type='text/css' media='screen' />
+	 	<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/lddbd_style.css' )."' type='text/css' media='screen' />
 	 	<div id='lddbd_business_directory'>
 	 		<div id='lddbd_business_directory_head'>
 	 		<p>{$options['welcome_message']}</p>
@@ -818,12 +854,6 @@ ABH;
 	 		<div id='lddbd_business_directory_body'>
 	 			<div id='lddbd_business_directory_list'>
 	 				{$business_div}
-		<!--
-			** We want to keep the following code just for ease of switching back to the old format if we want to.
-		-->
-	 				<!--	<div id='lddbd_categories_left'>	-->
-			 		<!--	{$categories}				-->
-			 		<!--	</div>					-->
 			 	</div>
 		 		{$add_business_holder}
 		 	</div>

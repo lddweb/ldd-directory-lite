@@ -1,25 +1,35 @@
 === Plugin Name ===
 Contributors: suffrage
 Donate link: http://www.lddwebdesign.com
-Tags: business directory, ldd, business
-Requires at least: 2.0.2
+Tags: business directory, ldd, lddbd, business, directory, listings, listings directory, directory plugin, business plugin, business directory plugin, listings plugin, listings directory plugin, business listings, business listings plugin
+Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.3.9
+Stable tag: 1.3.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+Create a directory of businesses and listings for your WordPress website.
+
 == Description ==
 
-The LDD Business Directory plugin allows a user to easily manage and display businesses and their information on a WordPress site. Simply use the shortcode `[business_directory]` on any WordPress page and the directory will be displayed, allowing visitors to search through the directory and submit a listing of their own. If the user has a listing on the directory, they can easily sign in and edit their information through the *Login* feature. From the WordPress backend, it is easy to categorize businesses and edit their information, as well as add any custom information fields that may be needed. Plus the settings allow for a greater range of customization of the functionality.
+The LDD Business Directory plugin allows a user to easily manage and display businesses and/or listings along with their information on a WordPress website. Simply using the shortcode `[business_directory]` on any WordPress page will display the directory as well as allow visitors to search through the directory and submit a business or listing of their own.
+
+For users that have a listing on the directory, they can easily sign in and edit their information through the *Login* feature. From the WordPress administration it is easy to categorize businesses and listings, edit their information, and add any custom information fields that site administrator may want to include.
+
+You can visit us at:
+
+<http://www.lddwebdesign.com> or <http://www.lddconsulting.com>
+
+If there are any questions or concerns feel free to contact us at the [LDD Business Directory homepage](http://www.lddwebdesign.com/ldd-web-design-featured-projects/ldd-business-directory-plugin/ "LDD Web Design - LDD Business Directory").
 
 == Installation ==
 
-1. Install from the WordPress plugins utility or simply move the `ldd-business-directory` folder to your plugins directory (`/wp-content/plugins`).
-2. Make sure you activate the plugin on your plugins page.
-3. Now you should have a `Directory Listings` menu item on your dashboard.
-4. From here you can alter your settings, add businesses, edit business information, and customize your categories.
+1. Install from the WordPress plugins utility or simply upload the `ldd-business-directory` folder to your plugins directory (`/wp-content/plugins`).
+2. Make sure you activate the plugin through the 'Plugins' page from the menu in WordPress.
+3. Now you should have a `Directory` menu item on your dashboard.
+4. From here you can alter your settings, add listings, edit listing information, approve user submitted listings, remove listings, and create categories.
 5. Decide which page you wish to display it on or create a page and enter the shortcode `[business_directory]` in the content area of your page.
-6. You can also use the php function `<?php display_business_directory(); ?>` directly in your template file.
+6. You can also use the PHP function `<?php display_business_directory(); ?>` directly in your template file.
 
 == Frequently Asked Questions ==
 
@@ -30,12 +40,19 @@ A. Try changing your Permalink settings to *Post name* and refresh your page.
 A. No. It is strictly used for the *Business Directory* and is for those who have submitted a business listing and would like to make changes to their directory entry.
 
 = Q. I would like to use this plugin for community organizations but need to change the text in places where it says business. Is this possible? =
-A. There is now a text field on the Settings page called `Directory Label` where you can change this text.
+A. There is a text field on the Settings page called `Directory Label` where you can change this text.
 
 = Q. The same image is being displayed across all the listings, why is this? =
-A. The filename of the logo used for each listing is based upon the *username* that has been entered for each individual listing. If all the listings have no username then whatever logo you upload for any one of them will be applied to all of them (same goes if multiple listings have the same username). Each listing should have a unique username.
+A. The filename of the logo used for each listing is based upon the *login name* that has been entered for each individual listing. If all the listings have no login then whatever logo has been uploaded for any one of them will be applied to all of them (same goes if multiple listings have the same login). Each listing should have a unique login.
 
 == Changelog ==
+
+= 1.3.10 =
+
+- Made WordPress 3.5 the minimum required version to operate this plugin.
+- Modified logo file naming function to use listing names instead of login names.
+- Added dialog boxes to Submit Listing to ensure a `listing name` and/or `login name` is entered.
+- Added setting to change the default view of the directory front end to either Categories or Listings.
 
 = 1.3.9 =
 
@@ -46,7 +63,7 @@ A. The filename of the logo used for each listing is based upon the *username* t
 
 = 1.3.8.2 =
 
-- Fixed a bug that removed client logo when editing a listing in the back end. (Thanks to user iBusinessLogic for reporting this!)
+- Fixed a bug that removed client logo when editing a listing in the back end.
 
 = 1.3.8.1 =
 
@@ -95,8 +112,3 @@ Added options for directory title, and whether to display the promo filter in th
 = 1.1 =
 
 Added ability to remove a logo, fixed some javascript bugs and updated styling.
-
-
-== Upgrade Notice ==
-
-= 1.3.8 =
