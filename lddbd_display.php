@@ -655,7 +655,8 @@ $add_business_holder = <<<ABH
 		<div class='lddbd_input_holder'>
 			<label for='promo'>Special Offer</label>
 			<div class='lddbd_radio_holder'>
-				<input type='radio' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='radio' id='promo' name='promo' value='false'/>No
+				<input type='radio' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;
+				<input type='radio' id='promo' name='promo' value='false'/>No
 			</div>
 		</div>
 		

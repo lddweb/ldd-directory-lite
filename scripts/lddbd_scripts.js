@@ -1,6 +1,5 @@
 jQuery(document).ready(function(){
 
-	
 	jQuery('#lddbd_categories_multiselect').change(function(){
 		var category_string = '';
 		var category_array = jQuery(this).val();
@@ -10,21 +9,21 @@ jQuery(document).ready(function(){
 		}
 		jQuery('#lddbd_categories').val(category_string);
 	});
-	
+
 	var add_business_top = jQuery('#lddbd_add_business_holder').css('top');
 	var input_holder = jQuery('div.lddbd_input_holder'); // There are 21 of these DIVs by default
-	
+
 	if( input_holder.length > 21 ) {
 		var incr = (-1* parseInt(add_business_top));
 		for( var i = 21; i < input_holder.length; i++ ) {
 			var increment_height = incr += 30;
 		}
 	}
-	
+
 	jQuery('#lddbd_listings_category_button, #lddbd_all_listings_button, #lddbd_business_login_button').click(function(){
 		jQuery('#lddbd_add_business_holder').css('visibility', 'hidden');
 	});
-	 
+
 	jQuery('#lddbd_add_business_button, #lddbd_cancel_listing').click(function(){
 		jQuery('#lddbd_add_business_holder').css('visibility', 'visible');
 		if(jQuery('#lddbd_add_business_holder').css('top')==add_business_top){
@@ -43,7 +42,7 @@ jQuery(document).ready(function(){
 			jQuery('#lddbd_business_directory_body').removeAttr('style');
 		}
 	});
-	
+
 	jQuery('#lddbd_add_business_form').submit(function(){
 		var error = false;
 		
@@ -55,12 +54,12 @@ jQuery(document).ready(function(){
 				error=true;
 			}
 		});
-		
+
 		if(jQuery.inArray(jQuery('#lddbd_add_business_form').find('#login').val(), lddbd_business_logins)!=-1){
 			jQuery('#lddbd_add_business_form').find('#login').addClass('add_business_error').parent().append('<div class="add_business_error">This login is taken.</div>');
 			error=true;
 		}
-		
+
 		jQuery('input.add_business_error').focus(function(){
 		jQuery(this).removeClass('add_business_error');
 	}).blur(function(){
@@ -70,7 +69,7 @@ jQuery(document).ready(function(){
 			jQuery(this).siblings('div.add_business_error').remove();
 		}
 	});
-		
+
 		if(!error){
 			jQuery(this).contents().fadeTo(200, 0.1);
 			return true;
@@ -85,7 +84,7 @@ jQuery(document).ready(function(){
 			return false;
 		}
 	});
-	
+
 	jQuery('#lddbd_search_directory').focus(function(){
 		if(jQuery(this).val()=='Search the Business Directory'){
 			jQuery(this).val('');
@@ -95,7 +94,7 @@ jQuery(document).ready(function(){
 			jQuery(this).val('Search the Business Directory');
 		}
 	});
-	
+
 	jQuery('#lddbd_business_search').submit(function(){
 		if(jQuery('#lddbd_add_business_holder').css('top') == '0px'){
 			jQuery('#lddbd_add_business_holder').animate({'top': add_business_top}, 400);
@@ -104,7 +103,7 @@ jQuery(document).ready(function(){
 		if(jQuery('#lddbd_business_directory_single').length){
 			jQuery('#lddbd_business_directory_single').fadeOut(200);
 		}
-		
+
 		var query = jQuery('#lddbd_search_directory').val();
 		if(query=='Search the Business Directory'){
 			query = '';
@@ -124,41 +123,40 @@ jQuery(document).ready(function(){
 		});
 		return false;
 	});
-	
-	
+
 	jQuery('#lddbd_business_login_button').click(function(){
 		if(jQuery('#lddbd_add_business_holder').css('top') == '0px'){
 			jQuery('#lddbd_add_business_holder').animate({'top': add_business_top}, 400);
 			jQuery('#lddbd_business_directory_body').removeAttr('style');	
 		}
-	
+
 		jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1, function(){
 			jQuery(this).html('<div id="lddbd_business_login_holder"><form onsubmit="javascript: return businessLogin();" id="lddbd_business_login_form" method="post" action=""><div id="lddbd_input_holder"><label for="lddbd_business_login">Login</label><input id="lddbd_business_login" name="lddbd_business_login" type="text"/><br/><label for="lddbd_business_password">Password</label><input id="lddbd_business_password" name="lddbd_business_password" type="password"/></div>	<input type="submit" value="Log In"></form><a href="javascript:void(0);" onclick="javascript: lddbdPasswordRecovery();" id="lddbd_forgot_password">Forgot Password?</a></div>');
 			jQuery(this).fadeTo(200, 1);
 		});
 	});
-	
+
 	jQuery('#lddbd_directory_home_button').click(function(){
 		if(jQuery('#lddbd_add_business_holder').css('top') == '0px'){
 			jQuery('#lddbd_add_business_holder').animate({'top': add_business_top}, 400);
 			jQuery('#lddbd_business_directory_body').removeAttr('style');	
 		}
-	
+
 		var current_url = window.location.toString();
 		var cutoff = current_url.indexOf('?');
 		window.location = current_url.substring(0, cutoff);
 	});
-	
+
 	jQuery('#lddbd_all_listings_button').click(function(){
 		if(jQuery('#lddbd_add_business_holder').css('top') == '0px'){
 			jQuery('#lddbd_add_business_holder').animate({'top': add_business_top}, 400);
 			jQuery('#lddbd_business_directory_body').removeAttr('style');	
 		}
-	
+
 		if(jQuery('#lddbd_business_directory_single').length){
 			jQuery('#lddbd_business_directory_single').fadeOut(200);
 		}
-		
+
 		jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1);
 		jQuery.ajax({
 			type: 'POST',
@@ -169,16 +167,16 @@ jQuery(document).ready(function(){
 			}
 		});
 	});
-	
+
 	jQuery('#lddbd_listings_category_button').click(function(){
 		if(jQuery('#lddbd_add_business_holder').css('top') == '0px'){
 			jQuery('#lddbd_add_business_holder').animate({'top': add_business_top}, 400);
 			jQuery('#lddbd_business_directory_body').removeAttr('style');	
 		}
-	
+
 		backToCategories();
 	});
-	
+
 	jQuery('.lddbd_categorization_bool[name="lddbd_options[categorization]"]').change(function(){
 		if(jQuery(this).val()=='Yes'){
 			jQuery('#lddbd_categories_list').closest('tr').slideDown('fast');
@@ -186,13 +184,12 @@ jQuery(document).ready(function(){
 			jQuery('#lddbd_categories_list').closest('tr').slideUp('fast');
 		}
 	});
-	
+
 	if(jQuery('.lddbd_categorization_bool:checked').val()=='Yes'){
 		jQuery('#lddbd_categories_list').closest('tr').slideDown(0);
 	} else {
 		jQuery('#lddbd_categories_list').closest('tr').slideUp(0);
 	}
-	
 });
 
 
@@ -210,7 +207,6 @@ function lddbdPasswordRecovery(){
 				else if(data=='success'){
 					alert("A new password has been sent to the email address listed for the business");
 				}
-				
 			}
 		});
 	} else {
@@ -222,7 +218,7 @@ function businessLogin(){
 	if(jQuery('#lddbd_business_directory_single').length){
 		jQuery('#lddbd_business_directory_single').fadeOut(200);
 	}
-	
+
 	jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1);
 	var login = jQuery('#lddbd_business_login').val();
 	var password = jQuery('#lddbd_business_password').val();
@@ -256,8 +252,7 @@ function mailToBusiness(email, element, business){
 		var message = jQuery('textarea#message', this).val();
 		var error = false;
 		var error_message = '';
-		
-		
+
 		if(from=='' || !email_regex.test(from)){
 			error = true;
 			error_message+='Please enter a valid return email \r\n';
@@ -266,7 +261,7 @@ function mailToBusiness(email, element, business){
 			error = true;
 			error_message+='Please enter a message \r\n';
 		}
-		
+
 		if(error){
 			alert(error_message);
 		} else {
@@ -287,15 +282,13 @@ function mailToBusiness(email, element, business){
 				}
 			});
 		}
-		
-		
+
 		return false;
 	});
-	
 }
 
 function backToCategories(){
-	
+
 	if(jQuery('#lddbd_add_business_holder').css('top') == '0px'){jQuery('#lddbd_add_business_button').click();}
 
 	if(jQuery('#lddbd_business_directory_single').length){
@@ -322,9 +315,9 @@ function backToResults(){
 	jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1, function(){
 		jQuery(this).html(previous_content).fadeTo(200, 1);
 	});
-} else {
+	} else {
 	window.location.href = window.location.href.split('?')[0];
-}	
+	}
 }
 
 function categoryListing(cat_id){
@@ -357,7 +350,7 @@ function removeInfoSection(element){
 	var section_id = jQuery(element).parent().attr('id');
 	var section_index = parseInt(section_id.replace('lddbd_information_section_', ''));
 	for(i=section_index+1; i<=section_count; i++){
-		
+
 		jQuery('#lddbd_information_section_'+i+' h3').html('Section '+(i-1));
 		jQuery('#lddbd_information_section_'+i).find('label').eq(0).attr('for', 'lddbd_options[section'+(i-1)+'_title]');
 		jQuery('#lddbd_information_section_'+i).find('input:text').attr('name', 'lddbd_options[section'+(i-1)+'_title]');
@@ -374,7 +367,7 @@ function removeCategory(element){
 	var category_id = jQuery(element).parent().attr('id');
 	var category_index = parseInt(category_id.replace('lddbd_category_holder_', ''));
 	for(i=category_index+1; i<=category_count; i++){
-		
+
 		jQuery('#lddbd_category_holder_'+i).find('input:text').attr('name', 'lddbd_options[category_'+(i-1)+']');
 		jQuery('#lddbd_category_holder_'+i).attr('id', 'lddbd_information_section_'+(i-1));
 	}

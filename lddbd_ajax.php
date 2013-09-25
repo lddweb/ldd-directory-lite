@@ -208,35 +208,50 @@ else if($action == 'edit'){
 		}
 	}
 	$update_array = array();
+
+	$update_array['updateDate'] = current_time('mysql');
 	if(!empty($_POST['name'])){$update_array['name'] = stripslashes($_POST['name']);}
 	if(!empty($_POST['description'])){$update_array['description'] = stripslashes($_POST['description']);}
+		else if( $_POST['description'] = ' ' || $_POST['description'] = '' ) { $update_array['description'] = ' '; }
 	if(!empty($_POST['address_street'])){$update_array['address_street'] = $_POST['address_street'];}
 	if(!empty($_POST['address_city'])){$update_array['address_city'] = $_POST['address_city'];}
 	if(!empty($_POST['address_state'])){$update_array['address_state'] = $_POST['address_state'];}
 	if(!empty($_POST['address_zip'])){$update_array['address_zip'] = $_POST['address_zip'];}
 	if(!empty($_POST['address_country'])){$update_array['address_country'] = $_POST['address_country'];}
 	if(!empty($_POST['phone'])){$update_array['phone'] = $_POST['phone'];}
+		else if( $_POST['phone'] = ' ' || $_POST['phone'] = '' ) { $update_array['phone'] = ' '; }
 	if(!empty($_POST['fax'])){$update_array['fax'] = $_POST['fax'];}
+		else if( $_POST['fax'] = ' ' || $_POST['fax'] = '' ) { $update_array['fax'] = ' '; }
 	if(!empty($_POST['email'])){$update_array['email'] = $_POST['email'];}
+		else if( $_POST['email'] = ' ' || $_POST['email'] = '' ) { $update_array['email'] = ' '; }
 	if(!empty($_POST['contact'])){$update_array['contact'] = $_POST['contact'];}
+		else if( $_POST['contact'] = ' ' || $_POST['contact'] = '' ) { $update_array['contact'] = ' '; }
 	if(!empty($_POST['url'])){$update_array['url'] = $_POST['url'];}
+		else if( $_POST['url'] = ' ' || $_POST['url'] = '' ) { $update_array['url'] = ' '; }
 	if(!empty($_POST['facebook'])){$update_array['facebook'] = $_POST['facebook'];}
+		else if( $_POST['facebook'] = ' ' || $_POST['facebook'] = '' ) { $update_array['facebook'] = ' '; }
 	if(!empty($_POST['twitter'])){$update_array['twitter'] = $_POST['twitter'];}
+		else if( $_POST['twitter'] = ' ' || $_POST['twitter'] = '' ) { $update_array['twitter'] = ' '; }
 	if(!empty($_POST['linkedin'])){$update_array['linkedin'] = $_POST['linkedin'];}
+		else if( $_POST['linkedin'] = ' ' || $_POST['linkedin'] = '' ) { $update_array['linkedin'] = ' '; }
 	if(isset($_POST['promo']) && $_POST['promo']=='true'){
 		$update_array['promo'] ='true';
 	}
 	else{$update_array['promo'] = 'false';}
 	if(!empty($_POST['promo_description'])){$update_array['promoDescription'] = stripslashes($_POST['promo_description']);}
+		else if( $_POST['promo_description'] = ' ' || $_POST['promo_description'] = '' ) { $update_array['promoDescription'] = ' '; }
 	if(!empty($_POST['current_logo'])){$update_array['logo'] = $_POST['current_logo'];}
 	if(!empty($_POST['login'])){$update_array['login'] = $_POST['login'];}
 	if(!empty($_POST['password'])){$update_array['password'] = $_POST['password'];}
+		else if( $_POST['password'] = ' ' || $_POST['password'] = '' ) { $update_array['password'] = ' '; }
 	if(!empty($_POST['approved'])){
 		if($_POST['approved']=='true'){$update_array['approved']='true';}
 		else{$update_array['approved']='false';}
 	}
 	if(!empty($save_additional_sections)){$update_array['other_info'] = serialize($save_additional_sections);}
+		else if( $save_additional_sections = ' ' || $save_additional_sections = '' ) { $update_array['other_info'] = ' '; }
 	if(!empty($_POST['categories'])){$update_array['categories'] = stripslashes($_POST['categories']);}
+		else if( $_POST['categories'] = ' ' || $_POST['categories'] = '' ) { $update_array['categories'] = ' '; }
 
 	if(!empty($_FILES['logo']['name'])){
 		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
@@ -298,13 +313,21 @@ else if($action == 'quick_edit'){
 	if(!empty($_POST['name'])){$update_array['name'] = stripslashes($_POST['name']);}
 	if(!empty($_POST['description'])){$update_array['description'] = stripslashes($_POST['description']);}
 	if(!empty($_POST['phone'])){$update_array['phone'] = $_POST['phone'];}
+		else if( $_POST['phone'] = ' ' || $_POST['phone'] = '' ) { $update_array['phone'] = ' '; }
 	if(!empty($_POST['fax'])){$update_array['fax'] = $_POST['fax'];}
+		else if( $_POST['fax'] = ' ' || $_POST['fax'] = '' ) { $update_array['fax'] = ' '; }
 	if(!empty($_POST['email'])){$update_array['email'] = $_POST['email'];}
+		else if( $_POST['email'] = ' ' || $_POST['email'] = '' ) { $update_array['email'] = ' '; }
 	if(!empty($_POST['contact'])){$update_array['contact'] = $_POST['contact'];}
+		else if( $_POST['contact'] = ' ' || $_POST['contact'] = '' ) { $update_array['contact'] = ' '; }
 	if(!empty($_POST['url'])){$update_array['url'] = $_POST['url'];}
+		else if( $_POST['url'] = ' ' || $_POST['url'] = '' ) { $update_array['url'] = ' '; }
 	if(!empty($_POST['facebook'])){$update_array['facebook'] = $_POST['facebook'];}
+		else if( $_POST['facebook'] = ' ' || $_POST['facebook'] = '' ) { $update_array['facebook'] = ' '; }
 	if(!empty($_POST['twitter'])){$update_array['twitter'] = $_POST['twitter'];}
+		else if( $_POST['twitter'] = ' ' || $_POST['twitter'] = '' ) { $update_array['twitter'] = ' '; }
 	if(!empty($_POST['linkedin'])){$update_array['linkedin'] = $_POST['linkedin'];}
+		else if( $_POST['linkedin'] = ' ' || $_POST['linkedin'] = '' ) { $update_array['linkedin'] = ' '; }
 	if(isset($_POST['promo']) && $_POST['promo']=='true'){
 		$update_array['promo'] ='true';
 	}

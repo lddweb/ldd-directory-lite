@@ -4,7 +4,7 @@
 Plugin Name: LDD Business Directory
 Plugin URI: http://www.lddwebdesign.com
 Description: Create a directory of businesses and listings for your WordPress website.
-Version: 1.3.10
+Version: 1.3.11
 Author: LDD Web Design
 Author URI: http://www.lddwebdesign.com
 License: LDDBD
@@ -21,7 +21,7 @@ function lddbd_admin_init() {
 }
 
 global $lddbd_db_version;
-$lddbd_db_version = "1.2";
+$lddbd_db_version = "1.3";
 
 global $wpdb;
 
@@ -99,68 +99,7 @@ function lddbd_install() {
    dbDelta($doc_table);
    dbDelta($cat_table);
  
-   add_option("lddbd_db_version", $lddbd_db_version);
-   
-$installed_ver = get_option( "lddbd_db_version" );
-
-// Update the database structure of the plugin if it was built on a previous version.
-if( $installed_ver != $lddbd_db_version ) {
-		$main_table = "CREATE TABLE $main_table_name (
-		id BIGINT(20) NOT NULL AUTO_INCREMENT,
-		createDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		updateDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		name TINYTEXT NOT NULL,
-		description TEXT NOT NULL,
-		categories TEXT NOT NULL,
-		address_street TEXT NOT NULL,
-		address_city TEXT NOT NULL,
-		address_state TEXT,
-		address_zip CHAR(15),
-		address_country TEXT NOT NULL
-		phone CHAR(15) NOT NULL,
-		fax CHAR(15),
-		email VARCHAR(55) DEFAULT '' NOT NULL,
-		contact tinytext NOT NULL,
-		url VARCHAR(55) DEFAULT '' NOT NULL,
-		facebook VARCHAR(256),
-		twitter VARCHAR(256),
-		linkedin VARCHAR(256),
-		promo ENUM('true', 'false') NOT NULL,
-		promoDescription text DEFAULT '',
-		logo VARCHAR(256) DEFAULT '' NOT NULL,
-		login text NOT NULL,
-		password VARCHAR(64) NOT NULL,
-		approved ENUM('true', 'false') NOT NULL,
-		other_info TEXT,
-		UNIQUE KEY id (id)
-		);";
-		
-		// Creates the table that contains documentation/descriptions.
-		$doc_table = "CREATE TABLE $doc_table_name (
-		doc_id BIGINT(20) NOT NULL AUTO_INCREMENT,
-		bus_id BIGINT(20) NOT NULL,
-		doc_path VARCHAR(256) NOT NULL,
-		doc_name TINYTEXT NOT NULL,
-		doc_description LONGTEXT,
-		PRIMARY KEY  (doc_id),
-		FOREIGN KEY (bus_id) REFERENCES $main_table_name(id)
-		);";
-		
-		// Creates the table that contains a listing of all the categories.
-		$cat_table = "CREATE TABLE $cat_table_name(
-		id BIGINT(20) NOT NULL AUTO_INCREMENT,
-		name TINYTEXT NOT NULL,
-		count BIGINT(20) NOT NULL,
-		PRIMARY KEY  (id)
-		);";
-		
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta($main_table);
-	dbDelta($doc_table);
-	dbDelta($cat_table);
-	
-	update_option( "lddbd_db_version", $lddbd_db_version );
-	}
+   add_site_option('lddbd_db_version', $lddbd_db_version);
 }
 
 register_activation_hook(__FILE__,'lddbd_install');

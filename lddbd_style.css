@@ -262,7 +262,7 @@ div.lddbd_input_holder{
 	#lddbd_business_directory_body{
 		position: relative;
 		overflow: hidden;
-		max-height: 2000px !important;	
+		/*max-height: 2000px !important;*/	
 	}
 	
 		#lddbd_business_directory_body h3 {

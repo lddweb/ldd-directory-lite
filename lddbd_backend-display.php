@@ -129,29 +129,6 @@ function lddbd_html_page(){
 		?>
 		</tbody>
 		</table>
-	<!-- #CODE BLOCK# Export/Import - Businesses #CODE BLOCK# -->
-	<?php
-	$lddbd_IER = ABSPATH . 'wp-content/plugins/lddbd-import-export-reports/lddbd_IER_core.php';
-
-	if( file_exists( $lddbd_IER ) ) {
-		$lddbd_IER_ext = 'lddbd-import-export-reports/lddbd_IER_core.php';
-		if( is_plugin_active( $lddbd_IER_ext ) ) {
-	?>
-		<p>
-   		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_csvExport-business.php' ); ?>" method="get">
-   			<input type="submit" class="button-primary" value="<?php _e('Export Listing(s)', 'lddbd-text'); ?>" />
-	   	</form>
-   		</p>
-
-   		<p>
-		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_csvImport-business.php' ); ?>" method="post" enctype="multipart/form-data">
-			<input type="file" name="uploaded" />
-			<input type="submit" class="button-primary" name="upfile" value="<?php _e('Import Listing(s) (CSV File)', 'lddbd-text'); ?>" />
-		</form>
-		</p>
-	<?php }
-	} ?>
-   	<!-- #CODE BLOCK# Export/Import - Businesses #CODE BLOCK# -->
 
 	</div>
 
@@ -241,26 +218,7 @@ function lddbd_settings_page(){
 			    <input type="submit" class="button-primary" value="<?php _e('Save Changes', 'lddbd-text') ?>" />
 		    </p>
    		</form>
-
-   	<!-- #CODE BLOCK# HTML Report - Settings Page #CODE BLOCK# -->
-   	<?php
-   	//if( lddbd_check_license() ) { /* Start the license check for Settings page. */
-	$lddbd_IER = ABSPATH . 'wp-content/plugins/lddbd-import-export-reports/lddbd_IER_core.php';
-
-	if( file_exists( $lddbd_IER ) ) {
-		$lddbd_IER_ext = 'lddbd-import-export-reports/lddbd_IER_core.php';
-		if( is_plugin_active( $lddbd_IER_ext ) ) {
-	?>
-   		<hr style="color: #fff; width: 525px; margin: 0 auto 0 0;" />
-   		<p>
-   		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_htmlReport.php' ); ?>" target="_blank" method="get">
-   			<input type="submit" class="button-primary" value="<?php _e('Generate Printable Directory List', 'lddbd-text'); ?>" style="float: left;" />
-	   	</form>
-   		</p>
-   	<?php }
-   	} ?>
-   	<!-- #CODE BLOCK# HTML Report - Settings Page #CODE BLOCK# -->
-   					
+ 					
 	</div>
 <?php
 }
@@ -982,29 +940,6 @@ jQuery(document).ready(function() {
 	});
 });
 </script>
-	<!-- #CODE BLOCK# Export/Import - Categories #CODE BLOCK# -->
-	<?php
-	$lddbd_IER = ABSPATH . 'wp-content/plugins/lddbd-import-export-reports/lddbd_IER_core.php';
-
-	if( file_exists( $lddbd_IER ) ) {
-		$lddbd_IER_ext = 'lddbd-import-export-reports/lddbd_IER_core.php';
-		if( is_plugin_active( $lddbd_IER_ext ) ) {
-	?>
-		<p>
-   		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_csvExport-category.php' ); ?>" method="get">
-   			<input type="submit" class="button-primary" value="<?php _e('Export Categories', 'lddbd-text'); ?>" />
-	   	</form>
-   		</p>
-
-   		<p>
-		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_csvImport-category.php' ); ?>" method="post" enctype="multipart/form-data">
-			<input type="file" name="uploaded" />
-			<input type="submit" class="button-primary" name="upfile" value="<?php _e('Import Categories (CSV File)', 'lddbd-text'); ?>" />
-		</form>
-		</p>
-	<?php }
-	} ?>
-   	<!-- #CODE BLOCK# Export/Import - Categories #CODE BLOCK# -->
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
