@@ -4,7 +4,7 @@ Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, lddbd, business, directory, listings, listings directory, directory plugin, business plugin, business directory plugin, listings plugin, listings directory plugin, business listings, business listings plugin
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.3.11
+Stable tag: 1.3.11.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ A. There is a text field on the Settings page called `Directory Label` where you
 A. The filename of the logo used for each listing is based upon the *login name* that has been entered for each individual listing. If all the listings have no login then whatever logo has been uploaded for any one of them will be applied to all of them (same goes if multiple listings have the same login). Each listing should have a unique login. *(Changed in version 1.3.10 to use the **Listing Name**)*
 
 == Changelog ==
+
+= 1.3.11.1 =
+- Corrected a bug that showed social media icons even while their corresponding fields were empty.
 
 = 1.3.11 =
 - Fixed bug that prevented optional fields from being cleared and saved after updating an entry.
