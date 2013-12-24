@@ -349,7 +349,7 @@ div.lddbd_input_holder{
 		#lddbd_add_business_holder{
 			width: 100%;
 			padding: 5px 10px;
-			top: -940px;
+			top: -1040px;
 			left: 0px;
 			display: block;
 			overflow: hidden;
@@ -532,6 +532,7 @@ div.lddbd_input_holder{
 		}
 		
 		#lddbd_business_directory form#lddbd_mail_to_business_form label{
+			color: #000;
 			float: left;
 			margin: 10px 0px 0px 0px;
 			clear: left;

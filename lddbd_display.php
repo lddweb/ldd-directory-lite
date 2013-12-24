@@ -8,7 +8,7 @@ if ( !wp_script_is( 'jquery' ) ) {
 }
 
 // Generates and controls all the behavior and business logic for the actual display page that a client will see.
-function display_business_directory( $atts ){
+function display_business_directory(){
 
 global $wpdb;
 global $lddbd_state_dropdown;
@@ -140,8 +140,9 @@ if($_GET['business']){
 		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
 	}
 	if(!empty($business->twitter)){ 
-		if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
-		else{$business_twitter = 'http://'.$business->twitter;}
+		if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
+		else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
+		else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
 		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 	}
 	if(!empty($business->linkedin)){ 
@@ -194,7 +195,7 @@ if($_GET['business']){
 			
 	$user_categorization_query = $options['user_categorization'];
 	
-	// Generates the category list for the frontend from all the categories available in the database.
+	// Generates the category list for the frontend from all the categories available in the database for a user to choose from.
 	if($user_categorization_query=='Yes'){
 		$categories_list = $wpdb->get_results(
 			"
@@ -216,7 +217,7 @@ if($_GET['business']){
 		$business_categories .= "<input id='lddbd_categories' type='hidden' name='categories'/>\n";
 		$business_categories .= "</div>\n";
 	}
-	
+
 	$submit_button_query = $options['display_button'];
 	
 	// Generates the Submit Listing form. Also returns the entire frontend display.
@@ -531,7 +532,7 @@ else {
 		$business_categories .= "<input id='lddbd_categories' type='hidden' name='categories'/>";
 		$business_categories .= "</div>";
 	}
-	
+
 	$submit_button_query = $options['display_button'];
 	if($submit_button_query=='Yes'){
 	
@@ -788,8 +789,9 @@ ABH;
 		}
 		// Check if there is a Twitter account assigned to this business listing.
 		if(!empty($business->twitter)){ 
-			if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
-			else{$business_twitter = 'http://'.$business->twitter;}
+			if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
+			else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
+			else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
 		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 		}
 		// Check if there is a LinkedIn account assigned to this business listing.
@@ -801,7 +803,7 @@ ABH;
 		// Check if there is an email address assigned to this business listing.
 		if(!empty($business->email)){
 			$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
+		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 		// Check if there is a promotion available for this business listing.
 		if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
 		/*

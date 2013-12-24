@@ -153,10 +153,11 @@ else if($action == 'add'){
 
 	$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
 	preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-	$logo_path = 'lddbd-logos/'.$name.'_logo.'.$fileExt[1];
+	$logo_name = str_replace( array( ',', '.', ' ', '?', '!', '@', '#', '$', '%', '^', '&', '*' ), '', $name );
+	$logo_path = 'lddbd-logos/'.$logo_name.'_logo.'.$fileExt[1];
 	while (file_exists($logo_path)) {
 		$modifier = rand(0, 1000);
-		$logo_path = 'lddbd-logos/'.$name.'_logo'.$modifier.'.'.$fileExt[1];
+		$logo_path = 'lddbd-logos/'.$logo_name.'_logo'.$modifier.'.'.$fileExt[1];
 	}
 
 	if(move_uploaded_file($_FILES['logo']['tmp_name'], "../../uploads/" . $logo_path)) {
@@ -192,6 +193,25 @@ else if($action == 'add'){
 			'other_info' => serialize($save_additional_sections)
 		)
 	);
+	
+	$admin_email = get_option( 'admin_email' );
+	$admin_sitename = get_option( 'blogname' );
+	
+	// Notification email that gets sent to the visitor who submitted the listing.
+	$mail_to = $email;
+	$mail_subject = 'Your directory listing has been successfully submitted!';
+	$mail_content = 'The entry you submitted to the directory at ' . $admin_sitename . ' was completed successfully and is now pending approval.';	
+	$mail_headers = 'From: LDD Business Directory <' . $admin_email . '>' . "\r\n";
+	
+	wp_mail( $mail_to, $mail_subject, $mail_content, $mail_headers );
+	
+	// Notification email that gets sent to the site administrator.
+	$admin_mail_to = $admin_email;
+	$admin_mail_subject = 'A new listing has been submitted for approval.';	
+	$admin_mail_content = 'A new listing, ' . $name . ', has been submitted and is awaiting administrative approal.';
+	$admin_mail_headers = 'From: LDD Business Directory <' . $admin_email . '>' . "\r\n";
+	
+	wp_mail( $admin_mail_to, $admin_mail_subject, $admin_mail_content, $admin_mail_headers );
 	
 	header('Location: '.get_bloginfo('url').'/wp-admin/admin.php?page=business_directory');
 }
@@ -254,12 +274,13 @@ else if($action == 'edit'){
 		else if( $_POST['categories'] = ' ' || $_POST['categories'] = '' ) { $update_array['categories'] = ''; }
 
 	if(!empty($_FILES['logo']['name'])){
-		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'xls', 'xslx', 'doc', 'docx', 'pdf');
+		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
 		preg_match('/\.('.implode($allowedExtensions, '|').')$/', $_FILES['logo']['name'], $fileExt);
-		$logo_path = 'lddbd-logos/'.$_POST['name'].'_logo.'.$fileExt[1];
+		$logo_name = str_replace( array( ',', '.', ' ',  '?', '!', '@', '#', '$', '%', '^', '&', '*' ), '', $_POST['name'] );
+		$logo_path = 'lddbd-logos/'.$logo_name.'_logo.'.$fileExt[1];
 		while (file_exists($logo_path)) {
 			$modifier = rand(0, 1000);
-			$logo_path = 'lddbd-logos/'.$_POST['name'].'_logo'.$modifier.'.'.$fileExt[1];
+			$logo_path = 'lddbd-logos/'.$logo_name.'_logo'.$modifier.'.'.$fileExt[1];
 		}
 
 		if(move_uploaded_file($_FILES['logo']['tmp_name'], "../../uploads/" . $logo_path)) {
@@ -417,8 +438,9 @@ else if($action == 'search'){
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
-				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
-				else{$business_twitter = 'http://'.$business->twitter;}
+				if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
+				else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
+				else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
@@ -428,7 +450,7 @@ else if($action == 'search'){
 			}
 			if(!empty($business->email)){
 				$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
+				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 			if($business->promo=='true'){
 				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
 			if(!empty($business->logo)){
@@ -540,8 +562,9 @@ else if($action == 'category_filter'){
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
 			}
 			if(!empty($business->twitter)){ 
-				if(strstr($business->twitter, 'http://')){$business_twitter = $business->twitter;}
-				else{$business_twitter = 'http://'.$business->twitter;}
+				if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
+				else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
+				else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
 				$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
 			}
 			if(!empty($business->linkedin)){ 
@@ -551,7 +574,7 @@ else if($action == 'category_filter'){
 			}
 			if(!empty($business->email)){
 				$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}'), this, '{$bizname_esc}';\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
+				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
 			if($business->promo=='true'){
 				$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
 			if(!empty($business->logo)){

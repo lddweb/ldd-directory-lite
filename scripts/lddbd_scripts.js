@@ -60,7 +60,7 @@ jQuery(document).ready(function(){
 			error=true;
 		}
 
-		jQuery('input.add_business_error').focus(function(){
+	jQuery('input.add_business_error').focus(function(){
 		jQuery(this).removeClass('add_business_error');
 	}).blur(function(){
 		if(jQuery(this).val()==''){
@@ -236,13 +236,29 @@ function businessLogin(){
 
 function mailToBusiness(email, element, business){
 	var click_position;
+	
 	if(jQuery(element).closest('div.lddbd_business_listing').length){
 		click_position = jQuery(element).closest('div.lddbd_business_listing').position();
-		click_position = click_position.top;
+		click_position = click_position.top + 50;
 	} else {
 		click_position = 5;
 	}
-	jQuery('#lddbd_business_directory').append('<div style="position: absolute; width: 100%; height: 100%; top:0px; left: 0px; background: #000; opacity: 0.5; z-index: 400;" id="lddbd_mail_shader"></div><form id="lddbd_mail_to_business_form" style="top: '+click_position+'%"><strong>Send message to '+business+'</strong><input type="hidden" readonly id="email" name="email" value="'+email+'" /><label for="name">Name:</label><input type="text" id="name" name="name" /><label for="from">Email:</label><input type="text" id="from" name="from" /><label for="phone">Phone:</label><input type="text" id="phone" name="phone" /><label for="message">Message:</label><textarea id="message" name="message"></textarea><input type="button" value="Cancel"><input type="submit" value="Send"></form>');
+	jQuery('#lddbd_business_directory').append(
+	'<div style="position: absolute; width: 100%; height: 100%; top:0px; left: 0px; background: #000; opacity: 0.5; z-index: 400;" id="lddbd_mail_shader"></div>' +
+	'<form id="lddbd_mail_to_business_form" style="top: '+click_position+'px">' +
+	'<strong>Send message to '+business+'</strong>' +
+	'<input type="hidden" readonly id="email" name="email" value="'+email+'" />' +
+	'<label for="name">Name:</label>' +
+		'<input type="text" id="name" name="name" />' +
+	'<label for="from">Email:</label>' +
+		'<input type="text" id="from" name="from" />' +
+	'<label for="phone">Phone:</label>' +
+		'<input type="text" id="phone" name="phone" />' +
+	'<label for="message">Message:</label>' +
+		'<textarea id="message" name="message"></textarea>' +
+		'<input type="button" value="Cancel"><input type="submit" value="Send">' +
+	'</form>');
+	
 	jQuery('#lddbd_mail_to_business_form input:button').click(function(){
 		jQuery('#lddbd_mail_to_business_form, #lddbd_mail_shader').remove();
 	});

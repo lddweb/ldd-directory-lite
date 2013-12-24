@@ -3,8 +3,8 @@ Contributors: suffrage
 Donate link: http://www.lddwebdesign.com
 Tags: business directory, ldd, lddbd, business, directory, listings, listings directory, directory plugin, business plugin, business directory plugin, listings plugin, listings directory plugin, business listings, business listings plugin
 Requires at least: 3.5
-Tested up to: 3.6
-Stable tag: 1.3.11.1
+Tested up to: 3.8
+Stable tag: 1.3.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,7 +45,31 @@ A. There is a text field on the Settings page called `Directory Label` where you
 = Q. The same image is being displayed across all the listings, why is this? =
 A. The filename of the logo used for each listing is based upon the *login name* that has been entered for each individual listing. If all the listings have no login then whatever logo has been uploaded for any one of them will be applied to all of them (same goes if multiple listings have the same login). Each listing should have a unique login. *(Changed in version 1.3.10 to use the **Listing Name**)*
 
+= Q. Could you please add [REQUESTED FEATURE] to the LDD Business Directory? =
+A. We try to take every suggestion into consideration for future iterations of the directory. Please keep in mind that we want to keep this business directory as user friendly as possible and new features require extensive testing to ensure that they work properly and don’t break current functionality.
+
+= Q. Why is this [DISPLAY ELEMENT] not displaying correctly? =
+A. The majority of the time when something shows up incorrectly when visiting the business directory it is due to a custom theme installed. Unfortunately we are unable to test the directory in every available theme and cannot guarantee how certain elements will look.
+
+= Q. Is this plugin available in other languages? =
+A. The LDD Business Directory does not presently have any translations available in other languages. This may change with future versions of the plugin.
+
+= Q. Why isn’t [COUNTRY NAME] an available option when adding a listing? =
+A. To add a country to the list we need more than just the country name. The elements required are the address format for that country along with a list of any states or provinces (if applicable), cities or towns, as well as any other relevant information required to be able to locate an address through Google Maps.
+
+== Screenshots ==
+
+1. The Directory Settings administration screen.
+2. Add listings to the directory.
+3. Quickly and easily add new categories.
+
 == Changelog ==
+
+= 1.3.13 =
+- Corrected problem with email message box not displaying above its selected entry when a list of entries is displayed.
+- Corrected issue with the business name not appearing in the email message box (previously read *Send message to undefined*).
+- Fixed bug where logos would not appear due to spaces being added to the filename from **Name** field of a listing.
+- Added email notifications for user submitted listings that are sent to the person submitting the entry and the site administrator.
 
 = 1.3.11.1 =
 - Corrected a bug that showed social media icons even while their corresponding fields were empty.
