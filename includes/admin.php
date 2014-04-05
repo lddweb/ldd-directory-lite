@@ -1,18 +1,14 @@
 <?php
 
-/* -------------- Settings Menu Backend Display | HTML/jQuery -------------- */
 
-// Load up jQuery to get certain functions working.
-if( is_admin() ) {
-	wp_enqueue_script('jquery');
-}
+
 
 // Generates the Business Directory List HTML page, populates it with businesses registered in the database, and formats how they're displayed.
-function lddbd_html_page(){ 
-	if (!current_user_can('manage_options'))  {
-		wp_die( __('You do not have sufficient permissions to access this page.', 'lddbd-text') );
-	}
-	
+function lddbd_html_page()
+{
+    global $wpdb, $tables;
+
+
 	$options = get_option('lddbd_options');
 	if( !empty ( $options['directory_label'] ) ) {
 		$directory_label = $options['directory_label'];
@@ -21,25 +17,24 @@ function lddbd_html_page(){
 	}
 	?>
 	<div class="wrap">
-		<h2><?php printf( __('%s Directory Listings', 'lddbd-text'), $directory_label ); ?></h2><?php echo get_option( 'blogname' ); ?>
+		<h2><?php printf( __('%s Directory Listings', 'lddbd'), $directory_label ); ?></h2><?php echo get_option( 'blogname' ); ?>
 
 		<table id="lddbd_business_table" class="wp-list-table widefat fixed" cellspacing="0">
 		<thead>
 			<tr>
-				<th scope="col" id="name" class="manage-column column-name sortable"><?php _e('Name', 'lddbd-text'); ?></th>
-				<th scope="col" id="email" class="manage-column column-email sortable"><?php _e('Email', 'lddbd-text'); ?></th>
-				<th scope="col" id="approved" class="manage-column column-approved"><?php _e('Approved', 'lddbd-text'); ?></th>
+				<th scope="col" id="name" class="manage-column column-name sortable"><?php _e('Name', 'lddbd'); ?></th>
+				<th scope="col" id="email" class="manage-column column-email sortable"><?php _e('Email', 'lddbd'); ?></th>
+				<th scope="col" id="approved" class="manage-column column-approved"><?php _e('Approved', 'lddbd'); ?></th>
 				<th scope="col" id="id" class="manage-column column-id sortable">ID</th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php
-		global $wpdb;
-		global $main_table_name, $doc_table_name, $cat_table_name;
+
 		$business_list = $wpdb->get_results(
 			"
 			SELECT *
-			FROM $main_table_name
+			FROM {$tables['main']}
 			ORDER BY name ASC
 			"
 		);
@@ -54,11 +49,11 @@ function lddbd_html_page(){
 				<div class="row-actions">
 					<a class="delete_business" href="javascript:void(0);">Delete</a>
 					<?php if($business->approved == 'false') { ?>
-						<a class="approve_business business_approval" href="javascript:void(0);"><?php _e('Approve', 'lddbd-text'); ?></a>
+						<a class="approve_business business_approval" href="javascript:void(0);"><?php _e('Approve', 'lddbd'); ?></a>
 					<?php } else { ?>
-						<a class="revoke_business business_approval" href="javascript:void(0);"><?php _e('Revoke Approval', 'lddbd-text'); ?></a>
+						<a class="revoke_business business_approval" href="javascript:void(0);"><?php _e('Revoke Approval', 'lddbd'); ?></a>
 					<?php } ?>
-					<a class="edit_business open" href="javascript:void(0);"><?php _e('Quick Edit', 'lddbd-text'); ?></a>
+					<a class="edit_business open" href="javascript:void(0);"><?php _e('Quick Edit', 'lddbd'); ?></a>
 				</div>
 			</td>
 			<td>
@@ -73,44 +68,44 @@ function lddbd_html_page(){
 			</tr>
 			<tr class="lddbd_edit_business_row">
 			<td colspan="4">
-			<form class="lddbd_edit_business_form" method="post" action="<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>" enctype='multipart/form-data'>
+			<form class="lddbd_edit_business_form" method="post" action="<?php echo DIRL_AJAX; ?>" enctype='multipart/form-data'>
 			<div class="lddbd_input_holder">
-				<label for="name"><?php printf( __('%s Name', 'lddbd-text'), $directory_label ); ?></label>
+				<label for="name"><?php printf( __('%s Name', 'lddbd'), $directory_label ); ?></label>
 				<input class="name required" type="text" name="name" value="<?php echo stripslashes($business->name); ?>"/>
 			</div>
 
 			<div class="lddbd_input_holder">
-				<label for="description"><?php printf( __('%s Description', 'lddbd-text'), $directory_label ); ?></label>
+				<label for="description"><?php printf( __('%s Description', 'lddbd'), $directory_label ); ?></label>
 				<textarea class="description" name="description"><?php echo $business->description; ?></textarea>
 			</div>
 
 			<div class="lddbd_input_holder">
-				<label for="phone"><?php _e('Contact Phone', 'lddbd-text'); ?></label>
+				<label for="phone"><?php _e('Contact Phone', 'lddbd'); ?></label>
 				<input class="phone " type="text" name="phone" value="<?php echo $business->phone; ?>"/>
 			</div>
 
 			<div class="lddbd_input_holder">
-				<label for="fax"><?php _e('Contact Fax', 'lddbd-text'); ?></label>
+				<label for="fax"><?php _e('Contact Fax', 'lddbd'); ?></label>
 				<input type="text" class="fax" name="fax" value="<?php echo $business->fax; ?>"/>
 			</div>
 
 			<div class="lddbd_input_holder">
-				<label for="email"><?php _e('Contact Email', 'lddbd-text'); ?></label>
+				<label for="email"><?php _e('Contact Email', 'lddbd'); ?></label>
 				<input class="email" type="text" name="email" value="<?php echo $business->email; ?>"/>
 			</div>
 
 			<div class="lddbd_input_holder">
-				<label for="contact"><?php _e('Contact Name', 'lddbd-text'); ?></label>
+				<label for="contact"><?php _e('Contact Name', 'lddbd'); ?></label>
 				<input class="contact" type="text" name="contact" value="<?php echo $business->contact; ?>"/>
 			</div>
 
 			<div class="lddbd_input_holder">
-				<label for="url"><?php _e('Website', 'lddbd-text'); ?></label>
+				<label for="url"><?php _e('Website', 'lddbd'); ?></label>
 				<input class="url" type="text" name="url" value="<?php echo $business->url; ?>"/>
 			</div>
 
 			<div class="lddbd_input_holder">
-				<label for="login"><?php _e('Login', 'lddbd-text'); ?></label>
+				<label for="login"><?php _e('Login', 'lddbd'); ?></label>
 				<input class="login" type="text" name="login" value="<?php echo $business->login; ?>"/>
 			</div>
 
@@ -118,14 +113,14 @@ function lddbd_html_page(){
 			<input type="hidden" class="id" name="id" value="<?php echo $business->id; ?>"/>
 
    			<p class="submit">
-			    <input type="submit" class="button-primary" value="<?php _e('Update Listing', 'lddbd-text') ?>" />
+			    <input type="submit" class="button-primary" value="<?php _e('Update Listing', 'lddbd') ?>" />
 			</p>
 	   		</form>
 	   		</td>
 			</tr>
 		<?php	
 			}		
-		} else { echo "<tr><td colspan='4'>" . __('Sorry, there are no businesses listed in the directory.', 'lddbd-text') . "</td></tr>"; }
+		} else { echo "<tr><td colspan='4'>" . __('Sorry, there are no businesses listed in the directory.', 'lddbd') . "</td></tr>"; }
 		?>
 		</tbody>
 		</table>
@@ -140,7 +135,7 @@ function lddbd_html_page(){
 	?>
 		<p>
    		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_csvExport-business.php' ); ?>" method="get">
-   			<input type="submit" class="button-primary" value="<?php _e('Export Listing(s)', 'lddbd-text'); ?>" />
+   			<input type="submit" class="button-primary" value="<?php _e('Export Listing(s)', 'lddbd'); ?>" />
 	   	</form>
    		</p>
 	<?php }
@@ -155,7 +150,7 @@ function lddbd_html_page(){
 			jQuery(this).closest("tr").fadeOut(400);
 			var business_id = jQuery(this).closest("tr").attr("id");
 			business_id = business_id.substring(9);
-			jQuery.post("<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>", {id:business_id, action:"delete"});
+			jQuery.post("<?php echo DIRL_AJAX; ?>", {id:business_id, action:"delete"});
 		});
 
 		jQuery(".business_approval").click(function(){
@@ -164,13 +159,13 @@ function lddbd_html_page(){
 				jQuery(this).closest("td").siblings("th.approval").children('input[type="checkbox"]').attr("checked", "checked");
 				var business_id = jQuery(this).closest("tr").attr("id");
 				business_id = business_id.substring(9);
-				jQuery.post("<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>", {id:business_id, action:"approve"});
+				jQuery.post("<?php echo DIRL_AJAX; ?>", {id:business_id, action:"approve"});
 			} else if(jQuery(this).hasClass("revoke_business")){
 				jQuery(this).html("Approve").removeClass("revoke_business").addClass("approve_business");
 				jQuery(this).closest("td").siblings("th.approval").children('input[type="checkbox"]').removeAttr("checked");
 				var business_id = jQuery(this).closest("tr").attr("id");
 				business_id = business_id.substring(9);
-				jQuery.post("<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>", {id:business_id, action:"revoke"});
+				jQuery.post("<?php echo DIRL_AJAX; ?>", {id:business_id, action:"revoke"});
 			}
 		});
 
@@ -218,21 +213,26 @@ function lddbd_html_page(){
 <?php
 }
 
-// Checks if the user has administrator privileges before generating the Settings page in the backend for them to see.
-// Also contains submit button for Settings.
-function lddbd_settings_page(){ 
+
+
+
+
+
+function lddbd_settings_page()
+{
+
 	if (!current_user_can('manage_options'))  {
-		wp_die( __('You do not have sufficient permissions to access this page.', 'lddbd-text') );
+		wp_die( __('You do not have sufficient permissions to access this page.', 'lddbd') );
 	}
 ?>
 	<div class="wrap">
-		<h2><?php _e('Directory Settings', 'lddbd-text'); ?></h2>
+		<h2><?php _e('Directory Settings', 'lddbd'); ?></h2>
 
 		<form method="post" action="options.php">
 			<?php settings_fields( 'lddbd_settings_group' ); ?>
    			<?php do_settings_sections( 'business_directory_settings' ); ?>
    			<p class="submit">
-			    <input type="submit" class="button-primary" value="<?php _e('Save Changes', 'lddbd-text') ?>" />
+			    <input type="submit" class="button-primary" value="<?php _e('Save Changes', 'lddbd') ?>" />
 		    </p>
    		</form>
 
@@ -248,7 +248,7 @@ function lddbd_settings_page(){
    		<hr style="color: #fff; width: 525px; margin: 0 auto 0 0;" />
    		<p>
    		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_htmlReport.php' ); ?>" target="_blank" method="get">
-   			<input type="submit" class="button-primary" value="<?php _e('Generate Printable Directory List', 'lddbd-text'); ?>" style="float: left;" />
+   			<input type="submit" class="button-primary" value="<?php _e('Generate Printable Directory List', 'lddbd'); ?>" style="float: left;" />
 	   	</form>
    		</p>
    	<?php }
@@ -260,18 +260,17 @@ function lddbd_settings_page(){
 <?php
 }
 
-// Checks if the user has administrator privileges before generating the Add Business page.
-function lddbd_add_business_page(){
-	if (!current_user_can('manage_options'))  {
-		wp_die( __('You do not have sufficient permissions to access this page.', 'lddbd-text') );
-	}
-	global $wpdb;
 
-	global $main_table_name, $doc_table_name, $cat_table_name;
+
+
+function lddbd_add_business_page()
+{
+    global $wpdb, $tables;
+
 	$full_business_list = $wpdb->get_results(
 		"
 		SELECT login
-		FROM $main_table_name
+		FROM {$tables['main']}
 		"
 	);
 	$logins = '';
@@ -284,7 +283,7 @@ function lddbd_add_business_page(){
 	$categories_list = $wpdb->get_results(
 		"
 		SELECT *
-		FROM $cat_table_name
+		FROM {$tables['cat']}
 		"
 	);
 
@@ -299,28 +298,28 @@ function lddbd_add_business_page(){
 	}
 ?>
 <div class="wrap">
-	<h2><?php printf( __( 'Add %s to Directory', 'lddbd-text'), $directory_label ); ?></h2>
+	<h2><?php printf( __( 'Add %s to Directory', 'lddbd'), $directory_label ); ?></h2>
 
-	<form id="lddbd_add_business_form" method="post" action="<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>" enctype='multipart/form-data'>
+	<form id="lddbd_add_business_form" method="post" action="<?php echo DIRL_AJAX; ?>" enctype='multipart/form-data'>
 		<div class="lddbd_input_holder">
-			<label for="name"><?php printf(  __('%s Name', 'lddbd-text'), $directory_label ); ?></label>
+			<label for="name"><?php printf(  __('%s Name', 'lddbd'), $directory_label ); ?></label>
 			<input class="required" type="text" id="lddbd_name" name="name"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="description"><?php printf( __('%s Description', 'lddbd-text'), $directory_label ); ?></label>
+			<label for="description"><?php printf( __('%s Description', 'lddbd'), $directory_label ); ?></label>
 			<textarea id="lddbd_description" name="description"></textarea>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="address_street"><?php _e('Street', 'lddbd-text'); ?></label>
+			<label for="address_street"><?php _e('Street', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_address_street" name="address_street">
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="address_country"><?php _e('Country', 'lddbd-text'); ?></label>
+			<label for="address_country"><?php _e('Country', 'lddbd'); ?></label>
 			<?php
-				$lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) . 'scripts/countries.txt';
+				$lddbd_countryTxtFile = DIRL_JS . 'countries.txt';
 
 				if( file_exists( $lddbd_countryTxtFile ) ) {
 					// Text file containing list of supported countries
@@ -333,7 +332,7 @@ function lddbd_add_business_page(){
 					$textLine = trim( $textLine );
 			?>
 
-			<option><?php esc_attr_e($textLine, 'lddbd-text'); ?></option>
+			<option><?php esc_attr_e($textLine, 'lddbd'); ?></option>
 
 			<?php	
 				}
@@ -342,76 +341,76 @@ function lddbd_add_business_page(){
 			</select>
 			<?php
 				} else {
-					echo "<p>" . __('This file does not exist!', 'lddbd-text') . "</p>";
+					echo "<p>" . __('This file does not exist!', 'lddbd') . "</p>";
 				}
 			?>
 		</div>
 		<div id="selectedCountryForm"></div>
 
 		<div class="lddbd_input_holder">
-			<label for="phone"><?php _e('Contact Phone', 'lddbd-text'); ?></label>
+			<label for="phone"><?php _e('Contact Phone', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_phone" name="phone"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="fax"><?php _e('Contact Fax', 'lddbd-text'); ?></label>
+			<label for="fax"><?php _e('Contact Fax', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_fax" name="fax">
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="email"><?php _e('Contact Email', 'lddbd-text'); ?></label>
+			<label for="email"><?php _e('Contact Email', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_email" name="email"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="contact"><?php _e('Contact Name', 'lddbd-text'); ?></label>
+			<label for="contact"><?php _e('Contact Name', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_contact" name="contact"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="url"><?php _e('Website', 'lddbd-text'); ?></label>
+			<label for="url"><?php _e('Website', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_url" name="url"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="facebook"><?php _e('Facebook Page', 'lddbd-text'); ?></label>
+			<label for="facebook"><?php _e('Facebook Page', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_facebook" name="facebook"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="twitter"><?php _e('Twitter Handle', 'lddbd-text'); ?></label>
+			<label for="twitter"><?php _e('Twitter Handle', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_twitter" name="twitter"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="linkedin"><?php _e('Linked In Profile', 'lddbd-text'); ?></label>
+			<label for="linkedin"><?php _e('Linked In Profile', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_linkedin" name="linkedin"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="promo"><?php _e('Special Offer', 'lddbd-text'); ?></label>
+			<label for="promo"><?php _e('Special Offer', 'lddbd'); ?></label>
 			<div class="lddbd_radio_holder">
 				<input type="radio" id="lddbd_promo" name="promo" value="true"/>Yes&nbsp;<input type="radio" id="lddbd_promo" name="promo" value="false"/>No
 			</div>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="promo_description"><?php _e('Special Offer Description', 'lddbd-text'); ?></label>
+			<label for="promo_description"><?php _e('Special Offer Description', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_promo_description" name="promo_description"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="logo"><?php _e('Logo Image', 'lddbd-text'); ?></label>
+			<label for="logo"><?php _e('Logo Image', 'lddbd'); ?></label>
 			<input class="" type="file" id="lddbd_logo" name="logo"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="login"><?php _e('Login', 'lddbd-text'); ?></label>
+			<label for="login"><?php _e('Login', 'lddbd'); ?></label>
 			<input class="required" type="text" id="lddbd_login" name="login"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="password"><?php _e('Password', 'lddbd-text'); ?></label>
+			<label for="password"><?php _e('Password', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_password" name="password"/>
 		</div>
 
@@ -438,12 +437,12 @@ if(!empty($section_array)){
 
 	<?php if(!empty($categories_list)){ ?>
 	<div class="lddbd_input_holder">
-		<label><strong><?php _e('Categories', 'lddbd-text'); ?></strong></label><br/>
+		<label><strong><?php _e('Categories', 'lddbd'); ?></strong></label><br/>
 		<?php foreach($categories_list as $category){ ?>
 
 		<div class="lddbd_category_block">
 			<input class="category_box" type="checkbox" name="category_<?php echo $category->id; ?>" value="x<?php echo $category->id; ?>x" />
-			<label for="category_<?php echo $category->id; ?>"><?php _e(stripslashes($category->name), 'lddbd-text'); ?></label>
+			<label for="category_<?php echo $category->id; ?>"><?php _e(stripslashes($category->name), 'lddbd'); ?></label>
 		</div>
 
 		<?php } ?>
@@ -453,18 +452,19 @@ if(!empty($section_array)){
 		<input id="lddbd_categories" type="hidden" name="categories"/>
 
 		<div class="lddbd_input_holder">
-			<label for="approved"><?php _e('Approved', 'lddbd-text'); ?></label>
+			<label for="approved"><?php _e('Approved', 'lddbd'); ?></label>
 			<input type="checkbox" id="lddbd_approved" name="approved" checked="checked" value="true"/>
 		</div>
 
 		<input type="hidden" id="lddbd_action" name="action" value="add"/>
 
 		<p class="submit">
-		    <input type="submit" class="button-primary" value="<?php _e('Add Listing', 'lddbd-text'); ?>" />
+		    <input type="submit" class="button-primary" value="<?php _e('Add Listing', 'lddbd'); ?>" />
 	    </p>
 	</form>
 
-<?php require( 'scripts/countrySelector.php' ); ?>
+<?php require( DIRL_JS . 'countrySelector.php' ); ?>
+
 <script type="text/javascript">
 	jQuery(document).ready(function(){
 		var business_logins = new Array(<?php echo substr($logins, 2); ?>);
@@ -523,24 +523,21 @@ if(!empty($section_array)){
 }
 
 // Checks if the user has administrator privileges before generating the Edit Business page and requests a specific business to edit.
-function lddbd_edit_business_page(){
-	
-	if (!current_user_can('manage_options'))  {
-		wp_die( __('You do not have sufficient permissions to access this page.', 'lddbd-text') );
-	}
-	
+function lddbd_edit_business_page()
+{
+    global $wpdb, $tables;
+
+
 	if(!empty($_GET['id'])){
 	$id = $_GET['id'];
 	
-	global $wpdb;
-	global $main_table_name, $doc_table_name, $cat_table_name;
-	//$wpdb->show_errors();
-	$business = $wpdb->get_row("SELECT * FROM $main_table_name WHERE id = $id");
+
+	$business = $wpdb->get_row("SELECT * FROM {$tables['main']} WHERE id = $id");
 	
 	$categories_list = $wpdb->get_results(
 		"
 		SELECT *
-		FROM $cat_table_name
+		FROM {$tables['cat']}
 		"
 	);
 	
@@ -548,8 +545,8 @@ function lddbd_edit_business_page(){
 	$categories_array = explode(',', str_replace('x', '', substr($business->categories, 1)));
 	if(empty($categories_array)){$categories_array=array();}
 	
-	// Performs a SELECT query on $doc_table_name. Used in a loop for the purpose of deleting an item.
-	$files = $wpdb->get_results("SELECT * FROM $doc_table_name WHERE bus_id = '$id'");
+	// Performs a SELECT query on {$tables['doc']}. Used in a loop for the purpose of deleting an item.
+	$files = $wpdb->get_results("SELECT * FROM {$tables['doc']} WHERE bus_id = '$id'");
 	$files_list = '';
 	
 	foreach($files as $file){
@@ -564,28 +561,28 @@ if( !empty ( $options['directory_label'] ) ) {
 }
 ?>
 <div class="wrap">
-	<h2><?php printf( __('Edit %s', 'lddbd-text'), $directory_label ); ?></h2>
+	<h2><?php printf( __('Edit %s', 'lddbd'), $directory_label ); ?></h2>
 
-	<form class="lddbd_edit_business_form" method="post" action="<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>" enctype='multipart/form-data'>
+	<form class="lddbd_edit_business_form" method="post" action="<?php echo DIRL_AJAX; ?>" enctype='multipart/form-data'>
 		<div class="lddbd_input_holder">
-			<label for="name"><?php printf( __('%s Name', 'lddbd-text'), $directory_label ); ?></label>
+			<label for="name"><?php printf( __('%s Name', 'lddbd'), $directory_label ); ?></label>
 			<input class="required" type="text" id="lddbd_name" name="name" value="<?php echo stripslashes($business->name); ?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="description"><?php printf( __('%s Description', 'lddbd-text'), $directory_label ); ?></label>
+			<label for="description"><?php printf( __('%s Description', 'lddbd'), $directory_label ); ?></label>
 			<textarea id="lddbd_description" name="description"><?php echo $business->description; ?></textarea>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="address_street"><?php _e('Street', 'lddbd-text'); ?></label>
+			<label for="address_street"><?php _e('Street', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_address_street" name="address_street" value="<?php echo $business->address_street;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="address_country"><?php _e('Country', 'lddbd-text'); ?></label>
+			<label for="address_country"><?php _e('Country', 'lddbd'); ?></label>
 			<?php
-				$lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) . 'scripts/countries.txt';
+				$lddbd_countryTxtFile = DIRL_JS . '/countries.txt';
 				
 				if( file_exists( $lddbd_countryTxtFile ) ) {
 					// Text file containing list of supported countries
@@ -598,7 +595,7 @@ if( !empty ( $options['directory_label'] ) ) {
 					$textLine = trim( $textLine );
 			?>
 
-			<option <?php if( $business->address_country == $textLine ) echo "selected='selected'"; ?> ><?php esc_attr_e($textLine, 'lddbd-text'); ?></option>
+			<option <?php if( $business->address_country == $textLine ) echo "selected='selected'"; ?> ><?php esc_attr_e($textLine, 'lddbd'); ?></option>
 			
 			<?php	
 				}
@@ -607,66 +604,66 @@ if( !empty ( $options['directory_label'] ) ) {
 			</select>
 			<?php
 				} else {
-					echo "<p>" . __('This file does not exist!', 'lddbd-text') . "</p>";
+					echo "<p>" . __('This file does not exist!', 'lddbd') . "</p>";
 				}
 			?>
 		</div>
 		<div id="selectedCountryForm"></div>
 
 		<div class="lddbd_input_holder">
-			<label for="phone"><?php _e('Contact Phone', 'lddbd-text'); ?></label>
+			<label for="phone"><?php _e('Contact Phone', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_phone" name="phone" value="<?php echo $business->phone;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="fax"><?php _e('Contact Fax', 'lddbd-text'); ?></label>
+			<label for="fax"><?php _e('Contact Fax', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_fax" name="fax" value="<?php echo $business->fax;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="email"><?php _e('Contact Email', 'lddbd-text'); ?></label>
+			<label for="email"><?php _e('Contact Email', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_email" name="email" value="<?php echo $business->email;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="contact"><?php _e('Contact Name', 'lddbd-text'); ?></label>
+			<label for="contact"><?php _e('Contact Name', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_contact" name="contact" value="<?php echo $business->contact;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="url"><?php _e('Website', 'lddbd-text'); ?></label>
+			<label for="url"><?php _e('Website', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_url" name="url" value="<?php echo $business->url;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="facebook"><?php _e('Facebook Page', 'lddbd-text'); ?></label>
+			<label for="facebook"><?php _e('Facebook Page', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_facebook" name="facebook" value="<?php echo $business->facebook;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="twitter"><?php _e('Twitter Handle', 'lddbd-text'); ?></label>
+			<label for="twitter"><?php _e('Twitter Handle', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_twitter" name="twitter" value="<?php echo $business->twitter;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="linkedin"><?php _e('Linked In Profile', 'lddbd-text'); ?></label>
+			<label for="linkedin"><?php _e('Linked In Profile', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_linkedin" name="linkedin" value="<?php echo $business->linkedin;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="promo"><?php _e('Special Offer', 'lddbd-text'); ?></label>
+			<label for="promo"><?php _e('Special Offer', 'lddbd'); ?></label>
 			<div class="lddbd_radio_holder">
 				<input type="radio" id="lddbd_promo" name="promo" value="true" <?php if($business->promo=='true'){echo 'checked="checked"';}?>/>Yes&nbsp;<input type="radio" id="promo" name="promo" value="false" <?php if($business->promo=='false'){echo 'checked="checked"';}?>/>No
 			</div>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="promo_description"><?php _e('Special Offer Description', 'lddbd-text'); ?></label>
+			<label for="promo_description"><?php _e('Special Offer Description', 'lddbd'); ?></label>
 			<input type="text" id="lddbd_promo_description" name="promo_description" value="<?php echo $business->promoDescription;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="current_logo"><?php _e('Current Logo', 'lddbd-text'); ?></label>
+			<label for="current_logo"><?php _e('Current Logo', 'lddbd'); ?></label>
 			<input type="hidden" id="lddbd_current_logo" name="current_logo" value="<?php echo $business->logo; ?>"/>
 		</div>
 
@@ -675,20 +672,20 @@ if( !empty ( $options['directory_label'] ) ) {
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="logo"><?php _e('Upload New Logo', 'lddbd-text'); ?></label>
+			<label for="logo"><?php _e('Upload New Logo', 'lddbd'); ?></label>
 			<input type="file" id="lddbd_logo" name="logo"/>
 		</div>
 
 		<div class='lddbd_input_holder'>
-			<label for="files"><?php _e('Files', 'lddbd-text'); ?></label>
+			<label for="files"><?php _e('Files', 'lddbd'); ?></label>
 			<ul>
 			<?php echo $files_list; ?>
 			</ul>
 		</div>
 
 		<div class='lddbd_input_holder file_input_holder'>
-			<strong><?php _e('File', 'lddbd-text'); ?></strong>
-			<strong><?php _e('Description', 'lddbd-text'); ?></strong>
+			<strong><?php _e('File', 'lddbd'); ?></strong>
+			<strong><?php _e('Description', 'lddbd'); ?></strong>
 		</div>
 
 		<div class='lddbd_input_holder file_input_holder'>
@@ -701,12 +698,12 @@ if( !empty ( $options['directory_label'] ) ) {
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="login"><?php _e('Login', 'lddbd-text'); ?></label>
+			<label for="login"><?php _e('Login', 'lddbd'); ?></label>
 			<input class="required" type="text" id="lddbd_login" name="login" value="<?php echo $business->login;?>"/>
 		</div>
 
 		<div class="lddbd_input_holder">
-			<label for="password"><?php _e('Password', 'lddbd-text'); ?></label>
+			<label for="password"><?php _e('Password', 'lddbd'); ?></label>
 			<input class="" type="text" id="lddbd_password" name="password" value="<?php echo $business->password;?>"/>
 		</div>
 
@@ -743,7 +740,7 @@ if( !empty ( $options['directory_label'] ) ) {
 
 		<?php if(!empty($categories_list)){ ?>
 		<div class="lddbd_input_holder">
-			<label><strong><?php _e('Categories', 'lddbd-text'); ?></strong></label><br/>
+			<label><strong><?php _e('Categories', 'lddbd'); ?></strong></label><br/>
 			<?php foreach($categories_list as $category){ ?>
 			<div class="lddbd_category_block">
 				<input class="category_box" type="checkbox" name="category_<?php echo $category->id; ?>" value="x<?php echo $category->id; ?>x" <?php if(in_array($category->id, $categories_array)){echo 'checked="checked"'; }?>/>
@@ -756,7 +753,7 @@ if( !empty ( $options['directory_label'] ) ) {
 		<input id="lddbd_categories" type="hidden" name="categories" value="<?php echo $business->categories; ?>">
 
 		<div class="lddbd_input_holder">
-			<label for="approved"><?php _e('Approved', 'lddbd-text'); ?></label>
+			<label for="approved"><?php _e('Approved', 'lddbd'); ?></label>
 			<input type="checkbox" id="lddbd_approved" name="approved" value="true" <?php if($business->approved=='true'){echo 'checked="checked"';} ?>/>
 		</div>
 
@@ -764,13 +761,14 @@ if( !empty ( $options['directory_label'] ) ) {
 		<input type="hidden" id="lddbd_id" name="id" value="<?php echo $business->id; ?>"/>
 
 		<p class="submit">
-		    <input type="submit" class="button-primary" value="<?php _e('Update Listing', 'lddbd-text'); ?>" />
+		    <input type="submit" class="button-primary" value="<?php _e('Update Listing', 'lddbd'); ?>" />
 	    </p>
 	</form>
 
 </div>
 
-<?php require( 'scripts/countryEditor.php' ); ?>
+<?php require( DIRL_JS . '/countryEditor.php' ); ?>
+
 <script type="text/javascript">
 	jQuery(document).ready(function(){
 
@@ -798,7 +796,7 @@ if( !empty ( $options['directory_label'] ) ) {
 				doc_id = parseInt(doc_id);
 				jQuery.ajax({
 				type: 'POST',
-				url: '<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>',
+				url: '<?php echo DIRL_AJAX; ?>',
 				data: {doc_id: doc_id, action: 'delete_doc'},
 				success: function(data){
 					this_placeholder.parent().slideUp('200');
@@ -810,12 +808,11 @@ if( !empty ( $options['directory_label'] ) ) {
 <?php
 	} else {
 
-		global $wpdb;
-		global $main_table_name, $doc_table_name, $cat_table_name;
+
 		$business_list = $wpdb->get_results(
 			"
 			SELECT *
-			FROM $main_table_name
+			FROM {$tables['main']}
 			ORDER BY name ASC
 			"
 		);
@@ -831,7 +828,7 @@ if( !empty ( $options['directory_label'] ) ) {
 
 ?>	
 	<div class="wrap">
-		<h2><?php printf( __('Choose %s to Edit', 'lddbd-text'), $directory_label ); ?></h2>
+		<h2><?php printf( __('Choose %s to Edit', 'lddbd'), $directory_label ); ?></h2>
 		<form action="<?php bloginfo('url'); ?>/wp-admin/admin.php" method="get">
 			<input type="hidden" name="page" id="lddbd_page" value="edit_business_in_directory" />
 			<select name="id">
@@ -841,7 +838,7 @@ if( !empty ( $options['directory_label'] ) ) {
 			</select>
 
 			<p class="submit">
-		    	<input type="submit" class="button-primary" value="<?php _e('Find Listing', 'lddbd-text'); ?>" />
+		    	<input type="submit" class="button-primary" value="<?php _e('Find Listing', 'lddbd'); ?>" />
 	   		</p>
 		</form>
 	</div>
@@ -851,7 +848,9 @@ if( !empty ( $options['directory_label'] ) ) {
 }
 
 // Checks the database for all categories available (if there are any) and generates a table listing them.
-function lddbd_business_categories_page(){
+function lddbd_business_categories_page()
+{
+    global $wpdb, $tables;
 
 $options = get_option('lddbd_options');
 	if( !empty ( $options['directory_label'] ) ) {
@@ -861,30 +860,30 @@ $options = get_option('lddbd_options');
 	}
 ?>
 <div class="wrap">
-<h2><?php printf( __('%s Directory Categories', 'lddbd-text'), $directory_label ); ?></h2>
+<h2><?php printf( __('%s Directory Categories', 'lddbd'), $directory_label ); ?></h2>
 
 <table id="lddbd_category_table" class="wp-list-table widefat fixed" cellspacing="0">
 <thead>
 	<tr>
-		<th scope="col" id="name" class="manage-column column-name sortable"><?php _e('Name', 'lddbd-text'); ?></th>
-		<th scope="col" id="count" class="manage-column column-email sortable"><?php _e('Count', 'lddbd-text'); ?></th>
+		<th scope="col" id="name" class="manage-column column-name sortable"><?php _e('Name', 'lddbd'); ?></th>
+		<th scope="col" id="count" class="manage-column column-email sortable"><?php _e('Count', 'lddbd'); ?></th>
 		<th scope="col" id="id" class="manage-column column-id sortable">ID</th>
 	</tr>
 </thead>
 <tbody>
 <?php
-	global $wpdb;
-	global $main_table_name, $doc_table_name, $cat_table_name;
+
+
 	$cat_list = $wpdb->get_results(
 		"
 		SELECT id, name, count
-		FROM $cat_table_name
+		FROM {$tables['cat']}
 		"
 	);
 	$business_cats = $wpdb->get_results(
 		"
 		SELECT categories
-		FROM $main_table_name
+		FROM {$tables['main']}
 		"
 	);
 
@@ -898,7 +897,7 @@ $options = get_option('lddbd_options');
 				}
 			}
 			$row_updated = $wpdb->update(
-				$cat_table_name,
+				$tables['cat'],
 				array('count'=>$cat_count),
 				array('id'=>$cat->id),
 				array('%d'),
@@ -909,8 +908,8 @@ $options = get_option('lddbd_options');
 		<td>
 			<strong><?php echo stripslashes($cat->name); ?></strong>
 			<div class="row-actions">
-				<a class="delete_category" href="javascript:void(0);"><?php _e('Delete', 'lddbd-text'); ?></a>
-				<a class="edit_category open" href="javascript:void(0);"><?php _e('Edit', 'lddbd-text'); ?></a>
+				<a class="delete_category" href="javascript:void(0);"><?php _e('Delete', 'lddbd'); ?></a>
+				<a class="edit_category open" href="javascript:void(0);"><?php _e('Edit', 'lddbd'); ?></a>
 			</div>
 		</td>
 		<td class="cat_count">
@@ -922,11 +921,11 @@ $options = get_option('lddbd_options');
 		</tr>
 		<tr class="lddbd_edit_category_row">
 		<td colspan="3">
-		<form class="lddbd_edit_category_form" method="post" action="<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>">
+		<form class="lddbd_edit_category_form" method="post" action="<?php echo DIRL_AJAX; ?>">
 			<input type="text" name="cat_name" value="<?php echo stripslashes($cat->name); ?>" />
 			<input type="hidden" name="id" value="<?php echo $cat->id; ?>"/>
    			<p class="submit">
-			    <input type="submit" class="button-secondary" value="<?php _e('Save Changes', 'lddbd-text'); ?>" />
+			    <input type="submit" class="button-secondary" value="<?php _e('Save Changes', 'lddbd'); ?>" />
 		    </p>
    		</form>
    		</td>
@@ -934,22 +933,22 @@ $options = get_option('lddbd_options');
 
 		<?php	
 			}		
-		} else { echo "<tr><td colspan='3'>" . __('Sorry, there are no categories listed in this directory.', 'lddbd-text') . "</td></tr>"; }
+		} else { echo "<tr><td colspan='3'>" . __('Sorry, there are no categories listed in this directory.', 'lddbd') . "</td></tr>"; }
 	?>
 	<tr id="lddbd_add_category_row">
 	<td colspan="3">
-		<form id="lddbd_add_category_form" method="post" action="<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>">
+		<form id="lddbd_add_category_form" method="post" action="<?php echo DIRL_AJAX; ?>">
 			<input class="name" type="text" name="name">
 			<input class="action" type="hidden" name="action" value="add_category">
    			<p class="submit">
-			    <input type="submit" id="lddbd_save_category_button" class="button-secondary" value="<?php _e('Save Category', 'lddbd-text'); ?>" />
+			    <input type="submit" id="lddbd_save_category_button" class="button-secondary" value="<?php _e('Save Category', 'lddbd'); ?>" />
 			</p>
    		</form>
 	</td>
 	</tr>
 	<tr>
 	<td colspan="3">
-		<input type="button" id="lddbd_add_category_button" class="button-secondary" value="<?php _e('Add Category', 'lddbd-text'); ?>" />
+		<input type="button" id="lddbd_add_category_button" class="button-secondary" value="<?php _e('Add Category', 'lddbd'); ?>" />
 	</td>
 	</tr>
 </tbody>
@@ -987,14 +986,14 @@ jQuery(document).ready(function() {
 	?>
 		<p>
    		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_csvExport-category.php' ); ?>" method="get">
-   			<input type="submit" class="button-primary" value="<?php _e('Export Categories', 'lddbd-text'); ?>" />
+   			<input type="submit" class="button-primary" value="<?php _e('Export Categories', 'lddbd'); ?>" />
 	   	</form>
    		</p>
 
    		<p>
 		<form action="<?php echo plugins_url( 'lddbd-import-export-reports/lddbd_csvImport-category.php' ); ?>" method="post" enctype="multipart/form-data">
 			<input type="file" name="uploaded" />
-			<input type="submit" class="button-primary" name="upfile" value="<?php _e('Import Categories (CSV File)', 'lddbd-text'); ?>" />
+			<input type="submit" class="button-primary" name="upfile" value="<?php _e('Import Categories (CSV File)', 'lddbd'); ?>" />
 		</form>
 		</p>
 	<?php }
@@ -1012,7 +1011,7 @@ jQuery(document).ready(function() {
 				jQuery(this).closest("tr").fadeOut(400);
 				var cat_id = jQuery(this).closest("tr").attr("id");
 				cat_id = cat_id.substring(4);
-				jQuery.post("<?php echo plugins_url( 'ldd-business-directory/lddbd_ajax.php' ); ?>", {id:cat_id, action:"delete_category"});
+				jQuery.post("<?php echo DIRL_AJAX; ?>", {id:cat_id, action:"delete_category"});
 			}
 		});
 
@@ -1081,7 +1080,4 @@ jQuery(document).ready(function() {
 </div>
 <?php
 
-} // Closing curly brace for lddbd_business_categories_page()
-
-require_once('lddbd_display.php');
-?>
+}

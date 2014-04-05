@@ -1,67 +1,32 @@
 <?php
 
-/* -------------- Display Page -------------- */
+function dirl_display_directory()
+{
+    global $wpdb, $tables;
 
-// Enqueue jQuery if, for whatever reason, it's not running by default in Wordpress
-if ( !wp_script_is( 'jquery' ) ) {
-	wp_enqueue_script('jquery');
-}
+    echo '<script>var lddbd_file_pathway = "' . DIRL_URL . '";</script>';
+    echo '<script src="' . DIRL_JS_URL . '/lite.js"></script>';
 
-// Generates and controls all the behavior and business logic for the actual display page that a client will see.
-function display_business_directory(){
+    if ( array_key_exists( 'business', $_GET ) )
+    {
 
-global $wpdb;
-global $lddbd_state_dropdown;
-global $main_table_name, $doc_table_name, $cat_table_name;
+	$full_business_list = $wpdb->get_results( "SELECT login FROM {$tables['main']}" );
+    $logins = '';
 
-echo "<script type='text/javascript'>
-	lddbd_file_pathway = '".plugins_url( 'ldd-business-directory/' )."';
-	</script>
-	<script type='text/javascript' src='".plugins_url( 'ldd-business-directory/scripts/lddbd_scripts.js' )."'></script>";
-
-// When a business is selected from the list of businesses it generates the display document containing the
-// description, logo, and links for the business.
-if($_GET['business']){
-
-	$full_business_list = $wpdb->get_results(
-		"
-		SELECT login
-		FROM $main_table_name
-		"
-	);
-	
-	$logins = '';
-	
-	if($full_business_list){
-		foreach($full_business_list as $business){
-			$logins.=", '{$business->login}'";
-		}
+    // @TODO: WHO THE HELL THOUGHT OF THIS?
+	foreach ( $full_business_list as $business )
+    {
+	    $logins .= ", '{$business->login}'";
 	}
 	
-	$business = $wpdb->get_row(
-		"
-		SELECT *
-		FROM $main_table_name
-		WHERE id = '{$_GET['business']}'
-		"
-	);
-	
-	$documents = $wpdb->get_results(
-		"
-		SELECT *
-		FROM $doc_table_name
-		WHERE bus_id = '{$business->id}'
-		"
-	);
+	$business = $wpdb->get_row( "SELECT * FROM {$tables['main']} WHERE id = '{$_GET['business']}'" );
+	$documents = $wpdb->get_results( "SELECT * FROM {$tables['doc']} WHERE bus_id = '{$business->id}'" );
 	
 	$doc_list = '';
-	if($documents){
-		foreach($documents as $document){
+	if($documents)
+		foreach($documents as $document)
 			$doc_list.="<li><a target='_blank' href='".site_url('/wp-content/uploads/').$document->doc_path."'>{$document->doc_description}</a></li>";
-		}
-	}
-	
-	$business_listing = '';
+
 	$options = get_option('lddbd_options');
 	$description = '';
 	$contact_left = '';
@@ -107,7 +72,7 @@ if($_GET['business']){
 		$name = "<h4>{$biz_name}</h4>";
 		}
 	if($business->promo=='true'){ 
-		$special_offer_logo="<img id='lddbd_special_offer_logo' src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' />";
+		$special_offer_logo="<img id='lddbd_special_offer_logo' src='". DIRL_URL . '/images/special-offer.png' ."' />";
 	}
 	if(!empty($business->description)){ $description="<p>{$business->description}</p>"; }
 	if(!empty($business->promoDescription)){$special_offer_description="<h4>Special Offer:</h4><p>{$business->promoDescription}</p>";}
@@ -121,7 +86,7 @@ if($_GET['business']){
 						$listing_category = $wpdb->get_row(
 							"
 							SELECT *
-							FROM $cat_table_name
+							FROM {$tables['cat']}
 							WHERE id = '{$cat_id}'
 							"
 						);
@@ -132,27 +97,27 @@ if($_GET['business']){
 	if(!empty($business->url)){ 
 		if(strstr($business->url, 'http://')){$business_url = $business->url;}
 		else{$business_url = 'http://'.$business->url;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url( 'ldd-business-directory/images/website.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='". DIRL_URL . '/images/website.png' ."' /></a>";
 	}
 	if(!empty($business->facebook)){ 
 		if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
 		else{$business_facebook = 'http://'.$business->facebook;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='". DIRL_URL . '/images/facebook.png' ."' /></a>";
 	}
 	if(!empty($business->twitter)){ 
 		if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
 		else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
 		else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='". DIRL_URL . '/images/twitter.png' ."' /></a>";
 	}
 	if(!empty($business->linkedin)){ 
 		if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
 		else{$business_linkedin = 'http://'.$business->linkedin;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url( 'ldd-business-directory/images/linkedin.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='". DIRL_URL . '/images/linkedin.png' ."' /></a>";
 	}
 	if(!empty($business->email)){
 	$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it 
-		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='". DIRL_URL . '/images/email.png' ."' /></a>";
 	}
 	
 	if(!empty($business->logo)){$logo_html = '<img src="'.site_url('/wp-content/uploads/').$business->logo.'"/>'; }
@@ -200,7 +165,7 @@ if($_GET['business']){
 		$categories_list = $wpdb->get_results(
 			"
 			SELECT *
-			FROM $cat_table_name
+			FROM {$tables['cat']}
 			"
 		);
 
@@ -243,7 +208,7 @@ if($_GET['business']){
 			}
 		}
 
-$lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) .  'scripts/countries.txt';
+$lddbd_countryTxtFile = DIRL_JS . '/countries.txt';
 
 	// Text file containing list of supported countries
 	$countryList = fopen( $lddbd_countryTxtFile, "r" );
@@ -260,10 +225,10 @@ fclose( $countryList );
 
 // Call the script file with the jQuery controls for displaying form elements for specific countries
 ob_start();
-include( 'scripts/countrySelector.php' );
+include( DIRL_JS . 'countrySelector.php' );
 $countrySelector = ob_get_clean();
 
-$formActionCall = plugins_url( 'ldd-business-directory/lddbd_ajax.php' );	
+$formActionCall = DIRL_AJAX;
 $submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
 
 	if( !empty ( $options['directory_label'] ) ) {
@@ -413,7 +378,7 @@ ABH;
 	}
 	
 	return "
-		<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/lddbd_style.css' )."' type='text/css' media='screen' />
+
 		<div id='lddbd_business_directory'>
 	 		<div id='lddbd_business_directory_head'>
 	 			<p>{$options['welcome_message']}</p>
@@ -445,33 +410,34 @@ ABH;
 	 	<script type='text/javascript'>
 	 		lddbd_business_logins = new Array(".substr($logins, 2).");
 	 	</script>";
-}
 
-// A backup in case - if($submit_button_query=='Yes') - returns false. 
-else {
+
+}
+else
+{
 
 	$full_business_list = $wpdb->get_results(
 		"
 		SELECT login
-		FROM $main_table_name
+		FROM {$tables['main']}
 		"
 	);
 	$business_list = $wpdb->get_results(
 		"
 		SELECT *
-		FROM $main_table_name WHERE approved = true
+		FROM {$tables['main']} WHERE approved = true
 		ORDER BY name ASC
 		"
 	);
 	$category_list = $wpdb->get_results(
 		"
-		SELECT * FROM $cat_table_name
+		SELECT * FROM {$tables['cat']}
 		ORDER BY name ASC
 		"
 	);
 	
-	$category_number = $wpdb->get_var( $wpdb->prepare( "SELECT * FROM $cat_table_name WHERE id = %d", $id ) );
-	
+	$category_number = $wpdb->get_var( "SELECT * FROM {$tables['cat']}" );
+
 	$logins = '';
 	
 	if($full_business_list){
@@ -479,9 +445,13 @@ else {
 			$logins.=", '{$business->login}'";
 		}
 	}
-	
+
+
+
+    // @TODO: CATEGORY_LIST looks the same, function?
 	if($category_list){
 		$i = 0;
+        $categories = '';
 		foreach($category_list as $category){
 			$cat_count = 0;
 			foreach($business_list as $business){
@@ -493,8 +463,8 @@ else {
 			
 			$cat_name = stripslashes($category->name);
 			
-			$row_updated = $wpdb->update(
-				$cat_table_name,
+			$wpdb->update(
+				$tables['cat'],
 				array('count'=>$cat_count),
 				array('id'=>$category->id),
 				array('%d'),
@@ -515,7 +485,7 @@ else {
 		$categories_list = $wpdb->get_results(
 			"
 			SELECT *
-			FROM $cat_table_name
+			FROM {$tables['cat']}
 			"
 		);
 
@@ -556,7 +526,7 @@ else {
 			}
 		}
 
-$lddbd_countryTxtFile = plugin_dir_path( __FILE__ ) .  'scripts/countries.txt';
+$lddbd_countryTxtFile = DIRL_JS . '/countries.txt';
 
 	// Text file containing list of supported countries
 	$countryList = fopen( $lddbd_countryTxtFile, "r" );
@@ -573,10 +543,10 @@ fclose( $countryList );
 
 // Call the script file with the jQuery controls for displaying form elements for specific countries
 ob_start();
-include 'scripts/countrySelector.php';
+include( DIRL_JS . '/countrySelector.php' );
 $countrySelector = ob_get_clean();
 
-$formActionCall = plugins_url( 'ldd-business-directory/lddbd_ajax.php' );
+$formActionCall = DIRL_AJAX;
 $submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
 
 	if( !empty ( $options['directory_label'] ) ) {
@@ -761,8 +731,12 @@ ABH;
 	} else {
 		$directory_label = 'Business';
 	}
-	
-	foreach($business_list as $business) {
+
+
+    $business_div = '';
+
+	foreach ( $business_list as $business )
+    {
 		$logo_html = '';
 		$contact = '';
 		$contact_right = '';
@@ -779,50 +753,46 @@ ABH;
 		if(!empty($business->url)){
 			if(strstr($business->url, 'http://')) {$business_url = $business->url; }
 			else{$business_url = 'http://'.$business->url;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='".plugins_url( 'ldd-business-directory/images/website.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_url}'><img src='". DIRL_URL . '/images/website.png' ."' /></a>";
 		}
 		// Check if there is a Facebook account assigned to this business listing.
 		if(!empty($business->facebook)){ 
 			if(strstr($business->facebook, 'http://')) {$business_facebook = $business->facebook;}
 			else{$business_facebook = 'http://'.$business->facebook;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='".plugins_url( 'ldd-business-directory/images/facebook.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_facebook}'><img src='". DIRL_URL . '/images/facebook.png' ."' /></a>";
 		}
 		// Check if there is a Twitter account assigned to this business listing.
 		if(!empty($business->twitter)){ 
 			if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
 			else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
 			else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='".plugins_url( 'ldd-business-directory/images/twitter.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_twitter}'><img src='". DIRL_URL . '/images/twitter.png' ."' /></a>";
 		}
 		// Check if there is a LinkedIn account assigned to this business listing.
 		if(!empty($business->linkedin)){ 
 			if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
 			else{$business_linkedin = 'http://'.$business->linkedin;}
-		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='".plugins_url( 'ldd-business-directory/images/linkedin.png' )."' /></a>"; 
+		$contact_right.="<a class='lddbd_contact_icon' target='_blank' href='{$business_linkedin}'><img src='". DIRL_URL . '/images/linkedin.png' ."' /></a>";
 		}
 		// Check if there is an email address assigned to this business listing.
 		if(!empty($business->email)){
 			$bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='".plugins_url( 'ldd-business-directory/images/email.png' )."' /></a>"; }
+		$contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='". DIRL_URL . '/images/email.png' ."' /></a>"; }
+
 		// Check if there is a promotion available for this business listing.
-		if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='".plugins_url( 'ldd-business-directory/images/special-offer.png' )."' /></a>"; }
-		/*
-		$listing_logo = wp_get_image_editor( $logo_html );
-		if( !is_wp_error( $logo_html ) ) {
-			$listing_logo->resize( 200, 200, true );
-			$listing_logo->save( $resized_logo );
-		}
-		*/
-		
-		// The user can switch between Categories or All Listings as their default front-end view.
-		// $business_div is set to NOT concatenate on Categories so it won't display the same categories multiple times.
-		// $business_div is set to concatenate on All Listings so that all the listings will show.
+		if($business->promo=='true'){ $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:singleBusinessListing({$business->id});\"><img src='". DIRL_URL . '/images/special-offer.png' ."' /></a>"; }
+
+
+
 		$lddbd_default_view = $options['default_view'];
-		if( $lddbd_default_view == 'Categories' ) {
+		if( $lddbd_default_view == 'Categories' )
+        {
 			$business_div = "<div id='lddbd_categories_left'>
 					{$categories}
 					</div>";
-		} else {
+		}
+        else
+        {
 			$business_div .= "<div class='lddbd_business_listing'>
 				{$logo_html}
 				<a href='javascript:void(0);' id='{$business->id}_business_detail' class='business_detail_link' onclick='javascript:singleBusinessListing({$business->id});'>{$business->name}</a>
@@ -835,9 +805,26 @@ ABH;
 			</div>";
 		}
 	}
-	
-	 return "
-	 	<link rel='stylesheet' href='".plugins_url( 'ldd-business-directory/lddbd_style.css' )."' type='text/css' media='screen' />
+
+
+    $append_form = <<<FORM
+    <div style="position: relative;">
+<div style="position: absolute; width: 100%; height: 100%; top:0px; left: 0px; background: #000; opacity: 0.5; z-index: 400;" id="lddbd_mail_shader"></div>
+	 <form id="lddbd_mail_to_business_form" style="top: 0px">
+	 <strong>Send message to Sample Business</strong>
+	 <input type="hidden" readonly="" id="email" name="email" value="mark@watero.us">
+	 <label for="name">Name:</label><input type="text" id="name" name="name">
+	 <label for="from">Email:</label><input type="text" id="from" name="from">
+	 <label for="phone">Phone:</label><input type="text" id="phone" name="phone">
+	 <label for="message">Message:</label><textarea id="message" name="message"></textarea>
+	 <input type="button" value="Cancel"><input type="submit" value="Send">
+	 </form>
+	 </div>
+FORM;
+
+	 return $append_form . "
+
+
 	 	<div id='lddbd_business_directory'>
 	 		<div id='lddbd_business_directory_head'>
 	 		<p>{$options['welcome_message']}</p>
@@ -866,5 +853,3 @@ ABH;
 	 	</script>"; 
 	}
 }
-add_shortcode( 'business_directory', 'display_business_directory' );
-?>

@@ -1,50 +1,36 @@
 <?php
 
-/* -------------- Settings Menu -------------- */
 
-add_action( 'plugins_load', 'lddText' );
-function lddText() {
-	$lddbd_plugin_dir = basename( dirname( __FILE__ ) ) . '/languages/';
-	load_plugin_textdomain( 'ldd-text', '$lddbd_plugin_dir' );
-}
 
 // Build our administration menu in the backend.
 add_action('admin_menu', 'lddbd_admin_menu');
 function lddbd_admin_menu() {
-	$lddbd_menu_page = add_menu_page( __('LDD Business Directory', 'lddbd-text'), __('Directory', 'lddbd-text'), 'manage_options', 'business_directory', 'lddbd_html_page' );
-	$lddbd_business_directory_page = add_submenu_page('business_directory', __('Directory Listings', 'lddbd-text'), __('Directory Listings', 'lddbd-text'), 'manage_options', 'business_directory' );
-	$lddbd_business_categories_page = add_submenu_page('business_directory', __('Directory Categories', 'lddbd-text'), __('Directory Categories'), 'manage_options', 'business_categories', 'lddbd_business_categories_page');
-	$lddbd_add_business_page = add_submenu_page('business_directory', __('Add Listing to Directory', 'lddbd-text'), __('Add Listing', 'lddbd-text'), 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
-	$lddbd_edit_business_page = add_submenu_page('business_directory', __('Edit Listing in Directory', 'lddbd-text'), __('Edit Listing', 'lddbd-text'), 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
-	$lddbd_settings_page = add_submenu_page('business_directory', __('Directory Settings', 'lddbd-text'), __('Settings', 'lddbd-text'), 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
+	$lddbd_menu_page = add_menu_page( __('LDD Business Directory', 'lddbd'), __('Directory', 'lddbd'), 'manage_options', 'business_directory', 'lddbd_html_page' );
+	$lddbd_business_directory_page = add_submenu_page('business_directory', __('Directory Listings', 'lddbd'), __('Directory Listings', 'lddbd'), 'manage_options', 'business_directory' );
+	$lddbd_business_categories_page = add_submenu_page('business_directory', __('Directory Categories', 'lddbd'), __('Directory Categories'), 'manage_options', 'business_categories', 'lddbd_business_categories_page');
+	$lddbd_add_business_page = add_submenu_page('business_directory', __('Add Listing to Directory', 'lddbd'), __('Add Listing', 'lddbd'), 'manage_options', 'add_business_to_directory', 'lddbd_add_business_page');
+	$lddbd_edit_business_page = add_submenu_page('business_directory', __('Edit Listing in Directory', 'lddbd'), __('Edit Listing', 'lddbd'), 'manage_options', 'edit_business_in_directory', 'lddbd_edit_business_page');
+	$lddbd_settings_page = add_submenu_page('business_directory', __('Directory Settings', 'lddbd'), __('Settings', 'lddbd'), 'manage_options', 'business_directory_settings', 'lddbd_settings_page');
 	
 	add_action( 'admin_init', 'register_mysettings' );
-	add_action( 'admin_print_styles-' . $lddbd_menu_page, 'lddbd_styles' );
-	add_action( 'admin_print_styles-' . $lddbd_settings_page, 'lddbd_styles' );
-	add_action( 'admin_print_styles-' . $lddbd_add_business_page, 'lddbd_styles' );
-	add_action( 'admin_print_styles-' . $lddbd_edit_business_page, 'lddbd_styles' );
-	add_action( 'admin_print_styles-' . $lddbd_business_directory_page, 'lddbd_styles' );
-	add_action( 'admin_print_styles-' . $lddbd_business_categories_page, 'lddbd_styles' );
+
 }
 
-function lddbd_styles() {
-	wp_enqueue_style( 'lddbd_stylesheet' );
-}
 
 // Register our settings
 function register_mysettings() {
 	register_setting( 'lddbd_settings_group', 'lddbd_options', 'lddbd_options_validate' );
 	add_settings_section( 'lddbd_main', '', 'lddbd_section_text', 'business_directory_settings' );
-	add_settings_field( 'lddbd_setting_one', __('Display "Submit Listing" Button', 'lddbd-text'), 'lddbd_setting_submit_button', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_two', __('Display "Login" Button', 'lddbd-text'), 'lddbd_setting_login_field', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_three', __('Display "Google Maps" Map', 'lddbd-text'), 'lddbd_setting_google_maps', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_four', __('Default Directory View', 'lddbd-text'), 'lddbd_setting_default_view', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_five', __('Directory Title', 'lddbd-text'), 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_six', __('Welcome Message', 'lddbd-text'), 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_seven', __('Directory Label', 'lddbd-text'), 'lddbd_setting_directory_label', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_eight', __('Additional Information Sections', 'lddbd-text'), 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main' );
-//	add_settings_field( 'lddbd_setting_nine', __('Categorize Entries', 'lddbd-text'), 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main' );
-	add_settings_field( 'lddbd_setting_ten', __('Allow User Categorization', 'lddbd-text'), 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_one', __('Display "Submit Listing" Button', 'lddbd'), 'lddbd_setting_submit_button', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_two', __('Display "Login" Button', 'lddbd'), 'lddbd_setting_login_field', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_three', __('Display "Google Maps" Map', 'lddbd'), 'lddbd_setting_google_maps', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_four', __('Default Directory View', 'lddbd'), 'lddbd_setting_default_view', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_five', __('Directory Title', 'lddbd'), 'lddbd_setting_directory_title', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_six', __('Welcome Message', 'lddbd'), 'lddbd_setting_welcome_message', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_seven', __('Directory Label', 'lddbd'), 'lddbd_setting_directory_label', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_eight', __('Additional Information Sections', 'lddbd'), 'lddbd_setting_information_sections', 'business_directory_settings', 'lddbd_main' );
+//	add_settings_field( 'lddbd_setting_nine', __('Categorize Entries', 'lddbd'), 'lddbd_setting_categorization', 'business_directory_settings', 'lddbd_main' );
+	add_settings_field( 'lddbd_setting_ten', __('Allow User Categorization', 'lddbd'), 'lddbd_setting_user_categorization', 'business_directory_settings', 'lddbd_main' );
 }
 
 function lddbd_section_text() {
@@ -175,7 +161,7 @@ function lddbd_setting_information_sections(){
 				});
 			});
 		</script>";
-	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/lddbd_scripts.js'></script>";	
+	echo '<script src="' . DIRL_JS_URL . '/lite.js"></script>';
 	
 }
 
@@ -191,8 +177,8 @@ function lddbd_setting_categorization(){
 		$noChecked = 'checked';
 	}
 	echo "<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='Yes' {$yesChecked} />&nbsp;Yes&nbsp;<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='No' {$noChecked} />&nbsp;No";
-	
-	echo "<script type='text/javascript' src='".plugins_url()."/ldd-business-directory/scripts/lddbd_scripts.js'></script>";
+
+    echo '<script src="' . DIRL_JS_URL . '/lite.js"></script>';
 }
 
 // Controls whether users are able to categorize their own entries.
@@ -245,6 +231,3 @@ if(!preg_match('/^[a-z0-9]{32}$/i', $newinput['text_string'])) {
 	return $newinput;
 }
 
-include('lddbd_backend-display.php');
-
-?>
