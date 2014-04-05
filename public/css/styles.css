@@ -1,0 +1,618 @@
+.lddbd_edit_business_form br, #lddbd_add_business_form br{
+	clear: both;
+}
+
+#lddbd_business_table th, #lddbd_category_table th {
+	padding: 5px 10px;
+}
+
+th#approved{
+	width: 10%;
+}
+
+tr.lddbd_edit_business_row, tr.lddbd_edit_category_row, tr#lddbd_add_category_row{
+	height: 0px;
+	overflow: hidden;
+	display: none;
+}
+
+.row-actions a{
+	margin: 0px 5px;
+}
+
+div.lddbd_input_holder{
+	display: block;
+	margin: 20px 0px;
+	width: 50rem;
+	overflow: hidden;
+	position: relative;
+}
+	
+	div.lddbd_input_holder label, #lddbd_business_directory div.lddbd_input_holder label{
+		float: left;
+		font-size: 16px;
+		height: auto;
+		margin: 0 10px 0 0;
+		line-height: normal;
+	}
+	
+	div.lddbd_radio_holder, #lddbd_business_directory div.lddbd_radio_holder{
+		text-align: left;
+	}
+	
+	div.lddbd_input_holder input[name="lddbd_license_key"] {
+		margin-right: 240px !important;
+	}
+	
+	div.lddbd_radio_holder input[name="promo"] {
+		margin: 0 5px 0;
+	}
+	
+	div.lddbd_input_holder input[type="text"], div.lddbd_input_holder input[type="file"], div.lddbd_input_holder .lddbd_radio_holder, div.lddbd_input_holder textarea{
+		float: right;
+		resize: none;
+		margin-right: 150px;
+		width: 400px;
+	}
+	
+	#lddbd_business_directory div.lddbd_input_holder input[type="text"], #lddbd_business_directory div.lddbd_input_holder input[type="file"], #lddbd_business_directory div.lddbd_input_holder .lddbd_radio_holder, #lddbd_business_directory div.lddbd_input_holder textarea{
+		float: right;
+		resize: none;
+		margin-right: 150px;
+		width: 400px;
+	}
+	
+	div.lddbd_input_holder select, #lddbd_business_directory div.lddbd_input_holder select{
+		float: right;
+		resize: none;
+		margin-right: 350px;
+		width: 200px;
+	}
+	
+	.lddbd_input_holder textarea, #lddbd_business_directory .lddbd_input_holder textarea{
+		height: 100px !important;
+		width: 398px;
+	}
+	
+	.lddbd_input_holder img, #lddbd_business_directory .lddbd_input_holder img{
+		max-height: 100px;
+		max-width: 100px;
+	}
+	
+	.lddbd_input_holder .lddbd_category_block{
+		display: block;
+		/* width: 200px; */
+		height: 20px;
+		line-height: 20px;
+		overflow: hidden;
+	}
+	
+		.lddbd_category_block input[type="checkbox"]{
+			margin: 0px 10px 0px 0px;
+			float: left;
+			height: 100%;
+			line-height: 100%;
+		}
+		
+		.lddbd_category_block label{
+			display: block;
+			float: left;
+		}
+
+
+
+
+#lddbd_business_directory{
+	position: relative;
+	overflow: hidden;
+	min-height: 300px;
+	font-size: 16px;
+}
+	
+	
+	#lddbd_business_directory input[type="text"], #lddbd_business_directory input[type="password"]{
+		float: none;
+		clear: none;
+		display: inline-block;
+		font-size: 13px;
+		margin: 2px;
+		border: 1px solid #bbb;
+		outline: none;
+	}
+	
+	#lddbd_business_directory textarea{
+		float: none;
+		clear: none;
+		display: inline-block;
+		font-size: 13px;
+		margin: 2px;
+	}
+	
+	#lddbd_business_directory input[type="button"], #lddbd_business_directory input[type="submit"]{
+		width: auto;
+		height: auto;
+		line-height: normal;
+		padding: 1px 6px;
+		text-align: center;
+		margin: 0px 5px;
+		float: none;
+		clear: none;
+		display: inline-block;
+	}
+
+	#lddbd_business_directory_head{
+		border-bottom: 1px solid #bbb;
+		padding: 10px 0px;
+		overflow: hidden;
+		margin-bottom: 20px;
+	}
+	
+		#lddbd_business_directory_head h2{
+			display: block;
+			position: relative;
+			float: left;
+			margin: 0px 0px 10px 0px;
+		}
+		
+		#lddbd_business_directory_head p{
+			display: block;
+			clear: both;
+		}
+		
+		#lddbd_navigation_holder{
+			display: block;
+			clear: both;
+			overflow: hidden;
+			margin: 20px 0px 0px 0px;
+			padding: 10px 0px 0px 0px;
+			border-top: 1px solid #bbb;
+		}
+		
+			#lddbd_navigation_holder .lddbd_navigation_button{
+				display: block;
+				float: left;
+				color: black;
+				text-decoration: none;
+				padding: 0px 5px;
+				border-left: 1px solid #efefef;
+				border-right: 1px solid #aaa;
+				border-top: 1px solid #aaa;
+				border-bottom: 1px solid #aaa;
+				background: #ddd; /* Old browsers */
+                background: -moz-linear-gradient(top,  #eeeeee 0%, #dddddd 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#dddddd)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* IE10+ */
+                background: linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#dddddd',GradientType=0 ); /* IE6-9 */
+			}
+			
+			#lddbd_navigation_holder .lddbd_navigation_button:first-child{
+				border-left: 1px solid #aaa;
+			}
+			
+			#lddbd_navigation_holder .lddbd_navigation_button:hover{
+				text-decoration: none;
+				background: #eee; /* Old browsers */
+                background: -moz-linear-gradient(top,  #dddddd 0%, #eeeeee 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dddddd), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* IE10+ */
+                background: linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddddd', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+			}
+		
+			#lddbd_navigation_holder #lddbd_add_business_button{
+				float: right;
+				border-left: 1px solid #aaa;
+			}
+			
+			#lddbd_navigation_holder #lddbd_business_login_button{
+				float: right;
+			}
+		#lddbd_business_directory_head #lddbd_directory_home_button{
+			clear: left;
+		}
+		
+		
+		
+			#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form #lddbd_input_holder{
+				margin-right: 6px;
+				float: left;
+				display: block;
+				text-align: right;
+			}
+			
+			#lddbd_forgot_password{
+				display: block;
+				text-align: center;
+			}
+			
+/*
+#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form label{
+				float: left;
+				clear: left;
+			}
+			
+			#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form input{
+				float: left;
+				display: block;
+			}
+			
+			#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form input[type="submit"]{
+				clear: left;
+			}
+*/
+		
+		#lddbd_business_directory_head form#lddbd_business_search{
+			float: right;
+			margin: 0px 0px 10px 0px;
+		}
+		
+			#lddbd_business_directory_head #lddbd_business_search #lddbd_search_directory{
+				width: 180px;
+			}
+			#lddbd_business_directory_head #lddbd_business_search #lddbd_promo_filter_label{
+				font-size: 12px;
+				line-height: 12px;
+			}
+			
+	#lddbd_business_directory_body{
+		position: relative;
+		overflow: hidden;
+		/*max-height: 2000px !important;*/	
+	}
+	
+		#lddbd_business_directory_body h3 {
+			text-align: center;
+			line-height: 30px;
+			margin: 0px;
+			/* border-top: 1px solid #fff; */
+			border-bottom: 1px solid #bbb;
+			position: relative;
+			overflow: hidden;
+		}
+		
+			#lddbd_business_directory_body h3 a#lddbd_back_to_categories, #lddbd_business_directory_body h3 a#lddbd_back_to_results{
+				position: absolute;
+				left: 0px;
+				cursor: pointer;
+				font-size: 0.8em;
+			}
+			
+			#lddbd_business_directory_body h3 span{
+				margin: 0px 100px;
+				max-width: 400px;
+				*width: 400px;
+				display: block;
+			}
+			
+			#lddbd_business_directory_body h3 #lddbd_special_offer_logo{
+				display: block;
+				float: right;
+			}
+		
+		#lddbd_business_directory_body .category_link{
+			display: block;
+		}
+
+		#lddbd_business_directory_body .lddbd_business_listing{
+			border-top: 1px solid #fff;
+			border-bottom: 1px solid #bbb;
+			overflow: hidden;
+			display: block;
+			padding: 10px 0px;
+		}
+			
+			#lddbd_business_directory_body .lddbd_logo_holder{
+				margin: 2px 10px 2px 2px;
+				float: left;
+				display: table-cell;
+				min-height: 100px;
+				width: 200px;
+			}
+			
+				#lddbd_business_directory_body .lddbd_business_listing img{
+					max-width: 200px;
+					max-height: 200px;
+					display: block;
+					margin: 0px auto;
+					vertical-align: middle;
+					cursor: pointer;
+				}
+			
+			#lddbd_business_directory_body .lddbd_business_listing>a{
+				display: block;
+				position: relative;
+				margin: 5px 0px;
+			}
+			
+			#lddbd_business_directory_body .lddbd_business_listing ul{
+				display: table-cell;
+				position: relative;
+				margin: 5px 0px;
+				padding: 0px;
+				text-indent: 0px;
+			}
+			
+				#lddbd_business_directory_body .lddbd_business_listing ul li{
+					margin: 0px;
+					list-style-type: none;
+				}
+				
+				#lddbd_business_directory_body .lddbd_business_listing ul li::before{
+					content: "";
+				}
+				
+		#lddbd_add_business_holder{
+			width: 100%;
+			padding: 5px 10px;
+			top: -1040px;
+			left: 0px;
+			display: block;
+			overflow: hidden;
+			position: absolute;
+			margin: 0px;
+			background-color: #fff;
+			visibility: hidden;
+		}
+		
+			#lddbd_add_business_holder .lddbd_input_holder{
+				margin: 2px 0px;
+				width: 100%;
+				display: block;
+				overflow: hidden;
+				position: relative;
+			}
+			
+				#lddbd_add_business_holder div.lddbd_input_holder input[type="text"]{
+					width: 250px;
+					margin-right: 40px;
+				}
+				
+				#lddbd_add_business_holder div.lddbd_input_holder select{
+					width: 250px;
+					margin-right: 40px;
+				}
+				
+				#lddbd_add_business_holder div.lddbd_input_holder textarea{
+					width: 248px;
+					margin-right: 41px;
+				}
+				
+				#lddbd_add_business_holder div.lddbd_input_holder input[type="file"], #lddbd_add_business_holder div.lddbd_input_holder .lddbd_radio_holder{
+					float: right;
+					margin-right: 41px;
+					width: 250px
+				}
+			
+				#lddbd_add_business_holder .lddbd_input_holder input.add_business_error, #lddbd_add_business_form .lddbd_input_holder input.add_business_error{
+					background-color: #ff9589;
+				}
+				
+				#lddbd_add_business_holder .lddbd_input_holder div.add_business_error, #lddbd_add_business_form .lddbd_input_holder div.add_business_error{
+					color: #ff0000;
+					position: absolute;
+					right: 0px;
+					top: 0px;
+				}
+	
+	
+	
+		#lddbd_business_login_form{
+			text-align: center;
+		}
+	
+	#lddbd_business_directory_single .single_business_left{
+		display: table-cell;
+		width: 200px;
+		padding: 10px 5px;
+		float: left;
+		border-top: 1px solid #fff;
+	}
+		
+		#lddbd_business_directory_single .single_business_left img{
+			display: block;
+			margin: 0px auto;
+			max-width: 200px;
+			*width: 200px;
+		}
+	
+	#lddbd_business_directory_single div.lddbd_business_contact{
+		display: block;
+		padding: 0;
+	}
+	
+	.lddbd_business_listing div.lddbd_business_contact{
+		display: block;
+		padding: 10px 0 0;
+	}
+	
+		#lddbd_business_directory_single ul li{
+			list-style-type: none;
+			margin-left: 0px;
+			display: block;
+			overflow: hidden;
+		}
+		
+		#lddbd_business_directory_single ul li::before{
+			content: "";
+		}
+	
+	#lddbd_business_directory_single .single_business_right{
+		display: table-cell;
+		padding: 10px 0 15px 20px;
+		border-top: 1px solid #fff;
+	}
+	
+		#lddbd_business_directory_single .single_business_right #lddbd_special_offer_logo{
+			display: block;
+			float: right;
+		}
+		
+		#lddbd_business_directory_single .single_business_right h4{
+			color: #333;
+			font-weight: bold;
+			font-size: 16px;
+			margin: 10px 0px 5px 0px;
+		}
+		
+		#lddbd_business_directory_single .single_business_right p{
+			margin: 0px 0px 20px 0px;
+		}
+		
+		#lddbd_business_directory_single .single_business_right ul.business_docs li{
+			text-indent: 0px;
+		}
+		
+		#lddbd_business_directory_single .single_business_right ul.business_docs li img{
+			float: left;
+			max-width: 100px;
+			max-height: 100px;
+			margin: 5px 10px 5px 0px;
+		}
+		
+		#lddbd_business_directory_single #lddbd_map{
+			clear: both;
+			display: block;
+			text-align: center;
+		}
+		
+		#lddbd_business_directory_list div.lddbd_business_contact a, #lddbd_business_directory_single div.lddbd_business_contact a{
+			display: block;
+			width: 40px;
+			height: 40px;
+			margin: 0px 5px;
+			float: left;
+		}
+		
+		#lddbd_business_directory_list div.lddbd_business_contact p, #lddbd_business_directory_single div.lddbd_business_contact p{
+			text-align: left;
+			display: block;
+			clear: both;
+			margin: 0px;
+		}
+				
+	#lddbd_business_directory_list #lddbd_categories_left{
+		width: 50%;
+		float: left;
+		display: block;
+	}
+	
+	#lddbd_business_directory_list #lddbd_categories_right{
+		width: 50%;
+		float: right;
+		display: block;
+	}		
+	
+	#lddbd_business_directory form#lddbd_mail_to_business_form{
+		width: 300px;
+		height: auto
+		overflow: hidden;
+		display: block;
+		margin: 0px auto;
+		z-index: 500;
+		position: absolute;
+		background-color: white;
+		padding: 10px;
+		text-align: center;
+		left: 50%;
+		margin-left: -160px;
+		border: 1px solid black;
+		box-shadow: 0px 0px 10px #444444;
+		-moz-box-shadow: 0px 0px 10px #444444;
+		-webkit-box-shadow: 0px 0px 10px #444444;
+	}
+	
+		#lddbd_business_directory form#lddbd_mail_to_business_form strong{
+			display: block;
+			clear: both;
+		}
+		
+		#lddbd_business_directory form#lddbd_mail_to_business_form label{
+			color: #000;
+			float: left;
+			margin: 10px 0px 0px 0px;
+			clear: left;
+			width: 75px;
+			line-height: 19px;
+			display: block;
+			text-align: left;
+		}
+		
+		#lddbd_business_directory form#lddbd_mail_to_business_form input[type="text"]{
+			display: block;
+			margin: 10px 0px 0px 0px;
+			width: 200px;
+			height: auto;
+		}
+		
+		#lddbd_business_directory form#lddbd_mail_to_business_form textarea{
+			width: 200px;
+			height: 100px;
+			display: block;
+			margin: 10px 0px;
+		}
+		
+		
+		
+
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder strong:first-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:first-child{
+	float: left;
+	/*margin-left: 50px;*/
+}
+
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder strong:last-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder strong:last-child{
+	float: right;
+	margin-right: 220px;
+}
+
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder input:first-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder input:first-child{
+	margin-right: 0px;
+	float: left;
+	width: 250px;
+}
+
+form.lddbd_edit_business_form div.lddbd_input_holder.file_input_holder input:last-child, #lddbd_business_directory div.lddbd_input_holder.file_input_holder input:last-child{
+	margin-right: 0px;
+	float: right;
+}
+
+#lddbd_business_directory div.lddbd_input_holder ul li{
+	list-style-type: none;
+}	
+
+#lddbd_business_directory div.lddbd_input_holder ul li::before{
+	content: "";
+}
+
+#lddbd_business_directory div.lddbd_input_holder{
+	width: 100%;
+}
+
+form#lddbd_edit_business_form div.lddbd_input_holder input[type="text"]{
+	width: 300px;
+}
+
+form#lddbd_edit_business_form div.lddbd_input_holder textarea{
+	width: 298px;
+}
+
+form#lddbd_edit_business_form div.lddbd_input_holder select{
+	margin-right: 253px;
+}
+
+.lddbd-business-info-type {
+	font-weight: bold;
+	width: 35%;
+	margin: 0 auto;
+	display: inline-block;
+}
+
+.lddbd-business-info-data {
+	width: 50%;
+	margin: 0 0 0 30px;
+	display: inline-block;
+}
