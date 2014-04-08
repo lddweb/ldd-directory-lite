@@ -1,6 +1,49 @@
 <?php
 
 
+add_action( 'admin_init', 'dirl_options_init' );
+
+function dirl_options_init()
+{
+
+    register_setting( 'writing', 'dirl_options', 'dirl_options_validate' );
+    function dirl_options_validate($input)
+    {
+        global $dirl_options;
+
+        $valid = $dirl_options;
+
+        $valid['email_onsubmit'] = wp_filter_nohtml_kses( $input['email_onsubmit'] );
+        $valid['email_onapprove'] = wp_filter_nohtml_kses( $input['email_onapprove'] );
+
+        return $valid;
+    }
+
+
+    add_settings_section( 'dirl_settings', 'LDD Business Directory Email', 'dirl_callback_settings', 'writing' );
+    function dirl_callback_settings()
+    {
+        echo '<p>'.__( 'Configure Business Directory email settings here.', 'lddbd' ).'</p>';
+    }
+
+
+    add_settings_field( 'dirl_email_onsubmit', '<label for="email_onsubmit">' . __( 'Submission Subject' , 'lddbd' ) . '</label>', 'dirl_callback_onsubmit', 'writing', 'dirl_settings' );
+    function dirl_callback_onsubmit()
+    {
+        $lddlite = lddlite();
+        echo '<input type="text" size="80" name="dirl_options[email_onsubmit]" value="'.esc_attr( $lddlite->options['email_onsubmit'] ).'" />';
+    }
+
+
+    add_settings_field( 'dirl_email_onapprove', '<label for="email_onapprove">' . __( 'Approved Subject' , 'lddbd' ) . '</label>', 'dirl_callback_onapprove', 'writing', 'dirl_settings' );
+    function dirl_callback_onapprove()
+    {
+        $lddlite = lddlite();
+        echo '<input type="text" size="80" name="dirl_options[email_onapprove]" value="'.esc_attr( $lddlite->options['email_onapprove'] ).'" />';
+    }
+
+}
+
 
 
 // Generates the Business Directory List HTML page, populates it with businesses registered in the database, and formats how they're displayed.
@@ -68,7 +111,7 @@ function lddbd_html_page()
 			</tr>
 			<tr class="lddbd_edit_business_row">
 			<td colspan="4">
-			<form class="lddbd_edit_business_form" method="post" action="<?php echo DIRL_AJAX; ?>" enctype='multipart/form-data'>
+			<form class="lddbd_edit_business_form" method="post" action="<?php echo LDDLITE_AJAX; ?>" enctype='multipart/form-data'>
 			<div class="lddbd_input_holder">
 				<label for="name"><?php printf( __('%s Name', 'lddbd'), $directory_label ); ?></label>
 				<input class="name required" type="text" name="name" value="<?php echo stripslashes($business->name); ?>"/>
@@ -150,7 +193,7 @@ function lddbd_html_page()
 			jQuery(this).closest("tr").fadeOut(400);
 			var business_id = jQuery(this).closest("tr").attr("id");
 			business_id = business_id.substring(9);
-			jQuery.post("<?php echo DIRL_AJAX; ?>", {id:business_id, action:"delete"});
+			jQuery.post("<?php echo LDDLITE_AJAX; ?>", {id:business_id, action:"delete"});
 		});
 
 		jQuery(".business_approval").click(function(){
@@ -159,13 +202,13 @@ function lddbd_html_page()
 				jQuery(this).closest("td").siblings("th.approval").children('input[type="checkbox"]').attr("checked", "checked");
 				var business_id = jQuery(this).closest("tr").attr("id");
 				business_id = business_id.substring(9);
-				jQuery.post("<?php echo DIRL_AJAX; ?>", {id:business_id, action:"approve"});
+				jQuery.post("<?php echo LDDLITE_AJAX; ?>", {id:business_id, action:"approve"});
 			} else if(jQuery(this).hasClass("revoke_business")){
 				jQuery(this).html("Approve").removeClass("revoke_business").addClass("approve_business");
 				jQuery(this).closest("td").siblings("th.approval").children('input[type="checkbox"]').removeAttr("checked");
 				var business_id = jQuery(this).closest("tr").attr("id");
 				business_id = business_id.substring(9);
-				jQuery.post("<?php echo DIRL_AJAX; ?>", {id:business_id, action:"revoke"});
+				jQuery.post("<?php echo LDDLITE_AJAX; ?>", {id:business_id, action:"revoke"});
 			}
 		});
 
@@ -300,7 +343,7 @@ function lddbd_add_business_page()
 <div class="wrap">
 	<h2><?php printf( __( 'Add %s to Directory', 'lddbd'), $directory_label ); ?></h2>
 
-	<form id="lddbd_add_business_form" method="post" action="<?php echo DIRL_AJAX; ?>" enctype='multipart/form-data'>
+	<form id="lddbd_add_business_form" method="post" action="<?php echo LDDLITE_AJAX; ?>" enctype='multipart/form-data'>
 		<div class="lddbd_input_holder">
 			<label for="name"><?php printf(  __('%s Name', 'lddbd'), $directory_label ); ?></label>
 			<input class="required" type="text" id="lddbd_name" name="name"/>
@@ -319,7 +362,7 @@ function lddbd_add_business_page()
 		<div class="lddbd_input_holder">
 			<label for="address_country"><?php _e('Country', 'lddbd'); ?></label>
 			<?php
-				$lddbd_countryTxtFile = DIRL_JS . 'countries.txt';
+				$lddbd_countryTxtFile = LDDLITE_JS . 'countries.txt';
 
 				if( file_exists( $lddbd_countryTxtFile ) ) {
 					// Text file containing list of supported countries
@@ -463,7 +506,7 @@ if(!empty($section_array)){
 	    </p>
 	</form>
 
-<?php require( DIRL_JS . 'countrySelector.php' ); ?>
+<?php require( LDDLITE_JS . 'countrySelector.php' ); ?>
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
@@ -563,7 +606,7 @@ if( !empty ( $options['directory_label'] ) ) {
 <div class="wrap">
 	<h2><?php printf( __('Edit %s', 'lddbd'), $directory_label ); ?></h2>
 
-	<form class="lddbd_edit_business_form" method="post" action="<?php echo DIRL_AJAX; ?>" enctype='multipart/form-data'>
+	<form class="lddbd_edit_business_form" method="post" action="<?php echo LDDLITE_AJAX; ?>" enctype='multipart/form-data'>
 		<div class="lddbd_input_holder">
 			<label for="name"><?php printf( __('%s Name', 'lddbd'), $directory_label ); ?></label>
 			<input class="required" type="text" id="lddbd_name" name="name" value="<?php echo stripslashes($business->name); ?>"/>
@@ -582,7 +625,7 @@ if( !empty ( $options['directory_label'] ) ) {
 		<div class="lddbd_input_holder">
 			<label for="address_country"><?php _e('Country', 'lddbd'); ?></label>
 			<?php
-				$lddbd_countryTxtFile = DIRL_JS . '/countries.txt';
+				$lddbd_countryTxtFile = LDDLITE_JS . '/countries.txt';
 				
 				if( file_exists( $lddbd_countryTxtFile ) ) {
 					// Text file containing list of supported countries
@@ -767,7 +810,7 @@ if( !empty ( $options['directory_label'] ) ) {
 
 </div>
 
-<?php require( DIRL_JS . '/countryEditor.php' ); ?>
+<?php require( LDDLITE_JS . '/countryEditor.php' ); ?>
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
@@ -796,7 +839,7 @@ if( !empty ( $options['directory_label'] ) ) {
 				doc_id = parseInt(doc_id);
 				jQuery.ajax({
 				type: 'POST',
-				url: '<?php echo DIRL_AJAX; ?>',
+				url: '<?php echo LDDLITE_AJAX; ?>',
 				data: {doc_id: doc_id, action: 'delete_doc'},
 				success: function(data){
 					this_placeholder.parent().slideUp('200');
@@ -921,7 +964,7 @@ $options = get_option('lddbd_options');
 		</tr>
 		<tr class="lddbd_edit_category_row">
 		<td colspan="3">
-		<form class="lddbd_edit_category_form" method="post" action="<?php echo DIRL_AJAX; ?>">
+		<form class="lddbd_edit_category_form" method="post" action="<?php echo LDDLITE_AJAX; ?>">
 			<input type="text" name="cat_name" value="<?php echo stripslashes($cat->name); ?>" />
 			<input type="hidden" name="id" value="<?php echo $cat->id; ?>"/>
    			<p class="submit">
@@ -937,7 +980,7 @@ $options = get_option('lddbd_options');
 	?>
 	<tr id="lddbd_add_category_row">
 	<td colspan="3">
-		<form id="lddbd_add_category_form" method="post" action="<?php echo DIRL_AJAX; ?>">
+		<form id="lddbd_add_category_form" method="post" action="<?php echo LDDLITE_AJAX; ?>">
 			<input class="name" type="text" name="name">
 			<input class="action" type="hidden" name="action" value="add_category">
    			<p class="submit">
@@ -1011,7 +1054,7 @@ jQuery(document).ready(function() {
 				jQuery(this).closest("tr").fadeOut(400);
 				var cat_id = jQuery(this).closest("tr").attr("id");
 				cat_id = cat_id.substring(4);
-				jQuery.post("<?php echo DIRL_AJAX; ?>", {id:cat_id, action:"delete_category"});
+				jQuery.post("<?php echo LDDLITE_AJAX; ?>", {id:cat_id, action:"delete_category"});
 			}
 		});
 

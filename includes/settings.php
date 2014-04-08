@@ -161,7 +161,7 @@ function lddbd_setting_information_sections(){
 				});
 			});
 		</script>";
-	echo '<script src="' . DIRL_JS_URL . '/lite.js"></script>';
+	echo '<script src="' . LDDLITE_JS_URL . '/lite.js"></script>';
 	
 }
 
@@ -178,7 +178,7 @@ function lddbd_setting_categorization(){
 	}
 	echo "<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='Yes' {$yesChecked} />&nbsp;Yes&nbsp;<input class='lddbd_categorization_bool' name='lddbd_options[categorization]' type='radio' value='No' {$noChecked} />&nbsp;No";
 
-    echo '<script src="' . DIRL_JS_URL . '/lite.js"></script>';
+    echo '<script src="' . LDDLITE_JS_URL . '/lite.js"></script>';
 }
 
 // Controls whether users are able to categorize their own entries.

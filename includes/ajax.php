@@ -11,10 +11,7 @@ $tables = array(
     'cat'   => $wpdb->prefix . 'lddbusinessdirectory_cats'
 );
 
-
-
-
-$dirl_options = dirl_get_options();
+$lddlite = lddlite();
 
 
 
@@ -145,8 +142,8 @@ if ( $action == 'approve' )
             'description'   => $listing[0]->description
         );
 
-        $approved_body = dirl_parse( 'email_approved', $data );
-        dirl_mail( $listing[0]->email, $dirl_options['email_onapprove'], $approved_body );
+        $approved_body = lddlite_parse_template( 'email_approved', $data );
+        dirl_mail( $listing[0]->email, $lddlite->options['email_onapprove'], $approved_body );
 
         // Update the approved list and save it
         $approved_emails[$id] = 'true';
@@ -303,11 +300,11 @@ else if ( $action == 'add' )
 
         // Notification email that gets sent to the visitor who submitted the listing.
         // The subject lines could be added to wp-admin for better user experience/customization
-        $submit_body = dirl_parse('email_onsubmit', $data);
-        dirl_mail($data['email'], $dirl_options['email_onsubmit'], $submit_body);
+        $submit_body = lddlite_parse_template('email_onsubmit', $data);
+        dirl_mail($data['email'], $lddlite->options['email_onsubmit'], $submit_body);
 
         // Send an email to the site owner
-        $admin_body = dirl_parse('email_admin', $data);
+        $admin_body = lddlite_parse_template('email_admin', $data);
         dirl_mail($data['site_email'], 'A new listing is awaiting approval.', $admin_body);
 
     }
@@ -527,6 +524,9 @@ else if ( $action == 'search' )
 		"
     );
     echo "<h3><a href='javascript:void(0);' id='lddbd_back_to_categories' onclick='javascript: backToCategories();'>&larr; Categories</a>Search Results</h3>";
+
+    global $post;
+
     if($search_results){
         foreach($search_results as $business){
             $contact = '';
@@ -537,36 +537,25 @@ else if ( $action == 'search' )
             if(!empty($business->phone)){ $contact.="<li><strong>Phone:</strong> {$business->phone}</li>"; }
             if(!empty($business->fax)){ $contact.="<li><strong>Fax:</strong> {$business->fax}</li>"; }
 
-            if(!empty($business->url)){
-                if(strstr($business->url, 'http://')){$business_url = $business->url;}
-                else{$business_url = 'http://'.$business->url;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_url . '"><img src="' . DIRL_URL . '/images/website.png' . '" /></a>';
-            }
-            if(!empty($business->facebook)){
-                if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
-                else{$business_facebook = 'http://'.$business->facebook;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_facebook . '"><img src="' . DIRL_URL . '/images/facebook.png' . '" /></a>';
-            }
-            if(!empty($business->twitter)){
-                if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
-                else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
-                else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_twitter . '"><img src="' . DIRL_URL . '/images/twitter.png' . '" /></a>';
-            }
-            if(!empty($business->linkedin)){
-                if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
-                else{$business_linkedin = 'http://'.$business->linkedin;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_linkedin . '"><img src="' . DIRL_URL . '/images/linkedin.png' . '" /></a>';
-            }
-            if ( !empty( $business->email ) )
+
+
+            $contact_right .= ( !empty( $business->url ) )      ? lddlite_icon( 'website', $business->url, 'Home page for ' . $business->name ) : '';
+            $contact_right .= ( !empty( $business->facebook ) ) ? lddlite_icon( 'facebook', $business->facebook, 'Visit ' . $business->name . ' on Facebook' ) : '';
+
+            // @TODO We shouldn't be doing this here, the usernames should be validated and normalized on submission.
+            if ( !empty( $business->twitter ) )
             {
-                $bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-                $contact_right .= '<a class="lddbd_contact_icon" href="javascript:void(0);" onclick="javascript:mailToBusiness(\'' . $business->email . '\', this, \'' . $bizname_esc . '\');\"><img src="' . DIRL_URL . '/images/email.png' . '" /></a>';
+                $twitter = $business->twitter;
+                if ( strpos( $business->twitter, '@' ) !== false )
+                    $twitter = preg_replace( '/@(\w+)/', 'http://twitter.com/\\1', $twitter );
+                $contact_right .= lddlite_icon( 'twitter', $twitter, 'Follow ' . $business->name . ' on Twitter' );
             }
-            if ( $business->promo == 'true' )
-            {
-                $contact_right .= '<a class="lddbd_contact_icon" href="javascript:void(0);" onclick="javascript:singleBusinessListing(' . $business->id . ');"><img src="' . DIRL_URL . '/images/special-offer.png' . '" /></a>';
-            }
+
+            $contact_right .= ( !empty( $business->linkedin ) ) ? lddlite_icon( 'linkedin', $business->linkedin, 'Visit ' . $business->name . ' on LinkedIn' ) : '';
+            $contact_right .= ( !empty( $business->email ) )    ? '<a href="#" onclick="">' . lddlite_icon( 'email' ) . '</a>' : '';
+
+
+
             if(!empty($business->logo)){
                 $logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}' /></div>"; }
 
@@ -674,30 +663,30 @@ else if ( $action == 'category_filter' )
             if(!empty($business->url)){
                 if(strstr($business->url, 'http://')){$business_url = $business->url;}
                 else{$business_url = 'http://'.$business->url;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_url . '"><img src="' . DIRL_URL . '/images/website.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_url . '"><img src="' . LDDLITE_URL . '/images/website.png' . '" /></a>';
             }
             if(!empty($business->facebook)){
                 if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
                 else{$business_facebook = 'http://'.$business->facebook;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_facebook . '"><img src="' . DIRL_URL . '/images/facebook.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_facebook . '"><img src="' . LDDLITE_URL . '/images/facebook.png' . '" /></a>';
             }
             if(!empty($business->twitter)){
                 if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
                 else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
                 else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_twitter . '"><img src="' . DIRL_URL . '/images/twitter.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_twitter . '"><img src="' . LDDLITE_URL . '/images/twitter.png' . '" /></a>';
             }
             if(!empty($business->linkedin)){
                 if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
                 else{$business_linkedin = 'http://'.$business->linkedin;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_linkedin . '"><img src="' . DIRL_URL . '/images/linkedin.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_linkedin . '"><img src="' . LDDLITE_URL . '/images/linkedin.png' . '" /></a>';
             }
             if(!empty($business->email)){
                 $bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-                $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='" . DIRL_URL . '/images/email.png' . "' /></a>"; }
+                $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='" . LDDLITE_URL . '/images/email.png' . "' /></a>"; }
             if ( $business->promo == 'true' )
             {
-                $contact_right .= '<a class="lddbd_contact_icon" href="javascript:void(0);" onclick="javascript:singleBusinessListing(' . $business->id . ');"><img src="' . DIRL_URL . '/images/special-offer.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" href="javascript:void(0);" onclick="javascript:singleBusinessListing(' . $business->id . ');"><img src="' . LDDLITE_URL . '/images/special-offer.png' . '" /></a>';
             }
             if(!empty($business->logo)){
                 $logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}' /></div>"; }
@@ -756,7 +745,7 @@ else if ( $action == 'add_category' )
         "</tr>".
         "<tr class='lddbd_edit_category_row'>".
         "<td colspan='3'>".
-        "<form class='lddbd_edit_category_form' method='post' action='" . DIRL_AJAX . "'>".
+        "<form class='lddbd_edit_category_form' method='post' action='" . LDDLITE_AJAX . "'>".
         "<input type='text' name='cat_name' value='{$_POST['name']}'>".
         "<input type='hidden' name='action' value='edit_category'/>".
         "<input type='hidden' name='id' value='{$wpdb->insert_id}'/>".
@@ -775,7 +764,7 @@ jQuery('.delete_category').click(function(){
 	});
 	var cat_id = jQuery(this).closest('tr').attr('id');
 	cat_id = cat_id.substring(4);
-	jQuery.post('" . DIRL_AJAX . "', {id:cat_id, action:'delete_category'});
+	jQuery.post('" . LDDLITE_AJAX . "', {id:cat_id, action:'delete_category'});
 });
 
 jQuery('.edit_category').click(function(){
@@ -907,7 +896,7 @@ else if ( $action == 'login' )
                 }
             }
 
-            $lddbd_countryTxtFile = DIRL_JS . '/countries.txt';
+            $lddbd_countryTxtFile = LDDLITE_JS . '/countries.txt';
 
             // Text file containing list of supported countries
             $countryList = fopen( $lddbd_countryTxtFile, "r" );
@@ -928,7 +917,7 @@ else if ( $action == 'login' )
 
 // Call the script file with the jQuery controls for displaying form elements for specific countries
             ob_start();
-            include( DIRL_JS . '/countryEditor.php' );
+            include( LDDLITE_JS . '/countryEditor.php' );
             $countryEditor = ob_get_clean();
 
             if( !empty ( $options['directory_label'] ) ) {
@@ -937,7 +926,7 @@ else if ( $action == 'login' )
                 $directory_label = 'Business';
             }
 
-            echo "<form id='lddbd_edit_business_form' action='" . DIRL_AJAX . "' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
+            echo "<form id='lddbd_edit_business_form' action='" . LDDLITE_AJAX . "' method='POST' enctype='multipart/form-data' target='lddbd_edit_submission_target'>
 	<div class='lddbd_input_holder'>
 		<label for='name'>{$directory_label} Name</label>
 		<input class='required' type='text' id='lddbd_name' name='name' value='{$business->name}'/>
@@ -1067,7 +1056,7 @@ else if ( $action == 'login' )
    	 </p>
 	</form>
 	{$countryEditor}
-			<iframe id='lddbd_edit_submission_target' name='lddbd_edit_submission_target' src='" . DIRL_AJAX . "' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
+			<iframe id='lddbd_edit_submission_target' name='lddbd_edit_submission_target' src='" . LDDLITE_AJAX . "' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
 			
 			<script type='text/javascript'>
 			jQuery(document).ready(function(){					
@@ -1106,7 +1095,7 @@ else if ( $action == 'login' )
  					doc_id = parseInt(doc_id);
  					jQuery.ajax({
 						type: 'POST',
-						url: '" . DIRL_AJAX . "',
+						url: '" . LDDLITE_AJAX . "',
 						data: {doc_id: doc_id, action: 'delete_doc'},
 						success: function(data){
 							this_placeholder.parent().slideUp('200');

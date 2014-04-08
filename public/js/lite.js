@@ -55,10 +55,6 @@ jQuery(document).ready(function(){
 			}
 		});
 
-		if(jQuery.inArray(jQuery('#lddbd_add_business_form').find('#login').val(), lddbd_business_logins)!=-1){
-			jQuery('#lddbd_add_business_form').find('#login').addClass('add_business_error').parent().append('<div class="add_business_error">This login is taken.</div>');
-			error=true;
-		}
 
 	jQuery('input.add_business_error').focus(function(){
 		jQuery(this).removeClass('add_business_error');
@@ -85,15 +81,6 @@ jQuery(document).ready(function(){
 		}
 	});
 
-	jQuery('#lddbd_search_directory').focus(function(){
-		if(jQuery(this).val()=='Search the Business Directory'){
-			jQuery(this).val('');
-		}
-	}).blur(function(){
-		if(jQuery(this).val()==''){
-			jQuery(this).val('Search the Business Directory');
-		}
-	});
 
 	jQuery('#lddbd_business_search').submit(function(){
 		if(jQuery('#lddbd_add_business_holder').css('top') == '0px'){
@@ -104,10 +91,7 @@ jQuery(document).ready(function(){
 			jQuery('#lddbd_business_directory_single').fadeOut(200);
 		}
 
-		var query = jQuery('#lddbd_search_directory').val();
-		if(query=='Search the Business Directory'){
-			query = '';
-		}
+
 		var promo_filter = '';
 		if(jQuery('#lddbd_promo_filter').is(":checked")){
 			promo_filter = 'promo';
@@ -115,7 +99,7 @@ jQuery(document).ready(function(){
 		jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1);
 		jQuery.ajax({
 			type: 'POST',
-			url: lddbd_file_pathway+'lddbd_ajax.php',
+			url: lddlite_ajax_url,
 			data: {query: query, promo_filter: promo_filter, action: 'search'},
 			success: function(data){
 				jQuery('#lddbd_business_directory_list').html(data).fadeTo(200, 1);
@@ -160,7 +144,7 @@ jQuery(document).ready(function(){
 		jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1);
 		jQuery.ajax({
 			type: 'POST',
-			url: lddbd_file_pathway+'lddbd_ajax.php',
+			url: lddlite_ajax_url,
 			data: {query: '', action: 'search'},
 			success: function(data){
 				jQuery('#lddbd_business_directory_list').html(data).fadeTo(200, 1);
@@ -198,7 +182,7 @@ function lddbdPasswordRecovery(){
 	if (login != ''){
 		jQuery.ajax({
 			type: 'POST',
-			url: lddbd_file_pathway+'lddbd_ajax.php',
+			url: lddlite_ajax_url,
 			data: {login: login, action: 'recover_password'},
 			success: function(data){
 				if(data=='no login'){
@@ -224,7 +208,7 @@ function businessLogin(){
 	var password = jQuery('#lddbd_business_password').val();
 	jQuery.ajax({
 		type: 'POST',
-		url: lddbd_file_pathway+'lddbd_ajax.php',
+		url: lddlite_ajax_url,
 		data: {login: login, password: password, action: 'login'},
 		success: function(data){
 			jQuery('#lddbd_business_directory_list').html(data).fadeTo(200, 1);
@@ -283,7 +267,7 @@ function mailToBusiness(email, element, business){
 		} else {
 			jQuery.ajax({
 				type: 'POST',
-				url: lddbd_file_pathway+'lddbd_ajax.php',
+				url: lddlite_ajax_url,
 				data: {
 					email: jQuery('#lddbd_mail_to_business_form input#email').val(),
 					from: from,
@@ -314,7 +298,7 @@ function backToCategories(){
 	jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1);
 	jQuery.ajax({
 		type: 'POST',
-		url: lddbd_file_pathway+'lddbd_ajax.php',
+		url: lddlite_ajax_url,
 		data: {
 			action: 'categories_list'
 			},
@@ -342,7 +326,7 @@ function categoryListing(cat_id){
 	jQuery('#lddbd_business_directory_list').fadeTo(200, 0.1);
 	jQuery.ajax({
 	type: 'POST',
-	url: lddbd_file_pathway+'lddbd_ajax.php',
+	url: lddlite_ajax_url,
 	data: {cat_id: cat_id, action: 'category_filter'},
 	success: function(data){
 		jQuery('#lddbd_business_directory_list').html(data).fadeTo(200, 1);
