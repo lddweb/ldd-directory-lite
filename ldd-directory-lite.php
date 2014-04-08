@@ -101,7 +101,7 @@ final class _LDD_Directory_Lite
         require_once( LDDLITE_PATH . '/includes/functions.php' );
         require_once( LDDLITE_PATH . '/includes/settings.php' );
         require_once( LDDLITE_PATH . '/includes/email.php' );
-        require_once( LDDLITE_PATH . '/includes/display.php' );
+        require_once( LDDLITE_PATH . '/includes/views.php' );
 
         if ( is_admin() )
             require_once( LDDLITE_PATH . '/includes/admin.php' );

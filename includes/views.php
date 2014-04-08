@@ -9,17 +9,17 @@ function lddlite_display_directory()
 
     if ( isset( $_GET['submit'] ) )
     {
-        require_once( LDDLITE_PATH . '/includes/display_submit.php' );
+        require_once( LDDLITE_PATH . '/includes/views/submit.php' );
         $output .= lddlite_display_submit_form();
     }
     else if ( array_key_exists( 'business', $_GET ) )
     {
-        require_once( LDDLITE_PATH . '/includes/display_business.php' );
+        require_once( LDDLITE_PATH . '/includes/views/business.php' );
         $output .= lddlite_display_business();
     }
     else
     {
-        require_once( LDDLITE_PATH . '/includes/display_directory.php' );
+        require_once( LDDLITE_PATH . '/includes/views/directory.php' );
         $output .= lddlite_display_main();
 	}
 

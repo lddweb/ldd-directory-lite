@@ -37,7 +37,13 @@ function lddlite_display_submit_form()
 
 function lddlite_process_page( $current_page )
 {
-    return true;
+
+    switch ( $current_page )
+    {
+        case '1':
+            md( $_POST );
+            break;
+    }
 }
 
 
