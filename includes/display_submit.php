@@ -10,13 +10,13 @@ function lddlite_display_submit_form()
 
     $lddlite = lddlite();
 
-    $page = isset( $_GET['page'] ) ? intval( $_GET['page'] ) : 1;
+    $page = isset( $_GET['segment'] ) ? intval( $_GET['segment'] ) : 1;
     $next_page = $page + 1;
 
 
     // Initialize our template variables.
     $template_vars = array(
-        'form_action'   => get_permalink( $post->ID ) . '?submit=true&page=' . $next_page,
+        'form_action'   => get_permalink( $post->ID ) . '?submit=true&segment=' . $next_page,
         'page'          => $page,
         'back'          => __( 'Back', $lddlite->slug() ),
         'next'          => __( 'Next', $lddlite->slug() ),

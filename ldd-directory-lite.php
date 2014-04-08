@@ -130,12 +130,17 @@ final class _LDD_Directory_Lite
 
         if ( isset( $_GET['submit'] ) && isset( $_POST['goback'] ) )
         {
-            $url = parse_url( esc_url( $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ) );
-            parse_str( $url['query'], $query );
-            md( $url );
-            $last_page = $_POST['current_page'] - 1;
-            $url = substr( esc_url( $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ), 0, -1 ) . $last_page;
-            header( 'Location: ' . $url );
+            add_action( 'init', 'testing_this' );
+            function testing_this()
+            {
+                $url = parse_url( esc_url( $_SERVER['HTTP_HOST'] ) . $_SERVER['REQUEST_URI'] );
+                parse_str( $url['query'], $query );
+                $query['segment'] -= 2;
+                if ( $query['segment'] == 1 )
+                    unset( $query['segment'] );
+                $url = 'http://' . $url['host'] . $url['path'] . '?' . http_build_query( $query );
+                header( 'Location: ' . $url );
+            }
         }
 
     }
