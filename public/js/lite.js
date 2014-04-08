@@ -240,51 +240,101 @@ function mailToBusiness(email, element, business){
 		'<input type="text" id="phone" name="phone" />' +
 	'<label for="message">Message:</label>' +
 		'<textarea id="message" name="message"></textarea>' +
-		'<input type="button" value="Cancel"><input type="submit" value="Send">' +
+        '<a tabindex="-1" style="border-style: none;" href="#" title="Refresh Image" onclick="document.getElementById(\'siimage\').src = \'' + $lddurl + '/includes/securimage/securimage_show.php?sid=\' + Math.random(); this.blur(); return false"><img src="' + $lddurl + '/includes/securimage/images/refresh.png" alt="Reload Image" height="32" width="32" onclick="this.blur()" /></a>' +
+        '<img style="margin-left: 20px;" id="siimage" style="border: 1px solid #000; margin-right: 15px" src="' + $lddurl + '/includes/securimage/securimage_show.php?sid=234uig324hkgf2341" alt="CAPTCHA Image" align="left" />' +
+        '<br /><label for="phone">Captcha:</label>' +
+        '<input type="text" name="ct_captcha" size="12" />' +
+		'<input type="button" value="Cancel" /><input type="submit" value="Send" />' +
 	'</form>');
 	
 	jQuery('#lddbd_mail_to_business_form input:button').click(function(){
 		jQuery('#lddbd_mail_to_business_form, #lddbd_mail_shader').remove();
 	});
+
+    var request;
+
+    jQuery('#lddbd_mail_to_business_form').submit(function(event){
+
+        if (request) {
+            request.abort();
+        }
+
+        var $form = jQuery(this);
+
+        var $inputs = $form.find("input, select, button, textarea");
+        var serializedData = $form.serialize();
+
+        // let's disable the inputs for the duration of the ajax request
+        // Note: we disable elements AFTER the form data has been serialized.
+        // Disabled form elements will not be serialized.
+        $inputs.prop("disabled", true);
+
+        // fire off the request to /form.php
+        request = jQuery.ajax({
+            url: $lddurl + "/includes/securimage/ajax.php",
+            type: "post",
+            data: serializedData,
+            dataType: 'json'
+        }).done(function (response, textStatus, jqXHR){
+            if (response.error == 1 ){
+                alert( 'Captcha Failed.' );
+                return false;
+            } else {
+                jQuery('#lddbd_mail_to_business_form').hide();
+                jQuery('#lddbd_mail_shader').hide();
+            }
+
+        }).always(function () {
+            // reenable the inputs
+            $inputs.prop("disabled", false);
+        });
+
+        // prevent default posting of form
+        event.preventDefault();
+    });
+
+
+
+    /*
 	jQuery('#lddbd_mail_to_business_form').submit(function(){
-		var email_regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-		var from = jQuery('input#from', this).val();
-		var message = jQuery('textarea#message', this).val();
-		var error = false;
-		var error_message = '';
+        var form = jQuery('#lddbd_mail_to_business_form');
+        var shader = jQuery('#lddbd_mail_shader');
 
-		if(from=='' || !email_regex.test(from)){
-			error = true;
-			error_message+='Please enter a valid return email \r\n';
-		} 
-		if(message==''){
-			error = true;
-			error_message+='Please enter a message \r\n';
-		}
 
-		if(error){
-			alert(error_message);
-		} else {
-			jQuery.ajax({
-				type: 'POST',
-				url: lddlite_ajax_url,
-				data: {
-					email: jQuery('#lddbd_mail_to_business_form input#email').val(),
-					from: from,
-					name: jQuery('#lddbd_mail_to_business_form input#name').val(),
-					phone: jQuery('#lddbd_mail_to_business_form input#phone').val(),
-					message: message,
-					action: 'email'
-					},
-				success: function(data){
-					//jQuery('#lddbd_mail_to_business_form').html(data);
-					jQuery('#lddbd_mail_to_business_form, #lddbd_mail_shader').remove();
-				}
-			});
-		}
+        jQuery.ajax({
+            url: 'http://local.wordpress.dev/wp-content/plugins/ldd-directory-lite/includes/securimage/ajax.php',
+            type: 'POST',
+            data: jQuery('#lddbd_mail_to_business_form').serialize(),
+            dataType: 'json',
+            success: function(data){
 
-		return false;
-	});
+
+            }
+        }).done(function( data ) {
+            form.hide();
+            shader.hide();
+            alert('here');
+        });
+
+        jQuery.ajax({
+            type: 'POST',
+            url: lddlite_ajax_url,
+            data: {
+                email: jQuery('#lddbd_mail_to_business_form input#email').val(),
+                from: from,
+                name: jQuery('#lddbd_mail_to_business_form input#name').val(),
+                phone: jQuery('#lddbd_mail_to_business_form input#phone').val(),
+                message: message,
+                action: 'email'
+            },
+            success: function(data){
+                //jQuery('#lddbd_mail_to_business_form').html(data);
+
+            }
+        });
+
+        return false;
+	}); */
 }
 
 function backToCategories(){

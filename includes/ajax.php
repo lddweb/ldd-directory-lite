@@ -557,8 +557,8 @@ else if ( $action == 'search' )
 
 
             if(!empty($business->logo)){
-                $logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}' /></div>"; }
-
+                $logo_html = "<div class='lddlite-logo' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}' /></div>"; }
+            $logo_html = '<div class="lddlite-logo" onclick="javascript:singleBusinessListing(' . $business->id . ');"><img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" /></div>';
             $biz_name = stripslashes($business->name);
 
             echo "<div class='lddbd_business_listing'>
@@ -663,33 +663,34 @@ else if ( $action == 'category_filter' )
             if(!empty($business->url)){
                 if(strstr($business->url, 'http://')){$business_url = $business->url;}
                 else{$business_url = 'http://'.$business->url;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_url . '"><img src="' . LDDLITE_URL . '/images/website.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_url . '"><img src="' . LDDLITE_URL . '/public/icons/website.png' . '" /></a>';
             }
             if(!empty($business->facebook)){
                 if(strstr($business->facebook, 'http://')){$business_facebook = $business->facebook;}
                 else{$business_facebook = 'http://'.$business->facebook;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_facebook . '"><img src="' . LDDLITE_URL . '/images/facebook.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_facebook . '"><img src="' . LDDLITE_URL . '/public/icons/facebook.png' . '" /></a>';
             }
             if(!empty($business->twitter)){
                 if(strstr($business->twitter, 'http://www.twitter.com/') || strstr($business->twitter, 'http://twitter.com/')){$business_twitter = $business->twitter;}
                 else if(strstr($business->twitter, '@')){$business_twitter = 'http://twitter.com/'.trim($business->twitter, '@');}
                 else{$business_twitter = 'http://twitter.com/'.$business->twitter;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_twitter . '"><img src="' . LDDLITE_URL . '/images/twitter.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_twitter . '"><img src="' . LDDLITE_URL . '/public/icons/twitter.png' . '" /></a>';
             }
             if(!empty($business->linkedin)){
                 if(strstr($business->linkedin, 'http://')){$business_linkedin = $business->linkedin;}
                 else{$business_linkedin = 'http://'.$business->linkedin;}
-                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_linkedin . '"><img src="' . LDDLITE_URL . '/images/linkedin.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" target="_blank" href="' . $business_linkedin . '"><img src="' . LDDLITE_URL . '/public/icons/linkedin.png' . '" /></a>';
             }
             if(!empty($business->email)){
                 $bizname_esc = addslashes($business->name); // In the event that our business has a single or double quote in it
-                $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='" . LDDLITE_URL . '/images/email.png' . "' /></a>"; }
+                $contact_right.="<a class='lddbd_contact_icon' href='javascript:void(0);' onclick=\"javascript:mailToBusiness('{$business->email}', this, '{$bizname_esc}');\"><img src='" . LDDLITE_URL . '/public/icons/email.png' . "' /></a>"; }
             if ( $business->promo == 'true' )
             {
-                $contact_right .= '<a class="lddbd_contact_icon" href="javascript:void(0);" onclick="javascript:singleBusinessListing(' . $business->id . ');"><img src="' . LDDLITE_URL . '/images/special-offer.png' . '" /></a>';
+                $contact_right .= '<a class="lddbd_contact_icon" href="javascript:void(0);" onclick="javascript:singleBusinessListing(' . $business->id . ');"><img src="' . LDDLITE_URL . '/public/icons/special-offer.png' . '" /></a>';
             }
             if(!empty($business->logo)){
-                $logo_html = "<div class='lddbd_logo_holder' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}' /></div>"; }
+                $logo_html = "<div class='lddlite-logo' onclick='javascript:singleBusinessListing({$business->id});'><img src='".site_url('/wp-content/uploads/')."{$business->logo}' /></div>"; }
+            $logo_html = '<div class="lddlite-logo" onclick="javascript:singleBusinessListing(' . $business->id . ');"><img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" /></div>';
 
             echo "<div class='lddbd_business_listing'>
 					{$logo_html}

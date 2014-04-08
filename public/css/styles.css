@@ -104,7 +104,6 @@ div.lddbd_input_holder{
 
 #lddbd_business_directory{
 	position: relative;
-	overflow: hidden;
 	min-height: 300px;
 	font-size: 16px;
 }
@@ -315,13 +314,12 @@ input.lddlite-search {
 			padding: 10px 0px;
 		}
 			
-			#lddbd_business_directory_body .lddbd_logo_holder{
-				margin: 2px 10px 2px 2px;
-				float: left;
-				display: table-cell;
-				min-height: 100px;
-				width: 200px;
-			}
+div.lddlite-logo {
+    margin: 2px 10px 2px 2px;
+    float: left;
+    display: table-cell;
+
+}
 			
 				#lddbd_business_directory_body .lddbd_business_listing img{
 					max-width: 200px;
