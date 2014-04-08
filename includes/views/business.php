@@ -222,130 +222,11 @@ function lddlite_display_business()
         include( LDDLITE_JS . 'countrySelector.php' );
         $countrySelector = ob_get_clean();
 
-        $formActionCall = LDDLITE_AJAX;
+
         $submit_button = "<a href='javascript:void(0);' id='lddbd_add_business_button' class='lddbd_navigation_button'>Submit Listing</a>";
 
-        if( !empty ( $options['directory_label'] ) ) {
-            $directory_label = $options['directory_label'];
-        } else {
-            $directory_label = 'Business';
-        }
 
-        $add_business_holder = <<<ABH
-        <div id='lddbd_add_business_holder'>
-            <form id='add_business_form' action='{$formActionCall}' method='POST' enctype='multipart/form-data' target='lddbd_submission_target'>
-                <div class='lddbd_input_holder'>
-                    <label for='name'>{$directory_label} Name</label>
-                    <input class='required' type='text' id='lddbd_name' name='name'/>
-                </div>
 
-                <div class='lddbd_input_holder'>
-                    <label for='description'>{$directory_label} Description</label>
-                    <textarea id='lddbd_description' name='description'></textarea>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='address_street'>Street</label>
-                    <input type='text' id='lddbd_address_street' name='address_street'>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='address_country'>Country</label>
-
-                    <select id='lddbd_address_country' name='address_country'>
-                        {$optionLine}
-                    </select>
-
-                </div>
-                <div id='selectedCountryForm'></div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='phone'>Contact Phone</label>
-                    <input class='' type='text' id='lddbd_phone' name='phone'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='fax'>Contact Fax</label>
-                    <input type='text' id='lddbd_fax' name='fax'>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='email'>Contact Email</label>
-                    <input class='' type='text' id='lddbd_email' name='email'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='contact'>Contact Name</label>
-                    <input class='' type='text' id='lddbd_contact' name='contact'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='url'>Website</label>
-                    <input type='text' id='lddbd_url' name='url'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='facebook'>Facebook Page</label>
-                    <input type='text' id='lddbd_facebook' name='facebook'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='twitter'>Twitter Handle</label>
-                    <input type='text' id='lddbd_twitter' name='twitter'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='linkedin'>Linked In Profile</label>
-                    <input type='text' id='lddbd_linkedin' name='linkedin'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='promo'>Special Offer</label>
-                    <div class='lddbd_radio_holder'>
-                        <input type='radio' id='lddbd_promo' name='promo' value='true'/>Yes&nbsp;<input type='radio' id='promo' name='promo' value='false'/>No
-                    </div>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='promo_description'>Special Offer Description</label>
-                    <input type='text' id='lddbd_promo_description' name='promo_description'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='logo'>Logo Image</label>
-                    <input class='' type='file' id='lddbd_logo' name='logo'/>
-                </div>
-
-                {$other_sections}
-
-                {$business_categories}
-
-                <div class='lddbd_input_holder'>
-                    <label for='login'>Login</label>
-                    <input class='required' type='text' id='lddbd_login' name='login'/>
-                </div>
-
-                <div class='lddbd_input_holder'>
-                    <label for='password'>Password</label>
-                    <input class='' type='text' id='lddbd_password' name='password'/>
-                </div>
-
-                <input type='hidden' id='action' name='action' value='add'/>
-                <input type='hidden' id='lddbd_from' name='from' value='frontend'/>
-
-                <div class='submit'>
-                    <input id='lddbd_cancel_listing' type='button' class='button-primary' value='Cancel' />
-                    <input type='submit' class='button-primary' value='Submit Listing' />
-                </div>
-            </form>
-            {$countrySelector}
-            <iframe id='lddbd_submission_target' name='lddbd_submission_target' src='{$formActionCall}' style='width:0px;height:0px;border:0px solid #fff;'></iframe>
-        </div>
-ABH;
-            } else {
-                $submit_button = '';
-                $add_business_holder = '';
-            }
 	    $login_form_query = $options['display_login'];
 
         // Generates link/button to the AJAX login on the front end.
@@ -385,7 +266,6 @@ ABH;
                     <div id='lddbd_navigation_holder'>
                         <a href='javascript:void(0);' id='lddbd_listings_category_button' class='lddbd_navigation_button'>Categories</a>
                         <a href='javascript:void(0);' id='lddbd_all_listings_button' class='lddbd_navigation_button'>All Listings</a>
-                        {$login_button}
                         {$submit_button}
                     </div>
                 </div>
@@ -398,7 +278,7 @@ ABH;
                         </h3>
                     {$business_listing}
                     </div>
-                    {$add_business_holder}
+
                 </div>
             </div>
 

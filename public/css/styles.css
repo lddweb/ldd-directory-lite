@@ -1,3 +1,12 @@
+input.bad, textarea.bad {
+    border-color: #c00;
+}
+form .error-message {
+    clear: both;
+    float: right;
+    margin-right: 150px;
+    color: #c00;
+}
 .lddbd_edit_business_form br, #lddbd_add_business_form br{
 	clear: both;
 }

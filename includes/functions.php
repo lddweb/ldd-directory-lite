@@ -40,7 +40,7 @@ function lddlite_parse_template( $tpl_file, $replace )
 {
 
     // Create an absolute path to our template file
-    $template = LDDLITE_TEMPLATES . '/' . str_replace( '/', '_', $tpl_file ) . '.' . LDDLITE_TPL_EXT;
+    $template = LDDLITE_TEMPLATES . '/' . $tpl_file . '.' . LDDLITE_TPL_EXT;
 
     // If the template doesn't exist, return false
     if (!file_exists($template))
