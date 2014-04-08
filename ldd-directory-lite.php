@@ -125,22 +125,23 @@ final class _LDD_Directory_Lite
 
         add_shortcode( 'business_directory', 'lddlite_display_directory' );
 
-        if ( isset( $_GET['submit'] ) )
-            add_action( 'init', 'session_start' );
+        // @TODO Naked and afraid.
+        add_action( 'init', 'session_start' );
 
-        if ( isset( $_GET['submit'] ) && isset( $_POST['goback'] ) )
+
+        // This handles the submission form back and forth buttons.
+        if ( isset( $_GET['submit'] ) && isset( $_POST['goback'] ) ) {
+            add_action( 'init', 'lddlite_submit_last_page_url' );
+        }
+
+        if ( isset( $_POST['current_page'] ) )
         {
-            add_action( 'init', 'testing_this' );
-            function testing_this()
-            {
-                $url = parse_url( esc_url( $_SERVER['HTTP_HOST'] ) . $_SERVER['REQUEST_URI'] );
-                parse_str( $url['query'], $query );
-                $query['segment'] -= 2;
-                if ( $query['segment'] == 1 )
-                    unset( $query['segment'] );
-                $url = 'http://' . $url['host'] . $url['path'] . '?' . http_build_query( $query );
-                header( 'Location: ' . $url );
+            // @TODO Object?
+            if ( !function_exists( 'lddlite_process_page' ) ) {
+                require_once( LDDLITE_PATH . '/includes/views/submit.php' );
             }
+
+            add_action( 'init', 'lddlite_process_page' );
         }
 
     }

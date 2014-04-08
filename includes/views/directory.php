@@ -147,4 +147,3 @@ function lddlite_display_main()
     return lddlite_parse_template( 'display/default', $template_vars );
 
 }
-
