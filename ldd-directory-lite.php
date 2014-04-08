@@ -125,9 +125,9 @@ final class _LDD_Directory_Lite
 
         add_shortcode( 'business_directory', 'lddlite_display_directory' );
 
-        if ( isset( $_GET['submit'] ) ) {
-            add_action( 'init', 'session_start' );
-        }
+        // @TODO Naked and afraid.
+        add_action( 'init', 'session_start' );
+
 
         // This handles the submission form back and forth buttons.
         if ( isset( $_GET['submit'] ) && isset( $_POST['goback'] ) ) {

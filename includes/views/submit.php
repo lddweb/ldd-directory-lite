@@ -14,6 +14,7 @@ function lddlite_display_submit_form()
     $next_page = $page + 1;
 
 
+
     // Initialize our template variables.
     $template_vars = array(
         'form_action'   => get_permalink( $post->ID ) . '?submit=true&segment=' . $next_page,
@@ -25,9 +26,11 @@ function lddlite_display_submit_form()
 
     if ( 1 == $page ) {
         $template_vars['country_dropdown'] = lddlite_dropdown_country();
-    } else if ( 2 == $page ) {
-        $template_vars['subdvision_dropdown'] = lddlite_dropdown_subdivision( $_SESSION['ldd']['country'] );
+    } else if ( 2 == intval( $page ) ) {
+        $template_vars['subdivision_dropdown'] = lddlite_dropdown_subdivision( $_SESSION['ldd']['country'] );
     }
+
+    md( $template_vars );
 
     if ( isset( $_SESSION['ldd'] ) ) {
         $template_vars = array_merge( $template_vars, $_SESSION['ldd'] );
@@ -36,7 +39,7 @@ function lddlite_display_submit_form()
 
     echo lddlite_parse_template( 'submit/' . $page, $template_vars );
 
-    md( $_SESSION, 'p', 0 );
+
 
     if ( isset( $_SESSION['errors'] ) )
     {
@@ -56,7 +59,8 @@ function lddlite_display_submit_form()
         echo $message;
         echo '}); </script>';
 
-        unset( $_SESSION['errors'] );
+        //unset( $_SESSION['errors'] );
+        //unset( $_SESSION['errors'] );
     }
 
 }
@@ -449,6 +453,7 @@ function lddlite_submit_last_page_url( $steps = 2 )
 
     // Rebuild and relocate.
     $url = 'http://' . $url['host'] . $url['path'] . '?' . http_build_query( $query );
+
     header( 'Location: ' . $url );
 
 }
