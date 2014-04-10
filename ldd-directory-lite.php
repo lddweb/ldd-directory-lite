@@ -25,16 +25,20 @@ if ( ! defined( 'WPINC' ) )
     die;
 
 
-define( 'LDDLITE_VERSION',  '0.1.0' );
+define( 'LDDLITE_VERSION',      '0.1' );
 
-define( 'LDDLITE_PATH',     WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
-define( 'LDDLITE_URL',      plugins_url().'/'.basename( dirname( __FILE__ ) ) );
+define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
+define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
 
-define( 'LDDLITE_CSS',      LDDLITE_URL . '/public/css' );
-define( 'LDDLITE_JS',       LDDLITE_PATH . '/public/js' );
-define( 'LDDLITE_JS_URL',   LDDLITE_URL . '/public/js' );
+define( 'LDDLITE_CSS',          LDDLITE_URL . '/public/css' );
+define( 'LDDLITE_JS',           LDDLITE_PATH . '/public/js' );
+define( 'LDDLITE_JS_URL',       LDDLITE_URL . '/public/js' );
 
-define( 'LDDLITE_AJAX',     LDDLITE_URL . '/includes/ajax.php' );
+define( 'LDDLITE_AJAX',         LDDLITE_URL . '/includes/ajax.php' );
+
+define( 'LDDLITE_POST_TYPE',    'directory_listings' );
+define( 'LDDLITE_TAX_CAT',      'listing_category' );
+define( 'LDDLITE_TAX_TAG',      'listing_tag' );
 
 define( 'LDDLITE_TEMPLATES',    LDDLITE_PATH . '/templates' );
 define( 'LDDLITE_TPL_EXT',      'tpl' );
@@ -68,9 +72,8 @@ final class _LDD_Directory_Lite
         if ( !isset( self::$_instance ) && !( self::$_instance instanceof _LDD_Business_Directory ) )
         {
             self::$_instance = new self;
-            self::$_instance->populate_options();
             self::$_instance->include_files();
-            self::$_instance->check_for_upgrade();
+            self::$_instance->populate_options();
             self::$_instance->action_filters();
             self::$_instance->enqueue_scripts();
         }
@@ -80,25 +83,11 @@ final class _LDD_Directory_Lite
     }
 
 
-    public function populate_options()
-    {
-
-        $defaults = apply_filters( 'lddlite_default_options', array(
-            'version'           => LDDLITE_VERSION,
-            'email_onsubmit'    => 'Your directory listing was successfully submitted!',
-            'email_onapprove'   => 'Your directory listing was approved!'
-        ) );
-
-        $this->options = wp_parse_args(
-            get_option( 'lddlite-options' ),
-            $defaults );
-
-    }
-
-
     public function include_files()
     {
+        require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
+        require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
         require_once( LDDLITE_PATH . '/includes/settings.php' );
         require_once( LDDLITE_PATH . '/includes/email.php' );
         require_once( LDDLITE_PATH . '/includes/views.php' );
@@ -108,8 +97,24 @@ final class _LDD_Directory_Lite
     }
 
 
-    public function check_for_upgrade()
+    public function populate_options()
     {
+
+        $defaults = apply_filters( 'lddlite_default_options', array(
+         // 'version'           => LDDLITE_VERSION,
+            'email_onsubmit'    => 'Your directory listing was successfully submitted!',
+            'email_onapprove'   => 'Your directory listing was approved!'
+        ) );
+
+        $options = wp_parse_args(
+            get_option( 'lddlite-options' ),
+            $defaults );
+
+        if ( !isset( $options['version'] ) || version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
+            require_once( LDDLITE_PATH . '/upgrade.php' );
+        }
+
+        $this->options = $options;
 
     }
 
@@ -125,23 +130,14 @@ final class _LDD_Directory_Lite
 
         add_shortcode( 'business_directory', 'lddlite_display_directory' );
 
-        // @TODO Naked and afraid.
-        add_action( 'init', 'session_start' );
+        { // These all relate to our custom post types and dashboard UI
+            add_action( 'init', 'lddlite_register__cpt_tax' );
 
+            add_filter( 'enter_title_here', 'lddlite_filter_enter_title_here' );
+            add_filter( 'admin_post_thumbnail_html', 'lddlite_filter_admin_post_thumbnail_html' );
 
-        // This handles the submission form back and forth buttons.
-        if ( isset( $_GET['submit'] ) && isset( $_POST['goback'] ) ) {
-            add_action( 'init', 'lddlite_submit_last_page_url' );
-        }
-
-        if ( isset( $_POST['current_page'] ) )
-        {
-            // @TODO Object?
-            if ( !function_exists( 'lddlite_process_page' ) ) {
-                require_once( LDDLITE_PATH . '/includes/views/submit.php' );
-            }
-
-            add_action( 'init', 'lddlite_process_page' );
+            add_action( 'admin_head', 'lddlite_action_directory_icon' );
+            add_action( '_admin_menu', 'lddlite_action_submenu_name' );
         }
 
     }
@@ -215,11 +211,3 @@ function lddslug()
     $lddlite = lddlite();
     return $lddlite->slug;
 }
-
-// @TODO: LEGACY CRAP. GET RID OF ASAP.
-global $tables;
-$tables = array(
-    'main'  => $wpdb->prefix . 'lddbusinessdirectory',
-    'doc'   => $wpdb->prefix . 'lddbusinessdirectory_docs',
-    'cat'   => $wpdb->prefix . 'lddbusinessdirectory_cats'
-);
