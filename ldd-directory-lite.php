@@ -102,6 +102,8 @@ final class _LDD_Directory_Lite
 
         $defaults = apply_filters( 'lddlite_default_options', array(
          // 'version'           => LDDLITE_VERSION,
+            'public_or_private' => 1,
+            'google_maps'       => 1,
             'email_onsubmit'    => 'Your directory listing was successfully submitted!',
             'email_onapprove'   => 'Your directory listing was approved!'
         ) );
