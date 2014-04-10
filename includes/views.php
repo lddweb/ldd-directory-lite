@@ -1,5 +1,14 @@
 <?php
 
+function lddlite_process_forms()
+{
+
+    if ( isset( $_POST['current_page'] ) )
+    {
+
+    }
+}
+
 function lddlite_display_directory()
 {
     global $wpdb, $tables;

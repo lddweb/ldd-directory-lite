@@ -1,0 +1,30 @@
+.wrap h2 .lite {
+    text-shadow: -1px 0 1px #ccd2d9;
+    color: #fff;
+}
+
+ul#directory-links {
+    width: 100%;
+    margin: 2em 0 2.5em;
+    padding-bottom: 1.5em;
+    overflow: hidden;
+    border-bottom: 6px dashed #f6f6f6;
+}
+
+ul#directory-links li {
+    line-height:1.5em;
+    float:left;
+    display:inline;
+    width: 50%;
+}
+
+ul#directory-links li.right {
+    text-align: center;
+    font-weight: 700;
+}
+
+.wrap h3 {
+    margin: 1.5em 0 0;
+    padding-top: 1.5em;
+    border-top: 6px dashed #f6f6f6;
+}
