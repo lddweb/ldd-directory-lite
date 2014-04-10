@@ -1,9 +1,12 @@
+
+<form class="directory-search cf">
+    <input type="text" placeholder="Search here..." required />
+    <button type="submit">Search</button>
+</form>
+
 <div id="lddbd_business_directory">
     <div id="lddbd_business_directory_head">
-        <form id="lddbd_business_search">
-            <input type="text" name="search_directory" class="lddlite-search" placeholder="Search..." />
-            <input type="submit" value="search" />
-        </form>
+
 
         <div id="lddbd_navigation_holder">
             <a href="javascript:void(0);" id="lddbd_listings_category_button" class="lddbd_navigation_button">Categories</a>

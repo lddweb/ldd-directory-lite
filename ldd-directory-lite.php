@@ -88,7 +88,6 @@ final class _LDD_Directory_Lite
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
         require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
-        require_once( LDDLITE_PATH . '/includes/settings.php' );
         require_once( LDDLITE_PATH . '/includes/email.php' );
         require_once( LDDLITE_PATH . '/includes/views.php' );
 

@@ -1,3 +1,134 @@
+.cf:before, .cf:after{
+    content:"";
+    display:table;
+}
+
+.cf:after{
+    clear:both;
+}
+
+.cf{
+    zoom:1;
+}
+
+/**
+ * Search Form Input
+ **************************************************************************************/
+
+.directory-search {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 500px;
+    padding: 15px;
+    margin: 1.5em auto;
+    background: #444;
+    background: #eee;
+    border-radius: 10px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+}
+
+/* Input */
+
+.directory-search input {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 379px;
+    height: 18px;
+    padding: 10px 5px;
+    float: left;
+    font: bold 15px 'lucida sans', 'trebuchet MS', 'Tahoma';
+    border: 0;
+    background: #fff;
+    border: 1px solid #aaa;
+    border-right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.directory-search input:focus {
+    outline: 0;
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+}
+
+.directory-search input::-webkit-input-placeholder {
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.directory-search input:-moz-placeholder {
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.directory-search input:-ms-input-placeholder {
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* Submit Button */
+.directory-search button {
+    overflow: visible;
+    position: relative;
+    float: right;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    height: 40px;
+    width: 110px;
+    font: bold 15px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
+    color: #fff;
+    text-transform: uppercase;
+    background: #7f7fff;
+    border-radius: 0 3px 3px 0;
+    text-shadow: 0 -1px 0 rgba(0, 0 ,0, .3);
+}
+
+.directory-search button:hover{
+    background: #a5a5ff;
+}
+
+.directory-search button:active,
+.directory-search button:focus{
+    background: #4c4c99;
+    outline: 0;
+}
+
+.directory-search button:before { /* left arrow */
+    content: '';
+    position: absolute;
+    border-width: 8px 8px 8px 0;
+    border-style: solid solid solid none;
+    border-color: transparent #7f7fff transparent;
+    top: 12px;
+    left: -6px;
+}
+
+.directory-search button:hover:before{
+    border-right-color: #a5a5ff;
+}
+
+.directory-search button:focus:before,
+.directory-search button:active:before{
+    border-right-color: #4c4c99;
+}
+
+.directory-search button::-moz-focus-inner { /* remove extra button spacing for Mozilla Firefox */
+    border: 0;
+    padding: 0;
+}
+
+/**************************************************************************************/
+
+
+
+
+
+
+
+
 input.bad, textarea.bad {
     border-color: #c00;
 }
@@ -117,7 +248,7 @@ div.lddbd_input_holder{
 	font-size: 16px;
 }
 	
-	
+
 	#lddbd_business_directory input[type="text"], #lddbd_business_directory input[type="password"]{
 		float: none;
 		clear: none;
