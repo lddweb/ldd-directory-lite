@@ -132,25 +132,6 @@ final class _LDD_Directory_Lite
 
         add_shortcode( 'business_directory', 'lddlite_display_directory' );
 
-<<<<<<< HEAD
-        // @TODO Naked and afraid.
-        add_action( 'init', 'session_start' );
-
-
-        // This handles the submission form back and forth buttons.
-        if ( isset( $_GET['submit'] ) && isset( $_POST['goback'] ) ) {
-            add_action( 'init', 'lddlite_submit_last_page_url' );
-        }
-
-        if ( isset( $_POST['current_page'] ) )
-        {
-            // @TODO Object?
-            if ( !function_exists( 'lddlite_process_page' ) ) {
-                require_once( LDDLITE_PATH . '/includes/views/submit.php' );
-            }
-
-            add_action( 'init', 'lddlite_process_page' );
-=======
         { // These all relate to our custom post types and dashboard UI
             add_action( 'init', 'lddlite_register__cpt_tax' );
 
@@ -159,7 +140,6 @@ final class _LDD_Directory_Lite
 
             add_action( 'admin_head', 'lddlite_action_directory_icon' );
             add_action( '_admin_menu', 'lddlite_action_submenu_name' );
->>>>>>> development
         }
 
     }
