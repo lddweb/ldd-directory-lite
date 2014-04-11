@@ -133,10 +133,6 @@
     padding: 0;
 }
 
-/*********************************************************************************************************************/
-
-
-
 
 /**
  * Buttons (with credit to http://red-team-design.com/just-another-awesome-css3-buttons/)
@@ -313,8 +309,83 @@ input::-moz-focus-inner
 }
 
 
+/**
+ * Categories Display
+ *********************************************************************************************************************/
 
-/*********************************************************************************************************************/
+.view-all {
+    display: none;
+}
+
+.directory-cat {
+    position: relative;
+    padding-bottom: 2em;
+}
+
+.directory-cat ul {
+    margin: 0;
+    padding: 0 1em;
+    position: relative;
+    list-style: none;
+}
+
+
+.directory-cat ul.top-level li {
+    width: 100%;
+    margin: 10px 0 0;
+    background: #fff;
+    -webkit-border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.directory-cat ul.top-level li a {
+    display: inline-block;
+    width: 100%;
+    padding: .1em .7em;
+    background: #e4e4e4;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 1.3em;
+    color: #333;
+    font-weight: 500;
+    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    text-transform: uppercase;
+}
+
+
+.directory-cat ul.top-level ul {
+    margin: .1em .4em 2em;
+}
+
+.directory-cat ul.children {
+    column-count:2;
+    -moz-column-count:3; /* Firefox */
+    -webkit-column-count:2; /* Safari and Chrome */
+
+}
+.directory-cat ul.children li {
+    margin: 0;
+}
+
+.directory-cat ul.children li a {
+    background: none;
+    font-size: 1.1em;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.6em;
+    padding: 0;
+    text-transform: none;
+}
+
+
+
+
+
 
 
 

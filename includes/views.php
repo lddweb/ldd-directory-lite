@@ -1,5 +1,31 @@
 <?php
 
+add_filter( 'term_link', 'lddlite_category_links' );
+function lddlite_category_links( $termlink )
+{
+    global $post;
+
+    $link = explode( '?', $termlink);
+
+    if ( count( $link ) < 2 ) {
+        return $termlink;
+    }
+
+    parse_str( $link[1], $link );
+
+    if ( !isset( $link[LDDLITE_TAX_CAT] ) ) {
+        return $termlink;
+    }
+
+    // @TODO Is there a situation where this won't be available? If so, use $_SERVER
+    $current_url = get_permalink( $post->ID );
+
+    $termlink = $current_url . '?show=category&slug=' . $link[LDDLITE_TAX_CAT];
+
+    return $termlink;
+}
+
+
 function lddlite_process_forms()
 {
 
@@ -9,29 +35,27 @@ function lddlite_process_forms()
     }
 }
 
+
 function lddlite_display_directory()
 {
-    global $wpdb, $tables;
 
-    // Initialize $output and set our JavaScript location
-    $output = '<script>var lddlite_ajax_url = "' . LDDLITE_AJAX . '"; var $lddurl = "' . LDDLITE_URL . '";</script>';
+    $action = 'home';
 
-    if ( isset( $_GET['submit'] ) )
-    {
-        require_once( LDDLITE_PATH . '/includes/views/submit.php' );
-        $output .= lddlite_display_submit_form();
+    $allowed_actions = array(
+        'submit',
+        'category',
+        'business',
+        'search',
+    );
+
+    if ( isset( $_GET['show'] ) && in_array( $_GET['show'], $allowed_actions ) ) {
+        $action = $_GET['show'];
     }
-    else if ( array_key_exists( 'business', $_GET ) )
-    {
-        require_once( LDDLITE_PATH . '/includes/views/business.php' );
-        $output .= lddlite_display_business();
-    }
-    else
-    {
-        require_once( LDDLITE_PATH . '/includes/views/directory.php' );
-        $output .= lddlite_display_main();
-	}
 
-    return $output;
+    require_once( LDDLITE_PATH . '/includes/views/' . $action . '.php' );
+
+    $func = 'lddlite_display_view_' . $action;
+
+    return $func();
 
 }

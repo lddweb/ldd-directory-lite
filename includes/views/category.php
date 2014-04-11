@@ -4,8 +4,19 @@
  *
  */
 
-function lddlite_display_main()
+function lddlite_display_view_category()
 {
+    global $post;
+
+    $template_vars = array(
+        'url'           => get_permalink( $post->ID ),
+    );
+
+    return lddlite_parse_template( 'display/category', $template_vars );
+
+
+
+
     global $wpdb, $tables;
 
     $business_list = $wpdb->get_results(
@@ -127,7 +138,7 @@ function lddlite_display_main()
 
 
 
-            $business_div = "<div id='lddbd_categories_left'>
+        $business_div = "<div id='lddbd_categories_left'>
 					{$categories}
 					</div>";
 
