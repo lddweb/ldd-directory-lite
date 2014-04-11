@@ -11,59 +11,73 @@
     zoom:1;
 }
 
-/**
- * Search Form Input
- **************************************************************************************/
+.left {
+    float: left;
+}
 
-.directory-search {
+.right {
+    float: right;
+}
+
+.section-wrapper {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
-    width: 500px;
-    padding: 15px;
-    margin: 1.5em auto;
-    background: #444;
-    background: #eee;
-    border-radius: 10px;
+    width: 100%;
+    background: #f8f8f8;
+    border-radius: 8px;
     box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
 }
 
+
+/**
+ * Search Form Input
+ *********************************************************************************************************************/
+
+.directory-search {
+    width: 540px;
+    padding: 8px 15px;
+    margin: 1.5em auto;
+    background: #eee;
+}
 /* Input */
 
 .directory-search input {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
-    width: 379px;
+    width: 419px;
     height: 18px;
     padding: 10px 5px;
     float: left;
-    font: bold 15px 'lucida sans', 'trebuchet MS', 'Tahoma';
-    border: 0;
+    font: bold 1em/2em Arial, Helvetica;
     background: #fff;
-    border: 1px solid #aaa;
+    border: 1px solid #ddd;
     border-right: 0;
-    border-radius: 3px 0 0 3px;
+    border-radius: 5px 0 0 5px;
 }
 
 .directory-search input:focus {
     outline: 0;
     background: #fff;
-    box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+    box-shadow: 0 0 2px rgba(0,0,0,.3) inset;
+    border: 1px solid #ddd;
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
 }
 
 .directory-search input::-webkit-input-placeholder {
-    color: #999;
+    color: #aaa;
     font-weight: normal;
     font-style: italic;
 }
 
 .directory-search input:-moz-placeholder {
-    color: #999;
+    color: #aaa;
     font-weight: normal;
     font-style: italic;
 }
 
 .directory-search input:-ms-input-placeholder {
-    color: #999;
+    color: #aaa;
     font-weight: normal;
     font-style: italic;
 }
@@ -78,21 +92,20 @@
     cursor: pointer;
     height: 40px;
     width: 110px;
-    font: bold 15px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
+    font: bold 1em/2em Arial, Helvetica;
     color: #fff;
-    text-transform: uppercase;
     background: #7f7fff;
     border-radius: 0 3px 3px 0;
-    text-shadow: 0 -1px 0 rgba(0, 0 ,0, .3);
+    text-shadow: 0 1px 0 rgba(0, 0 ,0, .6);
 }
 
 .directory-search button:hover{
-    background: #a5a5ff;
+    background: #4c4c99;
 }
 
 .directory-search button:active,
 .directory-search button:focus{
-    background: #4c4c99;
+    background: #a5a5ff;
     outline: 0;
 }
 
@@ -107,12 +120,12 @@
 }
 
 .directory-search button:hover:before{
-    border-right-color: #a5a5ff;
+    border-right-color: #4c4c99;
 }
 
 .directory-search button:focus:before,
 .directory-search button:active:before{
-    border-right-color: #4c4c99;
+    border-right-color: #a5a5ff;
 }
 
 .directory-search button::-moz-focus-inner { /* remove extra button spacing for Mozilla Firefox */
@@ -120,10 +133,188 @@
     padding: 0;
 }
 
-/**************************************************************************************/
+/*********************************************************************************************************************/
 
 
 
+
+/**
+ * Buttons (with credit to http://red-team-design.com/just-another-awesome-css3-buttons/)
+ *********************************************************************************************************************/
+
+.directory-nav {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: .5em;
+    margin: 0 auto 1.5em;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.button {
+    display: inline-block;
+    white-space: nowrap;
+    background-color: #ddd;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
+    background-image: -webkit-linear-gradient(top, #eee, #ccc);
+    background-image: -moz-linear-gradient(top, #eee, #ccc);
+    background-image: -ms-linear-gradient(top, #eee, #ccc);
+    background-image: -o-linear-gradient(top, #eee, #ccc);
+    background-image: linear-gradient(top, #eee, #ccc);
+    border: 1px solid #777;
+    padding: 0 1.5em;
+    margin: 0.5em;
+    font: bold 1em/2em Arial, Helvetica;
+    text-decoration: none;
+    color: #333;
+    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    -moz-border-radius: .2em;
+    -webkit-border-radius: .2em;
+    border-radius: .2em;
+    -moz-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+    box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+}
+
+.entry-content a.button,
+.entry-content a.button:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ddd));
+    background-image: -webkit-linear-gradient(top, #fafafa, #ddd);
+    background-image: -moz-linear-gradient(top, #fafafa, #ddd);
+    background-image: -ms-linear-gradient(top, #fafafa, #ddd);
+    background-image: -o-linear-gradient(top, #fafafa, #ddd);
+    background-image: linear-gradient(top, #fafafa, #ddd);
+}
+
+.button:active {
+    -moz-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    -webkit-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    position: relative;
+    top: 1px;
+}
+
+.button:focus
+{
+    outline: 0;
+    background: #fafafa;
+}
+
+.button:before
+{
+    background: #ccc;
+    background: rgba(0,0,0,.1);
+    float: left;
+    width: 1em;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0 1em 0 -1em;
+    padding: 0 .2em;
+    -moz-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+    -webkit-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+    box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+    -moz-border-radius: .15em 0 0 .15em;
+    -webkit-border-radius: .15em 0 0 .15em;
+    border-radius: .15em 0 0 .15em;
+    pointer-events: none;
+}
+
+/* Buttons and inputs */
+
+button.button, input.button
+{
+    cursor: pointer;
+    overflow: visible; /* removes extra side spacing in IE */
+}
+
+/* removes extra inner spacing in Firefox */
+button::-moz-focus-inner
+{
+    border: 0;
+    padding: 0;
+}
+
+/* If line-height can't be modified, then fix Firefox spacing with padding */
+input::-moz-focus-inner
+{
+    padding: .4em;
+}
+
+/* The disabled styles */
+.button[disabled], .button[disabled]:hover, .button.disabled, .button.disabled:hover
+{
+    background: #eee;
+    color: #aaa;
+    border-color: #aaa;
+    cursor: default;
+    text-shadow: none;
+    position: static;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+/* Hexadecimal entities for the icons */
+
+.add:before
+{
+    content: "\271A";
+}
+
+.edit:before
+{
+    content: "\270E";
+}
+
+.delete:before
+{
+    content: "\2718";
+}
+
+.save:before
+{
+    content: "\2714";
+}
+
+.email:before
+{
+    content: "\2709";
+}
+
+.like:before
+{
+    content: "\2764";
+}
+
+.next:before
+{
+    content: "\279C";
+}
+
+.star:before
+{
+    content: "\2605";
+}
+
+.spark:before
+{
+    content: "\2737";
+}
+
+.play:before
+{
+    content: "\25B6";
+}
+
+
+
+/*********************************************************************************************************************/
 
 
 
@@ -279,134 +470,20 @@ div.lddbd_input_holder{
 		display: inline-block;
 	}
 
-	#lddbd_business_directory_head{
-		border-bottom: 1px solid #bbb;
-		padding: 10px 0px;
-		overflow: hidden;
-		margin-bottom: 20px;
-	}
-	
-		#lddbd_business_directory_head h2{
-			display: block;
-			position: relative;
-			float: left;
-			margin: 0px 0px 10px 0px;
-		}
+
 		
-		#lddbd_business_directory_head p{
-			display: block;
-			clear: both;
-		}
-		
-		#lddbd_navigation_holder{
-			display: block;
-			clear: both;
-			overflow: hidden;
-			margin: 20px 0px 0px 0px;
-			padding: 10px 0px 0px 0px;
-			border-top: 1px solid #bbb;
-		}
-		
-			#lddbd_navigation_holder .lddbd_navigation_button{
-				display: block;
-				float: left;
-				color: black;
-				text-decoration: none;
-				padding: 0px 5px;
-				border-left: 1px solid #efefef;
-				border-right: 1px solid #aaa;
-				border-top: 1px solid #aaa;
-				border-bottom: 1px solid #aaa;
-				background: #ddd; /* Old browsers */
-                background: -moz-linear-gradient(top,  #eeeeee 0%, #dddddd 100%); /* FF3.6+ */
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#dddddd)); /* Chrome,Safari4+ */
-                background: -webkit-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* Chrome10+,Safari5.1+ */
-                background: -o-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* Opera 11.10+ */
-                background: -ms-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* IE10+ */
-                background: linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* W3C */
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#dddddd',GradientType=0 ); /* IE6-9 */
-			}
+
 			
-			#lddbd_navigation_holder .lddbd_navigation_button:first-child{
-				border-left: 1px solid #aaa;
-			}
-			
-			#lddbd_navigation_holder .lddbd_navigation_button:hover{
-				text-decoration: none;
-				background: #eee; /* Old browsers */
-                background: -moz-linear-gradient(top,  #dddddd 0%, #eeeeee 100%); /* FF3.6+ */
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dddddd), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
-                background: -webkit-linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
-                background: -o-linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* Opera 11.10+ */
-                background: -ms-linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* IE10+ */
-                background: linear-gradient(top,  #dddddd 0%,#eeeeee 100%); /* W3C */
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddddd', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
-			}
-		
-			#lddbd_navigation_holder #lddbd_add_business_button{
-				float: right;
-				border-left: 1px solid #aaa;
-			}
-			
-			#lddbd_navigation_holder #lddbd_business_login_button{
-				float: right;
-			}
-		#lddbd_business_directory_head #lddbd_directory_home_button{
-			clear: left;
-		}
-		
-		
-		
-			#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form #lddbd_input_holder{
-				margin-right: 6px;
-				float: left;
-				display: block;
-				text-align: right;
-			}
-			
-			#lddbd_forgot_password{
-				display: block;
-				text-align: center;
-			}
-			
-/*
-#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form label{
-				float: left;
-				clear: left;
-			}
-			
-			#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form input{
-				float: left;
-				display: block;
-			}
-			
-			#lddbd_business_directory_head #lddbd_business_login_holder #lddbd_business_login_form input[type="submit"]{
-				clear: left;
-			}
-*/
-		
-		#lddbd_business_directory_head form#lddbd_business_search{
-			float: right;
-			margin: 0px 0px 10px 0px;
-		}
-		
 
 
 
 
 
-input.lddlite-search {
-    width: 180px;
-}
 
 
 
 
-			#lddbd_business_directory_head #lddbd_business_search #lddbd_promo_filter_label{
-				font-size: 12px;
-				line-height: 12px;
-			}
-			
+
 	#lddbd_business_directory_body{
 		position: relative;
 		overflow: hidden;
