@@ -20,7 +20,7 @@ function lddlite_category_links( $termlink )
     // @TODO Is there a situation where this won't be available? If so, use $_SERVER
     $current_url = get_permalink( $post->ID );
 
-    $termlink = $current_url . '?show=category&category=' . $link[LDDLITE_TAX_CAT];
+    $termlink = $current_url . '?show=category&id=' . $link[LDDLITE_TAX_CAT];
 
     return $termlink;
 }

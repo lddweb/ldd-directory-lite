@@ -83,9 +83,9 @@ function lddlite_display_view_category()
     global $post;
 
     $category = 0;
-    if ( isset( $_GET['category'] ) )
+    if ( isset( $_GET['id'] ) )
     {
-        $term = term_exists( $_GET['category'], LDDLITE_TAX_CAT );
+        $term = term_exists( $_GET['id'], LDDLITE_TAX_CAT );
         $category = $term->term_id;
     }
 
@@ -105,24 +105,18 @@ function lddlite_display_view_category()
     if ( !empty( $listings ) )
     {
         // @TODO Starting to think we should store this in a class property?
-        $listing_url = get_permalink( $post->ID );
+        $permalink = get_permalink( $post->ID );
 
         foreach ( $listings as $listing )
         {
 
             $name = esc_attr( $listing->post_title );
+            $link = '<a href="' . $permalink . '?show=business&id=' . $listing->post_name . '" title="' . esc_attr( $listing->post_title ) . '">%1$s</a>';
 
-            if ( has_post_thumbnail( $listing->ID ) )
-            {
-                $featured = '<a href="' . $listing_url . '" title="' . esc_attr( $listing->post_title ) . '">'
-                          . get_the_post_thumbnail( $listing->ID, 'thumbnail' )
-                          . '</a>';
-            }
-            else
-            {
-                $featured = '<a href="' . $listing_url . '" title="' . esc_attr( $listing->post_title ) . '">'
-                          . '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />'
-                          . '</a>';
+            if ( has_post_thumbnail( $listing->ID ) ) {
+                $featured = sprintf( $link, get_the_post_thumbnail( $listing->ID, 'thumbnail' ) );
+            } else {
+                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />' );
             }
 
             $address = get_post_meta( $listing->ID, '_lddlite_address', 1 );
@@ -132,13 +126,13 @@ function lddlite_display_view_category()
             $website = ( is_array( $urls ) && isset( $urls['website'] ) ) ? $urls['website'] : '';
             $phone = ( is_array( $contact ) && isset( $contact['phone'] ) ) ? $contact['phone'] : '';
             $social = ( is_array( $urls ) && isset( $urls['social'] ) ) ? $urls['social'] : '';
-md( $social );
+
             $meta = lddlite_build_meta( $address, $website, $phone );
             $social = lddlite_build_social( $social, $name );
 
             $template_vars = array(
                 'featured'      => $featured,
-                'title'         => $name,
+                'title'         => sprintf( $link, $name ),
                 'meta'          => $meta,
                 'description'   => get_the_excerpt(),
                 'social'        => $social,
