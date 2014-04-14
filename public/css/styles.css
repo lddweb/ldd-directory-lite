@@ -23,9 +23,7 @@
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     width: 100%;
-    background: #f8f8f8;
-    border-radius: 8px;
-    box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+    border-radius: 2px;
 }
 
 
@@ -37,7 +35,6 @@
     width: 540px;
     padding: 8px 15px;
     margin: 1.5em auto;
-    background: #eee;
 }
 /* Input */
 
@@ -142,50 +139,37 @@
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     padding: .5em;
-    margin: 0 auto 1.5em;
-    border-bottom: 1px solid #ddd;
+    margin: 0;
+    background: #f2f2f2;
+    background: rgba(51, 51, 51, 0.10);
+    border-radius: 2px;
 }
 
 
 .button {
     display: inline-block;
     white-space: nowrap;
-    background-color: #ddd;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
-    background-image: -webkit-linear-gradient(top, #eee, #ccc);
-    background-image: -moz-linear-gradient(top, #eee, #ccc);
-    background-image: -ms-linear-gradient(top, #eee, #ccc);
-    background-image: -o-linear-gradient(top, #eee, #ccc);
-    background-image: linear-gradient(top, #eee, #ccc);
-    border: 1px solid #777;
-    padding: 0 1.5em;
-    margin: 0.5em;
+    background-color: #7f7fff;
+    border: 1px solid #7f7fff;
+    padding: 0 1.0em 0 1.5em;
+    margin: 0.5em 0;
     font: bold 1em/2em Arial, Helvetica;
     text-decoration: none;
-    color: #333;
-    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.77);
     -moz-border-radius: .2em;
     -webkit-border-radius: .2em;
     border-radius: .2em;
-    -moz-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
-    -webkit-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
-    box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
 }
 
 .entry-content a.button,
 .entry-content a.button:hover {
-    color: #333;
+    color: #fff;
     text-decoration: none;
 }
 
 .button:hover {
-    background-color: #eee;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ddd));
-    background-image: -webkit-linear-gradient(top, #fafafa, #ddd);
-    background-image: -moz-linear-gradient(top, #fafafa, #ddd);
-    background-image: -ms-linear-gradient(top, #fafafa, #ddd);
-    background-image: -o-linear-gradient(top, #fafafa, #ddd);
-    background-image: linear-gradient(top, #fafafa, #ddd);
+    background-color: #4c4c99;
 }
 
 .button:active {
@@ -204,17 +188,14 @@
 
 .button:before
 {
-    background: #ccc;
-    background: rgba(0,0,0,.1);
+    background: rgba(76, 76, 153, 0.2);
     float: left;
     width: 1em;
     text-align: center;
     font-size: 1.5em;
-    margin: 0 1em 0 -1em;
+    margin: 0 .2em 0 -1em;
     padding: 0 .2em;
-    -moz-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
-    -webkit-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
-    box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+
     -moz-border-radius: .15em 0 0 .15em;
     -webkit-border-radius: .15em 0 0 .15em;
     border-radius: .15em 0 0 .15em;
@@ -324,7 +305,7 @@ input::-moz-focus-inner
 
 .directory-cat ul {
     margin: 0;
-    padding: 0 1em;
+    padding: 0;
     position: relative;
     list-style: none;
 }
@@ -334,26 +315,27 @@ input::-moz-focus-inner
     width: 100%;
     margin: 10px 0 0;
     background: #fff;
-    -webkit-border-bottom-right-radius: 6px;
-    -webkit-border-bottom-left-radius: 6px;
-    -moz-border-radius-bottomright: 6px;
-    -moz-border-radius-bottomleft: 6px;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -moz-border-radius-bottomright: 2px;
+    -moz-border-radius-bottomleft: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
 }
 
 .directory-cat ul.top-level li a {
     display: inline-block;
     width: 100%;
     padding: .1em .7em;
-    background: #e4e4e4;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    font-size: 1.3em;
+    background: #f2f2f2;
+    background: rgba(51, 51, 51, 0.10);
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 1.2em;
+    line-height: 1.2em;
     color: #333;
     font-weight: 500;
-    text-shadow: 0 1px 0 rgba(255,255,255,.8);
     text-transform: uppercase;
 }
 
@@ -381,6 +363,74 @@ input::-moz-focus-inner
     padding: 0;
     text-transform: none;
 }
+
+
+/**
+ * Directory Listings, Category View
+ *********************************************************************************************************************/
+
+.directory-business .listing {
+    padding: .5em 0;
+    margin-bottom: 20px;
+}
+.directory-business .listing:last-child {
+    border-bottom: 0;
+}
+.directory-business .listing-image {
+    float: left;
+    position: relative;
+    width: 26%;
+    margin: 0 2% 0 0;
+}
+.directory-business .listing-content {
+    width: 66%;
+    float: left;
+}
+.directory-business .listing-social {
+    float: left;
+    width: 6%;
+    text-align: center;
+}
+.directory-business .listing-social img {
+    margin: .1em;
+}
+.directory-business .listing .featured-image {
+    display: inline-block;
+    vertical-align: top;
+}
+.directory-business .listing .featured-image img {
+    max-width: 100%;
+    height: auto;
+}
+.directory-business .listing-title {
+    font-size: 140%;
+    font-weight: normal;
+    line-height: 130%;
+    margin: 0 0 5px;
+}
+.directory-business .listing-title a {
+    text-decoration: none;
+}
+.directory-business .listing-title a:hover {
+    text-decoration: none;
+}
+
+.directory-business .listing-meta p {
+    font-size: 90%;
+    line-height: 130%;
+    color: #777;
+    margin: 0 0 8px;
+}
+.directory-business .listing-meta a {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 110%;
+}
+.directory-business .listing-meta a:hover {
+    text-decoration: none;
+}
+
+
 
 
 
