@@ -1,85 +1,86 @@
 <?php
 
-//add_filter( 'cmb_meta_boxes', 'lbd_define_metaboxes' );
-//add_action( 'init', 'lbd_init_metaboxes' );
 
-//add_action( 'add_meta_boxes', 'lbd_move_metabox', 0 );
+add_action( 'add_meta_boxes', 'lddlite_move_metabox', 0 );
+add_action( 'init', 'lddlite_init_metaboxes' );
 
-function lbd_move_metabox()
+add_filter( 'cmb_meta_boxes', 'lddlite_define_metaboxes' );
+
+function lddlite_move_metabox()
 {
     global $wp_meta_boxes;
 
-    unset( $wp_meta_boxes[LBD_POSTTYPE]['side']['low']['postimagediv'] );
+    unset( $wp_meta_boxes[LDDLITE_POST_TYPE]['side']['low']['postimagediv'] );
     add_meta_box('postimagediv', __('Business Logo'), 'post_thumbnail_meta_box', null, 'side', 'low');
 
-    unset( $wp_meta_boxes[LBD_POSTTYPE]['normal']['core']['authordiv'] );
-    add_meta_box( 'authordiv', __( 'Author' ), 'post_author_meta_box', LBD_POSTTYPE, 'side', 'default' );
+    unset( $wp_meta_boxes[LDDLITE_POST_TYPE]['normal']['core']['authordiv'] );
+    add_meta_box( 'authordiv', __( 'Author' ), 'post_author_meta_box', LDDLITE_POST_TYPE, 'side', 'default' );
 
 }
 
-function lbd_init_metaboxes()
+function lddlite_init_metaboxes()
 {
     if ( !class_exists( 'cmb_Meta_Box' ) )
         require_once( LDDLITE_PATH . '/includes/cmb/init.php' );
 }
 
 
-function lbd_define_metaboxes( array $meta_boxes )
+function lddlite_define_metaboxes( array $meta_boxes )
 {
-    $prefix = '_lbd_';
+    $prefix = '_lddlite_';
 
     $state_names = array(
-        __( 'Alabama', 'ldd-bd' ),
-        __( 'Alaska', 'ldd-bd' ),
-        __( 'Arizona', 'ldd-bd' ),
-        __( 'Arkansas', 'ldd-bd' ),
-        __( 'California', 'ldd-bd' ),
-        __( 'Colorado', 'ldd-bd' ),
-        __( 'Connecticut', 'ldd-bd' ),
-        __( 'Delaware', 'ldd-bd' ),
-        __( 'District Of Columbia', 'ldd-bd' ),
-        __( 'Florida', 'ldd-bd' ),
-        __( 'Georgia', 'ldd-bd' ),
-        __( 'Hawaii', 'ldd-bd' ),
-        __( 'Idaho', 'ldd-bd' ),
-        __( 'Illinois', 'ldd-bd' ),
-        __( 'Indiana', 'ldd-bd' ),
-        __( 'Iowa', 'ldd-bd' ),
-        __( 'Kansas', 'ldd-bd' ),
-        __( 'Kentucky', 'ldd-bd' ),
-        __( 'Louisiana', 'ldd-bd' ),
-        __( 'Maine', 'ldd-bd' ),
-        __( 'Maryland', 'ldd-bd' ),
-        __( 'Massachusetts', 'ldd-bd' ),
-        __( 'Michigan', 'ldd-bd' ),
-        __( 'Minnesota', 'ldd-bd' ),
-        __( 'Mississippi', 'ldd-bd' ),
-        __( 'Missouri', 'ldd-bd' ),
-        __( 'Montana', 'ldd-bd' ),
-        __( 'Nebraska', 'ldd-bd' ),
-        __( 'Nevada', 'ldd-bd' ),
-        __( 'New Hampshire', 'ldd-bd' ),
-        __( 'New Jersey', 'ldd-bd' ),
-        __( 'New Mexico', 'ldd-bd' ),
-        __( 'New York', 'ldd-bd' ),
-        __( 'North Carolina', 'ldd-bd' ),
-        __( 'North Dakota', 'ldd-bd' ),
-        __( 'Ohio', 'ldd-bd' ),
-        __( 'Oklahoma', 'ldd-bd' ),
-        __( 'Oregon', 'ldd-bd' ),
-        __( 'Pennsylvania', 'ldd-bd' ),
-        __( 'Rhode Island', 'ldd-bd' ),
-        __( 'South Carolina', 'ldd-bd' ),
-        __( 'South Dakota', 'ldd-bd' ),
-        __( 'Tennessee', 'ldd-bd' ),
-        __( 'Texas', 'ldd-bd' ),
-        __( 'Utah', 'ldd-bd' ),
-        __( 'Vermont', 'ldd-bd' ),
-        __( 'Virginia', 'ldd-bd' ),
-        __( 'Washington', 'ldd-bd' ),
-        __( 'West Virginia', 'ldd-bd' ),
-        __( 'Wisconsin', 'ldd-bd' ),
-        __( 'Wyoming', 'ldd-bd' ),
+        __( 'Alabama', lddslug() ),
+        __( 'Alaska', lddslug() ),
+        __( 'Arizona', lddslug() ),
+        __( 'Arkansas', lddslug() ),
+        __( 'California', lddslug() ),
+        __( 'Colorado', lddslug() ),
+        __( 'Connecticut', lddslug() ),
+        __( 'Delaware', lddslug() ),
+        __( 'District Of Columbia', lddslug() ),
+        __( 'Florida', lddslug() ),
+        __( 'Georgia', lddslug() ),
+        __( 'Hawaii', lddslug() ),
+        __( 'Idaho', lddslug() ),
+        __( 'Illinois', lddslug() ),
+        __( 'Indiana', lddslug() ),
+        __( 'Iowa', lddslug() ),
+        __( 'Kansas', lddslug() ),
+        __( 'Kentucky', lddslug() ),
+        __( 'Louisiana', lddslug() ),
+        __( 'Maine', lddslug() ),
+        __( 'Maryland', lddslug() ),
+        __( 'Massachusetts', lddslug() ),
+        __( 'Michigan', lddslug() ),
+        __( 'Minnesota', lddslug() ),
+        __( 'Mississippi', lddslug() ),
+        __( 'Missouri', lddslug() ),
+        __( 'Montana', lddslug() ),
+        __( 'Nebraska', lddslug() ),
+        __( 'Nevada', lddslug() ),
+        __( 'New Hampshire', lddslug() ),
+        __( 'New Jersey', lddslug() ),
+        __( 'New Mexico', lddslug() ),
+        __( 'New York', lddslug() ),
+        __( 'North Carolina', lddslug() ),
+        __( 'North Dakota', lddslug() ),
+        __( 'Ohio', lddslug() ),
+        __( 'Oklahoma', lddslug() ),
+        __( 'Oregon', lddslug() ),
+        __( 'Pennsylvania', lddslug() ),
+        __( 'Rhode Island', lddslug() ),
+        __( 'South Carolina', lddslug() ),
+        __( 'South Dakota', lddslug() ),
+        __( 'Tennessee', lddslug() ),
+        __( 'Texas', lddslug() ),
+        __( 'Utah', lddslug() ),
+        __( 'Vermont', lddslug() ),
+        __( 'Virginia', lddslug() ),
+        __( 'Washington', lddslug() ),
+        __( 'West Virginia', lddslug() ),
+        __( 'Wisconsin', lddslug() ),
+        __( 'Wyoming', lddslug() ),
     );
 
     $states = array_combine( $state_names, array(
@@ -138,36 +139,36 @@ function lbd_define_metaboxes( array $meta_boxes )
 
     $meta_boxes['listings_address'] = array(
         'id'         => 'listings_address',
-        'title'      => __( 'Business Address', 'ldd-bd' ),
-        'pages'      => array( LBD_POSTTYPE ),
+        'title'      => __( 'Business Address', lddslug() ),
+        'pages'      => array( LDDLITE_POST_TYPE ),
         'context'    => 'normal',
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
             array(
-                'name' => __( 'Address 1', 'ldd-bd' ),
+                'name' => __( 'Address 1', lddslug() ),
                 'id'   => $prefix . 'address_one',
                 'type' => 'text',
             ),
             array(
-                'name' => __( 'Address 2', 'ldd-bd' ),
+                'name' => __( 'Address 2', lddslug() ),
                 'id'   => $prefix . 'address_two',
                 'type' => 'text',
             ),
             array(
-                'name' => __( 'City', 'ldd-bd' ),
+                'name' => __( 'City', lddslug() ),
                 'id'   => $prefix . 'city',
                 'type' => 'text_medium',
             ),
             array(
-                'name'      => __( 'State', 'ldd-bd' ),
-                'id'        => $prefix . 'state',
+                'name'      => __( 'State', lddslug() ),
+                'id'        => $prefix . 'subdivision',
                 'type'      => 'select',
                 'options'   => $states,
             ),
             array(
-                'name' => __( 'Zip Code', 'ldd-bd' ),
-                'id'   => $prefix . 'zip',
+                'name' => __( 'Zip Code', lddslug() ),
+                'id'   => $prefix . 'post_code',
                 'type' => 'text_small',
             ),
         ),
@@ -175,34 +176,34 @@ function lbd_define_metaboxes( array $meta_boxes )
 
     $meta_boxes['listings_web'] = array(
         'id'         => 'listings_web',
-        'title'      => __( 'Web Addresses', 'ldd-bd' ),
-        'pages'      => array( LBD_POSTTYPE ),
+        'title'      => __( 'Web Addresses', lddslug() ),
+        'pages'      => array( LDDLITE_POST_TYPE ),
         'context'    => 'normal',
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
             array(
-                'name'          => __( 'Website', 'ldd-bd' ),
+                'name'          => __( 'Website', lddslug() ),
                 'placeholder'   => 'http://...',
-                'id'            => $prefix . 'url',
+                'id'            => $prefix . 'urls_website',
                 'type'          => 'text',
             ),
             array(
-                'name'          => __( 'Facebook', 'ldd-bd' ),
+                'name'          => __( 'Facebook', lddslug() ),
                 'placeholder'   => 'http://facebook.com/...',
-                'id'            => $prefix . 'facebook',
+                'id'            => $prefix . 'urls_social_facebook',
                 'type'          => 'text',
             ),
             array(
-                'name'          => __( 'Twitter', 'ldd-bd' ),
+                'name'          => __( 'Twitter', lddslug() ),
                 'placeholder'   => 'http://twitter.com/...',
-                'id'            => $prefix . 'twitter',
+                'id'            => $prefix . 'urls_social_twitter',
                 'type'          => 'text',
             ),
             array(
-                'name'          => __( 'LinkedIn', 'ldd-bd' ),
+                'name'          => __( 'LinkedIn', lddslug() ),
                 'placeholder'   => 'http://www.linkedin.com/in/...',
-                'id'            => $prefix . 'linkedin',
+                'id'            => $prefix . 'urls_social_linkedin',
                 'type'          => 'text',
             ),
         ),
@@ -210,25 +211,25 @@ function lbd_define_metaboxes( array $meta_boxes )
 
     $meta_boxes['listings_contact'] = array(
         'id'         => 'listings_contact',
-        'title'      => __( 'Contact Information', 'ldd-bd' ),
-        'pages'      => array( LBD_POSTTYPE ),
+        'title'      => __( 'Contact Information', lddslug() ),
+        'pages'      => array( LDDLITE_POST_TYPE ),
         'context'    => 'side',
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
             array(
-                'name' => __( 'Email', 'ldd-bd' ),
-                'id'   => $prefix . 'email',
+                'name' => __( 'Email', lddslug() ),
+                'id'   => $prefix . 'contact_emai]',
                 'type' => 'text_medium',
             ),
             array(
-                'name' => __( 'Phone', 'ldd-bd' ),
-                'id'   => $prefix . 'phone',
+                'name' => __( 'Phone', lddslug() ),
+                'id'   => $prefix . 'contact_phone',
                 'type' => 'text_medium',
             ),
             array(
-                'name' => __( 'Fax', 'ldd-bd' ),
-                'id'   => $prefix . 'fax',
+                'name' => __( 'Fax', lddslug() ),
+                'id'   => $prefix . 'contact_fax',
                 'type' => 'text_medium',
             ),
         ),

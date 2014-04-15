@@ -129,17 +129,23 @@ final class _LDD_Directory_Lite
         $basename = plugin_basename( __FILE__ );
         add_filter( 'plugin_action_links_' . $basename, array( $this, 'add_action_links' ) );
 
-        add_shortcode( 'business_directory', 'lddlite_display_directory' );
+        add_filter( 'the_content', 'lddlite_display_directory' );
+        //add_shortcode( 'business_directory', 'lddlite_display_directory' );
 
         { // These all relate to our custom post types and dashboard UI
             add_action( 'init', 'lddlite_register__cpt_tax' );
 
+            add_filter( 'post_type_link', 'lddlite_filter_post_type_link', 10, 2 );
             add_filter( 'enter_title_here', 'lddlite_filter_enter_title_here' );
             add_filter( 'admin_post_thumbnail_html', 'lddlite_filter_admin_post_thumbnail_html' );
 
             add_action( 'admin_head', 'lddlite_action_directory_icon' );
             add_action( '_admin_menu', 'lddlite_action_submenu_name' );
         }
+
+        // Process AJAX for the contact Form
+        add_action( 'wp_ajax_contact_form', 'lddlite_ajax_contact_form' );
+        add_action( 'wp_ajax_nopriv_contact_form', 'lddlite_ajax_contact_form' );
 
     }
 
@@ -209,6 +215,13 @@ lddlite();
 
 function lddslug()
 {
-    $lddlite = lddlite();
-    return $lddlite->slug;
+    static $slug;
+
+    if ( !isset( $slug ) )
+    {
+        $lddlite = lddlite();
+        $slug = $lddlite->slug;
+    }
+
+    return $slug;
 }

@@ -101,3 +101,9 @@ function lddlite_action_submenu_name()
 
     $submenu['edit.php?post_type=' . LDDLITE_POST_TYPE][5][0] = 'All Listings';
 }
+
+
+function lddlite_filter_post_type_link( $post_link, $post )
+{
+   // mdd( $post );
+}

@@ -63,3 +63,67 @@ function lddlite_parse_template( $tpl_file, $replace )
     return $body; // Sounds creepy.
 
 }
+
+
+function lddlite_ajax_contact_form()
+{
+
+    if ( !wp_verify_nonce( $_POST['nonce'], 'contact-form-nonce' ) ) {
+        die( 'You shall not pass!' );
+    }
+
+    $name = sanitize_text_field( $_POST['name'] );
+    $email = sanitize_text_field( $_POST['email'] );
+    $subject = sanitize_text_field( $_POST['subject'] );
+    $message = esc_html( sanitize_text_field( $_POST['message'] ) );
+    $math = sanitize_text_field( $_POST['math'] );
+
+/*    $name = '';
+    $email = 'mark@water';
+    $subject = '';
+    $message = 'message!';
+    $math = '2';*/
+
+    $errors = array();
+
+    if ( empty( $name ) || strlen( $name ) < 3 ) {
+        $errors['name'] = 'You must enter a name';
+    }
+
+    if ( empty( $email ) || !is_email( $email ) ) {
+        $errors['email'] = 'Please enter a valid email address';
+    }
+
+    if ( empty( $subject ) || strlen( $subject ) < 3 ) {
+        $errors['subject'] = 'You must enter a subject';
+    }
+
+    if ( empty( $message ) || strlen( $message ) < 20 ) {
+        $errors['message'] = 'Please enter a longer message';
+    }
+
+    if ( empty( $math ) || '11' != $math ) {
+        $errors['math'] = 'Your math is wrong';
+    }
+
+    if ( !empty( $errors ) )
+    {
+        echo json_encode( array(
+            'errors'    => $errors,
+            'success'   => false,
+        ) );
+        die;
+    }
+
+    $post_id = intval( $_POST['business_id'] );
+    $post_id = 30; // FOR TESTING, HAZ EMAIL
+    $contact_meta = get_post_meta( $post_id, '_lddlite_contact', 1 );
+    $email = $contact_meta['email'];
+
+    $headers = sprintf( "From: %1$s <%2$s>\r\n", $name, $email );
+
+    echo json_encode( array(
+        'success'   => wp_mail( 'mark@watero.us', $subject, $message, $headers ),
+    ) );
+    die;
+}

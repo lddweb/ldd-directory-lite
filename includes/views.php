@@ -42,8 +42,14 @@ function lddlite_get_search_form()
 }
 
 
-function lddlite_display_directory()
+function lddlite_display_directory( $content )
 {
+    global $post;
+
+    $lddlite = lddlite();
+
+    if ( !isset( $lddlite->options['directory_page'] ) || $post->ID != $lddlite->options['directory_page'] )
+        return $content;
 
     $action = 'home';
 

@@ -57,6 +57,16 @@ class _LDD_Directory_Admin
 
             }
 
+            add_settings_field( 'directory_page', '<label for="directory_page">' . __( 'Directory Page', lddslug() ) . '</label>', '_f_directory_page', 'lddlite-settings', 'lddlite-settings-general' );
+            function _f_directory_page()
+            {
+                $lddlite = lddlite();
+
+                echo '<input id="directory_page" type="text" size="20" name="lddlite-options[directory_page]" value="' . esc_attr( $lddlite->options['directory_page'] ) . '" />';
+                echo '<p class="description">Enter the page ID that you want to display the directory on. <a href="#" id="open-modal">Click here</a> for a list of pages.</p>';
+
+            }
+
             add_settings_field( 'public_or_private', '<label for="public_or_private">' . __( 'Public Directory', lddslug() ) . '</label>', '_f_public_or_private', 'lddlite-settings', 'lddlite-settings-general' );
             function _f_public_or_private()
             {
@@ -98,7 +108,7 @@ class _LDD_Directory_Admin
             function _f_email_onsubmit()
             {
                 $lddlite = lddlite();
-                echo '<input id="email_onsubmit" type="text" size="80" name="lddlite-options[email_onsubmit]" value="'.esc_attr( $lddlite->options['email_onsubmit'] ).'" />';
+                echo '<input id="email_onsubmit" type="text" size="80" name="lddlite-options[email_onsubmit]" value="' . esc_attr( $lddlite->options['email_onsubmit'] ) . '" />';
             }
 
 
@@ -136,16 +146,28 @@ class _LDD_Directory_Admin
     public function _add_settings_menu()
     {
         $slug = add_submenu_page( 'edit.php?post_type=' . LDDLITE_POST_TYPE, 'Directory [lite] Configuration', 'Settings', 'edit_post', 'lddlite-settings', array( $this, '_settings_page' ) );
-        add_action( 'admin_print_styles-' . $slug, array( $this, '_enqueue_styles' ) );
+        add_action( 'admin_print_scripts-' . $slug, array( $this, '_enqueue_styles' ) );
     }
 
 
         public function _settings_page()
         {
 
-        ?>
+            $args = array(
+                'depth'        => -1,
+                'echo'         => 0,
+                'title_li'     => '',
+            );
+
+            $pages = wp_list_pages( $args );
+
+            ?>
             <div class="wrap">
                 <h2>Directory <span class="lite">[lite]</span> <?php _e( 'Settings', lddslug() ); ?></h2>
+
+                <div id="modal-content" title="Select Page to display Directory [lite]" style="display:none;">
+                    <?php echo $pages; ?>
+                </div>
 
                 <form method="post" action="options.php">
                     <?php settings_fields( 'lddlite-options' ); ?>
@@ -160,6 +182,8 @@ class _LDD_Directory_Admin
 
         public function _enqueue_styles()
         {
+            wp_enqueue_script( lddslug() . '-scripts', LDDLITE_URL . '/public/js/admin.js', array( 'jquery-ui-dialog' ), LDDLITE_VERSION, 1 );
+            wp_enqueue_style(  'wp-jquery-ui-dialog');
             wp_enqueue_style( lddslug() . '-styles', LDDLITE_URL . '/public/css/admin.css', false, LDDLITE_VERSION );
         }
 
