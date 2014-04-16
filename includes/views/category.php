@@ -21,36 +21,63 @@ function lddlite_format_phone( $phone, $locale = 'US' )
 }
 
 
-function lddlite_build_meta( $address, $website = '', $phone = '' )
+function lddlite_build_meta( $id )
 {
-    if ( empty( $address ) || !is_array( $address ) )
+
+    if ( !is_int( $id ) )
         return false;
 
     $meta = '';
 
-    if ( !empty( $website ) ) {
+    if ( $website = get_post_meta( $id, '_lddlite_urls_website', 1 ) ) {
         $meta .= sprintf( '<p class="website"><a href="%1$s">%1$s</a></p>', esc_url( $website ) );
     }
 
-    if ( !empty( $phone ) ) {
-        $meta .= sprintf( '<p class="phone">%s</p>', lddlite_format_phone( $phone ) );
+    if ( $phone = get_post_meta( $id, '_lddlite_contact_phone', 1 ) ) {
+        $meta .= '<p class="phone">' . lddlite_format_phone( $phone ) . '</p>';
     }
 
-    $meta .= '<p class="address">' . $address['address_one'];
-    if ( !empty( $address['address_two'] ) ) {
-        $meta .= '<br />' . $address['address_two'];
+    $address = array(
+        'one'           => get_post_meta( $id, '_lddlite_address_one', 1 ),
+        'two'           => get_post_meta( $id, '_lddlite_address_two', 1 ),
+        'subdivision'   => get_post_meta( $id, '_lddlite_address_subdivision', 1 ),
+        'city'          => get_post_meta( $id, '_lddlite_address_city', 1 ),
+        'post_code'     => get_post_meta( $id, '_lddlite_address_post_code', 1 ),
+    );
+
+    $meta .= '<p class="address">' . $address['one'];
+    if ( !empty( $address['two'] ) ) {
+        $meta .= '<br />' . $address['two'];
     }
     $meta .= ',<br />' . $address['city'] . ', ' . $address['subdivision'] . ' ' . $address['post_code'];
 
     return $meta;
+
 }
 
 
-function lddlite_build_social( $social, $name )
+function _lddlite_esc_twitter( $username )
+{
+    if ( empty( $username ) )
+        return;
+
+    $twitter = esc_url( $username );
+
+    $pos = strrpos( $twitter, '/' );
+    if ( $pos !== false )
+    {
+        $pos += 1;
+        $twitter = substr( $twitter, $pos );
+    }
+
+    return 'https://twitter.com/' . $twitter;
+}
+
+function lddlite_build_social( $id )
 {
 
-    if ( !is_array( $social ) )
-        return '';
+    if ( !is_int( $id ) )
+        return false;
 
     $titles = array(
         'facebook'  => 'Visit %1$s on Facebook',
@@ -59,8 +86,15 @@ function lddlite_build_social( $social, $name )
         'default'   => 'Visit %1$s on %2$s',
     );
 
+    $social = array(
+        'facebook'  =>  get_post_meta( $id, '_lddlite_urls_social_facebook', 1 ),
+        'linkedin'  =>  get_post_meta( $id, '_lddlite_urls_social_linkedin', 1 ),
+        'twitter'   =>  get_post_meta( $id, '_lddlite_urls_social_twitter', 1 ),
+    );
+
+    $social['twitter'] = _lddlite_esc_twitter( $social['twitter'] );
+
     $output = '';
-    ksort( $social );
 
     foreach ( $social as $key => $url )
     {
@@ -78,40 +112,34 @@ function lddlite_build_social( $social, $name )
 }
 
 
-function lddlite_display_view_category()
+function lddlite_display_view_category( $cat_id )
 {
     global $post;
 
-    $category = 0;
-    if ( isset( $_GET['id'] ) )
-    {
-        $term = term_exists( $_GET['id'], LDDLITE_TAX_CAT );
-        $category = $term->term_id;
-    }
+    $lddlite = lddlite();
+    $permalink = get_permalink( $post->ID );
+
 
     $listings = get_posts( array(
         'posts_per_page'   => 10,
-        'category'         => $category,
+        'category'         => $cat_id,
         'orderby'          => 'title',
         'order'            => 'DESC',
         'post_type'        => LDDLITE_POST_TYPE,
         'post_status'      => 'publish',
-        'suppress_filters' => true
     ) );
 
     $output = '';
 
-
     if ( !empty( $listings ) )
     {
-        // @TODO Starting to think we should store this in a class property?
-        $permalink = get_permalink( $post->ID );
 
         foreach ( $listings as $listing )
         {
 
-            $name = esc_attr( $listing->post_title );
-            $link = '<a href="' . $permalink . '?show=business&id=' . $listing->post_name . '" title="' . esc_attr( $listing->post_title ) . '">%1$s</a>';
+            $id = $listing->ID;
+
+            $link = '<a href="' . $permalink . '?show=business&term=' . $listing->post_name . '" title="' . esc_attr( $listing->post_title ) . '">%1$s</a>';
 
             if ( has_post_thumbnail( $listing->ID ) ) {
                 $featured = sprintf( $link, get_the_post_thumbnail( $listing->ID, 'thumbnail' ) );
@@ -119,22 +147,14 @@ function lddlite_display_view_category()
                 $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />' );
             }
 
-            $address = get_post_meta( $listing->ID, '_lddlite_address', 1 );
-            $contact = get_post_meta( $listing->ID, '_lddlite_contact', 1 );
-            $urls = get_post_meta( $listing->ID, '_lddlite_urls', 1 );
-
-            $website = ( is_array( $urls ) && isset( $urls['website'] ) ) ? $urls['website'] : '';
-            $phone = ( is_array( $contact ) && isset( $contact['phone'] ) ) ? $contact['phone'] : '';
-            $social = ( is_array( $urls ) && isset( $urls['social'] ) ) ? $urls['social'] : '';
-
-            $meta = lddlite_build_meta( $address, $website, $phone );
-            $social = lddlite_build_social( $social, $name );
+            $meta = lddlite_build_meta( $id );
+            $social = lddlite_build_social( $id );
 
             $template_vars = array(
                 'featured'      => $featured,
-                'title'         => sprintf( $link, $name ),
+                'title'         => sprintf( $link, $listing->post_title ),
                 'meta'          => $meta,
-                'description'   => get_the_excerpt(),
+                'description'   => '',
                 'social'        => $social,
             );
 

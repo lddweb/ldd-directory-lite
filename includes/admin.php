@@ -30,6 +30,7 @@ class _LDD_Directory_Admin
     {
         add_action( 'admin_init', array( $this, '_register_settings' ) );
         add_action( 'admin_menu', array( $this, '_add_settings_menu' ) );
+        //add_action( 'admin_print_scripts-post.php', array( $this, '_enqueue_scripts' ), 11 );
     }
 
 
@@ -51,7 +52,6 @@ class _LDD_Directory_Admin
                     <li class="right"><a href="https://github.com/mwaterous/ldd-directory-lite/issues" title="Submit a bug or feature request on GitHub" class="bold-link">Submit an Issue</a></li>
                     <li>Visit us on <a href="https://github.com/mwaterous/ldd-directory-lite" title="We do most of our development from GitHub, come join us!">GitHub.com</a></li>
                     <li class="right"><a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Visit the LDD Directory [lite] Support Forums on WordPress.org" class="bold-link">Support Forums</a></li>
-                    <!-- <li>Do you find this plugin useful? <a href="" title="" class="bold-link">Give us a short review!</a></li> -->
                 </ul>
                 <?php
 
@@ -63,7 +63,9 @@ class _LDD_Directory_Admin
                 $lddlite = lddlite();
 
                 echo '<input id="directory_page" type="text" size="20" name="lddlite-options[directory_page]" value="' . esc_attr( $lddlite->options['directory_page'] ) . '" />';
-                echo '<p class="description">Enter the page ID that you want to display the directory on. <a href="#" id="open-modal">Click here</a> for a list of pages.</p>';
+                echo '<p class="description">Enter the page ID that you want to display the directory on.<br />';
+                echo '<a href="#" id="open-modal">Click here</a> for a list of pages.<br />';
+                echo 'Alternatively, we can <a href="#" disabled>create a page</a> for you.</p>';
 
             }
 
@@ -187,6 +189,13 @@ class _LDD_Directory_Admin
             wp_enqueue_style( lddslug() . '-styles', LDDLITE_URL . '/public/css/admin.css', false, LDDLITE_VERSION );
         }
 
+    public function _enqueue_scripts()
+    {
+        global $post_type;
+
+        if( LDDLITE_POST_TYPE == $post_type )
+            wp_enqueue_script( 'post' );
+    }
 
 }
 

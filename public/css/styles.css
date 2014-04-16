@@ -148,7 +148,7 @@
     display: inline-block;
     white-space: nowrap;
     background: #7f7fff;
-    padding: 0 1em;
+    padding: .2em 1em;
     margin: 0.5em 0;
     font: 700 1em/2em Geneva, Tahoma, Verdana, sans-serif;
     text-decoration: none;
@@ -176,7 +176,7 @@
     -webkit-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
     box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
     position: relative;
-    padding: 0 1em;
+    padding: .2em 1em;
     margin: 0.5em 0;
     top: 1px;
     outline: 0;

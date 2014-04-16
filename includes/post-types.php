@@ -77,7 +77,7 @@ function lddlite_filter_enter_title_here ( $title )
 function lddlite_filter_admin_post_thumbnail_html( $content )
 {
 
-    if ( get_post_type() == lddlite_POST_TYPE ) {
+    if ( LDDLITE_POST_TYPE == get_post_type() ) {
         $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', lddslug() ), $content);
     }
 
@@ -105,5 +105,40 @@ function lddlite_action_submenu_name()
 
 function lddlite_filter_post_type_link( $post_link, $post )
 {
-   // mdd( $post );
+
+    if ( LDDLITE_POST_TYPE != get_post_type( $post->ID ) )
+        return $post_link;
+
+    _lddlite_set_shortcode_ID();
+    $lddlite = lddlite();
+
+    $directory_link = get_permalink( $lddlite->directory_home_ID );
+
+    return ( $directory_link . '?show=business&term=' . $post->post_name );
+}
+
+
+function _lddlite_set_shortcode_ID( $force = false)
+{
+    $lddlite = lddlite();
+
+    if ( empty( $lddlite->directory_home_ID ) || $force )
+    {
+        $posts = get_posts( array(
+            'posts_per_page'    => -1,
+            'post_type'         => 'page',
+        ) );
+
+        $pattern = get_shortcode_regex();
+        foreach ( $posts as $post )
+        {
+            if ( preg_match( "/$pattern/s", $post->post_content ) )
+            {
+                $lddlite->directory_home_ID = $post->ID;
+                break;
+            }
+        }
+
+    }
+
 }

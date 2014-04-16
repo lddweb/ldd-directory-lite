@@ -7,7 +7,7 @@
 
     <div class="directory-nav cf">
         <a href="" class="button left view-all">Expand All</a>
-        <a href="{{url}}?submit=true" class="button add right">Submit Listing</a>
+        <a href="{{url}}?submit=true" class="button right">Submit Listing</a>
     </div>
 
     <div class="directory-cat cf">

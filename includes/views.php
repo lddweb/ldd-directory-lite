@@ -20,19 +20,9 @@ function lddlite_category_links( $termlink )
     // @TODO Is there a situation where this won't be available? If so, use $_SERVER
     $current_url = get_permalink( $post->ID );
 
-    $termlink = $current_url . '?show=category&id=' . $link[LDDLITE_TAX_CAT];
+    $termlink = $current_url . '?show=category&term=' . $link[LDDLITE_TAX_CAT];
 
     return $termlink;
-}
-
-
-function lddlite_process_forms()
-{
-
-    if ( isset( $_POST['current_page'] ) )
-    {
-
-    }
 }
 
 
@@ -42,14 +32,9 @@ function lddlite_get_search_form()
 }
 
 
-function lddlite_display_directory( $content )
+function lddlite_display_directory()
 {
     global $post;
-
-    $lddlite = lddlite();
-
-    if ( !isset( $lddlite->options['directory_page'] ) || $post->ID != $lddlite->options['directory_page'] )
-        return $content;
 
     $action = 'home';
 
@@ -60,14 +45,47 @@ function lddlite_display_directory( $content )
         'search',
     );
 
-    if ( isset( $_GET['show'] ) && in_array( $_GET['show'], $allowed_actions ) ) {
+    if ( isset( $_GET['show'] ) && in_array( $_GET['show'], $allowed_actions ) && isset( $_GET['term'] ) )
+    {
         $action = $_GET['show'];
+        $term = esc_attr( $_GET['term'] );
+
+        if ( 'category' == $action )
+        {
+
+            $term = term_exists( $term, LDDLITE_TAX_CAT );
+            if ( !$term ) {
+                $action = 'home';
+            } else {
+                $term = $term->term_id;
+            }
+
+        }
+        else if ( 'business' == $action )
+        {
+
+            $listing = get_posts( array(
+                'name'              => $term,
+                'post_type'         => LDDLITE_POST_TYPE,
+                'post_status'       => 'publish',
+                'posts_per_page'    => 1,
+            ) );
+
+            if ( empty( $listing ) ) {
+                $action = 'home';
+            } else {
+                $term = $listing[0];
+            }
+
+        }
+
     }
+
 
     require_once( LDDLITE_PATH . '/includes/views/' . $action . '.php' );
 
     $func = 'lddlite_display_view_' . $action;
 
-    return $func();
+    return $func( $term );
 
 }

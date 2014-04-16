@@ -19,8 +19,10 @@ ul#directory-links li {
 }
 
 ul#directory-links li.right {
-    text-align: center;
+    text-align: right;
     font-weight: 700;
+    width: 40%;
+    padding-right: 10%;
 }
 
 .wrap h3 {

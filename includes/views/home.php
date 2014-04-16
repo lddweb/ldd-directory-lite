@@ -4,7 +4,7 @@
  *
  */
 
-function lddlite_display_view_home()
+function lddlite_display_view_home( $term = false )
 {
     global $post;
 

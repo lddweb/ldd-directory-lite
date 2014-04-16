@@ -71,27 +71,26 @@
     }
 </style>
 
-{{search}}
 
 <div class="section-wrapper cf">
 
     <div class="directory-nav cf">
-        <a href="{{url}}?submit=true" class="button">Categories</a>
+        <a href="{{url}}" class="button">Directory Home</a>
         <a rel="leanModal" href="#panels" class="button right">Contact</a>
     </div>
 
     <div class="display-business">
 
         <div class="listing cf">
-            <div class="listing-image cf" style="background: #eee; border-radius: 2px;">
-                <a href="" class="featured-image"><img src="http://www.aaas.org/sites/default/files/migrate/uploads/0707green_building_0242.jpg" /></a>
+            <div class="listing-image cf">
+                {{logo}}
             </div>
 
             <div class="listing-content">
 
-                <h2 class="entry-title listing-title"><a  href="">Example Listing Business</a></h2>
+                <h2 class="entry-title listing-title">Example Listing Business</h2>
                 <div class="listing-meta">
-                    <p class="website"><a href="">lddconsulting.com</a></p>
+                    <p class="website">{{website}}</p>
 
                     <p class="phone">(505) 455-8749</p>
                     <p class="address">2420 Midtown Pl NE,<br />Albuquerque, NM 87107</p>
@@ -106,7 +105,7 @@
         </div>
 
         <div class="listing-description">
-            <p>Secondly: The ship Union, also of Nantucket, was in the year 1807 totally lost off the Azores by a similar onset, but the authentic particulars of this catastrophe I have never chanced to encounter... <a class="moretag" href="">Read More</a></p>
+            <p>Secondly: The ship Union, also of Nantucket, was in the year 1807 totally lost off the Azores by a similar onset, but the authentic particulars of this catastrophe I have never chanced to encounter...</p>
         </div>
 
 
