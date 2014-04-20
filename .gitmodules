@@ -1,0 +1,3 @@
+[submodule "includes/cmb"]
+	path = includes/cmb
+	url = https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress
