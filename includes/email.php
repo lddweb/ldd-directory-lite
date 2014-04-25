@@ -23,7 +23,7 @@
  * @param string $headers Optional, default is managed internally.
  * @return void
  */
-function dirl_mail($to, $subject, $message, $headers = "")
+function lddlite_mail($to, $subject, $message, $headers = "")
 {
 
     // If we're not passing any headers, default to our internal from address

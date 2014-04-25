@@ -1,0 +1,308 @@
+/** GENERAL STYLES **/
+
+.cf:before, .cf:after{
+    content:"";
+    display:table;
+}
+
+.cf:after{
+    clear:both;
+}
+
+.cf{
+    zoom:1;
+}
+
+
+/** HEADER STYLES **/
+
+
+header {
+
+    &.global-header {
+        margin: 0;
+        padding: 0;
+
+        &.submit-listing {
+            margin-bottom: 2em;
+        }
+    }
+
+}
+
+
+/** NAVIGATION STYLES **/
+
+nav {
+
+    &.lite-nav {
+        &.above-header {
+            margin: 0;
+            ul {
+                li {
+                    margin: 0;
+                }
+            }
+        }
+    }
+    &.lite-nav {
+        margin: 1em 0;
+        padding: 1em 0;
+        background: none;
+
+        ul {
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin: 0 5px 10px 0;
+                padding: 0;
+                list-style: none;
+                display: inline-block;
+                *display:inline; /* ie7 */
+
+                a {
+                    padding: .5em 1em;
+                    text-decoration: none;
+                    line-height: 100%;
+                }
+
+                a:hover {
+                    background: $primary-mid;
+                    border-bottom: 2px solid $primary-dark;
+                    color: $white;
+                    border-radius: 5px;
+                }
+
+                &.current a {
+                    background: $primary-mid;
+                    color: #fff;
+                    border-radius: 5px;
+                }
+
+            }
+
+        }
+
+        &.right ul {
+            text-align: right;
+        }
+
+        &.center ul {
+            text-align: center;
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    nav {
+
+        &.lite-nav:not(.above-header) {
+            position: relative;
+            min-height: 40px;
+
+            ul {
+                z-index: 10000;
+                width: 180px;
+                padding: 5px 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border: solid 1px #aaa;
+                background: #fff url('/wp-content/plugins/ldd-directory-lite/public/icons/icon-menu.png') no-repeat 10px 14px;
+                border-radius: 5px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+
+                li {
+                    display: none; /* hide all <li> items */
+                    margin: 0;
+
+                    a {
+                        display: block;
+                        padding: 8px 5px 8px 32px;
+                        text-align: left;
+                        color: #888;
+                    }
+
+                    a:hover {
+                        border-bottom: 0;
+                        background: $white;
+                        border-radius: 0;
+                    }
+
+                    &.current {
+                        display: block; /* show only current <li> item */
+                        a {
+                            background: none;
+                            color: #666;
+                        }
+                    }
+
+                }
+
+            }
+            /* on nav hover */
+            ul:hover {
+                background-image: none;
+                li {
+                    display: block;
+                    margin: 0 0 5px;
+                    &.current {
+                        background: url('/wp-content/plugins/ldd-directory-lite/public/icons/icon-check.png') no-repeat 10px 7px;
+                    }
+                    a:hover {
+                        color: $primary-dark;
+                    }
+                }
+            }
+
+            /* right nav */
+            &.right ul {
+                left: auto;
+                right: 0;
+            }
+
+            /* center nav */
+            &.center ul {
+                left: 50%;
+                margin-left: -90px;
+            }
+
+        }
+
+    }
+
+}
+
+
+/** LISTINGS LOOP **/
+
+#map_wrapper {
+    display: block;
+    margin-bottom: 1.5em;
+    height: 260px;
+}
+
+#map_canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+
+.directory-content {
+    background: #fff;
+    border: 1px solid rgba( $primary-dark, 0.5 );
+    padding: .5em;
+    border-radius: 3px;
+}
+
+.type-listing {
+    padding: .5em 0;
+    margin-bottom: .5em;
+    background: #fff;
+    border: 1px solid rgba( $primary-dark, 0.12 );
+    border-radius: 2px;
+    padding:  1em;
+
+    &.even {
+        background: rgba( $white, 0.5 );
+    }
+    .post-thumbnail {
+        position: relative;
+        width: 100%;
+        /* margin: 4px 4%; */
+        display: inline-block;
+        vertical-align: top;
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 3px;
+        }
+    }
+
+    .entry-header {
+        width: 100%;
+        padding: 0;
+
+        .entry-title {
+            font-size: 2em;
+            font-weight: normal;
+            line-height: 100%;
+            margin: 0 0 5px;
+            a {
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: none;
+            }
+
+        }
+
+        .entry-meta p {
+            font-size: 90%;
+            line-height: 130%;
+            color: #777;
+            margin: 0 0 8px;
+            a {
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 110%;
+            }
+            a:hover {
+                text-decoration: none;
+            }
+        }
+
+    }
+
+    .entry-summary {
+        width: 100%;
+        clear: both;
+        border-top: 1px solid rgba( $primary-dark, 0.12 );
+        margin-top: 1em;
+        padding-top: 1em;
+    }
+}
+
+
+@media screen and (min-width: 600px) {
+
+    .type-listing {
+
+        .post-thumbnail {
+            float: right;
+            position: relative;
+            width: 15%;
+
+        }
+
+        .entry-header {
+            width: 66%;
+            float: left;
+        }
+    }
+}
+/**
+LINK STYLES
+**/
+
+a, a:visited {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover, &:focus {
+        color: $link-hover;
+        text-decoration: none;
+    }
+
+    &:active {
+    }
+
+    &:link {
+        -webkit-tap-highlight-color : rgba( 0, 0, 0, 0.3 );
+    }
+}
+
