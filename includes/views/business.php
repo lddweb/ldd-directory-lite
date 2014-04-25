@@ -23,6 +23,7 @@ mdd( $listing );
         $logo = '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />';
     }
 
+
     $template_vars = array(
         'search'        => lddlite_get_search_form(),
         'base_url'      => $permalink,

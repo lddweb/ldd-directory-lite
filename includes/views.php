@@ -1,8 +1,7 @@
 <?php
 
 add_filter( 'term_link', 'lddlite_category_links' );
-function lddlite_category_links( $termlink )
-{
+function lddlite_category_links( $termlink ) {
     global $post;
 
     $link = explode( '?', $termlink);

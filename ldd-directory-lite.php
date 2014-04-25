@@ -85,6 +85,7 @@ final class _LDD_Directory_Lite {
     }
 
 
+
     public function include_files() {
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
@@ -95,6 +96,7 @@ final class _LDD_Directory_Lite {
         if ( is_admin() )
             require_once( LDDLITE_PATH . '/includes/admin.php' );
     }
+
 
 
     public function populate_options() {
@@ -131,7 +133,9 @@ final class _LDD_Directory_Lite {
         { // These all relate to our custom post types and dashboard UI
             add_action( 'init', 'lddlite_register__cpt_tax' );
 
+
             add_filter( 'post_type_link', 'lddlite_filter_post_type_link', 10, 2 );
+
             add_filter( 'enter_title_here', 'lddlite_filter_enter_title_here' );
             add_filter( 'admin_post_thumbnail_html', 'lddlite_filter_admin_post_thumbnail_html' );
 
@@ -214,6 +218,7 @@ function lddslug() {
     return $slug;
 }
 
+
 /**
  * * @ignore
  */
@@ -263,3 +268,4 @@ function lddlite_update_meta() {
     }
 
 }
+

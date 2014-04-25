@@ -17,6 +17,7 @@ Thumbs.db
 .settings
 .tmproj
 nbproject
+cmb/
 
 # Folders to ignore
 .svn

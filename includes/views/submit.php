@@ -93,6 +93,109 @@ function lddlite_process_page()
     }
 
 
+    if ( isset( $_SESSION['errors'] ) )
+    {
+        $fields = array_keys( $_SESSION['errors'] );
+        $fields = '"#' . implode( ', #', $fields ) . '"';
+
+        $message = '';
+
+        foreach ( $_SESSION['errors'] as $field => $error )
+        {
+            $message .= ' jQuery( "#' . $field . '" ).after( "<p class=\"error-message\">' . $error . '</p>" ); ';
+        }
+        echo '<script>';
+        echo 'jQuery(document).ready(function(){ ';
+        echo ' jQuery( ' . $fields . ' ).addClass( "bad" ); ';
+        echo ' jQuery( ' . $fields . ' ).focus(function() { jQuery(this).removeClass( "bad" ).next().remove(); });  ';
+        echo $message;
+        echo '}); </script>';
+
+        //unset( $_SESSION['errors'] );
+        //unset( $_SESSION['errors'] );
+    }
+
+}
+
+
+
+function lddlite_process_page()
+{
+    if ( !isset( $_POST['current_page'] ) || !isset( $_POST['ldd'] ) ) {
+        return false;
+    }
+
+    if ( !isset( $_SESSION['ldd'] ) ) {
+        $_SESSION['ldd'] = $_POST['ldd'];
+    } else {
+        $_SESSION['ldd'] = array_merge( $_SESSION['ldd'], $_POST['ldd'] );
+    }
+
+    $current_page   = $_POST['current_page'];
+    $input          = $_POST['ldd'];
+
+    $errors = array();
+
+    if ( '1' == $current_page )
+    {
+
+        foreach ( $input as $key => $value )
+        {
+            if ( empty( $value ) )
+            {
+                $errors[$key] = 'Field is required.';
+            }
+            else
+            {
+                switch ( $key )
+                {
+                    case 'name':
+                    case 'description':
+                    case 'contact':
+                        $input[$key] = esc_html( $value );
+                        break;
+                    case 'email':
+                        if ( !filter_var( $value, FILTER_VALIDATE_EMAIL ) )
+                            $errors[$key] = 'Invalid email address.';
+                        break;
+                }
+            }
+        }
+
+    }
+    else if ( '2' == $current_page )
+    {
+        foreach ( $input as $key => $value )
+        {
+            if ( empty( $value ) )
+            {
+                $errors[$key] = 'Field is required.';
+            }
+            else
+            {
+                switch ( $key )
+                {
+                    case 'street':
+                    case 'city':
+                    case 'state':
+                    case 'zip':
+                        $input[$key] = esc_html( $value );
+                        break;
+
+                }
+            }
+        }
+    }
+
+    $_SESSION['ldd'] = array_merge( $_SESSION['ldd'], $input );
+
+    if ( !empty( $errors ) )
+    {
+        $_SESSION['errors'] = $errors;
+        lddlite_submit_last_page_url( 1 );
+    }
+
+
 }
 
 
@@ -123,6 +226,7 @@ function lddlite_dropdown_subdivision( $subdivision )
     return $output;
 
 }
+
 
 function lddlite_dropdown_country()
 {
@@ -404,6 +508,7 @@ function lddlite_submit_last_page_url( $steps = 2 )
     $url = 'http://' . $url['host'] . $url['path'] . '?' . http_build_query( $query );
 
     header( 'Location: ' . $url );
+
 
 }
 /*
