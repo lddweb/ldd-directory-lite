@@ -4,65 +4,14 @@
  *
  */
 
-function lddlite_display_submit_form()
-{
-    global $wpdb, $post, $tables;
+function lddlite_display_view_submit( $term = false ) {
+	global $post;
 
-    $lddlite = lddlite();
+	$template_vars = array(
+		'url' => get_permalink( $post->ID ),
+	);
 
-    $page = isset( $_GET['segment'] ) ? intval( $_GET['segment'] ) : 1;
-    $next_page = $page + 1;
-
-
-
-    // Initialize our template variables.
-    $template_vars = array(
-        'form_action'   => get_permalink( $post->ID ) . '?submit=true&segment=' . $next_page,
-        'page'          => $page,
-        'back'          => __( 'Back', $lddlite->slug() ),
-        'next'          => __( 'Next', $lddlite->slug() ),
-        'submit'        => __( 'Submit Listing', $lddlite->slug() )
-    );
-
-    if ( 1 == $page ) {
-        $template_vars['country_dropdown'] = lddlite_dropdown_country();
-    } else if ( 2 == intval( $page ) ) {
-        $template_vars['subdivision_dropdown'] = lddlite_dropdown_subdivision( $_SESSION['ldd']['country'] );
-    }
-
-    md( $template_vars );
-
-    if ( isset( $_SESSION['ldd'] ) ) {
-        $template_vars = array_merge( $template_vars, $_SESSION['ldd'] );
-    }
-
-
-    echo lddlite_parse_template( 'submit/' . $page, $template_vars );
-
-
-
-    if ( isset( $_SESSION['errors'] ) )
-    {
-        $fields = array_keys( $_SESSION['errors'] );
-        $fields = '"#' . implode( ', #', $fields ) . '"';
-
-        $message = '';
-
-        foreach ( $_SESSION['errors'] as $field => $error )
-        {
-            $message .= ' jQuery( "#' . $field . '" ).after( "<p class=\"error-message\">' . $error . '</p>" ); ';
-        }
-        echo '<script>';
-        echo 'jQuery(document).ready(function(){ ';
-        echo ' jQuery( ' . $fields . ' ).addClass( "bad" ); ';
-        echo ' jQuery( ' . $fields . ' ).focus(function() { jQuery(this).removeClass( "bad" ).next().remove(); });  ';
-        echo $message;
-        echo '}); </script>';
-
-        //unset( $_SESSION['errors'] );
-        //unset( $_SESSION['errors'] );
-    }
-
+	return lddlite_parse_template( 'display/submit', $template_vars );
 }
 
 

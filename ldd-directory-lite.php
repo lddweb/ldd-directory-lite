@@ -47,8 +47,7 @@ define( 'LDDLITE_TPL_EXT',      'tpl' );
 
 
 
-final class _LDD_Directory_Lite
-{
+final class _LDD_Directory_Lite {
 
     /**
      * @var $_instance An instance of ones own instance
@@ -71,11 +70,9 @@ final class _LDD_Directory_Lite
     public $directory_home_ID;
 
 
-    public static function get_in()
-    {
+    public static function get_in() {
 
-        if ( !isset( self::$_instance ) && !( self::$_instance instanceof _LDD_Business_Directory ) )
-        {
+        if ( !isset( self::$_instance ) && !( self::$_instance instanceof _LDD_Business_Directory ) ) {
             self::$_instance = new self;
             self::$_instance->include_files();
             self::$_instance->populate_options();
@@ -88,8 +85,7 @@ final class _LDD_Directory_Lite
     }
 
 
-    public function include_files()
-    {
+    public function include_files() {
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
         require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
@@ -101,8 +97,7 @@ final class _LDD_Directory_Lite
     }
 
 
-    public function populate_options()
-    {
+    public function populate_options() {
 
         $defaults = apply_filters( 'lddlite_default_options', array(
          // 'version'           => LDDLITE_VERSION,
@@ -116,17 +111,15 @@ final class _LDD_Directory_Lite
             get_option( 'lddlite-options' ),
             $defaults );
 
-        if ( !isset( $options['version'] ) || version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
+        if ( !isset( $options['version'] ) || version_compare( LDDLITE_VERSION, $options['version'], '>' ) )
             require_once( LDDLITE_PATH . '/upgrade.php' );
-        }
 
         $this->options = $options;
 
     }
 
 
-    public function action_filters()
-    {
+    public function action_filters() {
 
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
@@ -153,8 +146,7 @@ final class _LDD_Directory_Lite
     }
 
 
-        public function load_plugin_textdomain()
-        {
+        public function load_plugin_textdomain() {
 
             $lang_dir = LDDLITE_PATH . '/languages/';
             $lang_dir = apply_filters( 'lddlite_languages_directory', $lang_dir );
@@ -170,8 +162,7 @@ final class _LDD_Directory_Lite
         }
 
 
-        public function add_action_links( $links )
-        {
+        public function add_action_links( $links ) {
 
             return array_merge(
                 array(
@@ -183,24 +174,21 @@ final class _LDD_Directory_Lite
         }
 
 
-    public function enqueue_scripts()
-    {
+    public function enqueue_scripts() {
         add_action( 'wp_enqueue_scripts', 'lddlite_enqueue_scripts' );
         add_action( 'admin_enqueue_scripts', 'lddlite_enqueue_scripts' );
 
-        function lddlite_enqueue_scripts()
-        {
+        function lddlite_enqueue_scripts() {
             // We want this in the footer so that we can set the
-            wp_enqueue_script( 'dirl-js', LDDLITE_JS_URL . '/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
+            wp_enqueue_script( 'lddlite-js', LDDLITE_JS_URL . '/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
             // @TODO: This should be reduced in scope so that it only enqueues where necessary.
             // @TODO: Right now it's just easier to plug it in.
-            wp_enqueue_style( 'dirl-styles', LDDLITE_CSS . '/styles.css', array(), LDDLITE_VERSION );
+            wp_enqueue_style( 'lddlite-styles', LDDLITE_CSS . '/style.css', array(), LDDLITE_VERSION );
         }
     }
 
 
-    public function slug()
-    {
+    public function slug() {
         return self::$_slug;
     }
 
@@ -208,20 +196,17 @@ final class _LDD_Directory_Lite
 }
 
 
-function lddlite()
-{
+function lddlite() {
     return _LDD_Directory_Lite::get_in();
 }
 
 lddlite();
 
 
-function lddslug()
-{
+function lddslug() {
     static $slug;
 
-    if ( !isset( $slug ) )
-    {
+    if ( !isset( $slug ) ) {
         $lddlite = lddlite();
         $slug = $lddlite->slug;
     }
@@ -229,24 +214,25 @@ function lddslug()
     return $slug;
 }
 
+/**
+ * * @ignore
+ */
+function lddlite_update_meta() {
 
-function lddlite_update_meta()
-{
     $posts = get_posts( array(
         'posts_per_page'    => -1,
         'post_type'         => LDDLITE_POST_TYPE,
     ) );
 
-    foreach ( $posts as $post )
-    {
+    foreach ( $posts as $post ) {
+
         $id = $post->ID;
 
         $address = get_post_meta( $id, '_lddlite_address', 1 );
         $contact = get_post_meta( $id, '_lddlite_contact', 1 );
         $urls = get_post_meta( $id, '_lddlite_urls', 1 );
 
-        if ( !empty( $address ) && is_array( $address ) )
-        {
+        if ( !empty( $address ) && is_array( $address ) ) {
             add_post_meta( $id, '_lddlite_address_one', ( isset( $address['address_one'] ) ? $address['address_one'] : '' ) );
             add_post_meta( $id, '_lddlite_address_two', ( isset( $address['address_two'] ) ? $address['address_two'] : '' ) );
             add_post_meta( $id, '_lddlite_address_country', ( isset( $address['country'] ) ? $address['country'] : '' ) );
@@ -257,8 +243,7 @@ function lddlite_update_meta()
             delete_post_meta( $id, '_lddlite_address' );
         }
 
-        if ( !empty( $contact ) && is_array( $contact ) )
-        {
+        if ( !empty( $contact ) && is_array( $contact ) ) {
             add_post_meta( $id, '_lddlite_contact_primary', ( isset( $contact['primary'] ) ? $contact['primary'] : '' ) );
             add_post_meta( $id, '_lddlite_contact_email', ( isset( $contact['email'] ) ? $contact['email'] : '' ) );
             add_post_meta( $id, '_lddlite_contact_phone', ( isset( $contact['phone'] ) ? $contact['phone'] : '' ) );
@@ -267,9 +252,7 @@ function lddlite_update_meta()
             delete_post_meta( $id, '_lddlite_contact' );
         }
 
-        if ( !empty( $urls ) && is_array( $urls ) )
-        {
-
+        if ( !empty( $urls ) && is_array( $urls ) ) {
             add_post_meta( $id, '_lddlite_urls_website', ( isset( $urls['website'] ) ? $urls['website'] : '' ) );
             add_post_meta( $id, '_lddlite_urls_social_facebook', ( isset( $urls['social']['facebook'] ) ? $urls['social']['facebook'] : '' ) );
             add_post_meta( $id, '_lddlite_urls_social_twitter', ( isset( $urls['social']['twitter'] ) ? $urls['social']['twitter'] : '' ) );

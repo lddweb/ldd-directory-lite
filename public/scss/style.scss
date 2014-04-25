@@ -1,0 +1,39 @@
+
+$primary-light:     #3778bb;
+$primary-mid:       #2f67a1;
+$primary-dark:      #20456c;
+
+$text-color:        $primary-dark;
+$link-color:        $primary-light;
+$link-hover:        darken( $link-color, 15% );
+
+$alert-yellow:      #ebe16f;
+$alert-red:         #fbe3e4;
+$alert-green:       #e6efc2;
+$alert-blue:        #d5edf8;
+
+$black:             #000;
+$white:             #fff;
+$gray:              #888;
+$disabled-gray:     #888;
+
+
+@import "partials/typography";
+@import "partials/functions";
+@import "partials/mixins";
+
+
+.business-directory {
+    position: relative;
+    width: 100%;
+    margin: 0;
+
+    @import "modules/alerts";
+    @import "modules/buttons";
+    @import "modules/forms";
+
+    @import "breakpoints/base";
+
+}
+
+
