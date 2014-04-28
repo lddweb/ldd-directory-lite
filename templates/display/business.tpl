@@ -52,9 +52,7 @@
     }
 
 
-    .listing-social img {
-        margin: .2em;
-    }
+
 
     .listing-description {
         clear: both;
@@ -69,7 +67,6 @@
         background: #fff;
         border: 1px solid rgba(32, 69, 108, 0.12);
         border-radius: 2px;
-        padding: 1em;
         text-align: center;
     }
 
@@ -87,6 +84,18 @@
         text-align: center;
         font-size: 3em;
     }
+    .listing-social a {
+        margin: 0 2px;
+        padding: 3px;
+        display: inline-block;
+        width: 48px;
+        height: 48px;
+    }
+    .listing-social a:hover {
+        background: #eee;
+        border-radius: 3px;
+    }
+    .listing-social img
 </style>
 
 
@@ -117,7 +126,7 @@
             <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/twitter.png" width="48" height="48" alt="" /></a>
         </div>
 
-        <article id="listing-1" class="listing-1 listing type-listing status-approved featured cf">
+        <article id="listing-1" class="listing-1 listing type-listing full-listing status-approved featured cf">
 
             <div class="location-wrapper pure-g-r">
 
@@ -126,32 +135,24 @@
                 </div>
                 <div class="pure-u-1-24"></div>
 
-                <div class="entry-meta pure-u-7-24">
+                <div class="entry-meta pure-u-7-24" style="font-size: .75em;">
                     <p class="website"><a href="">lddconsulting.com</a></p>
                     <p class="phone" style="font-size: 100%; display: none;">(505) 455-8749</p>
                     <p class="address" style="font-size: 100%;">2420 Midtown Pl NE,<br>Albuquerque, NM 87107</p>
-                    <p class="rating">Placeho
+                    <div class="ratings-stars">
+                        <img src="/wp-content/plugins/ldd-directory-lite/public/icons/stars.png">
+                        <p class="rating"><a href="">write a review</a> | <a href="">read reviews (3)</a></p>
+                    </div>
                 </div><!-- .entry-meta -->
 
             </div>
 
-            <div class="listing-content">
-
-                <div class="listing-meta">
-                    <p class="website">{{website}}</p>
-
-                    <p class="phone">(505) 455-8749</p>
-                    <p class="address">2420 Midtown Pl NE,<br />Albuquerque, NM 87107</p>
-                </div>
-
+            <div class="listing-description">
+                <p>Cutting me a green measuring-rod, I once more dived within the skeleton. From their arrow-slit in the skull, the priests perceived me taking the altitude of the final rib, "How now!" they shouted; "Dar'st thou measure this our god! That's for us." "Aye, priests&mdash;well, how long do ye make him, then?" But hereupon a fierce contest rose among them, concerning feet and inches; they cracked each other's sconces with their yard-sticks&mdash;the great skull echoed&mdash;and seizing that lucky chance, I quickly concluded my own admeasurements.</p>
+                <p>These admeasurements I now propose to set before you. But first, be it recorded, that, in this matter, I am not free to utter any fancied measurement I please. Because there are skeleton authorities you can refer to, to test my accuracy. There is a Leviathanic Museum, they tell me, in Hull, England, one of the whaling ports of that country, where they have some fine specimens of fin-backs and other whales. Likewise, I have heard that in the museum of Manchester, in New Hampshire, they have what the proprietors call "the only perfect specimen of a Greenland or River Whale in the United States." Moreover, at a place in Yorkshire, England, Burton Constable by name, a certain Sir Clifford Constable has in his possession the skeleton of a Sperm Whale, but of moderate size, by no means of the full-grown magnitude of my friend King Tranquo's.</p>
             </div>
 
-
-        <div class="listing-description">
-            <p>Secondly: The ship Union, also of Nantucket, was in the year 1807 totally lost off the Azores by a similar onset, but the authentic particulars of this catastrophe I have never chanced to encounter...</p>
-        </div>
-
-
+        </article>
 
     </section>
 
