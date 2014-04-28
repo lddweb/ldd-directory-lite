@@ -11,13 +11,14 @@
     overflow: hidden;
 
     input[type="text"] {
-        width: 90%;
-        padding: 6px 12px;
-        font-size: 2em;
-        color: $gray;
-        border-width: 0;
-        background: transparent;
-        outline: none;
+      width: 90%;
+      height: auto;
+      padding: 10px 12px;
+      font-size: 2em;
+      color: $gray;
+      border-width: 0;
+      background: transparent;
+      outline: none;
     }
 
     button {

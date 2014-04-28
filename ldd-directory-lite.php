@@ -190,7 +190,7 @@ final class _LDD_Directory_Lite {
     public function _enqueue_scripts() {
         if ( isset( $_GET['show'] ) && 'submit' == $_GET['show'] ) {
             wp_enqueue_script( 'lddlite-submit-form-js', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54' );
-            wp_enqueue_script( 'jquery-form-js', LDDLITE_URL . '/public/js/jquery.form.min.js', array( 'jquery' ), '20140218', 1 );
+            //wp_enqueue_script( 'jquery-form-js', LDDLITE_URL . '/public/js/jquery.form.min.js', array( 'jquery' ), '20140218', 1 );
         }
     }
 

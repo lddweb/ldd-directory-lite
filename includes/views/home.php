@@ -17,7 +17,7 @@ function lddlite_display_view_home( $term = false )
     ) );
 
     $template_vars = array(
-        'url'           => get_permalink( $post->ID ),
+        'base_url'      => get_permalink( $post->ID ),
         'categories'    => $categories,
         'allcats'       => lddlite_get_all_categories(),
     );

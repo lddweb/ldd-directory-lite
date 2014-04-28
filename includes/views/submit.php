@@ -3,13 +3,81 @@
 /**
  *
  */
+if ( isset( $_POST['__T__action'] ) ) {
+    ld_validate_submit_form( $_POST );
+}
+
+function ld_validate_submit_form( $form ) {
+
+    $description = $form['ld_s_description'];
+    unset( $form['ld_s_description'] );
+
+    $email = sanitize_email( $form['ld_s_email'] );
+    unset( $form['ld_s_email'] );
+
+    foreach ( $form as $key => $value ) {
+
+        if ( false !== strpos( $key, 'ld_s_' ) ) {
+            $var = substr( $key, 5 );
+            $$var = sanitize_text_field( $value );
+        }
+
+    }
+
+    $user = ld_submit_create_user( $username, $email );
+
+}
+
+
+function ld_submit_create_user( $username, $email ) {
+
+    $errors = new WP_Error;
+
+    if ( $username != sanitize_user( $username, true ) )
+        $errors->add( 'username_invalid', ld_submit_get_error_message( 'username_invalid' ) );
+
+    if ( username_exists( $username ) )
+        $errors->add( 'username_exists', ld_submit_get_error_message( 'username_exists' ) );
+
+    if ( email_exists( $email ) )
+        $errors->add( 'email_exists', ld_submit_get_error_message( 'email_exists' ) );
+
+    if ( !empty( $errors->get_error_codes() ) )
+        return $errors;
+
+    $user_data = array(
+        'user_login' => $username,
+        'user_email' => $email,
+    );
+
+    // wp_insert_user( $user_data );
+
+    return true;
+}
+
+
+function ld_submit_get_error_message( $error_slug ) {
+
+    $error_messages = array(
+        'username_invalid'  => __( 'That is not a valid username', lddslug() ),
+        'username_exists'   => __( 'That username already exists', lddslug() ),
+    );
+
+    if ( array_key_exists( $error_slug, $error_messages ) )
+        return $error_messages[ $error_slug ];
+
+    return false;
+}
 
 
 function lddlite_display_view_submit( $term = false ) {
 	global $post;
 
+	md( $_POST );
 	$template_vars = array(
-		'url' => get_permalink( $post->ID ),
+		'base_url'          => get_permalink( $post->ID ),
+		'action'            => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+		'nonce'             => wp_create_nonce( 'submit-listing-nonce' ),
         'country_dropdown'  => lddlite_dropdown_country(),
 	);
 
@@ -23,7 +91,7 @@ function lddlite_dropdown_subdivision( $subdivision )
     $parse = LDDLITE_PATH . '/includes/views/select/subdivision.' . $subdivision . '.inc';
 
     if ( !file_exists( $parse ) )
-        return  '<input id="subdivision" type="text" name="ldd[subdivision]" value="{{subdivision}}" />';
+        return  '<input id="subdivision" name="ld_s_subdivision" type="text" required>';
 
     $file = file( $parse );
 
@@ -49,256 +117,22 @@ function lddlite_dropdown_subdivision( $subdivision )
 function lddlite_dropdown_country()
 {
 
-    $_countries = array(
-        "US" => "United States",
-        "CA" => "Canada",
-        "GB" => "United Kingdom",
-        "AF" => "Afghanistan",
-        "AL" => "Albania",
-        "DZ" => "Algeria",
-        "AS" => "American Samoa",
-        "AD" => "Andorra",
-        "AO" => "Angola",
-        "AI" => "Anguilla",
-        "AQ" => "Antarctica",
-        "AG" => "Antigua And Barbuda",
-        "AR" => "Argentina",
-        "AM" => "Armenia",
-        "AW" => "Aruba",
-        "AU" => "Australia",
-        "AT" => "Austria",
-        "AZ" => "Azerbaijan",
-        "BS" => "Bahamas",
-        "BH" => "Bahrain",
-        "BD" => "Bangladesh",
-        "BB" => "Barbados",
-        "BY" => "Belarus",
-        "BE" => "Belgium",
-        "BZ" => "Belize",
-        "BJ" => "Benin",
-        "BM" => "Bermuda",
-        "BT" => "Bhutan",
-        "BO" => "Bolivia",
-        "BA" => "Bosnia And Herzegowina",
-        "BW" => "Botswana",
-        "BV" => "Bouvet Island",
-        "BR" => "Brazil",
-        "IO" => "British Indian Ocean Territory",
-        "BN" => "Brunei Darussalam",
-        "BG" => "Bulgaria",
-        "BF" => "Burkina Faso",
-        "BI" => "Burundi",
-        "KH" => "Cambodia",
-        "CM" => "Cameroon",
-        "CV" => "Cape Verde",
-        "KY" => "Cayman Islands",
-        "CF" => "Central African Republic",
-        "TD" => "Chad",
-        "CL" => "Chile",
-        "CN" => "China",
-        "CX" => "Christmas Island",
-        "CC" => "Cocos (Keeling) Islands",
-        "CO" => "Colombia",
-        "KM" => "Comoros",
-        "CG" => "Congo",
-        "CD" => "Congo, The Democratic Republic Of The",
-        "CK" => "Cook Islands",
-        "CR" => "Costa Rica",
-        "CI" => "Cote D'Ivoire",
-        "HR" => "Croatia (Local Name: Hrvatska)",
-        "CU" => "Cuba",
-        "CY" => "Cyprus",
-        "CZ" => "Czech Republic",
-        "DK" => "Denmark",
-        "DJ" => "Djibouti",
-        "DM" => "Dominica",
-        "DO" => "Dominican Republic",
-        "TP" => "East Timor",
-        "EC" => "Ecuador",
-        "EG" => "Egypt",
-        "SV" => "El Salvador",
-        "GQ" => "Equatorial Guinea",
-        "ER" => "Eritrea",
-        "EE" => "Estonia",
-        "ET" => "Ethiopia",
-        "FK" => "Falkland Islands (Malvinas)",
-        "FO" => "Faroe Islands",
-        "FJ" => "Fiji",
-        "FI" => "Finland",
-        "FR" => "France",
-        "FX" => "France, Metropolitan",
-        "GF" => "French Guiana",
-        "PF" => "French Polynesia",
-        "TF" => "French Southern Territories",
-        "GA" => "Gabon",
-        "GM" => "Gambia",
-        "GE" => "Georgia",
-        "DE" => "Germany",
-        "GH" => "Ghana",
-        "GI" => "Gibraltar",
-        "GR" => "Greece",
-        "GL" => "Greenland",
-        "GD" => "Grenada",
-        "GP" => "Guadeloupe",
-        "GU" => "Guam",
-        "GT" => "Guatemala",
-        "GN" => "Guinea",
-        "GW" => "Guinea-Bissau",
-        "GY" => "Guyana",
-        "HT" => "Haiti",
-        "HM" => "Heard And Mc Donald Islands",
-        "VA" => "Holy See (Vatican City State)",
-        "HN" => "Honduras",
-        "HK" => "Hong Kong",
-        "HU" => "Hungary",
-        "IS" => "Iceland",
-        "IN" => "India",
-        "ID" => "Indonesia",
-        "IR" => "Iran (Islamic Republic Of)",
-        "IQ" => "Iraq",
-        "IE" => "Ireland",
-        "IL" => "Israel",
-        "IT" => "Italy",
-        "JM" => "Jamaica",
-        "JP" => "Japan",
-        "JO" => "Jordan",
-        "KZ" => "Kazakhstan",
-        "KE" => "Kenya",
-        "KI" => "Kiribati",
-        "KP" => "Korea, Democratic People's Republic Of",
-        "KR" => "Korea, Republic Of",
-        "KW" => "Kuwait",
-        "KG" => "Kyrgyzstan",
-        "LA" => "Lao People's Democratic Republic",
-        "LV" => "Latvia",
-        "LB" => "Lebanon",
-        "LS" => "Lesotho",
-        "LR" => "Liberia",
-        "LY" => "Libyan Arab Jamahiriya",
-        "LI" => "Liechtenstein",
-        "LT" => "Lithuania",
-        "LU" => "Luxembourg",
-        "MO" => "Macau",
-        "MK" => "Macedonia, Former Yugoslav Republic Of",
-        "MG" => "Madagascar",
-        "MW" => "Malawi",
-        "MY" => "Malaysia",
-        "MV" => "Maldives",
-        "ML" => "Mali",
-        "MT" => "Malta",
-        "MH" => "Marshall Islands",
-        "MQ" => "Martinique",
-        "MR" => "Mauritania",
-        "MU" => "Mauritius",
-        "YT" => "Mayotte",
-        "MX" => "Mexico",
-        "FM" => "Micronesia, Federated States Of",
-        "MD" => "Moldova, Republic Of",
-        "MC" => "Monaco",
-        "MN" => "Mongolia",
-        "MS" => "Montserrat",
-        "MA" => "Morocco",
-        "MZ" => "Mozambique",
-        "MM" => "Myanmar",
-        "NA" => "Namibia",
-        "NR" => "Nauru",
-        "NP" => "Nepal",
-        "NL" => "Netherlands",
-        "AN" => "Netherlands Antilles",
-        "NC" => "New Caledonia",
-        "NZ" => "New Zealand",
-        "NI" => "Nicaragua",
-        "NE" => "Niger",
-        "NG" => "Nigeria",
-        "NU" => "Niue",
-        "NF" => "Norfolk Island",
-        "MP" => "Northern Mariana Islands",
-        "NO" => "Norway",
-        "OM" => "Oman",
-        "PK" => "Pakistan",
-        "PW" => "Palau",
-        "PA" => "Panama",
-        "PG" => "Papua New Guinea",
-        "PY" => "Paraguay",
-        "PE" => "Peru",
-        "PH" => "Philippines",
-        "PN" => "Pitcairn",
-        "PL" => "Poland",
-        "PT" => "Portugal",
-        "PR" => "Puerto Rico",
-        "QA" => "Qatar",
-        "RE" => "Reunion",
-        "RO" => "Romania",
-        "RU" => "Russian Federation",
-        "RW" => "Rwanda",
-        "KN" => "Saint Kitts And Nevis",
-        "LC" => "Saint Lucia",
-        "VC" => "Saint Vincent And The Grenadines",
-        "WS" => "Samoa",
-        "SM" => "San Marino",
-        "ST" => "Sao Tome And Principe",
-        "SA" => "Saudi Arabia",
-        "SN" => "Senegal",
-        "SC" => "Seychelles",
-        "SL" => "Sierra Leone",
-        "SG" => "Singapore",
-        "SK" => "Slovakia (Slovak Republic)",
-        "SI" => "Slovenia",
-        "SB" => "Solomon Islands",
-        "SO" => "Somalia",
-        "ZA" => "South Africa",
-        "GS" => "South Georgia, South Sandwich Islands",
-        "ES" => "Spain",
-        "LK" => "Sri Lanka",
-        "SH" => "St. Helena",
-        "PM" => "St. Pierre And Miquelon",
-        "SD" => "Sudan",
-        "SR" => "Suriname",
-        "SJ" => "Svalbard And Jan Mayen Islands",
-        "SZ" => "Swaziland",
-        "SE" => "Sweden",
-        "CH" => "Switzerland",
-        "SY" => "Syrian Arab Republic",
-        "TW" => "Taiwan",
-        "TJ" => "Tajikistan",
-        "TZ" => "Tanzania, United Republic Of",
-        "TH" => "Thailand",
-        "TG" => "Togo",
-        "TK" => "Tokelau",
-        "TO" => "Tonga",
-        "TT" => "Trinidad And Tobago",
-        "TN" => "Tunisia",
-        "TR" => "Turkey",
-        "TM" => "Turkmenistan",
-        "TC" => "Turks And Caicos Islands",
-        "TV" => "Tuvalu",
-        "UG" => "Uganda",
-        "UA" => "Ukraine",
-        "AE" => "United Arab Emirates",
-        "UM" => "United States Minor Outlying Islands",
-        "UY" => "Uruguay",
-        "UZ" => "Uzbekistan",
-        "VU" => "Vanuatu",
-        "VE" => "Venezuela",
-        "VN" => "Viet Nam",
-        "VG" => "Virgin Islands (British)",
-        "VI" => "Virgin Islands (U.S.)",
-        "WF" => "Wallis And Futuna Islands",
-        "EH" => "Western Sahara",
-        "YE" => "Yemen",
-        "YU" => "Yugoslavia",
-        "ZM" => "Zambia",
-        "ZW" => "Zimbabwe"
-    );
+    $countries_inc = LDDLITE_PATH . '/includes/views/select/countries.inc';
 
-    $output = '<select id="country" name="country" tabindex="7" required>';
+    if ( !file_exists( $countries_inc ) )
+        return  '<input id="country" name="ld_s_country" type="text" tabindex="7" required>';
 
-    foreach ( $_countries as $key => $value ) {
-        $output .= '<option value="' . $key . '"';
-        if ( isset( $_SESSION['ldd-country'] ) && $key == $_SESSION['ldd-country'] ) {
+    $_countries = file( $countries_inc );
+
+    $output = '<select id="country" name="ld_s_country" tabindex="7" required>';
+
+    foreach ( $_countries as $line ) {
+        $field = explode( ',', $line );
+        $output .= '<option value="' . $field[0] . '"';
+        if ( isset( $_SESSION['ldd-country'] ) && $field[0] == $_SESSION['ldd-country'] ) {
             $output .= ' selected ';
         }
-        $output .= '>' . $value . '</option>';
+        $output .= '>' . $field[1] . '</option>';
     }
 
     $output .= '</select>';
@@ -306,58 +140,3 @@ function lddlite_dropdown_country()
     return $output;
 
 }
-
-
-function lddlite_submit_last_page_url( $steps = 2 )
-{
-    // Get our current location and parse it.
-    $url = parse_url( esc_url( $_SERVER['HTTP_HOST'] ) . $_SERVER['REQUEST_URI'] );
-    parse_str( $url['query'], $query );
-
-    // How many steps do we need to go back?
-    $query['segment'] -= intval( $steps );
-
-    // If we're at page one, just take the query segment off.
-    if ( $query['segment'] == 1 )
-        unset( $query['segment'] );
-
-    // Rebuild and relocate.
-    $url = 'http://' . $url['host'] . $url['path'] . '?' . http_build_query( $query );
-
-    header( 'Location: ' . $url );
-
-
-}
-/*
-         { // Builds the category list for the submission form.
-            $categories_list = $wpdb->get_results(
-                "
-			SELECT *
-			FROM {$tables['cat']}
-			"
-            );
-
-            $business_categories = "<div class='lddbd_input_holder'>";
-            $business_categories .= "<label for='categories_multiselect'>Categories</label>";
-            $business_categories .= "<select id='lddbd_categories_multiselect' name='categories_multiselect' multiple='multiple'>";
-
-            foreach($categories_list as $category){
-                $cat_name = stripslashes($category->name);
-                $business_categories .= "<option value='x{$category->id}x'>{$cat_name}</option>";
-            }
-
-            $business_categories .= "</select>";
-            $business_categories .= "<input id='lddbd_categories' type='hidden' name='categories'/>";
-            $business_categories .= "</div>";
-
-        }
-
-        $template_vars = array(
-            'form_action'           => LDDLITE_AJAX,
-            'country_select'        => '<option value="USA">United States of America</option>',
-            'display_categories'    => $business_categories,
-        );
-
-        echo lddlite_parse_template( 'display/submit', $template_vars );
-
- */

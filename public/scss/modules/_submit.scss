@@ -57,7 +57,7 @@
 }
 
 
-#navigation {
+#submit-items {
   ul {
     margin: 0;
     width: 100%;
@@ -100,8 +100,8 @@
 }
 
 
-@media screen and (min-width: 600px) {
-  #navigation {
+@media screen and (min-width: 480px) {
+  #submit-items {
     ul {
       > li {
         display: table-cell;
@@ -151,10 +151,10 @@
   textarea,
   select {
     width: 100%;
+      line-height: inherit;
     border: 2px solid #ddd;
     background: #fff;
     margin: 0 0 5px;
-    padding: 10px;
     border-radius: 3px;
     -webkit-transition:border-color 0.3s ease-in-out;
     -moz-transition:border-color 0.3s ease-in-out;
@@ -168,6 +168,15 @@
       outline: 0;
       border: 2px solid #999;
     }
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  input[type="file"],
+  textarea {
+    padding: 10px;
   }
 
   textarea {

@@ -17,12 +17,11 @@
 
 
 
-    <form id="submit-listing" name="submit-listing" action="" method="post">
-        <input type="hidden" name="action" value="submit_form" />
-        <input type="hidden" name="nonce" value="{{nonce}}" />
-        <input type="hidden" name="business_id" value="{{id}}" />
+    <form id="submit-listing" name="submit-listing" action="{{action}}" method="post">
+        <input type="hidden" name="__T__action" value="submit_form" />
+        <input type="hidden" name="__T__nonce" value="{{nonce}}" />
 
-        <div id="navigation"></div>
+        <div id="submit-items"></div>
 
         <div class="submit-form-wrap">
             <ul id="submit-panels">
@@ -32,11 +31,14 @@
                         <div class="panel">
                             <label for="name">
                                 <span>Name:</span>
-                                <input id="name" name="name" placeholder="Please enter your full name" type="text" tabindex="1" required autofocus>
+                                <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" value="Mark's Hot Taco's" tabindex="1" required autofocus>
                             </label>
                             <label for="description">
                                 <span>Description:</span>
-                                <textarea id="description" name="description" placeholder="Enter a description for your business" tabindex="2" required></textarea>
+                                <textarea id="description" name="ld_s_description" placeholder="Enter a description for your business" tabindex="2" required>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+
+ Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit.
+                                </textarea>
                             </label>
                         </div>
                     </fieldset>
@@ -45,13 +47,14 @@
                             <div class="pure-u-11-24">
                                 <label for="username">
                                     <span>Username:</span>
-                                    <input id="username" placeholder="Choose a username" type="text" tabindex="3" required>
+                                    <input id="username" name="ld_s_username"
+                                           placeholder="Choose a username" type="text" tabindex="3" value="hot-taco" required>
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
                                 <label for="email">
                                     <span>Email:</span>
-                                    <input id="email" name="email" placeholder="Please enter your email address" type="email" tabindex="4" required>
+                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" tabindex="4" value="mark@watero.us" required>
                                 </label>
                             </div>
                         </div>
@@ -61,13 +64,13 @@
                             <div class="pure-u-11-24">
                                 <label for="phone">
                                     <span>Contact Phone</span>
-                                    <input id="phone" name="phone" type="text" tabindex="12">
+                                    <input id="phone" name="ld_s_phone" type="text" tabindex="12" value="505-252-0410">
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
                                 <label for="fax">
                                     <span>Contact Fax</span>
-                                    <input id="fax" name="fax" type="text" tabindex="13">
+                                    <input id="fax" name="ld_s_fax" type="text" tabindex="13">
                                 </label>
                             </div>
                         </div>
@@ -88,19 +91,19 @@
                             <div class="pure-u-24-24">
                                 <label for="street">
                                     <span>Street</span>
-                                    <input id="street" name="street" type="text" tabindex="7" required>
+                                    <input id="street" name="ld_s_street" type="text" tabindex="7" value="450 Michelle Cir" required>
                                 </label>
                             </div>
                             <div class="pure-u-7-24">
                                 <label for="city">
                                     <span>City / Town:</span>
-                                    <input id="city" name="city" type="text" tabindex="8" required>
+                                    <input id="city" name="ld_s_city" type="text" tabindex="8" value="Bernalillo" required>
                                 </label>
                             </div><div class="pure-u-1-24"></div>
                             <div class="pure-u-8-24">
                                 <label for="subdivision">
                                     <span>State:</span>
-                                    <select id="subdivision" name="subdivision" tabindex="9" required>
+                                    <select id="subdivision" name="ld_s_subdivision" tabindex="9" required>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -132,7 +135,7 @@
                                         <option value="NV">Nevada</option>
                                         <option value="NH">New Hampshire</option>
                                         <option value="NJ">New Jersey</option>
-                                        <option value="NM">New Mexico</option>
+                                        <option value="NM" selected>New Mexico</option>
                                         <option value="NY">New York</option>
                                         <option value="NC">North Carolina</option>
                                         <option value="ND">North Dakota</option>
@@ -158,7 +161,7 @@
                             <div class="pure-u-7-24">
                                 <label for="zip">
                                     <span>Zip/Postal:</span>
-                                    <input id="zip" name="zip" type="text" tabindex="10" required>
+                                    <input id="zip" name="ld_s_zip" type="text" tabindex="10" value="87004" required>
                                 </label>
                             </div>
                         </div>
@@ -171,19 +174,19 @@
                         <div class="panel">
                             <label for="url">
                                 <span>Website</span>
-                                <input id="url" name="url" type="text" tabindex="14">
+                                <input id="url" name="ld_s_url" type="text" tabindex="14">
                             </label>
                             <label for="facebook">
                                 <span>Facebook Page</span>
-                                <input id="facebook" name="facebook" type="text" tabindex="15">
+                                <input id="facebook" name="ld_s_facebook" type="text" tabindex="15">
                             </label>
                             <label for="twitter">
                                 <span>Twitter Handle</span>
-                                <input id="twitter" name="twitter" type="text" tabindex="16">
+                                <input id="twitter" name="ld_s_twitter" type="text" tabindex="16">
                             </label>
                             <label for="linkedin">
                                 <span>Linked In Profile</span>
-                                <input id="linkedin" name="linkedin" type="text" tabindex="17">
+                                <input id="linkedin" name="ld_s_linkedin" type="text" tabindex="17">
                             </label>
                         </div>
                     </fieldset>
@@ -194,7 +197,7 @@
                         <div class="panel">
                             <label for="logo">
                                 <span>Logo Image</span>
-                                <input id="logo" name="logo" type="file">
+                                <input id="logo" name="ld_s_logo" type="file">
                             </label>
                         </div>
                     </fieldset>
@@ -220,51 +223,6 @@
 
 
 <script>
-    jQuery(document).ready(function() {
-        var options = {
-            target:         '.show-ajax',
-            beforeSubmit:   showRequest,
-            success:        showResponse,
-            //dataType:       'json',
-
-        };
-
-
-        function showRequest(formData, jqForm, options)
-        {
-            jQuery('label.info').fadeOut();
-            jQuery('button.submit').text('Sending...');
-            return true;
-        }
-
-
-        function showResponse(responseText, statusText, xhr, $form)
-        {
-            var $response = JSON && JSON.parse(responseText) || jQuery.parseJSON(responseText);
-
-
-            if ( false == $response.success )
-            {
-                for ( var key in $response.errors )
-                {
-                    var field = jQuery( '#label-' + key );
-                    field.text( $response.errors[key] );
-                    field.addClass( 'error' );
-                    field.fadeIn();
-                }
-                jQuery('button.submit').text('Send');
-                jQuery('button.submit').blur();
-                return false;
-            }
-            else if ( true == $response.success )
-            {
-
-            }
-
-        }
-
-        jQuery('form#submit-listing').ajaxForm(options);
-    });
 
 
 
@@ -274,7 +232,7 @@
             auto:           false,
             pager:          true,
             nav:            true,
-            navContainer:   '#navigation',
+            navContainer:   '#submit-items',
             speed:          300,
             namespace:      'ldd-submit-listing',
         });
@@ -289,7 +247,7 @@
         var next_button = jQuery(".ldd-submit-listing_nav.next");
 
         prev_button.hide();
-        jQuery('.ldd-submit-listing_nav').add('#navigation a').click(function() {
+        jQuery('.ldd-submit-listing_nav').add('#submit-items a').click(function() {
             var the_top = jQuery('section.directory-content').offset().top - 40;
             jQuery('html, body').animate({
                 scrollTop: the_top

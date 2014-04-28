@@ -100,7 +100,8 @@ p {
     overflow: hidden; }
     .business-directory .directory-search input[type="text"] {
       width: 90%;
-      padding: 6px 12px;
+      height: auto;
+      padding: 10px 12px;
       font-size: 2em;
       color: #888888;
       border-width: 0;
@@ -169,7 +170,7 @@ p {
     -webkit-box-sizing: border-box; }
   .business-directory .ldd-submit-listing_nav {
     margin: 0 1px 0 4px; }
-  .business-directory #navigation ul {
+  .business-directory #submit-items ul {
     margin: 0;
     width: 100%;
     list-style: none;
@@ -178,17 +179,17 @@ p {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box; }
-    .business-directory #navigation ul > li {
+    .business-directory #submit-items ul > li {
       margin: 0 0 1px;
       text-align: center;
       position: relative;
       border-left: 1px solid #fff; }
-      .business-directory #navigation ul > li:first-child {
+      .business-directory #submit-items ul > li:first-child {
         border-left: 0; }
-    .business-directory #navigation ul li.ldd-submit-listing_here a {
+    .business-directory #submit-items ul li.ldd-submit-listing_here a {
       background: #dbe1e8;
       color: #666; }
-    .business-directory #navigation ul li a {
+    .business-directory #submit-items ul li a {
       display: block;
       height: 45px;
       background-color: #f1f3f5;
@@ -197,8 +198,8 @@ p {
       font-weight: bold;
       text-decoration: none;
       line-height: 45px; }
-  @media screen and (min-width: 600px) {
-    .business-directory #navigation ul > li {
+  @media screen and (min-width: 480px) {
+    .business-directory #submit-items ul > li {
       display: table-cell;
       margin: 0; } }
   .business-directory #submit-listing fieldset {
@@ -228,10 +229,10 @@ p {
   .business-directory #submit-listing textarea,
   .business-directory #submit-listing select {
     width: 100%;
+    line-height: inherit;
     border: 2px solid #ddd;
     background: #fff;
     margin: 0 0 5px;
-    padding: 10px;
     border-radius: 3px;
     -webkit-transition: border-color 0.3s ease-in-out;
     -moz-transition: border-color 0.3s ease-in-out;
@@ -253,6 +254,13 @@ p {
     .business-directory #submit-listing select:focus {
       outline: 0;
       border: 2px solid #999; }
+  .business-directory #submit-listing input[type="text"],
+  .business-directory #submit-listing input[type="email"],
+  .business-directory #submit-listing input[type="password"],
+  .business-directory #submit-listing input[type="url"],
+  .business-directory #submit-listing input[type="file"],
+  .business-directory #submit-listing textarea {
+    padding: 10px; }
   .business-directory #submit-listing textarea {
     height: 100px;
     max-width: 100%; }
