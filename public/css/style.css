@@ -9,7 +9,6 @@
       font-style: normal;
   }
 */
-/* line 20, ../scss/partials/_typography.scss */
 p {
   -ms-word-break: break-all;
   -ms-word-wrap: break-all;
@@ -25,13 +24,11 @@ p {
   -moz-font-feature-settings: "liga=1, dlig=1";
   -ms-font-feature-settings: "liga", "dlig";
   -o-font-feature-settings: "liga", "dlig";
-  font-feature-settings: "liga", "dlig";
-}
+  font-feature-settings: "liga", "dlig"; }
 
 /* USAGE: @include transition(all 0.2s ease-in-out); */
 /* @include css-gradient(#dfdfdf,#f8f8f8); */
 /* @include box-sizing(border-box); */
-/* line 26, ../scss/style.scss */
 .business-directory {
   position: relative;
   width: 100%;
@@ -40,400 +37,413 @@ p {
   /** HEADER STYLES **/
   /** NAVIGATION STYLES **/
   /** LISTINGS LOOP **/
+  /** Business Display **/
   /**
   LINK STYLES
-  **/
-}
-/* line 1, ../scss/modules/_alerts.scss */
-.business-directory .alert-help, .business-directory .alert-info, .business-directory .alert-error, .business-directory .alert-success {
-  margin: 10px;
-  padding: 5px 18px;
-  border: 1px solid;
-}
-/* line 7, ../scss/modules/_alerts.scss */
-.business-directory .alert-help {
-  border-color: #e8dc59;
-  background: #ebe16f;
-}
-/* line 13, ../scss/modules/_alerts.scss */
-.business-directory .alert-info {
-  border-color: #bfe4f4;
-  background: #d5edf8;
-}
-/* line 19, ../scss/modules/_alerts.scss */
-.business-directory .alert-error {
-  border-color: #f8cdce;
-  background: #fbe3e4;
-}
-/* line 25, ../scss/modules/_alerts.scss */
-.business-directory .alert-success {
-  border-color: #deeaae;
-  background: #e6efc2;
-}
-/* line 1, ../scss/modules/_buttons.scss */
-.business-directory .black-btn {
-  position: relative;
-  vertical-align: top;
-  width: 100%;
-  padding: .4em;
-  font-size: 1.6em;
-  line-height: 1.6em;
-  color: white;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(32, 69, 108, 0.7);
-  background: #3778bb;
-  border: 0;
-  border-bottom: 2px solid #20456c;
-  border-radius: 4px;
-  cursor: pointer;
-  -moz-box-shadow: inset 0 -2px #20456c;
-  -webkit-box-shadow: inset 0 -2px #20456c;
-  box-shadow: inset 0 -2px #20456c;
-  cursor: pointer;
-  text-decoration: none;
-  -webkit-transition: background-color 0.14s ease-in-out;
-  transition: background-color 0.14s ease-in-out;
-}
-/* line 23, ../scss/modules/_buttons.scss */
-.business-directory .black-btn:hover, .business-directory .black-btn:focus {
-  color: white;
-  text-decoration: none;
-}
-/* line 29, ../scss/modules/_buttons.scss */
-.business-directory .black-btn:active {
-  top: 1px;
-}
-/* line 35, ../scss/modules/_buttons.scss */
-.business-directory .black-btn {
-  background-color: black;
-}
-/* line 40, ../scss/modules/_buttons.scss */
-.business-directory .black-btn:hover, .business-directory .black-btn:focus {
-  background-color: black;
-}
-/* line 44, ../scss/modules/_buttons.scss */
-.business-directory .black-btn:active {
-  background-color: black;
-}
-/* line 2, ../scss/modules/_forms.scss */
-.business-directory .directory-search {
-  position: relative;
-  height: 56px;
-  border: 1px solid #2f67a1;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  background-color: white;
-  overflow: hidden;
-}
-/* line 13, ../scss/modules/_forms.scss */
-.business-directory .directory-search input[type="text"] {
-  width: 90%;
-  padding: 16px 0 0 12px;
-  font-size: 2em;
-  color: #888888;
-  border-width: 0;
-  background: transparent;
-  outline: none;
-}
-/* line 23, ../scss/modules/_forms.scss */
-.business-directory .directory-search button {
-  position: absolute;
-  top: 0;
-  right: -1px;
-  margin-top: 0;
-  padding: 0 1em;
-  height: 56px;
-  font-size: 1.4em;
-  color: white;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-align: center;
-  line-height: 56px;
-  background-color: #2f67a1;
-  border: 0;
-  -webkit-border-radius: 0 5px 5px 0;
-  -moz-border-radius: 0 5px 5px 0;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  -webkit-transition: background-color 0.54s ease-in-out;
-  transition: background-color 0.54s ease-in-out;
-}
-/* line 43, ../scss/modules/_forms.scss */
-.business-directory .directory-search button:hover {
-  background-color: white;
-  color: #888888;
-}
-/* line 3, ../scss/breakpoints/_base.scss */
-.business-directory .cf:before, .business-directory .cf:after {
-  content: "";
-  display: table;
-}
-/* line 8, ../scss/breakpoints/_base.scss */
-.business-directory .cf:after {
-  clear: both;
-}
-/* line 12, ../scss/breakpoints/_base.scss */
-.business-directory .cf {
-  zoom: 1;
-}
-/* line 22, ../scss/breakpoints/_base.scss */
-.business-directory header.global-header {
-  margin: 0;
-  padding: 0;
-}
-/* line 26, ../scss/breakpoints/_base.scss */
-.business-directory header.global-header.submit-listing {
-  margin-bottom: 2em;
-}
-/* line 39, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav.above-header {
-  margin: 0;
-}
-/* line 42, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav.above-header ul li {
-  margin: 0;
-}
-/* line 48, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav {
-  margin: 1em 0;
-  padding: 1em 0;
-  background: none;
-}
-/* line 53, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav ul {
-  margin: 0;
-  padding: 0;
-}
-/* line 57, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav ul li {
-  margin: 0 5px 10px 0;
-  padding: 0;
-  list-style: none;
-  display: inline-block;
-  *display: inline;
-  /* ie7 */
-}
-/* line 64, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav ul li a {
-  padding: .5em 1em;
-  text-decoration: none;
-  line-height: 100%;
-}
-/* line 70, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav ul li a:hover {
-  background: #2f67a1;
-  border-bottom: 2px solid #20456c;
-  color: white;
-  border-radius: 5px;
-}
-/* line 77, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav ul li.current a {
-  background: #2f67a1;
-  color: #fff;
-  border-radius: 5px;
-}
-/* line 87, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav.right ul {
-  text-align: right;
-}
-/* line 91, ../scss/breakpoints/_base.scss */
-.business-directory nav.lite-nav.center ul {
-  text-align: center;
-}
-@media screen and (max-width: 600px) {
-  /* line 102, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) {
+  **/ }
+  .business-directory .alert-help, .business-directory .alert-info, .business-directory .alert-error, .business-directory .alert-success {
+    margin: 10px;
+    padding: 5px 18px;
+    border: 1px solid; }
+  .business-directory .alert-help {
+    border-color: #e8dc59;
+    background: #ebe16f; }
+  .business-directory .alert-info {
+    border-color: #bfe4f4;
+    background: #d5edf8; }
+  .business-directory .alert-error {
+    border-color: #f8cdce;
+    background: #fbe3e4; }
+  .business-directory .alert-success {
+    border-color: #deeaae;
+    background: #e6efc2; }
+  .business-directory .black-btn, .business-directory .ldd-submit-listing_nav, .business-directory #submit-listing button[type="submit"] {
     position: relative;
-    min-height: 40px;
-    /* on nav hover */
-    /* right nav */
-    /* center nav */
-  }
-  /* line 106, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul {
-    z-index: 10000;
-    width: 180px;
-    padding: 5px 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: solid 1px #aaa;
-    background: white url("/wp-content/plugins/ldd-directory-lite/public/icons/icon-menu.png") no-repeat 10px 14px;
+    vertical-align: top;
+    padding: .2em 1em;
+    font-size: 1.6em;
+    line-height: 1.6em;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(32, 69, 108, 0.7);
+    background: #3778bb;
+    border: 0;
+    border-bottom: 2px solid #20456c;
+    border-radius: 4px;
+    cursor: pointer;
+    -moz-box-shadow: inset 0 -2px #20456c;
+    -webkit-box-shadow: inset 0 -2px #20456c;
+    box-shadow: inset 0 -2px #20456c;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-transition: background-color 0.14s ease-in-out;
+    transition: background-color 0.14s ease-in-out; }
+    .business-directory .black-btn:hover, .business-directory .ldd-submit-listing_nav:hover, .business-directory #submit-listing button[type="submit"]:hover, .business-directory .black-btn:focus, .business-directory .ldd-submit-listing_nav:focus, .business-directory #submit-listing button[type="submit"]:focus {
+      color: white;
+      text-decoration: none; }
+    .business-directory .black-btn:active, .business-directory .ldd-submit-listing_nav:active, .business-directory #submit-listing button[type="submit"]:active {
+      top: 1px; }
+  .business-directory .black-btn {
+    background-color: black; }
+    .business-directory .black-btn:hover, .business-directory .black-btn:focus {
+      background-color: black; }
+    .business-directory .black-btn:active {
+      background-color: black; }
+  .business-directory .directory-search {
+    position: relative;
+    height: 56px;
+    border: 1px solid #2f67a1;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
     border-radius: 5px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  }
-  /* line 118, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul li {
-    display: none;
-    /* hide all <li> items */
+    background-color: white;
+    overflow: hidden; }
+    .business-directory .directory-search input[type="text"] {
+      width: 90%;
+      padding: 6px 12px;
+      font-size: 2em;
+      color: #888888;
+      border-width: 0;
+      background: transparent;
+      outline: none; }
+    .business-directory .directory-search button {
+      position: absolute;
+      top: 0;
+      right: -1px;
+      margin-top: 0;
+      padding: 0 1em;
+      height: 56px;
+      font-size: 1.4em;
+      color: white;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      text-align: center;
+      line-height: 56px;
+      background-color: #2f67a1;
+      border: 0;
+      -webkit-border-radius: 0 5px 5px 0;
+      -moz-border-radius: 0 5px 5px 0;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      -webkit-transition: background-color 0.54s ease-in-out;
+      transition: background-color 0.54s ease-in-out; }
+      .business-directory .directory-search button:hover {
+        background-color: white;
+        color: #888888; }
+  .business-directory .panel,
+  .business-directory .panels-navigation {
+    width: 90%;
+    max-width: 800px;
+    margin: 1em auto; }
+  .business-directory .panels-navigation {
+    text-align: right; }
+  .business-directory #submit-listing ul {
     margin: 0;
-  }
-  /* line 122, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul li a {
-    display: block;
-    padding: 8px 5px 8px 32px;
-    text-align: left;
-    color: #888;
-  }
-  /* line 129, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul li a:hover {
-    border-bottom: 0;
-    background: white;
-    border-radius: 0;
-  }
-  /* line 135, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul li.current {
-    display: block;
-    /* show only current <li> item */
-  }
-  /* line 137, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul li.current a {
-    background: none;
-    color: #666;
-  }
-  /* line 147, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul:hover {
-    background-image: none;
-  }
-  /* line 149, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul:hover li {
-    display: block;
-    margin: 0 0 5px;
-  }
-  /* line 152, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul:hover li.current {
-    background: url("/wp-content/plugins/ldd-directory-lite/public/icons/icon-check.png") no-repeat 10px 7px;
-  }
-  /* line 155, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header) ul:hover li a:hover {
-    color: #20456c;
-  }
-  /* line 162, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header).right ul {
-    left: auto;
-    right: 0;
-  }
-  /* line 168, ../scss/breakpoints/_base.scss */
-  .business-directory nav.lite-nav:not(.above-header).center ul {
-    left: 50%;
-    margin-left: -90px;
-  }
-}
-/* line 182, ../scss/breakpoints/_base.scss */
-.business-directory #map_wrapper {
-  display: block;
-  margin-bottom: 1.5em;
-  height: 260px;
-}
-/* line 188, ../scss/breakpoints/_base.scss */
-.business-directory #map_canvas {
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-}
-/* line 195, ../scss/breakpoints/_base.scss */
-.business-directory .directory-content {
-  background: #fff;
-  border: 1px solid rgba(32, 69, 108, 0.5);
-  padding: .5em;
-  border-radius: 3px;
-}
-/* line 202, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing {
-  padding: .5em 0;
-  margin-bottom: .5em;
-  background: #fff;
-  border: 1px solid rgba(32, 69, 108, 0.12);
-  border-radius: 2px;
-  padding: 1em;
-}
-/* line 210, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing.even {
-  background: rgba(255, 255, 255, 0.5);
-}
-/* line 213, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .post-thumbnail {
-  position: relative;
-  width: 100%;
-  /* margin: 4px 4%; */
-  display: inline-block;
-  vertical-align: top;
-}
-/* line 219, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .post-thumbnail img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 3px;
-}
-/* line 226, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-header {
-  width: 100%;
-  padding: 0;
-}
-/* line 230, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-header .entry-title {
-  font-size: 2em;
-  font-weight: normal;
-  line-height: 100%;
-  margin: 0 0 5px;
-}
-/* line 235, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-header .entry-title a {
-  text-decoration: none;
-}
-/* line 238, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-header .entry-title a:hover {
-  text-decoration: none;
-}
-/* line 244, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-header .entry-meta p {
-  font-size: 90%;
-  line-height: 130%;
-  color: #777;
-  margin: 0 0 8px;
-}
-/* line 249, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-header .entry-meta p a {
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 110%;
-}
-/* line 254, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-header .entry-meta p a:hover {
-  text-decoration: none;
-}
-/* line 261, ../scss/breakpoints/_base.scss */
-.business-directory .type-listing .entry-summary {
-  width: 100%;
-  clear: both;
-  border-top: 1px solid rgba(32, 69, 108, 0.12);
-  margin-top: 1em;
-  padding-top: 1em;
-}
-@media screen and (min-width: 600px) {
-  /* line 275, ../scss/breakpoints/_base.scss */
-  .business-directory .type-listing .post-thumbnail {
-    float: right;
+    padding: 0; }
+  .business-directory #submit-listing * {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box; }
+  .business-directory .ldd-submit-listing {
     position: relative;
-    width: 15%;
-  }
-  /* line 282, ../scss/breakpoints/_base.scss */
-  .business-directory .type-listing .entry-header {
-    width: 66%;
-    float: left;
-  }
-}
-/* line 292, ../scss/breakpoints/_base.scss */
-.business-directory a, .business-directory a:visited {
-  color: #3778bb;
-  text-decoration: none;
-}
-/* line 296, ../scss/breakpoints/_base.scss */
-.business-directory a:hover, .business-directory a:focus, .business-directory a:visited:hover, .business-directory a:visited:focus {
-  color: #265280;
-  text-decoration: none;
-}
-/* line 304, ../scss/breakpoints/_base.scss */
-.business-directory a:link, .business-directory a:visited:link {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
-}
+    list-style: none;
+    overflow: hidden;
+    width: 100%;
+    padding: 0;
+    margin: 0 auto 40px; }
+  .business-directory .ldd-submit-listing li {
+    -webkit-backface-visibility: hidden;
+    position: absolute;
+    display: none;
+    width: 100%;
+    left: 0;
+    top: 0; }
+  .business-directory .ldd-submit-listing li:first-child {
+    position: relative;
+    display: block;
+    float: left; }
+  .business-directory .ldd-submit-listing input,
+  .business-directory .ldd-submit-listing select,
+  .business-directory .ldd-submit-listing textarea {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box; }
+  .business-directory .ldd-submit-listing_nav {
+    margin: 0 1px 0 4px; }
+  .business-directory #navigation ul {
+    margin: 0;
+    width: 100%;
+    list-style: none;
+    display: table;
+    table-layout: fixed;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box; }
+    .business-directory #navigation ul > li {
+      margin: 0 0 1px;
+      text-align: center;
+      position: relative;
+      border-left: 1px solid #fff; }
+      .business-directory #navigation ul > li:first-child {
+        border-left: 0; }
+    .business-directory #navigation ul li.ldd-submit-listing_here a {
+      background: #dbe1e8;
+      color: #666; }
+    .business-directory #navigation ul li a {
+      display: block;
+      height: 45px;
+      background-color: #f1f3f5;
+      color: #777;
+      outline: none;
+      font-weight: bold;
+      text-decoration: none;
+      line-height: 45px; }
+  @media screen and (min-width: 600px) {
+    .business-directory #navigation ul > li {
+      display: table-cell;
+      margin: 0; } }
+  .business-directory #submit-listing fieldset {
+    margin: 0 0 .5em;
+    padding: 0;
+    border: 0; }
+    .business-directory #submit-listing fieldset legend {
+      text-align: left;
+      background-color: #fff;
+      color: #dbe1e8;
+      font-size: 2em;
+      font-weight: 700;
+      width: 100%;
+      padding: 5px 0 5px 10px;
+      margin: 0 0 1em;
+      border-radius: 5px; }
+  .business-directory #submit-listing label span {
+    cursor: pointer;
+    display: block;
+    margin: 5px 0;
+    font-weight: 700; }
+  .business-directory #submit-listing input[type="text"],
+  .business-directory #submit-listing input[type="email"],
+  .business-directory #submit-listing input[type="password"],
+  .business-directory #submit-listing input[type="url"],
+  .business-directory #submit-listing input[type="file"],
+  .business-directory #submit-listing textarea,
+  .business-directory #submit-listing select {
+    width: 100%;
+    border: 2px solid #ddd;
+    background: #fff;
+    margin: 0 0 5px;
+    padding: 10px;
+    border-radius: 3px;
+    -webkit-transition: border-color 0.3s ease-in-out;
+    -moz-transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.3s ease-in-out; }
+    .business-directory #submit-listing input[type="text"]:hover,
+    .business-directory #submit-listing input[type="email"]:hover,
+    .business-directory #submit-listing input[type="password"]:hover,
+    .business-directory #submit-listing input[type="url"]:hover,
+    .business-directory #submit-listing input[type="file"]:hover,
+    .business-directory #submit-listing textarea:hover,
+    .business-directory #submit-listing select:hover {
+      border-color: #888; }
+    .business-directory #submit-listing input[type="text"]:focus,
+    .business-directory #submit-listing input[type="email"]:focus,
+    .business-directory #submit-listing input[type="password"]:focus,
+    .business-directory #submit-listing input[type="url"]:focus,
+    .business-directory #submit-listing input[type="file"]:focus,
+    .business-directory #submit-listing textarea:focus,
+    .business-directory #submit-listing select:focus {
+      outline: 0;
+      border: 2px solid #999; }
+  .business-directory #submit-listing textarea {
+    height: 100px;
+    max-width: 100%; }
+  .business-directory #submit-listing button[type="submit"] {
+    width: 100%; }
+  .business-directory .submit-form-wrap {
+    margin: 1em;
+    padding: 1em;
+    background: #eee;
+    border-radius: 10px; }
+  .business-directory ::-webkit-input-placeholder {
+    color: #888; }
+  .business-directory :-moz-placeholder {
+    color: #888; }
+  .business-directory ::-moz-placeholder {
+    color: #888; }
+  .business-directory :-ms-input-placeholder {
+    color: #888; }
+  .business-directory .cf:before, .business-directory .cf:after {
+    content: "";
+    display: table; }
+  .business-directory .cf:after {
+    clear: both; }
+  .business-directory .cf {
+    zoom: 1; }
+  .business-directory header.global-header {
+    margin: 0;
+    padding: 0; }
+    .business-directory header.global-header.submit-listing {
+      margin-bottom: 2em; }
+  .business-directory nav.lite-nav.above-header {
+    margin: 0; }
+    .business-directory nav.lite-nav.above-header ul li {
+      margin: 0; }
+  .business-directory nav.lite-nav {
+    margin: 1em 0;
+    padding: 1em 0;
+    background: none; }
+    .business-directory nav.lite-nav ul {
+      margin: 0;
+      padding: 0; }
+      .business-directory nav.lite-nav ul li {
+        margin: 0 5px 10px 0;
+        padding: 0;
+        list-style: none;
+        display: inline-block;
+        *display: inline;
+        /* ie7 */ }
+        .business-directory nav.lite-nav ul li a {
+          padding: .5em 1em;
+          text-decoration: none;
+          line-height: 100%; }
+        .business-directory nav.lite-nav ul li a:hover {
+          background: #2f67a1;
+          border-bottom: 2px solid #20456c;
+          color: white;
+          border-radius: 5px; }
+        .business-directory nav.lite-nav ul li.current a {
+          background: #2f67a1;
+          color: #fff;
+          border-radius: 5px; }
+    .business-directory nav.lite-nav.right ul {
+      text-align: right; }
+    .business-directory nav.lite-nav.center ul {
+      text-align: center; }
+  @media screen and (max-width: 600px) {
+    .business-directory nav.lite-nav:not(.above-header) {
+      position: relative;
+      min-height: 40px;
+      /* on nav hover */
+      /* right nav */
+      /* center nav */ }
+      .business-directory nav.lite-nav:not(.above-header) ul {
+        z-index: 10000;
+        width: 180px;
+        padding: 5px 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: solid 1px #aaa;
+        background: white url("/wp-content/plugins/ldd-directory-lite/public/icons/icon-menu.png") no-repeat 10px 14px;
+        border-radius: 5px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+        .business-directory nav.lite-nav:not(.above-header) ul li {
+          display: none;
+          /* hide all <li> items */
+          margin: 0; }
+          .business-directory nav.lite-nav:not(.above-header) ul li a {
+            display: block;
+            padding: 8px 5px 8px 32px;
+            text-align: left;
+            color: #888; }
+          .business-directory nav.lite-nav:not(.above-header) ul li a:hover {
+            border-bottom: 0;
+            background: white;
+            border-radius: 0; }
+          .business-directory nav.lite-nav:not(.above-header) ul li.current {
+            display: block;
+            /* show only current <li> item */ }
+            .business-directory nav.lite-nav:not(.above-header) ul li.current a {
+              background: none;
+              color: #666; }
+      .business-directory nav.lite-nav:not(.above-header) ul:hover {
+        background-image: none; }
+        .business-directory nav.lite-nav:not(.above-header) ul:hover li {
+          display: block;
+          margin: 0 0 5px; }
+          .business-directory nav.lite-nav:not(.above-header) ul:hover li.current {
+            background: url("/wp-content/plugins/ldd-directory-lite/public/icons/icon-check.png") no-repeat 10px 7px; }
+          .business-directory nav.lite-nav:not(.above-header) ul:hover li a:hover {
+            color: #20456c; }
+      .business-directory nav.lite-nav:not(.above-header).right ul {
+        left: auto;
+        right: 0; }
+      .business-directory nav.lite-nav:not(.above-header).center ul {
+        left: 50%;
+        margin-left: -90px; } }
+  .business-directory #map_wrapper {
+    display: block;
+    margin-bottom: 1.5em;
+    height: 260px; }
+  .business-directory #map_canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px; }
+  .business-directory .directory-content {
+    background: #fff;
+    border: 1px solid rgba(32, 69, 108, 0.5);
+    padding: .5em;
+    border-radius: 3px; }
+  .business-directory .type-listing {
+    padding: .5em 0;
+    margin-bottom: .5em;
+    background: #fff;
+    border: 1px solid rgba(32, 69, 108, 0.12);
+    border-radius: 2px;
+    padding: 1em; }
+    .business-directory .type-listing.even {
+      background: rgba(255, 255, 255, 0.5); }
+    .business-directory .type-listing .post-thumbnail {
+      position: relative;
+      width: 100%;
+      /* margin: 4px 4%; */
+      display: inline-block;
+      vertical-align: top; }
+      .business-directory .type-listing .post-thumbnail img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 3px; }
+    .business-directory .type-listing .entry-header {
+      width: 100%;
+      padding: 0; }
+      .business-directory .type-listing .entry-header .entry-title {
+        font-size: 2em;
+        font-weight: normal;
+        line-height: 100%;
+        margin: 0 0 5px; }
+        .business-directory .type-listing .entry-header .entry-title a {
+          text-decoration: none; }
+        .business-directory .type-listing .entry-header .entry-title a:hover {
+          text-decoration: none; }
+      .business-directory .type-listing .entry-header .entry-meta p {
+        font-size: 90%;
+        line-height: 130%;
+        color: #777;
+        margin: 0 0 8px; }
+        .business-directory .type-listing .entry-header .entry-meta p a {
+          text-decoration: none;
+          font-weight: 700;
+          font-size: 110%; }
+        .business-directory .type-listing .entry-header .entry-meta p a:hover {
+          text-decoration: none; }
+    .business-directory .type-listing .entry-summary {
+      width: 100%;
+      clear: both;
+      border-top: 1px solid rgba(32, 69, 108, 0.12);
+      margin-top: 1em;
+      padding-top: 1em; }
+  @media screen and (min-width: 600px) {
+    .business-directory .type-listing .post-thumbnail {
+      float: right;
+      position: relative;
+      width: 15%; }
+    .business-directory .type-listing .entry-header {
+      width: 66%;
+      float: left; } }
+  .business-directory a, .business-directory a:visited {
+    color: #3778bb;
+    text-decoration: none; }
+    .business-directory a:hover, .business-directory a:focus, .business-directory a:visited:hover, .business-directory a:visited:focus {
+      color: #265280;
+      text-decoration: none; }
+    .business-directory a:link, .business-directory a:visited:link {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3); }

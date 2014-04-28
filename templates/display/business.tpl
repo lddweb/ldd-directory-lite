@@ -52,43 +52,91 @@
     }
 
 
-    .display-business .listing-social {
-        clear: both;
-        width: 100%;
-        margin: 1em 0;
-        padding: 1em;
-        text-align: center;
-        border-top: 2px solid rgba(51, 51, 51, 0.10);
-        border-bottom: 2px solid rgba(51, 51, 51, 0.10);
-    }
-    .display-business .listing-social img {
-        margin: .1em;
+    .listing-social img {
+        margin: .2em;
     }
 
     .listing-description {
         clear: both;
         width: 100%;
     }
+    .business-directory .listing-title {
+
+    }
+    .listing-social {
+        padding: .5em 0;
+        margin-bottom: .5em;
+        background: #fff;
+        border: 1px solid rgba(32, 69, 108, 0.12);
+        border-radius: 2px;
+        padding: 1em;
+        text-align: center;
+    }
+
+    .listing-header {
+        padding-top: 1em;
+        text-align: center;
+    }
+
+    .listing-header .post-thumbnail img {
+        max-width: 100px;
+    }
+
+    .listing-header .listing-title {
+        margin: .2em 0;
+        text-align: center;
+        font-size: 3em;
+    }
 </style>
 
 
-<div class="section-wrapper cf">
+<section class="business-directory cf">
 
-    <div class="directory-nav cf">
-        <a href="{{url}}" class="button">Directory Home</a>
-        <a rel="leanModal" href="#panels" class="button right">Contact</a>
-    </div>
+    <nav class="lite-nav above-header center cf">
+        <ul>
+            <li><a href="{{base_url}}" id="show-tree">Directory Home</a></li>
+            <li><a href="{{base_url}}?show=submit&term=listing">Submit Listing</a></li>
 
-    <div class="display-business">
+        </ul>
+    </nav>
 
-        <div class="listing cf">
-            <div class="listing-image cf">
-                {{logo}}
+    <section class="directory-content">
+
+        <header class="listing-header">
+            <a href="" class="post-thumbnail">{{logo}}</a>
+            <h2 class="listing-title">{{title}}</h2>
+        </header>
+
+        <div class="listing-social">
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/browser.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/ebay.png" width="48" height="48" alt="" /></a>
+            <a rel="leanModal" href="#panels"><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/email.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/fb.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/google+.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/linkedin.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/twitter.png" width="48" height="48" alt="" /></a>
+        </div>
+
+        <article id="listing-1" class="listing-1 listing type-listing status-approved featured cf">
+
+            <div class="location-wrapper pure-g-r">
+
+                <div id="map_wrapper" class="pure-u-2-3">
+                    <div id="map_canvas" class="mapping"></div>
+                </div>
+                <div class="pure-u-1-24"></div>
+
+                <div class="entry-meta pure-u-7-24">
+                    <p class="website"><a href="">lddconsulting.com</a></p>
+                    <p class="phone" style="font-size: 100%; display: none;">(505) 455-8749</p>
+                    <p class="address" style="font-size: 100%;">2420 Midtown Pl NE,<br>Albuquerque, NM 87107</p>
+                    <p class="rating">Placeho
+                </div><!-- .entry-meta -->
+
             </div>
 
             <div class="listing-content">
 
-                <h2 class="entry-title listing-title">Example Listing Business</h2>
                 <div class="listing-meta">
                     <p class="website">{{website}}</p>
 
@@ -97,21 +145,18 @@
                 </div>
 
             </div>
-        </div>
 
-        <div class="listing-social">
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/24/twitter.png" width="24" height="24" alt="" /></a>
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/24/pinterest.png" width="24" height="24" alt="" /></a>
-        </div>
 
         <div class="listing-description">
             <p>Secondly: The ship Union, also of Nantucket, was in the year 1807 totally lost off the Azores by a similar onset, but the authentic particulars of this catastrophe I have never chanced to encounter...</p>
         </div>
 
 
-    </div>
 
-</div>
+    </section>
+
+
+</section>
 
 
 <div id="panels">
@@ -157,6 +202,76 @@
         </form>
     </div>
 </div>
+
+
+
+<script>
+
+    jQuery(function() {
+        // Asynchronously Load the map API
+        var script = document.createElement('script');
+        script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+        document.body.appendChild(script);
+    });
+
+    function initialize() {
+        var map;
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
+            mapTypeId: 'roadmap'
+        };
+
+        // Display a map on the page
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        map.setTilt(45);
+
+        // Multiple Markers
+        var markers = [
+            ['Herman Melville, Albuquerque', 35.1297672,-106.6171098]
+        ];
+
+        // Info Window Content
+        var infoWindowContent = [
+            ['<div class="info_content"><h3>Business Information!</h3></div>']
+        ];
+
+        // Display multiple markers on a map
+        var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+        // Loop through our array of markers & place each one on the map
+        for( i = 0; i < markers.length; i++ ) {
+            var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: markers[i][0]
+            });
+
+            var contentString = '<div id="map-window-' + i + '">Sample Content</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+            });
+
+            // Automatically center the map fitting all markers on the screen
+            map.fitBounds(bounds);
+        }
+
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+            this.setZoom(14);
+            google.maps.event.removeListener(boundsListener);
+        });
+
+    }
+</script>
+
+
 
 
 <script src="/wp-content/plugins/ldd-directory-lite/public/js/jquery.leanModal.min.js"></script>

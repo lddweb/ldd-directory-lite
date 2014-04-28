@@ -5,15 +5,12 @@
  */
 
 
-add_action( 'wp_enqueue_scripts', 'lddlite_enqueue_submit_scripts' );
-function lddlite_enqueue_submit_scripts() {
-    wp_enqueue_script
-}
 function lddlite_display_view_submit( $term = false ) {
 	global $post;
 
 	$template_vars = array(
 		'url' => get_permalink( $post->ID ),
+        'country_dropdown'  => lddlite_dropdown_country(),
 	);
 
 	return lddlite_parse_template( 'display/submit', $template_vars );
@@ -294,12 +291,11 @@ function lddlite_dropdown_country()
         "ZW" => "Zimbabwe"
     );
 
-    $output = '<select name="ldd[country]">';
+    $output = '<select id="country" name="country" tabindex="7" required>';
 
-    foreach ( $_countries as $key => $value )
-    {
+    foreach ( $_countries as $key => $value ) {
         $output .= '<option value="' . $key . '"';
-        if ( isset( $_SESSION['ldd']['country'] ) && $key == $_SESSION['ldd']['country'] ) {
+        if ( isset( $_SESSION['ldd-country'] ) && $key == $_SESSION['ldd-country'] ) {
             $output .= ' selected ';
         }
         $output .= '>' . $value . '</option>';

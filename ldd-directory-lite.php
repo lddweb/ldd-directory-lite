@@ -30,10 +30,6 @@ define( 'LDDLITE_VERSION',      '0.1' );
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
 define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
 
-define( 'LDDLITE_CSS',          LDDLITE_URL . '/public/css' );
-define( 'LDDLITE_JS',           LDDLITE_PATH . '/public/js' );
-define( 'LDDLITE_JS_URL',       LDDLITE_URL . '/public/js' );
-
 define( 'LDDLITE_AJAX',         LDDLITE_URL . '/includes/ajax.php' );
 
 define( 'LDDLITE_POST_TYPE',    'directory_listings' );
@@ -77,7 +73,6 @@ final class _LDD_Directory_Lite {
             self::$_instance->include_files();
             self::$_instance->populate_options();
             self::$_instance->action_filters();
-            self::$_instance->enqueue_scripts();
         }
 
         return self::$_instance;
@@ -143,7 +138,15 @@ final class _LDD_Directory_Lite {
             add_action( '_admin_menu', 'lddlite_action_submenu_name' );
         }
 
+        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts' ) );
+
         // Process AJAX for the contact Form
+        add_action( 'wp_ajax_contact_form', 'lddlite_ajax_contact_form' );
+        add_action( 'wp_ajax_nopriv_contact_form', 'lddlite_ajax_contact_form' );
+
+        // Process AJAX for the submission form
         add_action( 'wp_ajax_contact_form', 'lddlite_ajax_contact_form' );
         add_action( 'wp_ajax_nopriv_contact_form', 'lddlite_ajax_contact_form' );
 
@@ -178,18 +181,19 @@ final class _LDD_Directory_Lite {
         }
 
 
-    public function enqueue_scripts() {
-        add_action( 'wp_enqueue_scripts', 'lddlite_enqueue_scripts' );
-        add_action( 'admin_enqueue_scripts', 'lddlite_enqueue_scripts' );
+    public function _enqueue_scripts_global() {
+        wp_enqueue_script( 'lddlite-js', LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
+        wp_enqueue_style( 'lddlite-styles', LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
+	    wp_enqueue_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
+    }
 
-        function lddlite_enqueue_scripts() {
-            // We want this in the footer so that we can set the
-            wp_enqueue_script( 'lddlite-js', LDDLITE_JS_URL . '/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
-            // @TODO: This should be reduced in scope so that it only enqueues where necessary.
-            // @TODO: Right now it's just easier to plug it in.
-            wp_enqueue_style( 'lddlite-styles', LDDLITE_CSS . '/style.css', array(), LDDLITE_VERSION );
+    public function _enqueue_scripts() {
+        if ( isset( $_GET['show'] ) && 'submit' == $_GET['show'] ) {
+            wp_enqueue_script( 'lddlite-submit-form-js', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54' );
+            wp_enqueue_script( 'jquery-form-js', LDDLITE_URL . '/public/js/jquery.form.min.js', array( 'jquery' ), '20140218', 1 );
         }
     }
+
 
 
     public function slug() {

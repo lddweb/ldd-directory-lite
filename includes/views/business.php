@@ -8,7 +8,7 @@
 function lddlite_display_view_business( $listing )
 {
     global $post;
-mdd( $listing );
+
     $lddlite = lddlite();
 
     $permalink = get_permalink( $post->ID );
@@ -27,6 +27,7 @@ mdd( $listing );
     $template_vars = array(
         'search'        => lddlite_get_search_form(),
         'base_url'      => $permalink,
+        'title'         => $listing->post_title,
         'form_action'   => admin_url( 'admin-ajax.php' ),
         'nonce'         => wp_create_nonce( 'contact-form-nonce' ),
         'id'            => $post->ID,

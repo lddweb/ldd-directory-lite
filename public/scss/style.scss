@@ -24,16 +24,17 @@ $disabled-gray:     #888;
 
 
 .business-directory {
-    position: relative;
-    width: 100%;
-    margin: 0;
+  position: relative;
+  width: 100%;
+  margin: 0;
 
-    @import "modules/alerts";
-    @import "modules/buttons";
-    @import "modules/forms";
+  @import "modules/alerts";
+  @import "modules/buttons";
+  @import "modules/forms";
 
-    @import "breakpoints/base";
+  @import "modules/submit";
 
+  @import "breakpoints/base";
 }
 
 
