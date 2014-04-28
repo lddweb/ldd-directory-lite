@@ -147,7 +147,7 @@ class _LDD_Directory_Admin
 
     public function _add_settings_menu()
     {
-        $slug = add_submenu_page( 'edit.php?post_type=' . LDDLITE_POST_TYPE, 'Directory [lite] Configuration', 'Settings', 'edit_post', 'lddlite-settings', array( $this, '_settings_page' ) );
+        $slug = add_submenu_page( 'edit.php?post_type=' . LDDLITE_POST_TYPE, 'Directory [lite] Configuration', 'Settings', 'manage_options', 'lddlite-settings', array( $this, '_settings_page' ) );
         add_action( 'admin_print_scripts-' . $slug, array( $this, '_enqueue_styles' ) );
     }
 

@@ -212,7 +212,7 @@ function lddslug() {
 
     if ( !isset( $slug ) ) {
         $lddlite = lddlite();
-        $slug = $lddlite->slug;
+        $slug = $lddlite->slug();
     }
 
     return $slug;

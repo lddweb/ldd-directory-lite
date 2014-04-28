@@ -36,6 +36,7 @@ function lddlite_display_directory()
     global $post;
 
     $action = 'home';
+    $term   = '';
 
     $allowed_actions = array(
         'submit',

@@ -2,7 +2,10 @@
 <section class="business-directory cf">
 
     <nav class="lite-nav above-header center cf">
-        <ul><li><a href="{{url}}?show=submit&term=listing">Submit Listing</a></li></ul>
+        <ul>
+            <li><a href="{{url}}?show=submit&term=listing">Submit Listing</a></li>
+            <li><a href="#" id="show-tree">Show Tree</a></li>
+        </ul>
     </nav>
 
     <header class="global-header">
@@ -48,6 +51,20 @@
 
     <section class="directory-content">
 
+
+        <style>
+            #tree-hide ul.column {
+                float: left;
+                width: 45%;
+                margin-right: 1%;
+            }
+        </style>
+
+        <div id="tree-hide" style="display: none;">
+        {{allcats}}
+        </div>
+
+        <div class="cf"></div>
 
         <div id="map_wrapper">
             <div id="map_canvas" class="mapping"></div>
@@ -117,6 +134,14 @@
 
 
 <script>
+    jQuery(document).ready(function() {
+        var show_tree_btn = jQuery('#show-tree');
+        var tree_div = jQuery('#tree-hide');
+        show_tree_btn.click(function(e) {
+            e.preventDefault();
+            tree_div.slideToggle();
+        });
+    });
     jQuery(function() {
         // Asynchronously Load the map API
         var script = document.createElement('script');
