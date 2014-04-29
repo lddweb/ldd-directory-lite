@@ -25,35 +25,31 @@
   width: 100%;
   padding: 0;
   margin: 0 auto 40px;
-}
 
-.ldd-submit-listing li {
-  -webkit-backface-visibility: hidden;
-  position: absolute;
-  display: none;
-  width: 100%;
-  left: 0;
-  top: 0;
-}
+  li {
+    -webkit-backface-visibility: hidden;
+    position: absolute;
+    display: none;
+    width: 100%;
+    left: 0;
+    top: 0;
 
-.ldd-submit-listing li:first-child {
-  position: relative;
-  display: block;
-  float: left;
-}
+    &:first-child {
+      position: relative;
+      display: block;
+      float: left;
+    }
 
-.ldd-submit-listing input,
-.ldd-submit-listing select,
-.ldd-submit-listing textarea {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
+  }
 
+  input,
+  select,
+  textarea {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
 
-.ldd-submit-listing_nav {
-  @extend %btn;
-  margin: 0 1px 0 4px;
 }
 
 
@@ -69,25 +65,30 @@
     -webkit-box-sizing: border-box;
 
     > li {
-      margin: 0 0 1px;
+      margin: 0;
+      padding-right: 3px;
       text-align: center;
       position: relative;
-      border-left: 1px solid #fff;
 
       &:first-child {
-        border-left: 0;
+        padding-left:3px;
       }
     }
 
     li.ldd-submit-listing_here a {
-      background: #dbe1e8;
+      background: rgba(32, 69, 108, 0.12);
+      border: 0;
+      top: 0;
       color:#666;
     }
 
     li a {
       display:block;
       height:45px;
-      background-color: #f1f3f5;
+      border: 1px solid rgba(32, 69, 108, 0.12);
+      border-bottom: 0;
+      position: relative;
+      top: 1px;
       color:#777;
       outline:none;
       font-weight:bold;
@@ -193,11 +194,17 @@
 
 
 .submit-form-wrap {
-  margin: 1em;
+  margin-bottom: .5em;
+  border: 1px solid rgba(32, 69, 108, 0.12);
+  border-radius: 2px;
   padding: 1em;
-  background: #eee;
-  border-radius: 10px;
 }
+
+.ldd-submit-listing_nav {
+  @extend %btn;
+  margin: 0 1px 0 4px;
+}
+
 
 
 ::-webkit-input-placeholder {

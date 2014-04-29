@@ -1,14 +1,20 @@
-{{search}}
+<section class="business-directory directory-home cf">
 
-<div class="section-wrapper cf">
+    <nav class="lite-nav above-header center cf">
+        <ul>
+            <li><a href="{{url}}">Home</a></li>
+            <li><a href="{{url}}?show=submit&t=listing">Submit Listing</a></li>
+        </ul>
+    </nav>
 
-    <div class="directory-nav cf">
-        <a href="{{url}}" class="button">Directory Home</a>
-        <a href="{{url}}?submit=true" class="button right">Submit Listing</a>
-    </div>
+    <header class="global-header">
+        {{search_form}}
+    </header>
 
-    <div class="directory-business cf">
+    <section class="directory-content">
+
         {{listings}}
-    </div>
 
-</div>
+    </section>
+
+</section>

@@ -205,7 +205,7 @@
             </ul>
         </div>
 
-        <div class="submit-form-wrap">
+        <div class="submit-form-wrap submit-confirm" style="display: none;">
             <fieldset style="clear: both;">
                 <legend>Confirm</legend>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
@@ -256,6 +256,7 @@
                 prev_button.hide();
                 next_button.show();
             } else if ( last_tab.hasClass('ldd-submit-listing1_on') ) {
+                jQuery('.submit-confirm').slideDown();
                 prev_button.show();
                 next_button.hide();
             } else {

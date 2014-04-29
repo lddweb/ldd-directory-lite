@@ -34,34 +34,37 @@ function lddlite_icon( $label, $url = '', $title = '' )
  * @TODO This could be an object, with a single method, allowing us to build it as we went?
  * @param string $tpl_file Relative file path to the template we're parsing
  * @param array $replace Our find and replace array
- * @return bool|string
+ * @return mixed
  */
-function lddlite_parse_template( $tpl_file, $replace )
+function ld_parse_template( $tpl_file, $replace )
 {
 
     // Create an absolute path to our template file
     $template = LDDLITE_TEMPLATES . '/' . $tpl_file . '.' . LDDLITE_TPL_EXT;
 
     // If the template doesn't exist, return false
-    if (!file_exists($template))
+    if ( !file_exists( $template ) )
         return false;
 
     // Let's get to work!
-    $body = file_get_contents($template);
+    $body = file_get_contents( $template );
 
-    if (is_array($replace))
-    {
-        foreach ($replace as $macro => $value)
-        {
-            $body = str_replace('{{'.$macro.'}}', $value, $body);
+    if ( is_array( $replace ) ) {
+        foreach ( $replace as $macro => $value ) {
+            if ( is_array( $value ) ) {
+                foreach ( $value as $m => $v ) {
+                    $body = str_replace( '{{' . $macro . '.' . $m . '}}', $v, $body );
+                }
+            } else {
+                $body = str_replace( '{{'.$macro.'}}', $value, $body );
+            }
         }
     }
 
     // Remove all occurrences of macros that have not been replaced
-    $body = preg_replace('/\{{2}.*?\}{2}/', "", $body);
+    $body = preg_replace( '/\{{2}.*?\}{2}/', '', $body );
 
-    return $body; // Sounds creepy.
-
+    return $body; // creep.
 }
 
 

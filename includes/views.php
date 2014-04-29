@@ -19,15 +19,14 @@ function lddlite_category_links( $termlink ) {
     // @TODO Is there a situation where this won't be available? If so, use $_SERVER
     $current_url = get_permalink( $post->ID );
 
-    $termlink = $current_url . '?show=category&term=' . $link[LDDLITE_TAX_CAT];
+    $termlink = $current_url . '?show=category&t=' . $link[LDDLITE_TAX_CAT];
 
     return $termlink;
 }
 
 
-function lddlite_get_search_form()
-{
-    return lddlite_parse_template( 'display/search_form', array() );
+function ld_get_search_form() {
+    return ld_parse_template( 'display/search_form', array() );
 }
 
 
@@ -45,10 +44,10 @@ function lddlite_display_directory()
         'search',
     );
 
-    if ( isset( $_GET['show'] ) && in_array( $_GET['show'], $allowed_actions ) && isset( $_GET['term'] ) )
+    if ( isset( $_GET['show'] ) && in_array( $_GET['show'], $allowed_actions ) && isset( $_GET['t'] ) )
     {
         $action = $_GET['show'];
-        $term = esc_attr( $_GET['term'] );
+        $term = esc_attr( $_GET['t'] );
 
         if ( 'category' == $action )
         {

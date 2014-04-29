@@ -176,6 +176,60 @@ nav {
 
 }
 
+&.directory-home {
+  ul.category-tree {
+    margin: 0 0 0 1%;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+
+    * {
+      -webkit-box-sizing: content-box;
+      -moz-box-sizing: content-box;
+      box-sizing: content-box;
+    }
+
+    > li {
+      margin: 0 1% 1em 0;
+      display: inline-block;
+      width: 48%;
+      vertical-align: top;
+      padding: .3em 0;
+
+      > a {
+        font-weight: 700;
+        display: block;
+        margin-bottom: .2em;
+        background: #eee;
+        border-radius: 4px;
+        padding: 4px 8px;
+      }
+
+      > span {
+        display: none;
+      }
+    }
+
+    span {
+      font-size: 90%;
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    ul.children {
+      margin: 0 .5em;
+      padding: 0 .1em;
+      font-weight: 500;
+      list-style: none;
+
+      li {
+        margin: .1em 0;
+      }
+
+    }
+
+  }
+
+}
 
 /** LISTINGS LOOP **/
 
@@ -195,6 +249,7 @@ nav {
 .directory-content {
     background: #fff;
     border: 1px solid rgba( $primary-dark, 0.5 );
+    margin: .5em 0;
     padding: .5em;
     border-radius: 3px;
 }

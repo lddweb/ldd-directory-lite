@@ -1,51 +1,57 @@
 
 .directory-search {
-    position: relative;
+  position: relative;
+  height: 56px;
+
+  border: 1px solid $primary-light;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: $white;
+  overflow: hidden;
+
+  &:hover {
+    border-color: $primary-dark;
+  }
+
+  input[type="text"] {
+    width: 90%;
+    font-size: 2em;
+    line-height: normal;
+    color: #888888;
+    border-width: 0;
+    background: transparent;
+    outline: none;
+    margin: 0;
+    padding: 0px 0 0px 10px;
     height: 56px;
+  }
 
-    border: 1px solid $primary-mid;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    background-color: $white;
-    overflow: hidden;
+  button {
+    position: absolute;
+    top: 0;
+    right: -1px;
+    margin-top: 0;
+    padding: 0 1em;
+    height: 56px;
+    font-size: 1.4em;
+    color: $white;
+    font-family: $sans-serif;
+    text-align: center;
+    line-height: 56px;
+    background-color: $primary-mid;
+    border: 0;
+    -webkit-border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    @include transition(background-color 0.5s ease-in-out);
 
-    input[type="text"] {
-      width: 90%;
-      height: auto;
-      padding: 10px 12px;
-      font-size: 2em;
-      color: $gray;
-      border-width: 0;
-      background: transparent;
-      outline: none;
+    &:hover {
+      background-color: $white;
+      color: $primary-dark;
     }
-
-    button {
-        position: absolute;
-        top: 0;
-        right: -1px;
-        margin-top: 0;
-        padding: 0 1em;
-        height: 56px;
-        font-size: 1.4em;
-        color: $white;
-        font-family: $sans-serif;
-        text-align: center;
-        line-height: 56px;
-        background-color: $primary-mid;
-        border: 0;
-        -webkit-border-radius: 0 5px 5px 0;
-        -moz-border-radius: 0 5px 5px 0;
-        border-radius: 0 5px 5px 0;
-        cursor: pointer;
-        @include transition(background-color 0.54s ease-in-out);
-
-        &:hover {
-            background-color: $white;
-            color: $gray;
-        }
-    }
+  }
 
 }
 

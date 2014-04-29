@@ -4,56 +4,51 @@
  *
  */
 
-function lddlite_format_phone( $phone, $locale = 'US' )
-{
-    //@TODO add functionality to format for i18n
-    if ( 'US' == $locale )
-    {
+function lddlite_format_phone( $phone, $locale = 'US' ) {
+
+    if ( 'US' == $locale ) {
         $phone = preg_replace( '/[^[:digit:]]/', '', $phone );
-        if ( 10 == strlen( $phone ) )
-        {
+        if ( 10 == strlen( $phone ) ) {
             preg_match( '/(\d{3})(\d{3})(\d{4})/', $phone, $match );
             return "({$match[1]}) {$match[2]}-{$match[3]}";
         }
     }
 
-    return $phone;
+    return $phone; // because I lost it
 }
 
 
-function lddlite_build_meta( $id )
-{
+function ld_get_listing_meta( $id ) {
 
-    if ( !is_int( $id ) )
+    if ( !is_int( $id ) || LDDLITE_POST_TYPE != get_post_type( $id ) )
         return false;
 
-    $meta = '';
+    $meta = array();
 
-    if ( $website = get_post_meta( $id, '_lddlite_urls_website', 1 ) ) {
-        $meta .= sprintf( '<p class="website"><a href="%1$s">%1$s</a></p>', esc_url( $website ) );
-    }
+    $website = get_post_meta( $id, '_lddlite_urls_website', 1 );
+    if ( $website )
+        $meta['website'] = apply_filters( 'lddlite_listing_website', sprintf( '<a href="%1$s">%1$s</a>', esc_url( $website ) ) );
 
-    if ( $phone = get_post_meta( $id, '_lddlite_contact_phone', 1 ) ) {
-        $meta .= '<p class="phone">' . lddlite_format_phone( $phone ) . '</p>';
-    }
+    $phone = get_post_meta( $id, '_lddlite_contact_phone', 1 );
+    if ( $phone )
+        $meta['phone'] = lddlite_format_phone( $phone );
 
-    $address = array(
-        'one'           => get_post_meta( $id, '_lddlite_address_one', 1 ),
-        'two'           => get_post_meta( $id, '_lddlite_address_two', 1 ),
-        'subdivision'   => get_post_meta( $id, '_lddlite_address_subdivision', 1 ),
-        'city'          => get_post_meta( $id, '_lddlite_address_city', 1 ),
-        'post_code'     => get_post_meta( $id, '_lddlite_address_post_code', 1 ),
-    );
-
-    $meta .= '<p class="address">' . $address['one'];
-    if ( !empty( $address['two'] ) ) {
-        $meta .= '<br />' . $address['two'];
-    }
-    $meta .= ',<br />' . $address['city'] . ', ' . $address['subdivision'] . ' ' . $address['post_code'];
+    $meta['address_one'] = get_post_meta( $id, '_lddlite_address_one', 1 );
+    $meta['address_two'] = get_post_meta( $id, '_lddlite_address_two', 1 );
+    $meta['subdivision'] = get_post_meta( $id, '_lddlite_address_subdivision', 1 );
+    $meta['city']        = get_post_meta( $id, '_lddlite_address_city', 1 );
+    $meta['post_code']   = get_post_meta( $id, '_lddlite_address_post_code', 1 );
 
     return $meta;
 
 }
+
+
+
+
+
+
+
 
 
 function _lddlite_esc_twitter( $username )
@@ -130,6 +125,7 @@ function lddlite_display_view_category( $cat_id )
     ) );
 
     $output = '';
+    $nth = 0;
 
     if ( !empty( $listings ) )
     {
@@ -138,27 +134,57 @@ function lddlite_display_view_category( $cat_id )
         {
 
             $id = $listing->ID;
+            $status = $listing->post_status;
 
-            $link = '<a href="' . $permalink . '?show=business&term=' . $listing->post_name . '" title="' . esc_attr( $listing->post_title ) . '">%1$s</a>';
+            // determine our classes;
+            $nth_class = ( $nth % 2 ) ? 'odd' : 'even';
+            $nth++;
 
-            if ( has_post_thumbnail( $listing->ID ) ) {
-                $featured = sprintf( $link, get_the_post_thumbnail( $listing->ID, 'thumbnail' ) );
-            } else {
-                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />' );
+            // the following is used to build our title, and the logo
+            $link = '<a href="' . $permalink . '?show=business&t=' . $listing->post_name . '" title="' . esc_attr( $listing->post_title ) . '" %2$s>%1$s</a>';
+
+            // the logo
+            if ( has_post_thumbnail( $listing->ID ) )
+                $featured = sprintf( $link, get_the_post_thumbnail( $listing->ID, 'thumbnail' ), 'class="post-thumbnail"' );
+            else
+                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />', 'class="post-thumbnail"' );
+
+
+            $meta = ld_get_listing_meta( $id );
+
+            $summary = '';
+
+            if ( !empty( $listing->post_excerpt ) )
+                $summary = $listing->post_excerpt;
+
+            if ( empty( $summary ) ) {
+                $summary = $listing->post_content;
+
+                $summary = strip_shortcodes( $summary );
+
+                $summary = apply_filters( 'lddlite_the_content', $summary );
+                $summary = str_replace( ']]>', ']]&gt;', $summary );
+
+                $excerpt_length = apply_filters( 'lddlite_excerpt_length', 55 );
+                $excerpt_more = apply_filters( 'lddlite_excerpt_more', sprintf( '&hellip; (' . $link . ')', 'view listing', '' ) );
+
+                $summary = wp_trim_words( $summary, $excerpt_length, $excerpt_more );
             }
 
-            $meta = lddlite_build_meta( $id );
             $social = lddlite_build_social( $id );
 
             $template_vars = array(
+                'id'            => $id,
+                'status'        => $status,
+                'nth'           => $nth_class,
                 'featured'      => $featured,
-                'title'         => sprintf( $link, $listing->post_title ),
+                'title'         => sprintf( $link, $listing->post_title, '' ),
                 'meta'          => $meta,
-                'description'   => '',
+                'summary'       => $summary,
                 'social'        => $social,
             );
 
-            $output .= lddlite_parse_template( 'display/category_listing', $template_vars );
+            $output .= ld_parse_template( 'display/category_listing', $template_vars );
 
         } // foreach
 
@@ -166,11 +192,11 @@ function lddlite_display_view_category( $cat_id )
 
 
     $template_vars = array(
-        'search'    => lddlite_get_search_form(),
+        'search'    => ld_get_search_form(),
         'url'       => get_permalink( $post->ID ),
         'listings'  => $output,
     );
 
-    return lddlite_parse_template( 'display/category', $template_vars );
+    return ld_parse_template( 'display/category', $template_vars );
 
 }

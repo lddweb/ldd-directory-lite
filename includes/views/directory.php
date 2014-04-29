@@ -144,6 +144,6 @@ function lddlite_display_main()
         'url'   => get_permalink( $post->ID ),
     );
 
-    return lddlite_parse_template( 'display/default', $template_vars );
+    return ld_parse_template( 'display/default', $template_vars );
 
 }

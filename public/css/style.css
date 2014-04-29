@@ -57,7 +57,7 @@ p {
   .business-directory .alert-success {
     border-color: #deeaae;
     background: #e6efc2; }
-  .business-directory .black-btn, .business-directory .ldd-submit-listing_nav, .business-directory #submit-listing button[type="submit"] {
+  .business-directory .black-btn, .business-directory #submit-listing button[type="submit"], .business-directory .ldd-submit-listing_nav {
     position: relative;
     vertical-align: top;
     padding: .2em 1em;
@@ -78,10 +78,10 @@ p {
     text-decoration: none;
     -webkit-transition: background-color 0.14s ease-in-out;
     transition: background-color 0.14s ease-in-out; }
-    .business-directory .black-btn:hover, .business-directory .ldd-submit-listing_nav:hover, .business-directory #submit-listing button[type="submit"]:hover, .business-directory .black-btn:focus, .business-directory .ldd-submit-listing_nav:focus, .business-directory #submit-listing button[type="submit"]:focus {
+    .business-directory .black-btn:hover, .business-directory #submit-listing button[type="submit"]:hover, .business-directory .ldd-submit-listing_nav:hover, .business-directory .black-btn:focus, .business-directory #submit-listing button[type="submit"]:focus, .business-directory .ldd-submit-listing_nav:focus {
       color: white;
       text-decoration: none; }
-    .business-directory .black-btn:active, .business-directory .ldd-submit-listing_nav:active, .business-directory #submit-listing button[type="submit"]:active {
+    .business-directory .black-btn:active, .business-directory #submit-listing button[type="submit"]:active, .business-directory .ldd-submit-listing_nav:active {
       top: 1px; }
   .business-directory .black-btn {
     background-color: black; }
@@ -92,21 +92,25 @@ p {
   .business-directory .directory-search {
     position: relative;
     height: 56px;
-    border: 1px solid #2f67a1;
+    border: 1px solid #3778bb;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     background-color: white;
     overflow: hidden; }
+    .business-directory .directory-search:hover {
+      border-color: #20456c; }
     .business-directory .directory-search input[type="text"] {
       width: 90%;
-      height: auto;
-      padding: 10px 12px;
       font-size: 2em;
+      line-height: normal;
       color: #888888;
       border-width: 0;
       background: transparent;
-      outline: none; }
+      outline: none;
+      margin: 0;
+      padding: 0px 0 0px 10px;
+      height: 56px; }
     .business-directory .directory-search button {
       position: absolute;
       top: 0;
@@ -125,11 +129,11 @@ p {
       -moz-border-radius: 0 5px 5px 0;
       border-radius: 0 5px 5px 0;
       cursor: pointer;
-      -webkit-transition: background-color 0.54s ease-in-out;
-      transition: background-color 0.54s ease-in-out; }
+      -webkit-transition: background-color 0.5s ease-in-out;
+      transition: background-color 0.5s ease-in-out; }
       .business-directory .directory-search button:hover {
         background-color: white;
-        color: #888888; }
+        color: #20456c; }
   .business-directory .panel,
   .business-directory .panels-navigation {
     width: 90%;
@@ -151,25 +155,23 @@ p {
     width: 100%;
     padding: 0;
     margin: 0 auto 40px; }
-  .business-directory .ldd-submit-listing li {
-    -webkit-backface-visibility: hidden;
-    position: absolute;
-    display: none;
-    width: 100%;
-    left: 0;
-    top: 0; }
-  .business-directory .ldd-submit-listing li:first-child {
-    position: relative;
-    display: block;
-    float: left; }
-  .business-directory .ldd-submit-listing input,
-  .business-directory .ldd-submit-listing select,
-  .business-directory .ldd-submit-listing textarea {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box; }
-  .business-directory .ldd-submit-listing_nav {
-    margin: 0 1px 0 4px; }
+    .business-directory .ldd-submit-listing li {
+      -webkit-backface-visibility: hidden;
+      position: absolute;
+      display: none;
+      width: 100%;
+      left: 0;
+      top: 0; }
+      .business-directory .ldd-submit-listing li:first-child {
+        position: relative;
+        display: block;
+        float: left; }
+    .business-directory .ldd-submit-listing input,
+    .business-directory .ldd-submit-listing select,
+    .business-directory .ldd-submit-listing textarea {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box; }
   .business-directory #submit-items ul {
     margin: 0;
     width: 100%;
@@ -180,19 +182,24 @@ p {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box; }
     .business-directory #submit-items ul > li {
-      margin: 0 0 1px;
+      margin: 0;
+      padding-right: 3px;
       text-align: center;
-      position: relative;
-      border-left: 1px solid #fff; }
+      position: relative; }
       .business-directory #submit-items ul > li:first-child {
-        border-left: 0; }
+        padding-left: 3px; }
     .business-directory #submit-items ul li.ldd-submit-listing_here a {
-      background: #dbe1e8;
+      background: rgba(32, 69, 108, 0.12);
+      border: 0;
+      top: 0;
       color: #666; }
     .business-directory #submit-items ul li a {
       display: block;
       height: 45px;
-      background-color: #f1f3f5;
+      border: 1px solid rgba(32, 69, 108, 0.12);
+      border-bottom: 0;
+      position: relative;
+      top: 1px;
       color: #777;
       outline: none;
       font-weight: bold;
@@ -267,10 +274,12 @@ p {
   .business-directory #submit-listing button[type="submit"] {
     width: 100%; }
   .business-directory .submit-form-wrap {
-    margin: 1em;
-    padding: 1em;
-    background: #eee;
-    border-radius: 10px; }
+    margin-bottom: .5em;
+    border: 1px solid rgba(32, 69, 108, 0.12);
+    border-radius: 2px;
+    padding: 1em; }
+  .business-directory .ldd-submit-listing_nav {
+    margin: 0 1px 0 4px; }
   .business-directory ::-webkit-input-placeholder {
     color: #888; }
   .business-directory :-moz-placeholder {
@@ -378,6 +387,40 @@ p {
       .business-directory nav.lite-nav:not(.above-header).center ul {
         left: 50%;
         margin-left: -90px; } }
+  .business-directory.directory-home ul.category-tree {
+    margin: 0 0 0 1%;
+    padding: 0;
+    width: 100%;
+    list-style: none; }
+    .business-directory.directory-home ul.category-tree * {
+      -webkit-box-sizing: content-box;
+      -moz-box-sizing: content-box;
+      box-sizing: content-box; }
+    .business-directory.directory-home ul.category-tree > li {
+      margin: 0 1% 1em 0;
+      display: inline-block;
+      width: 48%;
+      vertical-align: top;
+      padding: .3em 0; }
+      .business-directory.directory-home ul.category-tree > li > a {
+        font-weight: 700;
+        display: block;
+        margin-bottom: .2em;
+        background: #eee;
+        border-radius: 4px;
+        padding: 4px 8px; }
+      .business-directory.directory-home ul.category-tree > li > span {
+        display: none; }
+    .business-directory.directory-home ul.category-tree span {
+      font-size: 90%;
+      color: rgba(0, 0, 0, 0.4); }
+    .business-directory.directory-home ul.category-tree ul.children {
+      margin: 0 .5em;
+      padding: 0 .1em;
+      font-weight: 500;
+      list-style: none; }
+      .business-directory.directory-home ul.category-tree ul.children li {
+        margin: .1em 0; }
   .business-directory #map_wrapper {
     display: block;
     margin-bottom: 1.5em;
@@ -389,6 +432,7 @@ p {
   .business-directory .directory-content {
     background: #fff;
     border: 1px solid rgba(32, 69, 108, 0.5);
+    margin: .5em 0;
     padding: .5em;
     border-radius: 3px; }
   .business-directory .type-listing {

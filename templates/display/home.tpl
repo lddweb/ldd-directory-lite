@@ -1,74 +1,38 @@
-<!-- NEW STYLE -->
-<section class="business-directory cf">
+<section class="business-directory directory-home cf">
 
     <nav class="lite-nav above-header center cf">
         <ul>
-            <li><a href="{{url}}?show=submit&term=listing">Submit Listing</a></li>
-            <li><a href="#" id="show-tree">Show Tree</a></li>
+            <li><a href="{{url}}?show=submit&t=listing">Submit Listing</a></li>
         </ul>
     </nav>
 
     <header class="global-header">
-        <form class="directory-search cf">
-            <input type="text" placeholder="Search the directory..." required />
-            <button type="submit">Search</button>
-        </form>
+        {{search_form}}
     </header>
 
-    <nav class="lite-nav below-header center cf">
+    <nav class="lite-nav below-header center cf" style="display:none;">
         <ul class="top-level">
-            <li class="cat-item cat-item-2"><a href="http://local.wordpress.dev/dir/?show=category&amp;term=arts-entertainment" title="View all posts filed under Arts &amp; Entertainment">Arts &amp; Entertainment</a></li>
-            <li class="cat-item cat-item-5"><a href="http://local.wordpress.dev/dir/?show=category&amp;term=computers-electronics" title="View all posts filed under Computers &amp; Electronics">Computers &amp; Electronics</a></li>
-            <li class="cat-item cat-item-9"><a href="http://local.wordpress.dev/dir/?show=category&amp;term=food-dining" title="View all posts filed under Food &amp; Dining">Food &amp; Dining</a></li>
-            <li class="cat-item cat-item-22"><a href="http://local.wordpress.dev/dir/?show=category&amp;term=general" title="View all posts filed under General">General</a></li>
-            <li class="cat-item cat-item-13"><a href="http://local.wordpress.dev/dir/?show=category&amp;term=home-garden" title="View all posts filed under Home &amp; Garden">Home &amp; Garden</a></li>
-            <li class="cat-item cat-item-23"><a href="http://local.wordpress.dev/dir/?show=category&amp;term=miscellaneous" title="View all posts filed under Miscellaneous">Miscellaneous</a></li>
-            <li class="cat-item cat-item-21"><a href="http://local.wordpress.dev/dir/?show=category&amp;term=test-category" title="View all posts filed under Test Category">Test Category</a></li>
+            <li class="cat-item cat-item-2"><a href="http://local.wordpress.dev/dir/?show=category&t=arts-entertainment" title="View all posts filed under Arts &amp; Entertainment">Arts &amp; Entertainment</a></li>
+            <li class="cat-item cat-item-5"><a href="http://local.wordpress.dev/dir/?show=category&t=computers-electronics" title="View all posts filed under Computers &amp; Electronics">Computers &amp; Electronics</a></li>
+            <li class="cat-item cat-item-9"><a href="http://local.wordpress.dev/dir/?show=category&t=food-dining" title="View all posts filed under Food &amp; Dining">Food &amp; Dining</a></li>
+            <li class="cat-item cat-item-22"><a href="http://local.wordpress.dev/dir/?show=category&t=general" title="View all posts filed under General">General</a></li>
+            <li class="cat-item cat-item-13"><a href="http://local.wordpress.dev/dir/?show=category&t=home-garden" title="View all posts filed under Home &amp; Garden">Home &amp; Garden</a></li>
+            <li class="cat-item cat-item-23"><a href="http://local.wordpress.dev/dir/?show=category&t=miscellaneous" title="View all posts filed under Miscellaneous">Miscellaneous</a></li>
+            <li class="cat-item cat-item-21"><a href="http://local.wordpress.dev/dir/?show=category&t=test-category" title="View all posts filed under Test Category">Test Category</a></li>
         </ul>
     </nav>
 
-    <script>
-        var lite_breakpoint = 640;
-        var shrunk = false;
-
-        jQuery(document).ready(function() {
-            if ( jQuery(window).width() < lite_breakpoint  && jQuery(".lite-nav.below-header .current").length == 0 ) {
-                jQuery('.lite-nav.below-header li:first-child').addClass('current');
-            }
-        });
-
-        jQuery(window).resize(function() {
-            if ( jQuery(window).width() < lite_breakpoint  && jQuery(".lite-nav.below-header .current").length == 0 ) {
-                shrunk = true;
-                jQuery('.lite-nav.below-header li:first-child').addClass('current');
-            }
-            if ( jQuery(window).width() > lite_breakpoint && shrunk ) {
-                shrunk = false;
-                jQuery('.lite-nav.below-header li').removeClass('current');
-            }
-        });
-    </script>
 
     <section class="directory-content">
 
+        <ul class="category-tree category-home">
+        {{categories}}
+        </ul>
 
-        <style>
-            #tree-hide ul.column {
-                float: left;
-                width: 45%;
-                margin-right: 1%;
-            }
-        </style>
+    </section>
 
-        <div id="tree-hide" style="display: none;">
-        {{allcats}}
-        </div>
 
-        <div class="cf"></div>
-
-        <div id="map_wrapper">
-            <div id="map_canvas" class="mapping"></div>
-        </div>
+    <section class="directory-content">
 
         <article id="listing-1" class="listing-1 listing type-listing status-approved featured cf">
             <a href="" class="post-thumbnail"><img src="http://www.aaas.org/sites/default/files/migrate/uploads/0707green_building_0242.jpg"></a>
@@ -132,8 +96,28 @@
 
 
 
-
 <script>
+    var lite_breakpoint = 640;
+    var shrunk = false;
+
+    jQuery(document).ready(function() {
+        if ( jQuery(window).width() < lite_breakpoint  && jQuery(".lite-nav.below-header .current").length == 0 ) {
+            jQuery('.lite-nav.below-header li:first-child').addClass('current');
+        }
+    });
+
+    jQuery(window).resize(function() {
+        if ( jQuery(window).width() < lite_breakpoint  && jQuery(".lite-nav.below-header .current").length == 0 ) {
+            shrunk = true;
+            jQuery('.lite-nav.below-header li:first-child').addClass('current');
+        }
+        if ( jQuery(window).width() > lite_breakpoint && shrunk ) {
+            shrunk = false;
+            jQuery('.lite-nav.below-header li').removeClass('current');
+        }
+    });
+
+
     jQuery(document).ready(function() {
         var show_tree_btn = jQuery('#show-tree');
         var tree_div = jQuery('#tree-hide');

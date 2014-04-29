@@ -81,7 +81,7 @@ function lddlite_display_view_submit( $term = false ) {
         'country_dropdown'  => lddlite_dropdown_country(),
 	);
 
-	return lddlite_parse_template( 'display/submit', $template_vars );
+	return ld_parse_template( 'display/submit', $template_vars );
 }
 
 

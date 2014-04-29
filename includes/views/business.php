@@ -25,7 +25,7 @@ function lddlite_display_view_business( $listing )
 
 
     $template_vars = array(
-        'search'        => lddlite_get_search_form(),
+        'search'        => ld_get_search_form(),
         'base_url'      => $permalink,
         'title'         => $listing->post_title,
         'form_action'   => admin_url( 'admin-ajax.php' ),
@@ -35,6 +35,6 @@ function lddlite_display_view_business( $listing )
         'logo'          => $logo,
     );
 
-    return lddlite_parse_template( 'display/business', $template_vars );
+    return ld_parse_template( 'display/business', $template_vars );
 
 }

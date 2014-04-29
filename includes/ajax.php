@@ -142,7 +142,7 @@ if ( $action == 'approve' )
             'description'   => $listing[0]->description
         );
 
-        $approved_body = lddlite_parse_template( 'email_approved', $data );
+        $approved_body = ld_parse_template( 'email_approved', $data );
         dirl_mail( $listing[0]->email, $lddlite->options['email_onapprove'], $approved_body );
 
         // Update the approved list and save it
@@ -300,11 +300,11 @@ else if ( $action == 'add' )
 
         // Notification email that gets sent to the visitor who submitted the listing.
         // The subject lines could be added to wp-admin for better user experience/customization
-        $submit_body = lddlite_parse_template('email_onsubmit', $data);
+        $submit_body = ld_parse_template('email_onsubmit', $data);
         dirl_mail($data['email'], $lddlite->options['email_onsubmit'], $submit_body);
 
         // Send an email to the site owner
-        $admin_body = lddlite_parse_template('email_admin', $data);
+        $admin_body = ld_parse_template('email_admin', $data);
         dirl_mail($data['site_email'], 'A new listing is awaiting approval.', $admin_body);
 
     }
