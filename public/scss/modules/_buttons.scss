@@ -1,4 +1,4 @@
-%btn {
+%btn-old {
     position: relative;
     vertical-align: top;
     padding: .2em 1em;
@@ -30,6 +30,31 @@
     }
 }
 
+%btn {
+  display: inline-block;
+  padding: 2px 16px;
+  font-size: 1.6em;
+  line-height: 1.6em;
+  color: #fff;
+  background-color: $primary-light;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px $primary-dark;
+  &:hover {
+    background-color: $primary-mid;
+    color: #fff;
+  }
+  &:focus {
+    outline: none
+  }
+  &:active {
+    background-color: $primary-mid;
+    box-shadow: 0 2px $primary-dark;
+    -webkit-transform: translateY(3px);
+    -ms-transform: translateY(3px);
+    transform: translateY(3px);
+  }
+}
 
 .black-btn {
   @extend %btn;
