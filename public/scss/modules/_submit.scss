@@ -66,26 +66,27 @@
 
     > li {
       margin: 0;
-      padding-right: 3px;
+      padding-right: 6px;
       text-align: center;
       position: relative;
 
       &:first-child {
-        padding-left:3px;
+        padding-left:6px;
       }
     }
 
     li.ldd-submit-listing_here a {
-      background: rgba(32, 69, 108, 0.12);
-      border: 0;
-      top: 0;
+      background: #fff;
+      border-top: 3px solid rgba(32, 69, 108, 0.3);
+      top: 3px;
       color:#666;
+      z-index: 100;
     }
 
     li a {
       display:block;
       height:45px;
-      border: 1px solid rgba(32, 69, 108, 0.12);
+      border: 1px solid rgba(32, 69, 108, 0.1);
       border-bottom: 0;
       position: relative;
       top: 1px;
@@ -195,7 +196,7 @@
 
 .submit-form-wrap {
   margin-bottom: .5em;
-  border: 1px solid rgba(32, 69, 108, 0.12);
+  border: 1px solid rgba(32, 69, 108, 0.3);
   border-radius: 2px;
   padding: 1em;
 }
