@@ -273,6 +273,12 @@ p {
     max-width: 100%; }
   .business-directory #submit-listing button[type="submit"] {
     width: 100%; }
+  .business-directory #submit-listing ul li a.submit-error,
+  .business-directory #submit-listing span.submit-error {
+    color: #c00; }
+  .business-directory #submit-listing input.submit-error {
+    border-color: #c00 !important;
+    background-color: #ffd5d5; }
   .business-directory .submit-form-wrap {
     margin-bottom: .5em;
     border: 1px solid rgba(32, 69, 108, 0.12);

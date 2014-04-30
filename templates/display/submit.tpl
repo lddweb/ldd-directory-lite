@@ -47,8 +47,8 @@
                             <div class="pure-u-11-24">
                                 <label for="username">
                                     <span>Username:</span>
-                                    <input id="username" name="ld_s_username"
-                                           placeholder="Choose a username" type="text" tabindex="3" value="hot-taco" required>
+                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" tabindex="3" value="hot-taco" required>
+                                    {{errors.username}}
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
@@ -175,6 +175,7 @@
                             <label for="url">
                                 <span>Website</span>
                                 <input id="url" name="ld_s_url" type="text" tabindex="14">
+                                <span class="submit-error">Fake error</span>
                             </label>
                             <label for="facebook">
                                 <span>Facebook Page</span>
@@ -241,6 +242,16 @@
 
 
     jQuery(document).ready(function() {
+
+        jQuery('span.submit-error').prev().addClass('submit-error');
+        console.log( jQuery('li').has('span.submit-error') );
+        jQuery('li').has('span.submit-error').each(function( index ) {
+            var tab_id = jQuery(this).attr('id');
+            var tab_number = parseInt( tab_id.split('_s').pop() ) + 1;
+            var tab_class = tab_id.substring( 0, tab_id.length - 1 ) + tab_number;
+            jQuery('.'+tab_class).addClass('submit-error');
+        });
+
         var first_tab = jQuery("#ldd-submit-listing1_s0");
         var last_tab  = jQuery("#ldd-submit-listing1_s3");
         var prev_button = jQuery(".ldd-submit-listing_nav.prev");

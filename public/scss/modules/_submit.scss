@@ -190,6 +190,15 @@
     width: 100%;
   }
 
+  ul li a.submit-error ,
+  span.submit-error {
+    color: #c00;
+  }
+
+  input.submit-error {
+    border-color: #c00 !important;
+    background-color: #ffd5d5;
+  }
 }
 
 
