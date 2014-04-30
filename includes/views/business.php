@@ -26,7 +26,7 @@ function lddlite_display_view_business( $listing )
 
     $template_vars = array(
         'search'        => ld_get_search_form(),
-        'base_url'      => $permalink,
+        'url'      => $permalink,
         'title'         => $listing->post_title,
         'form_action'   => admin_url( 'admin-ajax.php' ),
         'nonce'         => wp_create_nonce( 'contact-form-nonce' ),

@@ -177,7 +177,8 @@
   input[type="password"],
   input[type="url"],
   input[type="file"],
-  textarea {
+  textarea,
+  select {
     padding: 10px;
   }
 
@@ -193,12 +194,18 @@
 
   ul li a.submit-error ,
   span.submit-error {
-    color: #c00;
+    color: $alert-red-dark;
+  }
+
+  span.submit-error {
+    margin-top: 0;
+    font-weight: 500;
+    font-size: 80%;
   }
 
   input.submit-error {
-    border-color: #c00 !important;
-    background-color: #ffd5d5;
+    border-color: $alert-red-dark !important;
+    background-color: $alert-red;
   }
 }
 
@@ -215,23 +222,19 @@
   margin: 0 1px 0 4px;
 }
 
+.submit-success {
 
+  ul.submit-review {
+    list-style: none;
 
-::-webkit-input-placeholder {
-  color:#888;
+    span {
+      display: inline-block;
+      margin: .2em 0;
+      font-weight: 700;
+      width: 25%;
+    }
+
+  }
 }
-:-moz-placeholder {
-  color:#888;
-}
-::-moz-placeholder {
-  color:#888;
-}
-:-ms-input-placeholder {
-  color:#888;
-}
-
-
-
-
 
 

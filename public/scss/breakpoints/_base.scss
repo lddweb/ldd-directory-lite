@@ -254,6 +254,18 @@ nav {
     border-radius: 3px;
 }
 
+.listing-title {
+  margin: .2em 0;
+  text-align: center;
+  font-size: 3em;
+}
+.submit-success {
+  .listing-title {
+    margin: 1em 0 .5em;
+    border-bottom: 1px solid rgba( $primary-dark, 0.5 );
+  }
+}
+
 .type-listing {
     padding: .5em 0;
     margin-bottom: .5em;

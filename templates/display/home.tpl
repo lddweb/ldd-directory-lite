@@ -38,7 +38,7 @@
             <a href="" class="post-thumbnail"><img src="http://www.aaas.org/sites/default/files/migrate/uploads/0707green_building_0242.jpg"></a>
 
             <header class="entry-header">
-                <h2 class="entry-title listing-title"><a href="{{base_url}}?show=business&term=herman_melville">Example Listing Business</a></h2>
+                <h2 class="entry-title listing-title"><a href="{{url}}?show=business&term=herman_melville">Example Listing Business</a></h2>
                 <div class="entry-meta">
                     <p class="website"><a href="">lddconsulting.com</a></p>
                     <p class="phone" style="font-size: 100%; display: none;">(505) 455-8749</p>

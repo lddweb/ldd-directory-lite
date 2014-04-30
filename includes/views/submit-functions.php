@@ -29,25 +29,39 @@ function lddlite_dropdown_subdivision( $subdivision )
 }
 
 
-function lddlite_dropdown_country()
+function ld_get_country_array() {
+
+    $country_file = LDDLITE_PATH . '/includes/views/select/countries.inc';
+
+    if ( !file_exists( $country_file ) )
+        return array();
+
+    $countries = file( $country_file );
+    $data = array();
+
+    foreach ( $countries as $country ) {
+        $line = explode( ',', $country );
+        $data[ $line[0] ] = $line[1];
+    }
+
+    return $data;
+}
+
+
+function ld_dropdown_country()
 {
 
-    $countries_inc = LDDLITE_PATH . '/includes/views/select/countries.inc';
+    $countries = ld_get_country_array();
 
-    if ( !file_exists( $countries_inc ) )
+    if ( empty( $countries ) )
         return  '<input id="country" name="ld_s_country" type="text" tabindex="7" required>';
 
-    $_countries = file( $countries_inc );
 
     $output = '<select id="country" name="ld_s_country" tabindex="7" required>';
 
-    foreach ( $_countries as $line ) {
-        $field = explode( ',', $line );
-        $output .= '<option value="' . $field[0] . '"';
-        if ( isset( $_SESSION['ldd-country'] ) && $field[0] == $_SESSION['ldd-country'] ) {
-            $output .= ' selected ';
-        }
-        $output .= '>' . $field[1] . '</option>';
+    foreach ( $countries as $code => $name ) {
+        $output .= '<option value="' . $code . '"';
+        $output .= '>' . $name . '</option>';
     }
 
     $output .= '</select>';

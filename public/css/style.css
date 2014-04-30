@@ -129,6 +129,14 @@ p {
       .business-directory .directory-search button:hover {
         background-color: white;
         color: #20456c; }
+  .business-directory ::-webkit-input-placeholder {
+    color: #888; }
+  .business-directory :-moz-placeholder {
+    color: #888; }
+  .business-directory ::-moz-placeholder {
+    color: #888; }
+  .business-directory :-ms-input-placeholder {
+    color: #888; }
   .business-directory .panel,
   .business-directory .panels-navigation {
     width: 90%;
@@ -262,7 +270,8 @@ p {
   .business-directory #submit-listing input[type="password"],
   .business-directory #submit-listing input[type="url"],
   .business-directory #submit-listing input[type="file"],
-  .business-directory #submit-listing textarea {
+  .business-directory #submit-listing textarea,
+  .business-directory #submit-listing select {
     padding: 10px; }
   .business-directory #submit-listing textarea {
     height: 100px;
@@ -271,10 +280,14 @@ p {
     width: 100%; }
   .business-directory #submit-listing ul li a.submit-error,
   .business-directory #submit-listing span.submit-error {
-    color: #c00; }
+    color: #cc0000; }
+  .business-directory #submit-listing span.submit-error {
+    margin-top: 0;
+    font-weight: 500;
+    font-size: 80%; }
   .business-directory #submit-listing input.submit-error {
-    border-color: #c00 !important;
-    background-color: #ffd5d5; }
+    border-color: #cc0000 !important;
+    background-color: #fbe3e4; }
   .business-directory .submit-form-wrap {
     margin-bottom: .5em;
     border: 1px solid rgba(32, 69, 108, 0.3);
@@ -282,14 +295,13 @@ p {
     padding: 1em; }
   .business-directory .ldd-submit-listing_nav {
     margin: 0 1px 0 4px; }
-  .business-directory ::-webkit-input-placeholder {
-    color: #888; }
-  .business-directory :-moz-placeholder {
-    color: #888; }
-  .business-directory ::-moz-placeholder {
-    color: #888; }
-  .business-directory :-ms-input-placeholder {
-    color: #888; }
+  .business-directory .submit-success ul.submit-review {
+    list-style: none; }
+    .business-directory .submit-success ul.submit-review span {
+      display: inline-block;
+      margin: .2em 0;
+      font-weight: 700;
+      width: 25%; }
   .business-directory .cf:before, .business-directory .cf:after {
     content: "";
     display: table; }
@@ -437,6 +449,13 @@ p {
     margin: .5em 0;
     padding: .5em;
     border-radius: 3px; }
+  .business-directory .listing-title {
+    margin: .2em 0;
+    text-align: center;
+    font-size: 3em; }
+  .business-directory .submit-success .listing-title {
+    margin: 1em 0 .5em;
+    border-bottom: 1px solid rgba(32, 69, 108, 0.5); }
   .business-directory .type-listing {
     padding: .5em 0;
     margin-bottom: .5em;

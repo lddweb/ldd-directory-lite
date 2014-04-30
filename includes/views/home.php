@@ -24,7 +24,7 @@ function lddlite_display_view_home( $term = false )
     ) );
 
     $template_vars = array(
-        'base_url'      => get_permalink( $post->ID ),
+        'url'      => get_permalink( $post->ID ),
         'search_form'   => ld_get_search_form(),
         'categories'    => $categories,
     );

@@ -15,11 +15,9 @@
     <section class="directory-content">
 
 
-
-
-    <form id="submit-listing" name="submit-listing" action="{{action}}" method="post">
+    <form id="submit-listing" name="submit-listing" action="{{action}}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="__T__action" value="submit_form" />
-        <input type="hidden" name="__T__nonce" value="{{nonce}}" />
+        {{nonce}}
 
         <div id="submit-items"></div>
 
@@ -32,6 +30,7 @@
                             <label for="name">
                                 <span>Name:</span>
                                 <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" value="Mark's Hot Taco's" tabindex="1" required autofocus>
+                                {{errors.name}}
                             </label>
                             <label for="description">
                                 <span>Description:</span>
@@ -39,6 +38,7 @@
 
  Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit.
                                 </textarea>
+                                {{errors.description}}
                             </label>
                         </div>
                     </fieldset>
@@ -55,6 +55,7 @@
                                 <label for="email">
                                     <span>Email:</span>
                                     <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" tabindex="4" value="mark@watero.us" required>
+                                    {{errors.email}}
                                 </label>
                             </div>
                         </div>
@@ -65,12 +66,14 @@
                                 <label for="phone">
                                     <span>Contact Phone</span>
                                     <input id="phone" name="ld_s_phone" type="text" tabindex="12" value="505-252-0410">
+                                    {{errors.phone}}
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
                                 <label for="fax">
                                     <span>Contact Fax</span>
                                     <input id="fax" name="ld_s_fax" type="text" tabindex="13">
+                                    {{errors.fax}}
                                 </label>
                             </div>
                         </div>
@@ -83,6 +86,7 @@
                             <label for="country">
                                 <span>Country</span>
                                 {{country_dropdown}}
+                                {{errors.country}}
                             </label>
                         </div>
                     </fieldset>
@@ -92,12 +96,14 @@
                                 <label for="street">
                                     <span>Street</span>
                                     <input id="street" name="ld_s_street" type="text" tabindex="7" value="450 Michelle Cir" required>
+                                    {{errors.street}}
                                 </label>
                             </div>
                             <div class="pure-u-7-24">
                                 <label for="city">
                                     <span>City / Town:</span>
                                     <input id="city" name="ld_s_city" type="text" tabindex="8" value="Bernalillo" required>
+                                    {{errors.city}}
                                 </label>
                             </div><div class="pure-u-1-24"></div>
                             <div class="pure-u-8-24">
@@ -156,12 +162,14 @@
                                         <option value="WI">Wisconsin</option>
                                         <option value="WY">Wyoming</option>
                                     </select>
+                                    {{errors.subdivision}}
                                 </label>
                             </div><div class="pure-u-1-24"></div>
                             <div class="pure-u-7-24">
-                                <label for="zip">
+                                <label for="post_code">
                                     <span>Zip/Postal:</span>
-                                    <input id="zip" name="ld_s_zip" type="text" tabindex="10" value="87004" required>
+                                    <input id="post_code" name="ld_s_post_code" type="text" tabindex="10" value="87004" required>
+                                    {{errors.post_code}}
                                 </label>
                             </div>
                         </div>
@@ -174,20 +182,19 @@
                         <div class="panel">
                             <label for="url">
                                 <span>Website</span>
-                                <input id="url" name="ld_s_url" type="text" tabindex="14">
-                                <span class="submit-error">Fake error</span>
+                                <input id="url" name="ld_s_url[website]" type="text" tabindex="14">
                             </label>
                             <label for="facebook">
                                 <span>Facebook Page</span>
-                                <input id="facebook" name="ld_s_facebook" type="text" tabindex="15">
+                                <input id="facebook" name="ld_s_url[facebook]" type="text" tabindex="15">
                             </label>
                             <label for="twitter">
                                 <span>Twitter Handle</span>
-                                <input id="twitter" name="ld_s_twitter" type="text" tabindex="16">
+                                <input id="twitter" name="ld_s_url[twitter]" type="text" tabindex="16">
                             </label>
                             <label for="linkedin">
                                 <span>Linked In Profile</span>
-                                <input id="linkedin" name="ld_s_linkedin" type="text" tabindex="17">
+                                <input id="linkedin" name="ld_s_url[linkedin]" type="text" tabindex="17">
                             </label>
                         </div>
                     </fieldset>
@@ -199,6 +206,7 @@
                             <label for="logo">
                                 <span>Logo Image</span>
                                 <input id="logo" name="ld_s_logo" type="file">
+                                {{errors.logo}}
                             </label>
                         </div>
                     </fieldset>
@@ -241,16 +249,29 @@
     });
 
 
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function($) {
 
-        jQuery('span.submit-error').prev().addClass('submit-error');
-        console.log( jQuery('li').has('span.submit-error') );
-        jQuery('li').has('span.submit-error').each(function( index ) {
-            var tab_id = jQuery(this).attr('id');
+        $('span.submit-error').prev().addClass('submit-error');
+        console.log( $('li').has('span.submit-error') );
+        $('li').has('span.submit-error').each(function( index ) {
+            var tab_id = $(this).attr('id');
             var tab_number = parseInt( tab_id.split('_s').pop() ) + 1;
             var tab_class = tab_id.substring( 0, tab_id.length - 1 ) + tab_number;
-            jQuery('.'+tab_class).addClass('submit-error');
+            $('.'+tab_class).addClass('submit-error');
         });
+
+        $('.submit-error').focus(function(){
+            $(this).removeClass('submit-error');
+            $(this).next('span').animate({height: 0, opacity: 0}, 'slow', function() {
+                $(this).remove();
+            });
+        });
+
+        $('a.submit-error').click(function() {
+            $(this).removeClass('submit-error');
+        });
+
+            $("#submit-items li").hasClass('submit-error');
 
         var first_tab = jQuery("#ldd-submit-listing1_s0");
         var last_tab  = jQuery("#ldd-submit-listing1_s3");
@@ -267,7 +288,7 @@
                 prev_button.hide();
                 next_button.show();
             } else if ( last_tab.hasClass('ldd-submit-listing1_on') ) {
-                jQuery('.submit-confirm').slideDown();
+                $('.submit-confirm:hidden').slideDown();
                 prev_button.show();
                 next_button.hide();
             } else {
@@ -275,6 +296,10 @@
                 next_button.show();
             }
         });
+
+        if ( $("#submit-items li").hasClass('submit-error') ) {
+            $('.submit-confirm:hidden').show();
+        }
 
         var submit_button = jQuery('#submit-form-submit');
 
