@@ -115,7 +115,9 @@ function ld_submit_validate_form( $data) {
     else
         $data['url'] = ld_submit_sanitize_urls( $data['url'] );
 
-    if ( !empty( $submit_errors->get_error_codes() ) )
+    $codes = $submit_errors->get_error_codes();
+
+    if ( !empty( $codes ) )
         return $submit_errors;
 
     return true;

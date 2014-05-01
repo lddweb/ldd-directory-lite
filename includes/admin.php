@@ -1,7 +1,7 @@
 <?php
 
 
-class _LDD_Directory_Admin
+class LDD_Directory_Admin
 {
 
     /**
@@ -16,7 +16,9 @@ class _LDD_Directory_Admin
     public static function get_in()
     {
 
-        if ( !isset( self::$_instance ) && !( self::$_instance instanceof _LDD_Directory_Admin ) )
+        require_once( LDDLITE_PATH . '/includes/pointers.php' );
+
+        if ( !isset( self::$_instance ) && !( self::$_instance instanceof LDD_Directory_Admin ) )
         {
             self::$_instance = new self;
             self::$_instance->action_filters();
@@ -200,5 +202,5 @@ class _LDD_Directory_Admin
 }
 
 // Get... in!
-_LDD_Directory_Admin::get_in();
+LDD_Directory_Admin::get_in();
 
