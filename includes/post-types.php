@@ -114,7 +114,7 @@ function lddlite_filter_post_type_link( $post_link, $post )
 
     $directory_link = get_permalink( $lddlite->directory_home_ID );
 
-    return ( $directory_link . '?show=business&t=' . $post->post_name );
+    return ( $directory_link . '?show=listing&t=' . $post->post_name );
 }
 
 

@@ -25,7 +25,7 @@ if ( ! defined( 'WPINC' ) )
     die;
 
 
-define( 'LDDLITE_VERSION',      '0.1' );
+define( 'LDDLITE_VERSION',      '2.0.0' );
 
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
 define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
@@ -44,7 +44,7 @@ define( 'LDDLITE_PFX',          '_lddlite_' );
 
 
 
-final class _LDD_Directory_Lite {
+final class LDD_Directory_Lite {
 
     /**
      * @var $_instance An instance of ones own instance
@@ -69,7 +69,7 @@ final class _LDD_Directory_Lite {
 
     public static function get_in() {
 
-        if ( !isset( self::$_instance ) && !( self::$_instance instanceof _LDD_Business_Directory ) ) {
+        if ( !isset( self::$_instance ) && !( self::$_instance instanceof LDD_Directory_Lite ) ) {
             self::$_instance = new self;
             self::$_instance->include_files();
             self::$_instance->populate_options();
@@ -98,7 +98,7 @@ final class _LDD_Directory_Lite {
     public function populate_options() {
 
         $defaults = apply_filters( 'lddlite_default_options', array(
-         // 'version'           => LDDLITE_VERSION,
+            'version'           => 0.1,
             'public_or_private' => 1,
             'google_maps'       => 1,
             'email_onsubmit'    => 'Your directory listing was successfully submitted!',
@@ -109,9 +109,12 @@ final class _LDD_Directory_Lite {
             get_option( 'lddlite-options' ),
             $defaults );
 
-        if ( !isset( $options['version'] ) || version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
+        $dir = dirname( __FILE__ );
+        $old_plugin = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/ldd-business-directory/lddbd_core.php';
+
+        if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
             require_once( LDDLITE_PATH . '/upgrade.php' );
-            add_action( 'init', 'ld_upgrade_path' );
+            add_action( 'init', 'ld_upgrade_path', 20 );
         }
 
         $this->options = $options;
@@ -158,32 +161,32 @@ final class _LDD_Directory_Lite {
     }
 
 
-        public function load_plugin_textdomain() {
+    public function load_plugin_textdomain() {
 
-            $lang_dir = LDDLITE_PATH . '/languages/';
-            $lang_dir = apply_filters( 'lddlite_languages_directory', $lang_dir );
+        $lang_dir = LDDLITE_PATH . '/languages/';
+        $lang_dir = apply_filters( 'lddlite_languages_directory', $lang_dir );
 
-            $locale = apply_filters( 'plugin_locale', get_locale(), self::$_slug );
-            $mofile = $lang_dir . self::$_slug . $locale . '.mo';
+        $locale = apply_filters( 'plugin_locale', get_locale(), self::$_slug );
+        $mofile = $lang_dir . self::$_slug . $locale . '.mo';
 
-            if ( file_exists( $mofile ) )
-                load_textdomain( self::$_slug, $mofile );
-            else
-                load_plugin_textdomain( self::$_slug, false, $lang_dir );
+        if ( file_exists( $mofile ) )
+            load_textdomain( self::$_slug, $mofile );
+        else
+            load_plugin_textdomain( self::$_slug, false, $lang_dir );
 
-        }
+    }
 
 
-        public function add_action_links( $links ) {
+    public function add_action_links( $links ) {
 
-            return array_merge(
-                array(
-                    'settings' => '<a href="' . admin_url( 'options-writing.php' ) . '">' . __( 'Settings', 'wp-bitly' ) . '</a>'
-                ),
-                $links
-            );
+        return array_merge(
+            array(
+                'settings' => '<a href="' . admin_url( 'options-writing.php' ) . '">' . __( 'Settings', 'wp-bitly' ) . '</a>'
+            ),
+            $links
+        );
 
-        }
+    }
 
 
     public function register_scripts() {
@@ -191,7 +194,7 @@ final class _LDD_Directory_Lite {
         wp_register_script( 'lddlite-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
 
         wp_register_style( 'lddlite-css', LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
-	    wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
+        wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
     }
 
 
@@ -204,7 +207,7 @@ final class _LDD_Directory_Lite {
 
 
 function lddlite() {
-    return _LDD_Directory_Lite::get_in();
+    return LDD_Directory_Lite::get_in();
 }
 
 lddlite();

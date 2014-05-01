@@ -141,7 +141,7 @@ function ld_view_category( $cat_id )
             $nth++;
 
             // the following is used to build our title, and the logo
-            $link = '<a href="' . $permalink . '?show=business&t=' . $listing->post_name . '" title="' . esc_attr( $listing->post_title ) . '" %2$s>%1$s</a>';
+            $link = '<a href="' . $permalink . '?show=listing&t=' . $listing->post_name . '" title="' . esc_attr( $listing->post_title ) . '" %2$s>%1$s</a>';
 
             // the logo
             if ( has_post_thumbnail( $listing->ID ) )

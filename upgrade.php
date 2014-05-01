@@ -31,11 +31,16 @@ function _ldup_get_listings() {
 
     // Pull everything from the categories table
     $query = sprintf("
-                SELECT name
+                SELECT id, name
                 FROM `%s`
             ", $tables['cat'] );
-    $categories = $wpdb->get_col( $query );
+    $results = $wpdb->get_results( $query );
 
+    $categories = array();
+
+    foreach ( $results as $cat ) {
+        $categories[ $cat->id ] = $cat->name;
+    }
 
     // Grab all the directory listings
     $query = sprintf("
@@ -50,23 +55,15 @@ function _ldup_get_listings() {
 }
 
 
-function _ldup_create_categories( $categories ) {
+function _ldup_assign_categories( $listing_cats, $category_map ) {
     global $wpdb;
 
-    $tables = _ldup_get_tables();
+    if ( !empty( $listing_cats ) ) {
+        $listing_cats = str_replace( 'x', '', ltrim( $listing_cats, ',' ) );
+        $listing_cats = explode( ',', $listing_cats );
 
-    if ( !empty( $categories ) ) {
-        $categories = str_replace( 'x', '', ltrim( $categories, ',' ) );
-
-        $query = sprintf("
-                    SELECT name
-                    FROM `%s`
-                      WHERE id IN (%s)
-                ", $tables['cat'], $categories );
-        $results = $wpdb->get_col( $query );
-
-        foreach ( $results as $category ) {
-            $term = get_term_by( 'name', $category, LDDLITE_TAX_CAT );
+        foreach ( $listing_cats as $cat_id ) {
+            $term = get_term_by( 'name', $category_map[ $cat_id ], LDDLITE_TAX_CAT );
             $term_ids[] = $term->term_id;
         }
 
@@ -91,12 +88,11 @@ function _ldup_drop_tables() {
 
 function ld_upgrade_path() {
 
-    // Initialize these variables once, outside the loop
     $wp_upload_dir = wp_upload_dir();
-    list( $categories, $listings ) = _ldup_get_listings();
+    list( $category_map, $listings ) = _ldup_get_listings();
 
-    // Using our old category names, recreate them under our custom taxonomy
-    foreach ( $categories as $category ) {
+    // Using the old category names, add them to the new taxonomy
+    foreach ( $category_map as $category ) {
         // There was never any error checking before, don't repeat categories
         if ( !term_exists( $category, LDDLITE_TAX_CAT ) )
             wp_insert_term( $category, LDDLITE_TAX_CAT );
@@ -104,24 +100,24 @@ function ld_upgrade_path() {
     }
 
 
-    // Loop through existing listings and create new posts from them.
+    // Upgrade our listings to the new custom post type format
     foreach ( $listings as $listing ) {
 
-        $term_ids =_ldup_create_categories( $listing->categories );
+        $term_ids =_ldup_assign_categories( $listing->categories, $category_map );
 
-        $uid = false;
+        $user_id = false;
 
         if ( !empty( $listing->login ) ) {
 
-            $uid = username_exists( $listing->login );
-            if ( !$uid && !empty( $listing->email ) && email_exists( $listing->email ) == false )
-                $uid = wp_create_user( $listing->login, $listing->password, $listing->email );
+            $user_id = username_exists( $listing->login );
+            if ( !$user_id && !empty( $listing->email ) && email_exists( $listing->email ) == false )
+                $user_id = wp_create_user( $listing->login, $listing->password, $listing->email );
 
         }
 
         // Failsafe
-        if ( !get_user_by( 'id', $uid ) )
-            $uid = get_current_user_id();
+        if ( !get_user_by( 'id', $user_id ) )
+            $user_id = get_current_user_id();
 
 
         $post_status = ( 'true' == $listing->approved ) ? 'publish' : 'pending';
@@ -132,23 +128,20 @@ function ld_upgrade_path() {
 
 
         // Create a post for this listing.
-        $listing = array(
+        $new = array(
             'post_content'  => sprintf( '%s', wp_unslash( $listing->description ) ),
             'post_title'    => sprintf( '%s', wp_unslash( $listing->name ) ),
             'post_status'   => $post_status,
             'post_type'     => LDDLITE_POST_TYPE,
-            'post_author'   => $uid,
+            'post_author'   => $user_id,
             'post_date'     => $date,
             'tax_input'     => array( LDDLITE_TAX_CAT => $term_ids ),
         );
 
-        $post_id = wp_insert_post( $listing );
+        $post_id = wp_insert_post( $new );
 
-        // Hopefully this is never false?!
+
         if ( $post_id ) {
-
-            if ( !function_exists( 'ld_submit_sanitize_urls' ) )
-                require_once( LDDLITE_PATH . '/includes/views/submit-process.php' );
 
             $post_meta = array(
                 'address_one'   => $listing->address_street,
@@ -171,6 +164,9 @@ function ld_upgrade_path() {
                 'url_linkedin'  => esc_url_raw( $listing->linkedin ),
             );
 
+            if ( !function_exists( 'ld_submit_sanitize_urls' ) )
+                require_once( LDDLITE_PATH . '/includes/views/submit-process.php' );
+
             $urls = ld_submit_sanitize_urls( $urls );
 
             $post_meta = array_merge( $post_meta, $urls );
@@ -183,7 +179,7 @@ function ld_upgrade_path() {
             if ( !empty( $listing->logo ) && file_exists( $wp_upload_dir['basedir'] . '/' . $listing->logo ) ) {
 
                 $filename = $wp_upload_dir['path'] . basename( $listing->logo );
-                rename( $wp_upload_dir['basedir'] . '/' . $listing->logo, $filename );
+                copy( $wp_upload_dir['basedir'] . '/' . $listing->logo, $filename );
 
                 $filetype = wp_check_filetype( $filename, null );
 
@@ -210,14 +206,20 @@ function ld_upgrade_path() {
 
     } // foreach
 
+    // @TODO Let's add this back in a few months. We'll leave it out just in case there's any unforeseen upgrade problems.
+    // @TODO Then add it back in to clean up left over tables when we have enough feedback.
     //_ldup_drop_tables();
+    // @TODO Don't forget to delete old file directories
 
     $options = get_option( 'lddlite-options', array() );
     $options['version'] = LDDLITE_VERSION;
     update_option( 'lddlite-options', $options );
 
+    $old_plugin = '/ldd-business-directory/lddbd_core.php';
+
     // Last but not least, out with the old
-    deactivate( '/ldd-business-directory/lddbd_core.php' );
+    deactivate_plugins( $old_plugin );
+    delete_plugins( $old_plugin );
 
 }
 

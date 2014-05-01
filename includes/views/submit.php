@@ -15,12 +15,10 @@ function ld_view_submit( $term = false ) {
 
     if ( isset( $_POST['nonce_field'] ) && !empty( $_POST['nonce_field'] ) ) {
 
-        if ( !wp_verify_nonce( $_POST['nonce_field'], 'submit-listing-nonce' ) )
-            die( 'No, kitty! That\'s a bad kitty!' );
+        if ( !wp_verify_nonce( $_POST['nonce_field'], 'submit-listing-nonce' ) || !empty( $_POST['ld_s_summary'] ) )
+            die( "No, kitty! That's a bad kitty!" );
 
         $data = ld_submit_process_post( $_POST );
-        // @TODO REMOVE
-        $data['street'] = '450 Michelle Cir';
         $valid = ld_submit_validate_form( $data );
 
     }

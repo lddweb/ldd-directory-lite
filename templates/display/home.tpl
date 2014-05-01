@@ -1,3 +1,12 @@
+<style>
+    .entry .business-directory ul li:before {
+        content: '';
+    }
+    html>body .entry .business-directory ul {
+        text-indent: 0;
+    }
+</style>
+
 <section class="business-directory directory-home cf">
 
     <nav class="lite-nav above-header center cf">

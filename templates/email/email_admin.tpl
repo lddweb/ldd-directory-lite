@@ -4,7 +4,6 @@
     <p>This submission is awaiting approval. Please visit the following link to view the new listing:</p>
 
     {{approval_link}}
-    {{this_will_be_removed}}
 
     <p>Business Name: <strong>{{name}}</strong><br />
         Business Description: <strong>{{description}}</strong><br />

@@ -45,6 +45,15 @@
                         </div>
                     </fieldset>
 
+                    <fieldset id="submit-pot">
+                        <div class="panel">
+                            <label for="summary">
+                                <span>summary</span>
+                                <input id="summary" name="ld_s_summary" placeholder="Add a summary for your listing" type="text">
+                            </label>
+                        </div>
+                    </fieldset>
+
                     <fieldset>
                         <div class="panel">
                             <label for="logo">
