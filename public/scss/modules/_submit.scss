@@ -123,15 +123,13 @@
     border: 0;
 
     legend {
-      text-align: left;
-      background-color: #fff;
-      color: #dbe1e8;
-      font-size: 2em;
-      font-weight: 700;
-      width: 100%;
-      padding: 5px 0 5px 10px;
       margin: 0 0 1em;
-      border-radius: 5px;
+      padding-top: .5em;
+      width: 100%;
+      text-align: left;
+      color: rgba( $primary-mid, 0.35 );
+      font-size: 2em;
+      border: 0;
     }
 
   }

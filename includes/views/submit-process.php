@@ -1,50 +1,73 @@
 <?php
+global $submit_errors;
 
 function ld_submit_create_user( $username, $email ) {
 
     $password = wp_generate_password( 14, true );
-    $uid = wp_create_user( $username, $password, $email );
+    $user_id = wp_create_user( $username, $password, $email );
 
-    if ( $uid )
-        wp_new_user_notification( $uid, $password );
+    if ( $user_id )
+        wp_new_user_notification( $user_id, $password );
 
-    return $uid;
+    return $user_id;
 }
 
 
-function ld_submit_create_listing( $data ) {
+function ld_submit_create_listing( $name, $description, $cat_id, $user_id ) {
 
-    $post_status = ( 'true' == $listing->approved ) ? 'publish' : 'pending';
-
-    // This only runs once, we can be a little pedantic.
-    $date = date( 'Y-m-d H:i:s' );
-
-    // Create a post for this listing.
-    $post = array(
-        'post_content'  => sprintf( '%s', $listing->description ),
-        'post_title'    => sprintf( '%s', $listing->name ),
-        'post_status'   => $post_status,
+    $listing = array(
+        'post_content'  => $description,
+        'post_title'    => $name,
+        'post_status'   => 'pending',
         'post_type'     => LDDLITE_POST_TYPE,
-        'post_author'   => $uid,
-        'post_date'     => $date,
-        'tax_input'     => array( LDDLITE_TAX_CAT => $term_ids ),
+        'post_author'   => $user_id,
+        'post_date'     => date( 'Y-m-d H:i:s' ),
     );
-    $post_id = wp_insert_post( $post );
+
+    $post_id = wp_insert_post( $listing );
+    wp_set_post_terms( $post_id, $cat_id, LDDLITE_TAX_CAT );
+
+    return $post_id;
 }
+
+
+function ld_submit_create_meta( $data, $post_id ) {
+
+    $remove = array(
+        'name',
+        'description',
+        'username', // These two should already be gone, but let's pretend
+        'email',
+    );
+
+    $data = array_diff_key( $data, array_flip( $remove ) );
+
+    foreach ( $data['url'] as $key => $value ) {
+        $data[ 'url_' . $key ] = $value;
+    }
+    unset( $data['url'] );
+
+    foreach ( $data as $key => $value ) {
+        add_post_meta( $post_id, LDDLITE_PFX . $key, $value );
+    }
+
+}
+
 
 function ld_submit_process_post( $post_data ) {
 
     $required_fields = apply_filters( 'lddlite_required_fields', array(
-        'ld_s_name'         => '',
-        'ld_s_description'  => '',
-        'ld_s_username'     => '',
-        'ld_s_email'        => '',
-        'ld_s_phone'        => '',
-        'ld_s_street'       => '',
-        'ld_s_city'         => '',
-        'ld_s_subdivision'  => '',
-        'ld_s_post_code'    => '',
-        'ld_s_country'      => '',
+        'ld_s_name' => '',
+        'ld_s_description' => '',
+        'ld_s_username' => '',
+        'ld_s_email' => '',
+        'ld_s_contact_email' => '',
+        'ld_s_contact_phone' => '',
+        'ld_s_address_one' => '',
+        'ld_s_city' => '',
+        'ld_s_subdivision' => '',
+        'ld_s_post_code' => '',
+        'ld_s_country' => '',
     ) );
 
     $post_data = wp_parse_args( $post_data, $required_fields );
@@ -73,8 +96,9 @@ function ld_submit_validate_form( $data) {
 
     $submit_errors = new WP_Error;
 
+    ld_submit_validate_category( $data['category'] );
     ld_submit_validate_user( $data['username'], $data['email'] );
-    $data = ld_submit_validate_phone( $data );
+    ld_submit_validate_phone( $data['contact_phone'] );
 
     if ( empty( $data['street'] ) )
         ld_submit_add_errors( 'street_required' );
@@ -96,14 +120,21 @@ function ld_submit_validate_form( $data) {
     if ( !empty( $submit_errors->get_error_codes() ) )
         return $submit_errors;
 
-
-
     return true;
 }
 
 
+function ld_submit_validate_category( $cat_id ) {
+
+    $ids = get_terms( LDDLITE_TAX_CAT, array('fields' => 'ids', 'get' => 'all') );
+
+    if ( !in_array( $cat_id, $ids ) )
+        ld_submit_add_errors( 'category_invalid' );
+
+}
+
+
 function ld_submit_validate_user( $username, $email ) {
-    global $submit_errors;
 
     if ( $username != sanitize_user( $username, true ) )
         ld_submit_add_errors( 'username_invalid', $username );
@@ -117,25 +148,16 @@ function ld_submit_validate_user( $username, $email ) {
 }
 
 
-function ld_submit_validate_phone( $data ) {
-    global $submit_errors;
+function ld_submit_validate_phone( $number, $key = 'phone', $required = true ) {
 
-    $phone = preg_replace( '/[^0-9+]/', '', $data['phone'] );
-    $fax = ( isset( $data['fax'] ) && !empty( $data['fax'] ) ) ? preg_replace( '/[^0-9+]/', '', $data['fax'] ) : '';
+    $number = ld_sanitize_phone( $number );
 
-    if ( empty( $phone ) )
-        ld_submit_add_errors( 'phone_required' );
+    if ( $required && empty( $number ) )
+        ld_submit_add_errors( $key . '_required' );
 
-    if ( strlen( $phone ) < 7 || strlen( $phone ) > 16 )
-        ld_submit_add_errors( 'phone_invalid' );
+    if ( strlen( $number ) < 7 || strlen( $number ) > 16 )
+        ld_submit_add_errors( $key . '_invalid' );
 
-    if ( !empty( $fax ) && ( strlen( $fax ) < 7 || strlen( $fax ) > 16 ) )
-        ld_submit_add_errors( 'fax_invalid' );
-
-    $data['phone'] = $phone;
-    $data['fax']   = $fax;
-
-    return $data;
 }
 
 
@@ -156,7 +178,7 @@ function ld_submit_sanitize_urls( $urls ) {
         if ( 'twitter' != $type )
             $url = esc_url( $url );
 
-        $parsed = parse_url( $url ); md( $parsed );
+        $parsed = parse_url( $url );
 
         $scheme = ( 'website' == $type ) ? 'http' : 'https';
         $host = ( 'website' == $type ) ? $parsed['host'] : $hosts[ $type ];
@@ -187,6 +209,7 @@ function ld_submit_add_errors( $code, $data = null ) {
 function ld_submit_get_error_message( $error_slug ) {
 
     $error_messages = array(
+        'category_invalid'      => __( 'Please select a category', lddslug() ),
         'username_invalid'      => __( 'That is not a valid username', lddslug() ),
         'username_exists'       => __( 'That username already exists', lddslug() ),
         'email_exists'          => __( 'That email is already in use', lddslug() ),

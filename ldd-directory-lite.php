@@ -39,6 +39,7 @@ define( 'LDDLITE_TAX_TAG',      'listing_tag' );
 define( 'LDDLITE_TEMPLATES',    LDDLITE_PATH . '/templates' );
 define( 'LDDLITE_TPL_EXT',      'tpl' );
 
+define( 'LDDLITE_PFX',          '_lddlite_' );
 
 
 

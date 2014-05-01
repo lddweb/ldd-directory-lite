@@ -76,3 +76,7 @@ function ld_dropdown_country()
 
 }
 
+
+function ld_sanitize_phone( $number ) {
+    return preg_replace( '/[^0-9+]/', '', $number );
+}

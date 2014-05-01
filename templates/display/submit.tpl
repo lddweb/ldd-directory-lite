@@ -32,47 +32,42 @@
                                 <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" value="Mark's Hot Taco's" tabindex="1" required autofocus>
                                 {{errors.name}}
                             </label>
+                            <label for="category">
+                                <span>Listing Category:</span>
+                                {{category_dropdown}}
+                                {{errors.category}}
+                            </label>
                             <label for="description">
                                 <span>Description:</span>
-                                <textarea id="description" name="ld_s_description" placeholder="Enter a description for your business" tabindex="2" required>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-
- Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit.
-                                </textarea>
+                                <textarea id="description" name="ld_s_description" placeholder="Enter a description for your business" tabindex="3" required>{{data.description}}</textarea>
                                 {{errors.description}}
                             </label>
                         </div>
                     </fieldset>
+
                     <fieldset>
-                        <div class="panel pure-g-r">
-                            <div class="pure-u-11-24">
-                                <label for="username">
-                                    <span>Username:</span>
-                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" tabindex="3" value="hot-taco" required>
-                                    {{errors.username}}
-                                </label>
-                            </div><div class="pure-u-2-24"></div>
-                            <div class="pure-u-11-24">
-                                <label for="email">
-                                    <span>Email:</span>
-                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" tabindex="4" value="mark@watero.us" required>
-                                    {{errors.email}}
-                                </label>
-                            </div>
+                        <div class="panel">
+                            <label for="logo">
+                                <span>Logo</span>
+                                <input id="logo" name="ld_s_logo" type="file" tabindex="4">
+                                {{errors.logo}}
+                            </label>
                         </div>
                     </fieldset>
+
                     <fieldset>
                         <div class="panel pure-g-r">
                             <div class="pure-u-11-24">
                                 <label for="phone">
-                                    <span>Contact Phone</span>
-                                    <input id="phone" name="ld_s_phone" type="text" tabindex="12" value="505-252-0410">
+                                    <span>Contact Email</span>
+                                    <input id="contact_email" name="ld_s_contact_email" type="text" value="{{data.contact_email}}" tabindex="5" required>
                                     {{errors.phone}}
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
                                 <label for="fax">
-                                    <span>Contact Fax</span>
-                                    <input id="fax" name="ld_s_fax" type="text" tabindex="13">
+                                    <span>Contact Phone</span>
+                                    <input id="contact_phone" name="ld_s_contact_phone" type="text" value="{{data.contact_phone}}" tabindex="6" required>
                                     {{errors.fax}}
                                 </label>
                             </div>
@@ -81,7 +76,7 @@
                 </li>
                 <li>
                     <fieldset>
-                        <legend>Business Location</legend>
+                        <legend>Geographical Info</legend>
                         <div class="panel">
                             <label for="country">
                                 <span>Country</span>
@@ -95,21 +90,21 @@
                             <div class="pure-u-24-24">
                                 <label for="street">
                                     <span>Street</span>
-                                    <input id="street" name="ld_s_street" type="text" tabindex="7" value="450 Michelle Cir" required>
+                                    <input id="street" name="ld_s_address_one" type="text" tabindex="8" value="450 Michelle Cir" required>
                                     {{errors.street}}
                                 </label>
                             </div>
                             <div class="pure-u-7-24">
                                 <label for="city">
                                     <span>City / Town:</span>
-                                    <input id="city" name="ld_s_city" type="text" tabindex="8" value="Bernalillo" required>
+                                    <input id="city" name="ld_s_city" type="text" tabindex="9" value="Bernalillo" required>
                                     {{errors.city}}
                                 </label>
                             </div><div class="pure-u-1-24"></div>
                             <div class="pure-u-8-24">
                                 <label for="subdivision">
                                     <span>State:</span>
-                                    <select id="subdivision" name="ld_s_subdivision" tabindex="9" required>
+                                    <select id="subdivision" name="ld_s_subdivision" tabindex="10" required>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -168,7 +163,7 @@
                             <div class="pure-u-7-24">
                                 <label for="post_code">
                                     <span>Zip/Postal:</span>
-                                    <input id="post_code" name="ld_s_post_code" type="text" tabindex="10" value="87004" required>
+                                    <input id="post_code" name="ld_s_post_code" type="text" tabindex="11" value="87004" required>
                                     {{errors.post_code}}
                                 </label>
                             </div>
@@ -182,32 +177,42 @@
                         <div class="panel">
                             <label for="url">
                                 <span>Website</span>
-                                <input id="url" name="ld_s_url[website]" type="text" tabindex="14">
+                                <input id="url" name="ld_s_url[website]" type="text" tabindex="12">
                             </label>
                             <label for="facebook">
                                 <span>Facebook Page</span>
-                                <input id="facebook" name="ld_s_url[facebook]" type="text" tabindex="15">
+                                <input id="facebook" name="ld_s_url[facebook]" type="text" tabindex="13">
                             </label>
                             <label for="twitter">
                                 <span>Twitter Handle</span>
-                                <input id="twitter" name="ld_s_url[twitter]" type="text" tabindex="16">
+                                <input id="twitter" name="ld_s_url[twitter]" type="text" tabindex="14">
                             </label>
                             <label for="linkedin">
                                 <span>Linked In Profile</span>
-                                <input id="linkedin" name="ld_s_url[linkedin]" type="text" tabindex="17">
+                                <input id="linkedin" name="ld_s_url[linkedin]" type="text" tabindex="15">
                             </label>
                         </div>
                     </fieldset>
                 </li>
                 <li>
                     <fieldset>
-                        <legend>Business Logo</legend>
-                        <div class="panel">
-                            <label for="logo">
-                                <span>Logo Image</span>
-                                <input id="logo" name="ld_s_logo" type="file">
-                                {{errors.logo}}
-                            </label>
+                        <legend>Account Information</legend>
+
+                        <div class="panel pure-g-r">
+                            <div class="pure-u-11-24">
+                                <label for="username">
+                                    <span>Username:</span>
+                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" tabindex="16" value="hot-taco" required>
+                                    {{errors.username}}
+                                </label>
+                            </div><div class="pure-u-2-24"></div>
+                            <div class="pure-u-11-24">
+                                <label for="email">
+                                    <span>Your Email:</span>
+                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" tabindex="17" value="mark@watero.us" required>
+                                    {{errors.email}}
+                                </label>
+                            </div>
                         </div>
                     </fieldset>
                 </li>

@@ -2,13 +2,13 @@
 
 require_once( LDDLITE_PATH . '/includes/views/submit-functions.php' );
 
-add_action( 'add_meta_boxes', 'lddlite_move_metabox', 0 );
-add_action( 'init', 'lddlite_init_metaboxes' );
+add_action( 'add_meta_boxes', 'ld_move_metaboxes', 0 );
+add_action( 'init', 'ld_init_cmb' );
 
-add_filter( 'cmb_meta_boxes', 'lddlite_define_metaboxes' );
+add_filter( 'cmb_meta_boxes', 'ld_setup_cmb_boxes' );
 
-function lddlite_move_metabox()
-{
+
+function ld_move_metaboxes() {
     global $wp_meta_boxes;
 
     unset( $wp_meta_boxes[LDDLITE_POST_TYPE]['side']['low']['postimagediv'] );
@@ -19,52 +19,52 @@ function lddlite_move_metabox()
 
 }
 
-function lddlite_init_metaboxes()
-{
+
+function ld_init_cmb() {
+
     if ( !class_exists( 'cmb_Meta_Box' ) )
         require_once( LDDLITE_PATH . '/includes/cmb/init.php' );
+
 }
 
 
-function lddlite_define_metaboxes( array $meta_boxes )
-{
-    $prefix = '_lddlite_';
+function ld_setup_cmb_boxes( array $meta_boxes ) {
 
     $states = ld_get_subdivision_array( 'US' );
 
     $meta_boxes['listings_address'] = array(
-        'id'         => 'listings_address',
-        'title'      => __( 'Business Address', lddslug() ),
-        'pages'      => array( LDDLITE_POST_TYPE ),
-        'context'    => 'normal',
-        'priority'   => 'core',
-        'show_names' => true,
-        'fields'     => array(
+        'id'            => 'listings_address',
+        'title'         => __( 'Business Address', lddslug() ),
+        'pages'         => array( LDDLITE_POST_TYPE ),
+        'context'       => 'normal',
+        'priority'      => 'core',
+        'show_names'    => true,
+        'fields'        => array(
             array(
-                'name' => __( 'Address 1', lddslug() ),
-                'id'   => $prefix . 'address[one]',
-                'type' => 'text',
+                'name'      => __( 'Address 1', lddslug() ),
+                'id'        => LDDLITE_PFX . 'address_one',
+                'type'      => 'text',
             ),
             array(
-                'name' => __( 'Address 2', lddslug() ),
-                'id'   => $prefix . 'address[two]',
-                'type' => 'text',
+                'name'      => __( 'Address 2', lddslug() ),
+                'id'        => LDDLITE_PFX . 'address_two',
+                'type'      => 'text',
             ),
             array(
-                'name' => __( 'City', lddslug() ),
-                'id'   => $prefix . 'address_city',
-                'type' => 'text_medium',
+                'name'      => __( 'City', lddslug() ),
+                'id'        => LDDLITE_PFX . 'city',
+                'type'      => 'text_medium',
             ),
             array(
                 'name'      => __( 'State', lddslug() ),
-                'id'        => $prefix . 'address_subdivision',
+                'id'        => LDDLITE_PFX . 'subdivision',
                 'type'      => 'select',
                 'options'   => $states,
             ),
             array(
-                'name' => __( 'Zip Code', lddslug() ),
-                'id'   => $prefix . 'address_post_code',
-                'type' => 'text_small',
+                'name'      => __( 'Zip Code', lddslug() ),
+                'id'        => LDDLITE_PFX . 'post_code',
+                'type'      => 'text_small',
             ),
         ),
     );
@@ -80,25 +80,25 @@ function lddlite_define_metaboxes( array $meta_boxes )
             array(
                 'name'          => __( 'Website', lddslug() ),
                 'placeholder'   => 'http://...',
-                'id'            => $prefix . 'urls_website',
+                'id'            => LDDLITE_PFX . 'url_website',
                 'type'          => 'text',
             ),
             array(
                 'name'          => __( 'Facebook', lddslug() ),
                 'placeholder'   => 'http://facebook.com/...',
-                'id'            => $prefix . 'urls_social_facebook',
+                'id'            => LDDLITE_PFX . 'url_facebook',
                 'type'          => 'text',
             ),
             array(
                 'name'          => __( 'Twitter', lddslug() ),
                 'placeholder'   => 'http://twitter.com/...',
-                'id'            => $prefix . 'urls_social_twitter',
+                'id'            => LDDLITE_PFX . 'url_twitter',
                 'type'          => 'text',
             ),
             array(
                 'name'          => __( 'LinkedIn', lddslug() ),
                 'placeholder'   => 'http://www.linkedin.com/in/...',
-                'id'            => $prefix . 'urls_social_linkedin',
+                'id'            => LDDLITE_PFX . 'url_linkedin',
                 'type'          => 'text',
             ),
         ),
@@ -114,26 +114,26 @@ function lddlite_define_metaboxes( array $meta_boxes )
         'fields'     => array(
             array(
                 'name' => __( 'Email', lddslug() ),
-                'id'   => $prefix . 'contact_emai]',
+                'id'   => LDDLITE_PFX . 'contact_email',
                 'type' => 'text_medium',
             ),
             array(
                 'name' => __( 'Phone', lddslug() ),
-                'id'   => $prefix . 'contact_phone',
+                'id'   => LDDLITE_PFX . 'contact_phone',
                 'type' => 'text_medium',
             ),
             array(
                 'name' => __( 'Fax', lddslug() ),
-                'id'   => $prefix . 'contact_fax',
+                'id'   => LDDLITE_PFX . 'contact_fax',
                 'type' => 'text_medium',
             ),
         ),
     );
 
-
     return $meta_boxes;
-
 }
+
+
 
 
 add_action( 'add_meta_boxes', 'lddlite_swap_metaboxes' );
