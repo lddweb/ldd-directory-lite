@@ -29,7 +29,7 @@ function ld_view_submit( $term = false ) {
 
         // Create the user and insert a post for this listing
         $user_id = ld_submit_create_user( $data['username'], $data['email'] );
-        $post_id = ld_submit_create_listing( $data['name'], $data['description'], $data['category'] $user_id );
+        $post_id = ld_submit_create_listing( $data['name'], $data['description'], $data['category'], $user_id );
 
         // Add all the post meta fields
         ld_submit_create_meta( $data, $post_id );

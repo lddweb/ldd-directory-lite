@@ -22,12 +22,10 @@ function ld_submit_create_listing( $name, $description, $cat_id, $user_id ) {
         'post_type'     => LDDLITE_POST_TYPE,
         'post_author'   => $user_id,
         'post_date'     => date( 'Y-m-d H:i:s' ),
+        'tax_input'     => array( LDDLITE_TAX_CAT => $cat_id ),
     );
 
-    $post_id = wp_insert_post( $listing );
-    wp_set_post_terms( $post_id, $cat_id, LDDLITE_TAX_CAT );
-
-    return $post_id;
+    return wp_insert_post( $listing );
 }
 
 

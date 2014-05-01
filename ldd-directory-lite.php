@@ -109,8 +109,10 @@ final class _LDD_Directory_Lite {
             get_option( 'lddlite-options' ),
             $defaults );
 
-        if ( !isset( $options['version'] ) || version_compare( LDDLITE_VERSION, $options['version'], '>' ) )
+        if ( !isset( $options['version'] ) || version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
             require_once( LDDLITE_PATH . '/upgrade.php' );
+            add_action( 'init', 'ld_upgrade_path' );
+        }
 
         $this->options = $options;
 
