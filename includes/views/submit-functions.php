@@ -1,25 +1,51 @@
 <?php
 
-function lddlite_dropdown_subdivision( $subdivision )
+function ld_split_file_into_array( $arrfile ) {
+
+    if ( !file_exists( $arrfile ) )
+        return false;
+
+    $lines = file( $arrfile );
+    $data = array();
+
+    foreach ( $lines as $line ) {
+        $kv = explode( ',', $line );
+        $data[ $kv[0] ] = $kv[1];
+    }
+
+    return $data;
+}
+
+
+function ld_get_subdivision_array( $subdivision ) {
+
+    $subdivision_file = LDDLITE_PATH . '/includes/views/select/subdivision.' . $subdivision . '.inc';
+
+    return ld_split_file_into_array( $subdivision_file );
+}
+
+function ld_get_country_array() {
+
+    $country_file = LDDLITE_PATH . '/includes/views/select/countries.inc';
+
+    return ld_split_file_into_array( $country_file );
+}
+
+
+function ld_dropdown_subdivision( $subdivision )
 {
 
-    $parse = LDDLITE_PATH . '/includes/views/select/subdivision.' . $subdivision . '.inc';
 
-    if ( !file_exists( $parse ) )
-        return  '<input id="subdivision" name="ld_s_subdivision" type="text" required>';
+    $data = ld_get_subdivision_array( $subdivision );
 
-    $file = file( $parse );
+    if ( !$data )
+        return '<input id="subdivision" name="ld_s_subdivision" type="text" tabindex="9" required>';
 
-    $output = '<select name="subdivision">';
+    $output = '<select id="subdivision" name="ld_s_subdivision" tabindex="9" required>';
 
-    foreach ( $file as $line )
-    {
-        $field = explode( ',', $line );
-        $output .= '<option name="' . $field[0] . '"';
-        if ( isset( $_SESSION['ldd']['subdivsision'] ) && $field[0] == $_SESSION['ldd']['subdivsision'] ) {
-            $output .= ' selected ';
-        }
-        $output .= '>' . str_replace( array( "\r", "\n" ), '', $field[1] ) . '</option>';
+    foreach ( $data as $line ) {
+        $output .= '<option name="' . $line[0] . '"';
+        $output .= '>' . $line[1] . '</option>';
     }
 
     $output .= '</select>';
@@ -29,33 +55,13 @@ function lddlite_dropdown_subdivision( $subdivision )
 }
 
 
-function ld_get_country_array() {
-
-    $country_file = LDDLITE_PATH . '/includes/views/select/countries.inc';
-
-    if ( !file_exists( $country_file ) )
-        return array();
-
-    $countries = file( $country_file );
-    $data = array();
-
-    foreach ( $countries as $country ) {
-        $line = explode( ',', $country );
-        $data[ $line[0] ] = $line[1];
-    }
-
-    return $data;
-}
-
-
 function ld_dropdown_country()
 {
 
     $countries = ld_get_country_array();
 
-    if ( empty( $countries ) )
-        return  '<input id="country" name="ld_s_country" type="text" tabindex="7" required>';
-
+    if ( !$countries )
+        return '<input id="country" name="ld_s_country" type="text" tabindex="7" required>';
 
     $output = '<select id="country" name="ld_s_country" tabindex="7" required>';
 

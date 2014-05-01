@@ -123,7 +123,7 @@ final class _LDD_Directory_Lite {
         $basename = plugin_basename( __FILE__ );
         add_filter( 'plugin_action_links_' . $basename, array( $this, 'add_action_links' ) );
 
-        add_shortcode( 'business_directory', 'lddlite_display_directory' );
+        add_shortcode( 'business_directory', 'ld_display_the_directory' );
 
         { // These all relate to our custom post types and dashboard UI
             add_action( 'init', 'lddlite_register__cpt_tax' );
@@ -138,9 +138,11 @@ final class _LDD_Directory_Lite {
             add_action( '_admin_menu', 'lddlite_action_submenu_name' );
         }
 
-        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
-        add_action( 'admin_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
-        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts' ) );
+        add_action( 'init', array( $this, 'register_scripts' ) );
+
+//        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
+//        add_action( 'admin_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
+//        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts' ) );
 
         // Process AJAX for the contact Form
         add_action( 'wp_ajax_contact_form', 'lddlite_ajax_contact_form' );
@@ -181,19 +183,13 @@ final class _LDD_Directory_Lite {
         }
 
 
-    public function _enqueue_scripts_global() {
-        wp_enqueue_script( 'lddlite-js', LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
-        wp_enqueue_style( 'lddlite-styles', LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
-	    wp_enqueue_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
-    }
+    public function register_scripts() {
+        wp_register_script( 'lddlite-js', LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
+        wp_register_script( 'lddlite-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
 
-    public function _enqueue_scripts() {
-        if ( isset( $_GET['show'] ) && 'submit' == $_GET['show'] ) {
-            wp_enqueue_script( 'lddlite-submit-form-js', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54' );
-            //wp_enqueue_script( 'jquery-form-js', LDDLITE_URL . '/public/js/jquery.form.min.js', array( 'jquery' ), '20140218', 1 );
-        }
+        wp_register_style( 'lddlite-css', LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
+	    wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
     }
-
 
 
     public function slug() {

@@ -107,7 +107,7 @@ function lddlite_build_social( $id )
 }
 
 
-function lddlite_display_view_category( $cat_id )
+function ld_view_category( $cat_id )
 {
     global $post;
 
@@ -184,7 +184,7 @@ function lddlite_display_view_category( $cat_id )
                 'social'        => $social,
             );
 
-            $output .= ld_parse_template( 'display/category_listing', $template_vars );
+            $output .= ld_parse_template( 'display/listing-compact', $template_vars );
 
         } // foreach
 

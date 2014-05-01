@@ -8,7 +8,7 @@ require_once( LDDLITE_PATH . '/includes/views/submit-functions.php' );
 require_once( LDDLITE_PATH . '/includes/views/submit-process.php' );
 
 
-function lddlite_display_view_submit( $term = false ) {
+function ld_view_submit( $term = false ) {
     global $post;
 
     $valid = false;
@@ -23,31 +23,21 @@ function lddlite_display_view_submit( $term = false ) {
 
     }
 
+    if ( $valid == true && is_array( $data ) ) {
 
-    if ( $valid == false || is_wp_error( $valid ) ) {
+        $uid = ld_submit_create_user( $data['username'], $data['email'] );
+        $pid = ld_submit_create_listing( $data );
 
-        $template_vars = array(
-            'url'          => get_permalink( $post->ID ),
-            'action'            => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-            'nonce'             => wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ),
-            'country_dropdown'  => ld_dropdown_country(),
-        );
+        if ( isset( $_FILES['ld_s_logo'] ) ) {
+            // These files need to be included as dependencies when on the front end.
+            require_once( ABSPATH . 'wp-admin/includes/image.php' );
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+            require_once( ABSPATH . 'wp-admin/includes/media.php' );
 
-        if ( is_wp_error( $valid ) ) {
-            $template_vars['errors'] = array();
-
-            $codes = $valid->get_error_codes();
-
-            foreach ( $codes as $code ) {
-                $key = substr( $code, 0, strrpos( $code, '_' ) );
-                $template_vars['errors'][ $key ] = '<span class="submit-error">' . $valid->get_error_message( $code ) . '</span>';
-            }
-
+            $attachment_id = media_handle_upload( 'ld_s_logo', 0 );
         }
 
-        return ld_parse_template( 'display/submit', $template_vars );
 
-    } else {
 
         foreach ( $data as $key => $value ) {
 
@@ -66,5 +56,27 @@ function lddlite_display_view_submit( $term = false ) {
         return ld_parse_template( 'display/submit-success', $template_vars );
 
     }
+
+
+    $template_vars = array(
+        'url'          => get_permalink( $post->ID ),
+        'action'            => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+        'nonce'             => wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ),
+        'country_dropdown'  => ld_dropdown_country(),
+    );
+
+    if ( is_wp_error( $valid ) ) {
+        $template_vars['errors'] = array();
+
+        $codes = $valid->get_error_codes();
+
+        foreach ( $codes as $code ) {
+            $key = substr( $code, 0, strrpos( $code, '_' ) );
+            $template_vars['errors'][ $key ] = '<span class="submit-error">' . $valid->get_error_message( $code ) . '</span>';
+        }
+
+    }
+
+    return ld_parse_template( 'display/submit', $template_vars );
 
 }

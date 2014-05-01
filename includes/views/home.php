@@ -10,7 +10,7 @@ function ld_filter_categories_count( $links ) {
     return $links;
 }
 
-function lddlite_display_view_home( $term = false )
+function ld_view_home( $term = false )
 {
     global $post;
 

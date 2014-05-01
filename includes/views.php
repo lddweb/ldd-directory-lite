@@ -26,13 +26,17 @@ function lddlite_category_links( $termlink ) {
 
 
 function ld_get_search_form() {
-    return ld_parse_template( 'display/search_form', array() );
+    return ld_parse_template( 'display/search-form', array() );
 }
 
 
-function lddlite_display_directory()
-{
-    global $post;
+function ld_display_the_directory() {
+
+    wp_enqueue_script( 'lddlite-js' );
+    wp_enqueue_script( 'lddlite-responsiveslides' );
+
+    wp_enqueue_style( 'lddlite-css' );
+    wp_enqueue_style( 'yui-pure' );
 
     $action = 'home';
     $term   = '';
@@ -40,7 +44,7 @@ function lddlite_display_directory()
     $allowed_actions = array(
         'submit',
         'category',
-        'business',
+        'listing',
         'search',
     );
 
@@ -60,7 +64,7 @@ function lddlite_display_directory()
             }
 
         }
-        else if ( 'business' == $action )
+        else if ( 'listing' == $action )
         {
 
             $listing = get_posts( array(
@@ -83,8 +87,7 @@ function lddlite_display_directory()
 
     require_once( LDDLITE_PATH . '/includes/views/' . $action . '.php' );
 
-    $func = 'lddlite_display_view_' . $action;
+    $func = 'ld_view_' . $action;
 
     return $func( $term );
-
 }

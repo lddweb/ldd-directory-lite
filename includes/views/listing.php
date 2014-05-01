@@ -5,11 +5,8 @@
  */
 
 
-function lddlite_display_view_business( $listing )
-{
+function ld_view_listing( $listing ) {
     global $post;
-
-    $lddlite = lddlite();
 
     $permalink = get_permalink( $post->ID );
     $post_id = $listing->ID;
@@ -17,16 +14,15 @@ function lddlite_display_view_business( $listing )
     $top = is_admin_bar_showing() ? 32 : 0;
 
 
-    if ( has_post_thumbnail( $post_id ) ) {
+    if ( has_post_thumbnail( $post_id ) )
         $logo = get_the_post_thumbnail( $post_id, 'thumbnail' );
-    } else {
+    else
         $logo = '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />';
-    }
 
 
     $template_vars = array(
         'search'        => ld_get_search_form(),
-        'url'      => $permalink,
+        'url'           => $permalink,
         'title'         => $listing->post_title,
         'form_action'   => admin_url( 'admin-ajax.php' ),
         'nonce'         => wp_create_nonce( 'contact-form-nonce' ),
@@ -35,6 +31,5 @@ function lddlite_display_view_business( $listing )
         'logo'          => $logo,
     );
 
-    return ld_parse_template( 'display/business', $template_vars );
-
+    return ld_parse_template( 'display/listing', $template_vars );
 }

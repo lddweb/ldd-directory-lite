@@ -1,5 +1,37 @@
 <?php
 
+function ld_submit_create_user( $username, $email ) {
+
+    $password = wp_generate_password( 14, true );
+    $uid = wp_create_user( $username, $password, $email );
+
+    if ( $uid )
+        wp_new_user_notification( $uid, $password );
+
+    return $uid;
+}
+
+
+function ld_submit_create_listing( $data ) {
+
+    $post_status = ( 'true' == $listing->approved ) ? 'publish' : 'pending';
+
+    // This only runs once, we can be a little pedantic.
+    $date = date( 'Y-m-d H:i:s' );
+
+    // Create a post for this listing.
+    $post = array(
+        'post_content'  => sprintf( '%s', $listing->description ),
+        'post_title'    => sprintf( '%s', $listing->name ),
+        'post_status'   => $post_status,
+        'post_type'     => LDDLITE_POST_TYPE,
+        'post_author'   => $uid,
+        'post_date'     => $date,
+        'tax_input'     => array( LDDLITE_TAX_CAT => $term_ids ),
+    );
+    $post_id = wp_insert_post( $post );
+}
+
 function ld_submit_process_post( $post_data ) {
 
     $required_fields = apply_filters( 'lddlite_required_fields', array(
@@ -64,22 +96,7 @@ function ld_submit_validate_form( $data) {
     if ( !empty( $submit_errors->get_error_codes() ) )
         return $submit_errors;
 
-    if ( isset( $_FILES['ld_s_logo'] ) ) {
-        // These files need to be included as dependencies when on the front end.
-        require_once( ABSPATH . 'wp-admin/includes/image.php' );
-        require_once( ABSPATH . 'wp-admin/includes/file.php' );
-        require_once( ABSPATH . 'wp-admin/includes/media.php' );
 
-        $attachment_id = media_handle_upload( 'ld_s_logo', 0 );
-    }
-
-    // Create a new user account for this listing.
-    // Multiple listings per user should be handled via their dashboard, which is a @todo
-    $password = wp_generate_password( 14, true );
-    $uid = wp_create_user( $data['username'], $password, $data['email'] );
-    wp_new_user_notification( $uid, $password );
-
-    // @TODO CREATE POST
 
     return true;
 }
