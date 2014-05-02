@@ -101,8 +101,11 @@
 
 }
 
+fieldset#submit-pot {
+  display: none;
+}
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 700px) {
   #submit-items {
     ul {
       > li {

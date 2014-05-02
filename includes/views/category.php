@@ -111,9 +111,7 @@ function ld_view_category( $cat_id )
 {
     global $post;
 
-    $lddlite = lddlite();
     $permalink = get_permalink( $post->ID );
-
 
     $listings = get_posts( array(
         'posts_per_page'   => 10,

@@ -1,4 +1,4 @@
-<section class="business-directory directory-home cf">
+<section class="business-directory listing-category cf">
 
     <nav class="lite-nav above-header center cf">
         <ul>

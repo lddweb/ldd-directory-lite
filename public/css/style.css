@@ -209,7 +209,9 @@ p {
       font-weight: bold;
       text-decoration: none;
       line-height: 45px; }
-  @media screen and (min-width: 480px) {
+  .business-directory fieldset#submit-pot {
+    display: none; }
+  @media screen and (min-width: 700px) {
     .business-directory #submit-items ul > li {
       display: table-cell;
       margin: 0; } }
@@ -447,10 +449,14 @@ p {
     margin: .5em 0;
     padding: .5em;
     border-radius: 3px; }
-  .business-directory .listing-title {
-    margin: .2em 0;
+  .business-directory.directory-listing .listing-title {
+    margin: .4em 0;
     text-align: center;
-    font-size: 3em; }
+    font-size: 2.5em;
+    line-height: normal; }
+  .business-directory.listing-category .listing-title {
+    text-align: left;
+    font-size: 1.8em; }
   .business-directory .submit-success .listing-title {
     margin: 1em 0 .5em;
     border-bottom: 1px solid rgba(32, 69, 108, 0.5); }
@@ -477,10 +483,11 @@ p {
       width: 100%;
       padding: 0; }
       .business-directory .type-listing .entry-header .entry-title {
-        font-size: 2em;
+        font-size: 1.8em;
         font-weight: normal;
         line-height: 100%;
-        margin: 0 0 5px; }
+        margin: 0 0 5px;
+        text-align: left; }
         .business-directory .type-listing .entry-header .entry-title a {
           text-decoration: none; }
         .business-directory .type-listing .entry-header .entry-title a:hover {
@@ -500,16 +507,14 @@ p {
       width: 100%;
       clear: both;
       border-top: 1px solid rgba(32, 69, 108, 0.12);
-      margin-top: 1em;
+      margin-top: 2em;
       padding-top: 1em; }
   @media screen and (min-width: 600px) {
     .business-directory .type-listing .post-thumbnail {
       float: right;
       position: relative;
-      width: 15%; }
-    .business-directory .type-listing .entry-header {
-      width: 66%;
-      float: left; } }
+      width: 15%;
+      margin-left: 2%; } }
   .business-directory a, .business-directory a:visited {
     color: #3778bb;
     text-decoration: none; }

@@ -29,7 +29,7 @@
                         <div class="panel">
                             <label for="name">
                                 <span>Name:</span>
-                                <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" value="Mark's Hot Taco's" tabindex="1" required autofocus>
+                                <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" value="{{data.name}}" tabindex="1" required autofocus>
                                 {{errors.name}}
                             </label>
                             <label for="category">
@@ -99,14 +99,14 @@
                             <div class="pure-u-24-24">
                                 <label for="street">
                                     <span>Street</span>
-                                    <input id="street" name="ld_s_address_one" type="text" tabindex="8" value="450 Michelle Cir" required>
+                                    <input id="street" name="ld_s_address_one" type="text" tabindex="8" value="{{data.street}}" required>
                                     {{errors.street}}
                                 </label>
                             </div>
                             <div class="pure-u-7-24">
                                 <label for="city">
                                     <span>City / Town:</span>
-                                    <input id="city" name="ld_s_city" type="text" tabindex="9" value="Bernalillo" required>
+                                    <input id="city" name="ld_s_city" type="text" tabindex="9" value="{{data.city}}" required>
                                     {{errors.city}}
                                 </label>
                             </div><div class="pure-u-1-24"></div>
@@ -172,7 +172,7 @@
                             <div class="pure-u-7-24">
                                 <label for="post_code">
                                     <span>Zip/Postal:</span>
-                                    <input id="post_code" name="ld_s_post_code" type="text" tabindex="11" value="87004" required>
+                                    <input id="post_code" name="ld_s_post_code" type="text" tabindex="11" value="{{data.post_code}}" required>
                                     {{errors.post_code}}
                                 </label>
                             </div>
@@ -211,14 +211,14 @@
                             <div class="pure-u-11-24">
                                 <label for="username">
                                     <span>Username:</span>
-                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" tabindex="16" value="hot-taco" required>
+                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" tabindex="16" value="{{data.username}}" required>
                                     {{errors.username}}
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
                                 <label for="email">
                                     <span>Your Email:</span>
-                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" tabindex="17" value="mark@watero.us" required>
+                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" tabindex="17" value="{{data.email}}" required>
                                     {{errors.email}}
                                 </label>
                             </div>
@@ -231,7 +231,7 @@
         <div class="submit-form-wrap submit-confirm" style="display: none;">
             <fieldset style="clear: both;">
                 <legend>Confirm</legend>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
+                <p>Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.</p>
                 <button type="submit" id="submit-form-submit">Submit Listing</button>
             </fieldset>
         </div>

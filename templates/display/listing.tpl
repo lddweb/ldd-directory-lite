@@ -80,9 +80,9 @@
     }
 
     .listing-header .listing-title {
-        margin: .2em 0;
+        margin: .4em 0;
         text-align: center;
-        font-size: 3em;
+        font-size: 2.5em;
     }
     .listing-social a {
         margin: 0 2px;
@@ -99,7 +99,7 @@
 </style>
 
 
-<section class="business-directory cf">
+<section class="business-directory directory-listing cf">
 
     <nav class="lite-nav above-header center cf">
         <ul>
