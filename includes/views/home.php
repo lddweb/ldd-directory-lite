@@ -10,9 +10,10 @@ function ld_filter_categories_count( $links ) {
     return $links;
 }
 
-function ld_view_home( $term = false )
-{
+function ld_view_home( $term = false ) {
     global $post;
+
+    wp_enqueue_script( 'ldd-lite-search' );
 
     $categories = wp_list_categories( array(
         'echo'          => 0,

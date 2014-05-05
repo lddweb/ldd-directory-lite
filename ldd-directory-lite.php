@@ -150,6 +150,9 @@ final class LDD_Directory_Lite {
 //        add_action( 'admin_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
 //        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts' ) );
 
+        add_action( 'wp_ajax_search_directory', 'ld_ajax_search_directory' );
+        add_action( 'wp_ajax_nopriv_search_directory', 'ld_ajax_search_directory' );
+
         // Process AJAX for the contact Form
         add_action( 'wp_ajax_contact_form', 'lddlite_ajax_contact_form' );
         add_action( 'wp_ajax_nopriv_contact_form', 'lddlite_ajax_contact_form' );
@@ -190,10 +193,11 @@ final class LDD_Directory_Lite {
 
 
     public function register_scripts() {
-        wp_register_script( 'lddlite-js', LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
-        wp_register_script( 'lddlite-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
+        wp_register_script( 'ldd-lite', LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
+        wp_register_script( 'ldd-lite-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
+        wp_register_script( 'ldd-lite-search', LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
 
-        wp_register_style( 'lddlite-css', LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
+        wp_register_style( 'ldd-lite', LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
         wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
     }
 

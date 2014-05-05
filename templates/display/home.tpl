@@ -19,6 +19,11 @@
         {{search_form}}
     </header>
 
+    <div id="search-loading"></div>
+    <div id="search-directory-results">
+
+    </div>
+
     <nav class="lite-nav below-header center cf" style="display:none;">
         <ul class="top-level">
             <li class="cat-item cat-item-2"><a href="http://local.wordpress.dev/dir/?show=category&t=arts-entertainment" title="View all posts filed under Arts &amp; Entertainment">Arts &amp; Entertainment</a></li>

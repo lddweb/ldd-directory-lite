@@ -26,16 +26,16 @@ function lddlite_category_links( $termlink ) {
 
 
 function ld_get_search_form() {
-    return ld_parse_template( 'display/search-form', array() );
+    return ld_parse_template( 'display/search-form', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 
 
 function ld_display_the_directory() {
 
-    wp_enqueue_script( 'lddlite-js' );
-    wp_enqueue_script( 'lddlite-responsiveslides' );
+    wp_enqueue_script( 'ldd-lite-js' );
+    wp_enqueue_script( 'ldd-lite-responsiveslides' );
 
-    wp_enqueue_style( 'lddlite-css' );
+    wp_enqueue_style( 'ldd-lite' );
     wp_enqueue_style( 'yui-pure' );
 
     $action = 'home';

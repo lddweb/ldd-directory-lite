@@ -68,6 +68,13 @@ function ld_parse_template( $tpl_file, $replace )
 }
 
 
+function ld_ajax_search_directory() {
+    echo json_encode( array(
+        'success'   => 'BRINGONTHEPAINNNN',
+    ) );
+    die;
+}
+
 function lddlite_ajax_contact_form()
 {
 
