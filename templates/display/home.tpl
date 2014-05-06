@@ -40,9 +40,9 @@
         </section>
 
 
-        <section class="directory-content">
+        {{featured-listings-open}}
             {{featured-listings}}
-        </section>
+        {{featured-listings-close}}
 
     </div>
 

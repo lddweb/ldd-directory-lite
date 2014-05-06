@@ -4,6 +4,18 @@
  *
  */
 
+function ld_new_template() {
+
+    require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
+
+    raintpl::configure( 'tpl_ext',      'tpl' );
+    raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
+    raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
+
+    return new raintpl;
+}
+
+
 function lddlite_icon( $label, $url = '', $title = '' )
 {
 
@@ -134,11 +146,16 @@ function ld_ajax_search_directory() {
                 'summary'   => $summary,
             );
 
-            $output .= ld_parse_template( 'display/listing-search', $template_vars );
+            $output .= ld_parse_template( 'display/search-listing', $template_vars );
 
 
 
         }
+
+    } else { // Nothing found
+
+        $output = ld_parse_template( 'display/search-notfound', array() );
+
     }
 
     echo $output; 
