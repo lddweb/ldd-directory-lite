@@ -69,9 +69,79 @@ function ld_parse_template( $tpl_file, $replace )
 
 
 function ld_ajax_search_directory() {
-    echo json_encode( array(
-        'success'   => 'BRINGONTHEPAINNNN',
-    ) );
+    global $post;
+
+    $args = array(
+        'post_type'     => LDDLITE_POST_TYPE,
+        'post_status'   => 'publish',
+        's'             => $_POST['s'],
+    );
+
+    $search = new WP_Query( $args );
+
+    $output = '';
+    $nth = 0;
+
+    if ( $search->have_posts() ) {
+        while ( $search->have_posts() ) {
+            $search->the_post();
+
+            $id = $post->ID;
+            $permalink = get_the_permalink();
+            $slug = $post->post_name;
+            $title = $post->post_title;
+
+            $url = get_post_meta( $id, '_lddlite_url_website', true );
+
+            // determine our classes;
+            $nth_class = ( $nth % 2 ) ? 'odd' : 'even';
+            $nth++;
+
+            // the following is used to build our title, and the logo
+            $link = '<a href="' . $permalink . '?show=listing&t=' . $title . '" title="' . esc_attr( $title ) . '" %2$s>%1$s</a>';
+
+            // the logo
+            if ( has_post_thumbnail( $id ) )
+                $featured = sprintf( $link, get_the_post_thumbnail( $id, array( 100, 100 ) ), 'class="search-thumbnail"' );
+            else
+                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />', 'class="search-thumbnail"' );
+
+            $summary = '';
+
+            if ( !empty( $post->post_excerpt ) )
+                $summary = $post->post_excerpt;
+
+            if ( empty( $summary ) ) {
+                $summary = $post->post_content;
+
+                $summary = strip_shortcodes( $summary );
+
+                $summary = apply_filters( 'lddlite_the_content', $summary );
+                $summary = str_replace( ']]>', ']]&gt;', $summary );
+
+                $excerpt_length = apply_filters( 'lddlite_excerpt_length', 55 );
+                $excerpt_more = apply_filters( 'lddlite_excerpt_more', sprintf( '&hellip; (' . $link . ')', 'view listing', '' ) );
+
+                $summary = wp_trim_words( $summary, $excerpt_length, $excerpt_more );
+            }
+
+            $template_vars = array(
+                'id'        => $id,
+                'nth'       => $nth_class,
+                'featured'  => $featured,
+                'title'     => sprintf( $link, $title, '' ),
+                'url'       => $url,
+                'summary'   => $summary,
+            );
+
+            $output .= ld_parse_template( 'display/listing-search', $template_vars );
+
+
+
+        }
+    }
+
+    echo $output; 
     die;
 }
 

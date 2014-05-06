@@ -137,6 +137,36 @@ p {
     color: #888; }
   .business-directory :-ms-input-placeholder {
     color: #888; }
+  .business-directory #search-directory-results {
+    padding: 1em; }
+  .business-directory .search-result .search-thumbnail {
+    display: inline-block;
+    width: 10%;
+    margin-right: 2%;
+    vertical-align: top; }
+    .business-directory .search-result .search-thumbnail img {
+      max-width: 100%;
+      height: auto; }
+  .business-directory .search-result .search-content {
+    display: inline-block;
+    width: 87%; }
+    .business-directory .search-result .search-content .listing-summary {
+      font-size: 80%;
+      color: #999; }
+  .business-directory .search-result .search-content h2.listing-title {
+    font-size: 1.2em;
+    line-height: normal;
+    margin: 0;
+    padding: 0; }
+  .business-directory .search-result .search-content h3.listing-url {
+    font-size: 0.9em;
+    line-height: normal;
+    margin: .1em 0 .5em;
+    padding: 0; }
+    .business-directory .search-result .search-content h3.listing-url a {
+      color: rgba(0, 128, 0, 0.9); }
+    .business-directory .search-result .search-content h3.listing-url a:hover {
+      color: rgba(0, 170, 0, 0.9); }
   .business-directory .panel,
   .business-directory .panels-navigation {
     width: 90%;

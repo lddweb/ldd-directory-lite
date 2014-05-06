@@ -1,0 +1,56 @@
+#search-directory-results {
+  padding: 1em;
+}
+
+.search-result {
+
+  .search-thumbnail {
+    display: inline-block;
+    width: 10%;
+    margin-right: 2%;
+    vertical-align: top;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .search-content {
+    display: inline-block;
+    width: 87%;
+
+    .listing-summary {
+      font-size: 80%;
+      color: #999;
+    }
+
+  }
+
+  .search-content {
+
+    h2.listing-title {
+      font-size: 1.2em;
+      line-height: normal;
+      margin: 0;
+      padding: 0;
+    }
+
+    h3.listing-url {
+      font-size: 0.9em;
+      line-height: normal;
+      margin: .1em 0 .5em;
+      padding: 0;
+
+      a {
+        color: rgba(0, 128, 0, 0.90);
+      }
+      a:hover {
+        color: rgba(0, 170, 0, 0.90);
+      }
+
+    }
+
+  }
+
+}

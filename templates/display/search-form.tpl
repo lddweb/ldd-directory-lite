@@ -1,8 +1,13 @@
-<form class="directory-search cf">
-    <input type="hidden" name="action" value="search_directory">
-    <input id="search-directory-input" name="s" type="text" placeholder="Search the directory..." required />
-    <button type="submit">Search</button>
-</form>
+<div class="search-section">
+    <form class="directory-search cf">
+        <input type="hidden" name="action" value="search_directory">
+        <input id="search-directory-input" name="s" type="text" placeholder="Search the directory..." required />
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="search-loading"></div>
+    <div id="search-directory-results"></div>
+</div>
 
 <script>
     jQuery(document).ready(function() {

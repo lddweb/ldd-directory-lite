@@ -8,6 +8,7 @@
             url: '/search',
             param: 'query',
             dom_id: '#results',
+            wrapper: '.directory-wrap',
             delay: 100,
             loading_css: '#loading'
         },
@@ -25,15 +26,18 @@
         },
 
         process: function(terms) {
+
             var path = $.searchbox.settings.url.split('?'),
                 query = [$.searchbox.settings.param, '=', terms].join(''),
                 base = path[0], params = path[1], query_string = query
 
             if (params) query_string = [params.replace('&amp;', '&'), query].join('&')
 
-            $.get([base, '?', query_string].join(''), function(data) {
-                $($.searchbox.settings.dom_id).html(data)
-            })
+            $.post( base, { action: "search_directory", s: terms })
+                .done(function( data ) {
+                    $($.searchbox.settings.wrapper).hide()
+                    $($.searchbox.settings.dom_id).html(data)
+                })
         },
 
         start: function() {
