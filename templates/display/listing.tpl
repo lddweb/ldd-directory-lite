@@ -117,13 +117,13 @@
         </header>
 
         <div class="listing-social">
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/browser.png" width="48" height="48" alt="" /></a>
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/ebay.png" width="48" height="48" alt="" /></a>
-            <a rel="leanModal" href="#panels"><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/email.png" width="48" height="48" alt="" /></a>
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/fb.png" width="48" height="48" alt="" /></a>
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/google+.png" width="48" height="48" alt="" /></a>
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/linkedin.png" width="48" height="48" alt="" /></a>
-            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/icons/social/twitter.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/images/social/browser.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/images/social/ebay.png" width="48" height="48" alt="" /></a>
+            <a rel="leanModal" href="#panels"><img src="/wp-content/plugins/ldd-directory-lite/public/images/social/email.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/images/social/fb.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/images/social/google+.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/images/social/linkedin.png" width="48" height="48" alt="" /></a>
+            <a href=""><img src="/wp-content/plugins/ldd-directory-lite/public/images/social/twitter.png" width="48" height="48" alt="" /></a>
         </div>
 
         <article id="listing-1" class="listing-1 listing type-listing full-listing status-approved featured cf">
@@ -135,12 +135,12 @@
                 </div>
                 <div class="pure-u-1-24"></div>
 
-                <div class="entry-meta pure-u-7-24" style="font-size: .75em;">
+                <div class="listing-meta pure-u-7-24" style="font-size: .75em;">
                     <p class="website"><a href="">lddconsulting.com</a></p>
                     <p class="phone" style="font-size: 100%; display: none;">(505) 455-8749</p>
                     <p class="address" style="font-size: 100%;">2420 Midtown Pl NE,<br>Albuquerque, NM 87107</p>
                     <div class="ratings-stars">
-                        <img src="/wp-content/plugins/ldd-directory-lite/public/icons/stars.png">
+                        <img src="/wp-content/plugins/ldd-directory-lite/public/images/stars.png">
                         <p class="rating"><a href="">write a review</a> | <a href="">read reviews (3)</a></p>
                     </div>
                 </div><!-- .entry-meta -->
@@ -372,7 +372,7 @@
 
     form.lddlite legend {
         text-align: center;
-        background: #dbe1e8 url('/wp-content/plugins/ldd-directory-lite/public/icons/bg.png') repeat;
+        background: #dbe1e8 url('/wp-content/plugins/ldd-directory-lite/public/images/bg.png') repeat;
         color: #fff;
         font-size: 2em;
         font-weight: 700;

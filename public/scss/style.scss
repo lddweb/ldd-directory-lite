@@ -18,6 +18,8 @@ $white:             #fff;
 $gray:              #888;
 $disabled-gray:     #888;
 
+$url-link:          rgba(0, 128, 0, 0.90);
+$url-link-hover:    rgba(0, 170, 0, 0.90);
 
 @import "partials/typography";
 @import "partials/functions";

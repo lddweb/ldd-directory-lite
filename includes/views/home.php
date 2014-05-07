@@ -24,12 +24,11 @@ function ld_view_home( $term = false ) {
         'show_count'    => 1,
     ) );
 
-    $template_vars = array(
-        'url'      => get_permalink( $post->ID ),
-        'search_form'   => ld_get_search_form(),
-        'categories'    => $categories,
-    );
+    $tpl = ld_new_template();
 
-    return ld_parse_template( 'display/home', $template_vars );
+    $tpl->assign( 'url', get_permalink( $post->ID ) );
+    $tpl->assign( 'search_form', ld_get_search_form() );
+
+    return $tpl->draw( 'display/home', 1 );
 }
 

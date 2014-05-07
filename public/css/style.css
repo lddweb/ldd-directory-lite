@@ -137,6 +137,13 @@ p {
     color: #888; }
   .business-directory :-ms-input-placeholder {
     color: #888; }
+  .business-directory .search-section #search-loading-off {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: transparent url("../images/loading.gif") no-repeat center;
+    margin: 1em auto;
+    padding: 1em; }
   .business-directory #search-directory-results {
     padding: 1em; }
   .business-directory .search-result .search-thumbnail {
@@ -147,26 +154,33 @@ p {
     .business-directory .search-result .search-thumbnail img {
       max-width: 100%;
       height: auto; }
+  .business-directory .search-result.fourohfour .search-content {
+    width: 100%;
+    text-align: center; }
+  .business-directory .search-result.fourohfour h2.listing-title {
+    font-size: 200%; }
+  .business-directory .search-result.fourohfour .listing-summary {
+    font-size: 110%; }
   .business-directory .search-result .search-content {
     display: inline-block;
     width: 87%; }
+    .business-directory .search-result .search-content h2.listing-title {
+      font-size: 1.2em;
+      line-height: normal;
+      margin: 0;
+      padding: 0; }
+    .business-directory .search-result .search-content h3.listing-url {
+      font-size: 0.9em;
+      line-height: normal;
+      margin: .1em 0 .5em;
+      padding: 0; }
+      .business-directory .search-result .search-content h3.listing-url a {
+        color: rgba(0, 128, 0, 0.9); }
+      .business-directory .search-result .search-content h3.listing-url a:hover {
+        color: rgba(0, 170, 0, 0.9); }
     .business-directory .search-result .search-content .listing-summary {
-      font-size: 80%;
+      font-size: 1em;
       color: #999; }
-  .business-directory .search-result .search-content h2.listing-title {
-    font-size: 1.2em;
-    line-height: normal;
-    margin: 0;
-    padding: 0; }
-  .business-directory .search-result .search-content h3.listing-url {
-    font-size: 0.9em;
-    line-height: normal;
-    margin: .1em 0 .5em;
-    padding: 0; }
-    .business-directory .search-result .search-content h3.listing-url a {
-      color: rgba(0, 128, 0, 0.9); }
-    .business-directory .search-result .search-content h3.listing-url a:hover {
-      color: rgba(0, 170, 0, 0.9); }
   .business-directory .panel,
   .business-directory .panels-navigation {
     width: 90%;
@@ -394,7 +408,7 @@ p {
         top: 0;
         left: 0;
         border: solid 1px #aaa;
-        background: white url("/wp-content/plugins/ldd-directory-lite/public/icons/icon-menu.png") no-repeat 10px 14px;
+        background: white url("/wp-content/plugins/ldd-directory-lite/public/images/icon-menu.png") no-repeat 10px 14px;
         border-radius: 5px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
         .business-directory nav.lite-nav:not(.above-header) ul li {
@@ -422,7 +436,7 @@ p {
           display: block;
           margin: 0 0 5px; }
           .business-directory nav.lite-nav:not(.above-header) ul:hover li.current {
-            background: url("/wp-content/plugins/ldd-directory-lite/public/icons/icon-check.png") no-repeat 10px 7px; }
+            background: url("/wp-content/plugins/ldd-directory-lite/public/images/icon-check.png") no-repeat 10px 7px; }
           .business-directory nav.lite-nav:not(.above-header) ul:hover li a:hover {
             color: #20456c; }
       .business-directory nav.lite-nav:not(.above-header).right ul {
@@ -509,35 +523,41 @@ p {
         max-width: 100%;
         height: auto;
         border-radius: 3px; }
-    .business-directory .type-listing .entry-header {
+    .business-directory .type-listing .listing-header {
       width: 100%;
       padding: 0; }
-      .business-directory .type-listing .entry-header .entry-title {
+      .business-directory .type-listing .listing-header .listing-title {
         font-size: 1.8em;
         font-weight: normal;
         line-height: 100%;
         margin: 0 0 5px;
+        padding: 0;
         text-align: left; }
-        .business-directory .type-listing .entry-header .entry-title a {
+        .business-directory .type-listing .listing-header .listing-title a {
           text-decoration: none; }
-        .business-directory .type-listing .entry-header .entry-title a:hover {
+        .business-directory .type-listing .listing-header .listing-title a:hover {
           text-decoration: none; }
-      .business-directory .type-listing .entry-header .entry-meta p {
+      .business-directory .type-listing .listing-header .listing-meta p {
         font-size: 90%;
         line-height: 130%;
-        color: #777;
+        color: rgba(119, 119, 119, 0.5);
         margin: 0 0 8px; }
-        .business-directory .type-listing .entry-header .entry-meta p a {
-          text-decoration: none;
-          font-weight: 700;
-          font-size: 110%; }
-        .business-directory .type-listing .entry-header .entry-meta p a:hover {
+        .business-directory .type-listing .listing-header .listing-meta p.website {
+          font-weight: 400;
+          margin-bottom: 1em; }
+          .business-directory .type-listing .listing-header .listing-meta p.website a {
+            color: rgba(0, 128, 0, 0.9); }
+          .business-directory .type-listing .listing-header .listing-meta p.website a:hover {
+            color: rgba(0, 170, 0, 0.9); }
+        .business-directory .type-listing .listing-header .listing-meta p a {
           text-decoration: none; }
-    .business-directory .type-listing .entry-summary {
+        .business-directory .type-listing .listing-header .listing-meta p a:hover {
+          text-decoration: none; }
+    .business-directory .type-listing .listing-summary {
       width: 100%;
       clear: both;
       border-top: 1px solid rgba(32, 69, 108, 0.12);
-      margin-top: 2em;
+      margin-top: 1em;
       padding-top: 1em; }
   @media screen and (min-width: 600px) {
     .business-directory .type-listing .post-thumbnail {

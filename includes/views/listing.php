@@ -17,7 +17,7 @@ function ld_view_listing( $listing ) {
     if ( has_post_thumbnail( $post_id ) )
         $logo = get_the_post_thumbnail( $post_id, 'thumbnail' );
     else
-        $logo = '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />';
+        $logo = '<img src="' . LDDLITE_URL . '/public/images/avatar_default.png" />';
 
 
     $template_vars = array(

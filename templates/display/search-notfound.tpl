@@ -1,4 +1,4 @@
-        <article class="type-listing search-result 404 cf">
+        <article class="type-listing search-result fourohfour cf">
 
             <div class="search-content">
                 <header class="listing-header">

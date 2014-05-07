@@ -4,22 +4,26 @@
  *
  */
 
-function ld_new_template() {
+function lddslug() {
+    static $slug;
 
-    require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
+    if ( !isset( $slug ) ) {
+        $lddlite = lddlite();
+        $slug = $lddlite->slug();
+    }
 
-    raintpl::configure( 'tpl_ext',      'tpl' );
-    raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
-    raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
-
-    return new raintpl;
+    return $slug;
 }
+
+
+add_image_size( 'directory-listing-compact', 105, 305 );
+add_image_size( 'directory-listing-search', 100, 100 );
 
 
 function lddlite_icon( $label, $url = '', $title = '' )
 {
 
-    $icon = LDDLITE_URL . '/public/icons' . $label . '.png';
+    $icon = LDDLITE_URL . '/public/images' . $label . '.png';
 
     if ( !file_exists( $icon ) )
         return false;
@@ -114,9 +118,9 @@ function ld_ajax_search_directory() {
 
             // the logo
             if ( has_post_thumbnail( $id ) )
-                $featured = sprintf( $link, get_the_post_thumbnail( $id, array( 100, 100 ) ), 'class="search-thumbnail"' );
+                $featured = sprintf( $link, get_the_post_thumbnail( $id, 'directory-listing-search' ), 'class="search-thumbnail"' );
             else
-                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />', 'class="search-thumbnail"' );
+                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/images/avatar_default.png" />', 'class="search-thumbnail"' );
 
             $summary = '';
 

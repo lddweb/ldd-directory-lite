@@ -1,5 +1,26 @@
 <?php
 
+function ld_new_template() {
+
+    require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
+
+    raintpl::configure( 'tpl_ext',      'tpl' );
+    raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
+    raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
+
+    return new raintpl;
+}
+
+
+function ld_get_search_form() {
+    $tpl = ld_new_template();
+    $tpl->assign( 'placeholder', __( 'Search the directory...', lddslug() ) );
+    $tpl->assign( 'search_text', __( 'Search', lddslug() ) );
+    $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+    return $tpl->draw( 'display/search-form', 1 );
+}
+
+
 add_filter( 'term_link', 'lddlite_category_links' );
 function lddlite_category_links( $termlink ) {
     global $post;
@@ -22,11 +43,6 @@ function lddlite_category_links( $termlink ) {
     $termlink = $current_url . '?show=category&t=' . $link[LDDLITE_TAX_CAT];
 
     return $termlink;
-}
-
-
-function ld_get_search_form() {
-    return ld_parse_template( 'display/search-form', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 
 

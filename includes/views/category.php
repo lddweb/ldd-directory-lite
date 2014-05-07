@@ -25,6 +25,32 @@ function ld_get_listing_meta( $id ) {
 
     $meta = array();
 
+    $meta['address_one'] = get_post_meta( $id, '_lddlite_address_one', 1 );
+    $meta['address_two'] = get_post_meta( $id, '_lddlite_address_two', 1 );
+    $meta['city']        = get_post_meta( $id, '_lddlite_city', 1 );
+    $meta['subdivision'] = get_post_meta( $id, '_lddlite_subdivision', 1 );
+    $meta['post_code']   = get_post_meta( $id, '_lddlite_post_code', 1 );
+
+    $address = '';
+
+    foreach ( $meta as $key => $value ) {
+        if ( 'address_two' != $key && empty( $value ) ) {
+            $address = false;
+            break;
+        }
+    }
+
+    if ( false !== $address ) {
+        $address = $meta['address_one'];
+        if ( !empty( $meta['address_two'] ) )
+            $address .= '<br>' . $meta['address_two'];
+        $address .= ',<br>' . $meta['city'] . ', ' . $meta['subdivision'] . ' ' . $meta['post_code'];
+    } else {
+        $address = '';
+    }
+
+    $meta['address'] = $address;
+
     $website = get_post_meta( $id, '_lddlite_urls_website', 1 );
     if ( $website )
         $meta['website'] = apply_filters( 'lddlite_listing_website', sprintf( '<a href="%1$s">%1$s</a>', esc_url( $website ) ) );
@@ -32,12 +58,6 @@ function ld_get_listing_meta( $id ) {
     $phone = get_post_meta( $id, '_lddlite_contact_phone', 1 );
     if ( $phone )
         $meta['phone'] = lddlite_format_phone( $phone );
-
-    $meta['address_one'] = get_post_meta( $id, '_lddlite_address_one', 1 );
-    $meta['address_two'] = get_post_meta( $id, '_lddlite_address_two', 1 );
-    $meta['subdivision'] = get_post_meta( $id, '_lddlite_address_subdivision', 1 );
-    $meta['city']        = get_post_meta( $id, '_lddlite_address_city', 1 );
-    $meta['post_code']   = get_post_meta( $id, '_lddlite_address_post_code', 1 );
 
     return $meta;
 
@@ -99,7 +119,7 @@ function lddlite_build_social( $id )
             $title = sprintf( $title_key, $name, $key );
 
             $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '">';
-            $output .= '<img src="' . LDDLITE_URL . '/public/icons/24/' . $key . '.png" /></a>';
+            $output .= '<img src="' . LDDLITE_URL . '/public/images/24/' . $key . '.png" /></a>';
         }
     }
 
@@ -107,9 +127,10 @@ function lddlite_build_social( $id )
 }
 
 
-function ld_view_category( $cat_id )
-{
+function ld_view_category( $cat_id ) {
     global $post;
+
+    wp_enqueue_script( 'ldd-lite-search' );
 
     $permalink = get_permalink( $post->ID );
 
@@ -125,11 +146,11 @@ function ld_view_category( $cat_id )
     $output = '';
     $nth = 0;
 
-    if ( !empty( $listings ) )
-    {
+    if ( !empty( $listings ) ) {
 
-        foreach ( $listings as $listing )
-        {
+        $tpl = ld_new_template();
+
+        foreach ( $listings as $listing ) {
 
             $id = $listing->ID;
             $status = $listing->post_status;
@@ -143,9 +164,9 @@ function ld_view_category( $cat_id )
 
             // the logo
             if ( has_post_thumbnail( $listing->ID ) )
-                $featured = sprintf( $link, get_the_post_thumbnail( $listing->ID, 'thumbnail' ), 'class="post-thumbnail"' );
+                $featured = sprintf( $link, get_the_post_thumbnail( $listing->ID, 'directory-listing-compact' ), 'class="post-thumbnail"' );
             else
-                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/icons/avatar_default.png" />', 'class="post-thumbnail"' );
+                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/images/avatar_default.png" />', 'class="post-thumbnail"' );
 
 
             $meta = ld_get_listing_meta( $id );
@@ -171,30 +192,30 @@ function ld_view_category( $cat_id )
 
             $social = lddlite_build_social( $id );
 
-            $template_vars = array(
-                'id'            => $id,
-                'status'        => $status,
-                'nth'           => $nth_class,
-                'featured'      => $featured,
-                'title'         => sprintf( $link, $listing->post_title, '' ),
-                'meta'          => $meta,
-                'summary'       => $summary,
-                'social'        => $social,
-            );
+            $tpl->assign( 'id',         $id );
+            $tpl->assign( 'status',     $status );
+            $tpl->assign( 'nth',        $nth_class );
+            $tpl->assign( 'featured',   $featured );
+            $tpl->assign( 'title',      sprintf( $link, $listing->post_title, '' ) );
+            $tpl->assign( 'meta',       $meta );
+            $tpl->assign( 'address',    $meta['address'] );
+            $tpl->assign( 'summary',    $summary );
+            $tpl->assign( 'social',     $social );
 
-            $output .= ld_parse_template( 'display/listing-compact', $template_vars );
+            $output .= $tpl->draw( 'display/listing-compact', 1 );
 
         } // foreach
 
+        unset( $tpl );
+
     } // if
 
+    $tpl = ld_new_template();
 
-    $template_vars = array(
-        'search'    => ld_get_search_form(),
-        'url'       => get_permalink( $post->ID ),
-        'listings'  => $output,
-    );
+    $tpl->assign( 'url', get_permalink( $post->ID ) );
+    $tpl->assign( 'search_form', ld_get_search_form() );
+    $tpl->assign( 'listings', $output );
 
-    return ld_parse_template( 'display/category', $template_vars );
+    return $tpl->draw( 'display/category', 1 );
 
 }

@@ -16,7 +16,7 @@
             <h2 class="listing-title">Congratulations</h2>
         </header>
 
-        <div class="entry-content">
+        <div class="listing-content">
 
             <p>Your listing is awaiting review.</p>
 

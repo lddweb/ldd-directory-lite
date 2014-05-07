@@ -111,7 +111,7 @@ nav {
                 top: 0;
                 left: 0;
                 border: solid 1px #aaa;
-                background: #fff url('/wp-content/plugins/ldd-directory-lite/public/icons/icon-menu.png') no-repeat 10px 14px;
+                background: #fff url('/wp-content/plugins/ldd-directory-lite/public/images/icon-menu.png') no-repeat 10px 14px;
                 border-radius: 5px;
                 box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
 
@@ -150,7 +150,7 @@ nav {
                     display: block;
                     margin: 0 0 5px;
                     &.current {
-                        background: url('/wp-content/plugins/ldd-directory-lite/public/icons/icon-check.png') no-repeat 10px 7px;
+                        background: url('/wp-content/plugins/ldd-directory-lite/public/images/icon-check.png') no-repeat 10px 7px;
                     }
                     a:hover {
                         color: $primary-dark;
@@ -301,16 +301,18 @@ nav {
     }
   }
 
-  .entry-header {
+  .listing-header {
     width: 100%;
     padding: 0;
 
-    .entry-title {
+    .listing-title {
       font-size: 1.8em;
       font-weight: normal;
       line-height: 100%;
       margin: 0 0 5px;
+      padding: 0;
       text-align: left;
+
       a {
         text-decoration: none;
       }
@@ -320,28 +322,44 @@ nav {
 
     }
 
-    .entry-meta p {
-      font-size: 90%;
-      line-height: 130%;
-      color: #777;
-      margin: 0 0 8px;
-      a {
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 110%;
+    .listing-meta {
+
+      p {
+        font-size: 90%;
+        line-height: 130%;
+        color: rgba( #777, .5 );
+        margin: 0 0 8px;
+
+        &.website {
+          font-weight: 400;
+          margin-bottom: 1em;
+
+          a {
+            color: $url-link;
+          }
+          a:hover {
+            color: $url-link-hover;
+          }
+        }
+
+        a {
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: none;
+        }
+
       }
-      a:hover {
-        text-decoration: none;
-      }
+
     }
 
   }
 
-  .entry-summary {
+  .listing-summary {
     width: 100%;
     clear: both;
     border-top: 1px solid rgba( $primary-dark, 0.12 );
-    margin-top: 2em;
+    margin-top: 1em;
     padding-top: 1em;
   }
 }
@@ -358,11 +376,8 @@ nav {
       margin-left: 2%;
     }
 
-    .entry-header {
-      //width: 66%;
-      //float: left;
-    }
   }
+
 }
 
 

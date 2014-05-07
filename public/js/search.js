@@ -6,7 +6,6 @@
     $.extend(true, $.searchbox, {
         settings: {
             url: '/search',
-            param: 'query',
             dom_id: '#results',
             wrapper: '.directory-wrap',
             delay: 100,
@@ -32,11 +31,12 @@
                 base = path[0], params = path[1], query_string = query
 
             if (params) query_string = [params.replace('&amp;', '&'), query].join('&')
-console.log( terms );
+
             if ( terms ) {
                 $.post( base, { action: "search_directory", s: terms })
                     .done(function( data ) {
                         $($.searchbox.settings.wrapper).hide()
+                        $($.searchbox.settings.dom_id).show()
                         $($.searchbox.settings.dom_id).html(data)
                     })
 

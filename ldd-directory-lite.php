@@ -84,6 +84,7 @@ final class LDD_Directory_Lite {
 
     public function include_files() {
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
+        require_once( LDDLITE_PATH . '/includes/setup.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
         require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
         require_once( LDDLITE_PATH . '/includes/email.php' );
@@ -215,67 +216,3 @@ function lddlite() {
 }
 
 lddlite();
-
-
-function lddslug() {
-    static $slug;
-
-    if ( !isset( $slug ) ) {
-        $lddlite = lddlite();
-        $slug = $lddlite->slug();
-    }
-
-    return $slug;
-}
-
-
-/**
- * * @ignore
- */
-function lddlite_update_meta() {
-
-    $posts = get_posts( array(
-        'posts_per_page'    => -1,
-        'post_type'         => LDDLITE_POST_TYPE,
-    ) );
-
-    foreach ( $posts as $post ) {
-
-        $id = $post->ID;
-
-        $address = get_post_meta( $id, '_lddlite_address', 1 );
-        $contact = get_post_meta( $id, '_lddlite_contact', 1 );
-        $urls = get_post_meta( $id, '_lddlite_urls', 1 );
-
-        if ( !empty( $address ) && is_array( $address ) ) {
-            add_post_meta( $id, '_lddlite_address_one', ( isset( $address['address_one'] ) ? $address['address_one'] : '' ) );
-            add_post_meta( $id, '_lddlite_address_two', ( isset( $address['address_two'] ) ? $address['address_two'] : '' ) );
-            add_post_meta( $id, '_lddlite_address_country', ( isset( $address['country'] ) ? $address['country'] : '' ) );
-            add_post_meta( $id, '_lddlite_address_subdivision', ( isset( $address['subdivision'] ) ? $address['subdivision'] : '' ) );
-            add_post_meta( $id, '_lddlite_address_city', ( isset( $address['city'] ) ? $address['city'] : '' ) );
-            add_post_meta( $id, '_lddlite_address_post_code', ( isset( $address['post_code'] ) ? $address['post_code'] : '' ) );
-
-            delete_post_meta( $id, '_lddlite_address' );
-        }
-
-        if ( !empty( $contact ) && is_array( $contact ) ) {
-            add_post_meta( $id, '_lddlite_contact_primary', ( isset( $contact['primary'] ) ? $contact['primary'] : '' ) );
-            add_post_meta( $id, '_lddlite_contact_email', ( isset( $contact['email'] ) ? $contact['email'] : '' ) );
-            add_post_meta( $id, '_lddlite_contact_phone', ( isset( $contact['phone'] ) ? $contact['phone'] : '' ) );
-            add_post_meta( $id, '_lddlite_contact_fax', ( isset( $contact['fax'] ) ? $contact['fax'] : '' ) );
-
-            delete_post_meta( $id, '_lddlite_contact' );
-        }
-
-        if ( !empty( $urls ) && is_array( $urls ) ) {
-            add_post_meta( $id, '_lddlite_urls_website', ( isset( $urls['website'] ) ? $urls['website'] : '' ) );
-            add_post_meta( $id, '_lddlite_urls_social_facebook', ( isset( $urls['social']['facebook'] ) ? $urls['social']['facebook'] : '' ) );
-            add_post_meta( $id, '_lddlite_urls_social_twitter', ( isset( $urls['social']['twitter'] ) ? $urls['social']['twitter'] : '' ) );
-            add_post_meta( $id, '_lddlite_urls_social_linkedin', ( isset( $urls['social']['linkedin'] ) ? $urls['social']['linkedin'] : '' ) );
-
-            delete_post_meta( $id, '_lddlite_urls' );
-        }
-    }
-
-}
-
