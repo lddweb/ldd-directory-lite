@@ -1,8 +1,14 @@
 <?php
-
 /**
+ * General functionality
  *
+ * @package   ldd_directory_lite
+ * @author    LDD Web Design <info@lddwebdesign.com>
+ * @license   GPL-2.0+
+ * @link      http://lddwebdesign.com
+ * @copyright 2014 LDD Consulting, Inc
  */
+
 
 function lddslug() {
     static $slug;
@@ -16,215 +22,113 @@ function lddslug() {
 }
 
 
-add_image_size( 'directory-listing-compact', 105, 305 );
-add_image_size( 'directory-listing-search', 100, 100 );
+function ld_get_shortcode_id( $force = false) {
+    global $shortcode_tags;
+
+    $shortcode_id = get_transient( 'ldd_shortcode_id' );
+
+    if ( false !== $shortcode_id )
+        return $shortcode_id;
+
+    $posts = get_posts( array(
+        'posts_per_page'    => -1,
+        'post_type'         => 'page',
+    ) );
+
+    // Store this, we don't want to permanently change it
+    $old_shortcode_tags = $shortcode_tags;
+
+    // Remove everything but our shortcodes
+    $shortcode_tags = array_intersect_key( $shortcode_tags, array(
+        'directory' => '',
+        'business_directory' => '',
+    ) );
+
+    $pattern = get_shortcode_regex();
+    foreach ( $posts as $post ) {
+        if ( preg_match( "/$pattern/s", $post->post_content ) ) {
+            $shortcode_id = $post->ID;
+            break;
+        }
+    }
+
+    // Reset the global array
+    $shortcode_tags = $old_shortcode_tags;
+
+    if ( false !== $shortcode_id )
+        set_transient( 'ldd_shortcode_id', $shortcode_id, 3600 );
+
+    return $shortcode_id;
+}
 
 
-function lddlite_icon( $label, $url = '', $title = '' )
-{
+function ld_get_tpl() {
 
-    $icon = LDDLITE_URL . '/public/images' . $label . '.png';
+    require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
+
+    raintpl::configure( 'tpl_ext',      'tpl' );
+    raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
+    raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
+
+    return new raintpl;
+}
+
+
+function ld_get_search_form() {
+    $tpl = ld_get_tpl();
+    $tpl->assign( 'placeholder', __( 'Search the directory...', lddslug() ) );
+    $tpl->assign( 'search_text', __( 'Search', lddslug() ) );
+    $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+    return $tpl->draw( 'display/search-form', 1 );
+}
+
+
+function ld_get_social_icon( $label, $url = '', $title = '', $ext = 'png' ) {
+
+    $icon = LDDLITE_URL . '/public/images/social/' . $label . '.' . $ext;
 
     if ( !file_exists( $icon ) )
         return false;
 
-    $output = '<img src="' . $icon . '" />';
+    $output = '<img src="' . $icon . '">';
 
-    if ( !empty( $url ) )
-    {
+    if ( !empty( $url ) ) {
         $title = ( empty( $title ) ) ? '' : sprintf( ' title="%s" ', htmlspecialchars( $title ) );
-        $output = sprintf( '<a href="%1$s" %2$s class="ldd-link ldd-icon">%3$s</a>', esc_url( $url ), $title, $output );
+        $output = sprintf( '<a href="%1$s" %2$s class="social-icon">%3$s</a>', esc_url( $url ), $title, $output );
     }
 
     return $output;
-
 }
 
 
-/**
- * This function looks for any macros wrapped in a double set of curly braces and defined in
- * an associative array passed to it. All macros are replaced or removed and the template is
- * returned.
- * @since 1.3.13
- *
- * @TODO This could be an object, with a single method, allowing us to build it as we went?
- * @param string $tpl_file Relative file path to the template we're parsing
- * @param array $replace Our find and replace array
- * @return mixed
- */
-function ld_parse_template( $tpl_file, $replace )
-{
+function ld_split_file_into_array( $arrfile ) {
 
-    // Create an absolute path to our template file
-    $template = LDDLITE_TEMPLATES . '/' . $tpl_file . '.' . LDDLITE_TPL_EXT;
-
-    // If the template doesn't exist, return false
-    if ( !file_exists( $template ) )
+    if ( !file_exists( $arrfile ) )
         return false;
 
-    // Let's get to work!
-    $body = file_get_contents( $template );
+    $lines = file( $arrfile );
+    $data = array();
 
-    if ( is_array( $replace ) ) {
-        foreach ( $replace as $macro => $value ) {
-            if ( is_array( $value ) ) {
-                foreach ( $value as $m => $v ) {
-                    $body = str_replace( '{{' . $macro . '.' . $m . '}}', $v, $body );
-                }
-            } else {
-                $body = str_replace( '{{'.$macro.'}}', $value, $body );
-            }
-        }
+    foreach ( $lines as $line ) {
+        $kv = explode( ',', $line );
+        $data[ $kv[0] ] = $kv[1];
     }
 
-    // Remove all occurrences of macros that have not been replaced
-    $body = preg_replace( '/\{{2}.*?\}{2}/', '', $body );
-
-    return $body; // creep.
+    return $data;
 }
 
 
-function ld_ajax_search_directory() {
-    global $post;
+function ld_get_subdivision_array( $subdivision ) {
 
-    $args = array(
-        'post_type'     => LDDLITE_POST_TYPE,
-        'post_status'   => 'publish',
-        's'             => $_POST['s'],
-    );
+    $subdivision_file = LDDLITE_PATH . '/includes/views/select/subdivision.' . $subdivision . '.inc';
 
-    $search = new WP_Query( $args );
-
-    $output = '';
-    $nth = 0;
-
-    if ( $search->have_posts() ) {
-        while ( $search->have_posts() ) {
-            $search->the_post();
-
-            $id = $post->ID;
-            $permalink = get_the_permalink();
-            $slug = $post->post_name;
-            $title = $post->post_title;
-
-            $url = get_post_meta( $id, '_lddlite_url_website', true );
-
-            // determine our classes;
-            $nth_class = ( $nth % 2 ) ? 'odd' : 'even';
-            $nth++;
-
-            // the following is used to build our title, and the logo
-            $link = '<a href="' . $permalink . '?show=listing&t=' . $title . '" title="' . esc_attr( $title ) . '" %2$s>%1$s</a>';
-
-            // the logo
-            if ( has_post_thumbnail( $id ) )
-                $featured = sprintf( $link, get_the_post_thumbnail( $id, 'directory-listing-search' ), 'class="search-thumbnail"' );
-            else
-                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/images/avatar_default.png" />', 'class="search-thumbnail"' );
-
-            $summary = '';
-
-            if ( !empty( $post->post_excerpt ) )
-                $summary = $post->post_excerpt;
-
-            if ( empty( $summary ) ) {
-                $summary = $post->post_content;
-
-                $summary = strip_shortcodes( $summary );
-
-                $summary = apply_filters( 'lddlite_the_content', $summary );
-                $summary = str_replace( ']]>', ']]&gt;', $summary );
-
-                $excerpt_length = apply_filters( 'lddlite_excerpt_length', 55 );
-                $excerpt_more = apply_filters( 'lddlite_excerpt_more', sprintf( '&hellip; (' . $link . ')', 'view listing', '' ) );
-
-                $summary = wp_trim_words( $summary, $excerpt_length, $excerpt_more );
-            }
-
-            $template_vars = array(
-                'id'        => $id,
-                'nth'       => $nth_class,
-                'featured'  => $featured,
-                'title'     => sprintf( $link, $title, '' ),
-                'url'       => $url,
-                'summary'   => $summary,
-            );
-
-            $output .= ld_parse_template( 'display/search-listing', $template_vars );
-
-
-
-        }
-
-    } else { // Nothing found
-
-        $output = ld_parse_template( 'display/search-notfound', array() );
-
-    }
-
-    echo $output; 
-    die;
+    return ld_split_file_into_array( $subdivision_file );
 }
 
-function lddlite_ajax_contact_form()
-{
 
-    if ( !wp_verify_nonce( $_POST['nonce'], 'contact-form-nonce' ) ) {
-        die( 'You shall not pass!' );
-    }
+function ld_get_country_array() {
 
-    $name = sanitize_text_field( $_POST['name'] );
-    $email = sanitize_text_field( $_POST['email'] );
-    $subject = sanitize_text_field( $_POST['subject'] );
-    $message = esc_html( sanitize_text_field( $_POST['message'] ) );
-    $math = sanitize_text_field( $_POST['math'] );
+    $country_file = LDDLITE_PATH . '/includes/views/select/countries.inc';
 
-/*    $name = '';
-    $email = 'mark@water';
-    $subject = '';
-    $message = 'message!';
-    $math = '2';*/
-
-    $errors = array();
-
-    if ( empty( $name ) || strlen( $name ) < 3 ) {
-        $errors['name'] = 'You must enter a name';
-    }
-
-    if ( empty( $email ) || !is_email( $email ) ) {
-        $errors['email'] = 'Please enter a valid email address';
-    }
-
-    if ( empty( $subject ) || strlen( $subject ) < 3 ) {
-        $errors['subject'] = 'You must enter a subject';
-    }
-
-    if ( empty( $message ) || strlen( $message ) < 20 ) {
-        $errors['message'] = 'Please enter a longer message';
-    }
-
-    if ( empty( $math ) || '11' != $math ) {
-        $errors['math'] = 'Your math is wrong';
-    }
-
-    if ( !empty( $errors ) )
-    {
-        echo json_encode( array(
-            'errors'    => $errors,
-            'success'   => false,
-        ) );
-        die;
-    }
-
-    $post_id = intval( $_POST['business_id'] );
-    $post_id = 30; // FOR TESTING, HAZ EMAIL
-    $contact_meta = get_post_meta( $post_id, '_lddlite_contact', 1 );
-    $email = $contact_meta['email'];
-
-    $headers = sprintf( "From: %1$s <%2$s>\r\n", $name, $email );
-
-    echo json_encode( array(
-        'success'   => wp_mail( 'mark@watero.us', $subject, $message, $headers ),
-    ) );
-    die;
+    return ld_split_file_into_array( $country_file );
 }

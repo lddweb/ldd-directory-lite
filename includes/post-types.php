@@ -1,144 +1,87 @@
 <?php
+/**
+ * Filters related to our custom post type.
+ *
+ * Post types are registered in setup.php, all actions and filters in this file are related
+ * to customizing the way WordPress handles our custom post types and taxonomies.
+ *
+ * @package   ldd_directory_lite
+ * @author    LDD Web Design <info@lddwebdesign.com>
+ * @license   GPL-2.0+
+ * @link      http://lddwebdesign.com
+ * @copyright 2014 LDD Consulting, Inc
+ */
 
-function lddlite_register__cpt_tax()
-{
-    global $wp_rewrite;
 
-    register_taxonomy( LDDLITE_TAX_CAT, LDDLITE_POST_TYPE, array(
-        'hierarchical'      => true,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => false, // We are handling this internally until there's time to explore it fully.
-    ));
+function ld_filter__term_link( $termlink ) {
+    global $post;
 
-    register_taxonomy( LDDLITE_TAX_TAG, LDDLITE_POST_TYPE, array(
-        'hierarchical'      => false,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => false,
-    ));
+    $link = explode( '?', $termlink);
 
-    $labels = array(
-        'name'                  => 'Directory Listings',
-        'singular_name'         => 'Directory Listing',
-        'add_new'               => 'Add Listing',
-        'add_new_item'          => 'Add New Listing',
-        'edit_item'             => 'Edit Listing',
-        'new_item'              => 'New Directory Listing',
-        'view_item'             => 'View Directory Listing',
-        'search_items'          => 'Search Directory Listings',
-        'not_found'             => 'No directory listings found',
-        'not_found_in_trash'    => 'No directory listings found in Trash',
-        'parent_item_colon'     => 'Parent Directory Listing',
-        'menu_name'             => 'Directory [lite]'
-    );
+    if ( count( $link ) < 2 )
+        return $termlink;
 
-    $args = array(
-        'labels' => $labels,
-        'hierarchical' => false,
+    parse_str( $link[1], $link );
 
-        'supports'      => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions' ),
-        'taxonomies'    => array( LDDLITE_TAX_CAT, LDDLITE_TAX_TAG ),
-        'public'        => true,
-        'show_ui'       => true,
-        'show_in_menu'  => true,
-        'menu_position' => 25,
-        'menu_icon'     => '',
+    $permalink = get_permalink( $post->ID );
 
-        'show_in_nav_menus'     => false,
-        'publicly_queryable'    => true,
-        'exclude_from_search'   => false,
-        'has_archive'           => true,
-        'query_var'             => true,
-        'can_export'            => true,
-        'rewrite'               => true,
-        'capability_type'       => 'post'
-    );
+    if ( $permalink && isset( $link[LDDLITE_TAX_CAT] ) )
+        $termlink = $permalink . '?show=category&t=' . $link[LDDLITE_TAX_CAT];
 
-    register_post_type( LDDLITE_POST_TYPE, $args );
-    $wp_rewrite->flush_rules();
-
+    return $termlink;
 }
 
 
-function lddlite_filter_enter_title_here ( $title )
-{
+function ld_filter__post_type_link( $post_link, $post ) {
 
-    if ( get_post_type() == LDDLITE_POST_TYPE ) {
+    if ( LDDLITE_POST_TYPE != get_post_type( $post->ID ) )
+        return $post_link;
+
+    $shortcode_id = ld_get_shortcode_id();
+
+    $permalink = get_permalink( $shortcode_id );
+
+    return ( $permalink . '?show=listing&t=' . $post->post_name );
+}
+
+
+function ld_filter__enter_title_here ( $title ) {
+    if ( get_post_type() == LDDLITE_POST_TYPE )
         $title = __( 'Business Name', lddslug() );
-    }
 
     return $title;
 }
 
 
-function lddlite_filter_admin_post_thumbnail_html( $content )
-{
-
-    if ( LDDLITE_POST_TYPE == get_post_type() ) {
+function ld_filter__admin_post_thumbnail_html( $content ) {
+    if ( LDDLITE_POST_TYPE == get_post_type() )
         $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', lddslug() ), $content);
-    }
 
     return $content;
 }
 
 
-function lddlite_action_directory_icon()
-{
-
+function ld_action__admin_menu_icon() {
     echo "\n\t<style>";
     echo '#adminmenu .menu-icon-' . LDDLITE_POST_TYPE . ' div.wp-menu-image:before { content: \'\\f307\'; }';
     echo '</style>';
-
 }
 
 
-function lddlite_action_submenu_name()
-{
+function ld_action__submenu_title() {
     global $submenu;
-
     $submenu['edit.php?post_type=' . LDDLITE_POST_TYPE][5][0] = 'All Listings';
 }
 
 
-function lddlite_filter_post_type_link( $post_link, $post )
-{
+add_filter( 'term_link', 'ld_filter__term_link' );
+add_filter( 'post_type_link', 'ld_filter__post_type_link', 10, 2 );
+add_filter( 'enter_title_here', 'ld_filter__enter_title_here' );
+add_filter( 'admin_post_thumbnail_html', 'ld_filter__admin_post_thumbnail_html' );
 
-    if ( LDDLITE_POST_TYPE != get_post_type( $post->ID ) )
-        return $post_link;
-
-    _lddlite_set_shortcode_ID();
-    $lddlite = lddlite();
-
-    $directory_link = get_permalink( $lddlite->directory_home_ID );
-
-    return ( $directory_link . '?show=listing&t=' . $post->post_name );
-}
+add_action( 'admin_head', 'ld_action__admin_menu_icon' );
+add_action( '_admin_menu', 'ld_action__submenu_title' );
 
 
-function _lddlite_set_shortcode_ID( $force = false)
-{
-    $lddlite = lddlite();
 
-    if ( empty( $lddlite->directory_home_ID ) || $force )
-    {
-        $posts = get_posts( array(
-            'posts_per_page'    => -1,
-            'post_type'         => 'page',
-        ) );
 
-        $pattern = get_shortcode_regex();
-        foreach ( $posts as $post )
-        {
-            if ( preg_match( "/$pattern/s", $post->post_content ) )
-            {
-                $lddlite->directory_home_ID = $post->ID;
-                break;
-            }
-        }
-
-    }
-
-}

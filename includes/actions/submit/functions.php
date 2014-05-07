@@ -1,40 +1,7 @@
 <?php
 
-function ld_split_file_into_array( $arrfile ) {
 
-    if ( !file_exists( $arrfile ) )
-        return false;
-
-    $lines = file( $arrfile );
-    $data = array();
-
-    foreach ( $lines as $line ) {
-        $kv = explode( ',', $line );
-        $data[ $kv[0] ] = $kv[1];
-    }
-
-    return $data;
-}
-
-
-function ld_get_subdivision_array( $subdivision ) {
-
-    $subdivision_file = LDDLITE_PATH . '/includes/views/select/subdivision.' . $subdivision . '.inc';
-
-    return ld_split_file_into_array( $subdivision_file );
-}
-
-function ld_get_country_array() {
-
-    $country_file = LDDLITE_PATH . '/includes/views/select/countries.inc';
-
-    return ld_split_file_into_array( $country_file );
-}
-
-
-function ld_dropdown_subdivision( $subdivision )
-{
-
+function ld_dropdown_subdivision( $subdivision ) {
 
     $data = ld_get_subdivision_array( $subdivision );
 
@@ -55,8 +22,7 @@ function ld_dropdown_subdivision( $subdivision )
 }
 
 
-function ld_dropdown_country()
-{
+function ld_dropdown_country() {
 
     $countries = ld_get_country_array();
 

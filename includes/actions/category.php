@@ -127,7 +127,7 @@ function lddlite_build_social( $id )
 }
 
 
-function ld_view_category( $cat_id ) {
+function ld_action__category( $cat_id ) {
     global $post;
 
     wp_enqueue_script( 'ldd-lite-search' );
@@ -148,7 +148,7 @@ function ld_view_category( $cat_id ) {
 
     if ( !empty( $listings ) ) {
 
-        $tpl = ld_new_template();
+        $tpl = ld_get_tpl();
 
         foreach ( $listings as $listing ) {
 
@@ -210,7 +210,7 @@ function ld_view_category( $cat_id ) {
 
     } // if
 
-    $tpl = ld_new_template();
+    $tpl = ld_get_tpl();
 
     $tpl->assign( 'url', get_permalink( $post->ID ) );
     $tpl->assign( 'search_form', ld_get_search_form() );

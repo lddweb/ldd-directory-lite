@@ -5,7 +5,7 @@
  */
 
 
-function ld_view_listing( $listing ) {
+function ld_action__listing( $listing ) {
     global $post;
 
     $permalink = get_permalink( $post->ID );

@@ -13,11 +13,9 @@
  * Version:           2.0.0
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
- * Text Domain:       ldd-bd
+ * Text Domain:       ldd-lite
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path:       /lang
-
  */
 
 // If this file is called directly, abort.
@@ -30,18 +28,15 @@ define( 'LDDLITE_VERSION',      '2.0.0' );
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
 define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
 
-define( 'LDDLITE_AJAX',         LDDLITE_URL . '/includes/ajax.php' );
-
 define( 'LDDLITE_POST_TYPE',    'directory_listings' );
 define( 'LDDLITE_TAX_CAT',      'listing_category' );
 define( 'LDDLITE_TAX_TAG',      'listing_tag' );
 
-define( 'LDDLITE_TEMPLATES',    LDDLITE_PATH . '/templates' );
-define( 'LDDLITE_TPL_EXT',      'tpl' );
-
 define( 'LDDLITE_PFX',          '_lddlite_' );
 
 
+register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
+register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
 
 final class LDD_Directory_Lite {
@@ -52,9 +47,9 @@ final class LDD_Directory_Lite {
     private static $_instance;
 
     /**
-     * @var string Static-ly accessible and globally similar
+     * @var string Slug for our text domain and other similar uses
      */
-    private static $_slug = 'ldd-lite';
+    private $_slug = 'ldd-lite';
 
     /**
      * @var array Options, everybody has them.
@@ -67,13 +62,20 @@ final class LDD_Directory_Lite {
     public $directory_home_ID;
 
 
+    /**
+     * Singleton pattern, returns an instance of the class responsible for setting up the plugin
+     * and lording over it's configuration options.
+     *
+     * @since 2.0.0
+     * @return LDD_Directory_Lite An instance of the LDD_Directory_Lite class
+     */
     public static function get_in() {
 
         if ( !isset( self::$_instance ) && !( self::$_instance instanceof LDD_Directory_Lite ) ) {
             self::$_instance = new self;
             self::$_instance->include_files();
             self::$_instance->populate_options();
-            self::$_instance->action_filters();
+            self::$_instance->setup_plugin();
         }
 
         return self::$_instance;
@@ -81,21 +83,27 @@ final class LDD_Directory_Lite {
     }
 
 
-
+    /**
+     * Include all the files we'll need to function
+     *
+     * @since 2.0.0
+     */
     public function include_files() {
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/setup.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
         require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
         require_once( LDDLITE_PATH . '/includes/email.php' );
-        require_once( LDDLITE_PATH . '/includes/views.php' );
-
-        if ( is_admin() )
-            require_once( LDDLITE_PATH . '/includes/admin.php' );
+        if ( is_admin() ) require_once( LDDLITE_PATH . '/includes/admin.php' );
     }
 
 
-
+    /**
+     * Populate the options property based on a set of defaults and information pulled from
+     * the database. This will also check for and fire an upgrade if necessary.
+     *
+     * @since 2.0.0
+     */
     public function populate_options() {
 
         $defaults = apply_filters( 'lddlite_default_options', array(
@@ -115,7 +123,7 @@ final class LDD_Directory_Lite {
 
         if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
             require_once( LDDLITE_PATH . '/upgrade.php' );
-            add_action( 'init', 'ld_upgrade_path', 20 );
+            add_action( 'init', 'ld_upgrade__go', 20 ); // This has to fire later, so we know our CPT's are registered
         }
 
         $this->options = $options;
@@ -123,64 +131,47 @@ final class LDD_Directory_Lite {
     }
 
 
-    public function action_filters() {
-
+    /**
+     * Minor setup. Major setup of internal funtionality is handled in setup.php
+     *
+     * @since 2.0.0
+     */
+    public function setup_plugin() {
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
         $basename = plugin_basename( __FILE__ );
         add_filter( 'plugin_action_links_' . $basename, array( $this, 'add_action_links' ) );
-
-        add_shortcode( 'business_directory', 'ld_display_the_directory' );
-
-        { // These all relate to our custom post types and dashboard UI
-            add_action( 'init', 'lddlite_register__cpt_tax' );
-
-
-            add_filter( 'post_type_link', 'lddlite_filter_post_type_link', 10, 2 );
-
-            add_filter( 'enter_title_here', 'lddlite_filter_enter_title_here' );
-            add_filter( 'admin_post_thumbnail_html', 'lddlite_filter_admin_post_thumbnail_html' );
-
-            add_action( 'admin_head', 'lddlite_action_directory_icon' );
-            add_action( '_admin_menu', 'lddlite_action_submenu_name' );
-        }
-
-        add_action( 'init', array( $this, 'register_scripts' ) );
-
-//        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
-//        add_action( 'admin_enqueue_scripts', array( $this, '_enqueue_scripts_global' ) );
-//        add_action( 'wp_enqueue_scripts', array( $this, '_enqueue_scripts' ) );
-
-        add_action( 'wp_ajax_search_directory', 'ld_ajax_search_directory' );
-        add_action( 'wp_ajax_nopriv_search_directory', 'ld_ajax_search_directory' );
-
-        // Process AJAX for the contact Form
-        add_action( 'wp_ajax_contact_form', 'lddlite_ajax_contact_form' );
-        add_action( 'wp_ajax_nopriv_contact_form', 'lddlite_ajax_contact_form' );
-
-        // Process AJAX for the submission form
-        add_action( 'wp_ajax_contact_form', 'lddlite_ajax_contact_form' );
-        add_action( 'wp_ajax_nopriv_contact_form', 'lddlite_ajax_contact_form' );
-
     }
 
 
+    /**
+     * Load the related i18n files into the appropriate domain.
+     *
+     * @since 2.0.0
+     */
     public function load_plugin_textdomain() {
 
         $lang_dir = LDDLITE_PATH . '/languages/';
         $lang_dir = apply_filters( 'lddlite_languages_directory', $lang_dir );
 
-        $locale = apply_filters( 'plugin_locale', get_locale(), self::$_slug );
-        $mofile = $lang_dir . self::$_slug . $locale . '.mo';
+        $locale = apply_filters( 'plugin_locale', get_locale(), $this->_slug );
+        $mofile = $lang_dir . $this->_slug . $locale . '.mo';
 
         if ( file_exists( $mofile ) )
-            load_textdomain( self::$_slug, $mofile );
+            load_textdomain( $this->_slug, $mofile );
         else
-            load_plugin_textdomain( self::$_slug, false, $lang_dir );
+            load_plugin_textdomain( $this->_slug, false, $lang_dir );
 
     }
 
 
+    /**
+     * Add a 'Settings' link on the Plugins page for easier access.
+     *
+     * @since 2.0.0
+     * @param $links array Passed by the filter
+     * @return array The modified $links array
+     */
     public function add_action_links( $links ) {
 
         return array_merge(
@@ -193,26 +184,38 @@ final class LDD_Directory_Lite {
     }
 
 
-    public function register_scripts() {
-        wp_register_script( 'ldd-lite', LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
-        wp_register_script( 'ldd-lite-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
-        wp_register_script( 'ldd-lite-search', LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
-
-        wp_register_style( 'ldd-lite', LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
-        wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
+    /**
+     * Allow our slug to be used outside this class, without being modified
+     *
+     * @since 2.0.0
+     * @return string The slug
+     */
+    public function slug() {
+        return $this->_slug;
     }
 
 
-    public function slug() {
-        return self::$_slug;
+    /**
+     * Flush rewrite rules on activation or deactivation of the plugin.
+     *
+     * @since 2.0.0
+     */
+    public static function flush_rewrite() {
+        flush_rewrite_rules( false );
     }
 
 
 }
 
 
+/**
+ * An alias to calling the LDD_Directory_Lite::get_in() method
+ *
+ * @return LDD_Directory_Lite
+ */
 function lddlite() {
     return LDD_Directory_Lite::get_in();
 }
 
+// BOOM! I SAID BOOM!
 lddlite();

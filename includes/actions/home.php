@@ -10,7 +10,7 @@ function ld_filter_categories_count( $links ) {
     return $links;
 }
 
-function ld_view_home( $term = false ) {
+function ld_action__home( $term = false ) {
     global $post;
 
     wp_enqueue_script( 'ldd-lite-search' );
@@ -24,7 +24,7 @@ function ld_view_home( $term = false ) {
         'show_count'    => 1,
     ) );
 
-    $tpl = ld_new_template();
+    $tpl = ld_get_tpl();
 
     $tpl->assign( 'url', get_permalink( $post->ID ) );
     $tpl->assign( 'search_form', ld_get_search_form() );

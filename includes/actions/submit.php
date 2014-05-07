@@ -4,11 +4,11 @@
  *
  */
 
-require_once( LDDLITE_PATH . '/includes/views/submit-functions.php' );
-require_once( LDDLITE_PATH . '/includes/views/submit-process.php' );
+require_once( LDDLITE_PATH . '/includes/actions/submit/functions.php' );
+require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
 
 
-function ld_view_submit( $term = false ) {
+function ld_action__submit( $term = false ) {
     global $post;
 
     $valid = false;
