@@ -39,7 +39,8 @@ register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite'
 register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
 
-final class LDD_Directory_Lite {
+
+class LDD_Directory_Lite {
 
     /**
      * @var $_instance An instance of ones own instance
@@ -92,9 +93,12 @@ final class LDD_Directory_Lite {
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/setup.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
-        require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
         require_once( LDDLITE_PATH . '/includes/email.php' );
-        if ( is_admin() ) require_once( LDDLITE_PATH . '/includes/admin.php' );
+        if ( is_admin() ) {
+            require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
+            require_once( LDDLITE_PATH . '/includes/pointers.php' );
+            require_once( LDDLITE_PATH . '/includes/admin.php' );
+        }
     }
 
 
@@ -208,6 +212,7 @@ final class LDD_Directory_Lite {
 }
 
 
+
 /**
  * An alias to calling the LDD_Directory_Lite::get_in() method
  *
@@ -218,4 +223,24 @@ function lddlite() {
 }
 
 // BOOM! I SAID BOOM!
-lddlite();
+ldd::load();
+
+
+class ldd {
+    public static $slug = 'ldd-lite';
+
+    public static function load() {
+        return LDD_Directory_Lite::get_in();
+    }
+
+    public static function tpl() {
+        require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
+
+        raintpl::configure( 'tpl_ext',      'tpl' );
+        raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
+        raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
+        raintpl::configure( 'path_replace', false );
+
+        return new raintpl;
+    }
+}

@@ -1,7 +1,7 @@
 <?php
 global $submit_errors;
 
-function ld_submit_create_user( $username, $email ) {
+function ld_submit__create_user( $username, $email ) {
 
     $password = wp_generate_password( 14, true );
     $user_id = wp_create_user( $username, $password, $email );
@@ -13,7 +13,7 @@ function ld_submit_create_user( $username, $email ) {
 }
 
 
-function ld_submit_create_listing( $name, $description, $cat_id, $user_id ) {
+function ld_submit__create_listing( $name, $description, $cat_id, $user_id ) {
 
     $listing = array(
         'post_content'  => $description,
@@ -29,7 +29,7 @@ function ld_submit_create_listing( $name, $description, $cat_id, $user_id ) {
 }
 
 
-function ld_submit_create_meta( $data, $post_id ) {
+function ld_submit__create_meta( $data, $post_id ) {
 
     $remove = array(
         'name',
@@ -52,7 +52,7 @@ function ld_submit_create_meta( $data, $post_id ) {
 }
 
 
-function ld_submit_process_post( $post_data ) {
+function ld_sanitize__post( $post_data ) {
 
     $required_fields = apply_filters( 'lddlite_required_fields', array(
         'ld_s_name' => '',
@@ -209,17 +209,17 @@ function ld_submit_add_errors( $code, $data = null ) {
 function ld_submit_get_error_message( $error_slug ) {
 
     $error_messages = array(
-        'category_invalid'      => __( 'Please select a category', lddslug() ),
-        'username_invalid'      => __( 'That is not a valid username', lddslug() ),
-        'username_exists'       => __( 'That username already exists', lddslug() ),
-        'email_exists'          => __( 'That email is already in use', lddslug() ),
-        'phone_required'        => __( 'Please enter a phone number', lddslug() ),
-        'phone_invalid'         => __( 'That is not a valid phone number', lddslug() ),
-        'fax_invalid'           => __( 'That is not a valid fax number', lddslug() ),
-        'street_required'       => __( 'Please enter your street address', lddslug() ),
-        'city_required'         => __( 'Please enter a city', lddslug() ),
-        'subdivision_required'  => __( 'Please enter a state', lddslug() ),
-        'post_code_required'    => __( 'Please enter your zip', lddslug() ),
+        'category_invalid'      => __( 'Please select a category', ldd::$slug ),
+        'username_invalid'      => __( 'That is not a valid username', ldd::$slug ),
+        'username_exists'       => __( 'That username already exists', ldd::$slug ),
+        'email_exists'          => __( 'That email is already in use', ldd::$slug ),
+        'phone_required'        => __( 'Please enter a phone number', ldd::$slug ),
+        'phone_invalid'         => __( 'That is not a valid phone number', ldd::$slug ),
+        'fax_invalid'           => __( 'That is not a valid fax number', ldd::$slug ),
+        'street_required'       => __( 'Please enter your street address', ldd::$slug ),
+        'city_required'         => __( 'Please enter a city', ldd::$slug ),
+        'subdivision_required'  => __( 'Please enter a state', ldd::$slug ),
+        'post_code_required'    => __( 'Please enter your zip', ldd::$slug ),
     );
 
     if ( array_key_exists( $error_slug, $error_messages ) )

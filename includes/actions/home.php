@@ -24,10 +24,16 @@ function ld_action__home( $term = false ) {
         'show_count'    => 1,
     ) );
 
-    $tpl = ld_get_tpl();
+    $tpl = ldd::tpl();
 
     $tpl->assign( 'url', get_permalink( $post->ID ) );
     $tpl->assign( 'search_form', ld_get_search_form() );
+    $tpl->assign( 'categories', $categories );
+
+    // Placeholders
+    $tpl->assign( 'featured_listings_open', '' );
+    $tpl->assign( 'featured_listings', '' );
+    $tpl->assign( 'featured_listings_close', '' );
 
     return $tpl->draw( 'display/home', 1 );
 }

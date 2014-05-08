@@ -56,7 +56,7 @@ switch ( $post->post_status ) {
         break;
     case 'draft':
     case 'auto-draft':
-        _e('Draft');
+        _e('Disabled');
         break;
 }
 ?>
@@ -76,9 +76,9 @@ switch ( $post->post_status ) {
                                 <?php endif; ?>
                                 <option<?php selected( $post->post_status, 'pending' ); ?> value='pending'><?php _e('Pending Review') ?></option>
                                 <?php if ( 'auto-draft' == $post->post_status ) : ?>
-                                    <option<?php selected( $post->post_status, 'auto-draft' ); ?> value='draft'><?php _e('Draft') ?></option>
+                                    <option<?php selected( $post->post_status, 'auto-draft' ); ?> value='draft'><?php _e('Disabled') ?></option>
                                 <?php else : ?>
-                                    <option<?php selected( $post->post_status, 'draft' ); ?> value='draft'><?php _e('Draft') ?></option>
+                                    <option<?php selected( $post->post_status, 'draft' ); ?> value='draft'><?php _e('Disabled') ?></option>
                                 <?php endif; ?>
                             </select>
                             <a href="#post_status" class="save-post-status hide-if-no-js button"><?php _e('OK'); ?></a>
@@ -86,51 +86,6 @@ switch ( $post->post_status ) {
                         </div>
 
                     <?php } ?>
-                </div><!-- .misc-pub-section -->
-
-                <div class="misc-pub-section misc-pub-visibility" id="visibility">
-                    <?php _e('Visibility:'); ?> <span id="post-visibility-display"><?php
-
-                        if ( 'private' == $post->post_status ) {
-                            $post->post_password = '';
-                            $visibility = 'private';
-                            $visibility_trans = __('Private');
-                        } elseif ( !empty( $post->post_password ) ) {
-                            $visibility = 'password';
-                            $visibility_trans = __('Password protected');
-                        } elseif ( $post_type == 'post' && is_sticky( $post->ID ) ) {
-                            $visibility = 'public';
-                            $visibility_trans = __('Public, Sticky');
-                        } else {
-                            $visibility = 'public';
-                            $visibility_trans = __('Public');
-                        }
-
-                        echo esc_html( $visibility_trans ); ?></span>
-                    <?php if ( $can_publish ) { ?>
-                        <a href="#visibility" class="edit-visibility hide-if-no-js"><?php _e('Edit'); ?></a>
-
-                        <div id="post-visibility-select" class="hide-if-js">
-                            <input type="hidden" name="hidden_post_password" id="hidden-post-password" value="<?php echo esc_attr($post->post_password); ?>" />
-                            <?php if ($post_type == 'post'): ?>
-                                <input type="checkbox" style="display:none" name="hidden_post_sticky" id="hidden-post-sticky" value="sticky" <?php checked(is_sticky($post->ID)); ?> />
-                            <?php endif; ?>
-                            <input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility" value="<?php echo esc_attr( $visibility ); ?>" />
-                            <input type="radio" name="visibility" id="visibility-radio-public" value="public" <?php checked( $visibility, 'public' ); ?> /> <label for="visibility-radio-public" class="selectit"><?php _e('Public'); ?></label><br />
-                            <?php if ( $post_type == 'post' && current_user_can( 'edit_others_posts' ) ) : ?>
-                                <span id="sticky-span"><input id="sticky" name="sticky" type="checkbox" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?> /> <label for="sticky" class="selectit"><?php _e( 'Stick this post to the front page' ); ?></label><br /></span>
-                            <?php endif; ?>
-                            <input type="radio" name="visibility" id="visibility-radio-password" value="password" <?php checked( $visibility, 'password' ); ?> /> <label for="visibility-radio-password" class="selectit"><?php _e('Password protected'); ?></label><br />
-                            <span id="password-span"><label for="post_password"><?php _e('Password:'); ?></label> <input type="text" name="post_password" id="post_password" value="<?php echo esc_attr($post->post_password); ?>"  maxlength="20" /><br /></span>
-                            <input type="radio" name="visibility" id="visibility-radio-private" value="private" <?php checked( $visibility, 'private' ); ?> /> <label for="visibility-radio-private" class="selectit"><?php _e('Private'); ?></label><br />
-
-                            <p>
-                                <a href="#visibility" class="save-post-visibility hide-if-no-js button"><?php _e('OK'); ?></a>
-                                <a href="#visibility" class="cancel-post-visibility hide-if-no-js button-cancel"><?php _e('Cancel'); ?></a>
-                            </p>
-                        </div>
-                    <?php } ?>
-
                 </div><!-- .misc-pub-section -->
 
                 <?php
@@ -213,71 +168,67 @@ switch ( $post->post_status ) {
 }
 
 
+/**
+ * Change Metabox titles
+ *
+ * There's no way to filter the titles on most metaboxes, so we just disable them and turn them right back on
+ * with our own name.
+ *
+ * @since 2.0.0
+ */
 function ld_metaboxes__swap() {
     if ( LDDLITE_POST_TYPE == get_post_type() ) {
-        remove_meta_box( 'submitdiv', LDDLITE_POST_TYPE, 'side' );
         remove_meta_box( 'postimagediv', LDDLITE_POST_TYPE, 'side' );
-        add_meta_box( 'postimagediv', __('Logo'), 'post_thumbnail_meta_box', null, 'side', 'high' );
-        add_meta_box( 'submitdiv', __( 'Approval' ), 'ld_metaboxes__submitdiv', NULL, 'side', 'high', null );
+        remove_meta_box( 'submitdiv',    LDDLITE_POST_TYPE, 'side' );
+        remove_meta_box( 'authordiv',    LDDLITE_POST_TYPE, 'side' );
+        add_meta_box( 'authordiv',    __( 'Owner', ldd::$slug ),    'post_author_meta_box',    null, 'side', 'high' );
+        add_meta_box( 'postimagediv', __( 'Logo', ldd::$slug ),     'post_thumbnail_meta_box', null, 'side', 'high' );
+        add_meta_box( 'submitdiv',    __( 'Approval', ldd::$slug ), 'ld_metaboxes__submitdiv', null, 'side', 'high' );
     }
 }
 
 
-function ld_move_metaboxes() {
-    global $wp_meta_boxes;
-
-    unset( $wp_meta_boxes[LDDLITE_POST_TYPE]['side']['low']['postimagediv'] );
-    add_meta_box('postimagediv', __('Business Logo'), 'post_thumbnail_meta_box', null, 'side', 'low');
-
-    unset( $wp_meta_boxes[LDDLITE_POST_TYPE]['normal']['core']['authordiv'] );
-    add_meta_box( 'authordiv', __( 'Author' ), 'post_author_meta_box', LDDLITE_POST_TYPE, 'side', 'default' );
-
-}
-
-
-function ld_init_cmb() {
-
+function ld_metaboxes__init_cmb() {
     if ( !class_exists( 'cmb_Meta_Box' ) )
         require_once( LDDLITE_PATH . '/includes/cmb/init.php' );
-
 }
 
 
-function ld_setup_cmb_boxes( array $meta_boxes ) {
+function ld_metaboxes__setup_cmb( array $meta_boxes ) {
 
     $states = ld_get_subdivision_array( 'US' );
 
     $meta_boxes['listings_address'] = array(
         'id'            => 'listings_address',
-        'title'         => __( 'Business Address', lddslug() ),
+        'title'         => __( 'Business Address', ldd::$slug ),
         'pages'         => array( LDDLITE_POST_TYPE ),
         'context'       => 'normal',
         'priority'      => 'core',
         'show_names'    => true,
         'fields'        => array(
             array(
-                'name'      => __( 'Address 1', lddslug() ),
+                'name'      => __( 'Address 1', ldd::$slug ),
                 'id'        => LDDLITE_PFX . 'address_one',
                 'type'      => 'text',
             ),
             array(
-                'name'      => __( 'Address 2', lddslug() ),
+                'name'      => __( 'Address 2', ldd::$slug ),
                 'id'        => LDDLITE_PFX . 'address_two',
                 'type'      => 'text',
             ),
             array(
-                'name'      => __( 'City', lddslug() ),
+                'name'      => __( 'City', ldd::$slug ),
                 'id'        => LDDLITE_PFX . 'city',
                 'type'      => 'text_medium',
             ),
             array(
-                'name'      => __( 'State', lddslug() ),
+                'name'      => __( 'State', ldd::$slug ),
                 'id'        => LDDLITE_PFX . 'subdivision',
                 'type'      => 'select',
                 'options'   => $states,
             ),
             array(
-                'name'      => __( 'Zip Code', lddslug() ),
+                'name'      => __( 'Zip Code', ldd::$slug ),
                 'id'        => LDDLITE_PFX . 'post_code',
                 'type'      => 'text_small',
             ),
@@ -286,32 +237,32 @@ function ld_setup_cmb_boxes( array $meta_boxes ) {
 
     $meta_boxes['listings_web'] = array(
         'id'         => 'listings_web',
-        'title'      => __( 'Web Addresses', lddslug() ),
+        'title'      => __( 'Web Addresses', ldd::$slug ),
         'pages'      => array( LDDLITE_POST_TYPE ),
         'context'    => 'normal',
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
             array(
-                'name'          => __( 'Website', lddslug() ),
+                'name'          => __( 'Website', ldd::$slug ),
                 'placeholder'   => 'http://...',
                 'id'            => LDDLITE_PFX . 'url_website',
                 'type'          => 'text',
             ),
             array(
-                'name'          => __( 'Facebook', lddslug() ),
+                'name'          => __( 'Facebook', ldd::$slug ),
                 'placeholder'   => 'http://facebook.com/...',
                 'id'            => LDDLITE_PFX . 'url_facebook',
                 'type'          => 'text',
             ),
             array(
-                'name'          => __( 'Twitter', lddslug() ),
+                'name'          => __( 'Twitter', ldd::$slug ),
                 'placeholder'   => 'http://twitter.com/...',
                 'id'            => LDDLITE_PFX . 'url_twitter',
                 'type'          => 'text',
             ),
             array(
-                'name'          => __( 'LinkedIn', lddslug() ),
+                'name'          => __( 'LinkedIn', ldd::$slug ),
                 'placeholder'   => 'http://www.linkedin.com/in/...',
                 'id'            => LDDLITE_PFX . 'url_linkedin',
                 'type'          => 'text',
@@ -321,24 +272,24 @@ function ld_setup_cmb_boxes( array $meta_boxes ) {
 
     $meta_boxes['listings_contact'] = array(
         'id'         => 'listings_contact',
-        'title'      => __( 'Contact Information', lddslug() ),
+        'title'      => __( 'Contact Information', ldd::$slug ),
         'pages'      => array( LDDLITE_POST_TYPE ),
         'context'    => 'side',
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
             array(
-                'name' => __( 'Email', lddslug() ),
+                'name' => __( 'Email', ldd::$slug ),
                 'id'   => LDDLITE_PFX . 'contact_email',
                 'type' => 'text_medium',
             ),
             array(
-                'name' => __( 'Phone', lddslug() ),
+                'name' => __( 'Phone', ldd::$slug ),
                 'id'   => LDDLITE_PFX . 'contact_phone',
                 'type' => 'text_medium',
             ),
             array(
-                'name' => __( 'Fax', lddslug() ),
+                'name' => __( 'Fax', ldd::$slug ),
                 'id'   => LDDLITE_PFX . 'contact_fax',
                 'type' => 'text_medium',
             ),
@@ -350,10 +301,7 @@ function ld_setup_cmb_boxes( array $meta_boxes ) {
 
 
 
+add_action( 'add_meta_boxes', 'ld_metaboxes__swap', 5 );
 
-
-add_action( 'add_meta_boxes', 'ld_metaboxes__swap' );
-add_action( 'add_meta_boxes', 'ld_move_metaboxes', 0 );
-add_action( 'init', 'ld_init_cmb' );
-
-add_filter( 'cmb_meta_boxes', 'ld_setup_cmb_boxes' );
+add_action( 'init',            'ld_metaboxes__init_cmb' );
+add_filter( 'cmb_meta_boxes', 'ld_metaboxes__setup_cmb' );

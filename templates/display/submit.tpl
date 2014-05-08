@@ -1,7 +1,7 @@
 <section class="business-directory  cf">
 
     <nav class="lite-nav above-header center cf">
-        <ul><li><a href="{{url}}">Directory Home</a></li></ul>
+        <ul><li><a href="{$url}">Directory Home</a></li></ul>
     </nav>
 
     <header class="global-header submit-listing">
@@ -15,9 +15,9 @@
     <section class="directory-content">
 
 
-    <form id="submit-listing" name="submit-listing" action="{{action}}" method="post" enctype="multipart/form-data">
+    <form id="submit-listing" name="submit-listing" action="{$form_action}" method="post" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="__T__action" value="submit_form" />
-        {{nonce}}
+        {$nonce}
 
         <div id="submit-items"></div>
 
@@ -29,18 +29,18 @@
                         <div class="panel">
                             <label for="name">
                                 <span>Name:</span>
-                                <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" value="{{data.name}}" tabindex="1" required autofocus>
-                                {{errors.name}}
+                                <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" {if="!empty($data.name)"}value="{$data.name}" {/if}tabindex="1" required autofocus>
+                                {if="!empty($errors.name)"}{$errors.name}{/if}
                             </label>
                             <label for="category">
                                 <span>Listing Category:</span>
-                                {{category_dropdown}}
-                                {{errors.category}}
+                                {$category_dropdown}
+                                {if="!empty($errors.category)"}{$errors.category}{/if}
                             </label>
                             <label for="description">
                                 <span>Description:</span>
-                                <textarea id="description" name="ld_s_description" placeholder="Enter a description for your business" tabindex="3" required>{{data.description}}</textarea>
-                                {{errors.description}}
+                                <textarea id="description" name="ld_s_description" placeholder="Enter a description for your business" tabindex="3" required>{if="!empty($data.description)"}{$data.description}{/if}</textarea>
+                                {if="!empty($errors.description)"}{$errors.description}{/if}
                             </label>
                         </div>
                     </fieldset>
@@ -49,7 +49,8 @@
                         <div class="panel">
                             <label for="summary">
                                 <span>summary</span>
-                                <input id="summary" name="ld_s_summary" placeholder="Add a summary for your listing" type="text">
+                                <input id="summary" name="ld_s_summary" placeholder="Add a summary for your listing" type="text" {if="!empty($data.summary)"}value="{$data.summary}" {/if} tabindex="4">
+                                {if="!empty($errors.summary)"}{$errors.summary}{/if}
                             </label>
                         </div>
                     </fieldset>
@@ -58,8 +59,8 @@
                         <div class="panel">
                             <label for="logo">
                                 <span>Logo</span>
-                                <input id="logo" name="ld_s_logo" type="file" tabindex="4">
-                                {{errors.logo}}
+                                <input id="logo" name="ld_s_logo" type="file" tabindex="5">
+                                {if="!empty($errors.logo)"}{$errors.logo}{/if}
                             </label>
                         </div>
                     </fieldset>
@@ -69,15 +70,15 @@
                             <div class="pure-u-11-24">
                                 <label for="phone">
                                     <span>Contact Email</span>
-                                    <input id="contact_email" name="ld_s_contact_email" type="text" value="{{data.contact_email}}" tabindex="5" required>
-                                    {{errors.phone}}
+                                    <input id="contact_email" name="ld_s_contact_email" type="text" {if="!empty($data.contact_email)"}value="{$data.contact_email}" {/if}tabindex="6" required>
+                                    {if="!empty($errors.contact_email)"}{$errors.contact_email}{/if}
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
                                 <label for="fax">
                                     <span>Contact Phone</span>
-                                    <input id="contact_phone" name="ld_s_contact_phone" type="text" value="{{data.contact_phone}}" tabindex="6" required>
-                                    {{errors.fax}}
+                                    <input id="contact_phone" name="ld_s_contact_phone" type="text" {if="!empty($data.contact_phone)"}value="{$data.contact_phone}" {/if}tabindex="7" required>
+                                    {if="!empty($errors.contact_phone)"}{$errors.contact_phone}{/if}
                                 </label>
                             </div>
                         </div>
@@ -89,8 +90,8 @@
                         <div class="panel">
                             <label for="country">
                                 <span>Country</span>
-                                {{country_dropdown}}
-                                {{errors.country}}
+                                {$country_dropdown}
+                                {if="!empty($errors.country)"}{$errors.country}{/if}
                             </label>
                         </div>
                     </fieldset>
@@ -99,81 +100,29 @@
                             <div class="pure-u-24-24">
                                 <label for="street">
                                     <span>Street</span>
-                                    <input id="street" name="ld_s_address_one" type="text" tabindex="8" value="{{data.street}}" required>
-                                    {{errors.street}}
+                                    <input id="street" name="ld_s_address_one" type="text" {if="!empty($data.street)"}value="{$data.street}" {/if}tabindex="8" required>
+                                    {if="!empty($errors.street)"}{$errors.street}{/if}
                                 </label>
                             </div>
                             <div class="pure-u-7-24">
                                 <label for="city">
                                     <span>City / Town:</span>
-                                    <input id="city" name="ld_s_city" type="text" tabindex="9" value="{{data.city}}" required>
-                                    {{errors.city}}
+                                    <input id="city" name="ld_s_city" type="text" {if="!empty($data.city)"}value="{$data.city}" {/if}tabindex="9" required>
+                                    {if="!empty($errors.city)"}{$errors.city}{/if}
                                 </label>
                             </div><div class="pure-u-1-24"></div>
                             <div class="pure-u-8-24">
                                 <label for="subdivision">
                                     <span>State:</span>
-                                    <select id="subdivision" name="ld_s_subdivision" tabindex="10" required>
-                                        <option value="AL">Alabama</option>
-                                        <option value="AK">Alaska</option>
-                                        <option value="AZ">Arizona</option>
-                                        <option value="AR">Arkansas</option>
-                                        <option value="CA">California</option>
-                                        <option value="CO">Colorado</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="DE">Delaware</option>
-                                        <option value="DC">District Of Columbia</option>
-                                        <option value="FL">Florida</option>
-                                        <option value="GA">Georgia</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="ID">Idaho</option>
-                                        <option value="IL">Illinois</option>
-                                        <option value="IN">Indiana</option>
-                                        <option value="IA">Iowa</option>
-                                        <option value="KS">Kansas</option>
-                                        <option value="KY">Kentucky</option>
-                                        <option value="LA">Louisiana</option>
-                                        <option value="ME">Maine</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="MA">Massachusetts</option>
-                                        <option value="MI">Michigan</option>
-                                        <option value="MN">Minnesota</option>
-                                        <option value="MS">Mississippi</option>
-                                        <option value="MO">Missouri</option>
-                                        <option value="MT">Montana</option>
-                                        <option value="NE">Nebraska</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="NH">New Hampshire</option>
-                                        <option value="NJ">New Jersey</option>
-                                        <option value="NM" selected>New Mexico</option>
-                                        <option value="NY">New York</option>
-                                        <option value="NC">North Carolina</option>
-                                        <option value="ND">North Dakota</option>
-                                        <option value="OH">Ohio</option>
-                                        <option value="OK">Oklahoma</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="RI">Rhode Island</option>
-                                        <option value="SC">South Carolina</option>
-                                        <option value="SD">South Dakota</option>
-                                        <option value="TN">Tennessee</option>
-                                        <option value="TX">Texas</option>
-                                        <option value="UT">Utah</option>
-                                        <option value="VT">Vermont</option>
-                                        <option value="VA">Virginia</option>
-                                        <option value="WA">Washington</option>
-                                        <option value="WV">West Virginia</option>
-                                        <option value="WI">Wisconsin</option>
-                                        <option value="WY">Wyoming</option>
-                                    </select>
-                                    {{errors.subdivision}}
+                                    {$subdivision_dropdown}
+                                    {if="!empty($errors.subdivision)"}{$errors.subdivision}{/if}
                                 </label>
                             </div><div class="pure-u-1-24"></div>
                             <div class="pure-u-7-24">
                                 <label for="post_code">
                                     <span>Zip/Postal:</span>
-                                    <input id="post_code" name="ld_s_post_code" type="text" tabindex="11" value="{{data.post_code}}" required>
-                                    {{errors.post_code}}
+                                    <input id="post_code" name="ld_s_post_code" type="text" {if="!empty($data.post_code)"}value="{$data.post_code}" {/if}tabindex="11" required>
+                                    {if="!empty($errors.post_code)"}{$errors.post_code}{/if}
                                 </label>
                             </div>
                         </div>
@@ -211,15 +160,15 @@
                             <div class="pure-u-11-24">
                                 <label for="username">
                                     <span>Username:</span>
-                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" tabindex="16" value="{{data.username}}" required>
-                                    {{errors.username}}
+                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" {if="!empty($data.username)"}value="{$data.username}" {/if}tabindex="16" required>
+                                    {if="!empty($errors.username)"}{$errors.username}{/if}
                                 </label>
                             </div><div class="pure-u-2-24"></div>
                             <div class="pure-u-11-24">
                                 <label for="email">
                                     <span>Your Email:</span>
-                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" tabindex="17" value="{{data.email}}" required>
-                                    {{errors.email}}
+                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" {if="!empty($data.email)"}value="{$data.email}" {/if}tabindex="17" required>
+                                    {if="!empty($errors.email)"}{$errors.email}{/if}
                                 </label>
                             </div>
                         </div>
@@ -232,7 +181,7 @@
             <fieldset style="clear: both;">
                 <legend>Confirm</legend>
                 <p>Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.</p>
-                <button type="submit" id="submit-form-submit">Submit Listing</button>
+                <button type="submit" id="submit-form-submit" class="submit">Submit Listing</button>
             </fieldset>
         </div>
 

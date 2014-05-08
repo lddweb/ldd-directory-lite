@@ -30,7 +30,7 @@ function ld_ajax__search_directory() {
     $output = '';
     $nth = 0;
 
-    $tpl = ld_get_tpl();
+    $tpl = ldd::tpl();
 
     if ( $search->have_posts() ) {
 

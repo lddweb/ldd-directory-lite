@@ -15,7 +15,6 @@
 
 function ld_enqueue() {
     wp_enqueue_script( 'ldd-lite-js' );
-    wp_enqueue_script( 'ldd-lite-responsiveslides' );
 
     wp_enqueue_style( 'ldd-lite' );
     wp_enqueue_style( 'yui-pure' );
@@ -50,23 +49,19 @@ function ld_shortcode__display() {
 
     ld_enqueue();
 
-
-
     $action = 'home';
     $term   = '';
-
 
     if ( ld_is_action_requested() ) {
 
         $action = $_GET['show'];
         $t = isset( $_GET['t'] ) ? esc_attr( $_GET['t'] ) : '';
-        $term = '';
 
         if ( 'category' == $action ) {
 
-            $exists = term_exists( $t, LDDLITE_TAX_CAT );
-            if ( $exists )
-                $term = $exists->term_id;
+            $exists = term_exists( $t, LDDLITE_TAX_CAT ); md( $exists );
+            if ( is_array( $exists ) )
+                $term = $exists['term_id'];
 
         } else if ( 'listing' == $action ) {
 
@@ -79,6 +74,11 @@ function ld_shortcode__display() {
 
             if ( !empty( $listing ) )
                 $term = $listing[0];
+
+        } else if ( 'submit' == $action ) {
+
+            if ( 'listing' == $t )
+                $term = $t;
 
         }
 

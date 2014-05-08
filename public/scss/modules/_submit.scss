@@ -118,7 +118,7 @@ fieldset#submit-pot {
 
 
 
-#submit-listing {
+#submit-listing, .listing-contact-form {
 
   fieldset {
     margin: 0 0 .5em;
@@ -188,7 +188,7 @@ fieldset#submit-pot {
     max-width: 100%;
   }
 
-  button[type="submit"] {
+  button.submit {
     @extend %btn;
     width: 100%;
   }
@@ -222,6 +222,8 @@ fieldset#submit-pot {
   @extend %btn;
   margin: 0 1px 0 4px;
 }
+
+
 
 .submit-success {
 

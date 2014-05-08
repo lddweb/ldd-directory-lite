@@ -47,7 +47,7 @@ function ld_filter__post_type_link( $post_link, $post ) {
 
 function ld_filter__enter_title_here ( $title ) {
     if ( get_post_type() == LDDLITE_POST_TYPE )
-        $title = __( 'Business Name', lddslug() );
+        $title = __( 'Business Name', ldd::$slug );
 
     return $title;
 }
@@ -55,7 +55,7 @@ function ld_filter__enter_title_here ( $title ) {
 
 function ld_filter__admin_post_thumbnail_html( $content ) {
     if ( LDDLITE_POST_TYPE == get_post_type() )
-        $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', lddslug() ), $content);
+        $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', ldd::$slug ), $content);
 
     return $content;
 }

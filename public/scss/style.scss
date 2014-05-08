@@ -38,6 +38,17 @@ $url-link-hover:    rgba(0, 170, 0, 0.90);
   @import "modules/submit";
 
   @import "breakpoints/base";
+
+  a.contact-buttons {
+    @extend %btn;
+    display: inline-block;
+    margin: 0 1px 0 4px;
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+    }
+  }
 }
 
 
