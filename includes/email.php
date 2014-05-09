@@ -12,8 +12,7 @@
 
 
 /**
- * Simple wrapper for wp_mail that ensures any problems aren't dumped to the screen. Later on
- * this will allow us to pull {$from} and {$subject} lines from our options page.
+ * Alias for wp_mail that sets headers for us.
  *
  * @since 1.3.13
  * @param string $to Email address this message is going to
@@ -21,7 +20,7 @@
  * @param string $message Email contents
  * @param string $headers Optional, default is managed internally.
  */
-function lddlite_mail($to, $subject, $message, $headers = "") {
+function ld_mail($to, $subject, $message, $headers = '' ) {
 
     // If we're not passing any headers, default to our internal from address
     if (empty($headers)) {

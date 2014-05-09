@@ -75,26 +75,24 @@
       }
     }
 
-    li.ldd-submit-listing_here a {
-      background: #fff;
-      border-top: 3px solid rgba(32, 69, 108, 0.3);
-      top: 3px;
-      color:#666;
-      z-index: 100;
-    }
+    li {
 
-    li a {
-      display:block;
-      height:45px;
-      border: 1px solid rgba(32, 69, 108, 0.1);
-      border-bottom: 0;
-      position: relative;
-      top: 1px;
-      color:#777;
-      outline:none;
-      font-weight:bold;
-      text-decoration:none;
-      line-height:45px;
+      a {
+        display: block;
+        height: 45px;
+        color: #777;
+        outline: none;
+        font-weight: 400;
+        text-decoration: none;
+        line-height: 45px;
+      }
+
+      &.ldd-submit-listing_here a,
+      a:hover {
+        color: #555;
+        font-weight: 700;
+      }
+
     }
 
   }
@@ -130,7 +128,7 @@ fieldset#submit-pot {
       padding-top: .5em;
       width: 100%;
       text-align: left;
-      color: rgba( $primary-mid, 0.35 );
+      color: rgba( $gray, 0.35 );
       font-size: 2em;
       border: 0;
     }
@@ -158,18 +156,17 @@ fieldset#submit-pot {
     border: 2px solid #ddd;
     background: #fff;
     margin: 0 0 5px;
-    border-radius: 3px;
     -webkit-transition:border-color 0.3s ease-in-out;
     -moz-transition:border-color 0.3s ease-in-out;
     transition:border-color 0.3s ease-in-out;
 
     &:hover {
-      border-color: #888;
+      border-color: #0078e7;
     }
 
     &:focus {
       outline: 0;
-      border: 2px solid #999;
+      border-color: #0078e7;
     }
   }
 
@@ -204,24 +201,48 @@ fieldset#submit-pot {
     font-size: 80%;
   }
 
+  textarea.submit-error,
   input.submit-error {
     border-color: $alert-red-dark !important;
     background-color: $alert-red;
   }
 }
 
+.shaded {
+  background: rgba( 238, 238, 238, 0.3 );
+}
 
 .submit-form-wrap {
-  margin-bottom: .5em;
-  border: 1px solid rgba(32, 69, 108, 0.3);
-  border-radius: 2px;
-  padding: 1em;
+  background: rgba( 238, 238, 238, 0.3 );
+
+  .pure-button.next {
+    margin-right: 0;
+  }
+  &.submit-confirm {
+    text-align: center;
+
+    legend {
+      margin-bottom: .2em;
+    }
+
+    p {
+      margin-bottom: 2em;
+    }
+  }
+
+  legend {
+    text-align: left;
+  }
+
+  p {
+    text-align: left;
+  }
 }
 
-.ldd-submit-listing_nav {
+/*.ldd-submit-listing_nav {
   @extend %btn;
   margin: 0 1px 0 4px;
-}
+}*/
 
 
 

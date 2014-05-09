@@ -410,11 +410,15 @@ a.pure-button:visited
 button[type=submit].pure-button,
 button.pure-button {
 
+  margin: 0 4px;
   border: 2px solid #0078e7;
   background: transparent;
   color: #0078e7;
   border-radius: 4px;
   font-size: 110%;
+  -webkit-transition: background 0.2s ease-in-out;
+  -moz-transition: background 0.2s ease-in-out;
+  transition: background 0.2s ease-in-out;
 
   &:hover, &:focus {
     background: #0078e7;
@@ -426,5 +430,12 @@ button.pure-button {
 
   .fa {
     margin-right: .5em;
+    margin-left: 0;
+
+    &.r {
+      margin-right: 0;
+      margin-left: .5em;
+    }
   }
+
 }

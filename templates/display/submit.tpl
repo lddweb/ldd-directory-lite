@@ -1,42 +1,70 @@
 <section class="business-directory  cf">
 
     <nav class="lite-nav above-header center cf">
-        <ul><li><a href="{$url}">Directory Home</a></li></ul>
+        <ul>
+            <li><a href="{$url}" class="pure-button"><i class="fa fa-home"></i> Directory Home</a></li>
+            <li><a href="{$url}" id="open-search" class="pure-button"><i class="fa fa-search"></i> Search</a></li>
+        </ul>
     </nav>
 
-    <header class="global-header submit-listing">
-        <form class="directory-search cf">
-            <input type="text" placeholder="Search the directory..." required />
-            <button type="submit">Search</button>
-        </form>
-    </header>
+    {$search_form}
 
+<script>
+    jQuery(document).ready(function($) {
+        var searchButton = $("a#open-search")
+        var searchButtonIcon = $("a#open-search i")
+        var searchWrapper = $("#directory-search-wrap")
+
+        searchWrapper.hide()
+
+        searchButton.click(function() {
+            event.preventDefault();
+
+
+            if ( searchWrapper.is(":visible") ) {
+                searchWrapper.slideUp( 'slow', 'swing' )
+                $("#search-directory-input").blur()
+                searchButtonIcon.removeClass('fa-search-minus').addClass('fa-search');
+            } else {
+                searchWrapper.slideDown( 'slow', 'swing' )
+                $("#search-directory-input").focus()
+                searchButtonIcon.removeClass('fa-search').addClass('fa-search-minus');
+            }
+
+        })
+    })
+</script>
 
     <section class="directory-content">
 
 
     <form id="submit-listing" name="submit-listing" action="{$form_action}" method="post" enctype="multipart/form-data" novalidate>
-        <input type="hidden" name="__T__action" value="submit_form" />
+        <input type="hidden" name="__T__action" value="submit_form">
         {$nonce}
 
         <div id="submit-items"></div>
 
-        <div class="submit-form-wrap">
+        <div class="submit-form-wrap shaded thick-border">
             <ul id="submit-panels">
                 <li>
                     <fieldset>
                         <legend>General Information</legend>
                         <div class="panel">
                             <label for="name">
-                                <span>Name:</span>
-                                <input id="name" name="ld_s_name" placeholder="Please enter your full name" type="text" {if="!empty($data.name)"}value="{$data.name}" {/if}tabindex="1" required autofocus>
-                                {if="!empty($errors.name)"}{$errors.name}{/if}
+                                <span>Title:</span>
+                                <input id="title" name="ld_s_title" placeholder="Please enter a descriptive title for your listing" type="text" {if="!empty($data.title)"}value="{$data.title}" {/if}tabindex="1" required>
+                                {if="!empty($errors.title)"}{$errors.title}{/if}
                             </label>
                             <label for="category">
                                 <span>Listing Category:</span>
                                 {$category_dropdown}
                                 {if="!empty($errors.category)"}{$errors.category}{/if}
                             </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="panel">
                             <label for="description">
                                 <span>Description:</span>
                                 <textarea id="description" name="ld_s_description" placeholder="Enter a description for your business" tabindex="3" required>{if="!empty($data.description)"}{$data.description}{/if}</textarea>
@@ -100,8 +128,8 @@
                             <div class="pure-u-24-24">
                                 <label for="street">
                                     <span>Street</span>
-                                    <input id="street" name="ld_s_address_one" type="text" {if="!empty($data.street)"}value="{$data.street}" {/if}tabindex="8" required>
-                                    {if="!empty($errors.street)"}{$errors.street}{/if}
+                                    <input id="address_one" name="ld_s_address_one" type="text" {if="!empty($data.address_one)"}value="{$data.address_one}" {/if}tabindex="8" required>
+                                    {if="!empty($errors.address_one)"}{$errors.address_one}{/if}
                                 </label>
                             </div>
                             <div class="pure-u-7-24">
@@ -135,19 +163,19 @@
                         <div class="panel">
                             <label for="url">
                                 <span>Website</span>
-                                <input id="url" name="ld_s_url[website]" type="text" tabindex="12">
+                                <input id="url" name="ld_s_url[website]" type="text" {if="!empty($url.website)"}value="{$url.website}" {/if}tabindex="12">
                             </label>
                             <label for="facebook">
                                 <span>Facebook Page</span>
-                                <input id="facebook" name="ld_s_url[facebook]" type="text" tabindex="13">
+                                <input id="facebook" name="ld_s_url[facebook]" type="text" {if="!empty($url.facebook)"}value="{$url.facebook}" {/if}tabindex="13">
                             </label>
                             <label for="twitter">
                                 <span>Twitter Handle</span>
-                                <input id="twitter" name="ld_s_url[twitter]" type="text" tabindex="14">
+                                <input id="twitter" name="ld_s_url[twitter]" type="text" {if="!empty($url.twitter)"}value="{$url.twitter}" {/if}tabindex="14">
                             </label>
                             <label for="linkedin">
                                 <span>Linked In Profile</span>
-                                <input id="linkedin" name="ld_s_url[linkedin]" type="text" tabindex="15">
+                                <input id="linkedin" name="ld_s_url[linkedin]" type="text" {if="!empty($url.linkedin)"}value="{$url.linkedin}" {/if}tabindex="15">
                             </label>
                         </div>
                     </fieldset>
@@ -177,11 +205,11 @@
             </ul>
         </div>
 
-        <div class="submit-form-wrap submit-confirm" style="display: none;">
-            <fieldset style="clear: both;">
+        <div class="submit-form-wrap thick-border shaded submit-confirm" style="display: none;">
+            <fieldset>
                 <legend>Confirm</legend>
                 <p>Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.</p>
-                <button type="submit" id="submit-form-submit" class="submit">Submit Listing</button>
+                <button type="submit" id="submit-form-submit" class="pure-button"><i class="fa fa-cog"></i> Submit for Review</button>
             </fieldset>
         </div>
 
@@ -195,8 +223,6 @@
 
 
 <script>
-
-
 
     jQuery(function () {
 
@@ -217,10 +243,10 @@
         $('span.submit-error').prev().addClass('submit-error');
         console.log( $('li').has('span.submit-error') );
         $('li').has('span.submit-error').each(function( index ) {
-            var tab_id = $(this).attr('id');
-            var tab_number = parseInt( tab_id.split('_s').pop() ) + 1;
+            var tab_id = $(this).attr("id");
+            var tab_number = parseInt( tab_id.split("_s").pop() ) + 1;
             var tab_class = tab_id.substring( 0, tab_id.length - 1 ) + tab_number;
-            $('.'+tab_class).addClass('submit-error');
+            $( "." + tab_class).addClass("submit-error");
         });
 
         $('.submit-error').focus(function(){
@@ -236,6 +262,8 @@
 
             $("#submit-items li").hasClass('submit-error');
 
+
+        //
         var first_tab = jQuery("#ldd-submit-listing1_s0");
         var last_tab  = jQuery("#ldd-submit-listing1_s3");
         var prev_button = jQuery(".ldd-submit-listing_nav.prev");
@@ -264,10 +292,10 @@
             $('.submit-confirm:hidden').show();
         }
 
-        var submit_button = jQuery('#submit-form-submit');
+        var submitButton = jQuery('#submit-form-submit');
 
-        submit_button.click(function () {
-            jQuery(this).val('Submitting');
+        submitButton.click(function () {
+            jQuery('#submit-form-submit > i').addClass('fa-spin');
         });
 
     });

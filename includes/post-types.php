@@ -61,6 +61,12 @@ function ld_filter__admin_post_thumbnail_html( $content ) {
 }
 
 
+function ld_filter__get_shortlink( $shortlink ) {
+    if ( LDDLITE_POST_TYPE == get_post_type () )
+        return false;
+}
+
+
 function ld_action__admin_menu_icon() {
     echo "\n\t<style>";
     echo '#adminmenu .menu-icon-' . LDDLITE_POST_TYPE . ' div.wp-menu-image:before { content: \'\\f307\'; }';
@@ -74,14 +80,32 @@ function ld_action__submenu_title() {
 }
 
 
+function ld_action__send_approved_email() {
+
+    if ( LDDLITE_POST_TYPE != get_post_type() )
+        return;
+
+    $to_owner = ldd::tpl();
+
+    $to_owner->assign( 'site_title', get_bloginfo( 'name' ) );
+    $to_owner->assign( 'admin_email', ldd::opt( 'email_admin_email' ) );
+    $to_owner->assign( 'title', $data['title'] );
+    $to_onwer->assign( 'description', $data['description'] );
+
+    $message = $email->draw( 'email/to_owner', 1 );
+    ld_mail( $data['email'], ldd::opt( 'email_onsubmit' ), $message );
+
+}
+
 add_filter( 'term_link', 'ld_filter__term_link' );
 add_filter( 'post_type_link', 'ld_filter__post_type_link', 10, 2 );
 add_filter( 'enter_title_here', 'ld_filter__enter_title_here' );
 add_filter( 'admin_post_thumbnail_html', 'ld_filter__admin_post_thumbnail_html' );
+add_filter( 'get_shortlink', 'ld_filter__get_shortlink' );
 
 add_action( 'admin_head', 'ld_action__admin_menu_icon' );
 add_action( '_admin_menu', 'ld_action__submenu_title' );
 
-
+add_action( 'pending_to_publish', 'ld_action__send_approved_email' );
 
 

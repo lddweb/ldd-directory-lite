@@ -55,7 +55,7 @@ function ld_submit__create_meta( $data, $post_id ) {
 function ld_sanitize__post( $post_data ) {
 
     $required_fields = apply_filters( 'lddlite_required_fields', array(
-        'ld_s_name' => '',
+        'ld_s_title' => '',
         'ld_s_description' => '',
         'ld_s_username' => '',
         'ld_s_email' => '',
@@ -94,12 +94,24 @@ function ld_submit_validate_form( $data) {
 
     $submit_errors = new WP_Error;
 
+    if ( empty( $data['title'] ) )
+        ld_submit_add_errors( 'title_required' );
+
     ld_submit_validate_category( $data['category'] );
-    ld_submit_validate_user( $data['username'], $data['email'] );
+
+    if ( empty( $data['description'] ) )
+        ld_submit_add_errors( 'description_required' );
+
+    if ( empty( $data['contact_email'] ) || !is_email( $data['contact_email'] ) )
+        ld_submit_add_errors( 'contact_email_required' );
+
     ld_submit_validate_phone( $data['contact_phone'] );
 
-    if ( empty( $data['street'] ) )
-        ld_submit_add_errors( 'street_required' );
+    ld_submit_validate_user( $data['username'], $data['email'] );
+
+
+    if ( empty( $data['address_one'] ) )
+        ld_submit_add_errors( 'address_one_required' );
 
     if ( empty( $data['city'] ) )
         ld_submit_add_errors( 'city_required' );
@@ -136,6 +148,21 @@ function ld_submit_validate_category( $cat_id ) {
 
 function ld_submit_validate_user( $username, $email ) {
 
+    $r = false;
+
+    if ( empty( $username ) ) {
+        ld_submit_add_errors( 'username_required' );
+        $r = true;
+    }
+
+    if ( empty( $email ) || !is_email( $email ) ) {
+        ld_submit_add_errors( 'email_required' );
+        $r = true;
+    }
+
+    if ( $r )
+        return;
+
     if ( $username != sanitize_user( $username, true ) )
         ld_submit_add_errors( 'username_invalid', $username );
 
@@ -148,7 +175,7 @@ function ld_submit_validate_user( $username, $email ) {
 }
 
 
-function ld_submit_validate_phone( $number, $key = 'phone', $required = true ) {
+function ld_submit_validate_phone( $number, $key = 'contact_phone', $required = true ) {
 
     $number = ld_sanitize_phone( $number );
 
@@ -209,17 +236,21 @@ function ld_submit_add_errors( $code, $data = null ) {
 function ld_submit_get_error_message( $error_slug ) {
 
     $error_messages = array(
-        'category_invalid'      => __( 'Please select a category', ldd::$slug ),
-        'username_invalid'      => __( 'That is not a valid username', ldd::$slug ),
-        'username_exists'       => __( 'That username already exists', ldd::$slug ),
-        'email_exists'          => __( 'That email is already in use', ldd::$slug ),
-        'phone_required'        => __( 'Please enter a phone number', ldd::$slug ),
-        'phone_invalid'         => __( 'That is not a valid phone number', ldd::$slug ),
-        'fax_invalid'           => __( 'That is not a valid fax number', ldd::$slug ),
-        'street_required'       => __( 'Please enter your street address', ldd::$slug ),
-        'city_required'         => __( 'Please enter a city', ldd::$slug ),
-        'subdivision_required'  => __( 'Please enter a state', ldd::$slug ),
-        'post_code_required'    => __( 'Please enter your zip', ldd::$slug ),
+        'title_required'            => __( 'You need a title for your listing', ldd::$slug ),
+        'category_invalid'          => __( 'Please select a category', ldd::$slug ),
+        'description_required'      => __( 'Please add a description for your listing', ldd::$slug ),
+        'contact_email_required'    => __( 'Please enter an email address', ldd::$slug ),
+        'contact_phone_required'    => __( 'Please enter a phone number', ldd::$slug ),
+        'contact_phone_invalid'     => __( 'That is not a valid phone number', ldd::$slug ),
+        'username_required'         => __( 'A username is required', ldd::$slug ),
+        'username_invalid'          => __( 'That is not a valid username', ldd::$slug ),
+        'username_exists'           => __( 'That username already exists', ldd::$slug ),
+        'email_required'            => __( 'An email address is required', ldd::$slug ),
+        'email_exists'              => __( 'That email is already in use', ldd::$slug ),
+        'address_one_required'      => __( 'Please enter your street address', ldd::$slug ),
+        'city_required'             => __( 'Please enter a city', ldd::$slug ),
+        'subdivision_required'      => __( 'Please enter a state', ldd::$slug ),
+        'post_code_required'        => __( 'Please enter your zip', ldd::$slug ),
     );
 
     if ( array_key_exists( $error_slug, $error_messages ) )

@@ -51,8 +51,8 @@ class LDD_Directory_Admin {
             function _f_public_or_private() {
                 $lddlite = ldd::load();
 
-                echo '<label title=""><input type="radio" name="lddlite-options[public_or_private]" value="1" ' . checked( $lddlite->options['public_or_private'], 1, 0 ) . ' /> <span>Yes</span></label><br />';
-                echo '<label title=""><input type="radio" name="lddlite-options[public_or_private]" value="0" ' . checked( $lddlite->options['public_or_private'], 0, 0 ) . ' /> <span>No</span></label><br />';
+                echo '<label title=""><input type="radio" name="lddlite-options[public_or_private]" value="1" ' . checked( $lddlite->options['public_or_private'], 1, 0 ) . '> <span>Yes</span></label><br />';
+                echo '<label title=""><input type="radio" name="lddlite-options[public_or_private]" value="0" ' . checked( $lddlite->options['public_or_private'], 0, 0 ) . '> <span>No</span></label><br />';
                 echo '<p class="description">Determines whether features such as "Submit a Listing" are available.</p>';
 
             }
@@ -61,8 +61,8 @@ class LDD_Directory_Admin {
             function _f_google_maps() {
                 $lddlite = ldd::load();
 
-                echo '<label title=""><input type="radio" name="lddlite-options[google_maps]" value="1" ' . checked( $lddlite->options['google_maps'], 1, 0 ) . ' /> <span>Yes</span></label><br />';
-                echo '<label title=""><input type="radio" name="lddlite-options[google_maps]" value="0" ' . checked( $lddlite->options['google_maps'], 0, 0 ) . ' /> <span>No</span></label><br />';
+                echo '<label title=""><input type="radio" name="lddlite-options[google_maps]" value="1" ' . checked( $lddlite->options['google_maps'], 1, 0 ) . '> <span>Yes</span></label><br />';
+                echo '<label title=""><input type="radio" name="lddlite-options[google_maps]" value="0" ' . checked( $lddlite->options['google_maps'], 0, 0 ) . '> <span>No</span></label><br />';
                 echo '<p class="description">Display Google Maps on listing pages?</p>';
 
             }
@@ -70,31 +70,35 @@ class LDD_Directory_Admin {
 
             // @TODO Compartmentalize this, as if it was a module.
             add_settings_section( 'lddlite-settings-email', 'Email Settings', '_s_email_settings_section', 'lddlite-settings' );
-            /**
-             * @ignore
-             */
             function _s_email_settings_section() {
                 echo '<p>'.__( 'The following configuration options control how outgoing emails from Business Directory [lite] are handled.', ldd::$slug ).'</p>';
             }
 
 
+            add_settings_field( 'email_admin_name', '<label for="email_admin_name">' . __( 'Directory Administrator' , ldd::$slug ) . '</label>', '_f_email_admin_name', 'lddlite-settings', 'lddlite-settings-email' );
+            function _f_email_admin_name() {
+                echo '<input id="email_admin_name" type="text" size="80" name="lddlite-options[email_admin_name]" value="' . ldd::opt( 'email_admin_name', 1 ) . '">';
+                echo '<p class="description">' . __( 'The name that will be appended to administrative emails', ldd::$slug ) . '</p>';
+            }
+
+
+            add_settings_field( 'email_admin_email', '<label for="email_admin_email">' . __( 'Administrator Email' , ldd::$slug ) . '</label>', '_f_email_admin_email', 'lddlite-settings', 'lddlite-settings-email' );
+            function _f_email_admin_email() {
+                echo '<input id="email_admin_email" type="text" size="80" name="lddlite-options[email_admin_email]" value="' . ldd::opt( 'email_admin_email', 1 ) . '" style="margin-bottom: 2em;">';
+            }
+
+
             add_settings_field( 'email_onsubmit', '<label for="email_onsubmit">' . __( 'Listing Submitted' , ldd::$slug ) . '</label>', '_f_email_onsubmit', 'lddlite-settings', 'lddlite-settings-email' );
-            /**
-             * @ignore
-             */
             function _f_email_onsubmit() {
                 $lddlite = ldd::load();
-                echo '<input id="email_onsubmit" type="text" size="80" name="lddlite-options[email_onsubmit]" value="' . esc_attr( $lddlite->options['email_onsubmit'] ) . '" />';
+                echo '<input id="email_onsubmit" type="text" size="80" name="lddlite-options[email_onsubmit]" value="' . esc_attr( $lddlite->options['email_onsubmit'] ) . '">';
             }
 
 
             add_settings_field( 'email_onapprove', '<label for="email_onapprove">' . __( 'Listing Approved' , ldd::$slug ) . '</label>', '_f_email_onapprove', 'lddlite-settings', 'lddlite-settings-email' );
-            /**
-             * @ignore
-             */
             function _f_email_onapprove() {
                 $lddlite = ldd::load();
-                echo '<input id="email_onapprove" type="text" size="80" name="lddlite-options[email_onapprove]" value="'.esc_attr( $lddlite->options['email_onapprove'] ).'" />';
+                echo '<input id="email_onapprove" type="text" size="80" name="lddlite-options[email_onapprove]" value="'.esc_attr( $lddlite->options['email_onapprove'] ).'">';
             }
 
         }

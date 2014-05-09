@@ -11,8 +11,8 @@
 
     <nav class="lite-nav above-header center thin-border light cf">
         <ul>
-            <li><a href="{$url}" class="pure-button pure-button-primary"><i class="fa fa-home"></i> Directory Home</a></li>
-            <li><a href="{$url}?show=submit&t=listing" class="pure-button pure-button-primary"><i class="fa fa-pencil"></i> Submit Listing</a></li>
+            <li><a href="{$url}" class="pure-button"><i class="fa fa-home"></i> Directory Home</a></li>
+            <li><a href="{$url}?show=submit&t=listing" class="pure-button"><i class="fa fa-pencil"></i> Submit Listing</a></li>
         </ul>
     </nav>
 

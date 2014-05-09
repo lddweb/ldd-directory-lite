@@ -1,8 +1,8 @@
-<div class="search-section">
+<div id="directory-search-wrap" class="search-section">
     <form class="directory-search cf">
         <input type="hidden" name="action" value="search_directory">
         <input id="search-directory-input" name="s" type="text" placeholder="{$placeholder}" required />
-        <button type="submit">{$search_text}</button>
+        <button type="submit"><i class="fa fa-search"></i></button>
     </form>
 
     <div id="search-loading"></div>

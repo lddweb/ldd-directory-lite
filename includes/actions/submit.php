@@ -16,10 +16,15 @@ require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
 function ld_action__submit( $term = false ) {
     global $post;
 
-    wp_enqueue_script( 'ldd-lite-responsiveslides' );
+    wp_enqueue_style( 'font-awesome' );
+    wp_enqueue_script( ldd::$slug . '-responsiveslides' );
+    wp_enqueue_script( ldd::$slug . '-search' );
 
     $valid = false;
+
     $data = array();
+    $urls = array();
+
     $tpl = ldd::tpl();
 
     if ( isset( $_POST['nonce_field'] ) && !empty( $_POST['nonce_field'] ) ) {
@@ -36,7 +41,7 @@ function ld_action__submit( $term = false ) {
 
         // Create the user and insert a post for this listing
         $user_id = ld_submit__create_user( $data['username'], $data['email'] );
-        $post_id = ld_submit__create_listing( $data['name'], $data['description'], $data['category'], $user_id );
+        $post_id = ld_submit__create_listing( $data['title'], $data['description'], $data['category'], $user_id );
 
         // Add all the post meta fields
         ld_submit__create_meta( $data, $post_id );
@@ -62,12 +67,32 @@ function ld_action__submit( $term = false ) {
 
         }
 
-        $template_vars = array(
-            'url'       => get_permalink( $post->ID ),
-            'listing'   => $data,
-        );
+        // Send two emails, one to the site administrator notifying them of the listing
+        // and another to the person submitting the listing for reference.
+        $to_admin = ldd::tpl();
 
-        return ld_parse_template( 'display/submit-success', $template_vars );
+        $to_admin->assign( 'approve_link', admin_url( 'post.php?post=' . $post_id . '&action=edit' ) );
+        $to_admin->assign( 'title', $data['title'] );
+        $to_admin->assign( 'description', $data['description'] );
+
+        $message = $to_admin->draw( 'email/to_admin', 1 );
+        ld_mail( ldd::opt( 'email_admin_email' ), __( 'A new listing was submitted for review', ldd::$slug ), $message );
+
+
+        $to_owner = ldd::tpl();
+
+        $to_owner->assign( 'site_title', get_bloginfo( 'name' ) );
+        $to_owner->assign( 'admin_email', ldd::opt( 'email_admin_email' ) );
+        $to_owner->assign( 'title', $data['title'] );
+        $to_onwer->assign( 'description', $data['description'] );
+
+        $message = $email->draw( 'email/to_owner', 1 );
+        ld_mail( $data['email'], ldd::opt( 'email_onsubmit' ), $message );
+
+        $tpl->assign( 'url', get_permalink( $post->ID ) );
+        $tpl->assign( 'listing', $data );
+
+        return $tpl->draw( 'display/submit-success', 1 );
 
     }
 
@@ -83,11 +108,12 @@ function ld_action__submit( $term = false ) {
     );
 
     $tpl->assign( 'url', get_permalink( $post->ID ) );
+    $tpl->assign( 'search_form', ld_get_search_form() );
     $tpl->assign( 'form_action', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
     $tpl->assign( 'nonce', wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ) );
     $tpl->assign( 'category_dropdown', wp_dropdown_categories( $category_args ) );
     $tpl->assign( 'country_dropdown', ld_dropdown_country() );
-    $tpl->assign( 'subdivision_dropdown', ld_dropdown_subdivision( 'us' ) );
+    $tpl->assign( 'subdivision_dropdown', ld_dropdown_subdivision( 'us', $data ) );
 
     if ( is_wp_error( $valid ) ) {
 
@@ -100,14 +126,22 @@ function ld_action__submit( $term = false ) {
             $errors[ $key ] = '<span class="submit-error">' . $valid->get_error_message( $code ) . '</span>';
         }
 
-        $urls = $data['urls'];
-        unset( $data['urls'] );
+
+
+        $tpl->assign( 'errors', $errors );
+    }
+
+
+    if ( !empty( $data ) ) {
+
+        if ( isset( $data['url'] ) ) {
+            $urls = $data['url'];
+            unset( $data['url'] );
+            $tpl->assign( 'url', array_map( 'htmlentities', $urls ) );
+        }
 
         $data = array_map( 'htmlentities', $data );
 
-        $data['urls'] = array_map( 'htmlentities', $urls );
-
-        $tpl->assign( 'errors', $errors );
     }
 
     $tpl->assign( 'data', $data );

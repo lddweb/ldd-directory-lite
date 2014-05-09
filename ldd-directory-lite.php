@@ -114,6 +114,8 @@ class LDD_Directory_Lite {
             'version'           => 0.1,
             'public_or_private' => 1,
             'google_maps'       => 1,
+            'email_admin_name'  => get_bloginfo( 'name' ),
+            'email_admin_email' => get_bloginfo( 'admin_email' ),
             'email_onsubmit'    => 'Your directory listing was successfully submitted!',
             'email_onapprove'   => 'Your directory listing was approved!'
         ) );
@@ -209,6 +211,11 @@ class LDD_Directory_Lite {
     }
 
 
+    public function get_option( $key ) {
+        return isset( $this->options[ $key ] ) ? $this->options[ $key ] : '';
+    }
+
+
 }
 
 
@@ -243,4 +250,12 @@ class ldd {
 
         return new raintpl;
     }
+
+    public static function opt( $key, $esc = false ) {
+        $l = self::load();
+        $option = $l->get_option( $key );
+        if ( $esc ) $option = esc_attr( $option );
+        return $option;
+    }
+
 }

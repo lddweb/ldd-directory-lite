@@ -308,8 +308,8 @@
         if (settings.nav) {
           var navMarkup =
             "<div class='panels-navigation clearfix'>" +
-            "<a href='#' class='" + navClass + " prev'>" + settings.prevText + "</a>" +
-            "<a href='#' class='" + navClass + " next'>" + settings.nextText + "</a>" +
+            "<a href='#' class='" + navClass + " pure-button prev'><i class='fa fa-arrow-left'></i> " + settings.prevText + "</a>" +
+            "<a href='#' class='" + navClass + " pure-button next'><i class='fa fa-arrow-right'></i> " + settings.nextText + "</a>" +
             "</div>";
 
 

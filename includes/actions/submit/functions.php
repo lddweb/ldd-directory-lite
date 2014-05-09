@@ -1,18 +1,20 @@
 <?php
 
 
-function ld_dropdown_subdivision( $subdivision ) {
+function ld_dropdown_subdivision( $subdivision, $data ) {
 
-    $data = ld_get_subdivision_array( $subdivision );
+    $selected = isset( $data['subdivision'] ) ? $data['subdivision'] : '';
+    $lines = ld_get_subdivision_array( $subdivision );
 
-    if ( !$data )
-        return '<input id="subdivision" name="ld_s_subdivision" type="text" tabindex="9" required>';
+    if ( !$lines )
+        return '<input id="subdivision" name="ld_s_subdivision" type="text" value="' . $selected . '" tabindex="9" required>';
 
     $output = '<select id="subdivision" name="ld_s_subdivision" tabindex="9" required>';
 
-    foreach ( $data as $line ) {
-        $output .= '<option name="' . $line[0] . '"';
-        $output .= '>' . $line[1] . '</option>';
+    foreach ( $lines as $key => $value ) {
+        $output .= '<option value="' . $key . '"';
+        if ( $selected == $key ) $output .= ' selected';
+        $output .= '>' . $value . '</option>';
     }
 
     $output .= '</select>';
