@@ -80,22 +80,32 @@ function ld_action__submenu_title() {
 }
 
 
-function ld_action__send_approved_email() {
+function ld_action__send_approved_email( $post ) {
 
     if ( LDDLITE_POST_TYPE != get_post_type() )
         return;
 
-    $to_owner = ldd::tpl();
+    $user = get_userdata( $post->post_author );
 
-    $to_owner->assign( 'site_title', get_bloginfo( 'name' ) );
-    $to_owner->assign( 'admin_email', ldd::opt( 'email_admin_email' ) );
-    $to_owner->assign( 'title', $data['title'] );
-    $to_onwer->assign( 'description', $data['description'] );
+    $user_nicename = $user->data->display_name;
+    $user_email = $user->data->user_email;
 
-    $message = $email->draw( 'email/to_owner', 1 );
-    ld_mail( $data['email'], ldd::opt( 'email_onsubmit' ), $message );
+    $post_id = $post->ID;
+    $post_title = $post->post_title;
+    $post_content = $post->post_content;
+    $post_slug = $post->post_name;
+
+    $tpl = ldd::tpl();
+
+    $tpl->assign( 'site_title', get_bloginfo( 'name' ) );
+    $tpl->assign( 'admin_email', ldd::opt( 'email_admin_email' ) );
+    $tpl->assign( 'link', site_url( '?show=listing&t=' . $post_slug ) );
+
+    $message = $tpl->draw( 'email/approved', 1 );
+    ld_mail( $user_email, ldd::opt( 'email_onaprove' ), $message );
 
 }
+
 
 add_filter( 'term_link', 'ld_filter__term_link' );
 add_filter( 'post_type_link', 'ld_filter__post_type_link', 10, 2 );

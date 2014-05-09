@@ -84,9 +84,9 @@ function ld_action__submit( $term = false ) {
         $to_owner->assign( 'site_title', get_bloginfo( 'name' ) );
         $to_owner->assign( 'admin_email', ldd::opt( 'email_admin_email' ) );
         $to_owner->assign( 'title', $data['title'] );
-        $to_onwer->assign( 'description', $data['description'] );
+        $to_owner->assign( 'description', $data['description'] );
 
-        $message = $email->draw( 'email/to_owner', 1 );
+        $message = $to_owner->draw( 'email/to_owner', 1 );
         ld_mail( $data['email'], ldd::opt( 'email_onsubmit' ), $message );
 
         $tpl->assign( 'url', get_permalink( $post->ID ) );

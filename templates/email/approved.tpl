@@ -1,12 +1,6 @@
-<div class="lddbd approved email">
-    <p>Thank you for submitting your entry to {{site_title}}!</p>
+<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
 
-    <p>Your submission has been approved! You can now view it online.</p>
+<p>Your listing has been approved! You can now view it online:</p>
+<p>{$link}</p>
 
-    <p>Business Name: <strong>{{name}}</strong><br />
-        Business Description: <strong>{{description}}</strong><br />
-    </p>
-
-    <p>Sincerely,<br />
-    <em>The Team @ {{site_title}}</em></p>
-</div>
+<p><em>Sincerely,<br>{$site_title}</em></p>
