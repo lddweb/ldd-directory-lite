@@ -14,20 +14,25 @@
 }
 
 .thick-border {
-  border: 1px solid rgba( $primary-dark, 0.2);
   margin: .5em 0;
-  padding: .5em;
-  border-radius: 3px;
+  padding: 1em;
+  border: 1px solid rgba( $primary-dark, 0.2);
+  border-radius: 4px;
+  background: rgba( $white, 0.9 );
 }
 
 .thin-border {
-  margin-bottom: .5em;
-  padding: 1em;
-  border: 1px solid rgba( $primary-dark, 0.1);
-  border-radius: 2px;
-
+  margin: .5em 0;
+  padding: .5em;
+  border: 1px solid rgba( $primary-dark, 0.2);
+  border-radius: 4px;
+  background: rgba( $white, 0.9 );
 }
 
+.thick-border.light,
+.thin-border.light {
+  border-color: rgba( $primary-dark, 0.1 );
+}
 
 /** HEADER STYLES **/
 
@@ -76,7 +81,7 @@ nav {
                 display: inline-block;
                 *display:inline; /* ie7 */
 
-                a {
+/*                a {
                     padding: .5em 1em;
                     text-decoration: none;
                     line-height: 100%;
@@ -93,7 +98,7 @@ nav {
                     background: $primary-mid;
                     color: #fff;
                     border-radius: 5px;
-                }
+                }*/
 
             }
 
@@ -250,8 +255,7 @@ nav {
 
 #map_wrapper {
     display: block;
-    margin-bottom: 1.5em;
-    height: 260px;
+    height: 200px;
 }
 
 #map_canvas {
@@ -398,5 +402,29 @@ a, a:visited {
 
   &:link {
     -webkit-tap-highlight-color : rgba( 0, 0, 0, 0.3 );
+  }
+}
+
+a.pure-button,
+a.pure-button:visited
+button[type=submit].pure-button,
+button.pure-button {
+
+  border: 2px solid #0078e7;
+  background: transparent;
+  color: #0078e7;
+  border-radius: 4px;
+  font-size: 110%;
+
+  &:hover, &:focus {
+    background: #0078e7;
+    color: $white;
+  }
+
+  &:active {
+  }
+
+  .fa {
+    margin-right: .5em;
   }
 }

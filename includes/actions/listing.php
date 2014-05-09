@@ -8,6 +8,8 @@
 function ld_action__listing( $listing ) {
     global $post;
 
+    wp_enqueue_style( 'font-awesome' );
+
     $tpl = ldd::tpl();
 
     $permalink = get_permalink( $post->ID );
@@ -36,21 +38,23 @@ function ld_action__listing( $listing ) {
     $tpl->assign( 'search', ld_get_search_form() );
     $tpl->assign( 'url', $permalink );
     $tpl->assign( 'title', $listing->post_title );
-    $tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
-    $tpl->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
-    $tpl->assign( 'id', $post->ID );
+
+    $tpl->assign( 'id', $id );
     $tpl->assign( 'top', $top );
     $tpl->assign( 'logo', $logo );
     $tpl->assign( 'meta',       $meta );
     $tpl->assign( 'address',    $meta['address'] );
     $tpl->assign( 'social', ld_get_social( $id ) );
     $tpl->assign( 'geo', $geocode );
-    $tpl->assign( 'description', $listing->post_content );
+    $tpl->assign( 'description', wpautop( $listing->post_content ) );
 
     // Contact Form
     // @todo we're going to let people override this with Ninja Forms
 
     $contact_tpl = ldd::tpl();
+    $contact_tpl->assign( 'id', $id );
+    $contact_tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
+    $contact_tpl->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
     $tpl->assign( 'contact_form', $contact_tpl->draw( 'display/listing-contact', 1 ) );
 
     return $tpl->draw( 'display/listing', 1 );

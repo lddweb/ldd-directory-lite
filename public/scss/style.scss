@@ -39,6 +39,10 @@ $url-link-hover:    rgba(0, 170, 0, 0.90);
 
   @import "breakpoints/base";
 
+  .hpt {
+    display: none;
+  }
+  button.contact-buttons,
   a.contact-buttons {
     @extend %btn;
     display: inline-block;
@@ -47,6 +51,14 @@ $url-link-hover:    rgba(0, 170, 0, 0.90);
 
     &:hover {
       color: #fff;
+    }
+  }
+
+  a {
+    img:hover {
+      opacity: 1;
+      filter: alpha(opacity=100);
+      box-shadow: none;
     }
   }
 }

@@ -100,6 +100,7 @@ function ld_setup__register_scripts() {
 
     wp_register_style( ldd::$slug, LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
     wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
+    wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', false, '4.0.3' );
 
     // Admin
     wp_register_script( ldd::$slug . '-admin', LDDLITE_URL . '/public/js/admin.js', array( 'jquery-ui-dialog' ), LDDLITE_VERSION, 1 );

@@ -107,12 +107,22 @@ function ld_ajax__contact_form() {
     if ( !wp_verify_nonce( $_POST['nonce'], 'contact-form-nonce' ) )
         die( 'You shall not pass!' );
 
+    $hpt_field = 'summary';
+
+    if ( !empty( $_POST[ $hpt_field ] ) ) {
+        echo json_encode( array(
+            'success' => 1,
+        ) );
+        die;
+    }
+
 
     $name = sanitize_text_field( $_POST['name'] );
     $email = sanitize_text_field( $_POST['email'] );
     $subject = sanitize_text_field( $_POST['subject'] );
-    $message = esc_html( sanitize_text_field( $_POST['message'] ) );
     $math = sanitize_text_field( $_POST['math'] );
+    $message = esc_html( sanitize_text_field( $_POST['message'] ) );
+
 
     $errors = array();
 
@@ -128,7 +138,7 @@ function ld_ajax__contact_form() {
     if ( empty( $message ) || strlen( $message ) < 20 )
         $errors['message'] = 'Please enter a longer message';
 
-    if ( empty( $math ) || '11' != $math )
+    if ( empty( $math ) || '11' != $math || 'eleven' != strtolower( $math ) )
         $errors['math'] = 'Your math is wrong';
 
     if ( !empty( $errors ) ) {

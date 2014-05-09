@@ -9,10 +9,10 @@
 
 <section class="business-directory directory-listing cf">
 
-    <nav class="lite-nav above-header center cf">
+    <nav class="lite-nav above-header center thin-border light cf">
         <ul>
-            <li><a href="{$url}">Directory Home</a></li>
-            <li><a href="{$url}?show=submit&t=listing">Submit Listing</a></li>
+            <li><a href="{$url}" class="pure-button pure-button-primary"><i class="fa fa-home"></i> Directory Home</a></li>
+            <li><a href="{$url}?show=submit&t=listing" class="pure-button pure-button-primary"><i class="fa fa-pencil"></i> Submit Listing</a></li>
         </ul>
     </nav>
 
@@ -58,19 +58,33 @@
         }
         .listing-social a {
             margin: 0 2px;
-            padding: 3px;
+            padding: 0;
             display: inline-block;
             width: 48px;
             height: 48px;
         }
-        .listing-social a img {
-            opacity:0.4;
-            filter:alpha(opacity=40);
+        .listing-social a {
+            background: rgba(221, 221, 221, 0.5);
         }
-        .listing-social a:hover img {
-            opacity: 1;
-            filter: alpha(opacity=100);
+        .listing-social a:hover {
+            background: #2f67a1;
         }
+        .listing-social a.red:hover {
+            background: #d31800;
+        }
+        .listing-social a.orange:hover {
+            background: #f95400;
+        }
+        .listing-social a.yellow:hover {
+            background: #ffbf00;
+        }
+        .listing-social a.green:hover {
+            background: #7fb500;
+        }
+        .listing-social a.blue:hover {
+            background: #2968a2;
+        }
+        .listing-description
     </style>
     <section class="directory-content thin-border">
 
@@ -92,15 +106,13 @@
         </div>
 
 
-        <article id="listing-1" class="listing-1 listing type-listing full-listing status-approved featured thin-border cf">
-            <div id="map_wrapper">
-                <div id="map_canvas" class="mapping"></div>
-            </div>
-
+        <article id="listing-1" class="listing-1 listing type-listing full-listing status-approved featured thick-border light cf">
             <div class="listing-description">
                 {$description}
             </div>
-
+            <div id="map_wrapper">
+                <div id="map_canvas" class="mapping"></div>
+            </div>
         </article>
 
     </section>

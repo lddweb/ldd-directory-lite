@@ -48,7 +48,6 @@ function ld_action__category( $cat_id ) {
             else
                 $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/images/avatar_default.png" />', 'class="post-thumbnail"' );
 
-
             $meta = ld_get_listing_meta( $id );
 
             $summary = '';
@@ -70,7 +69,6 @@ function ld_action__category( $cat_id ) {
                 $summary = wp_trim_words( $summary, $excerpt_length, $excerpt_more );
             }
 
-            $social = lddlite_build_social( $id );
 
             $tpl->assign( 'id',         $id );
             $tpl->assign( 'status',     $status );
@@ -80,7 +78,6 @@ function ld_action__category( $cat_id ) {
             $tpl->assign( 'meta',       $meta );
             $tpl->assign( 'address',    $meta['address'] );
             $tpl->assign( 'summary',    $summary );
-            $tpl->assign( 'social',     $social );
 
             $output .= $tpl->draw( 'display/listing-compact', 1 );
 

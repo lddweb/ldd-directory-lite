@@ -203,17 +203,18 @@ function ld_get_social( $id ) {
         return false;
 
     $titles = array(
-        'facebook'  => 'Visit %1$s on Facebook',
-        'twitter'   => 'Follow %1$s on Twitter',
-        'linkedin'  => 'Connect with %1$s on LinkedIn',
-        'default'   => 'Visit %1$s on %2$s',
+        'facebook'  => array( 'orange', 'Visit %1$s on Facebook' ),
+        'linkedin'  => array( 'yellow', 'Connect with %1$s on LinkedIn' ),
+        'twitter'   => array( 'green', 'Follow %1$s on Twitter' ),
+        'default'   => array( 'blue', 'Visit %1$s on %2$s' ),
     );
 
     $output = '';
     $email = get_post_meta( $id, '_lddlite_contact_email', 1 );
+    $name = get_the_title( $id );
 
     if ( $email )
-        $output = '<a rel="contact" href="#contact"><img src="' . LDDLITE_URL . '/public/images/social/email.png" width="48" height="48" alt="" /></a>';
+        $output = '<a rel="contact" href="#contact" title="Send ' . $name . ' a message" class="red"><img src="' . LDDLITE_URL . '/public/images/social/email.png" width="48" height="48" alt="" /></a>';
 
     $social = array(
         'facebook'  =>  get_post_meta( $id, '_lddlite_url_facebook', 1 ),
@@ -223,10 +224,11 @@ function ld_get_social( $id ) {
 
     foreach ( $social as $key => $url ) {
         if ( !empty( $url ) ) {
-            $title_key = array_key_exists( $key, $titles ) ? $titles[$key] : $titles['default'];
+            $title_key = array_key_exists( $key, $titles ) ? $titles[$key][1] : $titles['default'][1];
+            $title_class = array_key_exists( $key, $titles ) ? $titles[$key][0] : $titles['default'][0];
             $title = sprintf( $title_key, $name, $key );
 
-            $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '">';
+            $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '" class="' . $title_class . '">';
             $output .= '<img src="' . LDDLITE_URL . '/public/images/social/' . $key . '.png" width="48" height="48"></a>';
         }
     }

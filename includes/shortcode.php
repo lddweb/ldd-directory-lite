@@ -59,7 +59,7 @@ function ld_shortcode__display() {
 
         if ( 'category' == $action ) {
 
-            $exists = term_exists( $t, LDDLITE_TAX_CAT ); md( $exists );
+            $exists = term_exists( $t, LDDLITE_TAX_CAT );
             if ( is_array( $exists ) )
                 $term = $exists['term_id'];
 

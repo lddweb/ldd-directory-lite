@@ -57,7 +57,8 @@ p {
   .business-directory .alert-success {
     border-color: #deeaae;
     background: #e6efc2; }
-  .business-directory .black-btn, .business-directory #submit-listing button.submit, .business-directory .listing-contact-form button.submit, .business-directory .ldd-submit-listing_nav, .business-directory a.contact-buttons {
+  .business-directory .black-btn, .business-directory #submit-listing button.submit, .business-directory .listing-contact-form button.submit, .business-directory .ldd-submit-listing_nav, .business-directory button.contact-buttons,
+  .business-directory a.contact-buttons {
     display: inline-block;
     padding: 2px 16px;
     font-size: 1.6em;
@@ -67,12 +68,15 @@ p {
     border: none;
     border-radius: 10px;
     box-shadow: 0 4px #20456c; }
-    .business-directory .black-btn:hover, .business-directory #submit-listing button.submit:hover, .business-directory .listing-contact-form button.submit:hover, .business-directory .ldd-submit-listing_nav:hover, .business-directory a.contact-buttons:hover {
+    .business-directory .black-btn:hover, .business-directory #submit-listing button.submit:hover, .business-directory .listing-contact-form button.submit:hover, .business-directory .ldd-submit-listing_nav:hover, .business-directory button.contact-buttons:hover,
+    .business-directory a.contact-buttons:hover {
       background-color: #2f67a1;
       color: #fff; }
-    .business-directory .black-btn:focus, .business-directory #submit-listing button.submit:focus, .business-directory .listing-contact-form button.submit:focus, .business-directory .ldd-submit-listing_nav:focus, .business-directory a.contact-buttons:focus {
+    .business-directory .black-btn:focus, .business-directory #submit-listing button.submit:focus, .business-directory .listing-contact-form button.submit:focus, .business-directory .ldd-submit-listing_nav:focus, .business-directory button.contact-buttons:focus,
+    .business-directory a.contact-buttons:focus {
       outline: none; }
-    .business-directory .black-btn:active, .business-directory #submit-listing button.submit:active, .business-directory .listing-contact-form button.submit:active, .business-directory .ldd-submit-listing_nav:active, .business-directory a.contact-buttons:active {
+    .business-directory .black-btn:active, .business-directory #submit-listing button.submit:active, .business-directory .listing-contact-form button.submit:active, .business-directory .ldd-submit-listing_nav:active, .business-directory button.contact-buttons:active,
+    .business-directory a.contact-buttons:active {
       background-color: #2f67a1;
       box-shadow: 0 2px #20456c;
       -webkit-transform: translateY(3px);
@@ -379,15 +383,20 @@ p {
   .business-directory .cf {
     zoom: 1; }
   .business-directory .thick-border {
+    margin: .5em 0;
+    padding: 1em;
     border: 1px solid rgba(32, 69, 108, 0.2);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.9); }
+  .business-directory .thin-border {
     margin: .5em 0;
     padding: .5em;
-    border-radius: 3px; }
-  .business-directory .thin-border {
-    margin-bottom: .5em;
-    padding: 1em;
-    border: 1px solid rgba(32, 69, 108, 0.1);
-    border-radius: 2px; }
+    border: 1px solid rgba(32, 69, 108, 0.2);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.9); }
+  .business-directory .thick-border.light,
+  .business-directory .thin-border.light {
+    border-color: rgba(32, 69, 108, 0.1); }
   .business-directory header.global-header {
     margin: 0;
     padding: 0; }
@@ -410,20 +419,25 @@ p {
         list-style: none;
         display: inline-block;
         *display: inline;
-        /* ie7 */ }
-        .business-directory nav.lite-nav ul li a {
-          padding: .5em 1em;
-          text-decoration: none;
-          line-height: 100%; }
-        .business-directory nav.lite-nav ul li a:hover {
-          background: #2f67a1;
-          border-bottom: 2px solid #20456c;
-          color: white;
-          border-radius: 5px; }
-        .business-directory nav.lite-nav ul li.current a {
-          background: #2f67a1;
-          color: #fff;
-          border-radius: 5px; }
+        /* ie7 */
+        /*                a {
+                            padding: .5em 1em;
+                            text-decoration: none;
+                            line-height: 100%;
+                        }
+        
+                        a:hover {
+                            background: $primary-mid;
+                            border-bottom: 2px solid $primary-dark;
+                            color: $white;
+                            border-radius: 5px;
+                        }
+        
+                        &.current a {
+                            background: $primary-mid;
+                            color: #fff;
+                            border-radius: 5px;
+                        }*/ }
     .business-directory nav.lite-nav.right ul {
       text-align: right; }
     .business-directory nav.lite-nav.center ul {
@@ -516,8 +530,7 @@ p {
         margin: .1em 0; }
   .business-directory #map_wrapper {
     display: block;
-    margin-bottom: 1.5em;
-    height: 260px; }
+    height: 200px; }
   .business-directory #map_canvas {
     width: 100%;
     height: 100%;
@@ -593,9 +606,40 @@ p {
       text-decoration: none; }
     .business-directory a:link, .business-directory a:visited:link {
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3); }
+  .business-directory a.pure-button,
+  .business-directory a.pure-button:visited
+  button[type=submit].pure-button,
+  .business-directory button.pure-button {
+    border: 2px solid #0078e7;
+    background: transparent;
+    color: #0078e7;
+    border-radius: 4px;
+    font-size: 110%; }
+    .business-directory a.pure-button:hover, .business-directory a.pure-button:focus,
+    .business-directory a.pure-button:visited
+    button[type=submit].pure-button:hover,
+    .business-directory a.pure-button:visited
+    button[type=submit].pure-button:focus,
+    .business-directory button.pure-button:hover,
+    .business-directory button.pure-button:focus {
+      background: #0078e7;
+      color: white; }
+    .business-directory a.pure-button .fa,
+    .business-directory a.pure-button:visited
+    button[type=submit].pure-button .fa,
+    .business-directory button.pure-button .fa {
+      margin-right: .5em; }
+  .business-directory .hpt {
+    display: none; }
+  .business-directory button.contact-buttons,
   .business-directory a.contact-buttons {
     display: inline-block;
     margin: 0 1px 0 4px;
     color: #fff; }
+    .business-directory button.contact-buttons:hover,
     .business-directory a.contact-buttons:hover {
       color: #fff; }
+  .business-directory a img:hover {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    box-shadow: none; }

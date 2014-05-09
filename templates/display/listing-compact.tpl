@@ -1,4 +1,4 @@
-        <article id="listing-{$id}" class="listing-{$id} type-listing status-{$status} {$nth} cf">
+        <article id="listing-{$id}" class="listing-{$id} type-listing status-{$status} thick-border {$nth} cf">
             {$featured}
 
             <header class="listing-header">
