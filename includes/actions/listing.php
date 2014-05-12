@@ -10,6 +10,12 @@ function ld_action__listing( $listing ) {
 
     wp_enqueue_style( 'font-awesome' );
 
+    wp_enqueue_style( 'bootstrap' );
+    wp_enqueue_style( 'bootflat' );
+    wp_enqueue_style( 'font-awesome' );
+
+    wp_enqueue_script( 'bootstrap' );
+
     $tpl = ldd::tpl();
 
     $permalink = get_permalink( $post->ID );
@@ -35,7 +41,12 @@ function ld_action__listing( $listing ) {
         'lng' => $output->results[0]->geometry->location->lng,
     );
 
-    $tpl->assign( 'search', ld_get_search_form() );
+    $tpl->assign( 'header', ld_get_page_header( 'category' ) );
+    $tpl->assign( 'home', remove_query_arg( array(
+        'show',
+        't',
+    ) ) );
+
     $tpl->assign( 'url', $permalink );
     $tpl->assign( 'title', $listing->post_title );
 
@@ -55,7 +66,7 @@ function ld_action__listing( $listing ) {
     $contact_tpl->assign( 'id', $id );
     $contact_tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
     $contact_tpl->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
-    $tpl->assign( 'contact_form', $contact_tpl->draw( 'display/listing-contact', 1 ) );
+    $tpl->assign( 'contact_form', $contact_tpl->draw( 'listing-contact', 1 ) );
 
-    return $tpl->draw( 'display/listing', 1 );
+    return $tpl->draw( 'listing', 1 );
 }

@@ -24,3 +24,4 @@ cmb/
 .CVS
 .idea
 
+*.rtpl.php

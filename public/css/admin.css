@@ -30,3 +30,7 @@ ul#directory-links li.right {
     padding-top: 1.5em;
     border-top: 6px dashed #f6f6f6;
 }
+
+.wp-editor-wrap {
+    margin-bottom: 2em;
+}

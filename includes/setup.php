@@ -20,6 +20,7 @@ add_shortcode( 'directory',             'ld_shortcode__display' );
  */
 add_shortcode( 'business_directory',    'ld_shortcode__display' );
 
+add_image_size( 'directory-listing-featured', 400, 300 );
 add_image_size( 'directory-listing', 300, 300 );
 add_image_size( 'directory-listing-compact', 105, 300 );
 add_image_size( 'directory-listing-search', 100, 100 );
@@ -97,8 +98,12 @@ function ld_setup__register_scripts() {
     wp_register_script( ldd::$slug,                       LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
     wp_register_script( ldd::$slug . '-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
     wp_register_script( ldd::$slug . '-search',           LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( 'bootstrap',        LDDLITE_URL . '/public/js/bootstrap.min.js', array( 'jquery' ), LDDLITE_VERSION, true );
 
-    wp_register_style( ldd::$slug, LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
+    wp_register_style( ldd::$slug,                LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
+    wp_register_style( 'bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', false, LDDLITE_VERSION );
+    wp_register_style( 'bootflat',  LDDLITE_URL . '/public/css/bootflat.min.css', false, LDDLITE_VERSION );
+
     wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
     wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', false, '4.0.3' );
 

@@ -76,23 +76,23 @@ function ld_action__submit( $term = false ) {
         $to_admin->assign( 'description', $data['description'] );
 
         $message = $to_admin->draw( 'email/to_admin', 1 );
-        ld_mail( ldd::opt( 'email_admin_email' ), __( 'A new listing was submitted for review', ldd::$slug ), $message );
+        ld_mail( ldd::opt( 'email_replyto' ), __( 'A new listing was submitted for review', ldd::$slug ), $message );
 
 
         $to_owner = ldd::tpl();
 
         $to_owner->assign( 'site_title', get_bloginfo( 'name' ) );
-        $to_owner->assign( 'admin_email', ldd::opt( 'email_admin_email' ) );
+        $to_owner->assign( 'admin_email', ldd::opt( 'email_replyto' ) );
         $to_owner->assign( 'title', $data['title'] );
         $to_owner->assign( 'description', $data['description'] );
 
         $message = $to_owner->draw( 'email/to_owner', 1 );
-        ld_mail( $data['email'], ldd::opt( 'email_onsubmit' ), $message );
+        ld_mail( $data['email'], ldd::opt( 'email_onsubmit_subject' ), $message );
 
         $tpl->assign( 'url', get_permalink( $post->ID ) );
         $tpl->assign( 'listing', $data );
 
-        return $tpl->draw( 'display/submit-success', 1 );
+        return $tpl->draw( 'submit-success', 1 );
 
     }
 
@@ -146,6 +146,6 @@ function ld_action__submit( $term = false ) {
 
     $tpl->assign( 'data', $data );
 
-    return $tpl->draw( 'display/submit', 1 );
+    return $tpl->draw( 'submit', 1 );
 
 }

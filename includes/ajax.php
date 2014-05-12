@@ -87,13 +87,13 @@ function ld_ajax__search_directory() {
             );
             $tpl->assign( $template_vars );
 
-            $output .= $tpl->draw( 'display/search-listing', 1 );
+            $output .= $tpl->draw( 'search-listing', 1 );
 
         }
 
     } else { // Nothing found
 
-        $output = $tpl->draw( 'display/search-notfound', 1 );
+        $output = $tpl->draw( 'search-notfound', 1 );
 
     }
 

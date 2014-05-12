@@ -98,7 +98,7 @@ function ld_action__send_approved_email( $post ) {
     $tpl = ldd::tpl();
 
     $tpl->assign( 'site_title', get_bloginfo( 'name' ) );
-    $tpl->assign( 'admin_email', ldd::opt( 'email_admin_email' ) );
+    $tpl->assign( 'admin_email', ldd::opt( 'email_replyto' ) );
     $tpl->assign( 'link', site_url( '?show=listing&t=' . $post_slug ) );
 
     $message = $tpl->draw( 'email/approved', 1 );

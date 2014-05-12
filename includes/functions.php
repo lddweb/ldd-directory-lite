@@ -74,13 +74,42 @@ function ld_get_tpl() {
 }
 
 
+function  ld_get_page_header( $show_label = 0 ) {
+
+    wp_enqueue_script( 'ldd-lite-search' );
+
+    $header_template = ldd::tpl();
+
+    $header_template->assign( 'show_label', $show_label );
+    $header_template->assign( 'directory_label', ldd::opt( 'directory_label' ) );
+    $header_template->assign( 'directory_description', ldd::opt( 'directory_description' ) );
+    $header_template->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
+
+    return $header_template->draw( 'header', 1 );
+
+}
+
+
+function ld_get_term_name( $term_id ) {
+    $term_id = (int) $term_id;
+    $term = get_term_by( 'term_id', $term_id, LDDLITE_TAX_CAT );
+    if ( !$term || is_wp_error( $term ) )
+        return '';
+    return $term->name;
+}
+
+
+/**
+ * @deprecated use ld_get_page_header()
+ */
 function ld_get_search_form() {
     $tpl = ldd::tpl();
     $tpl->assign( 'placeholder', __( 'Search the directory...', ldd::$slug ) );
     $tpl->assign( 'search_text', __( 'Search', ldd::$slug ) );
     $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
-    return $tpl->draw( 'display/search-form', 1 );
+    return $tpl->draw( 'search-form', 1 );
 }
+
 
 
 function ld_get_social_icon( $label, $url = '', $title = '', $ext = 'png' ) {

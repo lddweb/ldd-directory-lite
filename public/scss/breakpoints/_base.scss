@@ -13,6 +13,9 @@
     zoom:1;
 }
 
+
+
+
 .thick-border {
   margin: .5em 0;
   padding: 1em;
@@ -289,18 +292,7 @@ nav {
   &.even {
     background: rgba( $white, 0.5 );
   }
-  .post-thumbnail {
-    position: relative;
-    width: 100%;
-    /* margin: 4px 4%; */
-    display: inline-block;
-    vertical-align: top;
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 3px;
-    }
-  }
+
 
   .listing-header {
     width: 100%;
@@ -331,17 +323,7 @@ nav {
         color: rgba( #777, .5 );
         margin: 0 0 8px;
 
-        &.website {
-          font-weight: 400;
-          margin-bottom: 1em;
 
-          a {
-            color: $url-link;
-          }
-          a:hover {
-            color: $url-link-hover;
-          }
-        }
 
         a {
           text-decoration: none;
@@ -356,54 +338,15 @@ nav {
 
   }
 
-  .listing-summary {
-    width: 100%;
-    clear: both;
-    border-top: 1px solid rgba( $primary-dark, 0.12 );
-    margin-top: 1em;
-    padding-top: 1em;
-  }
-}
-
-
-@media screen and (min-width: 600px) {
-
-  .type-listing {
-
-    .post-thumbnail {
-      float: right;
-      position: relative;
-      width: 15%;
-      margin-left: 2%;
-    }
-
-  }
 
 }
 
 
-/** Business Display **/
 
 /**
 LINK STYLES
 **/
 
-a, a:visited {
-  color: $link-color;
-  text-decoration: none;
-
-  &:hover, &:focus {
-    color: $link-hover;
-    text-decoration: none;
-  }
-
-  &:active {
-  }
-
-  &:link {
-    -webkit-tap-highlight-color : rgba( 0, 0, 0, 0.3 );
-  }
-}
 
 a.pure-button,
 a.pure-button:visited

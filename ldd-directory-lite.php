@@ -95,9 +95,10 @@ class LDD_Directory_Lite {
         require_once( LDDLITE_PATH . '/includes/functions.php' );
         require_once( LDDLITE_PATH . '/includes/email.php' );
         if ( is_admin() ) {
-            require_once( LDDLITE_PATH . '/includes/metaboxes.php' );
-            require_once( LDDLITE_PATH . '/includes/pointers.php' );
-            require_once( LDDLITE_PATH . '/includes/admin.php' );
+            require_once( LDDLITE_PATH . '/includes/admin/metaboxes.php' );
+            require_once( LDDLITE_PATH . '/includes/admin/pointers.php' );
+            require_once( LDDLITE_PATH . '/includes/admin/settings.php' );
+            require_once( LDDLITE_PATH . '/includes/admin/help.php' );
         }
     }
 
@@ -110,14 +111,57 @@ class LDD_Directory_Lite {
      */
     public function populate_options() {
 
+        $site_title = get_bloginfo( 'name' );
+
+        $email = array();
+
+        $email['to_admin']   = <<<EM
+<p><strong>A new listing is pending review!</strong></p>
+
+<p>This submission is awaiting approval. Please visit the link to view and approve the new listing:</p>
+
+<p>{\$view_listing}</p>
+
+<ul>
+    <li>Business Name: <strong>{\$title}</strong></li>
+    <li>Business Description: <strong>{\$description}</strong></li>
+</ul>
+EM;
+        $email['on_submit']  = <<<EM
+<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
+
+<p>Your listing is pending approval.</p>
+<p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {$admin_email}.</p>
+
+<ul>
+    <li>Business Name: <strong>{\$title}</strong></li>
+    <li>Business Description: <strong>{\$description}</strong></li>
+</ul>
+
+<p><em>Sincerely,<br>{$site_title}</em></p>
+EM;
+        $email['on_approve'] = <<<EM
+<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
+
+<p>Your listing has been approved! You can now view it online:</p>
+<p>{\$link}</p>
+
+<p><em>Sincerely,<br>{$site_title}</em></p>
+EM;
+
         $defaults = apply_filters( 'lddlite_default_options', array(
-            'version'           => 0.1,
-            'public_or_private' => 1,
-            'google_maps'       => 1,
-            'email_admin_name'  => get_bloginfo( 'name' ),
-            'email_admin_email' => get_bloginfo( 'admin_email' ),
-            'email_onsubmit'    => 'Your directory listing was successfully submitted!',
-            'email_onapprove'   => 'Your directory listing was approved!'
+            'version'                   => 0.1,
+            'directory_label'           => get_bloginfo( 'name' ),
+            'directory_description'     => '',
+            'public_or_private'         => 1,
+            'google_maps'               => 1,
+            'email_replyto'             => get_bloginfo( 'admin_email' ),
+            'email_toadmin_subject'     => 'A new listing has been submitted for review!',
+            'email_toadmin_body'        => $email['to_admin'],
+            'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
+            'email_onsubmit_body'       => $email['on_submit'],
+            'email_onapprove_subject'   => 'Your listing on ' . $site_title . ' was approved!',
+            'email_onapprove_body'      => $email['on_approve'],
         ) );
 
         $options = wp_parse_args(
@@ -127,7 +171,9 @@ class LDD_Directory_Lite {
         $dir = dirname( __FILE__ );
         $old_plugin = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/ldd-business-directory/lddbd_core.php';
 
+        // @todo TESTING
         if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
+            trigger_error( 'Upgrade fired!', E_USER_ERROR ); die;
             require_once( LDDLITE_PATH . '/upgrade.php' );
             add_action( 'init', 'ld_upgrade__go', 20 ); // This has to fire later, so we know our CPT's are registered
         }

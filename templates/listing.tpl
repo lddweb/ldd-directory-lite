@@ -1,92 +1,17 @@
-<style>
-    .listing-description {
-        clear: both;
-        width: 100%;
-    }
+<section class="business-directory directory-category cf">
 
-</style>
+    <header class="directory-header">
+        {$header}
+    </header>
 
-
-<section class="business-directory directory-listing cf">
-
-    <nav class="lite-nav above-header center thin-border light cf">
-        <ul>
-            <li><a href="{$url}" class="pure-button"><i class="fa fa-home"></i> Directory Home</a></li>
-            <li><a href="{$url}?show=submit&t=listing" class="pure-button"><i class="fa fa-pencil"></i> Submit Listing</a></li>
-        </ul>
-    </nav>
+    <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em;">
+        <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#">Arts &amp; Entertainment</li>
+        <li class="active"><span>{$title}</span></li>
+    </ol>
 
 
-    <style>
-        .listing-header .listing-logo img {
-            width: 200px;
-            height: 200px;
-        }
-
-
-        .listing-header {
-            position: relative;
-            padding-right: 210px;
-            min-height: 210px;
-        }
-        .listing-header .listing-logo {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-        .listing-header h2.listing-title {
-            margin: 10px 0 0;
-            padding: 0;
-            text-align: left;
-            font-size: 2.5em;
-            font-weight: 300;
-            letter-spacing: -1px;
-            font-family: helvetica, arial;
-        }
-        .listing-header .listing-meta p.website {
-            margin: 0;
-            padding: 0;
-        }
-        .listing-header .listing-meta p.website a {
-            font-size: 1.1em;
-            color: green;
-        }
-        .listing-social {
-            padding: 0;
-            margin-bottom: .5em;
-            text-align: left;
-        }
-        .listing-social a {
-            margin: 0 2px;
-            padding: 0;
-            display: inline-block;
-            width: 48px;
-            height: 48px;
-        }
-        .listing-social a {
-            background: rgba(221, 221, 221, 0.5);
-        }
-        .listing-social a:hover {
-            background: #2f67a1;
-        }
-        .listing-social a.red:hover {
-            background: #d31800;
-        }
-        .listing-social a.orange:hover {
-            background: #f95400;
-        }
-        .listing-social a.yellow:hover {
-            background: #ffbf00;
-        }
-        .listing-social a.green:hover {
-            background: #7fb500;
-        }
-        .listing-social a.blue:hover {
-            background: #2968a2;
-        }
-        .listing-description
-    </style>
-    <section class="directory-content thin-border">
+    <article id="listing-1" class="listing-1 listing type-listing full-listing status-approved light cf">
 
         <header class="listing-header">
             <div class="listing-logo">{$logo}</div>
@@ -106,7 +31,7 @@
         </div>
 
 
-        <article id="listing-1" class="listing-1 listing type-listing full-listing status-approved featured thick-border light cf">
+
             <div class="listing-description">
                 {$description}
             </div>
@@ -115,7 +40,7 @@
             </div>
         </article>
 
-    </section>
+
 
 
 </section>
@@ -208,3 +133,80 @@
     }
 </script>
 
+
+
+
+
+<style>
+    .listing-description {
+        clear: both;
+        width: 100%;
+    }
+    .listing-header .listing-logo img {
+        width: 200px;
+        height: 200px;
+    }
+
+
+    .listing-header {
+        position: relative;
+        padding-right: 210px;
+        min-height: 210px;
+    }
+    .listing-header .listing-logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .listing-header h2.listing-title {
+        margin: 10px 0 0;
+        padding: 0;
+        text-align: left;
+        font-size: 2.5em;
+        font-weight: 300;
+        letter-spacing: -1px;
+        font-family: helvetica, arial;
+    }
+    .listing-header .listing-meta p.website {
+        margin: 0;
+        padding: 0;
+    }
+    .listing-header .listing-meta p.website a {
+        font-size: 1.1em;
+        color: green;
+    }
+    .listing-social {
+        padding: 0;
+        margin-bottom: .5em;
+        text-align: left;
+    }
+    .listing-social a {
+        margin: 0 2px;
+        padding: 0;
+        display: inline-block;
+        width: 48px;
+        height: 48px;
+    }
+    .listing-social a {
+        background: rgba(221, 221, 221, 0.5);
+    }
+    .listing-social a:hover {
+        background: #2f67a1;
+    }
+    .listing-social a.red:hover {
+        background: #d31800;
+    }
+    .listing-social a.orange:hover {
+        background: #f95400;
+    }
+    .listing-social a.yellow:hover {
+        background: #ffbf00;
+    }
+    .listing-social a.green:hover {
+        background: #7fb500;
+    }
+    .listing-social a.blue:hover {
+        background: #2968a2;
+    }
+    .listing-description
+</style>
