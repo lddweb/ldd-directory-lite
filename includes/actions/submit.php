@@ -18,7 +18,6 @@ function ld_action__submit( $term = false ) {
 
     wp_enqueue_style( ldd::$slug );
     wp_enqueue_script( ldd::$slug . '-responsiveslides' );
-    wp_enqueue_style( 'yui-pure' );
 
     wp_enqueue_style( 'bootstrap' );
     wp_enqueue_style( 'bootflat' );

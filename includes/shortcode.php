@@ -43,7 +43,7 @@ function ld_shortcode__display() {
     wp_enqueue_script( 'ldd-lite-js' );
 
     wp_enqueue_style( 'ldd-lite' );
-    wp_enqueue_style( 'yui-pure' );
+
 
     $action = 'home';
     $term   = '';

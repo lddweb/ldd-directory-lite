@@ -37,16 +37,6 @@
                         <legend>General Information</legend>
 
                         <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group has-error has-feedback">
-                                    <label class="control-label" for="inputError2">Input with error</label>
-                                    <input type="text" class="form-control" id="inputError2">
-                                    <span class="fa fa-exclamation form-control-feedback"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label for="">Title</label>

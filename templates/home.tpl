@@ -47,16 +47,7 @@
         </div>
 
 
-
-
-        </section>
-
-
-        {$featured_listings_open}
-        {$featured_listings}
-        {$featured_listings_close}
-
-
+    </section>
 
 </section>
 

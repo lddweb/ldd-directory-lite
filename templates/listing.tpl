@@ -4,52 +4,108 @@
         {$header}
     </header>
 
-    <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em;">
-        <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="#">Arts &amp; Entertainment</li>
-        <li class="active"><span>{$title}</span></li>
-    </ol>
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em;">
+                <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="{$term_link}">{$term_name}</a></li>
+                <li class="active"><span>View Listing</span></li>
+            </ol>
 
+        </div>
 
-    <article id="listing-1" class="listing-1 listing type-listing full-listing status-approved light cf">
-
-        <header class="listing-header">
-            <div class="listing-logo">{$logo}</div>
-
-            <h2 class="listing-title">{$title}</h2>
-            <div class="listing-meta">
-                <p class="website">{$meta.website}</p>
-                {if="!empty($address)"}<p class="address">{$address}</p>{/if}
+        <div class="col-md-4 view-types" style="text-align: center;">
+            <div class="btn-group">
+                <a href="" class="btn btn-success" data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>
+                <a href="" class="btn btn-success"><i class="fa fa-facebook-square"></i></a>
+                <a href="" class="btn btn-success"><i class="fa fa-twitter"></i></a>
+                <a href="" class="btn btn-success"><i class="fa fa-linkedin"></i></a>
             </div>
-            <div class="listing-social">
-                {$social}
-            </div>
-        </header>
+        </div>
+    </div>
 
-        <div id="listing-contact-form">
-            {$contact_form}
+
+    <article id="listing-{$id}" class="listing-{$id} listing type-listing listing-full cf">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="listing-title panel-title">{$title}</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    {if="!empty($website)"}<p class="website">{$website}</p>{/if}
+                </div>
+
+            </div>
         </div>
 
 
+        <div class="row">
+            <div class="col-md-8">
 
-            <div class="listing-description">
-                {$description}
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Description</h3>
+                    </div>
+                    <div class="panel-body">
+                        {$description}
+                    </div>
+                </div>
+
+
             </div>
-            <div id="map_wrapper">
-                <div id="map_canvas" class="mapping"></div>
+            <div class="col-md-4">
+
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        {$thumbnail}
+
+                        <div class="listing-meta">
+                            {if="!empty($meta.website)"}<p class="website"><i class="fa fa-phone"></i> {$meta.website}</p>{/if}
+                            {if="!empty($address)"}<p class="address"><i class="fa fa-globe"></i> {$address}</p>{/if}
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-        </article>
+        </div>
+
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <h4 class="panel-title">Location</h3>
+            </div>
+            <div class="panel-body">
+                <div id="map_wrapper">
+                    <div id="map_canvas" class="mapping"></div>
+                </div>
+            </div>
+        </div>
 
 
+    </article>
 
 
 </section>
 
 
 
+
+
 <script>
 
     jQuery(document).ready(function($) {
+
+        var modalTitle = $("#contact-modal-title")
+        modalTitle.text( "Contact {$title}" )
+
+
+
+
 
         var contactdiv = $(".listing-contact-form");
 
@@ -68,14 +124,12 @@
     });
 
 
-
     jQuery(function() {
         // Asynchronously Load the map API
         var script = document.createElement('script');
         script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
         document.body.appendChild(script);
     });
-
     function initialize() {
         var map;
         var bounds = new google.maps.LatLngBounds();
@@ -131,20 +185,78 @@
         });
 
     }
+
 </script>
 
-
-
-
-
 <style>
+    #map_wrapper {
+        margin: 0 -15px;
+    }
+    .listing-full .panel:last-child {
+        margin-bottom: 0;
+    }
+    .listing-full .panel {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+    .listing-full .panel-heading {
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+    .panel .listing-meta {
+        margin: .1em 0;
+        color: rgba(119, 119, 119, 0.8);
+    }
+
+    .panel-body {
+        position: relative;
+    }
+    .panel-title {
+        margin: 0 !important;
+        letter-spacing: normal !important;
+    }
+    .panel-primary .panel-title {
+        color: #fff !important;
+    }
+    .type-listing.listing-full {
+        padding: 1em;
+        position: relative;
+    }
+    .panel p.website {
+        margin-bottom: 0;
+        margin-left: 1em;
+        font-size: 1.2em;
+    }
+    .business-directory .type-listing.listing-full .listing-header .listing-meta p {
+        font-size: 1.2em;
+        line-height: normal;
+        color: rgba(119, 119, 119, 0.8);
+        margin: 0 0 8px;
+    }
+    .listing-full .listing-meta p .fa {
+        top: 4px;
+        left: 2px;
+    }
+/*    .listing-thumbnail {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }*/
+    .type-listing.listing-full .img-rounded {
+        margin: 0;
+        margin-top: -15px;
+        height: auto;
+    }
+
+    .listing-full h2.listing-title {
+        font-size: 2.4em !important;
+    }
+
     .listing-description {
         clear: both;
         width: 100%;
-    }
-    .listing-header .listing-logo img {
-        width: 200px;
-        height: 200px;
     }
 
 
@@ -153,11 +265,7 @@
         padding-right: 210px;
         min-height: 210px;
     }
-    .listing-header .listing-logo {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
+
     .listing-header h2.listing-title {
         margin: 10px 0 0;
         padding: 0;
@@ -172,11 +280,12 @@
         padding: 0;
     }
     .listing-header .listing-meta p.website a {
-        font-size: 1.1em;
+        font-size: 1.4em;
         color: green;
     }
     .listing-social {
         padding: 0;
+        margin-top: 1.5em;
         margin-bottom: .5em;
         text-align: left;
     }
@@ -208,5 +317,7 @@
     .listing-social a.blue:hover {
         background: #2968a2;
     }
-    .listing-description
+    .listing-description {
+        border-top: 1px solid rgba(119, 119, 119, 0.3);
+    }
 </style>

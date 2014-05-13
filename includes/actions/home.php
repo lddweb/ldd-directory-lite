@@ -36,54 +36,59 @@ function ld_action__home( $term = false ) {
     );
     $featured = get_posts( $featured_args );
 
-    $rand_keys = array_rand( $featured, 3 );
-    shuffle( $rand_keys );
+    if ( $featured ) {
+        $rand_keys = array_rand( $featured, 3 );
+        shuffle( $rand_keys );
 
-    // @todo can we filter guid once and use that as our url?
-    foreach ( $rand_keys as $key ) {
-        $listing = $featured[ $key ];
-        $featured_tpl = ldd::tpl();
+        // @todo can we filter guid once and use that as our url?
+        foreach ( $rand_keys as $key ) {
+            $listing = $featured[ $key ];
+            $featured_tpl = ldd::tpl();
 
-        $id = $listing->ID;
-        $summary = $listing->post_excerpt;
-        $slug = $listing->post_name;
-        $title = $listing->post_title;
-        $link = add_query_arg( array(
-            'show'  => 'listing',
-            't'     => $slug,
-        ) );
+            $id = $listing->ID;
+            $summary = $listing->post_excerpt;
+            $slug = $listing->post_name;
+            $title = $listing->post_title;
+            $link = add_query_arg( array(
+                'show'  => 'listing',
+                't'     => $slug,
+            ) );
 
-        if ( empty( $summary ) ) {
-            $summary = $listing->post_content;
+            if ( empty( $summary ) ) {
+                $summary = $listing->post_content;
 
-            $summary = strip_shortcodes( $summary );
+                $summary = strip_shortcodes( $summary );
 
-            $summary = apply_filters( 'lddlite_the_content', $summary );
-            $summary = str_replace( ']]>', ']]&gt;', $summary );
+                $summary = apply_filters( 'lddlite_the_content', $summary );
+                $summary = str_replace( ']]>', ']]&gt;', $summary );
 
-            $excerpt_length = apply_filters( 'lddlite_featured_excerpt_length', 25 );
-            $summary = wp_trim_words( $summary, $excerpt_length, '&hellip;' );
+                $excerpt_length = apply_filters( 'lddlite_featured_excerpt_length', 25 );
+                $summary = wp_trim_words( $summary, $excerpt_length, '&hellip;' );
+            }
+
+            $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';
+
+            if ( has_post_thumbnail( $id ) )
+                $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing-featured', array( 'class' => 'img-rounded' ) ) );
+            else
+                $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">' );
+
+            $featured_tpl->assign( 'thumbnail', $thumbnail );
+            $featured_tpl->assign( 'title',     $title );
+            $featured_tpl->assign( 'summary',   $summary );
+            $featured_tpl->assign( 'link',      $link );
+
+            $featured_output .= $featured_tpl->draw( 'featured', 1 );
         }
 
-       $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';
-
-        if ( has_post_thumbnail( $id ) )
-            $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing-featured', array( 'class' => 'img-rounded' ) ) );
-        else
-            $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">' );
-
-        $featured_tpl->assign( 'thumbnail', $thumbnail );
-        $featured_tpl->assign( 'title',     $title );
-        $featured_tpl->assign( 'summary',   $summary );
-        $featured_tpl->assign( 'link',      $link );
-
-        $featured_output .= $featured_tpl->draw( 'featured', 1 );
     }
+
 
     $directory_terms = get_terms( LDDLITE_TAX_CAT, array(
         'parent'         => 0,
     ) );
 
+    // @todo this shouldn't handle presentation, only populate an array. That's why we have a template parsing engine.
     $categories = '';
     foreach ( $directory_terms as $category ) {
         $term_link = add_query_arg( array(
@@ -98,13 +103,6 @@ function ld_action__home( $term = false ) {
     $tpl->assign( 'header', ld_get_page_header( 1 ) );
     $tpl->assign( 'featured', $featured_output );
     $tpl->assign( 'categories', $categories );
-
-    $tpl->assign( 'url', get_permalink( $post->ID ) );
-
-    // Placeholders
-    $tpl->assign( 'featured_listings_open', '' );
-    $tpl->assign( 'featured_listings', '' );
-    $tpl->assign( 'featured_listings_close', '' );
 
     return $tpl->draw( 'home', 1 );
 }

@@ -5,57 +5,83 @@
  */
 
 
-function ld_action__listing( $listing ) {
+function ld_action__listing( $listing )
+{
     global $post;
 
-    wp_enqueue_style( 'font-awesome' );
+    wp_enqueue_style('font-awesome');
 
-    wp_enqueue_style( 'bootstrap' );
-    wp_enqueue_style( 'bootflat' );
-    wp_enqueue_style( 'font-awesome' );
+    wp_enqueue_style('bootstrap');
+    wp_enqueue_style('bootflat');
+    wp_enqueue_style('font-awesome');
 
-    wp_enqueue_script( 'bootstrap' );
+    wp_enqueue_script('bootstrap');
+
+    $terms = wp_get_post_terms($listing->ID, LDDLITE_TAX_CAT);
+    if ( isset( $terms[0] ) ) {
+        $term_link = add_query_arg(array(
+            'show' => 'category',
+            't'    => $terms[0]->slug,
+        ) );
+        $term_name = $terms[0]->name;
+    }
 
     $tpl = ldd::tpl();
 
-    $permalink = get_permalink( $post->ID );
     $id = $listing->ID;
-
-    $top = is_admin_bar_showing() ? 32 : 0;
-
+    $title = $listing->post_title;
 
     if ( has_post_thumbnail( $id ) )
-        $logo = get_the_post_thumbnail( $id, 'directory-listing' );
+        $thumbnail = get_the_post_thumbnail( $id, 'directory-listing', array( 'class' => 'img-rounded' ) );
     else
-        $logo = '<img src="' . LDDLITE_URL . '/public/images/avatar_default.png" />';
+        $thumbnail = '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">';
 
     $meta = ld_get_listing_meta( $id );
-
-    $get_address = 'http://maps.google.com/maps/api/geocode/json?address=' . $meta['geocode'] . '&sensor=false';
-    $geocode = wp_remote_get( $get_address );
-
-    $output = json_decode( $geocode['body'] );
+        $address = $meta['address'];
+        $website = $meta['website'];
+        $email   = $meta['email'];
+        $phone   = $meta['phone'];
 
     $geocode = array(
-        'lat' => $output->results[0]->geometry->location->lat,
-        'lng' => $output->results[0]->geometry->location->lng,
+        'lat'   => '',
+        'lng'   => '',
     );
+;
+    if ( !empty( $meta['geocode'] ) ) {
 
-    $tpl->assign( 'header', ld_get_page_header( 'category' ) );
-    $tpl->assign( 'home', remove_query_arg( array(
+        $get_address = 'http://maps.google.com/maps/api/geocode/json?address=' . $meta['geocode'] . '&sensor=false';
+        $geocode = wp_remote_get( $get_address );
+
+        $output = json_decode( $geocode['body'] );
+
+        $geocode['lat'] = $output->results[0]->geometry->location->lat;
+        $geocode['lng'] = $output->results[0]->geometry->location->lng;
+
+    }
+
+    $social = ld_get_social( $id );
+
+    $tpl->assign( 'header',     ld_get_page_header( 'category' ) );
+
+    $tpl->assign( 'home',       remove_query_arg( array(
         'show',
         't',
     ) ) );
 
-    $tpl->assign( 'url', $permalink );
-    $tpl->assign( 'title', $listing->post_title );
+    $tpl->assign( 'id',         $id );
+    $tpl->assign( 'title',      $title );
 
-    $tpl->assign( 'id', $id );
-    $tpl->assign( 'top', $top );
-    $tpl->assign( 'logo', $logo );
-    $tpl->assign( 'meta',       $meta );
-    $tpl->assign( 'address',    $meta['address'] );
-    $tpl->assign( 'social', ld_get_social( $id ) );
+    $tpl->assign( 'term_link', $term_link );
+    $tpl->assign( 'term_name', $term_name );
+
+    $tpl->assign( 'thumbnail',  $thumbnail );
+
+    $tpl->assign( 'address',    $address );
+    $tpl->assign( 'website',    $website );
+    $tpl->assign( 'phone',      $phone );
+
+    $tpl->assign( 'social',     $social );
+
     $tpl->assign( 'geo', $geocode );
     $tpl->assign( 'description', wpautop( $listing->post_content ) );
 
@@ -67,6 +93,18 @@ function ld_action__listing( $listing ) {
     $contact_tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
     $contact_tpl->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
     $tpl->assign( 'contact_form', $contact_tpl->draw( 'listing-contact', 1 ) );
+
+    global $title, $email;
+
+    add_action( 'wp_footer', '_f_draw_modal' );
+    function _f_draw_modal() {
+        global  $title, $email;
+        $modal = ldd::tpl();
+        $modal->assign( 'title', $title );
+        $modal->assign( 'email', $email );
+        $modal->draw( 'modal' );
+    }
+
 
     return $tpl->draw( 'listing', 1 );
 }

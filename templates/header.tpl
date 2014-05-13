@@ -19,10 +19,12 @@
                 </button>
             </div>
 
+<!--            <a href="{$submit_link}" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="Submit a Listing"><i class="fa fa-plus"></i><span>Submit Listing</span></a> -->
+
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <div class="btn-group">
                     <a href="#" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="User Control Panel"><i class="fa fa-user"></i></a>
-                    <a href="{$submit_link}" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="Submit a Listing"><i class="fa fa-plus"></i><span>Submit Listing</span></a>
+                    <a href="{$submit_link}" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="Submit a Listing"><i class="fa fa-plus"></i></a>
                 </div>
 
                 <form action="{$form_action}" class="navbar-form navbar-right" role="search">

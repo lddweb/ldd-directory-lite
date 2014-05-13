@@ -195,6 +195,7 @@ function ld_get_listing_meta( $id ) {
     $meta['post_code']   = get_post_meta( $id, '_lddlite_post_code', 1 );
 
     $address = '';
+    $geocode = '';
 
     foreach ( $meta as $key => $value ) {
         if ( 'address_two' != $key && empty( $value ) ) {
@@ -210,16 +211,20 @@ function ld_get_listing_meta( $id ) {
             $address .= '<br>' . $meta['address_two'];
         $address .= ',<br>' . $meta['city'] . ', ' . $meta['subdivision'] . ' ' . $meta['post_code'];
 
+        $geocode = urlencode( str_replace( '<br>', ' ', $address ) );
+
     } else {
         $address = '';
     }
 
     $meta['address'] = $address;
-    $meta['geocode'] = urlencode( str_replace( '<br>', ' ', $address ) );
+    $meta['geocode'] = $geocode;
 
-    $website = get_post_meta( $id, '_lddlite_urls_website', 1 );
+    $website = get_post_meta( $id, '_lddlite_url_website', 1 );
     if ( $website )
-        $meta['website'] = apply_filters( 'lddlite_listing_website', sprintf( '<a href="%1$s">%1$s</a>', esc_url( $website ) ) );
+        $meta['website'] = apply_filters( 'lddlite_listing_website', sprintf( '<a href="%1$s"><i class="fa fa-external-link"></i>  %1$s</a>', esc_url( $website ) ) );
+
+    $meta['email'] = get_post_meta( $id, '_lddlite_contact_email', 1 );
 
     $phone = get_post_meta( $id, '_lddlite_contact_phone', 1 );
     if ( $phone )
