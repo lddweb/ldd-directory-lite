@@ -5,6 +5,7 @@ function ld_action__category( $cat_id ) {
     global $post;
 
     wp_enqueue_style( ldd::$slug );
+
     wp_enqueue_style( 'bootstrap' );
     wp_enqueue_style( 'bootflat' );
     wp_enqueue_style( 'font-awesome' );

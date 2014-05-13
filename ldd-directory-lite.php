@@ -112,6 +112,7 @@ class LDD_Directory_Lite {
     public function populate_options() {
 
         $site_title = get_bloginfo( 'name' );
+        $admin_email = get_bloginfo( 'admin_email' );
 
         $email = array();
 
@@ -173,7 +174,7 @@ EM;
 
         // @todo TESTING
         if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
-            trigger_error( 'Upgrade fired!', E_USER_ERROR ); die;
+
             require_once( LDDLITE_PATH . '/upgrade.php' );
             add_action( 'init', 'ld_upgrade__go', 20 ); // This has to fire later, so we know our CPT's are registered
         }

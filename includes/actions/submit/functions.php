@@ -7,9 +7,9 @@ function ld_dropdown_subdivision( $subdivision, $data ) {
     $lines = ld_get_subdivision_array( $subdivision );
 
     if ( !$lines )
-        return '<input id="subdivision" name="ld_s_subdivision" type="text" value="' . $selected . '" tabindex="9" required>';
+        return '<input id="subdivision" class="form-control" name="ld_s_subdivision" type="text" value="' . $selected . '" tabindex="9" required>';
 
-    $output = '<select id="subdivision" name="ld_s_subdivision" tabindex="9" required>';
+    $output = '<select id="subdivision" class="form-control" name="ld_s_subdivision" tabindex="9" required>';
 
     foreach ( $lines as $key => $value ) {
         $output .= '<option value="' . $key . '"';
@@ -29,9 +29,9 @@ function ld_dropdown_country() {
     $countries = ld_get_country_array();
 
     if ( !$countries )
-        return '<input id="country" name="ld_s_country" type="text" tabindex="7" required>';
+        return '<input id="country" class="form-control" name="ld_s_country" type="text" tabindex="7" required>';
 
-    $output = '<select id="country" name="ld_s_country" tabindex="7" required>';
+    $output = '<select id="country" class="form-control" name="ld_s_country" tabindex="7" required>';
 
     foreach ( $countries as $code => $name ) {
         $output .= '<option value="' . $code . '"';

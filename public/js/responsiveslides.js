@@ -307,10 +307,10 @@
         // Navigation
         if (settings.nav) {
           var navMarkup =
-            "<div class='panels-navigation clearfix'>" +
-            "<a href='#' class='" + navClass + " pure-button prev'><i class='fa fa-arrow-left'></i> " + settings.prevText + "</a>" +
-            "<a href='#' class='" + navClass + " pure-button next'><i class='fa fa-arrow-right'></i> " + settings.nextText + "</a>" +
-            "</div>";
+            "<ul class='pager clearfix'>" +
+            "<li class='previous'><a href='#' class='" + navClass + " prev'><i class='fa fa-arrow-left'></i> " + settings.prevText + "</a></li>" +
+            "<li class='next'><a href='#' class='" + navClass + " next'><i class='fa fa-arrow-right'></i> " + settings.nextText + "</a></li>" +
+            "</ul>";
 
 
             $this.after(navMarkup);

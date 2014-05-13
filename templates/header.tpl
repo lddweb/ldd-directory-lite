@@ -25,12 +25,26 @@
                     <a href="{$submit_link}" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="Submit a Listing"><i class="fa fa-plus"></i><span>Submit Listing</span></a>
                 </div>
 
-                <form class="navbar-form navbar-right" role="search">
+                <form action="{$form_action}" class="navbar-form navbar-right" role="search">
+                    <input type="hidden" name="action" value="search_directory">
+                    <input type="hidden" name="search-form-nonce" value="{$nonce}">
+
                     <div class="form-search search-only">
                         <i class="directory-search-icon fa fa-search"></i>
-                        <input type="text" class="form-control search-query">
+                        <input type="text" id="search-directory-input" class="form-control search-query">
                     </div>
                 </form>
             </div>
         </div>
     </nav>
+
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('input#search-directory-input').searchbox({
+                url: '{$ajaxurl}',
+                dom_id: '#search-directory-results',
+                delay: 250,
+                loading_css: '#search-loading'
+            });
+        });
+    </script>

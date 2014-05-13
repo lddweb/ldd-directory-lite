@@ -7,7 +7,7 @@
         settings: {
             url: '/search',
             dom_id: '#results',
-            wrapper: '.directory-wrap',
+            wrapper: '.directory-content',
             delay: 100,
             loading_css: '#loading'
         },
@@ -31,7 +31,7 @@
                 base = path[0], params = path[1], query_string = query
 
             if (params) query_string = [params.replace('&amp;', '&'), query].join('&')
-
+console.log( terms );
             if ( terms ) {
                 $.post( base, { action: "search_directory", s: terms })
                     .done(function( data ) {

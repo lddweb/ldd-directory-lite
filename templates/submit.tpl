@@ -1,42 +1,27 @@
-<section class="business-directory  cf">
+<section class="business-directory directory-submit cf">
 
-    <nav class="lite-nav above-header center cf">
-        <ul>
-            <li><a href="{$url}" class="pure-button"><i class="fa fa-home"></i> Directory Home</a></li>
-            <li><a href="{$url}" id="open-search" class="pure-button"><i class="fa fa-search"></i> Search</a></li>
-        </ul>
-    </nav>
+    <header class="directory-header">
+        {$header}
 
-    {$search_form}
+        <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em;">
+            <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active"><span>Submit a Listing</span></li>
+        </ol>
+    </header>
 
-<script>
-    jQuery(document).ready(function($) {
-        var searchButton = $("a#open-search")
-        var searchButtonIcon = $("a#open-search i")
-        var searchWrapper = $("#directory-search-wrap")
-
-        searchWrapper.hide()
-
-        searchButton.click(function() {
-            event.preventDefault();
-
-
-            if ( searchWrapper.is(":visible") ) {
-                searchWrapper.slideUp( 'slow', 'swing' )
-                $("#search-directory-input").blur()
-                searchButtonIcon.removeClass('fa-search-minus').addClass('fa-search');
-            } else {
-                searchWrapper.slideDown( 'slow', 'swing' )
-                $("#search-directory-input").focus()
-                searchButtonIcon.removeClass('fa-search').addClass('fa-search-minus');
-            }
-
-        })
-    })
-</script>
+    <div id="search-directory-results"></div>
 
     <section class="directory-content">
 
+
+    <style>
+        .submit-form-wrap .row {
+            margin-bottom: 1em;
+        }
+        .submit-form-wrap .row.bump {
+            margin-bottom: 2.5em;
+        }
+    </style>
 
     <form id="submit-listing" name="submit-listing" action="{$form_action}" method="post" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="__T__action" value="submit_form">
@@ -44,172 +29,209 @@
 
         <div id="submit-items"></div>
 
-        <div class="submit-form-wrap shaded thick-border">
+        <div class="submit-form-wrap">
             <ul id="submit-panels">
                 <li>
+
                     <fieldset>
                         <legend>General Information</legend>
-                        <div class="panel">
-                            <label for="name">
-                                <span>Title:</span>
-                                <input id="title" name="ld_s_title" placeholder="Please enter a descriptive title for your listing" type="text" {if="!empty($data.title)"}value="{$data.title}" {/if}tabindex="1" required>
-                                {if="!empty($errors.title)"}{$errors.title}{/if}
-                            </label>
-                            <label for="category">
-                                <span>Listing Category:</span>
-                                {$category_dropdown}
-                                {if="!empty($errors.category)"}{$errors.category}{/if}
-                            </label>
-                        </div>
-                    </fieldset>
 
-                    <fieldset>
-                        <div class="panel">
-                            <label for="description">
-                                <span>Description:</span>
-                                <textarea id="description" name="ld_s_description" placeholder="Enter a description for your business" tabindex="3" required>{if="!empty($data.description)"}{$data.description}{/if}</textarea>
-                                {if="!empty($errors.description)"}{$errors.description}{/if}
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <fieldset id="submit-pot">
-                        <div class="panel">
-                            <label for="summary">
-                                <span>summary</span>
-                                <input id="summary" name="ld_s_summary" placeholder="Add a summary for your listing" type="text" {if="!empty($data.summary)"}value="{$data.summary}" {/if} tabindex="4">
-                                {if="!empty($errors.summary)"}{$errors.summary}{/if}
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="panel">
-                            <label for="logo">
-                                <span>Logo</span>
-                                <input id="logo" name="ld_s_logo" type="file" tabindex="5">
-                                {if="!empty($errors.logo)"}{$errors.logo}{/if}
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="panel pure-g-r">
-                            <div class="pure-u-11-24">
-                                <label for="phone">
-                                    <span>Contact Email</span>
-                                    <input id="contact_email" name="ld_s_contact_email" type="text" {if="!empty($data.contact_email)"}value="{$data.contact_email}" {/if}tabindex="6" required>
-                                    {if="!empty($errors.contact_email)"}{$errors.contact_email}{/if}
-                                </label>
-                            </div><div class="pure-u-2-24"></div>
-                            <div class="pure-u-11-24">
-                                <label for="fax">
-                                    <span>Contact Phone</span>
-                                    <input id="contact_phone" name="ld_s_contact_phone" type="text" {if="!empty($data.contact_phone)"}value="{$data.contact_phone}" {/if}tabindex="7" required>
-                                    {if="!empty($errors.contact_phone)"}{$errors.contact_phone}{/if}
-                                </label>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group has-error has-feedback">
+                                    <label class="control-label" for="inputError2">Input with error</label>
+                                    <input type="text" class="form-control" id="inputError2">
+                                    <span class="fa fa-exclamation form-control-feedback"></span>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label for="">Title</label>
+                                    <input id="title" class="form-control" name="ld_s_title" placeholder="Please enter a descriptive title for your listing" type="text" {if="!empty($data.title)"}value="{$data.title}" {/if} tabindex="1" required>
+                                    {if="!empty($errors.title)"}{$errors.title}{/if}
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label for="">Category</label>
+                                    {$category_dropdown}
+                                    {if="!empty($errors.category)"}{$errors.category}{/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bump">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Description</label>
+                                    <textarea id="description" class="form-control" name="ld_s_description" placeholder="Enter a description for your business" tabindex="3" required>{if="!empty($data.description)"}{$data.description}{/if}</textarea>
+                                    {if="!empty($errors.description)"}{$errors.description}{/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hpt">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Summary</label>
+                                    <input id="summary" class="form-control" name="ld_s_summary" placeholder="Add a summary for your listing" type="text" {if="!empty($data.summary)"}value="{$data.summary}" {/if} tabindex="4">
+                                    {if="!empty($errors.summary)"}{$errors.summary}{/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bump">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Logo</label>
+                                    <input id="logo" class="form-control" name="ld_s_logo" type="file" tabindex="5">
+                                    {if="!empty($errors.logo)"}{$errors.logo}{/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label for="">Contact Email</label>
+                                    <input id="contact_email" class="form-control" name="ld_s_contact_email" type="text" {if="!empty($data.contact_email)"}value="{$data.contact_email}" {/if}tabindex="6" required>
+                                    {if="!empty($errors.contact_email)"}{$errors.contact_email}{/if}
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label for="">Contact Phone</label>
+                                    <input id="contact_phone" class="form-control" name="ld_s_contact_phone" type="text" {if="!empty($data.contact_phone)"}value="{$data.contact_phone}" {/if}tabindex="7" required>
+                                    {if="!empty($errors.contact_phone)"}{$errors.contact_phone}{/if}
+                                </div>
+                            </div>
+                        </div>
+
                     </fieldset>
                 </li>
+
+
                 <li>
                     <fieldset>
                         <legend>Geographical Info</legend>
-                        <div class="panel">
-                            <label for="country">
-                                <span>Country</span>
-                                {$country_dropdown}
-                                {if="!empty($errors.country)"}{$errors.country}{/if}
-                            </label>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="panel pure-g-r">
-                            <div class="pure-u-24-24">
-                                <label for="street">
-                                    <span>Street</span>
-                                    <input id="address_one" name="ld_s_address_one" type="text" {if="!empty($data.address_one)"}value="{$data.address_one}" {/if}tabindex="8" required>
-                                    {if="!empty($errors.address_one)"}{$errors.address_one}{/if}
-                                </label>
+
+                        <div class="row bump">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Country</label>
+                                    {$country_dropdown}
+                                    {if="!empty($errors.country)"}{$errors.country}{/if}
+                                </div>
                             </div>
-                            <div class="pure-u-7-24">
-                                <label for="city">
-                                    <span>City / Town:</span>
-                                    <input id="city" name="ld_s_city" type="text" {if="!empty($data.city)"}value="{$data.city}" {/if}tabindex="9" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Street</label>
+                                    <input id="address_one" class="form-control" name="ld_s_address_one" type="text" {if="!empty($data.address_one)"}value="{$data.address_one}" {/if}tabindex="8" required>
+                                    {if="!empty($errors.address_one)"}{$errors.address_one}{/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label for="">City/Town</label>
+                                    <input id="city" class="form-control" name="ld_s_city" type="text" {if="!empty($data.city)"}value="{$data.city}" {/if}tabindex="9" required>
                                     {if="!empty($errors.city)"}{$errors.city}{/if}
-                                </label>
-                            </div><div class="pure-u-1-24"></div>
-                            <div class="pure-u-8-24">
-                                <label for="subdivision">
-                                    <span>State:</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label for="">State</label>
                                     {$subdivision_dropdown}
                                     {if="!empty($errors.subdivision)"}{$errors.subdivision}{/if}
-                                </label>
-                            </div><div class="pure-u-1-24"></div>
-                            <div class="pure-u-7-24">
-                                <label for="post_code">
-                                    <span>Zip/Postal:</span>
-                                    <input id="post_code" name="ld_s_post_code" type="text" {if="!empty($data.post_code)"}value="{$data.post_code}" {/if}tabindex="11" required>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label for="">Zip/Postal Code</label>
+                                    <input id="post_code" class="form-control" name="ld_s_post_code" type="text" {if="!empty($data.post_code)"}value="{$data.post_code}" {/if}tabindex="11" required>
                                     {if="!empty($errors.post_code)"}{$errors.post_code}{/if}
-                                </label>
+                                </div>
                             </div>
                         </div>
-                        <div class="show-ajax"></div>
+
                     </fieldset>
                 </li>
+
+
                 <li>
                     <fieldset>
                         <legend>Web & Social</legend>
-                        <div class="panel">
-                            <label for="url">
-                                <span>Website</span>
-                                <input id="url" name="ld_s_url[website]" type="text" {if="!empty($url.website)"}value="{$url.website}" {/if}tabindex="12">
-                            </label>
-                            <label for="facebook">
-                                <span>Facebook Page</span>
-                                <input id="facebook" name="ld_s_url[facebook]" type="text" {if="!empty($url.facebook)"}value="{$url.facebook}" {/if}tabindex="13">
-                            </label>
-                            <label for="twitter">
-                                <span>Twitter Handle</span>
-                                <input id="twitter" name="ld_s_url[twitter]" type="text" {if="!empty($url.twitter)"}value="{$url.twitter}" {/if}tabindex="14">
-                            </label>
-                            <label for="linkedin">
-                                <span>Linked In Profile</span>
-                                <input id="linkedin" name="ld_s_url[linkedin]" type="text" {if="!empty($url.linkedin)"}value="{$url.linkedin}" {/if}tabindex="15">
-                            </label>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Website URL</label>
+                                    <input id="url" class="form-control" name="ld_s_url[website]" type="text" {if="!empty($url.website)"}value="{$url.website}" {/if}tabindex="12">
+                                </div>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Facebook Url</label>
+                                    <input id="facebook" class="form-control" name="ld_s_url[facebook]" type="text" {if="!empty($url.facebook)"}value="{$url.facebook}" {/if}tabindex="13">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Twitter</label>
+                                    <input id="twitter" class="form-control" name="ld_s_url[twitter]" type="text" {if="!empty($url.twitter)"}value="{$url.twitter}" {/if}tabindex="14">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label for="">Linkedin</label>
+                                    <input id="linkedin" class="form-control" name="ld_s_url[linkedin]" type="text" {if="!empty($url.linkedin)"}value="{$url.linkedin}" {/if}tabindex="15">
+                                </div>
+                            </div>
+                        </div>
+
                     </fieldset>
                 </li>
+
+
                 <li>
                     <fieldset>
                         <legend>Account Information</legend>
 
-                        <div class="panel pure-g-r">
-                            <div class="pure-u-11-24">
-                                <label for="username">
-                                    <span>Username:</span>
-                                    <input id="username" name="ld_s_username" placeholder="Choose a username" type="text" {if="!empty($data.username)"}value="{$data.username}" {/if}tabindex="16" required>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label for="">Username</label>
+                                    <input id="username" class="form-control" name="ld_s_username" placeholder="Choose a username" type="text" {if="!empty($data.username)"}value="{$data.username}" {/if}tabindex="16" required>
                                     {if="!empty($errors.username)"}{$errors.username}{/if}
-                                </label>
-                            </div><div class="pure-u-2-24"></div>
-                            <div class="pure-u-11-24">
-                                <label for="email">
-                                    <span>Your Email:</span>
-                                    <input id="email" name="ld_s_email" placeholder="Please enter your email address" type="email" {if="!empty($data.email)"}value="{$data.email}" {/if}tabindex="17" required>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label for="">Your Email</label>
+                                    <input id="email" class="form-control" name="ld_s_email" placeholder="Please enter your email address" type="email" {if="!empty($data.email)"}value="{$data.email}" {/if}tabindex="17" required>
                                     {if="!empty($errors.email)"}{$errors.email}{/if}
-                                </label>
+                                </div>
                             </div>
                         </div>
+
                     </fieldset>
                 </li>
             </ul>
         </div>
 
-        <div class="submit-form-wrap thick-border shaded submit-confirm" style="display: none;">
+        <div class="submit-form-wrap submit-confirm" style="display: none;">
             <fieldset>
                 <legend>Confirm</legend>
                 <p>Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.</p>
-                <button type="submit" id="submit-form-submit" class="pure-button"><i class="fa fa-cog"></i> Submit for Review</button>
+                <button type="submit" id="submit-form-submit" class="btn btn-success"><i class="fa fa-cog"></i> Submit for Review</button>
             </fieldset>
         </div>
 
@@ -240,27 +262,44 @@
 
     jQuery(document).ready(function($) {
 
-        $('span.submit-error').prev().addClass('submit-error');
-        console.log( $('li').has('span.submit-error') );
+        function getNavItem( currentItem ) {
+            var tab_number = parseInt( currentItem.split("_s").pop() ) + 1
+            var tab_class = currentItem.substring( 0, currentItem.length - 1 ) + tab_number
+            return tab_class;
+        }
+
+        $('.row.hpt').hide()
+
+        $('span.submit-error').closest('div').addClass('has-error has-feedback')
+
+        // Append "submit-error" class to tabs
         $('li').has('span.submit-error').each(function( index ) {
-            var tab_id = $(this).attr("id");
-            var tab_number = parseInt( tab_id.split("_s").pop() ) + 1;
-            var tab_class = tab_id.substring( 0, tab_id.length - 1 ) + tab_number;
-            $( "." + tab_class).addClass("submit-error");
+            var tab_id = $(this).attr("id")
+            var tab_number = parseInt( tab_id.split("_s").pop() ) + 1
+            var tab_class = tab_id.substring( 0, tab_id.length - 1 ) + tab_number
+            $( "." + tab_class).addClass("submit-error")
         });
 
-        $('.submit-error').focus(function(){
-            $(this).removeClass('submit-error');
-            $(this).next('span').animate({height: 0, opacity: 0}, 'slow', function() {
-                $(this).remove();
-            });
+        $('.form-control').focus(function(){
+            if ( $(this).closest('div').hasClass('has-error') ) {
+
+                var tab_id = $(this).closest('li').attr('id')
+                var activeTab = getNavItem( tab_id )
+
+                $("a." + activeTab).removeClass('submit-error')
+
+                $(this).next('span').remove()
+                $(this).closest('div').removeClass('has-error has-feedback')
+                $(this).next('span').animate({height: 0, opacity: 0}, 'slow', function() {
+                    $(this).remove();
+                });
+
+            }
         });
 
         $('a.submit-error').click(function() {
             $(this).removeClass('submit-error');
         });
-
-            $("#submit-items li").hasClass('submit-error');
 
 
         //

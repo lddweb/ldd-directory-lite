@@ -61,8 +61,8 @@ function ld_action__home( $term = false ) {
             $summary = apply_filters( 'lddlite_the_content', $summary );
             $summary = str_replace( ']]>', ']]&gt;', $summary );
 
-            $excerpt_length = apply_filters( 'lddlite_featured_excerpt_length', 35 );
-            $summary = wp_trim_words( $summary, $excerpt_length, '' );
+            $excerpt_length = apply_filters( 'lddlite_featured_excerpt_length', 25 );
+            $summary = wp_trim_words( $summary, $excerpt_length, '&hellip;' );
         }
 
        $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';

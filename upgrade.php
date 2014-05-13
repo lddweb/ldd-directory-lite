@@ -165,7 +165,7 @@ function ld_upgrade__go() {
             );
 
             if ( !function_exists( 'ld_submit_sanitize_urls' ) )
-                require_once( LDDLITE_PATH . '/includes/views/submit-process.php' );
+                require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
 
             $urls = ld_submit_sanitize_urls( $urls );
 
@@ -219,7 +219,6 @@ function ld_upgrade__go() {
 
     // Last but not least, out with the old
     deactivate_plugins( $old_plugin );
-    delete_plugins( $old_plugin );
 
 }
 

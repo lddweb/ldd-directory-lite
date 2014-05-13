@@ -16,13 +16,10 @@
 function ld_ajax__search_directory() {
     global $post;
 
-    if ( !wp_verify_nonce( $_POST['nonce'], 'search-form-nonce' ) )
-        die( 'You shall not pass!' );
-
     $args = array(
         'post_type'     => LDDLITE_POST_TYPE,
         'post_status'   => 'publish',
-        's'             => $_POST['s'],
+        's'             => sanitize_text_field( $_POST['s'] ),
     );
 
     $search = new WP_Query( $args );
@@ -30,6 +27,7 @@ function ld_ajax__search_directory() {
     $output = '';
     $nth = 0;
 
+    // @todo NEARLY IDENTICAL TO CATEGORY RESULTS
     $tpl = ldd::tpl();
 
     if ( $search->have_posts() ) {
@@ -37,30 +35,27 @@ function ld_ajax__search_directory() {
         while ( $search->have_posts() ) {
             $search->the_post();
 
-            $id = $post->ID;
-            $permalink = get_the_permalink();
-            $slug = $post->post_name;
-            $title = $post->post_title;
-
-            $url = get_post_meta( $id, '_lddlite_url_website', true );
-
-            // determine our classes;
             $nth_class = ( $nth % 2 ) ? 'odd' : 'even';
             $nth++;
 
+            $id         = $post->ID;
+            $title      = $post->post_title;
+            $summary    = $post->post_excerpt;
+            $meta       = ld_get_listing_meta( $id );
+            $link       = add_query_arg( array(
+                'show'  => 'listing',
+                't'     => $post->post_name,
+            ) );
+
+
             // the following is used to build our title, and the logo
-            $link = '<a href="' . $permalink . '?show=listing&t=' . $title . '" title="' . esc_attr( $title ) . '" %2$s>%1$s</a>';
+            $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';
 
             // the logo
             if ( has_post_thumbnail( $id ) )
-                $featured = sprintf( $link, get_the_post_thumbnail( $id, 'directory-listing-search' ), 'class="search-thumbnail"' );
+                $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing', array( 'class' => 'img-rounded' ) ) );
             else
-                $featured = sprintf( $link, '<img src="' . LDDLITE_URL . '/public/images/avatar_default.png" />', 'class="search-thumbnail"' );
-
-            $summary = '';
-
-            if ( !empty( $post->post_excerpt ) )
-                $summary = $post->post_excerpt;
+                $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">' );
 
             if ( empty( $summary ) ) {
                 $summary = $post->post_content;
@@ -70,24 +65,21 @@ function ld_ajax__search_directory() {
                 $summary = apply_filters( 'lddlite_the_content', $summary );
                 $summary = str_replace( ']]>', ']]&gt;', $summary );
 
-                $excerpt_length = apply_filters( 'lddlite_excerpt_length', 55 );
-                $excerpt_more = apply_filters( 'lddlite_excerpt_more', sprintf( '&hellip; (' . $link . ')', 'view listing', '' ) );
+                $excerpt_length = apply_filters( 'lddlite_excerpt_length', 35 );
+                $excerpt_more = apply_filters( 'lddlite_excerpt_more', '&hellip;' );
 
                 $summary = wp_trim_words( $summary, $excerpt_length, $excerpt_more );
             }
 
+            $tpl->assign( 'id',         $id );
+            $tpl->assign( 'nth',        $nth_class );
+            $tpl->assign( 'thumbnail',  $thumbnail );
+            $tpl->assign( 'title',      sprintf( $link_mask, $title ) );
+            $tpl->assign( 'meta',       $meta );
+            $tpl->assign( 'address',    $meta['address'] );
+            $tpl->assign( 'summary',    $summary );
 
-            $template_vars = array(
-                'id'        => $id,
-                'nth'       => $nth_class,
-                'featured'  => $featured,
-                'title'     => sprintf( $link, $title, '' ),
-                'url'       => $url,
-                'summary'   => $summary,
-            );
-            $tpl->assign( $template_vars );
-
-            $output .= $tpl->draw( 'search-listing', 1 );
+            $output .= $tpl->draw( 'listing-compact', 1 );
 
         }
 

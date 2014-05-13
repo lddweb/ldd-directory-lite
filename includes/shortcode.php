@@ -13,14 +13,6 @@
  */
 
 
-function ld_enqueue() {
-    wp_enqueue_script( 'ldd-lite-js' );
-
-    wp_enqueue_style( 'ldd-lite' );
-    wp_enqueue_style( 'yui-pure' );
-}
-
-
 function ld_get_allowed_actions() {
 
     $allowed_actions = array(
@@ -47,7 +39,11 @@ function ld_is_action_requested() {
 
 function ld_shortcode__display() {
 
-    ld_enqueue();
+    wp_enqueue_script( ldd::$slug . '-search' );
+    wp_enqueue_script( 'ldd-lite-js' );
+
+    wp_enqueue_style( 'ldd-lite' );
+    wp_enqueue_style( 'yui-pure' );
 
     $action = 'home';
     $term   = '';

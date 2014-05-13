@@ -85,6 +85,10 @@ function  ld_get_page_header( $show_label = 0 ) {
     $header_template->assign( 'directory_description', ldd::opt( 'directory_description' ) );
     $header_template->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
 
+    $header_template->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
+    $header_template->assign( 'nonce', wp_create_nonce( 'search-form-nonce' ) );
+    $header_template->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+
     return $header_template->draw( 'header', 1 );
 
 }

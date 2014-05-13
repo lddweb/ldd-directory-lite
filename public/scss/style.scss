@@ -34,13 +34,12 @@ $pure-blue:         #0078e7;
   width: 100%;
   margin: 0;
 
-  @import "modules/reset";
 /*  @import "modules/alerts";
   @import "modules/buttons";
   @import "modules/forms";
-  @import "modules/search";
+  @import "modules/search"; */
   @import "modules/submit";
-*/
+
   @import "breakpoints/base";
 /*
   .hpt {
@@ -67,6 +66,10 @@ $pure-blue:         #0078e7;
   }*/
 
 
+  span.submit-error,
+  #submit-items ul li a.submit-error {
+    color: #da4453;
+  }
 
   h3.featured-listing {
     font-size: 1.45em !important;
@@ -166,3 +169,98 @@ $pure-blue:         #0078e7;
 }
 
 
+/* Category and Search */
+
+h2.listing-title {
+  font-size: 1.8em !important;
+  margin: 5px 0 0 !important;
+}
+.type-grid h2.listing-title {
+  font-size: 1.4em !important;
+  margin: 0 0 15px !important;
+}
+
+.submit-form-wrap,
+.type-listing {
+  padding: 0;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid rgba(128, 128, 128, 0.10);
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.type-listing .img-rounded {
+  margin: 15px auto;
+}
+.type-listing .listing-summary {
+  margin: 0 0 15px;
+  padding: 0;
+  width: 100%;
+  font-size: .9em;
+}
+.type-grid .listing-meta p {
+  text-align: left;
+  font-size: .8em;
+  color: rgba(119, 119, 119, 0.5);
+}
+.listing-meta p .fa {
+  position: absolute;
+  top: 3px;
+  left: 0px;
+}
+.listing-meta {
+  margin-top: 15px;
+}
+.listing-meta p {
+  padding-left: 20px;
+  position: relative;
+}
+p.website {
+  font-weight: 400;
+  margin-bottom: 1em;
+
+  a {
+    color: rgba(0, 128, 0, 0.90);
+  }
+  a:hover {
+    color: rgba(0, 170, 0, 0.90);
+  }
+}
+
+/* Home Page */
+
+  .thumbnail.featured a > img,
+  .thumbnail.featured > img {
+    width: auto;
+    max-height: 140px;
+  }
+
+
+
+/* Submit Form */
+
+.submit-form-wrap {
+  padding: 1em;
+
+  .pure-button.next {
+    margin-right: 0;
+  }
+  &.submit-confirm {
+    text-align: center;
+
+    legend {
+
+    }
+
+    p {
+      margin-bottom: 2em;
+    }
+  }
+
+}

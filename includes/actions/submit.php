@@ -16,16 +16,23 @@ require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
 function ld_action__submit( $term = false ) {
     global $post;
 
-    wp_enqueue_style( 'font-awesome' );
+    wp_enqueue_style( ldd::$slug );
     wp_enqueue_script( ldd::$slug . '-responsiveslides' );
-    wp_enqueue_script( ldd::$slug . '-search' );
+    wp_enqueue_style( 'yui-pure' );
+
+    wp_enqueue_style( 'bootstrap' );
+    wp_enqueue_style( 'bootflat' );
+    wp_enqueue_style( 'font-awesome' );
+
+    wp_enqueue_script( 'bootstrap' );
+
+    $tpl = ldd::tpl();
 
     $valid = false;
 
     $data = array();
     $urls = array();
 
-    $tpl = ldd::tpl();
 
     if ( isset( $_POST['nonce_field'] ) && !empty( $_POST['nonce_field'] ) ) {
 
@@ -103,12 +110,16 @@ function ld_action__submit( $term = false ) {
         'hierarchical'       => 1,
         'name'               => 'ld_s_category',
         'id'                 => 'category',
+        'class'         => 'form-control',
         'tab_index'          => 2,
         'taxonomy'           => LDDLITE_TAX_CAT,
     );
 
-    $tpl->assign( 'url', get_permalink( $post->ID ) );
-    $tpl->assign( 'search_form', ld_get_search_form() );
+
+    $tpl->assign( 'header', ld_get_page_header() );
+
+    $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
+
     $tpl->assign( 'form_action', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
     $tpl->assign( 'nonce', wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ) );
     $tpl->assign( 'category_dropdown', wp_dropdown_categories( $category_args ) );
@@ -123,7 +134,7 @@ function ld_action__submit( $term = false ) {
 
         foreach ( $codes as $code ) {
             $key = substr( $code, 0, strrpos( $code, '_' ) );
-            $errors[ $key ] = '<span class="submit-error">' . $valid->get_error_message( $code ) . '</span>';
+            $errors[ $key ] = '<span class="fa fa-exclamation form-control-feedback"></span><span class="submit-error">' . $valid->get_error_message( $code ) . '</span>';
         }
 
 

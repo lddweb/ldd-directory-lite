@@ -20,7 +20,7 @@ add_shortcode( 'directory',             'ld_shortcode__display' );
  */
 add_shortcode( 'business_directory',    'ld_shortcode__display' );
 
-add_image_size( 'directory-listing-featured', 400, 300 );
+add_image_size( 'directory-listing-featured', 200, 200 );
 add_image_size( 'directory-listing', 300, 300 );
 add_image_size( 'directory-listing-compact', 105, 300 );
 add_image_size( 'directory-listing-search', 100, 100 );
