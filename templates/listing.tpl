@@ -4,6 +4,7 @@
         {$header}
     </header>
 
+
     <div class="row">
         <div class="col-md-8">
             <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em;">
@@ -24,8 +25,10 @@
         </div>
     </div>
 
+    <div id="search-directory-results"></div>
 
-    <article id="listing-{$id}" class="listing-{$id} listing type-listing listing-full cf">
+
+    <article id="listing-{$id}" class="directory-content listing-{$id} listing type-listing listing-full cf">
 
         <div class="panel panel-primary">
             <div class="panel-heading">

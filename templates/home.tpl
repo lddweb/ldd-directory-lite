@@ -4,6 +4,9 @@
         {$header}
     </header>
 
+
+    <div id="search-directory-results"></div>
+
     <section class="directory-content">
 
         <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em; display:none;">

@@ -41,7 +41,12 @@ function ld_ajax__search_directory() {
             $id         = $post->ID;
             $title      = $post->post_title;
             $summary    = $post->post_excerpt;
-            $meta       = ld_get_listing_meta( $id );
+            $meta = ld_get_listing_meta( $id );
+                $address = $meta['address'];
+                $website = $meta['website'];
+                $email   = $meta['email'];
+                $phone   = $meta['phone'];
+
             $link       = add_query_arg( array(
                 'show'  => 'listing',
                 't'     => $post->post_name,
@@ -75,8 +80,12 @@ function ld_ajax__search_directory() {
             $tpl->assign( 'nth',        $nth_class );
             $tpl->assign( 'thumbnail',  $thumbnail );
             $tpl->assign( 'title',      sprintf( $link_mask, $title ) );
-            $tpl->assign( 'meta',       $meta );
+
             $tpl->assign( 'address',    $meta['address'] );
+            $tpl->assign( 'website',    $meta['website'] );
+            $tpl->assign( 'email',      $meta['email'] );
+            $tpl->assign( 'phone',      $meta['phone'] );
+
             $tpl->assign( 'summary',    $summary );
 
             $output .= $tpl->draw( 'listing-compact', 1 );

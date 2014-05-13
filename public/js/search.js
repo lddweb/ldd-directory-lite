@@ -31,7 +31,7 @@
                 base = path[0], params = path[1], query_string = query
 
             if (params) query_string = [params.replace('&amp;', '&'), query].join('&')
-console.log( terms );
+
             if ( terms ) {
                 $.post( base, { action: "search_directory", s: terms })
                     .done(function( data ) {
