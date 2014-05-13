@@ -19,12 +19,10 @@
                 </button>
             </div>
 
-<!--            <a href="{$submit_link}" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="Submit a Listing"><i class="fa fa-plus"></i><span>Submit Listing</span></a> -->
-
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <div class="btn-group">
-                    <a href="#" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="User Control Panel"><i class="fa fa-user"></i></a>
-                    <a href="{$submit_link}" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="Submit a Listing"><i class="fa fa-plus"></i></a>
+                    <!-- <a href="#" class="btn btn navbar-btn" data-toggle="modal" data-target="#login-form-modal"><i class="fa fa-user"></i></a> -->
+                    <a href="{$submit_link}" class="btn btn navbar-btn" data-toggle="tooltip" data-placement="top" title="Submit a Listing"><i class="fa fa-plus"></i> Submit Listing</a>
                 </div>
 
                 <form action="{$form_action}" class="navbar-form navbar-right" role="search">
@@ -41,12 +39,13 @@
     </nav>
 
     <script>
-        jQuery(document).ready(function() {
-            jQuery('input#search-directory-input').searchbox({
+        jQuery(document).ready(function($) {
+            $('input#search-directory-input').searchbox({
                 url: '{$ajaxurl}',
                 dom_id: '#search-directory-results',
                 delay: 250,
                 loading_css: '#search-loading'
             });
+            $()
         });
     </script>

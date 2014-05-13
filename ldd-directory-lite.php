@@ -283,6 +283,9 @@ ldd::load();
 class ldd {
     public static $slug = 'ldd-lite';
 
+    public static $modal = array();
+
+
     public static function load() {
         return LDD_Directory_Lite::get_in();
     }

@@ -94,15 +94,11 @@ function ld_action__listing( $listing )
     $contact_tpl->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
     $tpl->assign( 'contact_form', $contact_tpl->draw( 'listing-contact', 1 ) );
 
-    global $title, $email;
 
     add_action( 'wp_footer', '_f_draw_modal' );
     function _f_draw_modal() {
-        global  $title, $email;
         $modal = ldd::tpl();
-        $modal->assign( 'title', $title );
-        $modal->assign( 'email', $email );
-        $modal->draw( 'modal' );
+        $modal->draw( 'modal-contact' );
     }
 
 

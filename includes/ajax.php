@@ -52,6 +52,10 @@ function ld_ajax__search_directory() {
                 't'     => $post->post_name,
             ) );
 
+            // @todo BAD HACK!
+            $link = explode( '?', $link );
+
+            $link = $_SERVER['HTTP_REFERER'] . '?' . $link[1];
 
             // the following is used to build our title, and the logo
             $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';

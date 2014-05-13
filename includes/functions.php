@@ -284,3 +284,13 @@ function ld_get_social( $id ) {
 
     return $output;
 }
+
+
+function ld_append_login_form() {
+
+    $modal = ldd::tpl();
+    $modal->assign( 'login_url', ldd::$modal['url'] );
+    $modal->assign( 'login_form', wp_login_form( array( 'echo' => false ) ) );
+    $modal->draw( 'modal-login' );
+
+}

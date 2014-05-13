@@ -44,6 +44,9 @@ function ld_shortcode__display() {
 
     wp_enqueue_style( 'ldd-lite' );
 
+/*    ldd::$modal['url'] = $_SERVER['REQUEST_URI'];
+    add_action( 'wp_footer', 'ld_append_login_form' );*/
+
 
     $action = 'home';
     $term   = '';
