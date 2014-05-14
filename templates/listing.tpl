@@ -78,6 +78,7 @@
             </div>
         </div>
 
+        {if="$google_maps"}
         <div class="panel panel-default" >
             <div class="panel-heading">
                 <h4 class="panel-title">Location</h3>
@@ -88,6 +89,7 @@
                 </div>
             </div>
         </div>
+        {/if}
 
 
     </article>
@@ -96,37 +98,8 @@
 </section>
 
 
-
-
-
+{if="$google_maps"}
 <script>
-
-    jQuery(document).ready(function($) {
-
-        var modalTitle = $("#contact-modal-title")
-        modalTitle.text( "Contact {$title}" )
-
-
-
-
-
-        var contactdiv = $(".listing-contact-form");
-
-        $("a[rel=contact]").click(function() {
-            if ( contactdiv.is(":visible") ) {
-                contactdiv.fadeOut( 'slow' );
-            } else {
-                contactdiv.show( 'slow', 'swing' )
-            }
-        })
-
-        $("a.cancel").click(function() {
-            contactdiv.hide( 'slow' );
-        })
-
-    });
-
-
     jQuery(function() {
         // Asynchronously Load the map API
         var script = document.createElement('script');
@@ -188,6 +161,34 @@
         });
 
     }
+</script>
+{/if}
+
+
+<script>
+
+    jQuery(document).ready(function($) {
+
+        var modalTitle = $("#contact-modal-title")
+        modalTitle.text( "Contact {$title}" )
+
+
+
+        var contactdiv = $(".listing-contact-form");
+
+        $("a[rel=contact]").click(function() {
+            if ( contactdiv.is(":visible") ) {
+                contactdiv.fadeOut( 'slow' );
+            } else {
+                contactdiv.show( 'slow', 'swing' )
+            }
+        })
+
+        $("a.cancel").click(function() {
+            contactdiv.hide( 'slow' );
+        })
+
+    });
 
 </script>
 

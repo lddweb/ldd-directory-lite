@@ -121,11 +121,11 @@ class LDD_Directory_Lite {
 
 <p>This submission is awaiting approval. Please visit the link to view and approve the new listing:</p>
 
-<p>{\$view_listing}</p>
+<p>{view_listing}</p>
 
 <ul>
-    <li>Business Name: <strong>{\$title}</strong></li>
-    <li>Business Description: <strong>{\$description}</strong></li>
+    <li>Business Name: <strong>{title}</strong></li>
+    <li>Business Description: <strong>{description}</strong></li>
 </ul>
 EM;
         $email['on_submit']  = <<<EM
@@ -135,8 +135,8 @@ EM;
 <p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {$admin_email}.</p>
 
 <ul>
-    <li>Business Name: <strong>{\$title}</strong></li>
-    <li>Business Description: <strong>{\$description}</strong></li>
+    <li>Business Name: <strong>{title}</strong></li>
+    <li>Business Description: <strong>{description}</strong></li>
 </ul>
 
 <p><em>Sincerely,<br>{$site_title}</em></p>
@@ -145,13 +145,13 @@ EM;
 <p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
 
 <p>Your listing has been approved! You can now view it online:</p>
-<p>{\$link}</p>
+<p>{link}</p>
 
 <p><em>Sincerely,<br>{$site_title}</em></p>
 EM;
 
         $defaults = apply_filters( 'lddlite_default_options', array(
-            'version'                   => 0.1,
+            'version'                   => LDDLITE_VERSION,
             'directory_label'           => get_bloginfo( 'name' ),
             'directory_description'     => '',
             'disable_bootstrap'         => 0,
@@ -166,14 +166,21 @@ EM;
             'email_onapprove_body'      => $email['on_approve'],
         ) );
 
+        $old_options = get_option( 'lddlite-options', false );
+
+        if ( is_array( $old_options ) ) {
+            update_option( 'lddlite_settings', array_intersect_key( $old_options, $defaults ) );
+            delete_option( 'lddlite-options' );
+        }
+
+
         $options = wp_parse_args(
-            get_option( 'lddlite-options' ),
+            get_option( 'lddlite_settings' ),
             $defaults );
 
         $dir = dirname( __FILE__ );
         $old_plugin = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/ldd-business-directory/lddbd_core.php';
 
-        // @todo TESTING
         if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
             require_once( LDDLITE_PATH . '/upgrade.php' );
             add_action( 'init', 'ld_upgrade__go', 20 ); // This has to fire later, so we know our CPT's are registered

@@ -36,17 +36,17 @@ function ld_admin__help() {
             '<p>' . __( 'The email settings allow you to customize the notifications sent from your directory installation.', ldd::$slug ) . '</p>' .
             '<p>' . __( 'Variables available in all email templates include;', ldd::$slug ) . '</p>' .
             '<p><ul>' .
-            '<li>' . __( '<em>{$title}</em> The title of the listing as the owner defined it.', ldd::$slug ) . '</li>' .
-            '<li>' . __( '<em>{$description}</em> The listing description.', ldd::$slug ) . '</li>' .
+            '<li>' . __( '<em>{title}</em> The title of the listing as the owner defined it.', ldd::$slug ) . '</li>' .
+            '<li>' . __( '<em>{description}</em> The listing description.', ldd::$slug ) . '</li>' .
             '</ul></p>' .
             '<p>' . __( '<strong>Administrator Notification</strong> - This is the email sent to you, as the site owner, when someone submits a new listing for review. Additional variables include;', ldd::$slug ) . '</p>' .
             '<p><ul>' .
-            '<li>' . __( '<em>{$link}</em> Direct link to the administrator page where you can review and approve or reject the listing.', ldd::$slug ) . '</li>' .
+            '<li>' . __( '<em>{link}</em> Direct link to the administrator page where you can review and approve or reject the listing.', ldd::$slug ) . '</li>' .
             '</ul></p>' .
             '<p>' . __( '<strong>Listing Submission</strong> - This email is sent to the listing owner when they submit a new listing, prior to it being approved by the site administrator.', ldd::$slug ) . '</p>' .
             '<p>' . __( '<strong>Listing Approved</strong> - This email is sent to the listing owner after their new listing has been approved and is now availble publicly on the directory. Additional variables include;', ldd::$slug ) . '</p>' .
             '<p><ul>' .
-            '<li>' . __( '<em>{$link}</em> Direct link to their new listing as it appears on your directory.', ldd::$slug ) . '</li>' .
+            '<li>' . __( '<em>{link}</em> Direct link to their new listing as it appears on your directory.', ldd::$slug ) . '</li>' .
             '</ul></p>'
     ) );
 

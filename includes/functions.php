@@ -18,6 +18,16 @@ function ld_bootstrap() {
 }
 
 
+function ld_is_public() {
+    return ldd::opt( 'public_or_private' );
+}
+
+
+function ld_use_google_maps() {
+    return ldd::opt( 'google_maps' );
+}
+
+
 function lddslug() {
     static $slug;
 
@@ -91,6 +101,8 @@ function  ld_get_page_header( $show_label = 0 ) {
     $header_template->assign( 'show_label', $show_label );
     $header_template->assign( 'directory_label', ldd::opt( 'directory_label' ) );
     $header_template->assign( 'directory_description', ldd::opt( 'directory_description' ) );
+
+    $header_template->assign( 'public', ld_is_public() );
     $header_template->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
 
     $header_template->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
@@ -194,7 +206,7 @@ function ld_get_listing_meta( $id ) {
     if ( !is_int( $id ) || LDDLITE_POST_TYPE != get_post_type( $id ) )
         return false;
 
-/*    $meta = array(
+    $defaults = array(
         'address_one' => '',
         'address_two' => '',
         'city' => '',
@@ -205,7 +217,7 @@ function ld_get_listing_meta( $id ) {
         'website' => '',
         'email' => '',
         'phone' => '',
-    );*/
+    );
 
     $meta['address_one'] = get_post_meta( $id, '_lddlite_address_one', 1 );
     $meta['address_two'] = get_post_meta( $id, '_lddlite_address_two', 1 );
@@ -249,6 +261,8 @@ function ld_get_listing_meta( $id ) {
     if ( $phone )
         $meta['phone'] = ld_format_phone( $phone );
 
+    $meta = wp_parse_args( $meta, $defaults );
+
     return $meta;
 
 }
@@ -260,18 +274,21 @@ function ld_get_social( $id ) {
         return false;
 
     $titles = array(
-        'facebook'  => array( 'orange', 'Visit %1$s on Facebook' ),
-        'linkedin'  => array( 'yellow', 'Connect with %1$s on LinkedIn' ),
-        'twitter'   => array( 'green', 'Follow %1$s on Twitter' ),
-        'default'   => array( 'blue', 'Visit %1$s on %2$s' ),
+        'facebook'  => 'Visit %1$s on Facebook',
+        'linkedin'  => 'Connect with %1$s on LinkedIn',
+        'twitter'   => 'Follow %1$s on Twitter',
+        'default'   => 'Visit %1$s on %2$s',
     );
 
     $output = '';
     $email = get_post_meta( $id, '_lddlite_contact_email', 1 );
     $name = get_the_title( $id );
+                <a href="" class="btn btn-success"><i class="fa fa-facebook-square"></i></a>
+                <a href="" class="btn btn-success"><i class="fa fa-twitter"></i></a>
+                <a href="" class="btn btn-success"><i class="fa fa-linkedin"></i></a>
 
     if ( $email )
-        $output = '<a rel="contact" href="#contact" title="Send ' . $name . ' a message" class="red"><img src="' . LDDLITE_URL . '/public/images/social/email.png" width="48" height="48" alt="" /></a>';
+        $output = '    <a href="" class="btn btn-success" data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
 
     $social = array(
         'facebook'  =>  get_post_meta( $id, '_lddlite_url_facebook', 1 ),
@@ -281,8 +298,7 @@ function ld_get_social( $id ) {
 
     foreach ( $social as $key => $url ) {
         if ( !empty( $url ) ) {
-            $title_key = array_key_exists( $key, $titles ) ? $titles[$key][1] : $titles['default'][1];
-            $title_class = array_key_exists( $key, $titles ) ? $titles[$key][0] : $titles['default'][0];
+            $title_key = array_key_exists( $key, $titles ) ? $titles[ $key ] : $titles['default'];
             $title = sprintf( $title_key, $name, $key );
 
             $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '" class="' . $title_class . '">';

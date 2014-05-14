@@ -211,9 +211,9 @@ function ld_upgrade__go() {
     //_ldup_drop_tables();
     // @TODO Don't forget to delete old file directories
 
-    $options = get_option( 'lddlite-options', array() );
+    $options = get_option( 'lddlite_settings', array() );
     $options['version'] = LDDLITE_VERSION;
-    update_option( 'lddlite-options', $options );
+    update_option( 'lddlite_settings', $options );
 
     $old_plugin = '/ldd-business-directory/lddbd_core.php';
 

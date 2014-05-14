@@ -6,22 +6,21 @@
 ul#directory-links {
     width: 100%;
     margin: 2em 0 2.5em;
-    padding-bottom: 1.5em;
     overflow: hidden;
-    border-bottom: 6px dashed #f6f6f6;
 }
 
 ul#directory-links li {
-    line-height:1.5em;
-    float:left;
-    display:inline;
-    width: 50%;
+    line-height: 1.5em;
+    font-weight: 700;
+    float: left;
+    display: inline;
+    width: 20%;
 }
 
 ul#directory-links li.right {
-    text-align: right;
-    font-weight: 700;
-    width: 40%;
+    text-align: left;
+    width: 70%;
+    font-weight: 500;
     padding-right: 10%;
 }
 
