@@ -194,7 +194,7 @@ function ld_get_listing_meta( $id ) {
     if ( !is_int( $id ) || LDDLITE_POST_TYPE != get_post_type( $id ) )
         return false;
 
-    $meta = array(
+/*    $meta = array(
         'address_one' => '',
         'address_two' => '',
         'city' => '',
@@ -205,7 +205,7 @@ function ld_get_listing_meta( $id ) {
         'website' => '',
         'email' => '',
         'phone' => '',
-    );
+    );*/
 
     $meta['address_one'] = get_post_meta( $id, '_lddlite_address_one', 1 );
     $meta['address_two'] = get_post_meta( $id, '_lddlite_address_two', 1 );

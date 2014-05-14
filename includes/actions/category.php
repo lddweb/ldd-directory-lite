@@ -47,7 +47,13 @@ function ld_action__category( $cat_id ) {
             $id         = $listing->ID;
             $title      = $listing->post_title;
             $summary    = $listing->post_excerpt;
-            $meta       = ld_get_listing_meta( $id );
+
+            $meta = ld_get_listing_meta( $id );
+                $address = $meta['address'];
+                $website = $meta['website'];
+                $email   = $meta['email'];
+                $phone   = $meta['phone'];
+
             $link       = add_query_arg( array(
                 'show'  => 'listing',
                 't'     => $listing->post_name,
@@ -82,8 +88,12 @@ function ld_action__category( $cat_id ) {
             $tpl->assign( 'nth',        $nth_class );
             $tpl->assign( 'thumbnail',  $thumbnail );
             $tpl->assign( 'title',      sprintf( $link_mask, $title ) );
-            $tpl->assign( 'meta',       $meta );
-            $tpl->assign( 'address',    $meta['address'] );
+
+            $tpl->assign( 'address', $address );
+            $tpl->assign( 'website', $website );
+            $tpl->assign( 'email',   $email );
+            $tpl->assign( 'phone',   $phone );
+
             $tpl->assign( 'summary',    $summary );
 
             $draw = ( $gridview ) ? 'listing-grid' : 'listing-compact';
