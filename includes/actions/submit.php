@@ -16,14 +16,14 @@ require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
 function ld_action__submit( $term = false ) {
     global $post;
 
+    ld_bootstrap();
+
     wp_enqueue_style( ldd::$slug );
     wp_enqueue_script( ldd::$slug . '-responsiveslides' );
 
-    wp_enqueue_style( 'bootstrap' );
     wp_enqueue_style( 'bootflat' );
     wp_enqueue_style( 'font-awesome' );
 
-    wp_enqueue_script( 'bootstrap' );
 
     $tpl = ldd::tpl();
 

@@ -49,6 +49,7 @@ class LDD_Directory_Admin {
 
             add_settings_field( 'directory_label',          '<label for="directory_label">' . __( 'Directory Label' , ldd::$slug ) . '</label>',        '_f_directory_label',       'lddlite-settings', 'lddlite-settings-general' );
             add_settings_field( 'directory_description',    '<label for="directory_label">' . __( 'Directory Description' , ldd::$slug ) . '</label>',  '_f_directory_description', 'lddlite-settings', 'lddlite-settings-general' );
+            add_settings_field( 'disable_bootstrap',        '<label for="public_or_private">' . __( 'Disable Bootstrap', ldd::$slug ) . '</label>',     '_f_disable_bootstrap',     'lddlite-settings', 'lddlite-settings-general' );
             add_settings_field( 'public_or_private',        '<label for="public_or_private">' . __( 'Public Directory', ldd::$slug ) . '</label>',      '_f_public_or_private',     'lddlite-settings', 'lddlite-settings-general' );
             add_settings_field( 'google_maps',              '<label for="google_maps">' . __( 'Use Google Maps', ldd::$slug ) . '</label>',             '_f_google_maps',           'lddlite-settings', 'lddlite-settings-general' );
 
@@ -59,6 +60,11 @@ class LDD_Directory_Admin {
 
             function _f_directory_description() {
                 wp_editor( ldd::opt( 'directory_description' ), 'ld_directory_description', array( 'textarea_name' => 'lddlite-options[directory_description]', 'textarea_rows' => 5 ) );
+            }
+
+            function _f_disable_bootstrap() {
+                echo '<label title=""><input type="checkbox" name="lddlite-options[disable_bootstrap]" value="1" ' . checked( ldd::opt( 'disable_bootstrap' ), 1, 0 ) . '> <span>Disable</span></label>';
+                echo '<p class="description">A lot of themes already use bootstrap; if yours is one, disable the plugin from loading another copy.</p>';
             }
 
             function _f_public_or_private() {
@@ -136,6 +142,12 @@ class LDD_Directory_Admin {
 
 
             public function validate_settings( $input ) {
+
+                //@todo separate version from settings. whynot.
+                $input['version'] = ldd::opt( 'version' );
+
+                if ( $input['disable_bootstrap'] != 0 )
+                    $input['disable_bootstrap'] = 1;
 
                 if ( $input['public_or_private'] != 0 )
                     $input['public_or_private'] = 1;

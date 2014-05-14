@@ -10,6 +10,14 @@
  */
 
 
+function ld_bootstrap() {
+    if ( !ldd::opt( 'disable_bootstrap' ) ) {
+        wp_enqueue_style( 'bootstrap' );
+        wp_enqueue_script( 'bootstrap' );
+    }
+}
+
+
 function lddslug() {
     static $slug;
 

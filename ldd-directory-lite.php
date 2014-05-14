@@ -154,6 +154,7 @@ EM;
             'version'                   => 0.1,
             'directory_label'           => get_bloginfo( 'name' ),
             'directory_description'     => '',
+            'disable_bootstrap'         => 0,
             'public_or_private'         => 1,
             'google_maps'               => 1,
             'email_replyto'             => get_bloginfo( 'admin_email' ),
@@ -174,7 +175,6 @@ EM;
 
         // @todo TESTING
         if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
-
             require_once( LDDLITE_PATH . '/upgrade.php' );
             add_action( 'init', 'ld_upgrade__go', 20 ); // This has to fire later, so we know our CPT's are registered
         }

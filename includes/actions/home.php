@@ -13,12 +13,12 @@ function ld_filter_categories_count( $links ) {
 function ld_action__home( $term = false ) {
     global $post;
 
+    ld_bootstrap();
+
 //    wp_enqueue_style( ldd::$slug );
-    wp_enqueue_style( 'bootstrap' );
     wp_enqueue_style( 'bootflat' );
     wp_enqueue_style( 'font-awesome' );
 
-    wp_enqueue_script( 'bootstrap' );
 
     // Retrieve all featured listings
     $featured_output = '';

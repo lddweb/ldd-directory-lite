@@ -5,17 +5,16 @@
  */
 
 
-function ld_action__listing( $listing )
-{
+function ld_action__listing( $listing ) {
     global $post;
+
+    ld_bootstrap();
 
     wp_enqueue_style('font-awesome');
 
-    wp_enqueue_style('bootstrap');
     wp_enqueue_style('bootflat');
     wp_enqueue_style('font-awesome');
 
-    wp_enqueue_script('bootstrap');
 
     $terms = wp_get_post_terms($listing->ID, LDDLITE_TAX_CAT);
     if ( isset( $terms[0] ) ) {
