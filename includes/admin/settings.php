@@ -32,6 +32,10 @@ class LDD_Directory_Admin {
 
         add_settings_field( 'lddlite_settings[directory_label]',       '<label for="directory_label">' . __( 'Directory Label' , ldd::$slug ) . '</label>',       '_f_directory_label',       'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[directory_description]', '<label for="directory_label">' . __( 'Directory Description' , ldd::$slug ) . '</label>', '_f_directory_description', 'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[locale_separator]',      '<span style="font-size: 18px">' . __( 'Locale Settings', ldd::$slug ) . '</span>',        '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[directory_use_locale]',  '<label for="directory_use_locale">' . __( 'Use Locale', ldd::$slug ) . '</label>',        '_f_directory_use_locale',  'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[directory_locale]',      '<label for="directory_locale">' . __( 'Directory Locale', ldd::$slug ) . '</label>',      '_f_directory_locale',      'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[other_separator]',       '<span style="font-size: 18px">' . __( 'Other Settings', ldd::$slug ) . '</span>',         '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[disable_bootstrap]',     '<label for="public_or_private">' . __( 'Disable Bootstrap', ldd::$slug ) . '</label>',    '_f_disable_bootstrap',     'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[public_or_private]',     '<label for="public_or_private">' . __( 'Public Directory', ldd::$slug ) . '</label>',     '_f_public_or_private',     'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[google_maps]',           '<label for="google_maps">' . __( 'Use Google Maps', ldd::$slug ) . '</label>',            '_f_google_maps',           'lddlite_settings_general', 'lddlite_settings_general' );
@@ -43,6 +47,18 @@ class LDD_Directory_Admin {
 
         function _f_directory_description() {
             wp_editor( ldd::opt( 'directory_description' ), 'ld_directory_description', array( 'textarea_name' => 'lddlite_settings[directory_description]', 'textarea_rows' => 5 ) );
+        }
+
+        function _f_directory_use_locale() {
+            echo '<label title=""><input type="checkbox" name="lddlite_settings[directory_use_locale]" value="1" ' . checked( ldd::opt( 'directory_use_locale' ), 1, 0 ) . '> <span>If checked, set locale below.</span></label>';
+        }
+
+        function _f_directory_locale() {
+
+            if ( !function_exists( 'ld_dropdown_country' ) )
+                require_once( LDDLITE_PATH . '/includes/actions/submit/functions.php' );
+            echo ld_dropdown_country( 'lddlite_settings[directory_locale]', ldd::opt( 'directory_locale' ) );
+
         }
 
         function _f_disable_bootstrap() {

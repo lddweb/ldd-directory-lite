@@ -17,10 +17,7 @@
 
         <div class="col-md-4 view-types" style="text-align: center;">
             <div class="btn-group">
-                <a href="" class="btn btn-success" data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>
-                <a href="" class="btn btn-success"><i class="fa fa-facebook-square"></i></a>
-                <a href="" class="btn btn-success"><i class="fa fa-twitter"></i></a>
-                <a href="" class="btn btn-success"><i class="fa fa-linkedin"></i></a>
+                {$social}
             </div>
         </div>
     </div>

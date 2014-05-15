@@ -29,17 +29,17 @@ function ld_action__listing( $listing ) {
 
     $id = $listing->ID;
     $title = $listing->post_title;
-
-    if ( has_post_thumbnail( $id ) )
-        $thumbnail = get_the_post_thumbnail( $id, 'directory-listing', array( 'class' => 'img-rounded' ) );
-    else
-        $thumbnail = '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">';
-
     $meta = ld_get_listing_meta( $id );
         $address = $meta['address'];
         $website = $meta['website'];
         $email   = $meta['email'];
         $phone   = $meta['phone'];
+    $social = ld_get_social( $id );
+
+    if ( has_post_thumbnail( $id ) )
+        $thumbnail = get_the_post_thumbnail( $id, 'directory-listing', array( 'class' => 'img-rounded' ) );
+    else
+        $thumbnail = '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">';
 
     $geocode = array(
         'lat'   => '',
@@ -58,7 +58,7 @@ function ld_action__listing( $listing ) {
 
     }
 
-    $social = ld_get_social( $id );
+
 
     $tpl->assign( 'header',     ld_get_page_header( 'category' ) );
 

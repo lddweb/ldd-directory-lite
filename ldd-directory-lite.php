@@ -154,6 +154,8 @@ EM;
             'version'                   => LDDLITE_VERSION,
             'directory_label'           => get_bloginfo( 'name' ),
             'directory_description'     => '',
+            'directory_use_locale'      => 0,
+            'directory_locale'          => 'US',
             'disable_bootstrap'         => 0,
             'public_or_private'         => 1,
             'google_maps'               => 1,

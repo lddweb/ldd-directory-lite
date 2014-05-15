@@ -274,26 +274,24 @@ function ld_get_social( $id ) {
         return false;
 
     $titles = array(
-        'facebook'  => 'Visit %1$s on Facebook',
-        'linkedin'  => 'Connect with %1$s on LinkedIn',
-        'twitter'   => 'Follow %1$s on Twitter',
-        'default'   => 'Visit %1$s on %2$s',
+        'facebook-square' => 'Visit %1$s on Facebook',
+        'linkedin'        => 'Connect with %1$s on LinkedIn',
+        'twitter'         => 'Follow %1$s on Twitter',
+        'default'         => 'Visit %1$s on %2$s',
     );
 
     $output = '';
     $email = get_post_meta( $id, '_lddlite_contact_email', 1 );
     $name = get_the_title( $id );
-                <a href="" class="btn btn-success"><i class="fa fa-facebook-square"></i></a>
-                <a href="" class="btn btn-success"><i class="fa fa-twitter"></i></a>
-                <a href="" class="btn btn-success"><i class="fa fa-linkedin"></i></a>
+
 
     if ( $email )
         $output = '    <a href="" class="btn btn-success" data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
 
     $social = array(
-        'facebook'  =>  get_post_meta( $id, '_lddlite_url_facebook', 1 ),
-        'linkedin'  =>  get_post_meta( $id, '_lddlite_url_linkedin', 1 ),
-        'twitter'   =>  get_post_meta( $id, '_lddlite_url_twitter', 1 ),
+        'facebook-square' =>  get_post_meta( $id, '_lddlite_url_facebook', 1 ),
+        'linkedin'        =>  get_post_meta( $id, '_lddlite_url_linkedin', 1 ),
+        'twitter'         =>  get_post_meta( $id, '_lddlite_url_twitter', 1 ),
     );
 
     foreach ( $social as $key => $url ) {
@@ -301,8 +299,8 @@ function ld_get_social( $id ) {
             $title_key = array_key_exists( $key, $titles ) ? $titles[ $key ] : $titles['default'];
             $title = sprintf( $title_key, $name, $key );
 
-            $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '" class="' . $title_class . '">';
-            $output .= '<img src="' . LDDLITE_URL . '/public/images/social/' . $key . '.png" width="48" height="48"></a>';
+            $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '" class="btn btn-success">';
+            $output .= '<i class="fa fa-' . $key . '"></i></a>';
         }
     }
 
