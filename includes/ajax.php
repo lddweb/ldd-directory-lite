@@ -167,3 +167,43 @@ function ld_ajax__contact_form() {
     die;
 
 }
+
+
+function ld_ajax__dropdown_change() {
+
+    $subdivision = $_POST['subdivision'];
+
+    $labels = array(
+        'US' => array(
+            'sub'  => 'State',
+            'code' => 'Zip'
+        ),
+        'CA' => array(
+            'sub'  => 'Province',
+            'code' => 'Postal Code',
+        ),
+    );
+
+    $defaults = array(
+        'sub'  => 'State / Province',
+        'code' => 'Zip / Postal Code',
+    );
+
+    if ( isset( $labels[ $subdivision ] ) ) {
+        $sub  = $labels[ $subdivision ]['sub'];
+        $code = $labels[ $subdivision ]['code'];
+    } else {
+        $sub  = $defaults['sub'];
+        $code = $defaults['code'];
+    }
+
+    $output = ld_dropdown_subdivision( $subdivision, '', 9 );
+    echo json_encode( array(
+        'subdivision' => $subdivision,
+        'input' => $output,
+        'sub'   => $sub,
+        'code'  => $code,
+    ) );
+
+    die;
+}

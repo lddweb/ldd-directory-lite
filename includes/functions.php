@@ -18,6 +18,16 @@ function ld_bootstrap() {
 }
 
 
+function ld_use_locale() {
+    return ldd::opt( 'directory_use_locale' );
+}
+
+
+function ld_get_locale() {
+    return ldd::opt( 'directory_locale' );
+}
+
+
 function ld_is_public() {
     return ldd::opt( 'public_or_private' );
 }
@@ -175,6 +185,9 @@ function ld_get_subdivision_array( $subdivision ) {
 
     $subdivision_file = LDDLITE_PATH . '/includes/actions/select/subdivision.' . $subdivision . '.inc';
 
+    if ( !file_exists( $subdivision_file ) )
+        return false;
+
     return ld_split_file_into_array( $subdivision_file );
 }
 
@@ -182,6 +195,9 @@ function ld_get_subdivision_array( $subdivision ) {
 function ld_get_country_array() {
 
     $country_file = LDDLITE_PATH . '/includes/actions/select/countries.inc';
+
+    if ( !file_exists( $country_file ) )
+        return false;
 
     return ld_split_file_into_array( $country_file );
 }
@@ -315,4 +331,70 @@ function ld_append_login_form() {
     $modal->assign( 'login_form', wp_login_form( array( 'echo' => false ) ) );
     $modal->draw( 'modal-login' );
 
+}
+
+
+function ld_dropdown_subdivision( $subdivision, $data, $tabindex = 0 ) {
+
+    $selected = '';
+    $lines = '';
+
+    if ( !empty( $subdivision ) ) {
+        $selected = isset( $data['subdivision'] ) ? $data['subdivision'] : '';
+        $lines = ld_get_subdivision_array( $subdivision );
+    }
+
+    $tabindex = $tabindex ? 'tabindex="' . $tabindex . '"' : '';
+
+    if ( !$lines )
+        return '<input id="subdivision" class="form-control" name="ld_s_subdivision" type="text" value="' . $selected . '" ' . $tabindex . ' required>';
+
+    $output = '<select id="subdivision" class="form-control" name="ld_s_subdivision" ' . $tabindex . ' required>';
+
+    foreach ( $lines as $key => $value ) {
+        $output .= '<option value="' . $key . '"';
+        if ( $selected == $key ) $output .= ' selected';
+        $output .= '>' . $value . '</option>';
+    }
+
+    $output .= '</select>';
+
+    return $output;
+
+}
+
+
+function ld_dropdown_country( $name, $data = '', $tabindex = 0 ) {
+
+    $selected = '';
+    if ( !is_array( $data ) && !empty( $data )  )
+        $selected = $data;
+    else if ( isset( $data['country'] ) && !empty( $data ) )
+        $selected = $data['country'];
+
+    $tabindex = $tabindex ? 'tabindex="' . $tabindex . '"' : '';
+
+    $countries = ld_get_country_array();
+
+    if ( !$countries )
+        return '<input id="country" class="form-control" name="' . $name . '" type="text" ' . $tabindex . ' required>';
+
+    $output  = '<select id="country" class="form-control" name="' . $name . '" ' . $tabindex . ' required>';
+    //$output .= '<option value="">Select a Country...</option>';
+
+    foreach ( $countries as $code => $name ) {
+        $output .= '<option value="' . $code . '"';
+        if ( $selected == $code ) $output .= ' selected';
+        $output .= '>' . $name . '</option>';
+    }
+
+    $output .= '</select>';
+
+    return $output;
+
+}
+
+
+function ld_sanitize_phone( $number ) {
+    return preg_replace( '/[^0-9+]/', '', $number );
 }

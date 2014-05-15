@@ -102,10 +102,11 @@ function ld_submit_validate_form( $data) {
     if ( empty( $data['description'] ) )
         ld_submit_add_errors( 'description_required' );
 
-    if ( empty( $data['contact_email'] ) || !is_email( $data['contact_email'] ) )
-        ld_submit_add_errors( 'contact_email_required' );
+    if ( !empty( $data['contact_email'] ) && !is_email( $data['contact_email'] ) )
+        ld_submit_add_errors( 'contact_email_invalid' );
 
-    ld_submit_validate_phone( $data['contact_phone'] );
+    if ( !empty( $data['contact_phone'] ) )
+        ld_submit_validate_phone( $data['contact_phone'] );
 
     ld_submit_validate_user( $data['username'], $data['email'] );
 
@@ -239,7 +240,7 @@ function ld_submit_get_error_message( $error_slug ) {
         'title_required'            => __( 'You need a title for your listing', ldd::$slug ),
         'category_invalid'          => __( 'Please select a category', ldd::$slug ),
         'description_required'      => __( 'Please add a description for your listing', ldd::$slug ),
-        'contact_email_required'    => __( 'Please enter an email address', ldd::$slug ),
+        'contact_email_invalid'     => __( 'Please enter a valid email address', ldd::$slug ),
         'contact_phone_required'    => __( 'Please enter a phone number', ldd::$slug ),
         'contact_phone_invalid'     => __( 'That is not a valid phone number', ldd::$slug ),
         'username_required'         => __( 'A username is required', ldd::$slug ),

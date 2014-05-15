@@ -98,7 +98,8 @@ function ld_setup__register_scripts() {
     wp_register_script( ldd::$slug,                       LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
     wp_register_script( ldd::$slug . '-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
     wp_register_script( ldd::$slug . '-search',           LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
-    wp_register_script( 'bootstrap',        LDDLITE_URL . '/public/js/bootstrap.min.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( 'bootstrap',        LDDLITE_URL . '/public/js/bootstrap.min.js', array( 'jquery' ), '3.1.1', true );
+    wp_register_script( 'icheck',           LDDLITE_URL . '/public/js/icheck.min.js', array( 'jquery' ), '1.0.2', true );
 
     wp_register_style( ldd::$slug,                LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
     wp_register_style( 'bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', false, LDDLITE_VERSION );
@@ -123,8 +124,11 @@ add_action( 'init', 'ld_setup__register_scripts' );
  */
 require_once( LDDLITE_PATH . '/includes/ajax.php' );
 
-add_action( 'wp_ajax_search_directory', 'ld_ajax__search_directory' );
+add_action( 'wp_ajax_search_directory',        'ld_ajax__search_directory' );
 add_action( 'wp_ajax_nopriv_search_directory', 'ld_ajax__search_directory' );
 
-add_action( 'wp_ajax_contact_form', 'ld_ajax__contact_form' );
+add_action( 'wp_ajax_contact_form',        'ld_ajax__contact_form' );
 add_action( 'wp_ajax_nopriv_contact_form', 'ld_ajax__contact_form' );
+
+add_action( 'wp_ajax_dropdown_change',        'ld_ajax__dropdown_change' );
+add_action( 'wp_ajax_nopriv_dropdown_change', 'ld_ajax__dropdown_change' );

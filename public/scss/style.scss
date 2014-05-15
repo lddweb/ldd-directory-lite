@@ -265,4 +265,21 @@ p.website {
     }
   }
 
+  fieldset {
+    p {
+      padding: 10px 10px 20px;
+      font-size: 1em;
+      font-weight: 300;
+
+    }
+
+    span.description {
+      margin: 5px 0 0 3px;
+      display: inline-block;
+      color: #AAB2BD;
+      font-size: .9em;
+    }
+
+  }
+
 }

@@ -54,8 +54,11 @@ function ld_filter__enter_title_here ( $title ) {
 
 
 function ld_filter__admin_post_thumbnail_html( $content ) {
-    if ( LDDLITE_POST_TYPE == get_post_type() )
+
+    if ( LDDLITE_POST_TYPE == get_post_type() ) {
         $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', ldd::$slug ), $content);
+        $content = str_replace( __( 'Remove featured image' ), __( 'Remove Logo', ldd::$slug ), $content);
+    }
 
     return $content;
 }

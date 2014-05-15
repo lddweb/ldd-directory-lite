@@ -196,7 +196,7 @@ function ld_metaboxes__init_cmb() {
 
 function ld_metaboxes__setup_cmb( array $meta_boxes ) {
 
-    $states = ld_get_subdivision_array( 'US' );
+    $use_locale = ldd::opt( 'directory_use_locale' );
 
     $meta_boxes['listings_address'] = array(
         'id'            => 'listings_address',
@@ -207,33 +207,59 @@ function ld_metaboxes__setup_cmb( array $meta_boxes ) {
         'show_names'    => true,
         'fields'        => array(
             array(
-                'name'      => __( 'Address 1', ldd::$slug ),
-                'id'        => LDDLITE_PFX . 'address_one',
-                'type'      => 'text',
+                'name'  => __( 'Address 1', ldd::$slug ),
+                'id'    => LDDLITE_PFX . 'address_one',
+                'type'  => 'text',
             ),
             array(
-                'name'      => __( 'Address 2', ldd::$slug ),
-                'id'        => LDDLITE_PFX . 'address_two',
-                'type'      => 'text',
+                'name'  => __( 'Address 2', ldd::$slug ),
+                'id'    => LDDLITE_PFX . 'address_two',
+                'type'  => 'text',
             ),
             array(
-                'name'      => __( 'City', ldd::$slug ),
-                'id'        => LDDLITE_PFX . 'city',
-                'type'      => 'text_medium',
+                'name'  => __( 'City', ldd::$slug ),
+                'id'    => LDDLITE_PFX . 'city',
+                'type'  => 'text_medium',
             ),
             array(
-                'name'      => __( 'State', ldd::$slug ),
-                'id'        => LDDLITE_PFX . 'subdivision',
-                'type'      => 'select',
-                'options'   => $states,
+                'name'  => __( 'State / Province', ldd::$slug ),
+                'id'    => LDDLITE_PFX . 'subdivision',
             ),
             array(
-                'name'      => __( 'Zip Code', ldd::$slug ),
-                'id'        => LDDLITE_PFX . 'post_code',
-                'type'      => 'text_small',
+                'name'  => __( 'Zip / Post Code', ldd::$slug ),
+                'id'    => LDDLITE_PFX . 'post_code',
+                'type'  => 'text_small',
             ),
         ),
     );
+
+    if ( $use_locale ) {
+
+        $subdivision = ldd::opt( 'directory_locale' );
+        $subdivision_array = ld_get_subdivision_array( $subdivision );
+
+        if ( $subdivision_array) {
+            $meta_boxes['listings_address']['fields'][3]['type']    = 'select';
+            $meta_boxes['listings_address']['fields'][3]['options'] = $subdivision_array;
+        } else {
+            $meta_boxes['listings_address']['fields'][3]['type']    = 'text_medium';
+        }
+
+    } else {
+
+        $meta_boxes['listings_address']['fields'][3]['type']    = 'text_medium';
+
+        $country = array(
+            'name'    => __( 'Country', ldd::$slug ),
+            'id'      => LDDLITE_PFX . 'country',
+            'type'    => 'select',
+            'options' => ld_get_country_array(),
+        );
+
+        array_unshift( $meta_boxes['listings_address']['fields'], $country );
+
+    }
+
 
     $meta_boxes['listings_web'] = array(
         'id'         => 'listings_web',
@@ -244,28 +270,28 @@ function ld_metaboxes__setup_cmb( array $meta_boxes ) {
         'show_names' => true,
         'fields'     => array(
             array(
-                'name'          => __( 'Website', ldd::$slug ),
-                'placeholder'   => 'http://...',
-                'id'            => LDDLITE_PFX . 'url_website',
-                'type'          => 'text',
+                'name' => __( 'Website', ldd::$slug ),
+                'desc' => __( 'Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', ldd::$slug ),
+                'id'   => LDDLITE_PFX . 'url_website',
+                'type' => 'text',
             ),
             array(
-                'name'          => __( 'Facebook', ldd::$slug ),
-                'placeholder'   => 'http://facebook.com/...',
-                'id'            => LDDLITE_PFX . 'url_facebook',
-                'type'          => 'text',
+                'name' => __( 'Facebook', ldd::$slug ),
+                'desc' => __( 'This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', ldd::$slug ),
+                'id'   => LDDLITE_PFX . 'url_facebook',
+                'type' => 'text',
             ),
             array(
-                'name'          => __( 'Twitter', ldd::$slug ),
-                'placeholder'   => 'http://twitter.com/...',
-                'id'            => LDDLITE_PFX . 'url_twitter',
-                'type'          => 'text',
+                'name' => __( 'Twitter', ldd::$slug ),
+                'desc' => __( 'Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', ldd::$slug ),
+                'id'   => LDDLITE_PFX . 'url_twitter',
+                'type' => 'text',
             ),
             array(
-                'name'          => __( 'LinkedIn', ldd::$slug ),
-                'placeholder'   => 'http://www.linkedin.com/in/...',
-                'id'            => LDDLITE_PFX . 'url_linkedin',
-                'type'          => 'text',
+                'name' => __( 'LinkedIn', ldd::$slug ),
+                'desc' => __( 'This should start with <code>www.linkedin.com</code>', ldd::$slug ),
+                'id'   => LDDLITE_PFX . 'url_linkedin',
+                'type' => 'text',
             ),
         ),
     );
@@ -286,12 +312,12 @@ function ld_metaboxes__setup_cmb( array $meta_boxes ) {
             array(
                 'name' => __( 'Phone', ldd::$slug ),
                 'id'   => LDDLITE_PFX . 'contact_phone',
-                'type' => 'text_medium',
+                'type' => 'text_small',
             ),
             array(
                 'name' => __( 'Fax', ldd::$slug ),
                 'id'   => LDDLITE_PFX . 'contact_fax',
-                'type' => 'text_medium',
+                'type' => 'text_small',
             ),
         ),
     );
@@ -300,8 +326,59 @@ function ld_metaboxes__setup_cmb( array $meta_boxes ) {
 }
 
 
-
 add_action( 'add_meta_boxes', 'ld_metaboxes__swap', 5 );
 
-add_action( 'init',            'ld_metaboxes__init_cmb' );
+add_action( 'init',           'ld_metaboxes__init_cmb' );
 add_filter( 'cmb_meta_boxes', 'ld_metaboxes__setup_cmb' );
+
+add_action( 'save_post', 'ld_metaboxes__sanitize', 5 );
+
+
+function ld_metaboxes__sanitize( $post_id ) {
+
+    if ( defined('DOING_AUTOSAVE' ) && DOING_AUTOSAVE || ! current_user_can( 'edit_post', $post_id ) )
+        return $post_id;
+
+    foreach ( $_POST as $key => $value ) {
+        if ( strpos( $key, 'lddlite' ) === false || empty( $value ) )
+            continue;
+
+        $field = substr( $key, 9 );
+
+        echo $field.'<br>';
+        echo $value.'<br>';
+
+        if ( 'contact_phone' == $field || 'contact_fax' == $field ) {
+
+            $_POST[ $key ] = ld_format_phone( $value );
+
+        } else if ( 'url_website' == $field ) {
+
+            $_POST[ $key ] = esc_url_raw( $value, array( 'http', 'https' ) );
+
+        } else if ( 'url_facebook' == $field ) {
+
+            $url = parse_url(esc_url_raw($value));
+            $_POST[$key] = 'https://www.facebook.com' . $url['path'];
+
+        } else if ( 'url_twitter' == $field ) {
+
+            if ( strpos( $value, '/' ) !== false ) {
+                $url = parse_url( esc_url_raw( $value ) );
+                $_POST[ $key ] = 'https://twitter.com' . $url['path'];
+            } else {
+                $_POST[ $key ] = 'https://twitter.com/' . $value;
+            }
+
+        } else if ( 'url_linkedin' == $field ) {
+
+            $url = parse_url( esc_url_raw( $value ) );
+            $_POST[ $key ] = 'https://www.linkedin.com' . $url['path'];
+
+        }
+
+
+    }
+
+}
+

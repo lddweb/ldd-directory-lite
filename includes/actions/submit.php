@@ -9,7 +9,6 @@
  * @copyright 2014 LDD Consulting, Inc
  */
 
-require_once( LDDLITE_PATH . '/includes/actions/submit/functions.php' );
 require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
 
 
@@ -20,6 +19,7 @@ function ld_action__submit( $term = false ) {
 
     wp_enqueue_style( ldd::$slug );
     wp_enqueue_script( ldd::$slug . '-responsiveslides' );
+    wp_enqueue_script( 'icheck' );
 
     wp_enqueue_style( 'bootflat' );
     wp_enqueue_style( 'font-awesome' );
@@ -114,7 +114,11 @@ function ld_action__submit( $term = false ) {
         'taxonomy'           => LDDLITE_TAX_CAT,
     );
 
+    $use_locale = ld_use_locale();
+    $subdivision = $use_locale ? ld_get_locale() : 'US';
 
+    $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+    $tpl->assign( 'allowed_tags', allowed_tags() );
     $tpl->assign( 'header', ld_get_page_header() );
 
     $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
@@ -122,8 +126,10 @@ function ld_action__submit( $term = false ) {
     $tpl->assign( 'form_action', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
     $tpl->assign( 'nonce', wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ) );
     $tpl->assign( 'category_dropdown', wp_dropdown_categories( $category_args ) );
-    $tpl->assign( 'country_dropdown', ld_dropdown_country() );
-    $tpl->assign( 'subdivision_dropdown', ld_dropdown_subdivision( 'us', $data ) );
+
+    $tpl->assign( 'use_locale',  $use_locale );
+    $tpl->assign( 'country_dropdown', ld_dropdown_country( 'ld_s_country', $data ) );
+    $tpl->assign( 'subdivision_dropdown', ld_dropdown_subdivision( $subdivision, $data ) );
 
     if ( is_wp_error( $valid ) ) {
 

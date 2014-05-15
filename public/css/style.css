@@ -103,17 +103,28 @@ p {
       .business-directory #submit-items ul > li:first-child {
         padding-left: 6px; }
     .business-directory #submit-items ul li a {
-      display: block;
+      display: inline;
       height: 45px;
       color: #777;
       outline: none;
       font-weight: 400;
       text-decoration: none;
-      line-height: 45px; }
+      line-height: 45px;
+      font-size: .9em; }
     .business-directory #submit-items ul li.ldd-submit-listing_here a,
     .business-directory #submit-items ul li a:hover {
-      color: #555;
-      font-weight: 700; }
+      display: inline;
+      min-width: 10px;
+      padding: 3px 7px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      vertical-align: baseline;
+      white-space: nowrap;
+      text-align: center;
+      background-color: #999;
+      border-radius: 10px; }
   .business-directory fieldset#submit-pot {
     display: none; }
   @media screen and (min-width: 700px) {
@@ -511,3 +522,12 @@ p.website {
     text-align: center; }
     .submit-form-wrap.submit-confirm p {
       margin-bottom: 2em; }
+  .submit-form-wrap fieldset p {
+    padding: 10px 10px 20px;
+    font-size: 1em;
+    font-weight: 300; }
+  .submit-form-wrap fieldset span.description {
+    margin: 5px 0 0 3px;
+    display: inline-block;
+    color: #AAB2BD;
+    font-size: .9em; }

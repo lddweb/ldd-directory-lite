@@ -54,11 +54,7 @@ class LDD_Directory_Admin {
         }
 
         function _f_directory_locale() {
-
-            if ( !function_exists( 'ld_dropdown_country' ) )
-                require_once( LDDLITE_PATH . '/includes/actions/submit/functions.php' );
             echo ld_dropdown_country( 'lddlite_settings[directory_locale]', ldd::opt( 'directory_locale' ) );
-
         }
 
         function _f_disable_bootstrap() {
@@ -225,8 +221,10 @@ LDD_Directory_Admin::get_in();
 
 
 function lddlite_settings_general_sanitize( $input ) {
-
+md( $input );
     $input['directory_label']   = wp_filter_nohtml_kses( $input['directory_label'] );
+
+    $input['directory_use_locale'] = ( '1' == $input['directory_use_locale'] ) ? 1 : 0;
 
     $input['disable_bootstrap'] = ( '1' == $input['disable_bootstrap'] ) ? 1 : 0;
     $input['public_or_private'] = ( '0' == $input['public_or_private'] ) ? 0 : 1;

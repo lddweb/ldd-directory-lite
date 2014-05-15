@@ -53,19 +53,31 @@
     li {
 
       a {
-        display: block;
+        display: inline;
         height: 45px;
         color: #777;
         outline: none;
         font-weight: 400;
         text-decoration: none;
         line-height: 45px;
+        font-size: .9em;
       }
 
       &.ldd-submit-listing_here a,
       a:hover {
-        color: #555;
+        display: inline;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-size: 12px;
         font-weight: 700;
+        color: #fff;
+        line-height: 1;
+        vertical-align: baseline;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #999;
+        border-radius: 10px;
+
       }
 
     }
