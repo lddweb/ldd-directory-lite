@@ -45,7 +45,7 @@ function ld_action__listing( $listing ) {
         'lat'   => '',
         'lng'   => '',
     );
-;
+
     if ( !empty( $meta['geocode'] ) ) {
 
         $get_address = 'http://maps.google.com/maps/api/geocode/json?address=' . $meta['geocode'] . '&sensor=false';
@@ -96,9 +96,20 @@ function ld_action__listing( $listing ) {
     $tpl->assign( 'contact_form', $contact_tpl->draw( 'listing-contact', 1 ) );
 
 
+    wp_enqueue_script( 'happy' );
     add_action( 'wp_footer', '_f_draw_modal' );
     function _f_draw_modal() {
+        $listing = ldd::pull();
+
+        $to = ld_get_listing_email( $listing->ID );
+        if ( !$to )
+            return;
+
         $modal = ldd::tpl();
+        $modal->assign( 'to', $to );
+        $modal->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+        $modal->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
+
         $modal->draw( 'modal-contact' );
     }
 

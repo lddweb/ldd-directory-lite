@@ -23,7 +23,7 @@
         }
     </style>
 
-    <form id="submit-listing" name="submit-listing" action="{$form_action}" method="post" enctype="multipart/form-data" novalidate>
+    <form id="submit-listing" name="submit-listing" action="{$form_action}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="__T__action" value="submit_form">
         {$nonce}
 
@@ -181,7 +181,7 @@
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="">Twitter</label>
-                                    <input id="twitter" class="form-control" name="ld_s_url[twitter]" type="text" {if="!empty($url.twitter)"}value="{$url.twitter}" {/if}tabindex="14" placeholder="https://twitter.com/username">
+                                    <input id="twitter" class="form-control" name="ld_s_url[twitter]" type="text" {if="!empty($url.twitter)"}value="{$url.twitter}" {/if}tabindex="14">
                                     <span class="description">This will always be 'https://twitter.com/<strong>username</strong>'</span>
                                 </div>
                             </div>
@@ -190,7 +190,7 @@
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="">Linkedin</label>
-                                    <input id="linkedin" class="form-control" name="ld_s_url[linkedin]" type="text" {if="!empty($url.linkedin)"}value="{$url.linkedin}" {/if}tabindex="15" placeholder="https://www.linkedin.com/pub/user-name/12/34/5b6">
+                                    <input id="linkedin" class="form-control" name="ld_s_url[linkedin]" type="text" {if="!empty($url.linkedin)"}value="{$url.linkedin}" {/if}tabindex="15">
                                     <span class="description">Help locating and customizing your <a href="http://help.linkedin.com/app/answers/detail/a_id/85/~/promoting-your-public-profile" title="Promoting Your Public Profile | LinkedIn Help Center">LinkedIn profile URL</a></span>
                                 </div>
                             </div>

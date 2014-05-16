@@ -112,27 +112,31 @@ function ld_ajax__contact_form() {
     if ( !wp_verify_nonce( $_POST['nonce'], 'contact-form-nonce' ) )
         die( 'You shall not pass!' );
 
-    $hpt_field = 'summary';
+    /*    $hpt_field = 'summary';
 
-    if ( !empty( $_POST[ $hpt_field ] ) ) {
-        echo json_encode( array(
-            'success' => 1,
-        ) );
-        die;
-    }
+        if ( !empty( $_POST[ $hpt_field ] ) ) {
+            echo json_encode( array(
+                'success' => 1,
+            ) );
+            die;
+        }*/
 
+    $answers = array(
+        '14',
+        'fourteen'
+    );
 
-    $name = sanitize_text_field( $_POST['name'] );
+    $name = sanitize_text_field( $_POST['first_name'] );
     $email = sanitize_text_field( $_POST['email'] );
     $subject = sanitize_text_field( $_POST['subject'] );
-    $math = sanitize_text_field( $_POST['math'] );
     $message = esc_html( sanitize_text_field( $_POST['message'] ) );
 
+    $answer = sanitize_text_field( strtolower( $_POST['last_name'] ) );
 
     $errors = array();
 
     if ( empty( $name ) || strlen( $name ) < 3 )
-        $errors['name'] = 'You must enter a name';
+        $errors['name'] = 'You must enter your name';
 
     if ( empty( $email ) || !is_email( $email ) )
         $errors['email'] = 'Please enter a valid email address';
@@ -182,10 +186,14 @@ function ld_ajax__dropdown_change() {
             'sub'  => 'Province',
             'code' => 'Postal Code',
         ),
+        'GB' => array(
+            'sub'  => 'County',
+            'code' => 'Post Code',
+        ),
     );
 
     $defaults = array(
-        'sub'  => 'State / Province',
+        'sub'  => 'State / Province / Locality',
         'code' => 'Zip / Postal Code',
     );
 
@@ -193,6 +201,7 @@ function ld_ajax__dropdown_change() {
         $sub  = $labels[ $subdivision ]['sub'];
         $code = $labels[ $subdivision ]['code'];
     } else {
+        //$sub  = '"' . $subdivision . '"' . $defaults['sub'];
         $sub  = $defaults['sub'];
         $code = $defaults['code'];
     }

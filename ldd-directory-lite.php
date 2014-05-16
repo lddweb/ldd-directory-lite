@@ -58,9 +58,9 @@ class LDD_Directory_Lite {
     public $options = array();
 
     /**
-     * @var int The post->ID of the page where the [business_directory] shortcode is located.
+     * @var
      */
-    public $directory_home_ID;
+    public $listing;
 
 
     /**
@@ -151,7 +151,6 @@ EM;
 EM;
 
         $defaults = apply_filters( 'lddlite_default_options', array(
-            'version'                   => LDDLITE_VERSION,
             'directory_label'           => get_bloginfo( 'name' ),
             'directory_description'     => '',
             'directory_use_locale'      => 0,
@@ -175,7 +174,6 @@ EM;
             delete_option( 'lddlite-options' );
         }
 
-
         $options = wp_parse_args(
             get_option( 'lddlite_settings' ),
             $defaults );
@@ -185,7 +183,7 @@ EM;
 
         if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
             require_once( LDDLITE_PATH . '/upgrade.php' );
-            add_action( 'init', 'ld_upgrade__go', 20 ); // This has to fire later, so we know our CPT's are registered
+            add_action( 'init', 'ld_upgrade', 20 ); // This has to fire later, so we know our CPT's are registered
         }
 
         $this->options = $options;
@@ -315,6 +313,16 @@ class ldd {
         $option = $l->get_option( $key );
         if ( $esc ) $option = esc_attr( $option );
         return $option;
+    }
+
+    public static function attach( $listing ) {
+        $l = self::load();
+        $l->listing = $listing;
+    }
+
+    public static function pull() {
+        $l = self::load();
+        return $l->listing;
     }
 
 }

@@ -76,7 +76,7 @@ function ld_setup__register_custom() {
         'public'        => true,
         'show_ui'       => true,
         'show_in_menu'  => true,
-        'menu_position' => 25,
+        'menu_position' => '27.3',
         'menu_icon'     => '',
 
         'show_in_nav_menus'     => false,
@@ -99,7 +99,8 @@ function ld_setup__register_scripts() {
     wp_register_script( ldd::$slug . '-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
     wp_register_script( ldd::$slug . '-search',           LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
     wp_register_script( 'bootstrap',        LDDLITE_URL . '/public/js/bootstrap.min.js', array( 'jquery' ), '3.1.1', true );
-    wp_register_script( 'icheck',           LDDLITE_URL . '/public/js/icheck.min.js', array( 'jquery' ), '1.0.2', true );
+
+    wp_register_script( 'happy',        LDDLITE_URL . '/public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true );
 
     wp_register_style( ldd::$slug,                LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
     wp_register_style( 'bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', false, LDDLITE_VERSION );

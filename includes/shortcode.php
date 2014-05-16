@@ -71,8 +71,10 @@ function ld_shortcode__display() {
                 'posts_per_page'    => 1,
             ) );
 
-            if ( !empty( $listing ) )
+            if ( !empty( $listing ) ) {
                 $term = $listing[0];
+                ldd::attach( $listing[0] );
+            }
 
         } else if ( 'submit' == $action ) {
 

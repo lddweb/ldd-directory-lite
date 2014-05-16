@@ -398,3 +398,8 @@ function ld_dropdown_country( $name, $data = '', $tabindex = 0 ) {
 function ld_sanitize_phone( $number ) {
     return preg_replace( '/[^0-9+]/', '', $number );
 }
+
+
+function ld_get_listing_email( $id ) {
+    return get_post_meta( $id, '_lddlite_contact_email', 1 );
+}

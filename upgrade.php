@@ -86,7 +86,7 @@ function _ldup_drop_tables() {
 }
 
 
-function ld_upgrade__go() {
+function ld_upgrade() {
 
     $wp_upload_dir = wp_upload_dir();
     list( $category_map, $listings ) = _ldup_get_listings();

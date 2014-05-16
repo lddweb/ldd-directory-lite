@@ -29,6 +29,25 @@ $pure-blue:         #0078e7;
 @import "partials/mixins";
 
 
+.bump-up {
+  margin-bottom: 1em;
+}
+.bump-down {
+  margin-top: 1em;
+}
+
+.modal label {
+  margin-top: 10px;
+}
+
+.unhappyMessage {
+  color: #da4453;
+  margin: 4px 2px;
+  display: inline-block;
+  font-weight: 500;
+  font-size: .9em;
+}
+
 .business-directory {
   position: relative;
   width: 100%;
@@ -64,6 +83,7 @@ $pure-blue:         #0078e7;
       box-shadow: none;
     }
   }*/
+
 
 
   span.submit-error,
@@ -197,8 +217,8 @@ h2.listing-title {
 
 .type-listing .img-rounded {
   margin: 15px auto;
-  height: auto;
-  max-width: 100%;
+  height: auto !important;
+  max-width: 100% !important;
 }
 .type-listing .listing-summary {
   margin: 0 0 15px;
