@@ -25,7 +25,7 @@ function ld_action__listing( $listing ) {
         $term_name = $terms[0]->name;
     }
 
-    $tpl = ldd::tpl();
+    $tpl = ldl::tpl();
 
     $id = $listing->ID;
     $title = $listing->post_title;
@@ -86,26 +86,17 @@ function ld_action__listing( $listing ) {
     $tpl->assign( 'geo', $geocode );
     $tpl->assign( 'description', wpautop( $listing->post_content ) );
 
-    // Contact Form
-    // @todo we're going to let people override this with Ninja Forms
-
-    $contact_tpl = ldd::tpl();
-    $contact_tpl->assign( 'id', $id );
-    $contact_tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
-    $contact_tpl->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
-    $tpl->assign( 'contact_form', $contact_tpl->draw( 'listing-contact', 1 ) );
-
 
     wp_enqueue_script( 'happy' );
     add_action( 'wp_footer', '_f_draw_modal' );
     function _f_draw_modal() {
-        $listing = ldd::pull();
+        $listing = ldl::pull();
 
         $to = ld_get_listing_email( $listing->ID );
         if ( !$to )
             return;
 
-        $modal = ldd::tpl();
+        $modal = ldl::tpl();
         $modal->assign( 'to', $to );
         $modal->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
         $modal->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );

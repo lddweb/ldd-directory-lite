@@ -5,13 +5,13 @@ function ld_action__category( $cat_id ) {
     global $post;
 
     ld_bootstrap();
-    wp_enqueue_style( ldd::$slug );
+    wp_enqueue_style( ldl::$slug );
 
     wp_enqueue_style( 'bootflat' );
     wp_enqueue_style( 'font-awesome' );
 
 
-    $tpl = ldd::tpl();
+    $tpl = ldl::tpl();
 
 
     $listings = get_posts( array(
@@ -108,7 +108,7 @@ function ld_action__category( $cat_id ) {
             $output .= '</row>';
     } // if
 
-    $tpl = ldd::tpl();
+    $tpl = ldl::tpl();
 
     $tpl->assign( 'header', ld_get_page_header( 'category' ) );
     $tpl->assign( 'home', remove_query_arg( array(

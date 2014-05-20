@@ -39,12 +39,12 @@ function ld_is_action_requested() {
 
 function ld_shortcode__display() {
 
-    wp_enqueue_script( ldd::$slug . '-search' );
+    wp_enqueue_script( ldl::$slug . '-search' );
     wp_enqueue_script( 'ldd-lite-js' );
 
     wp_enqueue_style( 'ldd-lite' );
 
-/*    ldd::$modal['url'] = $_SERVER['REQUEST_URI'];
+/*    ldl::$modal['url'] = $_SERVER['REQUEST_URI'];
     add_action( 'wp_footer', 'ld_append_login_form' );*/
 
 
@@ -73,7 +73,7 @@ function ld_shortcode__display() {
 
             if ( !empty( $listing ) ) {
                 $term = $listing[0];
-                ldd::attach( $listing[0] );
+                ldl::attach( $listing[0] );
             }
 
         } else if ( 'submit' == $action ) {

@@ -15,7 +15,7 @@ function ld_action__home( $term = false ) {
 
     ld_bootstrap();
 
-//    wp_enqueue_style( ldd::$slug );
+//    wp_enqueue_style( ldl::$slug );
     wp_enqueue_style( 'bootflat' );
     wp_enqueue_style( 'font-awesome' );
 
@@ -43,7 +43,7 @@ function ld_action__home( $term = false ) {
         // @todo can we filter guid once and use that as our url?
         foreach ( $rand_keys as $key ) {
             $listing = $featured[ $key ];
-            $featured_tpl = ldd::tpl();
+            $featured_tpl = ldl::tpl();
 
             $id = $listing->ID;
             $summary = $listing->post_excerpt;
@@ -98,7 +98,7 @@ function ld_action__home( $term = false ) {
         $categories .= sprintf( '<a href="%1$s" class="list-group-item"><span class="badge badge-default">%3$d</span>%2$s</a>', $term_link, $category->name, $category->count );
     }
 
-    $tpl = ldd::tpl();
+    $tpl = ldl::tpl();
 
     $tpl->assign( 'header', ld_get_page_header( 1 ) );
     $tpl->assign( 'featured', $featured_output );

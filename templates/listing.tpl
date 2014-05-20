@@ -105,7 +105,7 @@
         var mapLatLng = new google.maps.LatLng({$geo.lat}, {$geo.lng})
         var mapOptions = {
             center: mapLatLng,
-            zoom: 17,
+            zoom: 16,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             panControl: false,
         }
@@ -223,7 +223,6 @@
     .listing-header {
         position: relative;
         padding-right: 210px;
-        min-height: 210px;
     }
 
     .listing-header h2.listing-title {

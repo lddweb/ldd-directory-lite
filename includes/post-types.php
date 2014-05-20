@@ -47,7 +47,7 @@ function ld_filter__post_type_link( $post_link, $post ) {
 
 function ld_filter__enter_title_here ( $title ) {
     if ( get_post_type() == LDDLITE_POST_TYPE )
-        $title = __( 'Business Name', ldd::$slug );
+        $title = __( 'Business Name', ldl::$slug );
 
     return $title;
 }
@@ -56,8 +56,8 @@ function ld_filter__enter_title_here ( $title ) {
 function ld_filter__admin_post_thumbnail_html( $content ) {
 
     if ( LDDLITE_POST_TYPE == get_post_type() ) {
-        $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', ldd::$slug ), $content);
-        $content = str_replace( __( 'Remove featured image' ), __( 'Remove Logo', ldd::$slug ), $content);
+        $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', ldl::$slug ), $content);
+        $content = str_replace( __( 'Remove featured image' ), __( 'Remove Logo', ldl::$slug ), $content);
     }
 
     return $content;
@@ -98,14 +98,14 @@ function ld_action__send_approved_email( $post ) {
     $post_content = $post->post_content;
     $post_slug = $post->post_name;
 
-    $tpl = ldd::tpl();
+    $tpl = ldl::tpl();
 
     $tpl->assign( 'site_title', get_bloginfo( 'name' ) );
-    $tpl->assign( 'admin_email', ldd::opt( 'email_replyto' ) );
+    $tpl->assign( 'admin_email', ldl::setting( 'email_replyto' ) );
     $tpl->assign( 'link', site_url( '?show=listing&t=' . $post_slug ) );
 
     $message = $tpl->draw( 'email/approved', 1 );
-    ld_mail( $user_email, ldd::opt( 'email_onaprove' ), $message );
+    ld_mail( $user_email, ldl::setting( 'email_onaprove' ), $message );
 
 }
 

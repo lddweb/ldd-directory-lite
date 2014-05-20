@@ -10,7 +10,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful yet simple to use, easily add a business directory to your WordPress site.
- * Version:           2.0.0
+ * Version:           2.0.0-working
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Text Domain:       ldd-lite
@@ -18,12 +18,10 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) )
-    die;
+if ( ! defined( 'WPINC' ) ) die;
 
 
-define( 'LDDLITE_VERSION',      '2.0.0' );
+define( 'LDDLITE_VERSION',      '2.0.0-working' );
 
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
 define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
@@ -38,7 +36,8 @@ define( 'LDDLITE_PFX',          '_lddlite_' );
 register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
-
+ini_set( 'display_errors', 1 );
+error_reporting(-1);
 
 class LDD_Directory_Lite {
 
@@ -111,82 +110,26 @@ class LDD_Directory_Lite {
      */
     public function populate_options() {
 
-        $site_title = get_bloginfo( 'name' );
-        $admin_email = get_bloginfo( 'admin_email' );
-
-        $email = array();
-
-        $email['to_admin']   = <<<EM
-<p><strong>A new listing is pending review!</strong></p>
-
-<p>This submission is awaiting approval. Please visit the link to view and approve the new listing:</p>
-
-<p>{view_listing}</p>
-
-<ul>
-    <li>Business Name: <strong>{title}</strong></li>
-    <li>Business Description: <strong>{description}</strong></li>
-</ul>
-EM;
-        $email['on_submit']  = <<<EM
-<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
-
-<p>Your listing is pending approval.</p>
-<p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {$admin_email}.</p>
-
-<ul>
-    <li>Business Name: <strong>{title}</strong></li>
-    <li>Business Description: <strong>{description}</strong></li>
-</ul>
-
-<p><em>Sincerely,<br>{$site_title}</em></p>
-EM;
-        $email['on_approve'] = <<<EM
-<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
-
-<p>Your listing has been approved! You can now view it online:</p>
-<p>{link}</p>
-
-<p><em>Sincerely,<br>{$site_title}</em></p>
-EM;
-
-        $defaults = apply_filters( 'lddlite_default_options', array(
-            'directory_label'           => get_bloginfo( 'name' ),
-            'directory_description'     => '',
-            'directory_use_locale'      => 0,
-            'directory_locale'          => 'US',
-            'disable_bootstrap'         => 0,
-            'public_or_private'         => 1,
-            'google_maps'               => 1,
-            'email_replyto'             => get_bloginfo( 'admin_email' ),
-            'email_toadmin_subject'     => 'A new listing has been submitted for review!',
-            'email_toadmin_body'        => $email['to_admin'],
-            'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
-            'email_onsubmit_body'       => $email['on_submit'],
-            'email_onapprove_subject'   => 'Your listing on ' . $site_title . ' was approved!',
-            'email_onapprove_body'      => $email['on_approve'],
-        ) );
-
-        $old_options = get_option( 'lddlite-options', false );
-
-        if ( is_array( $old_options ) ) {
-            update_option( 'lddlite_settings', array_intersect_key( $old_options, $defaults ) );
-            delete_option( 'lddlite-options' );
-        }
-
-        $options = wp_parse_args(
+        $settings = wp_parse_args(
             get_option( 'lddlite_settings' ),
-            $defaults );
+            ldl_get_default_settings() );
 
-        $dir = dirname( __FILE__ );
-        $old_plugin = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/ldd-business-directory/lddbd_core.php';
+        $version = get_option( 'lddlite_version' );
 
-        if ( file_exists( $old_plugin ) && version_compare( LDDLITE_VERSION, $options['version'], '>' ) ) {
-            require_once( LDDLITE_PATH . '/upgrade.php' );
-            add_action( 'init', 'ld_upgrade', 20 ); // This has to fire later, so we know our CPT's are registered
+//        require_once( LDDLITE_PATH . '/uninstall.php' );
+
+        if ( !$version ) {
+            $dir = dirname( __FILE__ );
+            $old_plugin = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/ldd-business-directory/lddbd_core.php';
+            if ( file_exists( $old_plugin ) ) {
+                require_once( LDDLITE_PATH . '/upgrade.php' );
+                add_action( 'init', 'ldl_upgrade', 20 ); // This has to fire later, so we know our CPT's are registered
+                add_action( 'admin_init', 'ldl_disable_old' );
+            }
         }
 
-        $this->options = $options;
+        $this->settings = $settings;
+        $this->version = $version;
 
     }
 
@@ -245,17 +188,6 @@ EM;
 
 
     /**
-     * Allow our slug to be used outside this class, without being modified
-     *
-     * @since 2.0.0
-     * @return string The slug
-     */
-    public function slug() {
-        return $this->_slug;
-    }
-
-
-    /**
      * Flush rewrite rules on activation or deactivation of the plugin.
      *
      * @since 2.0.0
@@ -265,29 +197,14 @@ EM;
     }
 
 
-    public function get_option( $key ) {
-        return isset( $this->options[ $key ] ) ? $this->options[ $key ] : '';
+    public function get_setting( $key ) {
+        return isset( $this->settings[ $key ] ) ? $this->settings[ $key ] : '';
     }
 
 
 }
 
-
-
-/**
- * An alias to calling the LDD_Directory_Lite::get_in() method
- *
- * @return LDD_Directory_Lite
- */
-function lddlite() {
-    return LDD_Directory_Lite::get_in();
-}
-
-// BOOM! I SAID BOOM!
-ldd::load();
-
-
-class ldd {
+class ldl {
     public static $slug = 'ldd-lite';
 
     public static $modal = array();
@@ -308,9 +225,9 @@ class ldd {
         return new raintpl;
     }
 
-    public static function opt( $key, $esc = false ) {
+    public static function setting( $key, $esc = false ) {
         $l = self::load();
-        $option = $l->get_option( $key );
+        $option = $l->get_setting( $key );
         if ( $esc ) $option = esc_attr( $option );
         return $option;
     }
@@ -326,3 +243,10 @@ class ldd {
     }
 
 }
+
+/**
+ * Start everything.
+ */
+ldl::load();
+
+

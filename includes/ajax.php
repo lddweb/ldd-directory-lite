@@ -28,7 +28,7 @@ function ld_ajax__search_directory() {
     $nth = 0;
 
     // @todo NEARLY IDENTICAL TO CATEGORY RESULTS
-    $tpl = ldd::tpl();
+    $tpl = ldl::tpl();
 
     if ( $search->have_posts() ) {
 

@@ -17,15 +17,15 @@ function ld_action__submit( $term = false ) {
 
     ld_bootstrap();
 
-    wp_enqueue_style( ldd::$slug );
-    wp_enqueue_script( ldd::$slug . '-responsiveslides' );
+    wp_enqueue_style( ldl::$slug );
+    wp_enqueue_script( ldl::$slug . '-responsiveslides' );
     wp_enqueue_script( 'icheck' );
 
     wp_enqueue_style( 'bootflat' );
     wp_enqueue_style( 'font-awesome' );
 
 
-    $tpl = ldd::tpl();
+    $tpl = ldl::tpl();
 
     $valid = false;
 
@@ -75,25 +75,25 @@ function ld_action__submit( $term = false ) {
 
         // Send two emails, one to the site administrator notifying them of the listing
         // and another to the person submitting the listing for reference.
-        $to_admin = ldd::tpl();
+        $to_admin = ldl::tpl();
 
         $to_admin->assign( 'approve_link', admin_url( 'post.php?post=' . $post_id . '&action=edit' ) );
         $to_admin->assign( 'title', $data['title'] );
         $to_admin->assign( 'description', $data['description'] );
 
         $message = $to_admin->draw( 'email/to_admin', 1 );
-        ld_mail( ldd::opt( 'email_replyto' ), __( 'A new listing was submitted for review', ldd::$slug ), $message );
+        ld_mail( ldl::setting( 'email_replyto' ), __( 'A new listing was submitted for review', ldl::$slug ), $message );
 
 
-        $to_owner = ldd::tpl();
+        $to_owner = ldl::tpl();
 
         $to_owner->assign( 'site_title', get_bloginfo( 'name' ) );
-        $to_owner->assign( 'admin_email', ldd::opt( 'email_replyto' ) );
+        $to_owner->assign( 'admin_email', ldl::setting( 'email_replyto' ) );
         $to_owner->assign( 'title', $data['title'] );
         $to_owner->assign( 'description', $data['description'] );
 
         $message = $to_owner->draw( 'email/to_owner', 1 );
-        ld_mail( $data['email'], ldd::opt( 'email_onsubmit_subject' ), $message );
+        ld_mail( $data['email'], ldl::setting( 'email_onsubmit_subject' ), $message );
 
         $tpl->assign( 'url', get_permalink( $post->ID ) );
         $tpl->assign( 'listing', $data );

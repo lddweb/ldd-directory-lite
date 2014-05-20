@@ -237,21 +237,21 @@ function ld_submit_add_errors( $code, $data = null ) {
 function ld_submit_get_error_message( $error_slug ) {
 
     $error_messages = array(
-        'title_required'            => __( 'You need a title for your listing', ldd::$slug ),
-        'category_invalid'          => __( 'Please select a category', ldd::$slug ),
-        'description_required'      => __( 'Please add a description for your listing', ldd::$slug ),
-        'contact_email_invalid'     => __( 'Please enter a valid email address', ldd::$slug ),
-        'contact_phone_required'    => __( 'Please enter a phone number', ldd::$slug ),
-        'contact_phone_invalid'     => __( 'That is not a valid phone number', ldd::$slug ),
-        'username_required'         => __( 'A username is required', ldd::$slug ),
-        'username_invalid'          => __( 'That is not a valid username', ldd::$slug ),
-        'username_exists'           => __( 'That username already exists', ldd::$slug ),
-        'email_required'            => __( 'An email address is required', ldd::$slug ),
-        'email_exists'              => __( 'That email is already in use', ldd::$slug ),
-        'address_one_required'      => __( 'Please enter your street address', ldd::$slug ),
-        'city_required'             => __( 'Please enter a city', ldd::$slug ),
-        'subdivision_required'      => __( 'Please enter a state', ldd::$slug ),
-        'post_code_required'        => __( 'Please enter your zip', ldd::$slug ),
+        'title_required'            => __( 'You need a title for your listing', ldl::$slug ),
+        'category_invalid'          => __( 'Please select a category', ldl::$slug ),
+        'description_required'      => __( 'Please add a description for your listing', ldl::$slug ),
+        'contact_email_invalid'     => __( 'Please enter a valid email address', ldl::$slug ),
+        'contact_phone_required'    => __( 'Please enter a phone number', ldl::$slug ),
+        'contact_phone_invalid'     => __( 'That is not a valid phone number', ldl::$slug ),
+        'username_required'         => __( 'A username is required', ldl::$slug ),
+        'username_invalid'          => __( 'That is not a valid username', ldl::$slug ),
+        'username_exists'           => __( 'That username already exists', ldl::$slug ),
+        'email_required'            => __( 'An email address is required', ldl::$slug ),
+        'email_exists'              => __( 'That email is already in use', ldl::$slug ),
+        'address_one_required'      => __( 'Please enter your street address', ldl::$slug ),
+        'city_required'             => __( 'Please enter a city', ldl::$slug ),
+        'subdivision_required'      => __( 'Please enter a state', ldl::$slug ),
+        'post_code_required'        => __( 'Please enter your zip', ldl::$slug ),
     );
 
     if ( array_key_exists( $error_slug, $error_messages ) )

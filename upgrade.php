@@ -11,6 +11,7 @@
  *
  */
 
+if ( ! defined( 'WPINC' ) ) die;
 
 function _ldup_get_tables() {
     global $wpdb;
@@ -86,7 +87,14 @@ function _ldup_drop_tables() {
 }
 
 
-function ld_upgrade() {
+function ldl_upgrade() {
+
+
+    if ( !function_exists( 'ld_use_locale' ) )
+        require_once( LDDLITE_PATH . '/includes/functions.php' );
+
+    if ( !function_exists( 'wp_generate_attachment_metadata' ) )
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
 
     $wp_upload_dir = wp_upload_dir();
     list( $category_map, $listings ) = _ldup_get_listings();
@@ -140,63 +148,70 @@ function ld_upgrade() {
 
         $post_id = wp_insert_post( $new );
 
-
         if ( $post_id ) {
 
+            if ( 'United Kingdom' == $listing->address_country ) {
+                $country = 'GB';
+                $address_one = $listing->address_street;
+
+                if ( strpos( $listing->address_city, ',' ) !== false ) {
+                    $pos = strrpos( $listing->address_city, ',' );
+                    $city = trim( substr( $listing->address_city, 0, $pos ) );
+                    $subdivision = trim( substr( $listing->address_city, $pos + 1 ) );
+                } else {
+                    $city = '';
+                    $subdivision = $listing->address_city;
+                }
+
+            } else {
+                $countries = ld_get_country_array();
+                $country = array_search( $listing->address_country, $countries );
+                $address_one = $listing->address_street;
+                $city = $listing->address_city;
+                $subdivision = $listing->address_state;
+            }
+
             $post_meta = array(
-                'address_one'   => $listing->address_street,
+                'country'       => $country,
+                'address_one'   => $address_one,
                 'address_two'   => '',
-                'country'       => $listing->address_country,
-                'subdivision'   => $listing->address_state,
-                'city'          => $listing->address_city,
+                'city'          => $city,
+                'subdivision'   => $subdivision,
                 'post_code'     => $listing->address_zip,
                 'contact_email' => $listing->email,
                 'contact_phone' => $listing->phone,
                 'contact_fax'   => $listing->fax,
                 'promotion'     => sprintf( '%s', $listing->promoDescription ),
                 'other'         => $listing->other_info,
+                'url_website'   => empty( $listing->url ) ? '' : esc_url_raw( $listing->url ),
+                'url_facebook'  => empty( $listing->facebook ) ? '' : ldl_sanitize_https( $listing->facebook ),
+                'url_twitter'   => empty( $listing->twitter ) ? '' : ldl_sanitize_twitter( $listing->twitter ),
+                'url_linkedin'  => empty( $listing->linkedin ) ? '' : ldl_sanitize_https( $listing->linkedin ),
             );
-
-            $urls = array(
-                'url_website'   => esc_url_raw( $listing->url ),
-                'url_facebook'  => esc_url_raw( $listing->facebook ),
-                'url_twitter'   => esc_url_raw( $listing->twitter ),
-                'url_linkedin'  => esc_url_raw( $listing->linkedin ),
-            );
-
-            if ( !function_exists( 'ld_submit_sanitize_urls' ) )
-                require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
-
-            $urls = ld_submit_sanitize_urls( $urls );
-
-            $post_meta = array_merge( $post_meta, $urls );
 
             foreach ( $post_meta as $key => $value ) {
                 add_post_meta( $post_id, LDDLITE_PFX . $key, $value );
             }
 
-
             if ( !empty( $listing->logo ) && file_exists( $wp_upload_dir['basedir'] . '/' . $listing->logo ) ) {
 
-                $filename = $wp_upload_dir['path'] . basename( $listing->logo );
-                copy( $wp_upload_dir['basedir'] . '/' . $listing->logo, $filename );
+                $old = $wp_upload_dir['basedir'] . '/' . $listing->logo;
+                $new = $wp_upload_dir['path'] . '/' . basename( $listing->logo );
 
-                $filetype = wp_check_filetype( $filename, null );
+                copy( $old, $new ); // We're not renaming/moving them until we feel comfortable this upgrade is flawless
 
+                $filetype = wp_check_filetype( $new );
                 $attachment = array(
-                    'guid'              => $filename,
+                    'guid'              => $wp_upload_dir['url'] . '/' . basename( $new ),
                     'post_mime_type'    => $filetype['type'],
-                    'post_title'        => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+                    'post_title'        => sanitize_title( substr( basename( $new ), 0, -4 ) ),
                     'post_content'      => '',
                     'post_status'       => 'inherit'
                 );
 
-                $attached = wp_insert_attachment( $attachment, $filename, $post_id );
+                $attached = wp_insert_attachment( $attachment, $new, $post_id );
 
-                if ( !function_exists( 'wp_generate_attachment_metadata' ) )
-                    require_once(ABSPATH . 'wp-admin/includes/image.php');
-
-                $attach_data = wp_generate_attachment_metadata( $attached, $filename );
+                $attach_data = wp_generate_attachment_metadata( $attached, $new );
                 wp_update_attachment_metadata( $attached, $attach_data );
 
                 set_post_thumbnail( $post_id, $attached );
@@ -208,17 +223,20 @@ function ld_upgrade() {
 
     // @TODO Let's add this back in a few months. We'll leave it out just in case there's any unforeseen upgrade problems.
     // @TODO Then add it back in to clean up left over tables when we have enough feedback.
-    //_ldup_drop_tables();
     // @TODO Don't forget to delete old file directories
+    //_ldup_drop_tables();
 
-    $options = get_option( 'lddlite_settings', array() );
-    $options['version'] = LDDLITE_VERSION;
-    update_option( 'lddlite_settings', $options );
-
-    $old_plugin = '/ldd-business-directory/lddbd_core.php';
-
-    // Last but not least, out with the old
-    deactivate_plugins( $old_plugin );
+    update_option( 'lddlite_settings', array() );
+    update_option( 'lddlite_version',  LDDLITE_VERSION );
 
 }
 
+function ldl_disable_old() {
+    $old_plugin = '/ldd-business-directory/lddbd_core.php';
+
+    if ( !function_exists( 'deactivate_plugins' ) )
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+    // Last but not least, out with the old
+    deactivate_plugins( $old_plugin );
+}

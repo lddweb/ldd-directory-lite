@@ -336,7 +336,7 @@ p {
     background: rgba(255, 255, 255, 0.5); }
   .business-directory .type-listing .listing-header {
     width: 100%;
-    padding: 0; }
+    padding: 15px 0; }
     .business-directory .type-listing .listing-header .listing-title {
       font-size: 1.8em;
       font-weight: normal;

@@ -30,52 +30,47 @@ class LDD_Directory_Admin {
 
         add_settings_section( 'lddlite_settings_general', __return_null(), '__return_false()', 'lddlite_settings_general' );
 
-        add_settings_field( 'lddlite_settings[directory_label]',       '<label for="directory_label">' . __( 'Directory Label' , ldd::$slug ) . '</label>',       '_f_directory_label',       'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[directory_description]', '<label for="directory_label">' . __( 'Directory Description' , ldd::$slug ) . '</label>', '_f_directory_description', 'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[locale_separator]',      '<span style="font-size: 18px">' . __( 'Locale Settings', ldd::$slug ) . '</span>',        '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[directory_use_locale]',  '<label for="directory_use_locale">' . __( 'Use Locale', ldd::$slug ) . '</label>',        '_f_directory_use_locale',  'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[directory_locale]',      '<label for="directory_locale">' . __( 'Directory Locale', ldd::$slug ) . '</label>',      '_f_directory_locale',      'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[other_separator]',       '<span style="font-size: 18px">' . __( 'Other Settings', ldd::$slug ) . '</span>',         '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[disable_bootstrap]',     '<label for="public_or_private">' . __( 'Disable Bootstrap', ldd::$slug ) . '</label>',    '_f_disable_bootstrap',     'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[public_or_private]',     '<label for="public_or_private">' . __( 'Public Directory', ldd::$slug ) . '</label>',     '_f_public_or_private',     'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[google_maps]',           '<label for="google_maps">' . __( 'Use Google Maps', ldd::$slug ) . '</label>',            '_f_google_maps',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[directory_label]',       '<label for="directory_label">' . __( 'Directory Label' , ldl::$slug ) . '</label>',       '_f_directory_label',       'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[directory_description]', '<label for="directory_label">' . __( 'Directory Description' , ldl::$slug ) . '</label>', '_f_directory_description', 'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[locale_separator]',      '<span style="font-size: 18px">' . __( 'Locale Settings', ldl::$slug ) . '</span>',        '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[directory_use_locale]',  '<label for="directory_use_locale">' . __( 'Use Locale', ldl::$slug ) . '</label>',        '_f_directory_use_locale',  'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[directory_locale]',      '<label for="directory_locale">' . __( 'Directory Locale', ldl::$slug ) . '</label>',      '_f_directory_locale',      'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[other_separator]',       '<span style="font-size: 18px">' . __( 'Other Settings', ldl::$slug ) . '</span>',         '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[disable_bootstrap]',     '<label for="public_or_private">' . __( 'Disable Bootstrap', ldl::$slug ) . '</label>',    '_f_disable_bootstrap',     'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[public_or_private]',     '<label for="public_or_private">' . __( 'Public Directory', ldl::$slug ) . '</label>',     '_f_public_or_private',     'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[google_maps]',           '<label for="google_maps">' . __( 'Use Google Maps', ldl::$slug ) . '</label>',            '_f_google_maps',           'lddlite_settings_general', 'lddlite_settings_general' );
 
         function _f_directory_label() {
-            echo '<input id="directory_label" type="text" size="80" name="lddlite_settings[directory_label]" value="' . ldd::opt( 'directory_label', 1 ) . '">';
-            echo '<p class="description">' . __( 'Name your directory; "My Business Directory", "Local Restaurant Feed", "John\'s List of Links", etc.', ldd::$slug ) . '</p>';
+            echo '<input id="directory_label" type="text" size="80" name="lddlite_settings[directory_label]" value="' . ldl::setting( 'directory_label', 1 ) . '">';
+            echo '<p class="description">' . __( 'Name your directory; "My Business Directory", "Local Restaurant Feed", "John\'s List of Links", etc.', ldl::$slug ) . '</p>';
         }
 
         function _f_directory_description() {
-            wp_editor( ldd::opt( 'directory_description' ), 'ld_directory_description', array( 'textarea_name' => 'lddlite_settings[directory_description]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl::setting( 'directory_description' ), 'ld_directory_description', array( 'textarea_name' => 'lddlite_settings[directory_description]', 'textarea_rows' => 5 ) );
         }
 
         function _f_directory_use_locale() {
-            echo '<label title=""><input type="checkbox" name="lddlite_settings[directory_use_locale]" value="1" ' . checked( ldd::opt( 'directory_use_locale' ), 1, 0 ) . '> <span>If checked, set locale below.</span></label>';
+            echo '<label title=""><input type="checkbox" name="lddlite_settings[directory_use_locale]" value="1" ' . checked( ldl::setting( 'directory_use_locale' ), 1, 0 ) . '> <span>If checked, set locale below.</span></label>';
         }
 
         function _f_directory_locale() {
-            echo ld_dropdown_country( 'lddlite_settings[directory_locale]', ldd::opt( 'directory_locale' ) );
+            echo ld_dropdown_country( 'lddlite_settings[directory_locale]', ldl::setting( 'directory_locale' ) );
         }
 
         function _f_disable_bootstrap() {
-            echo '<label title=""><input type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked( ldd::opt( 'disable_bootstrap' ), 1, 0 ) . '> <span>Disable</span></label>';
+            echo '<label title=""><input type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked( ldl::setting( 'disable_bootstrap' ), 1, 0 ) . '> <span>Disable</span></label>';
             echo '<p class="description">A lot of themes already use bootstrap; if yours is one, disable the plugin from loading another copy.</p>';
         }
 
         function _f_public_or_private() {
-            $lddlite = ldd::load();
-
-            echo '<label title=""><input type="radio" name="lddlite_settings[public_or_private]" value="1" ' . checked( $lddlite->options['public_or_private'], 1, 0 ) . '> <span>Yes</span></label><br />';
-            echo '<label title=""><input type="radio" name="lddlite_settings[public_or_private]" value="0" ' . checked( $lddlite->options['public_or_private'], 0, 0 ) . '> <span>No</span></label><br />';
+            echo '<label title=""><input type="radio" name="lddlite_settings[public_or_private]" value="1" ' . checked( ldl::setting( 'public_or_private' ), 1, 0 ) . '> <span>Yes</span></label><br />';
+            echo '<label title=""><input type="radio" name="lddlite_settings[public_or_private]" value="0" ' . checked( ldl::setting( 'public_or_private' ), 0, 0 ) . '> <span>No</span></label><br />';
             echo '<p class="description">Determines whether features such as "Submit a Listing" are available.</p>';
-
         }
 
         function _f_google_maps() {
-            $lddlite = ldd::load();
-
-            echo '<label title=""><input type="radio" name="lddlite_settings[google_maps]" value="1" ' . checked( $lddlite->options['google_maps'], 1, 0 ) . '> <span>Yes</span></label><br />';
-            echo '<label title=""><input type="radio" name="lddlite_settings[google_maps]" value="0" ' . checked( $lddlite->options['google_maps'], 0, 0 ) . '> <span>No</span></label><br />';
+            echo '<label title=""><input type="radio" name="lddlite_settings[google_maps]" value="1" ' . checked( ldl::setting( 'google_maps' ), 1, 0 ) . '> <span>Yes</span></label><br />';
+            echo '<label title=""><input type="radio" name="lddlite_settings[google_maps]" value="0" ' . checked( ldl::setting( 'google_maps' ), 0, 0 ) . '> <span>No</span></label><br />';
             echo '<p class="description">Display Google Maps on listing pages?</p>';
 
         }
@@ -84,47 +79,47 @@ class LDD_Directory_Admin {
         // @TODO Compartmentalize this, as if it was a module.
         add_settings_section( 'lddlite_settings_email', __return_null(), '_s_email_settings_section', 'lddlite_settings_email' );
         function _s_email_settings_section() {
-            echo '<p>'.__( 'The following configuration options control how outgoing emails from Business Directory [lite] are handled.', ldd::$slug ).'</p>';
+            echo '<p>'.__( 'The following configuration options control how outgoing emails from Business Directory [lite] are handled.', ldl::$slug ).'</p>';
         }
 
 
-        add_settings_field( 'lddlite_settings[email_replyto]',           '<label for="email_replyto">' . __( 'Email Reply-to' , ldd::$slug ) . '</label>',                               '_f_email_replyto',           'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_toadmin_subject]',   '<label for="email_toadmin_subject">' . __( 'Administrator Notification Email' , ldd::$slug ) . '</label>',     '_f_email_toadmin_subject',   'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_toadmin_body]',      '<label for="email_toadmin_body" class="screen-reader-text">' . __( 'Email Body' , ldd::$slug ) . '</label>',   '_f_email_toadmin_body',      'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onsubmit_subject]',  '<label for="email_onsubmit_subject">' . __( 'Listing Submission' , ldd::$slug ) . '</label>',                  '_f_email_onsubmit_subject',  'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onsubmit_body]',     '<label for="email_onsubmit_body" class="screen-reader-text">' . __( 'Email Body' , ldd::$slug ) . '</label>',  '_f_email_onsubmit_body',     'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onapprove_subject]', '<label for="email_onapprove_subject">' . __( 'Listing Approval' , ldd::$slug ) . '</label>',                   '_f_email_onapprove_subject', 'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onapprove_body]',    '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , ldd::$slug ) . '</label>', '_f_email_onapprove_body',    'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_replyto]',           '<label for="email_replyto">' . __( 'Email Reply-to' , ldl::$slug ) . '</label>',                               '_f_email_replyto',           'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_toadmin_subject]',   '<label for="email_toadmin_subject">' . __( 'Administrator Notification Email' , ldl::$slug ) . '</label>',     '_f_email_toadmin_subject',   'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_toadmin_body]',      '<label for="email_toadmin_body" class="screen-reader-text">' . __( 'Email Body' , ldl::$slug ) . '</label>',   '_f_email_toadmin_body',      'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onsubmit_subject]',  '<label for="email_onsubmit_subject">' . __( 'Listing Submission' , ldl::$slug ) . '</label>',                  '_f_email_onsubmit_subject',  'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onsubmit_body]',     '<label for="email_onsubmit_body" class="screen-reader-text">' . __( 'Email Body' , ldl::$slug ) . '</label>',  '_f_email_onsubmit_body',     'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onapprove_subject]', '<label for="email_onapprove_subject">' . __( 'Listing Approval' , ldl::$slug ) . '</label>',                   '_f_email_onapprove_subject', 'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onapprove_body]',    '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , ldl::$slug ) . '</label>', '_f_email_onapprove_body',    'lddlite_settings_email', 'lddlite_settings_email' );
 
         function _f_email_replyto() {
-            echo '<input id="email_replyto" type="text" size="80" name="lddlite_settings[email_replyto]" value="' . ldd::opt( 'email_replyto', 1 ) . '" style="margin-bottom: 2em;">';
+            echo '<input id="email_replyto" type="text" size="80" name="lddlite_settings[email_replyto]" value="' . ldl::setting( 'email_replyto', 1 ) . '" style="margin-bottom: 2em;">';
         }
 
         function _f_email_toadmin_subject() {
-            echo '<input id="email_toadmin_subject" type="text" size="80" name="lddlite_settings[email_toadmin_subject]" value="' . ldd::opt( 'email_toadmin_subject', 1 ) . '">';
+            echo '<input id="email_toadmin_subject" type="text" size="80" name="lddlite_settings[email_toadmin_subject]" value="' . ldl::setting( 'email_toadmin_subject', 1 ) . '">';
             echo '<p class="description">Sent to the site administrator when a listing is submitted and pending approval.</p>';
         }
 
         function _f_email_toadmin_body() {
-            wp_editor( ldd::opt( 'email_toadmin_body' ), 'ld_email_toadmin_body', array( 'textarea_name' => 'lddlite_settings[email_toadmin_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl::setting( 'email_toadmin_body' ), 'ld_email_toadmin_body', array( 'textarea_name' => 'lddlite_settings[email_toadmin_body]', 'textarea_rows' => 5 ) );
         }
 
         function _f_email_onsubmit_subject() {
-            echo '<input id="email_onsubmit_subject" type="text" size="80" name="lddlite_settings[email_onsubmit_subject]" value="' . ldd::opt( 'email_onsubmit_subject', 1 ) . '">';
+            echo '<input id="email_onsubmit_subject" type="text" size="80" name="lddlite_settings[email_onsubmit_subject]" value="' . ldl::setting( 'email_onsubmit_subject', 1 ) . '">';
             echo '<p class="description">Sent to the listing owner on submission of their information, prior to approval.</p>';
         }
 
         function _f_email_onsubmit_body() {
-            wp_editor( ldd::opt( 'email_onsubmit_body' ), 'ld_email_onsubmit_body', array( 'textarea_name' => 'lddlite_settings[email_onsubmit_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl::setting( 'email_onsubmit_body' ), 'ld_email_onsubmit_body', array( 'textarea_name' => 'lddlite_settings[email_onsubmit_body]', 'textarea_rows' => 5 ) );
         }
 
         function _f_email_onapprove_subject() {
-            echo '<input id="email_onapprove_subject" type="text" size="80" name="lddlite_settings[email_onapprove_subject]" value="' . ldd::opt( 'email_onapprove_subject', 1 ) . '">';
+            echo '<input id="email_onapprove_subject" type="text" size="80" name="lddlite_settings[email_onapprove_subject]" value="' . ldl::setting( 'email_onapprove_subject', 1 ) . '">';
             echo '<p class="description">Sent to the listing owner when the site administrator approves their listing.</p>';
         }
 
         function _f_email_onapprove_body() {
-            wp_editor( ldd::opt( 'email_onapprove_body' ), 'ld_email_onapprove_body', array( 'textarea_name' => 'lddlite_settings[email_onapprove_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl::setting( 'email_onapprove_body' ), 'ld_email_onapprove_body', array( 'textarea_name' => 'lddlite_settings[email_onapprove_body]', 'textarea_rows' => 5 ) );
         }
 
         register_setting( 'lddlite_settings', 'lddlite_settings', array( $this, 'validate_settings' ) );
@@ -147,7 +142,8 @@ class LDD_Directory_Admin {
 
         $output = array_merge( $options, $input );
 
-        add_settings_error( 'lddlite_settings', '', __( 'Settings updated.', ldd::$slug ), 'updated' );
+
+        add_settings_error( 'lddlite_settings', '', __( 'Settings updated.', ldl::$slug ), 'updated' );
 
         return $output;
     }
@@ -160,12 +156,12 @@ class LDD_Directory_Admin {
 
     public function settings_page() {
 
-        wp_enqueue_style( ldd::$slug . '-admin' );
+        wp_enqueue_style( ldl::$slug . '-admin' );
         $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general';
 
         ?>
         <div class="wrap">
-            <h2>Directory <span class="lite">[lite]</span> <?php _e( 'Settings', ldd::$slug ); ?></h2>
+            <h2>Directory <span class="lite">[lite]</span> <?php _e( 'Settings', ldl::$slug ); ?></h2>
 
             <?php settings_errors( 'lddlite_settings' ) ?>
 
@@ -179,8 +175,8 @@ class LDD_Directory_Admin {
 
 
             <h2 class="nav-tab-wrapper">
-                <a href="<?php echo add_query_arg( 'tab', 'general', remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e( 'General', ldd::$slug ); ?></a>
-                <a href="<?php echo add_query_arg( 'tab', 'email',   remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'email' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Email', ldd::$slug ); ?></a>
+                <a href="<?php echo add_query_arg( 'tab', 'general', remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e( 'General', ldl::$slug ); ?></a>
+                <a href="<?php echo add_query_arg( 'tab', 'email',   remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'email' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Email', ldl::$slug ); ?></a>
             </h2>
 
             <div id="tab_container">
@@ -239,7 +235,7 @@ function lddlite_settings_email_sanitize( $input ) {
 
     if ( !is_email( $input['email_replyto'] ) ) {
         $input['email_replyto'] = '';
-        add_settings_error( 'lddlite_settings', '', __( 'Please enter a valid email address.', ldd::$slug ), 'error' );
+        add_settings_error( 'lddlite_settings', '', __( 'Please enter a valid email address.', ldl::$slug ), 'error' );
     }
 
     $input['email_toadmin_subject'] = wp_filter_nohtml_kses( $input['email_toadmin_subject'] );

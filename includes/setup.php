@@ -95,14 +95,14 @@ function ld_setup__register_custom() {
 
 
 function ld_setup__register_scripts() {
-    wp_register_script( ldd::$slug,                       LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
-    wp_register_script( ldd::$slug . '-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
-    wp_register_script( ldd::$slug . '-search',           LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( ldl::$slug,                       LDDLITE_URL . '/public/js/lite.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( ldl::$slug . '-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
+    wp_register_script( ldl::$slug . '-search',           LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
     wp_register_script( 'bootstrap',        LDDLITE_URL . '/public/js/bootstrap.min.js', array( 'jquery' ), '3.1.1', true );
 
     wp_register_script( 'happy',        LDDLITE_URL . '/public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true );
 
-    wp_register_style( ldd::$slug,                LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
+    wp_register_style( ldl::$slug,                LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
     wp_register_style( 'bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', false, LDDLITE_VERSION );
     wp_register_style( 'bootflat',  LDDLITE_URL . '/public/css/bootflat.min.css', false, LDDLITE_VERSION );
 
@@ -110,14 +110,14 @@ function ld_setup__register_scripts() {
     wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', false, '4.0.3' );
 
     // Admin
-    wp_register_script( ldd::$slug . '-admin', LDDLITE_URL . '/public/js/admin.js', array( 'jquery-ui-dialog' ), LDDLITE_VERSION, 1 );
-    wp_register_style(  ldd::$slug . '-admin', LDDLITE_URL . '/public/css/admin.css', false, LDDLITE_VERSION );
+    wp_register_script( ldl::$slug . '-admin', LDDLITE_URL . '/public/js/admin.js', array( 'jquery-ui-dialog' ), LDDLITE_VERSION, 1 );
+    wp_register_style(  ldl::$slug . '-admin', LDDLITE_URL . '/public/css/admin.css', false, LDDLITE_VERSION );
 
 }
 
 
-add_action( 'init', 'ld_setup__register_custom' );
-add_action( 'init', 'ld_setup__register_scripts' );
+add_action( 'init', 'ld_setup__register_custom', 5 );
+add_action( 'init', 'ld_setup__register_scripts', 5 );
 
 
 /**

@@ -10,8 +10,68 @@
  */
 
 
+function ldl_get_default_settings() {
+    $site_title = get_bloginfo( 'name' );
+    $admin_email = get_bloginfo( 'admin_email' );
+
+    $email = array();
+
+    $email['to_admin']   = <<<EM
+<p><strong>A new listing is pending review!</strong></p>
+
+<p>This submission is awaiting approval. Please visit the link to view and approve the new listing:</p>
+
+<p>{view_listing}</p>
+
+<ul>
+    <li>Business Name: <strong>{title}</strong></li>
+    <li>Business Description: <strong>{description}</strong></li>
+</ul>
+EM;
+    $email['on_submit']  = <<<EM
+<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
+
+<p>Your listing is pending approval.</p>
+<p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {$admin_email}.</p>
+
+<ul>
+    <li>Business Name: <strong>{title}</strong></li>
+    <li>Business Description: <strong>{description}</strong></li>
+</ul>
+
+<p><em>Sincerely,<br>{$site_title}</em></p>
+EM;
+    $email['on_approve'] = <<<EM
+<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
+
+<p>Your listing has been approved! You can now view it online:</p>
+<p>{link}</p>
+
+<p><em>Sincerely,<br>{$site_title}</em></p>
+EM;
+
+    $defaults = apply_filters( 'lddlite_default_options', array(
+        'directory_label'           => get_bloginfo( 'name' ),
+        'directory_description'     => '',
+        'directory_use_locale'      => 0,
+        'directory_locale'          => 'US',
+        'disable_bootstrap'         => 0,
+        'public_or_private'         => 1,
+        'google_maps'               => 1,
+        'email_replyto'             => get_bloginfo( 'admin_email' ),
+        'email_toadmin_subject'     => 'A new listing has been submitted for review!',
+        'email_toadmin_body'        => $email['to_admin'],
+        'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
+        'email_onsubmit_body'       => $email['on_submit'],
+        'email_onapprove_subject'   => 'Your listing on ' . $site_title . ' was approved!',
+        'email_onapprove_body'      => $email['on_approve'],
+    ) );
+
+    return $defaults;
+}
+
 function ld_bootstrap() {
-    if ( !ldd::opt( 'disable_bootstrap' ) ) {
+    if ( !ldl::setting( 'disable_bootstrap' ) ) {
         wp_enqueue_style( 'bootstrap' );
         wp_enqueue_script( 'bootstrap' );
     }
@@ -19,34 +79,22 @@ function ld_bootstrap() {
 
 
 function ld_use_locale() {
-    return ldd::opt( 'directory_use_locale' );
+    return ldl::setting( 'directory_use_locale' );
 }
 
 
 function ld_get_locale() {
-    return ldd::opt( 'directory_locale' );
+    return ldl::setting( 'directory_locale' );
 }
 
 
 function ld_is_public() {
-    return ldd::opt( 'public_or_private' );
+    return ldl::setting( 'public_or_private' );
 }
 
 
 function ld_use_google_maps() {
-    return ldd::opt( 'google_maps' );
-}
-
-
-function lddslug() {
-    static $slug;
-
-    if ( !isset( $slug ) ) {
-        $lddlite = ldd::load();
-        $slug = $lddlite->slug();
-    }
-
-    return $slug;
+    return ldl::setting( 'google_maps' );
 }
 
 
@@ -106,11 +154,11 @@ function  ld_get_page_header( $show_label = 0 ) {
 
     wp_enqueue_script( 'ldd-lite-search' );
 
-    $header_template = ldd::tpl();
+    $header_template = ldl::tpl();
 
     $header_template->assign( 'show_label', $show_label );
-    $header_template->assign( 'directory_label', ldd::opt( 'directory_label' ) );
-    $header_template->assign( 'directory_description', ldd::opt( 'directory_description' ) );
+    $header_template->assign( 'directory_label', ldl::setting( 'directory_label' ) );
+    $header_template->assign( 'directory_description', ldl::setting( 'directory_description' ) );
 
     $header_template->assign( 'public', ld_is_public() );
     $header_template->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
@@ -137,9 +185,9 @@ function ld_get_term_name( $term_id ) {
  * @deprecated use ld_get_page_header()
  */
 function ld_get_search_form() {
-    $tpl = ldd::tpl();
-    $tpl->assign( 'placeholder', __( 'Search the directory...', ldd::$slug ) );
-    $tpl->assign( 'search_text', __( 'Search', ldd::$slug ) );
+    $tpl = ldl::tpl();
+    $tpl->assign( 'placeholder', __( 'Search the directory...', ldl::$slug ) );
+    $tpl->assign( 'search_text', __( 'Search', ldl::$slug ) );
     $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
     return $tpl->draw( 'search-form', 1 );
 }
@@ -174,7 +222,7 @@ function ld_split_file_into_array( $arrfile ) {
 
     foreach ( $lines as $line ) {
         $kv = explode( ',', $line );
-        $data[ $kv[0] ] = $kv[1];
+        $data[ $kv[0] ] = str_replace( array( "\r", "\n" ), '', $kv[1] );
     }
 
     return $data;
@@ -326,8 +374,8 @@ function ld_get_social( $id ) {
 
 function ld_append_login_form() {
 
-    $modal = ldd::tpl();
-    $modal->assign( 'login_url', ldd::$modal['url'] );
+    $modal = ldl::tpl();
+    $modal->assign( 'login_url', ldl::$modal['url'] );
     $modal->assign( 'login_form', wp_login_form( array( 'echo' => false ) ) );
     $modal->draw( 'modal-login' );
 
@@ -367,9 +415,9 @@ function ld_dropdown_subdivision( $subdivision, $data, $tabindex = 0 ) {
 function ld_dropdown_country( $name, $data = '', $tabindex = 0 ) {
 
     $selected = '';
-    if ( !is_array( $data ) && !empty( $data )  )
+    if ( !is_array( $data )  )
         $selected = $data;
-    else if ( isset( $data['country'] ) && !empty( $data ) )
+    else if ( isset( $data['country'] ) )
         $selected = $data['country'];
 
     $tabindex = $tabindex ? 'tabindex="' . $tabindex . '"' : '';
@@ -403,3 +451,110 @@ function ld_sanitize_phone( $number ) {
 function ld_get_listing_email( $id ) {
     return get_post_meta( $id, '_lddlite_contact_email', 1 );
 }
+
+
+function ldl_sanitize_twitter( $input ) {
+
+    $output = preg_replace( '/[^A-Za-z0-9\/:.]/', '', $input );
+
+    if ( strpos( $output, '/' ) !== false )
+        $output = substr( $input, strrpos( $output, '/' ) + 1 );
+
+    $output = 'https://twitter.com/' . $output;
+
+    return $output;
+}
+
+function ldl_sanitize_https( $url ) {
+
+    if ( strpos( $url, 'http') !== 0 )
+        $url = esc_url_raw( $url );
+
+    return preg_replace( '~http:~', 'https:', $url );
+}
+
+
+/**
+ * Shamelessly taken from http://james.cridland.net/code/format_uk_phonenumbers.html
+ */
+function ldl_format_uk( $number ) {
+
+
+
+    // Change the international number format and remove any non-number character
+    $number = preg_replace( '/[^0-9]/', '', str_replace( '+', '00', $number ) );
+    $arr    = ldl_uk_split( $number, explode( ',', ldl_get_uk_format( $number ) ) );
+
+    // Add brackets around first split of numbers if number starts with 01 or 02
+    if ( substr( $number, 0, 2) == '01' || substr( $number, 0, 2) == '02' )
+        $arr[0] = '(' . $arr[0] . ')';
+
+    // Convert array back into string, split by spaces
+    $formatted = implode( ' ', $arr );
+
+    return $formatted;
+}
+
+function ldl_uk_split( $number, $split ) {
+    $start = 0;
+    $array = array();
+    foreach ( $split as $value ) {
+        $array[] = substr( $number, $start, $value );
+        $start = $start + $value;
+    }
+    return $array;
+}
+
+function ldl_get_uk_format($number) {
+
+    // This uses full codes from http://www.area-codes.org.uk/formatting.shtml
+    $formats = array (
+        '02'        => '3,4,4',
+        '03'        => '4,3,4',
+        '05'        => '3,4,4',
+        '0500'      => '4,6',
+        '07'        => '5,6',
+        '070'       => '3,4,4',
+        '076'       => '3,4,4',
+        '07624'     => '5,6',
+        '08'        => '4,3,4',
+        '09'        => '4,3,4',
+        '01'        => '5,6',
+        '011'       => '4,3,4',
+        '0121'      => '4,3,4',
+        '0131'      => '4,3,4',
+        '0141'      => '4,3,4',
+        '0151'      => '4,3,4',
+        '0161'      => '4,3,4',
+        '0191'      => '4,3,4',
+        '013873'    => '6,5',
+        '015242'    => '6,5',
+        '015394'    => '6,5',
+        '015395'    => '6,5',
+        '015396'    => '6,5',
+        '016973'    => '6,5',
+        '016974'    => '6,5',
+        '016977'    => '6,5',
+        '0169772'   => '6,4',
+        '0169773'   => '6,4',
+        '017683'    => '6,5',
+        '017684'    => '6,5',
+        '017687'    => '6,5',
+        '019467'    => '6,5'
+    );
+
+    // uksort, pardon the pun
+    uksort( $formats, 'ldl_uk_sort_callback' );
+
+    foreach ( $formats as $k => $v ) {
+        if ( substr( $number, 0, strlen( $k ) ) == $k )
+            break;
+    }
+
+    return $v;
+}
+
+function ldl_uk_sort_callback( $a, $b ) {
+    return strlen( $b ) - strlen( $a );
+}
+
