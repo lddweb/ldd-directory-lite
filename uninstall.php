@@ -19,35 +19,46 @@ function ldl_uninstall_data() {
     $query = sprintf( "SELECT id FROM %s WHERE post_type = '%s'", $wpdb->posts, LDDLITE_POST_TYPE );
     $post_ids = $wpdb->get_col( $query );
 
-    foreach ( $post_ids as $id ) {
-        $attachments = get_posts( array(
-            'post_type'      => 'attachment',
-            'posts_per_page' => -1,
-            'post_status'    => 'any',
-            'post_parent'    => $id
-        ) );
+    if ( !empty( $post_ids ) ) {
+        foreach ( $post_ids as $id ) {
+            $attachments = get_posts( array(
+                'post_type'      => 'attachment',
+                'posts_per_page' => -1,
+                'post_status'    => 'any',
+                'post_parent'    => $id
+            ) );
 
-        foreach ( $attachments as $attachment )
-            wp_delete_attachment( $attachment->ID );
+            if ( empty( $attachments ) )
+                continue;
+
+            foreach ( $attachments as $attachment )
+                wp_delete_attachment( $attachment->ID );
+        }
     }
 
     $wpdb->query( sprintf( "DELETE FROM %s WHERE post_id IN ( SELECT id FROM %s WHERE post_type = '%s' ) ", $wpdb->postmeta, $wpdb->posts, LDDLITE_POST_TYPE ) );
     $wpdb->query( sprintf( "DELETE FROM %s WHERE post_type = '%s'", $wpdb->posts, LDDLITE_POST_TYPE ) );
 
 
-    $categories = get_terms( LDDLITE_TAX_CAT );
+    $categories = get_terms(
+        LDDLITE_TAX_CAT,
+        array( 'hide_empty' => false, 'fields' => 'ids' )
+    );
 
     if ( $categories ) {
-        foreach ( $categories as $term ) {
-            wp_delete_term( $term->term_id, LDDLITE_TAX_CAT );
+        foreach ( $categories as $term_id ) {
+            wp_delete_term( $term_id, LDDLITE_TAX_CAT );
         }
     }
 
-    $tags = get_terms( LDDLITE_TAX_TAG );
+    $tags = get_terms(
+        LDDLITE_TAX_TAG,
+        array( 'hide_empty' => false, 'fields' => 'ids' )
+    );
 
     if ( $tags ) {
-        foreach ( $tags as $term ) {
-            wp_delete_term( $term->term_id, LDDLITE_TAX_TAG );
+        foreach ( $tags as $term_id ) {
+            wp_delete_term( $term_id, LDDLITE_TAX_TAG );
         }
     }
 

@@ -74,8 +74,8 @@
                         <div class="row bump">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">Logo</label>
-                                    <input id="logo" class="form-control" name="ld_s_logo" type="file" tabindex="5">
+                                    <label class="control-label" for="submit-logo">Logo</label>
+                                    <input id="submit-logo" class="form-control" name="ld_s_logo" type="file" tabindex="5">
                                     {if="!empty($errors.logo)"}{$errors.logo}{/if}
                                     <span class="description">Maximum file size is 2mb. This will be displayed on your profile page, and search results.</span>
                                 </div>
@@ -134,18 +134,23 @@
                                     {if="!empty($errors.city)"}{$errors.city}{/if}
                                 </div>
                             </div>
-                            <div class="col-xs-4">
-                                <div class="form-group">
-                                    <label id="subdivision_label" class="control-label" for="subdivision">State</label>
-                                    <span id="subdivision_control">{$subdivision_dropdown}</span>
-                                    {if="!empty($errors.subdivision)"}{$errors.subdivision}{/if}
-                                </div>
+                            <div class="submit-ajax-loading col-xs-8" style="display:none;">
+                                <img src="/wp-content/plugins/ldd-directory-lite/public/images/loading.gif" width="32" height="32">
                             </div>
-                            <div class="col-xs-4">
-                                <div class="form-group">
-                                    <label id="post_code_label" class="control-label" for="post_code">Zip/Postal Code</label>
-                                    <input id="post_code" class="form-control" name="ld_s_post_code" type="text" {if="!empty($data.post_code)"}value="{$data.post_code}" {/if}tabindex="11" required>
-                                    {if="!empty($errors.post_code)"}{$errors.post_code}{/if}
+                            <div class="submit-ajax-replace">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label id="subdivision_label" class="control-label" for="subdivision">State</label>
+                                        <span id="subdivision_control">{$subdivision_dropdown}</span>
+                                        {if="!empty($errors.subdivision)"}{$errors.subdivision}{/if}
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label id="post_code_label" class="control-label" for="post_code">Zip/Postal Code</label>
+                                        <input id="post_code" class="form-control" name="ld_s_post_code" type="text" {if="!empty($data.post_code)"}value="{$data.post_code}" {/if}tabindex="11" required>
+                                        {if="!empty($errors.post_code)"}{$errors.post_code}{/if}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -158,40 +163,37 @@
                     <fieldset>
                         <legend>Web & Social</legend>
 
-                        <p>None of the following information is required, however it can play a very important role in distinguishing your listing from others in our directory. The best way to ensure the validity of these URLs is to copy them directly from the location bar in your browser.</p>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="">Website URL</label>
-                                    <input id="url" class="form-control" name="ld_s_url[website]" type="text" {if="!empty($url.website)"}value="{$url.website}" {/if}tabindex="12">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="">Website</label>
+                                        <input id="url" class="form-control" name="ld_s_url[website]" type="text" {if="!empty($url.website)"}value="{$url.website}" {/if}tabindex="12">
+                                        <span class="description">Examples include; 'http://www.yoursite.com', 'mysite.org'</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="">Facebook</label>
+                                        <input id="facebook" class="form-control" name="ld_s_url[facebook]" type="text" {if="!empty($url.facebook)"}value="{$url.facebook}" {/if}tabindex="13">
+                                        <span class="description">Help locating and customizing your <a href="https://www.facebook.com/help/www/329992603752372" title="Your Facebook Web Address | Facebook Help Center">Facebook profile URL</a></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="">Facebook Url</label>
-                                    <input id="facebook" class="form-control" name="ld_s_url[facebook]" type="text" {if="!empty($url.facebook)"}value="{$url.facebook}" {/if}tabindex="13">
-                                    <span class="description">Help locating and customizing your <a href="https://www.facebook.com/help/www/329992603752372" title="Your Facebook Web Address | Facebook Help Center">Facebook profile URL</a></span>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="">Twitter</label>
+                                        <input id="twitter" class="form-control" name="ld_s_url[twitter]" type="text" {if="!empty($url.twitter)"}value="{$url.twitter}" {/if}tabindex="14">
+                                        <span class="description">This will always be 'https://twitter.com/<strong>username</strong>'</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="">Twitter</label>
-                                    <input id="twitter" class="form-control" name="ld_s_url[twitter]" type="text" {if="!empty($url.twitter)"}value="{$url.twitter}" {/if}tabindex="14">
-                                    <span class="description">This will always be 'https://twitter.com/<strong>username</strong>'</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="">Linkedin</label>
-                                    <input id="linkedin" class="form-control" name="ld_s_url[linkedin]" type="text" {if="!empty($url.linkedin)"}value="{$url.linkedin}" {/if}tabindex="15">
-                                    <span class="description">Help locating and customizing your <a href="http://help.linkedin.com/app/answers/detail/a_id/85/~/promoting-your-public-profile" title="Promoting Your Public Profile | LinkedIn Help Center">LinkedIn profile URL</a></span>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="">Linkedin</label>
+                                        <input id="linkedin" class="form-control" name="ld_s_url[linkedin]" type="text" {if="!empty($url.linkedin)"}value="{$url.linkedin}" {/if}tabindex="15">
+                                        <span class="description">Help locating and customizing your <a href="http://help.linkedin.com/app/answers/detail/a_id/85/~/promoting-your-public-profile" title="Promoting Your Public Profile | LinkedIn Help Center">LinkedIn profile URL</a></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -249,30 +251,24 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Contact</h4>
+                <h4 class="modal-title">Terms of Service</h4>
             </div>
             <div class="modal-body">
-                <p>Feel free to contact us for any issues you might have with our products.</p>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <label>Name</label>
-                        <input type="text" class="form-control" placeholder="Name">
-                    </div>
-                    <div class="col-xs-6">
-                        <label>Email</label>
-                        <input type="text" class="form-control" placeholder="Email">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label>Message</label>
-                        <textarea class="form-control" rows="3">Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac</textarea>
-                    </div>
-                </div>
+
+                        <textarea class="form-control" rows="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.
+
+                            Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit.
+
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus.
+
+                            Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper.
+
+                            Nulla facilisi. Integer lacinia sollicitudin massa. Cras metus. Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales.
+                        </textarea>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Send</button>
             </div>
         </div>
     </div>
@@ -309,13 +305,19 @@
                     action: "dropdown_change",
                     subdivision: newSubdivision,
                 },
+                beforeSend: function() {
+                    $(".submit-ajax-replace").hide();
+                }
             })
             request.done(function( msg ) {
                 var response = $.parseJSON( msg )
                 console.log( response.subdivision )
+                console.log( subControl.html() )
+                console.log( response.input )
                 subControl.html( response.input )
                 $("#subdivision_label").text( response.sub )
                 $("#post_code_label").text( response.code )
+                $(".submit-ajax-replace").show();
             })
         })
 

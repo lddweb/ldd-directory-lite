@@ -36,8 +36,8 @@ define( 'LDDLITE_PFX',          '_lddlite_' );
 register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
-ini_set( 'display_errors', 1 );
-error_reporting(-1);
+/*ini_set( 'display_errors', 1 );
+error_reporting(-1);*/
 
 class LDD_Directory_Lite {
 
@@ -248,5 +248,3 @@ class ldl {
  * Start everything.
  */
 ldl::load();
-
-

@@ -1,4 +1,4 @@
-<div class="modal fade" id="contact-listing-owner" tabindex="-1" role="dialog" aria-labelledby="contact-listing-ownerLabel" aria-hidden="true">
+<div class="business-directory modal fade" id="contact-listing-owner" tabindex="-1" role="dialog" aria-labelledby="contact-listing-ownerLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

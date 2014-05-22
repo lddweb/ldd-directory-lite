@@ -53,8 +53,6 @@ EM;
     $defaults = apply_filters( 'lddlite_default_options', array(
         'directory_label'           => get_bloginfo( 'name' ),
         'directory_description'     => '',
-        'directory_use_locale'      => 0,
-        'directory_locale'          => 'US',
         'disable_bootstrap'         => 0,
         'public_or_private'         => 1,
         'google_maps'               => 1,
@@ -65,6 +63,10 @@ EM;
         'email_onsubmit_body'       => $email['on_submit'],
         'email_onapprove_subject'   => 'Your listing on ' . $site_title . ' was approved!',
         'email_onapprove_body'      => $email['on_approve'],
+        'submit_use_tos'            => 0,
+        'submit_tos'                => '',
+        'submit_use_locale'         => 0,
+        'submit_locale'             => 'US',
     ) );
 
     return $defaults;
@@ -79,12 +81,12 @@ function ld_bootstrap() {
 
 
 function ld_use_locale() {
-    return ldl::setting( 'directory_use_locale' );
+    return ldl::setting( 'submit_use_locale' );
 }
 
 
 function ld_get_locale() {
-    return ldl::setting( 'directory_locale' );
+    return ldl::setting( 'submit_locale' );
 }
 
 
@@ -231,7 +233,7 @@ function ld_split_file_into_array( $arrfile ) {
 
 function ld_get_subdivision_array( $subdivision ) {
 
-    $subdivision_file = LDDLITE_PATH . '/includes/actions/select/subdivision.' . $subdivision . '.inc';
+    $subdivision_file = LDDLITE_PATH . '/includes/actions/select/subdivision.' . strtolower( $subdivision ) . '.inc';
 
     if ( !file_exists( $subdivision_file ) )
         return false;
@@ -384,13 +386,11 @@ function ld_append_login_form() {
 
 function ld_dropdown_subdivision( $subdivision, $data, $tabindex = 0 ) {
 
-    $selected = '';
+    $selected = isset( $data['subdivision'] ) ? $data['subdivision'] : '';
     $lines = '';
 
-    if ( !empty( $subdivision ) ) {
-        $selected = isset( $data['subdivision'] ) ? $data['subdivision'] : '';
+    if ( !empty( $subdivision ) )
         $lines = ld_get_subdivision_array( $subdivision );
-    }
 
     $tabindex = $tabindex ? 'tabindex="' . $tabindex . '"' : '';
 

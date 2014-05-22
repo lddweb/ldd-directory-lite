@@ -89,6 +89,26 @@ function _ldup_drop_tables() {
 
 function ldl_upgrade() {
 
+    function _maintenance( $enable = false ) {
+
+        $file = ABSPATH . '.maintenance';
+        if ( $enable ) {
+
+            $fh = fopen( $file, 'w' );
+            if ( $fh ) {
+                fwrite( $fh, '<?php $upgrading = ' . time() . '; ?>' );
+                fclose( $fh );
+                chmod( $file, 0644 );
+            }
+
+        } else if ( !$enable && file_exists( $file ) ) {
+            unlink( $file );
+        }
+    }
+
+    _maintenance( true );
+
+    //trigger_error( 'Upgrade Fired: ' . print_r( debug_backtrace(), 1 ), E_USER_NOTICE );
 
     if ( !function_exists( 'ld_use_locale' ) )
         require_once( LDDLITE_PATH . '/includes/functions.php' );
@@ -229,7 +249,10 @@ function ldl_upgrade() {
     update_option( 'lddlite_settings', array() );
     update_option( 'lddlite_version',  LDDLITE_VERSION );
 
+    _maintenance( false );
+
 }
+
 
 function ldl_disable_old() {
     $old_plugin = '/ldd-business-directory/lddbd_core.php';

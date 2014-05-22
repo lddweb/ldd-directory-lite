@@ -18,7 +18,7 @@ function ld_filter__term_link( $termlink ) {
 
     $link = explode( '?', $termlink);
 
-    if ( count( $link ) < 2 )
+    if ( count( $link ) < 2 || !is_object( $post ) )
         return $termlink;
 
     parse_str( $link[1], $link );

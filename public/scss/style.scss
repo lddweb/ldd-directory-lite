@@ -47,6 +47,11 @@ $pure-blue:         #0078e7;
   font-weight: 500;
   font-size: .9em;
 }
+.modal * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 .business-directory {
   position: relative;
@@ -85,6 +90,9 @@ $pure-blue:         #0078e7;
   }*/
 
 
+  li {
+    margin: 0;
+  }
 
   span.submit-error,
   #submit-items ul li a.submit-error {
@@ -203,9 +211,8 @@ h2.listing-title {
 .submit-form-wrap,
 .type-listing {
   padding: 0;
-  margin-bottom: 20px;
+/*  margin-bottom: 20px;*/
   background-color: #fff;
-  border-radius: 4px;
   border: 1px solid rgba(128, 128, 128, 0.10);
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
@@ -268,10 +275,12 @@ p.website {
 /* Submit Form */
 
 .submit-form-wrap {
-  padding: 1em;
+  padding: 2em 1em 1em;
+  margin-bottom: 1em;
 
   .pure-button.next {
     margin-right: 0;
+    color: rgba(32, 69, 108, 0.79);
   }
   &.submit-confirm {
     text-align: center;
@@ -281,13 +290,13 @@ p.website {
     }
 
     p {
-      margin-bottom: 2em;
+      margin: 0 0 1em;
     }
   }
 
   fieldset {
     p {
-      padding: 10px 10px 20px;
+      padding: .1em 0 .2em;
       font-size: 1em;
       font-weight: 300;
 

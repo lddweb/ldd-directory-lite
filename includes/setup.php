@@ -104,10 +104,10 @@ function ld_setup__register_scripts() {
 
     wp_register_style( ldl::$slug,                LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
     wp_register_style( 'bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', false, LDDLITE_VERSION );
-    wp_register_style( 'bootflat',  LDDLITE_URL . '/public/css/bootflat.min.css', false, LDDLITE_VERSION );
+    wp_register_style( 'bootflat',  LDDLITE_URL . '/public/css/bootflat.css', false, LDDLITE_VERSION );
 
     wp_register_style( 'yui-pure', '//yui.yahooapis.com/pure/0.4.2/pure-min.css', false, '0.4.2' );
-    wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', false, '4.0.3' );
+    wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', false, '4.1.0' );
 
     // Admin
     wp_register_script( ldl::$slug . '-admin', LDDLITE_URL . '/public/js/admin.js', array( 'jquery-ui-dialog' ), LDDLITE_VERSION, 1 );

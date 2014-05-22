@@ -1,9 +1,9 @@
 <article id="listing-{$id}" class="listing-{$id} type-listing {$nth} cf">
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             {$thumbnail}
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
             <div class="listing-header row">
                 <div class="col-sm-8">
                     <h2 class="listing-title">{$title}</h2>
