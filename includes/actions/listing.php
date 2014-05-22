@@ -8,14 +8,6 @@
 function ld_action__listing( $listing ) {
     global $post;
 
-    ld_bootstrap();
-
-    wp_enqueue_style('font-awesome');
-
-    wp_enqueue_style('bootflat');
-    wp_enqueue_style('font-awesome');
-
-
     $terms = wp_get_post_terms($listing->ID, LDDLITE_TAX_CAT);
     if ( isset( $terms[0] ) ) {
         $term_link = add_query_arg(array(
@@ -87,7 +79,7 @@ function ld_action__listing( $listing ) {
     $tpl->assign( 'description', wpautop( $listing->post_content ) );
 
 
-    wp_enqueue_script( 'happy' );
+    wp_enqueue_script( 'lddlite-happy' );
     add_action( 'wp_footer', '_f_draw_modal' );
     function _f_draw_modal() {
         $listing = ldl::pull();

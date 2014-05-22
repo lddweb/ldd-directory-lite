@@ -1,4 +1,4 @@
-<article id="listing-{$id}" class="listing-{$id} type-listing {$nth} cf">
+<article id="listing-{$id}" class="listing-{$id} type-listing {$nth}">
 
         <div class="col-sm-2">
             {$thumbnail}

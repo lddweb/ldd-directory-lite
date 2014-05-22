@@ -72,11 +72,14 @@ EM;
     return $defaults;
 }
 
-function ld_bootstrap() {
-    if ( !ldl::setting( 'disable_bootstrap' ) ) {
-        wp_enqueue_style( 'bootstrap' );
-        wp_enqueue_script( 'bootstrap' );
-    }
+
+function ldl_get_loading_gif() {
+    $img = '<img src="' . LDDLITE_URL . '/public/images/loading.gif" width="32" height="32">';
+    return $img;
+}
+
+function ldl_use_tos() {
+    return ldl::setting( 'submit_use_tos' );
 }
 
 
@@ -154,7 +157,7 @@ function ld_get_tpl() {
 
 function  ld_get_page_header( $show_label = 0 ) {
 
-    wp_enqueue_script( 'ldd-lite-search' );
+    wp_enqueue_script( 'lddlite-search' );
 
     $header_template = ldl::tpl();
 
@@ -180,18 +183,6 @@ function ld_get_term_name( $term_id ) {
     if ( !$term || is_wp_error( $term ) )
         return '';
     return $term->name;
-}
-
-
-/**
- * @deprecated use ld_get_page_header()
- */
-function ld_get_search_form() {
-    $tpl = ldl::tpl();
-    $tpl->assign( 'placeholder', __( 'Search the directory...', ldl::$slug ) );
-    $tpl->assign( 'search_text', __( 'Search', ldl::$slug ) );
-    $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
-    return $tpl->draw( 'search-form', 1 );
 }
 
 
@@ -371,16 +362,6 @@ function ld_get_social( $id ) {
     }
 
     return $output;
-}
-
-
-function ld_append_login_form() {
-
-    $modal = ldl::tpl();
-    $modal->assign( 'login_url', ldl::$modal['url'] );
-    $modal->assign( 'login_form', wp_login_form( array( 'echo' => false ) ) );
-    $modal->draw( 'modal-login' );
-
 }
 
 

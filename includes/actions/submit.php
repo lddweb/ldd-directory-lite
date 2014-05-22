@@ -12,20 +12,57 @@
 require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
 
 
+function ldl_append_tos() {
+
+    if ( !ldl_use_tos() )
+        return;
+
+    $tpl = ld_get_tpl();
+    $tpl->assign( 'tos', ldl::setting( 'submit_tos' ) );
+    $tpl->draw( 'modal-tos' );
+
+}
+add_action( 'wp_footer', 'ldl_append_tos' );
+
+
 function ld_action__submit( $term = false ) {
     global $post;
 
-    ld_bootstrap();
-
-    wp_enqueue_style( ldl::$slug );
-    wp_enqueue_script( ldl::$slug . '-responsiveslides' );
-    wp_enqueue_script( 'icheck' );
-
-    wp_enqueue_style( 'bootflat' );
-    wp_enqueue_style( 'font-awesome' );
-
+    wp_enqueue_script( 'lddlite-responsiveslides' );
+    wp_enqueue_script( 'lddlite-submit' );
 
     $tpl = ldl::tpl();
+    $tpl->assign( 'header', ld_get_page_header() );
+    $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
+
+    $tpl->assign( 'form_action', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+    $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+    $tpl->assign( 'nonce', wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ) );
+
+    $category_args = array(
+        'hide_empty'    => 0,
+        'echo'          => 0,
+        'selected'      => isset( $data['category'] ) ? $data['category'] : 0,
+        'hierarchical'  => 1,
+        'name'          => 'ld_s_category',
+        'id'            => 'category',
+        'class'         => 'form-control',
+        'tab_index'     => 2,
+        'taxonomy'      => LDDLITE_TAX_CAT,
+    );
+
+    $tpl->assign( 'allowed_tags', allowed_tags() );
+    $tpl->assign( 'category_dropdown', wp_dropdown_categories( $category_args ) );
+
+    $subdivision = $use_locale ? ld_get_locale() : 'US';
+
+    $tpl->assign( 'use_locale',  ld_use_locale() );
+    $tpl->assign( 'country_dropdown', ld_dropdown_country( 'ld_s_country', $data ) );
+    $tpl->assign( 'subdivision_dropdown', ld_dropdown_subdivision( $subdivision, $data ) );
+
+    $tpl->assign( 'use_tos', ldl::setting( 'submit_use_tos' ) );
+    $tpl->assign( 'tos', ldl::setting( 'submit_tos' ) );
+    $tpl->assign( 'is_logged_in', (int) is_user_logged_in() );
 
     $valid = false;
 
@@ -102,35 +139,6 @@ function ld_action__submit( $term = false ) {
 
     }
 
-    $category_args = array(
-        'hide_empty'         => 0,
-        'echo'               => 0,
-        'selected'           => isset( $data['category'] ) ? $data['category'] : 0,
-        'hierarchical'       => 1,
-        'name'               => 'ld_s_category',
-        'id'                 => 'category',
-        'class'         => 'form-control',
-        'tab_index'          => 2,
-        'taxonomy'           => LDDLITE_TAX_CAT,
-    );
-
-    $use_locale = ld_use_locale();
-    $subdivision = $use_locale ? ld_get_locale() : 'US';
-
-    $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
-    $tpl->assign( 'allowed_tags', allowed_tags() );
-    $tpl->assign( 'header', ld_get_page_header() );
-
-    $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
-
-    $tpl->assign( 'form_action', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
-    $tpl->assign( 'nonce', wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ) );
-    $tpl->assign( 'category_dropdown', wp_dropdown_categories( $category_args ) );
-
-    $tpl->assign( 'use_locale',  $use_locale );
-    $tpl->assign( 'country_dropdown', ld_dropdown_country( 'ld_s_country', $data ) );
-    $tpl->assign( 'subdivision_dropdown', ld_dropdown_subdivision( $subdivision, $data ) );
-
     if ( is_wp_error( $valid ) ) {
 
         $errors = array();
@@ -161,6 +169,16 @@ function ld_action__submit( $term = false ) {
     }
 
     $tpl->assign( 'data', $data );
+
+    $panel_general   = $tpl->draw( 'submit-general', 1 );
+    $panel_geography = $tpl->draw( 'submit-geography', 1 );
+    $panel_urls      = $tpl->draw( 'submit-urls', 1 );
+    $panel_account   = $tpl->draw( 'submit-account', 1 );
+
+    $tpl->assign( 'panel_general',   $panel_general );
+    $tpl->assign( 'panel_geography', $panel_geography );
+    $tpl->assign( 'panel_urls',      $panel_urls );
+    $tpl->assign( 'panel_account',   $panel_account );
 
     return $tpl->draw( 'submit', 1 );
 

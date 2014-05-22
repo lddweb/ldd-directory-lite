@@ -4,21 +4,9 @@
  *
  */
 
-add_filter( 'wp_list_categories', 'ld_filter_categories_count');
-function ld_filter_categories_count( $links ) {
-    $links = preg_replace( '/\(([0-9]{0,5})\)/', '<span class="category-count">($1)</span>', $links );
-    return $links;
-}
 
 function ld_action__home( $term = false ) {
     global $post;
-
-    ld_bootstrap();
-
-//    wp_enqueue_style( ldl::$slug );
-    wp_enqueue_style( 'bootflat' );
-    wp_enqueue_style( 'font-awesome' );
-
 
     // Retrieve all featured listings
     $featured_output = '';
@@ -88,7 +76,6 @@ function ld_action__home( $term = false ) {
         'parent'         => 0,
     ) );
 
-    // @todo this shouldn't handle presentation, only populate an array. That's why we have a template parsing engine.
     $categories = '';
     foreach ( $directory_terms as $category ) {
         $term_link = add_query_arg( array(
@@ -101,6 +88,7 @@ function ld_action__home( $term = false ) {
     $tpl = ldl::tpl();
 
     $tpl->assign( 'header', ld_get_page_header( 1 ) );
+    $tpl->assign( 'loading', ldl_get_loading_gif() );
     $tpl->assign( 'featured', $featured_output );
     $tpl->assign( 'categories', $categories );
 

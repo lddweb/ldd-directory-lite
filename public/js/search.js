@@ -35,7 +35,6 @@
             if ( terms ) {
                 $.post( base, { action: "search_directory", s: terms })
                     .done(function( data ) {
-                        $($.searchbox.settings.wrapper).hide()
                         $($.searchbox.settings.dom_id).show()
                         $($.searchbox.settings.dom_id).html(data)
                     })
@@ -48,6 +47,7 @@
 
         start: function() {
             $(document).trigger('before.searchbox')
+            $($.searchbox.settings.wrapper).hide()
             $.searchbox.loading()
         },
 

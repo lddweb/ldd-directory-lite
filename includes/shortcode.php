@@ -12,6 +12,54 @@
  * @copyright 2014 LDD Consulting, Inc
  */
 
+function ldl_enqueue() {
+
+    if ( !ldl::setting( 'disable_bootstrap' ) ) {
+        wp_enqueue_style( 'lddlite-bootstrap' );
+        wp_enqueue_script( 'lddlite-bootstrap' );
+    }
+
+    wp_enqueue_style( 'lddlite' );
+    wp_enqueue_style( 'lddlite-bootflat' );
+    wp_enqueue_style( 'font-awesome' );
+
+}
+
+
+function ldl_get_template( $slug, $name = '' ) {
+
+    do_action( "lddlite_get_template_part_{$slug}", $slug, $name );
+
+    if ( '' !== $name )
+        $_template = "{$slug}-{$name}.php";
+    else
+        $_template = "{$slug}.php";
+
+    $located = '';
+
+    $locations = array(
+        'child'  => STYLESHEETPATH . '/directory/' . $_template,
+        'parent' => TEMPLATEPATH . '/directory/' . $_template,
+        'plugin' => LDDLITE_PATH . '/templates/' . $_template,
+    );
+
+    foreach ( $locations as $path ) {
+        if ( file_exists( $path ) ) {
+            $located = $path;
+            break;
+        }
+    }
+
+    if ( '' != $located ) {
+        ob_start();
+        require( $located );
+        $located = ob_get_contents();
+        ob_end_clean;
+    }
+
+    return $located;
+}
+
 
 function ld_get_allowed_actions() {
 
@@ -39,21 +87,13 @@ function ld_is_action_requested() {
 
 function ld_shortcode__display() {
 
-    wp_enqueue_script( ldl::$slug . '-search' );
-    wp_enqueue_script( 'ldd-lite-js' );
+    ldl_enqueue();
 
-    wp_enqueue_style( 'ldd-lite' );
-
-/*    ldl::$modal['url'] = $_SERVER['REQUEST_URI'];
-    add_action( 'wp_footer', 'ld_append_login_form' );*/
-
-
-    $action = 'home';
+    $action = isset( $_GET['show'] ) ? $_GET['show'] : 'home';
     $term   = '';
 
     if ( ld_is_action_requested() ) {
 
-        $action = $_GET['show'];
         $t = isset( $_GET['t'] ) ? esc_attr( $_GET['t'] ) : '';
 
         if ( 'category' == $action ) {

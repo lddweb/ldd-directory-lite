@@ -1,4 +1,4 @@
-<section class="business-directory directory-category cf">
+<section class="directory-lite directory-category">
 
     <header class="directory-header">
         {$header}

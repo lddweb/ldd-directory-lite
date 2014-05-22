@@ -1,4 +1,4 @@
-<section class="business-directory directory-category cf">
+<section class="directory-lite directory-category">
 
     <header class="directory-header">
         {$header}
@@ -25,11 +25,11 @@
     <div id="search-directory-results"></div>
 
 
-    <article id="listing-{$id}" class="directory-content listing-{$id} listing type-listing listing-full cf">
+    <article id="listing-{$id}" class="directory-content listing-{$id} listing type-listing listing-full">
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h2 class="listing-title panel-title">{$title}</h3>
+                <h2 class="listing-title panel-title">{$title}</h2>
             </div>
             <div class="panel-body">
 
@@ -189,7 +189,7 @@
         margin-left: 1em;
         font-size: 1.2em;
     }
-    .business-directory .type-listing.listing-full .listing-header .listing-meta p {
+    .directory-lite .type-listing.listing-full .listing-header .listing-meta p {
         font-size: 1.2em;
         line-height: normal;
         color: rgba(119, 119, 119, 0.8);

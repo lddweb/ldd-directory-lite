@@ -171,8 +171,8 @@ class LDD_Directory_Admin {
     public function settings_page() {
 
         wp_enqueue_style( 'font-awesome' );
+        wp_enqueue_style( 'lddlite-admin' );
 
-        wp_enqueue_style( ldl::$slug . '-admin' );
         $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general';
 
         ?>
@@ -195,7 +195,6 @@ class LDD_Directory_Admin {
                 <a href="<?php echo add_query_arg( 'tab', 'general', remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e( 'General', ldl::$slug ); ?></a>
                 <a href="<?php echo add_query_arg( 'tab', 'email',   remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'email' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Email', ldl::$slug ); ?></a>
                 <a href="<?php echo add_query_arg( 'tab', 'submit',  remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'submit' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Submit Form', ldl::$slug ); ?></a>
-                <input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes" style="float: right;">
             </h2>
 
             <div id="tab_container">

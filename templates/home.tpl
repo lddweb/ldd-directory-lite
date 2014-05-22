@@ -1,10 +1,10 @@
-<section class="business-directory directory-home cf">
+<section class="directory-lite directory-home">
 
     <header class="directory-header">
         {$header}
     </header>
 
-
+    <div id="search-loading">{$loading}</div>
     <div id="search-directory-results"></div>
 
     <section class="directory-content">
@@ -53,28 +53,3 @@
     </section>
 
 </section>
-
-
-
-<script>
-    // This is all part of the mobile menu... that we may not even use.
-    var lite_breakpoint = 640;
-    var shrunk = false;
-
-    jQuery(document).ready(function() {
-        if ( jQuery(window).width() < lite_breakpoint  && jQuery(".lite-nav.below-header .current").length == 0 ) {
-            jQuery('.lite-nav.below-header li:first-child').addClass('current');
-        }
-    });
-
-    jQuery(window).resize(function() {
-        if ( jQuery(window).width() < lite_breakpoint  && jQuery(".lite-nav.below-header .current").length == 0 ) {
-            shrunk = true;
-            jQuery('.lite-nav.below-header li:first-child').addClass('current');
-        }
-        if ( jQuery(window).width() > lite_breakpoint && shrunk ) {
-            shrunk = false;
-            jQuery('.lite-nav.below-header li').removeClass('current');
-        }
-    });
-</script>

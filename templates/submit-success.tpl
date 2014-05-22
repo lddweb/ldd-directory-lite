@@ -1,13 +1,15 @@
-<section class="business-directory  cf">
+<section class="directory-lite directory-submit">
 
-    <nav class="lite-nav above-header center cf">
-        <ul><li><a href="{{url}}">Directory Home</a></li></ul>
-    </nav>
+    <header class="directory-header">
+        {$header}
 
-    <form class="directory-search cf">
-        <input type="text" placeholder="Search the directory..." required />
-        <button type="submit">Search</button>
-    </form>
+        <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em;">
+            <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active"><span>Submit a Listing</span></li>
+        </ol>
+    </header>
+
+    <div id="search-directory-results"></div>
 
     <section class="directory-content submit-success">
 
@@ -32,6 +34,5 @@
 
 
     </section>
-
 
 </section>

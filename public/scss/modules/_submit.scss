@@ -1,5 +1,3 @@
-
-
 .ldd-submit-listing {
   position: relative;
   list-style: none;
@@ -36,9 +34,7 @@
     list-style: none;
     display: table;
     table-layout: fixed;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+
 
     > li {
       margin: 0;
@@ -56,6 +52,8 @@
 
       a {
         display: inline;
+        min-width: 10px;
+        padding: 3px 7px;
         height: 45px;
         color: #777;
         outline: none;
@@ -63,23 +61,16 @@
         text-decoration: none;
         line-height: 45px;
         font-size: .9em;
+        vertical-align: baseline;
+        white-space: nowrap;
+        text-align: center;
       }
 
       &.ldd-submit-listing_here a,
       a:hover {
-        display: inline;
-        min-width: 10px;
-        padding: 3px 7px;
-        font-size: 12px;
-        font-weight: 700;
         color: #fff;
-        line-height: 1;
-        vertical-align: baseline;
-        white-space: nowrap;
-        text-align: center;
         background-color: #999;
         border-radius: 10px;
-
       }
 
     }
@@ -89,26 +80,37 @@
 }
 
 
+.submit-form-wrap {
+  padding: 2em 0 1em;
+  margin-bottom: 1em;
 
-fieldset#submit-pot {
-  display: none;
-}
-
-@media screen and (min-width: 700px) {
-  #submit-items {
-    ul {
-      > li {
-        display: table-cell;
-        margin: 0;
-      }
-    }
+  .row.bump {
+    margin-bottom: 1.5em;
   }
+
+  &.submit-confirm {
+    padding: 1em;
+    text-align: center;
+  }
+
+  fieldset {
+    span.description {
+      margin: 5px 0 0 3px;
+      display: inline-block;
+      color: #AAB2BD;
+      font-size: .9em;
+    }
+
+  }
+
+  .pager {
+    padding: 0 1em;
+  }
+
 }
 
 
-
-
-#submit-listing, .listing-contact-form {
+#submit-listing{
 
   fieldset {
     margin: 0 0 .5em;
@@ -130,10 +132,6 @@ fieldset#submit-pot {
   }
 }
 
-
-
-
-
 .submit-success {
 
   ul.submit-review {
@@ -147,6 +145,5 @@ fieldset#submit-pot {
     }
 
   }
+
 }
-
-

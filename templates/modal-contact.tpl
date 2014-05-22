@@ -1,4 +1,4 @@
-<div class="business-directory modal fade" id="contact-listing-owner" tabindex="-1" role="dialog" aria-labelledby="contact-listing-ownerLabel" aria-hidden="true">
+<div class="directory-lite modal fade" id="contact-listing-owner" tabindex="-1" role="dialog" aria-labelledby="contact-listing-ownerLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -82,7 +82,7 @@
         height: 100%;
         border-radius: 8px;
     }
-    #content-main .page .entry-content .business-directory img {
+    #content-main .page .entry-content .directory-lite img {
         max-width: none;
     }
 </style>
