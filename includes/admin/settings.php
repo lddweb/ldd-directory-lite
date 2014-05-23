@@ -71,7 +71,7 @@ class LDD_Directory_Admin {
         }
 
 
-        add_settings_field( 'lddlite_settings[email_replyto]',           '<label for="email_replyto">' . __( 'Email Reply-to' , ldl::$slug ) . '</label>',                               '_f_email_replyto',           'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_admin]',             '<label for="email_admin">' . __( 'Directory Email' , ldl::$slug ) . '</label>',                                '_f_email_admin',           'lddlite_settings_email', 'lddlite_settings_email' );
         add_settings_field( 'lddlite_settings[email_toadmin_subject]',   '<label for="email_toadmin_subject">' . __( 'Administrator Notification Email' , ldl::$slug ) . '</label>',     '_f_email_toadmin_subject',   'lddlite_settings_email', 'lddlite_settings_email' );
         add_settings_field( 'lddlite_settings[email_toadmin_body]',      '<label for="email_toadmin_body" class="screen-reader-text">' . __( 'Email Body' , ldl::$slug ) . '</label>',   '_f_email_toadmin_body',      'lddlite_settings_email', 'lddlite_settings_email' );
         add_settings_field( 'lddlite_settings[email_onsubmit_subject]',  '<label for="email_onsubmit_subject">' . __( 'Listing Submission' , ldl::$slug ) . '</label>',                  '_f_email_onsubmit_subject',  'lddlite_settings_email', 'lddlite_settings_email' );
@@ -79,8 +79,9 @@ class LDD_Directory_Admin {
         add_settings_field( 'lddlite_settings[email_onapprove_subject]', '<label for="email_onapprove_subject">' . __( 'Listing Approval' , ldl::$slug ) . '</label>',                   '_f_email_onapprove_subject', 'lddlite_settings_email', 'lddlite_settings_email' );
         add_settings_field( 'lddlite_settings[email_onapprove_body]',    '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , ldl::$slug ) . '</label>', '_f_email_onapprove_body',    'lddlite_settings_email', 'lddlite_settings_email' );
 
-        function _f_email_replyto() {
-            echo '<input id="email_replyto" type="text" size="80" name="lddlite_settings[email_replyto]" value="' . ldl::setting( 'email_replyto', 1 ) . '" style="margin-bottom: 2em;">';
+        function _f_email_admin() {
+            echo '<input id="email_admin" type="text" size="80" name="lddlite_settings[email_admin]" value="' . ldl::setting( 'email_admin', 1 ) . '">';
+            echo '<p class="description" style="margin-bottom: 2em;">' . __( 'This is the email address that will appear in the "from" field of outgoing messages. Directory notifications will be sent to ', ldl::$slug ) . get_bloginfo( 'admin_email' ) . '</p>';
         }
 
         function _f_email_toadmin_subject() {
@@ -182,10 +183,10 @@ class LDD_Directory_Admin {
             <div class="sub-heading">
                 <p>LDD Business Directory [lite] configuration settings can all be found here. If you require support, or would like to make a suggestion for improving this plugin, please refer to the following links.</p>
                 <ul id="directory-links">
-                    <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues" title="Submit a bug or feature request on GitHub" class="bold-link"><i class="fa fa-exclamation-triangle"></i> Submit an Issue</a></li>
-                    <li class="right"><i class="fa fa-wordpress"></i> Visit us on <a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Come visit the plugin homepage on WordPress.org">WordPress.org</a></li>
-                    <li><a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Visit the LDD Directory [lite] Support Forums on WordPress.org" class="bold-link"><i class="fa fa-comments"></i> Support Forums</a></li>
-                    <li class="right"><i class="fa fa-github-alt"></i> Visit us on <a href="https://github.com/mwaterous/ldd-directory-lite" title="We do most of our development from GitHub, come join us!">GitHub.com</a></li>
+                    <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues" title="Submit a bug or feature request on GitHub" class="bold-link"><i class="fa fa-exclamation-triangle fa-fw"></i> Submit an Issue</a></li>
+                    <li class="right"><i class="fa fa-wordpress fa-fw"></i> Visit us on <a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Come visit the plugin homepage on WordPress.org">WordPress.org</a></li>
+                    <li><a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Visit the LDD Directory [lite] Support Forums on WordPress.org" class="bold-link"><i class="fa fa-comments fa-fw"></i> Support Forums</a></li>
+                    <li class="right"><i class="fa fa-github-alt fa-fw"></i> Visit us on <a href="https://github.com/mwaterous/ldd-directory-lite" title="We do most of our development from GitHub, come join us!">GitHub.com</a></li>
                 </ul>
             </div>
 
@@ -249,8 +250,8 @@ function lddlite_settings_general_sanitize( $input ) {
 
 function lddlite_settings_email_sanitize( $input ) {
 
-    if ( !is_email( $input['email_replyto'] ) ) {
-        $input['email_replyto'] = '';
+    if ( !is_email( $input['email_admin'] ) ) {
+        $input['email_admin'] = '';
         add_settings_error( 'lddlite_settings', '', __( 'Please enter a valid email address.', ldl::$slug ), 'error' );
     }
 

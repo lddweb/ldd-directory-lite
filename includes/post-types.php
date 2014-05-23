@@ -85,7 +85,7 @@ function ld_action__submenu_title() {
 
 function ld_action__send_approved_email( $post ) {
 
-    if ( LDDLITE_POST_TYPE != get_post_type() )
+    if ( LDDLITE_POST_TYPE != get_post_type() || 1 == get_post_meta( $post->ID, '_approved', true ) )
         return;
 
     $user = get_userdata( $post->post_author );
@@ -93,19 +93,18 @@ function ld_action__send_approved_email( $post ) {
     $user_nicename = $user->data->display_name;
     $user_email = $user->data->user_email;
 
-    $post_id = $post->ID;
-    $post_title = $post->post_title;
-    $post_content = $post->post_content;
     $post_slug = $post->post_name;
+    $permalink = get_permalink( ld_get_shortcode_id() );
 
-    $tpl = ldl::tpl();
+    $subject = ldl::setting( 'email_onapprove_subject' );
+    $message = ldl::setting( 'email_onapprove_body' );
 
-    $tpl->assign( 'site_title', get_bloginfo( 'name' ) );
-    $tpl->assign( 'admin_email', ldl::setting( 'email_replyto' ) );
-    $tpl->assign( 'link', site_url( '?show=listing&t=' . $post_slug ) );
+    $message = str_replace( '{site_title}', get_bloginfo( 'name' ), $message );
+    $message = str_replace( '{directory_title}', ldl::setting( 'directory_label' ), $message );
+    $message = str_replace( '{link}', add_query_arg( array( 'show' => 'listing', 't' => $post_slug ), $permalink ), $message );
 
-    $message = $tpl->draw( 'email/approved', 1 );
-    ld_mail( $user_email, ldl::setting( 'email_onaprove' ), $message );
+    ld_mail( $user_email, $subject, $message );
+    update_post_meta( $post->ID, '_approved', 1 );
 
 }
 
@@ -119,6 +118,6 @@ add_filter( 'get_shortlink', 'ld_filter__get_shortlink' );
 add_action( 'admin_head', 'ld_action__admin_menu_icon' );
 add_action( '_admin_menu', 'ld_action__submenu_title' );
 
-add_action( 'pending_to_publish', 'ld_action__send_approved_email' );
+//add_action( 'pending_to_publish', 'ld_action__send_approved_email' );
 
 

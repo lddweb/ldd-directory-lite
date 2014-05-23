@@ -6,20 +6,16 @@ jQuery(function($) {
         navContainer:   '#submit-items',
         speed:          300,
         namespace:      'ldd-submit-listing',
-    });
-
-});
+    })
+})
 
 
 jQuery(document).ready(function($) {
 
-    var countryDrop = $("#country")
-    var subControl = $("#subdivision_control")
-
-    countryDrop.change(function() {
+    $("#country").change(function() {
         var newSubdivision = this.value
         var request = $.ajax({
-            url: "{$ajaxurl}",
+            url: ajaxurl,
             type: "POST",
             data: {
                 action: "dropdown_change",
@@ -31,17 +27,12 @@ jQuery(document).ready(function($) {
         })
         request.done(function( msg ) {
             var response = $.parseJSON( msg )
-            console.log( response.subdivision )
-            console.log( subControl.html() )
-            console.log( response.input )
-            subControl.html( response.input )
+            $("#subdivision_control").html( response.input )
             $("#subdivision_label").text( response.sub )
             $("#post_code_label").text( response.code )
             $(".submit-ajax-replace").show();
         })
     })
-
-
 
 
     function getNavItem( currentItem ) {
@@ -115,10 +106,12 @@ jQuery(document).ready(function($) {
             $('.submit-confirm:hidden').show();
         }
 
-        var submitButton = jQuery('#submit-form-submit');
+    // This doesn't make sense until the form is submitted via ajax!
+    // Doesn't make it any less fun.
+/*        var submitButton = jQuery('#submit-form-submit');
 
         submitButton.click(function () {
             jQuery('#submit-form-submit > i').addClass('fa-spin');
-        });
+        });*/
 
     });

@@ -3,7 +3,7 @@
     <header class="directory-header">
         {$header}
 
-        <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em;">
+        <ol class="l-breadcrumb" style="margin-bottom: 1em;">
             <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
             <li class="active"><span>Submit a Listing</span></li>
         </ol>
@@ -13,7 +13,24 @@
 
     <section class="directory-content">
 
-        <form id="submit-listing" name="submit-listing" action="{$form_action}" method="post" enctype="multipart/form-data">
+        {if="!empty($errors)"}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>Oops!</strong> Panels marked in red have errors that need to be fixed before submitting.
+            </div>
+        {/if}
+
+        {if="$success"}
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4>Thank you for your submission!</h4>
+                    <p>Your listing is awaiting approval. Please allow time for us to review the accuracy of your content before it appears publicly in our directory.</p>
+                    <p><a class="btn btn-success" href="{$home}">View Other Listings</a></p>
+                </div>
+
+        {/if}
+
+        <form id="submit-listing" name="submit-listing" action="{$form_action}" method="post" enctype="multipart/form-data" novalidate>
             <input type="hidden" name="__T__action" value="submit_form">
             {$nonce}
 
@@ -42,7 +59,10 @@
 
 </section>
 
-
-<script>
-    var topOffset = 10{if="$is_logged_in"} + 32{/if};
-</script>
+<style>
+    .directory-lite #submit-items ul li.ldd-submit-listing_here a.submit-error,
+    .directory-lite #submit-items ul li a.submit-error:hover {
+        background-color: #da4453;
+        color: #fff;
+    }
+</style>

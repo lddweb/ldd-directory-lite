@@ -52,40 +52,34 @@ function ld_submit__create_meta( $data, $post_id ) {
 }
 
 
-function ld_sanitize__post( $post_data ) {
+function ld_sanitize__post( $data ) {
 
-    $required_fields = apply_filters( 'lddlite_required_fields', array(
-        'ld_s_title' => '',
-        'ld_s_description' => '',
-        'ld_s_username' => '',
-        'ld_s_email' => '',
-        'ld_s_contact_email' => '',
-        'ld_s_contact_phone' => '',
-        'ld_s_address_one' => '',
-        'ld_s_city' => '',
-        'ld_s_subdivision' => '',
-        'ld_s_post_code' => '',
-        'ld_s_country' => '',
-    ) );
+    $output['description'] = $data['ld_s_description'];
+    $output['contact_email'] = sanitize_email( $data['ld_s_contact_email'] );
+    $output['email'] = sanitize_email( $data['ld_s_email'] );
+    unset( $data['ld_s_description'] );
+    unset( $data['ld_s_contact_email'] );
+    unset( $data['ld_s_email'] );
 
-    $post_data = wp_parse_args( $post_data, $required_fields );
-
-    $data['description'] = $post_data['ld_s_description'];
-    unset( $post_data['ld_s_description'] );
-
-    $data['email'] = sanitize_email( $post_data['ld_s_email'] );
-    unset( $post_data['ld_s_email'] );
-
-    foreach ( $post_data as $key => $value ) {
-
+    foreach ( $data as $key => $value ) {
         if ( false !== strpos( $key, 'ld_s_' ) ) {
             $var = substr( $key, 5 );
-            $data[ $var ] = is_array( $value ) ? $value : sanitize_text_field( wp_unslash( $value ) );
+            $output[ $var ] = is_array( $value ) ? $value : sanitize_text_field( wp_unslash( $value ) );
         }
-
     }
 
-    return $data;
+    if ( is_array( $output['url'] ) ) {
+        foreach ( $output['url'] as $key => $value ) {
+            if ( in_array( $key, array( 'facebook', 'linkedin' ) ) )
+                $output['url'][ $key ] = ldl_sanitize_https( $value );
+            else if ( 'twitter' == $key )
+                $output['url'][ $key ] = ldl_sanitize_twitter( $value );
+            else if ( strpos( $url, 'http') !== 0 )
+                $output['url'][ $key ] = esc_url_raw( $value );
+        }
+    }
+
+    return $output;
 }
 
 

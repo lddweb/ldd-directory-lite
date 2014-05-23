@@ -1,6 +1,6 @@
-<div class="directory-lite modal fade" id="contact-listing-owner" tabindex="-1" role="dialog" aria-labelledby="contact-listing-ownerLabel" aria-hidden="true">
+<div class="modal fade" id="contact-listing-owner" tabindex="-1" role="dialog" aria-labelledby="contact-listing-ownerLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="directory-lite modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 id="contact-modal-title" class="modal-title">Contact</h4>
@@ -65,28 +65,6 @@
     </div>
 </div>
 
-<style>
-    #contact-listing-owner.modal {
-        top: 32px;
-        z-index: 99999;
-        font-style: normal;
-        text-align: left;
-    }
-    #map_wrapper {
-        display: block;
-        height: 200px;
-    }
-
-    #map_canvas {
-        width: 100%;
-        height: 100%;
-        border-radius: 8px;
-    }
-    #content-main .page .entry-content .directory-lite img {
-        max-width: none;
-    }
-</style>
-
 
 <script>
     jQuery(document).ready( function($) {
@@ -117,7 +95,7 @@
                 }
             });
 
-/*        $('form#contact-form').submit( function(event) {
+        $('form#contact-form').submit( function(event) {
             console.log( 'submitting' );
             var $form = $(this);
             var $target = $($form.attr('data-target'));
@@ -133,6 +111,6 @@
             });
 
             event.preventDefault();
-        });*/
+        });
     });
 </script>

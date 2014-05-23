@@ -20,7 +20,7 @@ function ldl_enqueue() {
     }
 
     wp_enqueue_style( 'lddlite' );
-    wp_enqueue_style( 'lddlite-bootflat' );
+    //wp_enqueue_style( 'lddlite-bootflat' );
     wp_enqueue_style( 'font-awesome' );
 
 }

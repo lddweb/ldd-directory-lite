@@ -22,7 +22,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label" for="">Description</label>
-                    <textarea id="description" class="form-control" name="ld_s_description" tabindex="3" required>{if="!empty($data.description)"}{$data.description}{/if}</textarea>
+                    <textarea id="description" class="form-control" name="ld_s_description" rows="5" tabindex="3" required>{if="!empty($data.description)"}{$data.description}{/if}</textarea>
                     {if="!empty($errors.description)"}{$errors.description}{/if}
                     <span class="description">The following HTML tags and attributes are allowed in your description:<br> {$allowed_tags} </span>
                 </div>

@@ -36,12 +36,17 @@
     </nav>
 
     <script>
+        var topOffset = 10{if="$is_logged_in"} + 32{/if};
+
+        if ( typeof ajaxurl === "undefined" )
+            var ajaxurl = "{$ajaxurl}"
+
         jQuery(document).ready(function($) {
-            $('#directory-search').searchbox({
-                url: '{$ajaxurl}',
+            $("#directory-search").searchbox({
+                url: ajaxurl,
                 dom_id: '#search-directory-results',
                 delay: 250,
                 loading_css: '#search-loading'
-            });
-        });
+            })
+        })
     </script>

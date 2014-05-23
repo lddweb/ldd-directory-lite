@@ -33,10 +33,7 @@ function ld_action__listing( $listing ) {
     else
         $thumbnail = '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">';
 
-    $geocode = array(
-        'lat'   => '',
-        'lng'   => '',
-    );
+    $geocode = false;
 
     if ( !empty( $meta['geocode'] ) ) {
 
@@ -74,7 +71,8 @@ function ld_action__listing( $listing ) {
 
     $tpl->assign( 'social',     $social );
 
-    $tpl->assign( 'google_maps', ld_use_google_maps() );
+    $google_maps = ( ld_use_google_maps() && $geocode ) ? true : false;
+    $tpl->assign( 'google_maps',  $google_maps );
     $tpl->assign( 'geo', $geocode );
     $tpl->assign( 'description', wpautop( $listing->post_content ) );
 

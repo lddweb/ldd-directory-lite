@@ -21,7 +21,7 @@ function ldl_get_default_settings() {
 
 <p>This submission is awaiting approval. Please visit the link to view and approve the new listing:</p>
 
-<p>{view_listing}</p>
+<p>{approve_link}</p>
 
 <ul>
     <li>Business Name: <strong>{title}</strong></li>
@@ -29,10 +29,10 @@ function ldl_get_default_settings() {
 </ul>
 EM;
     $email['on_submit']  = <<<EM
-<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
+<p><strong>Thank you for submitting a listing to {site_title}!</strong></p>
 
 <p>Your listing is pending approval.</p>
-<p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {$admin_email}.</p>
+<p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {directory_email}.</p>
 
 <ul>
     <li>Business Name: <strong>{title}</strong></li>
@@ -42,12 +42,12 @@ EM;
 <p><em>Sincerely,<br>{$site_title}</em></p>
 EM;
     $email['on_approve'] = <<<EM
-<p><strong>Thank you for submitting a listing to {$site_title}!</strong></p>
+<p><strong>Thank you for submitting a listing to {site_title}!</strong></p>
 
 <p>Your listing has been approved! You can now view it online:</p>
 <p>{link}</p>
 
-<p><em>Sincerely,<br>{$site_title}</em></p>
+<p><em>Sincerely,<br>{site_title}</em></p>
 EM;
 
     $defaults = apply_filters( 'lddlite_default_options', array(
@@ -56,7 +56,7 @@ EM;
         'disable_bootstrap'         => 0,
         'public_or_private'         => 1,
         'google_maps'               => 1,
-        'email_replyto'             => get_bloginfo( 'admin_email' ),
+        'email_admin'             => get_bloginfo( 'admin_email' ),
         'email_toadmin_subject'     => 'A new listing has been submitted for review!',
         'email_toadmin_body'        => $email['to_admin'],
         'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
@@ -89,7 +89,7 @@ function ld_use_locale() {
 
 
 function ld_get_locale() {
-    return ldl::setting( 'submit_locale' );
+    return ld_use_locale() ? ldl::setting( 'submit_locale' ) : 'US';
 }
 
 
@@ -159,21 +159,22 @@ function  ld_get_page_header( $show_label = 0 ) {
 
     wp_enqueue_script( 'lddlite-search' );
 
-    $header_template = ldl::tpl();
+    $tpl = ldl::tpl();
 
-    $header_template->assign( 'show_label', $show_label );
-    $header_template->assign( 'directory_label', ldl::setting( 'directory_label' ) );
-    $header_template->assign( 'directory_description', ldl::setting( 'directory_description' ) );
+    $tpl->assign( 'show_label', $show_label );
+    $tpl->assign( 'directory_label', ldl::setting( 'directory_label' ) );
+    $tpl->assign( 'directory_description', ldl::setting( 'directory_description' ) );
 
-    $header_template->assign( 'public', ld_is_public() );
-    $header_template->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
+    $tpl->assign( 'public', ld_is_public() );
+    $tpl->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
 
-    $header_template->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
-    $header_template->assign( 'nonce', wp_create_nonce( 'search-form-nonce' ) );
-    $header_template->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+    $tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
+    $tpl->assign( 'nonce', wp_create_nonce( 'search-form-nonce' ) );
+    $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 
-    return $header_template->draw( 'header', 1 );
+    $tpl->assign( 'is_logged_in', (int) is_user_logged_in() );
 
+    return $tpl->draw( 'header', 1 );
 }
 
 

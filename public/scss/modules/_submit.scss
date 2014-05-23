@@ -1,3 +1,16 @@
+.alert h4 {
+  font-weight: 700;
+  margin: 0 0 .5em !important;
+  color: inherit !important;
+  letter-spacing: normal;
+}
+.alert p {
+  margin-bottom: 1em;
+}
+.alert p:last-child {
+  margin-bottom: 0;
+}
+
 .ldd-submit-listing {
   position: relative;
   list-style: none;
@@ -146,4 +159,15 @@
 
   }
 
+}
+
+@media screen and (min-width: 767px) {
+  #submit-items {
+    ul {
+      > li {
+        display: table-cell;
+        margin: 0;
+      }
+    }
+  }
 }

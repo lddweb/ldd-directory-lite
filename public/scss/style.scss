@@ -24,6 +24,42 @@ $url-link-hover:    rgba(0, 170, 0, 0.90);
 
 $pure-blue:         #0078e7;
 
+
+@import
+
+  // Variables, Extends, Mixins
+"bootflat/global",
+
+  // Base
+"bootflat/typography",
+"bootflat/button",
+"bootflat/button_group",
+"bootflat/label_badge",
+"bootflat/tooltip",
+"bootflat/popover",
+"bootflat/progress",
+"bootflat/breadcrumb",
+"bootflat/pagination",
+"bootflat/pager",
+"bootflat/form",
+"bootflat/checkbox_radio",
+"bootflat/alert",
+"bootflat/tab",
+"bootflat/pill",
+"bootflat/navbar",
+"bootflat/list",
+"bootflat/media_list",
+"bootflat/modal",
+"bootflat/well",
+"bootflat/thumbnail",
+"bootflat/jumbotron",
+"bootflat/panel",
+"bootflat/accordion",
+"bootflat/footer",
+"bootflat/dropdown";
+
+
+
 @import "partials/typography";
 @import "partials/functions";
 @import "partials/mixins";
@@ -213,7 +249,104 @@ p.website {
   max-height: 140px;
 }
 
+.l-breadcrumb {
+  margin-bottom: 1em;
+}
+
+
+/** - Listing View */
+.btn-group a,
+.btn-group a:visited {
+  color: #fff;
+}
+.social-btn-group {
+  color: #fff;
+  text-align: right;
+}
+#map_wrapper {
+  display: block;
+  height: 200px;
+  margin: 0 -15px;
+}
+#map_canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+#content-main .page .entry-content img,
+#map_wrapper img,
+#map_canvas img {
+  max-width: none;
+}
+.listing-full .panel:last-child {
+  margin-bottom: 0;
+}
+.listing-full .panel {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.listing-full .panel-heading {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.panel .listing-meta {
+  margin: .1em 0;
+  color: rgba(119, 119, 119, 0.8);
+}
+
+.panel-body {
+  position: relative;
+}
+.panel-title {
+  margin: 0 !important;
+  letter-spacing: normal !important;
+}
+.panel-primary .panel-title {
+  color: #fff !important;
+}
+.type-listing.listing-full {
+  position: relative;
+  padding-top: 1em;
+}
+.panel p.website {
+  margin-bottom: 1em;
+  padding-left: 1em;
+  font-size: 1.2em;
+}
+.directory-lite .type-listing.listing-full .listing-header .listing-meta p {
+  font-size: 1.2em;
+  line-height: normal;
+  color: rgba(119, 119, 119, 0.8);
+  margin: 0 0 8px;
+}
+.listing-full .listing-meta p .fa {
+  top: 4px;
+  left: 2px;
+}
+
+.type-listing.listing-full .img-rounded {
+  margin: 0;
+  margin-top: -15px;
+  height: auto;
+}
+
+.listing-full h2.listing-title {
+  font-size: 2.4em !important;
+}
+
+
 
 
 /* Submit Form */
 
+
+
+/** - Modals */
+#contact-listing-owner.modal {
+  top: 32px;
+  z-index: 99999;
+  font-style: normal;
+  text-align: left;
+}

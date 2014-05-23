@@ -7,7 +7,7 @@
         settings: {
             url: '/search',
             dom_id: '#results',
-            wrapper: '.directory-content',
+            wrapper: '',
             delay: 100,
             loading_css: '#loading'
         },
