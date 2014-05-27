@@ -61,7 +61,7 @@ function ldl_get_template( $slug, $name = '' ) {
 }
 
 
-function ld_get_allowed_actions() {
+function ldl_get_allowed_actions() {
 
     $allowed_actions = array(
         'submit',
@@ -74,9 +74,9 @@ function ld_get_allowed_actions() {
 }
 
 
-function ld_is_action_requested() {
+function ldl_is_action_requested() {
 
-    $allowed_actions = ld_get_allowed_actions();
+    $allowed_actions = ldl_get_allowed_actions();
 
     if ( !isset( $_GET['show'] ) )
         return false;
@@ -85,14 +85,14 @@ function ld_is_action_requested() {
 }
 
 
-function ld_shortcode__display() {
+function ldl_shortcode__display() {
 
     ldl_enqueue();
 
     $action = isset( $_GET['show'] ) ? $_GET['show'] : 'home';
     $term   = '';
 
-    if ( ld_is_action_requested() ) {
+    if ( ldl_is_action_requested() ) {
 
         $t = isset( $_GET['t'] ) ? esc_attr( $_GET['t'] ) : '';
 
@@ -131,7 +131,7 @@ function ld_shortcode__display() {
 
     require_once( LDDLITE_PATH . '/includes/actions/' . $action . '.php' );
 
-    $func = 'ld_action__' . $action;
+    $func = 'ldl_action__' . $action;
 
     return $func( $term );
 
@@ -139,16 +139,23 @@ function ld_shortcode__display() {
 
 
 /**
- * This is an alias of ld_shortcode__display() if anyone wants to embed the directory via PHP
+ * This is an alias of ldl_shortcode__display() if anyone wants to embed the directory via PHP
  *
  * @param bool $echo Whether to echo or return
- * @return mixed The output of ld_shortcode__display() if $echo is false
+ * @return mixed The output of ldl_shortcode__display() if $echo is false
  */
-function ld_display_the_directory( $echo = true ) {
+function ldl_display( $echo = true ) {
 
     if ( $echo )
-        echo ld_shortcode__display();
+        echo ldl_shortcode__display();
     else
-        return ld_shortcode__display();
+        return ldl_shortcode__display();
 
 }
+
+
+add_shortcode( 'directory_lite',        'ldl_shortcode__display' );
+/**
+ * @deprecated since version 0.5.0, please use [directory_lite] instead
+ */
+add_shortcode( 'business_directory',    'ldl_shortcode__display' );

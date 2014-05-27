@@ -25,5 +25,5 @@ This is a port of the LDD Business Directory plugin, as that plugin transitions 
 
 == Changelog ==
 
-= 2.0.0 =
+= 0.5.0 =
 - Initial commit of the forked plugin.

@@ -1,7 +1,7 @@
 <?php
 /**
  * Responsible for bringing all copies of the LDD Business Directory
- * prior to version 2.0.0 up to speed.
+ * prior to version 0.5.0 up to speed.
  *
  * @package   LDDBD
  * @author    LDD Web Design <info@lddwebdesign.com>
@@ -27,7 +27,7 @@ function _ldup_get_tables() {
 function _ldup_get_listings() {
     global $wpdb;
 
-    // Tables used prior to version 2.0.0
+    // Tables used prior to version 0.5.0
     $tables = _ldup_get_tables();
 
     // Pull everything from the categories table
@@ -110,7 +110,7 @@ function ldl_upgrade() {
 
     //trigger_error( 'Upgrade Fired: ' . print_r( debug_backtrace(), 1 ), E_USER_NOTICE );
 
-    if ( !function_exists( 'ld_use_locale' ) )
+    if ( !function_exists( 'ldl_use_locale' ) )
         require_once( LDDLITE_PATH . '/includes/functions.php' );
 
     if ( !function_exists( 'wp_generate_attachment_metadata' ) )
@@ -184,7 +184,7 @@ function ldl_upgrade() {
                 }
 
             } else {
-                $countries = ld_get_country_array();
+                $countries = ldl_get_country_array();
                 $country = array_search( $listing->address_country, $countries );
                 $address_one = $listing->address_street;
                 $city = $listing->address_city;

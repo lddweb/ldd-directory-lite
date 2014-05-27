@@ -1,7 +1,7 @@
 <?php
 
 
-function ld_action__category( $cat_id ) {
+function ldl_action__category( $cat_id ) {
     global $post;
 
     $tpl = ldl::tpl();
@@ -41,7 +41,7 @@ function ld_action__category( $cat_id ) {
             $title      = $listing->post_title;
             $summary    = $listing->post_excerpt;
 
-            $meta = ld_get_listing_meta( $id );
+            $meta = ldl_get_listing_meta( $id );
                 $address = $meta['address'];
                 $website = $meta['website'];
                 $email   = $meta['email'];
@@ -103,12 +103,12 @@ function ld_action__category( $cat_id ) {
 
     $tpl = ldl::tpl();
 
-    $tpl->assign( 'header', ld_get_page_header( 'category' ) );
+    $tpl->assign( 'header', ldl_get_header( 'category' ) );
     $tpl->assign( 'home', remove_query_arg( array(
         'show',
         't',
     ) ) );
-    $tpl->assign( 'category_title', ld_get_term_name( $cat_id ) );
+    $tpl->assign( 'category_title', ldl_get_term_name( $cat_id ) );
     $tpl->assign( 'list_link', remove_query_arg( array( 'f' ) ) );
     $tpl->assign( 'grid_link', add_query_arg( array(
         'f' => 'grid',

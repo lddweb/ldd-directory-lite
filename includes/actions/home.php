@@ -5,7 +5,7 @@
  */
 
 
-function ld_action__home( $term = false ) {
+function ldl_action__home( $term = false ) {
     global $post;
 
     // Retrieve all featured listings
@@ -87,7 +87,7 @@ function ld_action__home( $term = false ) {
 
     $tpl = ldl::tpl();
 
-    $tpl->assign( 'header', ld_get_page_header( 1 ) );
+    $tpl->assign( 'header', ldl_get_header( 1 ) );
     $tpl->assign( 'loading', ldl_get_loading_gif() );
     $tpl->assign( 'featured', $featured_output );
     $tpl->assign( 'categories', $categories );

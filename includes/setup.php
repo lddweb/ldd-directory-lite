@@ -14,12 +14,6 @@
 
 require_once( LDDLITE_PATH . '/includes/shortcode.php' );
 
-add_shortcode( 'directory',             'ld_shortcode__display' );
-/**
- * @deprecated since version 2.0.0, please use [directory] instead
- */
-add_shortcode( 'business_directory',    'ld_shortcode__display' );
-
 add_image_size( 'directory-listing-featured', 200, 200 );
 add_image_size( 'directory-listing', 300, 300 );
 add_image_size( 'directory-listing-compact', 105, 300 );
@@ -30,10 +24,10 @@ add_image_size( 'directory-listing-search', 100, 100 );
 /**
  * Registers our custom taxonomies and post types.
  *
- * @since 2.0.0
+ * @since 0.5.0
  * @todo (low priority) Can we use the internal rewrites effectively?
  */
-function ld_setup__register_custom() {
+function ldl_setup__register_custom() {
 
     register_taxonomy( LDDLITE_TAX_CAT, LDDLITE_POST_TYPE, array(
         'hierarchical'      => true,
@@ -94,7 +88,7 @@ function ld_setup__register_custom() {
 }
 
 
-function ld_setup__register_scripts() {
+function ldl_setup__register_scripts() {
 
     wp_register_script( 'lddlite-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
     wp_register_script( 'lddlite-search',           LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
@@ -103,7 +97,7 @@ function ld_setup__register_scripts() {
     wp_register_script( 'lddlite-happy',            LDDLITE_URL . '/public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true );
 
     wp_register_style( 'lddlite',           LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
-    wp_register_style( 'lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', false, LDDLITE_VERSION );
+    wp_register_style( 'lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', false, LDDLITE_VERSION );
     // @Todo: roll this into "lddlite"
     wp_register_style( 'lddlite-bootflat',  LDDLITE_URL . '/public/css/bootflat.css', false, LDDLITE_VERSION );
 
@@ -116,8 +110,8 @@ function ld_setup__register_scripts() {
 }
 
 
-add_action( 'init', 'ld_setup__register_custom', 5 );
-add_action( 'init', 'ld_setup__register_scripts', 5 );
+add_action( 'init', 'ldl_setup__register_custom', 5 );
+add_action( 'init', 'ldl_setup__register_scripts', 5 );
 
 
 /**
@@ -125,11 +119,11 @@ add_action( 'init', 'ld_setup__register_scripts', 5 );
  */
 require_once( LDDLITE_PATH . '/includes/ajax.php' );
 
-add_action( 'wp_ajax_search_directory',        'ld_ajax__search_directory' );
-add_action( 'wp_ajax_nopriv_search_directory', 'ld_ajax__search_directory' );
+add_action( 'wp_ajax_search_directory',        'ldl_ajax__search_directory' );
+add_action( 'wp_ajax_nopriv_search_directory', 'ldl_ajax__search_directory' );
 
-add_action( 'wp_ajax_contact_form',        'ld_ajax__contact_form' );
-add_action( 'wp_ajax_nopriv_contact_form', 'ld_ajax__contact_form' );
+add_action( 'wp_ajax_contact_form',        'ldl_ajax__contact_form' );
+add_action( 'wp_ajax_nopriv_contact_form', 'ldl_ajax__contact_form' );
 
-add_action( 'wp_ajax_dropdown_change',        'ld_ajax__dropdown_change' );
-add_action( 'wp_ajax_nopriv_dropdown_change', 'ld_ajax__dropdown_change' );
+add_action( 'wp_ajax_dropdown_change',        'ldl_ajax__dropdown_change' );
+add_action( 'wp_ajax_nopriv_dropdown_change', 'ldl_ajax__dropdown_change' );

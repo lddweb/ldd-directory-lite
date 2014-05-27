@@ -13,7 +13,7 @@
  */
 
 
-function ld_ajax__search_directory() {
+function ldl_ajax__search_directory() {
     global $post;
 
     $args = array(
@@ -41,7 +41,7 @@ function ld_ajax__search_directory() {
             $id         = $post->ID;
             $title      = $post->post_title;
             $summary    = $post->post_excerpt;
-            $meta = ld_get_listing_meta( $id );
+            $meta = ldl_get_listing_meta( $id );
                 $address = $meta['address'];
                 $website = $meta['website'];
                 $email   = $meta['email'];
@@ -107,19 +107,20 @@ function ld_ajax__search_directory() {
 }
 
 
-function ld_ajax__contact_form() {
+function ldl_ajax__contact_form() {
 
     if ( !wp_verify_nonce( $_POST['nonce'], 'contact-form-nonce' ) )
         die( 'You shall not pass!' );
 
-    /*    $hpt_field = 'summary';
+    $hpt_field = 'last_name';
 
-        if ( !empty( $_POST[ $hpt_field ] ) ) {
-            echo json_encode( array(
-                'success' => 1,
-            ) );
-            die;
-        }*/
+    if ( !empty( $_POST[ $hpt_field ] ) ) {
+        echo json_encode( array(
+            'success'   => 1,
+            'msg'       => '<p>' . __( 'Your message has been successfully sent to the email address we have on file!', 'lddlite' ) . '</p>',
+        ) );
+        die;
+    }
 
     $answers = array(
         '14',
@@ -131,7 +132,11 @@ function ld_ajax__contact_form() {
     $subject = sanitize_text_field( $_POST['subject'] );
     $message = esc_html( sanitize_text_field( $_POST['message'] ) );
 
-    $answer = sanitize_text_field( strtolower( $_POST['last_name'] ) );
+    $answer = sanitize_text_field( strtolower( $_POST['other_name'] ) );
+    if ( !is_numeric( $answer ) )
+        $answer = strtolower( $answer );
+    else
+        $answer = intval( $answer );
 
     $errors = array();
 
@@ -147,33 +152,46 @@ function ld_ajax__contact_form() {
     if ( empty( $message ) || strlen( $message ) < 20 )
         $errors['message'] = 'Please enter a longer message';
 
-    if ( empty( $math ) || '11' != $math || 'eleven' != strtolower( $math ) )
+    if ( empty( $answer ) || !in_array( $answer, array( '14', 'fourteen' ) ) )
         $errors['math'] = 'Your math is wrong';
 
     if ( !empty( $errors ) ) {
         echo json_encode( array(
-            'errors'    => $errors,
             'success'   => false,
+            'errors'    => serialize( $errors ),
+            'msg'       => '<p>There were errors with your form submission. Please back up and try again.</p>',
         ) );
         die;
     }
 
-    $post_id = intval( $_POST['business_id'] );
-    $contact_meta = get_post_meta( $post_id, '_lddlite_contact', 1 );
-    $email = $contact_meta['email'];
+    $post_id = intval( $_POST['post_id'] );
+    $contact_email = get_post_meta( $post_id, '_lddlite_contact_email', 1 );
+    $listing_title = get_the_title( $post_id );
 
-    $headers = sprintf( "From: %1$s <%2$s>\r\n", $name, $email );
+    $headers = sprintf( "From: %s <%s>\r\n", $name, $email );
 
-    echo json_encode( array(
-        'success'   => wp_mail( 'mark@watero.us', $subject, $message, $headers ),
-    ) );
+    $result = wp_mail( 'mark@watero.us', $subject, $message, $headers );
+//    $result = wp_mail( $contact_email, $subject, $message, $headers );
 
+    if ( $result ) {
+        $response = array(
+            'success'   => 1,
+            'msg'       => '<p>Your message has been successfully sent to the email address we have on file for <strong style="font-style: italic;">' . $listing_title . '</strong>!</p><p>The listing owner is responsible for getting back to you. Please do not contact us directly if you have not heard back from <strong style="font-style: italic;">' . $listing_title . '</strong> in response to your message. We apologize for any inconvenience this may cause.</p>',
+        );
+    } else {
+        $response = array(
+            'success'   => 0,
+            'msg'       => '<p>There were unknown errors with your form submission.</p><p>Please wait a while and then try again.</p>',
+        );
+    }
+
+    echo json_encode( $response );
     die;
 
 }
 
 
-function ld_ajax__dropdown_change() {
+function ldl_ajax__dropdown_change() {
 
     $subdivision = $_POST['subdivision'];
 
@@ -206,7 +224,7 @@ function ld_ajax__dropdown_change() {
         $code = $defaults['code'];
     }
 
-    $output = ld_dropdown_subdivision( $subdivision, '', 9 );
+    $output = ldl_dropdown_subdivision( $subdivision, '', 9 );
     echo json_encode( array(
         'subdivision' => $subdivision,
         'input' => $output,

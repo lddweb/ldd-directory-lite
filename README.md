@@ -4,7 +4,7 @@ This is a fully maintained fork of [LDD Business Directory](http://wordpress.org
 
 Easily add a yellow pages style directory of businesses, contacts, non-profit organizations or any other type of listing you can think of. This plugin provides a powerful set of configuration options to customize it for your specific needs, or just activate the plugin and use as is straight out of the box! LDD Directory Lite will integrate with any WordPress theme.
 
-* **Current Version**: 2.0.0-working
+* **Current Version**: 0.5.0
 * **Latest Stable**: 
 * **Contributors**: [@mwaterous](https://github.com/mwaterous)
 

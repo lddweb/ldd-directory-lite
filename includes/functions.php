@@ -14,6 +14,14 @@ function ldl_get_default_settings() {
     $site_title = get_bloginfo( 'name' );
     $admin_email = get_bloginfo( 'admin_email' );
 
+    $signature = <<<SIG
+
+
+*****************************************
+This is an automated message from {$site_title}
+Please do not respond directly to this email
+SIG;
+
     $email = array();
 
     $email['to_admin']   = <<<EM
@@ -38,21 +46,21 @@ EM;
     <li>Business Name: <strong>{title}</strong></li>
     <li>Business Description: <strong>{description}</strong></li>
 </ul>
-
-<p><em>Sincerely,<br>{$site_title}</em></p>
 EM;
     $email['on_approve'] = <<<EM
 <p><strong>Thank you for submitting a listing to {site_title}!</strong></p>
 
 <p>Your listing has been approved! You can now view it online:</p>
 <p>{link}</p>
-
-<p><em>Sincerely,<br>{site_title}</em></p>
 EM;
+
+    foreach ( $email as $key => $msg )
+        $email[ $key ] = $msg . $signature;
 
     $defaults = apply_filters( 'lddlite_default_options', array(
         'directory_label'           => get_bloginfo( 'name' ),
         'directory_description'     => '',
+        'directory_page'            => '',
         'disable_bootstrap'         => 0,
         'public_or_private'         => 1,
         'google_maps'               => 1,
@@ -83,28 +91,30 @@ function ldl_use_tos() {
 }
 
 
-function ld_use_locale() {
+function ldl_use_locale() {
     return ldl::setting( 'submit_use_locale' );
 }
 
 
-function ld_get_locale() {
-    return ld_use_locale() ? ldl::setting( 'submit_locale' ) : 'US';
+function ldl_get_locale() {
+    return ldl_use_locale() ? ldl::setting( 'submit_locale' ) : 'US';
 }
 
 
-function ld_is_public() {
+function ldl_is_public() {
     return ldl::setting( 'public_or_private' );
 }
 
 
-function ld_use_google_maps() {
+function ldl_use_google_maps() {
     return ldl::setting( 'google_maps' );
 }
 
 
-function ld_get_shortcode_id( $force = false) {
-    global $shortcode_tags;
+function ldl_get_page_haz_shortcode( $force = false) {
+
+    if ( ldl::setting( 'directory_page' ) )
+        return ldl::setting( 'directory_page' );
 
     $shortcode_id = get_transient( 'ldd_shortcode_id' );
 
@@ -115,6 +125,8 @@ function ld_get_shortcode_id( $force = false) {
         'posts_per_page'    => -1,
         'post_type'         => 'page',
     ) );
+
+    global $shortcode_tags;
 
     // Store this, we don't want to permanently change it
     $old_shortcode_tags = $shortcode_tags;
@@ -143,19 +155,7 @@ function ld_get_shortcode_id( $force = false) {
 }
 
 
-function ld_get_tpl() {
-
-    require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
-
-    raintpl::configure( 'tpl_ext',      'tpl' );
-    raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
-    raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
-
-    return new raintpl;
-}
-
-
-function  ld_get_page_header( $show_label = 0 ) {
+function  ldl_get_header( $show_label = 0 ) {
 
     wp_enqueue_script( 'lddlite-search' );
 
@@ -165,7 +165,7 @@ function  ld_get_page_header( $show_label = 0 ) {
     $tpl->assign( 'directory_label', ldl::setting( 'directory_label' ) );
     $tpl->assign( 'directory_description', ldl::setting( 'directory_description' ) );
 
-    $tpl->assign( 'public', ld_is_public() );
+    $tpl->assign( 'public', ldl_is_public() );
     $tpl->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
 
     $tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
@@ -178,7 +178,7 @@ function  ld_get_page_header( $show_label = 0 ) {
 }
 
 
-function ld_get_term_name( $term_id ) {
+function ldl_get_term_name( $term_id ) {
     $term_id = (int) $term_id;
     $term = get_term_by( 'term_id', $term_id, LDDLITE_TAX_CAT );
     if ( !$term || is_wp_error( $term ) )
@@ -187,26 +187,7 @@ function ld_get_term_name( $term_id ) {
 }
 
 
-
-function ld_get_social_icon( $label, $url = '', $title = '', $ext = 'png' ) {
-
-    $icon = LDDLITE_URL . '/public/images/social/' . $label . '.' . $ext;
-
-    if ( !file_exists( $icon ) )
-        return false;
-
-    $output = '<img src="' . $icon . '">';
-
-    if ( !empty( $url ) ) {
-        $title = ( empty( $title ) ) ? '' : sprintf( ' title="%s" ', htmlspecialchars( $title ) );
-        $output = sprintf( '<a href="%1$s" %2$s class="social-icon">%3$s</a>', esc_url( $url ), $title, $output );
-    }
-
-    return $output;
-}
-
-
-function ld_split_file_into_array( $arrfile ) {
+function ldl_split_file_into_array( $arrfile ) {
 
     if ( !file_exists( $arrfile ) )
         return false;
@@ -223,29 +204,29 @@ function ld_split_file_into_array( $arrfile ) {
 }
 
 
-function ld_get_subdivision_array( $subdivision ) {
+function ldl_get_subdivision_array( $subdivision ) {
 
     $subdivision_file = LDDLITE_PATH . '/includes/actions/select/subdivision.' . strtolower( $subdivision ) . '.inc';
 
     if ( !file_exists( $subdivision_file ) )
         return false;
 
-    return ld_split_file_into_array( $subdivision_file );
+    return ldl_split_file_into_array( $subdivision_file );
 }
 
 
-function ld_get_country_array() {
+function ldl_get_country_array() {
 
     $country_file = LDDLITE_PATH . '/includes/actions/select/countries.inc';
 
     if ( !file_exists( $country_file ) )
         return false;
 
-    return ld_split_file_into_array( $country_file );
+    return ldl_split_file_into_array( $country_file );
 }
 
 
-function ld_format_phone( $phone, $locale = 'US' ) {
+function ldl_format_phone( $phone, $locale = 'US' ) {
 
     if ( 'US' == $locale ) {
         $phone = preg_replace( '/[^[:digit:]]/', '', $phone );
@@ -259,7 +240,7 @@ function ld_format_phone( $phone, $locale = 'US' ) {
 }
 
 
-function ld_get_listing_meta( $id ) {
+function ldl_get_listing_meta( $id ) {
 
     if ( !is_int( $id ) || LDDLITE_POST_TYPE != get_post_type( $id ) )
         return false;
@@ -317,7 +298,7 @@ function ld_get_listing_meta( $id ) {
 
     $phone = get_post_meta( $id, '_lddlite_contact_phone', 1 );
     if ( $phone )
-        $meta['phone'] = ld_format_phone( $phone );
+        $meta['phone'] = ldl_format_phone( $phone );
 
     $meta = wp_parse_args( $meta, $defaults );
 
@@ -326,7 +307,7 @@ function ld_get_listing_meta( $id ) {
 }
 
 
-function ld_get_social( $id ) {
+function ldl_get_social( $id ) {
 
     if ( !is_int( $id ) )
         return false;
@@ -366,13 +347,13 @@ function ld_get_social( $id ) {
 }
 
 
-function ld_dropdown_subdivision( $subdivision, $data, $tabindex = 0 ) {
+function ldl_dropdown_subdivision( $subdivision, $data, $tabindex = 0 ) {
 
     $selected = isset( $data['subdivision'] ) ? $data['subdivision'] : '';
     $lines = '';
 
     if ( !empty( $subdivision ) )
-        $lines = ld_get_subdivision_array( $subdivision );
+        $lines = ldl_get_subdivision_array( $subdivision );
 
     $tabindex = $tabindex ? 'tabindex="' . $tabindex . '"' : '';
 
@@ -394,7 +375,7 @@ function ld_dropdown_subdivision( $subdivision, $data, $tabindex = 0 ) {
 }
 
 
-function ld_dropdown_country( $name, $data = '', $tabindex = 0 ) {
+function ldl_dropdown_country( $name, $data = '', $tabindex = 0 ) {
 
     $selected = '';
     if ( !is_array( $data )  )
@@ -404,7 +385,7 @@ function ld_dropdown_country( $name, $data = '', $tabindex = 0 ) {
 
     $tabindex = $tabindex ? 'tabindex="' . $tabindex . '"' : '';
 
-    $countries = ld_get_country_array();
+    $countries = ldl_get_country_array();
 
     if ( !$countries )
         return '<input id="country" class="form-control" name="' . $name . '" type="text" ' . $tabindex . ' required>';
@@ -425,12 +406,12 @@ function ld_dropdown_country( $name, $data = '', $tabindex = 0 ) {
 }
 
 
-function ld_sanitize_phone( $number ) {
+function ldl_sanitize_phone( $number ) {
     return preg_replace( '/[^0-9+]/', '', $number );
 }
 
 
-function ld_get_listing_email( $id ) {
+function ldl_get_listing_email( $id ) {
     return get_post_meta( $id, '_lddlite_contact_email', 1 );
 }
 
@@ -540,3 +521,27 @@ function ldl_uk_sort_callback( $a, $b ) {
     return strlen( $b ) - strlen( $a );
 }
 
+
+/**
+ * Alias for wp_mail that sets headers for us.
+ *
+ * @since 1.3.13
+ * @param string $to Email address this message is going to
+ * @param string $subject Email subject
+ * @param string $message Email contents
+ * @param string $headers Optional, default is managed internally.
+ */
+function ldl_mail($to, $subject, $message, $headers = '' ) {
+
+    // If we're not passing any headers, default to our internal from address
+    if (empty($headers)) {
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: LDD Business Directory <' . get_option('admin_email') . '>' . "\r\n";
+    }
+
+    ob_start();
+    wp_mail($to, $subject, $message, $headers);
+    ob_end_clean();
+
+}

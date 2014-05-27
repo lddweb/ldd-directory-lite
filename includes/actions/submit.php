@@ -17,7 +17,7 @@ function ldl_append_tos() {
     if ( !ldl_use_tos() )
         return;
 
-    $tpl = ld_get_tpl();
+    $tpl = ldl::tpl();
     $tpl->assign( 'tos', ldl::setting( 'submit_tos' ) );
     $tpl->draw( 'modal-tos' );
 
@@ -34,7 +34,7 @@ function ldl_submit__email_admin( array $data, $post_id ) {
     $message = str_replace( '{title}', $data['title'], $message );
     $message = str_replace( '{description}', $data['description'], $message );
 
-    ld_mail( ldl::setting( 'email_admin' ), $subject, $message );
+    ldl_mail( ldl::setting( 'email_admin' ), $subject, $message );
 }
 
 
@@ -49,18 +49,18 @@ function ldl_submit__email_owner( array $data ) {
     $message = str_replace( '{title}', $data['title'], $message );
     $message = str_replace( '{description}', $data['description'], $message );
 
-    ld_mail( $data['email'], $subject, $message );
+    ldl_mail( $data['email'], $subject, $message );
 }
 
 
-function ld_action__submit( $term = false ) {
+function ldl_action__submit( $term = false ) {
     global $post;
 
     wp_enqueue_script( 'lddlite-responsiveslides' );
     wp_enqueue_script( 'lddlite-submit' );
 
     $tpl = ldl::tpl();
-    $tpl->assign( 'header', ld_get_page_header() );
+    $tpl->assign( 'header', ldl_get_header() );
     $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
 
 
@@ -77,8 +77,8 @@ function ld_action__submit( $term = false ) {
         if ( !wp_verify_nonce( $_POST['nonce_field'], 'submit-listing-nonce' ) || !empty( $_POST['ld_s_summary'] ) )
             die( "No, kitty! That's a bad kitty!" );
 
-        $data = ld_sanitize__post( $_POST );
-        $valid = ld_submit_validate_form( $data );
+        $data = ldl_sanitize__post( $_POST );
+        $valid = ldl_submit_validate_form( $data );
 
         if ( is_wp_error( $valid ) ) {
 
@@ -93,11 +93,11 @@ function ld_action__submit( $term = false ) {
         } else {
 
             // Create the user and insert a post for this listing
-            $user_id = ld_submit__create_user( $data['username'], $data['email'] );
-            $post_id = ld_submit__create_listing( $data['title'], $data['description'], $data['category'], $user_id );
+            $user_id = ldl_submit__create_user( $data['username'], $data['email'] );
+            $post_id = ldl_submit__create_listing( $data['title'], $data['description'], $data['category'], $user_id );
 
             // Add all the post meta fields
-            ld_submit__create_meta( $data, $post_id );
+            ldl_submit__create_meta( $data, $post_id );
 
             // Upload their logo if one was submitted
             if ( isset( $_FILES['ld_s_logo'] ) ) {
@@ -147,11 +147,11 @@ function ld_action__submit( $term = false ) {
     if ( isset( $data['country'] ) )
         $subdivision = $data['country'];
     else
-        $subdivision = ld_get_locale();
+        $subdivision = ldl_get_locale();
 
-    $tpl->assign( 'use_locale',  ld_use_locale() );
-    $tpl->assign( 'country_dropdown', ld_dropdown_country( 'ld_s_country', $data ) );
-    $tpl->assign( 'subdivision_dropdown', ld_dropdown_subdivision( $subdivision, $data, 10 ) );
+    $tpl->assign( 'use_locale',  ldl_use_locale() );
+    $tpl->assign( 'country_dropdown', ldl_dropdown_country( 'ld_s_country', $data ) );
+    $tpl->assign( 'subdivision_dropdown', ldl_dropdown_subdivision( $subdivision, $data, 10 ) );
 
     $tpl->assign( 'use_tos', ldl::setting( 'submit_use_tos' ) );
     $tpl->assign( 'tos', ldl::setting( 'submit_tos' ) );
