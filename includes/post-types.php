@@ -47,7 +47,7 @@ function ldl_filter__post_type_link( $post_link, $post ) {
 
 function ldl_filter__enter_title_here ( $title ) {
     if ( get_post_type() == LDDLITE_POST_TYPE )
-        $title = __( 'Business Name', 'lddlite' );
+        $title = __( 'Listing Name', 'lddlite' );
 
     return $title;
 }

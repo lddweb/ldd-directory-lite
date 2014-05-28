@@ -32,8 +32,8 @@ SIG;
 <p>{approve_link}</p>
 
 <ul>
-    <li>Business Name: <strong>{title}</strong></li>
-    <li>Business Description: <strong>{description}</strong></li>
+    <li>Listing Name: <strong>{title}</strong></li>
+    <li>Listing Description: <strong>{description}</strong></li>
 </ul>
 EM;
     $email['on_submit']  = <<<EM
@@ -43,8 +43,8 @@ EM;
 <p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {directory_email}.</p>
 
 <ul>
-    <li>Business Name: <strong>{title}</strong></li>
-    <li>Business Description: <strong>{description}</strong></li>
+    <li>Listing Name: <strong>{title}</strong></li>
+    <li>Listing Description: <strong>{description}</strong></li>
 </ul>
 EM;
     $email['on_approve'] = <<<EM
@@ -328,9 +328,9 @@ function ldl_get_social( $id ) {
         $output = '    <a href="" class="btn btn-success" data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
 
     $social = array(
-        'facebook-square' =>  get_post_meta( $id, '_lddlite_url_facebook', 1 ),
-        'linkedin'        =>  get_post_meta( $id, '_lddlite_url_linkedin', 1 ),
-        'twitter'         =>  get_post_meta( $id, '_lddlite_url_twitter', 1 ),
+        'facebook-square' =>  'http://', //get_post_meta( $id, '_lddlite_url_facebook', 1 ),
+        'linkedin'        =>  'http://', //get_post_meta( $id, '_lddlite_url_linkedin', 1 ),
+        'twitter'         =>  'http://', //get_post_meta( $id, '_lddlite_url_twitter', 1 ),
     );
 
     foreach ( $social as $key => $url ) {

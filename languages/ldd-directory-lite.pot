@@ -1,0 +1,864 @@
+# Copyright (C) 2014 LDD Directory Lite
+# This file is distributed under the same license as the LDD Directory Lite package.
+msgid ""
+msgstr ""
+"Project-Id-Version: LDD Directory Lite 0.5.1-beta\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/ldd-directory-lite\n"
+"POT-Creation-Date: 2014-05-28 15:48:27+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: includes/actions/submit/process.php:234
+msgid "You need a title for your listing"
+msgstr ""
+
+#: includes/actions/submit/process.php:235
+msgid "Please select a category"
+msgstr ""
+
+#: includes/actions/submit/process.php:236
+msgid "Please add a description for your listing"
+msgstr ""
+
+#: includes/actions/submit/process.php:237
+msgid "Please enter a valid email address"
+msgstr ""
+
+#: includes/actions/submit/process.php:238
+msgid "Please enter a phone number"
+msgstr ""
+
+#: includes/actions/submit/process.php:239
+msgid "That is not a valid phone number"
+msgstr ""
+
+#: includes/actions/submit/process.php:240
+msgid "A username is required"
+msgstr ""
+
+#: includes/actions/submit/process.php:241
+msgid "That is not a valid username"
+msgstr ""
+
+#: includes/actions/submit/process.php:242
+msgid "That username already exists"
+msgstr ""
+
+#: includes/actions/submit/process.php:243
+msgid "An email address is required"
+msgstr ""
+
+#: includes/actions/submit/process.php:244
+msgid "That email is already in use"
+msgstr ""
+
+#: includes/actions/submit/process.php:245
+msgid "Please enter your street address"
+msgstr ""
+
+#: includes/actions/submit/process.php:246
+msgid "Please enter a city"
+msgstr ""
+
+#: includes/actions/submit/process.php:247
+msgid "Please enter a state"
+msgstr ""
+
+#: includes/actions/submit/process.php:248
+msgid "Please enter your zip"
+msgstr ""
+
+#: includes/admin/help.php:17
+msgid "Helpful Links:"
+msgstr ""
+
+#: includes/admin/help.php:18
+msgid ""
+"Please visit us on <a href=\"%s\">WordPress.org</a> for help, faqs, and "
+"other documentation."
+msgstr ""
+
+#: includes/admin/help.php:19
+msgid "Found a bug?"
+msgstr ""
+
+#: includes/admin/help.php:20
+msgid "<a href=\"%s\">Submit issues</a> on <a href=\"%s\">GitHub</a>."
+msgstr ""
+
+#: includes/admin/help.php:28
+msgid "General Help"
+msgstr ""
+
+#: includes/admin/help.php:29
+msgid ""
+"Directory [lite] is designed to work out of the box with as little effort on "
+"your part as possible. Use this page to define any custom configuration "
+"options you would like for your web site."
+msgstr ""
+
+#: includes/admin/help.php:34
+msgid "Email Settings"
+msgstr ""
+
+#: includes/admin/help.php:36
+msgid ""
+"The email settings allow you to customize the notifications sent from your "
+"directory installation."
+msgstr ""
+
+#: includes/admin/help.php:37
+msgid "Variables available in all email templates include;"
+msgstr ""
+
+#: includes/admin/help.php:39
+msgid "<em>{title}</em> The title of the listing as the owner defined it."
+msgstr ""
+
+#: includes/admin/help.php:40
+msgid "<em>{description}</em> The listing description."
+msgstr ""
+
+#: includes/admin/help.php:42
+msgid ""
+"<strong>Administrator Notification</strong> - This is the email sent to you, "
+"as the site owner, when someone submits a new listing for review. Additional "
+"variables include;"
+msgstr ""
+
+#: includes/admin/help.php:44
+msgid ""
+"<em>{link}</em> Direct link to the administrator page where you can review "
+"and approve or reject the listing."
+msgstr ""
+
+#: includes/admin/help.php:46
+msgid ""
+"<strong>Listing Submission</strong> - This email is sent to the listing "
+"owner when they submit a new listing, prior to it being approved by the site "
+"administrator."
+msgstr ""
+
+#: includes/admin/help.php:47
+msgid ""
+"<strong>Listing Approved</strong> - This email is sent to the listing owner "
+"after their new listing has been approved and is now availble publicly on "
+"the directory. Additional variables include;"
+msgstr ""
+
+#: includes/admin/help.php:49
+msgid ""
+"<em>{link}</em> Direct link to their new listing as it appears on your "
+"directory."
+msgstr ""
+
+#: includes/admin/metaboxes.php:24 includes/cmb/init.php:1155
+msgid "Save"
+msgstr ""
+
+#: includes/admin/metaboxes.php:30
+msgid "Save Draft"
+msgstr ""
+
+#: includes/admin/metaboxes.php:32
+msgid "Save as Pending"
+msgstr ""
+
+#: includes/admin/metaboxes.php:41
+msgid "Status:"
+msgstr ""
+
+#: includes/admin/metaboxes.php:46
+msgid "Privately Listed Business"
+msgstr ""
+
+#: includes/admin/metaboxes.php:49 includes/admin/metaboxes.php:71
+msgid "Approved"
+msgstr ""
+
+#: includes/admin/metaboxes.php:52 includes/admin/metaboxes.php:75
+msgid "Scheduled"
+msgstr ""
+
+#: includes/admin/metaboxes.php:55 includes/admin/metaboxes.php:77
+msgid "Pending Review"
+msgstr ""
+
+#: includes/admin/metaboxes.php:59 includes/admin/metaboxes.php:79
+#: includes/admin/metaboxes.php:81
+msgid "Disabled"
+msgstr ""
+
+#: includes/admin/metaboxes.php:65 includes/admin/metaboxes.php:116
+msgid "Edit"
+msgstr ""
+
+#: includes/admin/metaboxes.php:73
+msgid "Privately Listed"
+msgstr ""
+
+#: includes/admin/metaboxes.php:84
+msgid "OK"
+msgstr ""
+
+#: includes/admin/metaboxes.php:85
+msgid "Cancel"
+msgstr ""
+
+#. translators: Publish box date format, see http:php.net/date
+#: includes/admin/metaboxes.php:93
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: includes/admin/metaboxes.php:96
+msgid "Scheduled for: <b>%1$s</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:98
+msgid "Approved on: <b>%1$s</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:100
+msgid "Approve <b>immediately</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:102
+msgid "Schedule for: <b>%1$s</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:104
+msgid "List on: <b>%1$s</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:108
+msgid "Publish <b>immediately</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:132
+msgid "Delete Permanently"
+msgstr ""
+
+#: includes/admin/metaboxes.php:134
+msgid "Move to Trash"
+msgstr ""
+
+#: includes/admin/metaboxes.php:146 includes/admin/metaboxes.php:147
+msgid "Schedule"
+msgstr ""
+
+#: includes/admin/metaboxes.php:149
+msgid "Publish"
+msgstr ""
+
+#: includes/admin/metaboxes.php:150
+msgid "Approve"
+msgstr ""
+
+#: includes/admin/metaboxes.php:153 includes/admin/metaboxes.php:154
+msgid "Submit for Review"
+msgstr ""
+
+#: includes/admin/metaboxes.php:158 includes/admin/metaboxes.php:159
+msgid "Update"
+msgstr ""
+
+#: includes/admin/metaboxes.php:184
+msgid "Owner"
+msgstr ""
+
+#: includes/admin/metaboxes.php:185
+msgid "Logo"
+msgstr ""
+
+#: includes/admin/metaboxes.php:186
+msgid "Approval"
+msgstr ""
+
+#: includes/admin/metaboxes.php:203
+msgid "Business Address"
+msgstr ""
+
+#: includes/admin/metaboxes.php:210
+msgid "Address 1"
+msgstr ""
+
+#: includes/admin/metaboxes.php:215
+msgid "Address 2"
+msgstr ""
+
+#: includes/admin/metaboxes.php:220
+msgid "City"
+msgstr ""
+
+#: includes/admin/metaboxes.php:225
+msgid "State / Province"
+msgstr ""
+
+#: includes/admin/metaboxes.php:229
+msgid "Zip / Post Code"
+msgstr ""
+
+#: includes/admin/metaboxes.php:253
+msgid "Country"
+msgstr ""
+
+#: includes/admin/metaboxes.php:266
+msgid "Web Addresses"
+msgstr ""
+
+#: includes/admin/metaboxes.php:273
+msgid "Website"
+msgstr ""
+
+#: includes/admin/metaboxes.php:274
+msgid ""
+"Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</"
+"code>, or <code>www.hosting.com/mysite/mypage.html</code>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:279
+msgid "Facebook"
+msgstr ""
+
+#: includes/admin/metaboxes.php:280
+msgid ""
+"This should always start with <code>facebook.com/</code> or <code>www."
+"facebook.com</code>."
+msgstr ""
+
+#: includes/admin/metaboxes.php:285
+msgid "Twitter"
+msgstr ""
+
+#: includes/admin/metaboxes.php:286
+msgid ""
+"Enter the entire url (<code>www.twitter.com/username</code>) or just the "
+"username."
+msgstr ""
+
+#: includes/admin/metaboxes.php:291
+msgid "LinkedIn"
+msgstr ""
+
+#: includes/admin/metaboxes.php:292
+msgid "This should start with <code>www.linkedin.com</code>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:301
+msgid "Contact Information"
+msgstr ""
+
+#: includes/admin/metaboxes.php:308 includes/admin/settings.php:216
+msgid "Email"
+msgstr ""
+
+#: includes/admin/metaboxes.php:313
+msgid "Phone"
+msgstr ""
+
+#: includes/admin/metaboxes.php:318
+msgid "Fax"
+msgstr ""
+
+#: includes/admin/pointers.php:60
+msgid ""
+"Thank you for updating to the latest LDD Directory version! You can add, "
+"edit or remove listings from this menu. Some new features have been added "
+"since last time, so be sure to review your settings!"
+msgstr ""
+
+#: includes/admin/settings.php:33
+msgid "Directory Label"
+msgstr ""
+
+#: includes/admin/settings.php:34
+msgid "Directory Description"
+msgstr ""
+
+#: includes/admin/settings.php:35
+msgid "Directory Page"
+msgstr ""
+
+#: includes/admin/settings.php:36 includes/admin/settings.php:133
+msgid "Other Settings"
+msgstr ""
+
+#: includes/admin/settings.php:37
+msgid "Disable Bootstrap"
+msgstr ""
+
+#: includes/admin/settings.php:38
+msgid "Public Directory"
+msgstr ""
+
+#: includes/admin/settings.php:39
+msgid "Use Google Maps"
+msgstr ""
+
+#: includes/admin/settings.php:43
+msgid ""
+"Name your directory; \"My Business Directory\", \"Local Restaurant Feed\", "
+"\"John's List of Links\", etc."
+msgstr ""
+
+#: includes/admin/settings.php:59
+msgid "Contains the <code>[directory_lite]</code> shortcode."
+msgstr ""
+
+#: includes/admin/settings.php:83
+msgid "Directory Email"
+msgstr ""
+
+#: includes/admin/settings.php:84
+msgid "Administrator Notification Email"
+msgstr ""
+
+#: includes/admin/settings.php:85 includes/admin/settings.php:87
+#: includes/admin/settings.php:89
+msgid "Email Body"
+msgstr ""
+
+#: includes/admin/settings.php:86
+msgid "Listing Submission"
+msgstr ""
+
+#: includes/admin/settings.php:88
+msgid "Listing Approval"
+msgstr ""
+
+#: includes/admin/settings.php:92
+msgid ""
+"The following configuration options control how outgoing emails from "
+"Business Directory [lite] are handled."
+msgstr ""
+
+#: includes/admin/settings.php:97
+msgid ""
+"This is the email address that will appear in the \"from\" field of outgoing "
+"messages. Directory notifications will be sent to "
+msgstr ""
+
+#: includes/admin/settings.php:131
+msgid "Include Terms"
+msgstr ""
+
+#: includes/admin/settings.php:132
+msgid "Terms of Service"
+msgstr ""
+
+#: includes/admin/settings.php:134
+msgid "Use Locale"
+msgstr ""
+
+#: includes/admin/settings.php:135
+msgid "Directory Locale"
+msgstr ""
+
+#: includes/admin/settings.php:138
+msgid ""
+"Control the way your submit form appears to people, and the information that "
+"is displayed on it."
+msgstr ""
+
+#: includes/admin/settings.php:180
+msgid "Settings updated."
+msgstr ""
+
+#: includes/admin/settings.php:200
+msgid "LDD Directory [lite]"
+msgstr ""
+
+#: includes/admin/settings.php:215
+msgid "General"
+msgstr ""
+
+#: includes/admin/settings.php:217
+msgid "Submit Form"
+msgstr ""
+
+#: includes/admin/settings.php:274
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: includes/ajax.php:120
+msgid ""
+"Your message has been successfully sent to the email address we have on file!"
+msgstr ""
+
+#: includes/cmb/example-functions.php:28
+msgid "Test Metabox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:36
+#: includes/cmb/example-functions.php:269
+msgid "Test Text"
+msgstr ""
+
+#: includes/cmb/example-functions.php:37 includes/cmb/example-functions.php:47
+#: includes/cmb/example-functions.php:54 includes/cmb/example-functions.php:61
+#: includes/cmb/example-functions.php:69 includes/cmb/example-functions.php:76
+#: includes/cmb/example-functions.php:88 includes/cmb/example-functions.php:94
+#: includes/cmb/example-functions.php:101
+#: includes/cmb/example-functions.php:116
+#: includes/cmb/example-functions.php:124
+#: includes/cmb/example-functions.php:131
+#: includes/cmb/example-functions.php:137
+#: includes/cmb/example-functions.php:143
+#: includes/cmb/example-functions.php:155
+#: includes/cmb/example-functions.php:166
+#: includes/cmb/example-functions.php:177
+#: includes/cmb/example-functions.php:188
+#: includes/cmb/example-functions.php:196
+#: includes/cmb/example-functions.php:203
+#: includes/cmb/example-functions.php:211
+#: includes/cmb/example-functions.php:217
+#: includes/cmb/example-functions.php:229
+#: includes/cmb/example-functions.php:270
+#: includes/cmb/example-functions.php:335
+#: includes/cmb/example-functions.php:342
+#: includes/cmb/example-functions.php:349
+#: includes/cmb/example-functions.php:355
+#: includes/cmb/example-functions.php:361
+#: includes/cmb/example-functions.php:367
+#: includes/cmb/example-functions.php:373
+#: includes/cmb/example-functions.php:391
+msgid "field description (optional)"
+msgstr ""
+
+#: includes/cmb/example-functions.php:46
+msgid "Test Text Small"
+msgstr ""
+
+#: includes/cmb/example-functions.php:53
+msgid "Test Text Medium"
+msgstr ""
+
+#: includes/cmb/example-functions.php:60
+msgid "Website URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:68
+msgid "Test Text Email"
+msgstr ""
+
+#: includes/cmb/example-functions.php:75
+msgid "Test Time"
+msgstr ""
+
+#: includes/cmb/example-functions.php:81 includes/cmb/example-functions.php:82
+msgid "Time zone"
+msgstr ""
+
+#: includes/cmb/example-functions.php:87
+msgid "Test Date Picker"
+msgstr ""
+
+#: includes/cmb/example-functions.php:93
+msgid "Test Date Picker (UNIX timestamp)"
+msgstr ""
+
+#: includes/cmb/example-functions.php:100
+msgid "Test Date/Time Picker Combo (UNIX timestamp)"
+msgstr ""
+
+#: includes/cmb/example-functions.php:115
+msgid "Test Money"
+msgstr ""
+
+#: includes/cmb/example-functions.php:123
+msgid "Test Color Picker"
+msgstr ""
+
+#: includes/cmb/example-functions.php:130
+msgid "Test Text Area"
+msgstr ""
+
+#: includes/cmb/example-functions.php:136
+msgid "Test Text Area Small"
+msgstr ""
+
+#: includes/cmb/example-functions.php:142
+msgid "Test Text Area for Code"
+msgstr ""
+
+#: includes/cmb/example-functions.php:148
+msgid "Test Title Weeeee"
+msgstr ""
+
+#: includes/cmb/example-functions.php:149
+msgid "This is a title description"
+msgstr ""
+
+#: includes/cmb/example-functions.php:154
+msgid "Test Select"
+msgstr ""
+
+#: includes/cmb/example-functions.php:159
+#: includes/cmb/example-functions.php:170
+#: includes/cmb/example-functions.php:181
+msgid "Option One"
+msgstr ""
+
+#: includes/cmb/example-functions.php:160
+#: includes/cmb/example-functions.php:171
+#: includes/cmb/example-functions.php:182
+msgid "Option Two"
+msgstr ""
+
+#: includes/cmb/example-functions.php:161
+#: includes/cmb/example-functions.php:172
+#: includes/cmb/example-functions.php:183
+msgid "Option Three"
+msgstr ""
+
+#: includes/cmb/example-functions.php:165
+msgid "Test Radio inline"
+msgstr ""
+
+#: includes/cmb/example-functions.php:176
+msgid "Test Radio"
+msgstr ""
+
+#: includes/cmb/example-functions.php:187
+msgid "Test Taxonomy Radio"
+msgstr ""
+
+#: includes/cmb/example-functions.php:195
+msgid "Test Taxonomy Select"
+msgstr ""
+
+#: includes/cmb/example-functions.php:202
+msgid "Test Taxonomy Multi Checkbox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:210
+msgid "Test Checkbox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:216
+msgid "Test Multi Checkbox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:221
+msgid "Check One"
+msgstr ""
+
+#: includes/cmb/example-functions.php:222
+msgid "Check Two"
+msgstr ""
+
+#: includes/cmb/example-functions.php:223
+msgid "Check Three"
+msgstr ""
+
+#: includes/cmb/example-functions.php:228
+msgid "Test wysiwyg"
+msgstr ""
+
+#: includes/cmb/example-functions.php:235
+msgid "Test Image"
+msgstr ""
+
+#: includes/cmb/example-functions.php:236
+msgid "Upload an image or enter a URL."
+msgstr ""
+
+#: includes/cmb/example-functions.php:241
+msgid "Multiple Files"
+msgstr ""
+
+#: includes/cmb/example-functions.php:242
+msgid "Upload or add multiple images/attachments."
+msgstr ""
+
+#: includes/cmb/example-functions.php:248
+msgid "oEmbed"
+msgstr ""
+
+#: includes/cmb/example-functions.php:249
+msgid ""
+"Enter a youtube, twitter, or instagram URL. Supports services listed at <a "
+"href=\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/"
+"Embeds</a>."
+msgstr ""
+
+#: includes/cmb/example-functions.php:261
+msgid "About Page Metabox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:282
+msgid "Repeating Field Group"
+msgstr ""
+
+#: includes/cmb/example-functions.php:288
+msgid "Generates reusable form entries"
+msgstr ""
+
+#: includes/cmb/example-functions.php:290
+msgid "Add Another Entry"
+msgstr ""
+
+#: includes/cmb/example-functions.php:291
+msgid "Remove Entry"
+msgstr ""
+
+#: includes/cmb/example-functions.php:328
+msgid "User Profile Metabox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:334
+msgid "Extra Info"
+msgstr ""
+
+#: includes/cmb/example-functions.php:341
+msgid "Avatar"
+msgstr ""
+
+#: includes/cmb/example-functions.php:348
+msgid "Facebook URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:354
+msgid "Twitter URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:360
+msgid "Google+ URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:366
+msgid "Linkedin URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:372
+msgid "User Field"
+msgstr ""
+
+#: includes/cmb/example-functions.php:386
+msgid "Theme Options Metabox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:390
+msgid "Site Background Color"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_ajax.php:47
+msgid "Please Try Again"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_ajax.php:131
+msgid "Remove Embed"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_ajax.php:134
+msgid "No oEmbed Results Found for %s. View more info at"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_field.php:449
+msgid "Add Group"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_field.php:450
+msgid "Remove Group"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:249
+msgid "Add Row"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:305
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:705
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+msgid "Remove"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:600
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:634
+msgid "No terms"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:673
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:727
+msgid "Add or Upload File"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:694
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:757
+msgid "Remove Image"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:705
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+msgid "File:"
+msgstr ""
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:705
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+msgid "Download"
+msgstr ""
+
+#: includes/cmb/init.php:251
+msgid "Clear"
+msgstr ""
+
+#: includes/cmb/init.php:252
+msgid "Default"
+msgstr ""
+
+#: includes/cmb/init.php:253
+msgid "Select Color"
+msgstr ""
+
+#: includes/cmb/init.php:254
+msgid "Current Color"
+msgstr ""
+
+#: includes/post-types.php:50
+msgid "Listing Name"
+msgstr ""
+
+#: includes/post-types.php:59
+msgid "Set featured image"
+msgstr ""
+
+#: includes/post-types.php:59
+msgid "Upload A Logo"
+msgstr ""
+
+#: includes/post-types.php:60
+msgid "Remove featured image"
+msgstr ""
+
+#: includes/post-types.php:60
+msgid "Remove Logo"
+msgstr ""
+
+#: ldd-directory-lite.php:175
+msgid "Settings"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "LDD Directory Lite"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/plugins/ldd-directory-lite"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Powerful yet simple to use, easily add a business directory to your "
+"WordPress site."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "LDD Web Design"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.lddwebdesign.com"
+msgstr ""

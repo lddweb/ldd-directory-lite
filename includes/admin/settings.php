@@ -197,10 +197,10 @@ class LDD_Directory_Admin {
 
         ?>
         <div class="wrap directory-lite">
-            <h2 class="heading"><?php _e( 'LDD Directory Settings', 'lddlite' ); ?></h2>
+            <h2 class="heading"><?php _e( 'LDD Directory [lite]', 'lddlite' ); ?></h2>
 
             <div class="sub-heading">
-                <p>LDD Business Directory [lite] configuration settings can all be found here. If you require support, or would like to make a suggestion for improving this plugin, please refer to the following links.</p>
+                <p>Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.</p>
                 <ul id="directory-links">
                     <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues" title="Submit a bug or feature request on GitHub" class="bold-link"><i class="fa fa-exclamation-triangle fa-fw"></i> Submit an Issue</a></li>
                     <li class="right"><i class="fa fa-wordpress fa-fw"></i> Visit us on <a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Come visit the plugin homepage on WordPress.org">WordPress.org</a></li>
