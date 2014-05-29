@@ -75,6 +75,7 @@ EM;
         'submit_tos'                => '',
         'submit_use_locale'         => 0,
         'submit_locale'             => 'US',
+        'submit_require_address'    => 1,
     ) );
 
     return $defaults;

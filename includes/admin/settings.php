@@ -61,19 +61,19 @@ class LDD_Directory_Admin {
 
         function _f_disable_bootstrap() {
             echo '<label for="lite-disable_bootstrap"><input id="lite-disable_bootstrap" type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked( ldl::setting( 'disable_bootstrap' ), 1, 0 ) . '> <span>Disable</span></label>';
-            echo '<p class="description">A lot of themes already use bootstrap; if yours is one, disable the plugin from loading another copy.</p>';
+            echo '<p class="description">' . __( 'A lot of themes already use bootstrap; if yours is one, disable the plugin from loading another copy.', 'lddlite' ) . '</p>';
         }
 
         function _f_public_or_private() {
             echo '<label for="lite-public_or_private-yes" title="Allow public interaction"><input id="lite-public_or_private-yes" type="radio" name="lddlite_settings[public_or_private]" value="1" ' . checked( ldl::setting( 'public_or_private' ), 1, 0 ) . '> <span>Yes</span></label><br />';
             echo '<label for="lite-public_or_private-no" title="Disallow public interaction"><input id="lite-public_or_private-no" type="radio" name="lddlite_settings[public_or_private]" value="0" ' . checked( ldl::setting( 'public_or_private' ), 0, 0 ) . '> <span>No</span></label><br />';
-            echo '<p class="description">Determines whether features such as "Submit a Listing" are available.</p>';
+            echo '<p class="description">' . __( 'Determines whether features such as "Submit a Listing" are available.', 'lddlite' ) . '</p>';
         }
 
         function _f_google_maps() {
             echo '<label for="lite-google_maps-yes" title="Enable Google Maps"><input id="lite-google_maps-yes" type="radio" name="lddlite_settings[google_maps]" value="1" ' . checked( ldl::setting( 'google_maps' ), 1, 0 ) . '> <span>Yes</span></label><br />';
             echo '<label for="lite-google_maps-no" title="Disable Google Maps"><input id="lite-google_maps-no" type="radio" name="lddlite_settings[google_maps]" value="0" ' . checked( ldl::setting( 'google_maps' ), 0, 0 ) . '> <span>No</span></label><br />';
-            echo '<p class="description">Display Google Maps on listing pages?</p>';
+            echo '<p class="description">' . __( 'Display Google Maps on listing pages?', 'lddlite' ) . '</p>';
 
         }
 
@@ -89,7 +89,7 @@ class LDD_Directory_Admin {
         add_settings_field( 'lddlite_settings[email_onapprove_body]',    '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>', '_f_email_onapprove_body',    'lddlite_settings_email', 'lddlite_settings_email' );
 
         function _s_settings_email() {
-            echo '<p>'.__( 'The following configuration options control how outgoing emails from Business Directory [lite] are handled.', 'lddlite' ).'</p>';
+            echo '<p>' . __( 'The following configuration options control how outgoing emails from Business Directory [lite] are handled.', 'lddlite' ) . '</p>';
         }
 
         function _f_email_admin() {
@@ -99,25 +99,25 @@ class LDD_Directory_Admin {
 
         function _f_email_toadmin_subject() {
             echo '<input id="email_toadmin_subject" type="text" size="80" name="lddlite_settings[email_toadmin_subject]" value="' . ldl::setting( 'email_toadmin_subject', 1 ) . '">';
-            echo '<p class="description">Sent to the site administrator when a listing is submitted and pending approval.</p>';
+            echo '<p class="description">' . __( 'Sent to the site administrator when a listing is submitted and pending approval.', 'lddlite' ) . '</p>';
         }
 
         function _f_email_toadmin_body() {
-            wp_editor( ldl::setting( 'email_toadmin_body' ), 'ld_email_toadmin_body', array( 'textarea_name' => 'lddlite_settings[email_toadmin_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl::setting( 'email_toadmin_body' ), 'lite-email_toadmin_body', array( 'textarea_name' => 'lddlite_settings[email_toadmin_body]', 'textarea_rows' => 5 ) );
         }
 
         function _f_email_onsubmit_subject() {
             echo '<input id="email_onsubmit_subject" type="text" size="80" name="lddlite_settings[email_onsubmit_subject]" value="' . ldl::setting( 'email_onsubmit_subject', 1 ) . '">';
-            echo '<p class="description">Sent to the listing owner on submission of their information, prior to approval.</p>';
+            echo '<p class="description">' . __( 'Sent to the listing owner on submission of their information, prior to approval.', 'lddlite' ) . '</p>';
         }
 
         function _f_email_onsubmit_body() {
-            wp_editor( ldl::setting( 'email_onsubmit_body' ), 'ld_email_onsubmit_body', array( 'textarea_name' => 'lddlite_settings[email_onsubmit_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl::setting( 'email_onsubmit_body' ), 'lite-email_onsubmit_body', array( 'textarea_name' => 'lddlite_settings[email_onsubmit_body]', 'textarea_rows' => 5 ) );
         }
 
         function _f_email_onapprove_subject() {
             echo '<input id="email_onapprove_subject" type="text" size="80" name="lddlite_settings[email_onapprove_subject]" value="' . ldl::setting( 'email_onapprove_subject', 1 ) . '">';
-            echo '<p class="description">Sent to the listing owner when the site administrator approves their listing.</p>';
+            echo '<p class="description">' . __( 'Sent to the listing owner when the site administrator approves their listing.', 'lddlite' ) . '</p>';
         }
 
         function _f_email_onapprove_body() {
@@ -128,18 +128,19 @@ class LDD_Directory_Admin {
         if ( ldl::setting( 'public_or_private' ) ) {
             add_settings_section( 'lddlite_settings_submit', __return_null(), '_s_settings_submit', 'lddlite_settings_submit' );
 
-            add_settings_field( 'lddlite_settings[submit_use_tos]',         '<label for="submit_use_tos">' . __( 'Include Terms', 'lddlite' ) . '</label>',    '_f_submit_use_tos',    'lddlite_settings_submit', 'lddlite_settings_submit' );
-            add_settings_field( 'lddlite_settings[submit_tos]',             '<label for="submit_tos">' . __( 'Terms of Service' , 'lddlite' ) . '</label>',    '_f_submit_tos',        'lddlite_settings_submit', 'lddlite_settings_submit' );
-            add_settings_field( 'lddlite_settings[submit_other_separator]', '<span style="font-size: 18px">' . __( 'Other Settings', 'lddlite' ) . '</span>',  '__return_false',       'lddlite_settings_submit', 'lddlite_settings_submit' );
-            add_settings_field( 'lddlite_settings[submit_use_locale]',      '<label for="submit_use_locale">' . __( 'Use Locale', 'lddlite' ) . '</label>',    '_f_submit_use_locale', 'lddlite_settings_submit', 'lddlite_settings_submit' );
-            add_settings_field( 'lddlite_settings[submit_locale]',          '<label for="submit_locale">' . __( 'Directory Locale', 'lddlite' ) . '</label>',  '_f_submit_locale',     'lddlite_settings_submit', 'lddlite_settings_submit' );
+            add_settings_field( 'lddlite_settings[submit_use_tos]',         __( 'Include Terms', 'lddlite' ),                                                 '_f_submit_use_tos',         'lddlite_settings_submit', 'lddlite_settings_submit' );
+            add_settings_field( 'lddlite_settings[submit_tos]',             '<label for="submit_tos">' . __( 'Terms of Service' , 'lddlite' ) . '</label>',   '_f_submit_tos',             'lddlite_settings_submit', 'lddlite_settings_submit' );
+            add_settings_field( 'lddlite_settings[submit_other_separator]', '<span style="font-size: 18px">' . __( 'Other Settings', 'lddlite' ) . '</span>', '__return_false',            'lddlite_settings_submit', 'lddlite_settings_submit' );
+            add_settings_field( 'lddlite_settings[submit_use_locale]',      __( 'Use Locale', 'lddlite' ),                                                    '_f_submit_use_locale',      'lddlite_settings_submit', 'lddlite_settings_submit' );
+            add_settings_field( 'lddlite_settings[submit_locale]',          '<label for="submit_locale">' . __( 'Directory Locale', 'lddlite' ) . '</label>', '_f_submit_locale',          'lddlite_settings_submit', 'lddlite_settings_submit' );
+	        add_settings_field( 'lddlite_settings[submit_require_address]', __( 'Require Address', 'lddlite' ),                                               '_f_submit_require_address', 'lddlite_settings_submit', 'lddlite_settings_submit' );
 
             function _s_settings_submit() {
-                echo '<p>'.__( 'Control the way your submit form appears to people, and the information that is displayed on it.', 'lddlite' ).'</p>';
+                echo '<p>' . __( 'Control the way your submit form appears to people, and the information that is displayed on it.', 'lddlite' ) . '</p>';
             }
 
             function _f_submit_use_tos() {
-                echo '<label title=""><input type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked( ldl::setting( 'submit_use_tos' ), 1, 0 ) . '> <span>If checked, submission form will include terms of service</span></label>';
+                echo '<label for="lite-submit_use_tos"><input id="lite-submit_use_tos" type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked( ldl::setting( 'submit_use_tos' ), 1, 0 ) . '> <span>' . __( 'If checked, submission form will include terms of service', 'lddlite' ) . '</span></label>';
             }
 
             function _f_submit_tos() {
@@ -147,13 +148,16 @@ class LDD_Directory_Admin {
             }
 
             function _f_submit_use_locale() {
-                echo '<label title=""><input type="checkbox" name="lddlite_settings[submit_use_locale]" value="1" ' . checked( ldl::setting( 'submit_use_locale' ), 1, 0 ) . '> <span>If checked, set locale below</span></label>';
+                echo '<label for="lite-submit_use_locale"><input type="checkbox" name="lddlite_settings[submit_use_locale]" value="1" ' . checked( ldl::setting( 'submit_use_locale' ), 1, 0 ) . '> <span>' . __( 'If checked, set locale below', 'lddlite' ) . '</span></label>';
             }
 
             function _f_submit_locale() {
                 echo ldl_dropdown_country( 'lddlite_settings[submit_locale]', ldl::setting( 'submit_locale' ) );
             }
 
+	        function _f_submit_require_address() {
+		        echo '<label for="lite-submit_require_address"><input id="lite-submit_require_address" type="checkbox" name="lddlite_settings[submit_require_address]" value="1" ' . checked( ldl::setting( 'submit_require_address' ), 1, 0 ) . '> <span>' . __( 'If checked, users will be required to enter their address', 'lddlite' ) . '</span></label>';
+	        }
         }
 
 
@@ -287,7 +291,8 @@ function lddlite_settings_submit_sanitize( $input ) {
 
     $input['submit_use_tos'] = ( '1' == $input['submit_use_tos'] ) ? 1 : 0;
     $input['submit_tos']   = wp_filter_nohtml_kses( $input['submit_tos'] );
-    $input['submit_use_locale'] = ( '1' == $input['submit_use_locale'] ) ? 1 : 0;
+	$input['submit_use_locale'] = ( '1' == $input['submit_use_locale'] ) ? 1 : 0;
+	$input['submit_require_address'] = ( '1' == $input['submit_require_address'] ) ? 1 : 0;
 
     return $input;
 }

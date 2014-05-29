@@ -105,17 +105,19 @@ function ldl_submit_validate_form( $data) {
     ldl_submit_validate_user( $data['username'], $data['email'] );
 
 
-    if ( empty( $data['address_one'] ) )
-        ldl_submit_add_errors( 'address_one_required' );
+	if ( ldl::setting( 'submit_require_address' ) ) {
+		if ( empty( $data['address_one'] ) )
+			ldl_submit_add_errors( 'address_one_required' );
 
-    if ( empty( $data['city'] ) )
-        ldl_submit_add_errors( 'city_required' );
+		if ( empty( $data['city'] ) )
+			ldl_submit_add_errors( 'city_required' );
 
-    if ( empty( $data['subdivision'] ) )
-        ldl_submit_add_errors( 'subdivision_required' );
+		if ( empty( $data['subdivision'] ) )
+			ldl_submit_add_errors( 'subdivision_required' );
 
-    if ( empty( $data['post_code'] ) )
-        ldl_submit_add_errors( 'post_code_required' );
+		if ( empty( $data['post_code'] ) )
+			ldl_submit_add_errors( 'post_code_required' );
+	}
 
     if ( !is_array( $data['url'] ) )
         $data['url'] = array();
