@@ -25,3 +25,5 @@ cmb/
 .idea
 
 *.rtpl.php
+koala-config.json
+
