@@ -10,7 +10,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.5.1-beta
+ * Version:           0.5.2-beta
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -23,7 +23,7 @@
 if ( ! defined( 'WPINC' ) ) die;
 
 
-define( 'LDDLITE_VERSION',      '0.5.1-beta' );
+define( 'LDDLITE_VERSION',      '0.5.2-beta' );
 
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
 define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
@@ -85,6 +85,7 @@ class LDD_Directory_Lite {
      * @since 0.5.0
      */
     public function include_files() {
+	    require_once( LDDLITE_PATH . '/includes/class.ldl-tracking.php' );
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/setup.php' );
         require_once( LDDLITE_PATH . '/includes/functions.php' );
@@ -123,7 +124,10 @@ class LDD_Directory_Lite {
             }
         }
 
-        $this->settings = $settings;
+/*	    unset( $settings['allow_tracking'] );
+	    unset( $settings['allow_tracking_popup_done'] );
+	    update_option( 'lddlite_settings', $settings );*/
+        $this->settings = $settings; //mdd ($settings, 'd' );
         $this->version = $version;
 
     }
@@ -196,6 +200,15 @@ class LDD_Directory_Lite {
         return isset( $this->settings[ $key ] ) ? $this->settings[ $key ] : '';
     }
 
+
+	public function update_setting( $key, $value = '' ) {
+		$this->settings[ $key ] = $value;
+	}
+
+
+	public function save_settings() {
+		update_option( 'lddlite_settings', $this->settings );
+	}
 
 }
 

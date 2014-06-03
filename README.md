@@ -2,12 +2,7 @@
 
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, LDD Directory Lite.
 
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
-
-* **Working Version**: 0.5.1-beta
+* **Working Version**: 0.5.2-beta
 * **Latest Stable**: 
 * **Contributors**: [@mwaterous](https://github.com/mwaterous)
 

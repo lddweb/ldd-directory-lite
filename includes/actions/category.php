@@ -8,7 +8,7 @@ function ldl_action__category( $cat_id ) {
 
 
     $listings = get_posts( array(
-        'posts_per_page'    => 10,
+        'posts_per_page'    => -1,
         'orderby'           => 'title',
         'order'             => 'DESC',
         'post_type'         => LDDLITE_POST_TYPE,
