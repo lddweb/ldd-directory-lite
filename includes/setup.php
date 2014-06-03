@@ -127,3 +127,5 @@ add_action( 'wp_ajax_nopriv_contact_form', 'ldl_ajax__contact_form' );
 
 add_action( 'wp_ajax_dropdown_change',        'ldl_ajax__dropdown_change' );
 add_action( 'wp_ajax_nopriv_dropdown_change', 'ldl_ajax__dropdown_change' );
+
+add_action( 'wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response' );

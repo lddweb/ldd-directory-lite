@@ -1,5 +1,14 @@
 <?php
 
+function ldl_schedule_tracking( $value, $force_unschedule = false ) {
+	$current_schedule = wp_next_scheduled( 'directory_lite_tracking' );
+
+	if ( $force_unschedule !== true && ( $value['allow_tracking'] == true && $current_schedule === false ) ) {
+		wp_schedule_event( time(), 'daily', 'directory_lite_tracking' );
+	} else if ( $force_unschedule === true || ( $value['allow_tracking'] == false && $current_schedule !== false ) ) {
+		wp_clear_scheduled_hook( 'directory_lite_tracking' );
+	}
+}
 
 class LDD_Directory_Admin {
 
@@ -23,6 +32,12 @@ class LDD_Directory_Admin {
     public function action_filters() {
         add_action( 'admin_init', array( $this, 'register_settings' ) );
         add_action( 'admin_menu', array( $this, 'add_settings_menu' ) );
+	    if ( ldl::setting( 'allow_tracking' ) ) {
+		    add_action( 'admin_enqueue_scripts', array( 'LDL_Pointers', 'get_instance' ) );
+	    }
+	    if ( !ldl::setting( 'allow_tracking_pointer_done' ) ) {
+		    add_action( 'directory_lite_tracking', array( 'LDL_Tracking', 'get_instance' ) );
+	    }
     }
 
 
@@ -179,7 +194,6 @@ class LDD_Directory_Admin {
         $input = apply_filters( 'lddlite_settings_' . $tab . '_sanitize', $input );
 
         $output = array_merge( $options, $input );
-
 
         add_settings_error( 'lddlite_settings', '', __( 'Settings updated.', 'lddlite' ), 'updated' );
 

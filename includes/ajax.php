@@ -234,3 +234,22 @@ function ldl_ajax__dropdown_change() {
 
     die;
 }
+
+
+function ldl_store_tracking_response() {
+
+	if ( !wp_verify_nonce( $_POST['nonce'], 'lite_allow_tracking_nonce' ) )
+		die();
+
+	$ldl = ldl::load();
+
+	$ldl->update_setting( 'allow_tracking_popup_done', true );
+
+	if ( $_POST['allow_tracking'] == 'yes' ) {
+		$ldl->update_setting( 'allow_tracking', true );
+	} else {
+		$ldl->update_setting( 'allow_tracking', false );
+	}
+
+	$ldl->save_settings();
+}
