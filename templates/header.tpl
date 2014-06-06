@@ -18,18 +18,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                {if="$public"}<a class="navbar-brand" href="{$submit_link}">Submit Listing <i class="fa fa-cogs fa-sm"></i></a>{/if}
+                {if="$public"}<a class="navbar-brand" href="{$submit_link}">Submit Listing</a>{/if}
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                <form action="{$form_action}" class="navbar-form navbar-right" role="search">
-                    <input type="hidden" name="action" value="search_directory">
-                    <input type="hidden" name="search-form-nonce" value="{$nonce}">
+                <form class="navbar-form navbar-right" role="search">
+                    <input type="hidden" name="show" value="search">
                     <div class="form-search search-only">
                         <i class="search-icon fa fa-search"></i>
-                        <input type="text" id="directory-search" class="form-control search-query">
+                        <input id="directory-search" name="t" type="text" value="{$terms}" class="form-control search-query">
                     </div>
+                    <input type="hidden" name="n" value="{$nonce}">
                 </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

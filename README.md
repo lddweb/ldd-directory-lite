@@ -46,7 +46,7 @@ If you prefer to install manually, follow these steps;
 1. Download the latest stable version from [WordPress.org](http://wordpress.org/plugins/ldd-directory-lite/)
 2. Upload the archive contents to your `/wp-content/plugins/` directory
 3. Activate the plugin from the **Plugins** menu on your dashboard
-4. Navigate to the **Directory [lite]** menu option, and customize the settings to your needs
+4. Navigate to the **Directory Lite** menu option, and customize the settings to your needs
 5. Insert the `[directory]` shortcode on to any page you want the directory to appear on (this can even be your home page).
 
 If you have any questions or are unsure about any part of the process, don't hesitate to ask for help in the [WordPress.org Support Forums](http://wordpress.org/support/plugin/ldd-directory-lite)

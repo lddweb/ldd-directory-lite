@@ -124,23 +124,26 @@ function ldl_upgrade() {
         // There was never any error checking before, don't repeat categories
         if ( !term_exists( $category, LDDLITE_TAX_CAT ) )
             wp_insert_term( $category, LDDLITE_TAX_CAT );
-
     }
 
+//    $listed = array();
 
     // Upgrade our listings to the new custom post type format
     foreach ( $listings as $listing ) {
+
+/*        $t = sanitize_title( $listing->name );
+        echo 'Listing ID: ' . $t . '<br>';
+        if ( in_array( $t, $listed ) ) echo 'Duplicate entry: ' . $t . '<br><br>';
+        $listed[] = $t;*/
 
         $term_ids =_ldup_assign_categories( $listing->categories, $category_map );
 
         $user_id = false;
 
         if ( !empty( $listing->login ) ) {
-
             $user_id = username_exists( $listing->login );
             if ( !$user_id && !empty( $listing->email ) && email_exists( $listing->email ) == false )
                 $user_id = wp_create_user( $listing->login, $listing->password, $listing->email );
-
         }
 
         // Failsafe

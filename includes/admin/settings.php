@@ -32,12 +32,10 @@ class LDD_Directory_Admin {
     public function action_filters() {
         add_action( 'admin_init', array( $this, 'register_settings' ) );
         add_action( 'admin_menu', array( $this, 'add_settings_menu' ) );
-	    if ( ldl::setting( 'allow_tracking' ) ) {
+	    if ( true !== ldl::setting( 'allow_tracking_popup_done' ) )
 		    add_action( 'admin_enqueue_scripts', array( 'LDL_Pointers', 'get_instance' ) );
-	    }
-	    if ( !ldl::setting( 'allow_tracking_pointer_done' ) ) {
+	    if ( true === ldl::setting( 'allow_tracking' ) )
 		    add_action( 'directory_lite_tracking', array( 'LDL_Tracking', 'get_instance' ) );
-	    }
     }
 
 
@@ -48,7 +46,8 @@ class LDD_Directory_Admin {
         add_settings_field( 'lddlite_settings[directory_label]',       '<label for="lite-directory_label">' . __( 'Directory Label' , 'lddlite' ) . '</label>',             '_f_directory_label',       'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[directory_description]', '<label for="lite-directory_description">' . __( 'Directory Description' , 'lddlite' ) . '</label>', '_f_directory_description', 'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[directory_page]',        '<label for="lite-directory_page">' . __( 'Directory Page' , 'lddlite' ) . '</label>',               '_f_directory_page',        'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[other_separator]',       '<span style="font-size: 18px">' . __( 'Other Settings', 'lddlite' ) . '</span>',                    '__return_false',            'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[other_separator]',       '<span style="font-size: 18px">' . __( 'Other Settings', 'lddlite' ) . '</span>',                    '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings[allow_tracking]',        __( 'Allow Tracking', 'lddlite' ),                                                                   '_f_allow_tracking',        'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[disable_bootstrap]',     __( 'Disable Bootstrap', 'lddlite' ),                                                                '_f_disable_bootstrap',     'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[public_or_private]',     __( 'Public Directory', 'lddlite' ),                                                                 '_f_public_or_private',     'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[google_maps]',           __( 'Use Google Maps', 'lddlite' ),                                                                  '_f_google_maps',           'lddlite_settings_general', 'lddlite_settings_general' );
@@ -74,6 +73,11 @@ class LDD_Directory_Admin {
             echo '<p class="description">' . __( 'Contains the <code>[directory_lite]</code> shortcode.', 'lddlite' ) . '</p>';
         }
 
+        function _f_allow_tracking() {
+            echo '<label for="lite-allow_tracking"><input id="lite-allow_tracking" type="checkbox" name="lddlite_settings[allow_tracking]" value="1" ' . checked( ldl::setting( 'allow_tracking' ), 1, 0 ) . '> <span>Allow anonymous usage tracking</span></label>';
+            echo '<p class="description">' . __( 'Your privacy is important to us, and all information collected is completely anonymous. Information collected is used only to improve future versions of the plugin, and is never shared with anyone who is not directly involved in developing LDD Directory Lite.', 'lddlite' ) . '</p>';
+        }
+
         function _f_disable_bootstrap() {
             echo '<label for="lite-disable_bootstrap"><input id="lite-disable_bootstrap" type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked( ldl::setting( 'disable_bootstrap' ), 1, 0 ) . '> <span>Disable</span></label>';
             echo '<p class="description">' . __( 'A lot of themes already use bootstrap; if yours is one, disable the plugin from loading another copy.', 'lddlite' ) . '</p>';
@@ -93,7 +97,7 @@ class LDD_Directory_Admin {
         }
 
 
-        add_settings_section( 'lddlite_settings_email', __return_null(), '_s_settings_email', 'lddlite_settings_email' );
+        add_settings_section( 'lddlite_settings_email', __return_null(), '__return_false', 'lddlite_settings_email' );
 
         add_settings_field( 'lddlite_settings[email_admin]',             '<label for="email_admin">' . __( 'Directory Email' , 'lddlite' ) . '</label>',                                '_f_email_admin',           'lddlite_settings_email', 'lddlite_settings_email' );
         add_settings_field( 'lddlite_settings[email_toadmin_subject]',   '<label for="email_toadmin_subject">' . __( 'Administrator Notification Email' , 'lddlite' ) . '</label>',     '_f_email_toadmin_subject',   'lddlite_settings_email', 'lddlite_settings_email' );
@@ -102,10 +106,6 @@ class LDD_Directory_Admin {
         add_settings_field( 'lddlite_settings[email_onsubmit_body]',     '<label for="email_onsubmit_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>',  '_f_email_onsubmit_body',     'lddlite_settings_email', 'lddlite_settings_email' );
         add_settings_field( 'lddlite_settings[email_onapprove_subject]', '<label for="email_onapprove_subject">' . __( 'Listing Approval' , 'lddlite' ) . '</label>',                   '_f_email_onapprove_subject', 'lddlite_settings_email', 'lddlite_settings_email' );
         add_settings_field( 'lddlite_settings[email_onapprove_body]',    '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>', '_f_email_onapprove_body',    'lddlite_settings_email', 'lddlite_settings_email' );
-
-        function _s_settings_email() {
-            echo '<p>' . __( 'The following configuration options control how outgoing emails from Business Directory [lite] are handled.', 'lddlite' ) . '</p>';
-        }
 
         function _f_email_admin() {
             echo '<input id="email_admin" type="text" size="80" name="lddlite_settings[email_admin]" value="' . ldl::setting( 'email_admin', 1 ) . '">';
@@ -141,7 +141,7 @@ class LDD_Directory_Admin {
 
 
         if ( ldl::setting( 'public_or_private' ) ) {
-            add_settings_section( 'lddlite_settings_submit', __return_null(), '_s_settings_submit', 'lddlite_settings_submit' );
+            add_settings_section( 'lddlite_settings_submit', __return_null(), '__return_false', 'lddlite_settings_submit' );
 
             add_settings_field( 'lddlite_settings[submit_use_tos]',         __( 'Include Terms', 'lddlite' ),                                                 '_f_submit_use_tos',         'lddlite_settings_submit', 'lddlite_settings_submit' );
             add_settings_field( 'lddlite_settings[submit_tos]',             '<label for="submit_tos">' . __( 'Terms of Service' , 'lddlite' ) . '</label>',   '_f_submit_tos',             'lddlite_settings_submit', 'lddlite_settings_submit' );
@@ -202,7 +202,7 @@ class LDD_Directory_Admin {
 
 
     public function add_settings_menu() {
-        add_submenu_page( 'edit.php?post_type=' . LDDLITE_POST_TYPE, 'Directory [lite] Configuration', 'Settings', 'manage_options', 'lddlite-settings', array( $this, 'settings_page' ) );
+        add_submenu_page( 'edit.php?post_type=' . LDDLITE_POST_TYPE, 'Directory Lite Configuration', 'Settings', 'manage_options', 'lddlite-settings', array( $this, 'settings_page' ) );
     }
 
 
@@ -215,14 +215,14 @@ class LDD_Directory_Admin {
 
         ?>
         <div class="wrap directory-lite">
-            <h2 class="heading"><?php _e( 'LDD Directory [lite]', 'lddlite' ); ?></h2>
+            <h2 class="heading"><?php _e( 'LDD Directory Lite', 'lddlite' ); ?></h2>
 
             <div class="sub-heading">
                 <p>Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.</p>
                 <ul id="directory-links">
                     <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues" title="Submit a bug or feature request on GitHub" class="bold-link"><i class="fa fa-exclamation-triangle fa-fw"></i> Submit an Issue</a></li>
                     <li class="right"><i class="fa fa-wordpress fa-fw"></i> Visit us on <a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Come visit the plugin homepage on WordPress.org">WordPress.org</a></li>
-                    <li><a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Visit the LDD Directory [lite] Support Forums on WordPress.org" class="bold-link"><i class="fa fa-comments fa-fw"></i> Support Forums</a></li>
+                    <li><a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Visit the LDD Directory Lite Support Forums on WordPress.org" class="bold-link"><i class="fa fa-comments fa-fw"></i> Support Forums</a></li>
                     <li class="right"><i class="fa fa-github-alt fa-fw"></i> Visit us on <a href="https://github.com/mwaterous/ldd-directory-lite" title="We do most of our development from GitHub, come join us!">GitHub.com</a></li>
                 </ul>
             </div>

@@ -26,14 +26,9 @@
 
         process: function(terms) {
 
-            var path = $.searchbox.settings.url.split('?'),
-                query = [$.searchbox.settings.param, '=', terms].join(''),
-                base = path[0], params = path[1], query_string = query
-
-            if (params) query_string = [params.replace('&amp;', '&'), query].join('&')
-
+console.log( terms )
             if ( terms ) {
-                $.post( base, { action: "search_directory", s: terms })
+                $.post( $.searchbox.settings.url, { action: "search_directory", s: terms })
                     .done(function( data ) {
                         $($.searchbox.settings.dom_id).show()
                         $($.searchbox.settings.dom_id).html(data)

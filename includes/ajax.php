@@ -15,7 +15,7 @@
 
 function ldl_ajax__search_directory() {
     global $post;
-
+mdd( $_POST );
     $args = array(
         'post_type'     => LDDLITE_POST_TYPE,
         'post_status'   => 'publish',

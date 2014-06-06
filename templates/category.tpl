@@ -4,17 +4,17 @@
         {$header}
 
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <ol class="l-breadcrumb">
                     <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
                     <li class="active"><span>{$category_title}</span></li>
                 </ol>
             </div>
 
-            <div class="col-md-3 view-types" style="text-align: right;">
+            <div class="col-md-12 view-types" style="text-align: right">
                 <div class="btn-group">
-                    <a href="{$list_link}" class="btn btn-success"><i class="fa fa-list"></i></a>
-                    <a href="{$grid_link}" class="btn btn-success"><i class="fa fa-th"></i></a>
+                    <a href="{$list_link}" class="btn btn-default"><i class="fa fa-list"></i></a>
+                    <a href="{$grid_link}" class="btn btn-default"><i class="fa fa-th"></i></a>
                 </div>
             </div>
         </div>

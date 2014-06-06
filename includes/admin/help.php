@@ -26,7 +26,7 @@ function ldl_admin__help() {
     $screen->add_help_tab( array(
         'id'	    => 'lddlite-settings-general',
         'title'	    => __( 'General Help', 'lddlite' ),
-        'content'	=> '<p>' . __( 'Directory [lite] is designed to work out of the box with as little effort on your part as possible. Use this page to define any custom configuration options you would like for your web site.', 'lddlite' ) . '</p>'
+        'content'	=> '<p>' . __( 'Directory Lite is designed to work out of the box with as little effort on your part as possible. Use this page to define any custom configuration options you would like for your web site.', 'lddlite' ) . '</p>'
     ) );
 
     $screen->add_help_tab( array(

@@ -20,7 +20,6 @@ function ldl_enqueue() {
     }
 
     wp_enqueue_style( 'lddlite' );
-    //wp_enqueue_style( 'lddlite-bootflat' );
     wp_enqueue_style( 'font-awesome' );
 
 }
@@ -117,10 +116,9 @@ function ldl_shortcode__display() {
             }
 
         } else if ( 'submit' == $action ) {
-
-            if ( 'listing' == $t )
-                $term = $t;
-
+            $term = 'listing';
+        } else if ( 'search' == $action ) {
+            $term = $t;
         }
 
         if ( empty( $term ) )

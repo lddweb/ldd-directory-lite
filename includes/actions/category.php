@@ -46,6 +46,7 @@ function ldl_action__category( $cat_id ) {
                 $website = $meta['website'];
                 $email   = $meta['email'];
                 $phone   = $meta['phone'];
+            $social = ldl_get_social( $id, 'default', false );
 
             $link       = add_query_arg( array(
                 'show'  => 'listing',
@@ -82,6 +83,7 @@ function ldl_action__category( $cat_id ) {
             $tpl->assign( 'thumbnail',  $thumbnail );
             $tpl->assign( 'title',      sprintf( $link_mask, $title ) );
 
+            $tpl->assign( 'social', $social );
             $tpl->assign( 'address', $address );
             $tpl->assign( 'website', $website );
             $tpl->assign( 'email',   $email );

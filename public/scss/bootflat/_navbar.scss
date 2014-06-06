@@ -114,6 +114,7 @@ $navbar-inverse-background-color:            $black !default;
   }
 
   .navbar-inverse {
+    margin-bottom: 1em;
       & {
           background-color: lighten($navbar-inverse-background-color, 20%);
           border-color: lighten($navbar-inverse-background-color, 20%);

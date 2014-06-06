@@ -6,7 +6,6 @@
 
 
 function ldl_action__listing( $listing ) {
-    global $post;
 
     $terms = wp_get_post_terms($listing->ID, LDDLITE_TAX_CAT);
     if ( isset( $terms[0] ) ) {
@@ -26,7 +25,7 @@ function ldl_action__listing( $listing ) {
         $website = $meta['website'];
         $email   = $meta['email'];
         $phone   = $meta['phone'];
-    $social = ldl_get_social( $post_id );
+    $social = ldl_get_social( $post_id, '' );
 
     if ( has_post_thumbnail( $post_id ) )
         $thumbnail = get_the_post_thumbnail( $post_id, 'directory-listing', array( 'class' => 'img-rounded' ) );

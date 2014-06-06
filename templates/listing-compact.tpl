@@ -1,4 +1,4 @@
-<article id="listing-{$id}" class="listing-{$id} type-listing {$nth}">
+<article id="listing-{$id}" class="listing-{$id} type-listing compact {$nth}">
 
     <div class="container-fluid">
         <div class="row">
@@ -15,8 +15,10 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
+                        <span class="social-meta">
+                            {$social}
+                        </span>
                         <div class="listing-meta">
-
                             {if="!empty($phone)"}<p class="phone"><i class="fa fa-phone"></i> {$phone}</p>{/if}
                             {if="!empty($address)"}<p class="address"><i class="fa fa-globe"></i> {$address}</p>{/if}
                         </div>

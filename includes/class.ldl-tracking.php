@@ -163,10 +163,10 @@ class LDL_Tracking {
 		);
 
 		//mdd( $args );
-		//wp_remote_post( 'https://tracking.yoast.com/', $args );
+		wp_remote_post( 'http://tracking.lddwebdesign.com/', $args );
 
 		// Store for a week, then push data again.
-		//set_transient( 'lite_tracking_cache', true, 60 * 60 * 24 * 7 );
+		set_transient( 'lite_tracking_cache', true, 60 * 60 * 24 * 7 );
 
 	}
 }

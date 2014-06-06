@@ -10,78 +10,6 @@
  */
 
 
-function ldl_get_default_settings() {
-    $site_title = get_bloginfo( 'name' );
-    $admin_email = get_bloginfo( 'admin_email' );
-
-    $signature = <<<SIG
-
-
-*****************************************
-This is an automated message from {$site_title}
-Please do not respond directly to this email
-SIG;
-
-    $email = array();
-
-    $email['to_admin']   = <<<EM
-<p><strong>A new listing is pending review!</strong></p>
-
-<p>This submission is awaiting approval. Please visit the link to view and approve the new listing:</p>
-
-<p>{approve_link}</p>
-
-<ul>
-    <li>Listing Name: <strong>{title}</strong></li>
-    <li>Listing Description: <strong>{description}</strong></li>
-</ul>
-EM;
-    $email['on_submit']  = <<<EM
-<p><strong>Thank you for submitting a listing to {site_title}!</strong></p>
-
-<p>Your listing is pending approval.</p>
-<p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {directory_email}.</p>
-
-<ul>
-    <li>Listing Name: <strong>{title}</strong></li>
-    <li>Listing Description: <strong>{description}</strong></li>
-</ul>
-EM;
-    $email['on_approve'] = <<<EM
-<p><strong>Thank you for submitting a listing to {site_title}!</strong></p>
-
-<p>Your listing has been approved! You can now view it online:</p>
-<p>{link}</p>
-EM;
-
-    foreach ( $email as $key => $msg )
-        $email[ $key ] = $msg . $signature;
-
-    $defaults = apply_filters( 'lddlite_default_options', array(
-        'directory_label'           => get_bloginfo( 'name' ),
-        'directory_description'     => '',
-        'directory_page'            => '',
-        'disable_bootstrap'         => 0,
-        'public_or_private'         => 1,
-        'google_maps'               => 1,
-        'email_admin'             => get_bloginfo( 'admin_email' ),
-        'email_toadmin_subject'     => 'A new listing has been submitted for review!',
-        'email_toadmin_body'        => $email['to_admin'],
-        'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
-        'email_onsubmit_body'       => $email['on_submit'],
-        'email_onapprove_subject'   => 'Your listing on ' . $site_title . ' was approved!',
-        'email_onapprove_body'      => $email['on_approve'],
-        'submit_use_tos'            => 0,
-        'submit_tos'                => '',
-        'submit_use_locale'         => 0,
-        'submit_locale'             => 'US',
-        'submit_require_address'    => 1,
-    ) );
-
-    return $defaults;
-}
-
-
 function ldl_get_loading_gif() {
     $img = '<img src="' . LDDLITE_URL . '/public/images/loading.gif" width="32" height="32">';
     return $img;
@@ -169,7 +97,8 @@ function  ldl_get_header( $show_label = 0 ) {
     $tpl->assign( 'public', ldl_is_public() );
     $tpl->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
 
-    $tpl->assign( 'form_action', admin_url( 'admin-ajax.php' ) );
+    $tpl->assign( 'form_action', '' );
+    $tpl->assign( 'terms', 'search' == $_GET['show'] ? $_GET['t'] : '' );
     $tpl->assign( 'nonce', wp_create_nonce( 'search-form-nonce' ) );
     $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 
@@ -308,7 +237,7 @@ function ldl_get_listing_meta( $id ) {
 }
 
 
-function ldl_get_social( $id ) {
+function ldl_get_social( $id, $class = 'btn btn-success', $email_btn = true ) {
 
     if ( !is_int( $id ) )
         return false;
@@ -321,12 +250,13 @@ function ldl_get_social( $id ) {
     );
 
     $output = '';
-    $email = get_post_meta( $id, '_lddlite_contact_email', 1 );
     $name = get_the_title( $id );
+    $class = !empty( $class ) ? ' class="' . $class . '" ' : '';
 
-
-    if ( $email )
-        $output = '    <a href="" class="btn btn-success" data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
+    if ( $email_btn ) {
+        $email = get_post_meta( $id, '_lddlite_contact_email', 1 );
+        if ( $email ) $output = '<a href="" ' . $class . ' data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
+    }
 
     $social = array(
         'facebook-square' =>  'http://', //get_post_meta( $id, '_lddlite_url_facebook', 1 ),
@@ -339,7 +269,7 @@ function ldl_get_social( $id ) {
             $title_key = array_key_exists( $key, $titles ) ? $titles[ $key ] : $titles['default'];
             $title = sprintf( $title_key, $name, $key );
 
-            $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '" class="btn btn-success">';
+            $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '" ' . $class . '>';
             $output .= '<i class="fa fa-' . $key . '"></i></a>';
         }
     }

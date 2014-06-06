@@ -60,7 +60,7 @@ function ldl_setup__register_custom() {
             'not_found'             => 'No directory listings found',
             'not_found_in_trash'    => 'No directory listings found in Trash',
             'parent_item_colon'     => 'Parent Directory Listing',
-            'menu_name'             => 'Directory [lite]'
+            'menu_name'             => 'Directory'
         ),
 
         'hierarchical'  => false,
@@ -79,7 +79,11 @@ function ldl_setup__register_custom() {
         'has_archive'           => true,
         'query_var'             => true,
         'can_export'            => true,
-        'rewrite'               => true,
+        'rewrite'               => array(
+            'slug'  => 'directory',
+            'feeds' => false,
+            'pages' => false,
+        ),
         'capability_type'       => 'post'
     );
 
@@ -98,8 +102,6 @@ function ldl_setup__register_scripts() {
 
     wp_register_style( 'lddlite',           LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
     wp_register_style( 'lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', false, LDDLITE_VERSION );
-    // @Todo: roll this into "lddlite"
-    wp_register_style( 'lddlite-bootflat',  LDDLITE_URL . '/public/css/bootflat.css', false, LDDLITE_VERSION );
 
     wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', false, '4.1.0' );
 

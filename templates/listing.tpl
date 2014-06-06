@@ -6,19 +6,12 @@
 
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <ol class="l-breadcrumb">
                 <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
                 <li><a href="{$term_link}">{$term_name}</a></li>
                 <li class="active"><span>View Listing</span></li>
             </ol>
-
-        </div>
-
-        <div class="col-md-4 social-btn-group">
-            <div class="btn-group">
-                {$social}
-            </div>
         </div>
     </div>
 
@@ -28,17 +21,15 @@
     <article id="listing-{$id}" class="directory-content listing-{$id} listing type-listing listing-full">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="listing-title panel-title">{$title}</h2>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                {if="!empty($website)"}<p class="website">{$website}</p>{/if}
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-8">
+
+                    {if="!empty($website)"}<span class="website">{$website}</p>{/if}
+
+                </div>
+                <div class="col-md-4">
+
+
+
                 </div>
             </div>
 
@@ -49,12 +40,18 @@
                             <h4 class="panel-title">Description</h3>
                         </div>
                         <div class="panel-body">
+                            {if="!empty($website)"}<span class="website">{$website}</p>{/if}
                             {$description}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="panel panel-default">
+                        <div class="panel-heading" style="padding: 4px 0;">
+                                <span class="social-meta">
+                                    {$social}
+                                </span>
+                        </div>
                         <div class="panel-body">
                             {$thumbnail}
                             <div class="listing-meta">
