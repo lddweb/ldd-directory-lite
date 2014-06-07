@@ -345,9 +345,6 @@ function ldl_metaboxes__sanitize( $post_id ) {
 
         $field = substr( $key, 9 );
 
-        echo $field.'<br>';
-        echo $value.'<br>';
-
         if ( 'contact_phone' == $field || 'contact_fax' == $field ) {
 
             $_POST[ $key ] = ldl_format_phone( $value );
@@ -376,7 +373,6 @@ function ldl_metaboxes__sanitize( $post_id ) {
             $_POST[ $key ] = 'https://www.linkedin.com' . $url['path'];
 
         }
-
 
     }
 
