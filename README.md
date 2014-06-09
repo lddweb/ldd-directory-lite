@@ -97,3 +97,31 @@ If you have discovered an issue that you feel needs our attention, please take a
 Please try to include as much information as possible, including steps that we can take to reproduce the issue and any other information that may be pertinent to your particular situation. If you can, include a list of other plugins you are running (in case it may be a conflict), what version of WordPress you're using, and any error messages or notices you saw.
 
 **Feature requests can also be posted on the [GitHub Issue Tracker](https://github.com/mwaterous/ldd-directory-lite/issues).**
+
+## Credits
+
+I tend to spend a lot of time coding; not only is it my day job, but it's also one of the things I like to do in my spare time. No matter how much time I spend however, I'm just one person. This plugin is where it is thanks to the hard work and open source beliefs of more people than just myself. While I always try to make sure they are credited in the code itself, I would like to take the time to include them here as well. In no particular order:
+
+**Who:** [WebDevStudios](http://webdevstudios.com/)<br>
+**Where:** [Custom Metaboxes and Fields for WordPress](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)<br>
+**Why:** Used to build the administrative user interface for the directory listings custom post types.
+
+**Who:** Federico Ulfo<br>
+**Where:** [Rain.TPL](http://www.raintpl.com/)<br>
+**Why:** This amazing but lightweight template parser helps keep our views sorted away from our programming logic. It hasn't yet been decided whether or not this will be permanent (to capitalize on the caching abilities) or temporary (to run straight PHP templates for speed), it is an amazing parser that has helped me focus on other areas of programming.
+
+**Who:** [yoast](https://yoast.com)<br>
+**Where:** [WordPress SEO](https://yoast.com/wordpress/plugins/#wpseo) Usage Tracking<br>
+**Why:** Code from the WordPress SEO plugin was integrated into this plugin in order to quickly add anonymous usage tracking. The information supplied by those who opt in to this program allows us a fantastic insight as to what configurations the plugin is being used on, and how to test future releases.
+
+**Who:** [Bootstrap](http://getbootstrap.com/) & [Bootflat](http://bootflat.github.io/)<br>
+**Where:** Front end interface.<br>
+**Why:** A trimmed down copy of bootstrap (which can be disabled if your theme already uses it) and bootflat were used to rapidly define the front end interface for the plugin. These libraries are amazing feats of CSS prowess.
+
+**Who:** [Viljami S.](http://viljamis.com), [Henrik Joreteg, Adam Brault & Michael Garvin](http://happyjs.com/), [Ryan Heath](http://rpheath.com/)<br>
+**Where:** [Responsive Slides](http://responsiveslides.com), [Happy.js](http://happyjs.com/), and [searchbox](https://github.com/rpheath/searchbox)<br>
+**Why:** Various javascript elements all around the plugin are built on or with scripts originally coded by the above folk. As of this writing, my own javascript abilities are nowhere near as advanced as my ability to draw circles on my stomach and pat my head at the same time. Until they are, I seek out the knowledge of others.
+
+**Who:** [Evan Solomon](http://evansolomon.me/), [Michel Fortin](http://michelf.ca), & [John Gruber](http://daringfireball.net)<br>
+**Where:** [WP Github Flavored Markdown Comments](https://github.com/evansolomon/wp-github-flavored-markdown-comments/blob/master/github-flavored-markdown-comments.php)<br>
+**Why:** Because markdown! Markdown is slowly being integrated in to the front end of the plugin, which will allow users to have some measure of control over the way their listings appear (should the site administrator choose to enable it).

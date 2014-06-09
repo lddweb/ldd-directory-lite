@@ -33,6 +33,8 @@ class LDD_Directory_Admin {
 	    $basename = plugin_basename( __FILE__ );
 	    add_filter( 'plugin_action_links_' . $basename, array( $this, 'add_action_links' ) );
 
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
         add_action( 'admin_init', array( $this, 'register_settings' ) );
         add_action( 'admin_menu', array( $this, 'add_settings_menu' ) );
 	    if ( true !== ldl_get_setting( 'allow_tracking_popup_done' ) )
@@ -42,7 +44,18 @@ class LDD_Directory_Admin {
     }
 
 
-	/**
+    function enqueue_scripts( $hook_suffix ) {
+
+        if ( 'directory_listings_page_lddlite-settings' != $hook_suffix )
+            return;
+
+        wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_script( 'wp-color-picker' );
+        wp_enqueue_script( 'lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array( 'wp-color-picker' ), false, true );
+    }
+
+
+    /**
 	 * Add a 'Settings' link on the Plugins page for easier access.
 	 *
 	 * @since 0.5.0
@@ -196,6 +209,17 @@ class LDD_Directory_Admin {
 	        function _f_submit_require_address() {
 		        echo '<label for="lite-submit_require_address"><input id="lite-submit_require_address" type="checkbox" name="lddlite_settings[submit_require_address]" value="1" ' . checked( ldl_get_setting( 'submit_require_address' ), 1, 0 ) . '> <span>' . __( 'If checked, users will be required to enter their address', 'lddlite' ) . '</span></label>';
 	        }
+
+        }
+
+
+        add_settings_section( 'lddlite_settings_appearance', __return_null(), '__return_false', 'lddlite_settings_appearance' );
+
+        add_settings_field( 'lddlite_settings[appearance_primary]', '<label for="submit_locale">' . __( 'Primary Color', 'lddlite' ) . '</label>', '_f_appearance_primary', 'lddlite_settings_appearance', 'lddlite_settings_appearance' );
+
+        function _f_appearance_primary() {
+            echo '<input id="appearance_primary" type="text" name="lddlite_settings[appearance_primary]" value="' . ldl_get_setting( 'appearance_primary' ) . '" class="my-color-field" data-default-color="#3bafda">';
+            echo '<p class="description">' . __( 'The primary color used in the plugins header (displaying your directory name) and other locations such as buttons, badges, and more.', 'lddlite' ) . '</p>';
         }
 
 
@@ -256,6 +280,7 @@ class LDD_Directory_Admin {
                 <a href="<?php echo add_query_arg( 'tab', 'general', remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e( 'General', 'lddlite' ); ?></a>
                 <a href="<?php echo add_query_arg( 'tab', 'email',   remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'email' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Email', 'lddlite' ); ?></a>
                 <?php if ( ldl_get_setting( 'public_or_private' ) ): ?><a href="<?php echo add_query_arg( 'tab', 'submit',  remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'submit' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Submit Form', 'lddlite' ); ?></a><?php endif; ?>
+                <a href="<?php echo add_query_arg( 'tab', 'appearance',   remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'appearance' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Appearance', 'lddlite' ); ?></a>
             </h2>
 
             <div id="tab_container">
@@ -270,6 +295,8 @@ class LDD_Directory_Admin {
                         do_settings_sections( 'lddlite_settings_email' );
                     } elseif ( $active_tab == 'submit' ) {
                         do_settings_sections( 'lddlite_settings_submit' );
+                    } elseif ( $active_tab == 'appearance' ) {
+                        do_settings_sections( 'lddlite_settings_appearance' );
                     }
 
                     submit_button();
@@ -283,13 +310,13 @@ class LDD_Directory_Admin {
     }
 
 
-    public function enqueue_scripts() {
+/*    public function enqueue_scripts() {
         global $post_type;
 
         if( LDDLITE_POST_TYPE == $post_type )
             wp_enqueue_script( 'post' );
 
-    }
+    }*/
 
 }
 

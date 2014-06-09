@@ -84,7 +84,7 @@ class LDD_Directory_Lite {
      * @since 0.5.0
      */
     public function include_files() {
-	    require_once( LDDLITE_PATH . '/includes/class.ldl-tracking.php' );
+	    require_once( LDDLITE_PATH . '/includes/class.tracking.php' );
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/setup.php' );
 

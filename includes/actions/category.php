@@ -48,12 +48,12 @@ function ldl_action__category( $cat_id ) {
                 $phone   = $meta['phone'];
             $social = ldl_get_social( $id, 'default', false );
 
-/*            $link       = add_query_arg( array(
+            $link       = add_query_arg( array(
                 'show'  => 'listing',
                 't'     => $listing->post_name,
-            ) );*/
+            ) );
 
-	        $link = get_permalink( $id );
+//	        $link = get_permalink( $id );
 
 
             // the following is used to build our title, and the logo

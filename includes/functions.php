@@ -83,6 +83,7 @@ EM;
 		'submit_require_address'    => 1,
 		'allow_tracking_popup_done' => 0,
 		'allow_tracking'            => 0,
+        'appearance_primary'         => '#3bafda',
 	) );
 
 	return $defaults;
