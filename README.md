@@ -125,3 +125,5 @@ I tend to spend a lot of time coding; not only is it my day job, but it's also o
 **Who:** [Evan Solomon](http://evansolomon.me/), [Michel Fortin](http://michelf.ca), & [John Gruber](http://daringfireball.net)<br>
 **Where:** [WP Github Flavored Markdown Comments](https://github.com/evansolomon/wp-github-flavored-markdown-comments/blob/master/github-flavored-markdown-comments.php)<br>
 **Why:** Because markdown! Markdown is slowly being integrated in to the front end of the plugin, which will allow users to have some measure of control over the way their listings appear (should the site administrator choose to enable it).
+
+If I forgot anyone, it wasn't intentional and will be added to future updates of this file.

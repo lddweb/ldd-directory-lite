@@ -25,12 +25,17 @@ $url-link-hover:    rgba(0, 170, 0, 0.90);
 $pure-blue:         #0078e7;
 
 
+@import "bootflat/global";
+
+.directory-lite {
+  @import
+    "bootflat/normalize",
+    "bootflat/base",
+    "bootflat/submit";
+}
+
 
 @import
-
-  // Variables, Extends, Mixins
-"bootflat/global",
-
   // Base
 "bootflat/typography",
 "bootflat/button",
@@ -58,6 +63,7 @@ $pure-blue:         #0078e7;
 //"bootflat/accordion",
 //"bootflat/footer",
 //"bootflat/dropdown";
+
 
 
 
@@ -108,11 +114,6 @@ $pure-blue:         #0078e7;
     -webkit-text-size-adjust: 100%; // 2
     font-size: 62.5%;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-
-  @import "bootflat/normalize";
-  @import "bootflat/submit";
-  @import "bootflat/base";
-
 
   #search-loading {
     padding: 10em 0;
@@ -299,7 +300,7 @@ span.social-meta {
 #map_wrapper {
   display: block;
   height: 200px;
-  margin: 0 -15px;
+/*  margin: 0 -15px;*/
 }
 #map_canvas {
   width: 100%;
@@ -312,10 +313,15 @@ span.social-meta {
   max-width: none;
 }
 
-.listing-full .panel {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+.listing-full {
+  .panel {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+  .panel-body {
+    padding: 15px 0;
+  }
 }
 .listing-full .panel-heading {
   -webkit-border-radius: 4px;

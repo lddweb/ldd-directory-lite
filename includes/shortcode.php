@@ -108,11 +108,12 @@ function ldl_shortcode__display() {
                 'post_type'         => LDDLITE_POST_TYPE,
                 'post_status'       => 'publish',
                 'posts_per_page'    => 1,
+                'no_found_rows'     => true,
             ) );
 
             if ( !empty( $listing ) ) {
                 $term = $listing[0];
-                ldl::attach( $listing[0] );
+                ldl_set_listing_id( $listing[0]->ID );
             }
 
         } else if ( 'submit' == $action ) {

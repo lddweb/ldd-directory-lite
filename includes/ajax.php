@@ -13,6 +13,14 @@
  */
 
 
+
+/**
+ * This responds to the AJAX live search request. Results returned by this function, at least at present, should
+ * only consist of the listings themselves. The results are displayed inside the <section> markup of the content.
+ *
+ * @since 0.5.3
+ * @todo Code duplication exists between this, the category view, and the physical search results view. Should be reduced.
+ */
 function ldl_ajax__search_directory() {
     global $post;
 
@@ -27,8 +35,6 @@ function ldl_ajax__search_directory() {
     $output = '';
     $nth = 0;
 
-    // @todo NEARLY IDENTICAL TO CATEGORY RESULTS
-	// @TODO There's code repetition occurring now between this, the physical search results and the category list.
     $tpl = ldl_get_template_object();
 
     if ( $search->have_posts() ) {
@@ -43,10 +49,10 @@ function ldl_ajax__search_directory() {
             $title      = $post->post_title;
             $summary    = $post->post_excerpt;
             $meta = ldl_get_listing_meta( $id );
-                $address = $meta['address'];
-                $website = $meta['website'];
-                $email   = $meta['email'];
-                $phone   = $meta['phone'];
+            $address = $meta['address'];
+            $website = $meta['website'];
+            $email   = $meta['email'];
+            $phone   = $meta['phone'];
 
             $link       = add_query_arg( array(
                 'show'  => 'listing',
@@ -108,6 +114,15 @@ function ldl_ajax__search_directory() {
 }
 
 
+/**
+ * This function responds to the "contact_form" AJAX action. All data is sanitized and double checked for validity
+ * before being sent to the email on file for the listing. There's a honeypot and a math question to combat spam and
+ * attempt to avoid abuse of this functionality. Listing owners can opt out of receiving contacts by excluding a
+ * contact email address in their listing details.
+ *
+ * @since 5.3.0
+ * @todo
+ */
 function ldl_ajax__contact_form() {
 
     if ( !wp_verify_nonce( $_POST['nonce'], 'contact-form-nonce' ) )
@@ -242,7 +257,7 @@ function ldl_store_tracking_response() {
 	if ( !wp_verify_nonce( $_POST['nonce'], 'lite_allow_tracking_nonce' ) )
 		die();
 
-	$ldl = ldl_load();
+	$ldl = ldl_get_instance();
 
 	$ldl->update_setting( 'allow_tracking_popup_done', true );
 

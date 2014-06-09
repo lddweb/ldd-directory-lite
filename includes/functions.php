@@ -12,22 +12,27 @@
 
 /**
  * Settings Functions
+ * =====================================================================================================================
  */
 
 
+/**
+ * Returns an array of default settings for initial use by the plugin. Also allows for the addition of
+ * new settings without running any additional upgrade methods.
+ *
+ * @since yore
+ * @return array The default settings
+ */
 function ldl_get_default_settings() {
+
+    $email = array();
 	$site_title = get_bloginfo( 'name' );
-	$admin_email = get_bloginfo( 'admin_email' );
 
-	$signature = <<<SIG
-
-
+    $signature = <<<SIG
 *****************************************
 This is an automated message from {$site_title}
 Please do not respond directly to this email
 SIG;
-
-	$email = array();
 
 	$email['to_admin']   = <<<EM
 <p><strong>A new listing is pending review!</strong></p>
@@ -59,17 +64,18 @@ EM;
 <p>{link}</p>
 EM;
 
-	foreach ( $email as $key => $msg )
-		$email[ $key ] = $msg . $signature;
+	foreach ( $email as $key => $msg ) {
+        $email[ $key ] = $msg . $signature;
+    }
 
-	$defaults = apply_filters( 'lddlite_default_options', array(
+	$defaults = apply_filters( 'lddlite_default_settings_array', array(
 		'directory_label'           => get_bloginfo( 'name' ),
 		'directory_description'     => '',
 		'directory_page'            => '',
 		'disable_bootstrap'         => 0,
 		'public_or_private'         => 1,
 		'google_maps'               => 1,
-		'email_admin'             => get_bloginfo( 'admin_email' ),
+		'email_admin'               => get_bloginfo( 'admin_email' ),
 		'email_toadmin_subject'     => 'A new listing has been submitted for review!',
 		'email_toadmin_body'        => $email['to_admin'],
 		'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
@@ -90,10 +96,18 @@ EM;
 }
 
 
-
+/**
+ * An alias for the LDL_Directory_Lite get_setting() method which handles loading the singleton and also
+ * allows for escaping the value if necessary.
+ *
+ * @since 0.5.3
+ * @param string $key The configuration setting
+ * @param bool $esc Whether or not to escape the output
+ * @return mixed Returns empty if the setting doesn't exist, or the value if it does
+ */
 function ldl_get_setting( $key, $esc = false ) {
 
-	$ldl = ldl_load();
+	$ldl = ldl_get_instance();
 	$value = $ldl->get_setting( $key );
 
 	if ( $esc )
@@ -103,9 +117,18 @@ function ldl_get_setting( $key, $esc = false ) {
 }
 
 
+/**
+ * An alias for the LDL_Directory_Lite update_setting() method that also handles loading the singleton. This
+ * function automatically saves the settings after update, requiring only one function call to handle the entire
+ * process.
+ *
+ * @since 0.5.3
+ * @param string $key The configuration setting we're updating
+ * @param string $new_val The new value, leave empty to initialize
+ */
 function ldl_update_setting( $key, $new_val = '' ) {
 
-	$ldl = ldl_load();
+	$ldl = ldl_get_instance();
 	$old_val = $ldl->get_setting( $key );
 
 	if ( $new_val == $old_val )
@@ -118,7 +141,33 @@ function ldl_update_setting( $key, $new_val = '' ) {
 
 
 /**
+ * An alias for the LDL_Directory_Lite set_listing_id() method.
+ *
+ * @since 0.5.3
+ * @param int $listing_ID The listing/post ID for the currently active listing
+ */
+function ldl_set_listing_id( $listing_ID ) {
+    $ldl = ldl_get_instance();
+    $ldl->set_listing_id( $listing_ID );
+}
+
+
+/**
+ * An alias for the LDL_Directory_Lite get_listing_id() method.
+ *
+ * @since 0.5.3
+ * @return int The currently active listing ID
+ */
+function ldl_get_listing_id() {
+    $ldl = ldl_get_instance();
+    return $ldl->get_listing_id();
+}
+
+
+
+/**
  * Template Functions
+ * =====================================================================================================================
  */
 
 

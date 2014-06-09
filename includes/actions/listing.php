@@ -80,9 +80,9 @@ function ldl_action__listing( $listing ) {
     add_action( 'wp_footer', '_f_draw_modal' );
     function _f_draw_modal() {
 
-        $listing = ldl::pull();
+        $listing_ID = ldl_get_listing_id();
 
-        $to = ldl_get_listing_email( $listing->ID );
+        $to = ldl_get_listing_email( $listing_ID );
         if ( !$to )
             return;
 
@@ -90,7 +90,7 @@ function ldl_action__listing( $listing ) {
         $modal->assign( 'to', $to );
         $modal->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
         $modal->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );
-        $modal->assign( 'post_id', $listing->ID );
+        $modal->assign( 'post_id', $listing_ID );
 
         $modal->draw( 'modal-contact' );
     }

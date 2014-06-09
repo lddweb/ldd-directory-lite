@@ -22,7 +22,9 @@
 
 if ( ! defined( 'WPINC' ) ) die;
 
-
+/**
+ * Define constants
+ */
 define( 'LDDLITE_VERSION',      '0.5.3-beta' );
 
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
@@ -35,11 +37,18 @@ define( 'LDDLITE_TAX_TAG',      'listing_tag' );
 define( 'LDDLITE_PFX',          '_lddlite_' );
 
 
+/**
+ * Flush the rewrites for custom post types
+ */
 register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
 
-
+/**
+ * Primary controller class, this handles set up for the entire plugin.
+ *
+ * @since the_beginning
+ */
 class LDD_Directory_Lite {
 
     /**
@@ -55,7 +64,7 @@ class LDD_Directory_Lite {
     /**
      * @var object This is a temporary storage facility for listings, transporting information between actions
      */
-    public $listing;
+    private $listing_ID;
 
 
     /**
@@ -72,7 +81,7 @@ class LDD_Directory_Lite {
             self::$_instance = new self;
             self::$_instance->populate_options(); // This should always happen before anything else
             self::$_instance->include_files();
-            self::$_instance->setup_plugin();
+            self::$_instance->action_filters();
         }
         return self::$_instance;
     }
@@ -129,11 +138,13 @@ class LDD_Directory_Lite {
 
 
     /**
-     *
+     * Really all this does at the moment is add the textdomain function, and given
+     * that there are no translations for the plugin at the moment, we're pretty much just
+     * going through the motions.
      *
      * @since 0.5.0
      */
-    public function setup_plugin() {
+    public function action_filters() {
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
     }
@@ -159,6 +170,16 @@ class LDD_Directory_Lite {
 
     }
 
+
+    /**
+     * Gets a setting from the private $settings array and returns it. An empty string is returned if the setting
+     * is not found in order to avoid triggering a false negative. Settings that may have a true|false value should
+     * be explicitly tested.
+     *
+     * @since 0.5.3
+     * @param string $key The configuration setting we need the value of
+     * @return mixed An empty string, or the setting value
+     */
     public function get_setting( $key ) {
 
         if ( empty( $this->settings ) )
@@ -168,7 +189,14 @@ class LDD_Directory_Lite {
     }
 
 
-	public function update_setting( $key, $value = '' ) {
+    /**
+     * Update a configuration setting stored in the private $settings array
+     *
+     * @since 0.5.3
+     * @param string $key The configuration setting we're updating
+     * @param mixed $value The value for the configuration setting, leave empty to initialize
+     */
+    public function update_setting( $key, $value = '' ) {
 
 		if ( empty( $key ) || !isset( $this->settings[ $key ] ) )
 			return;
@@ -177,42 +205,67 @@ class LDD_Directory_Lite {
 	}
 
 
-	public function add_setting( $key, $value = '' ) {
+    /**
+     * An alias for update_setting() at present, may have further use in the future.
+     *
+     * @since 0.5.3
+     * @param string $key The configuration setting we're updating
+     * @param mixed $value The value for the configuration setting, leave empty to initialize
+     */
+    public function add_setting( $key, $value = '' ) {
 		$this->update_setting( $key, $value );
 	}
 
 
-	public function save_settings() {
+    /**
+     * Writes the $settings array to the database.
+     *
+     * @since 0.5.3
+     */
+    public function save_settings() {
 		if ( !empty( $this->settings ) )
 			update_option( 'lddlite_settings', $this->settings );
 	}
 
 
+    /**
+     * This is a hack way of memorizing what listing we're viewing, necessary due to the current way we're
+     * displaying UI elements. This will most likely deprecate if and when the plugin moves to using internal
+     * rewrites provided by the custom post type and taxonomy API.
+     *
+     * @since 0.5.3
+     * @param int $listing_ID The listing/post ID for the currently active listing
+     */
+    public function set_listing_id( $listing_ID ) {
+        $this->listing_ID = $listing_ID;
+    }
+
+
+    /**
+     * Get the previously stored listing ID.
+     *
+     * @since 0.5.3
+     * @return int The currently active listing ID
+     */
+    public function get_listing_id() {
+        return $this->listing_ID;
+    }
 
 }
 
-function ldl_load() {
+
+/**
+ * An alias for the LDD_Directory_Lite get_instance() method.
+ *
+ * @return LDD_Directory_Lite The controller singleton
+ */
+function ldl_get_instance() {
 	return LDD_Directory_Lite::get_instance();
 }
 
-class ldl {
-
-
-    public static function attach( $listing ) {
-        $l = ldl_load();
-        $l->listing = $listing;
-    }
-
-    public static function pull() {
-        $l = ldl_load();
-        return $l->listing;
-    }
-
-}
-
 /**
- * Start everything.
+ * Das boot
  */
-ldl_load();
+ldl_get_instance();
 
 
