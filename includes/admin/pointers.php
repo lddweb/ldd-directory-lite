@@ -83,7 +83,7 @@ class LDL_Pointers {
 	 * Class constructor.
 	 */
 	private function __construct() {
-		if ( current_user_can( 'manage_options' ) && !ldl::setting( 'allow_tracking_pointer_done' ) ) {
+		if ( current_user_can( 'manage_options' ) && !ldl_get_setting( 'allow_tracking_pointer_done' ) ) {
 			wp_enqueue_style( 'wp-pointer' );
 			wp_enqueue_script( 'jquery-ui' );
 			wp_enqueue_script( 'wp-pointer' );

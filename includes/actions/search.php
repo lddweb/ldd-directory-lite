@@ -1,13 +1,9 @@
 <?php
-// wp_create_nonce( 'search-form-nonce' )
 
 function ldl_action__search( $terms ) {
     global $post;
 
-    if ( !isset( $_GET['n'] ) || !wp_verify_nonce( $_GET['n'], 'search-form-nonce' ) )
-        die('horribly');
-
-    $tpl = ldl::tpl();
+    $tpl = ldl_get_template_object();
 
     $terms = sanitize_text_field( $terms );
 
@@ -101,7 +97,7 @@ function ldl_action__search( $terms ) {
             $output .= '</row>';
     } // if
 
-    $tpl = ldl::tpl();
+    $tpl = ldl_get_template_object();
 
     $tpl->assign( 'header', ldl_get_header( 'category' ) );
     $tpl->assign( 'home', remove_query_arg( array(

@@ -196,7 +196,7 @@ function ldl_metaboxes__init_cmb() {
 
 function ldl_metaboxes__setup_cmb( array $meta_boxes ) {
 
-    $use_locale = ldl::setting( 'submit_use_locale' );
+    $use_locale = ldl_get_setting( 'submit_use_locale' );
 
     $meta_boxes['listings_address'] = array(
         'id'            => 'listings_address',
@@ -235,7 +235,7 @@ function ldl_metaboxes__setup_cmb( array $meta_boxes ) {
 
     if ( $use_locale ) {
 
-        $subdivision = ldl::setting( 'submit_locale' );
+        $subdivision = ldl_get_setting( 'submit_locale' );
         $subdivision_array = ldl_get_subdivision_array( $subdivision );
 
         if ( $subdivision_array) {

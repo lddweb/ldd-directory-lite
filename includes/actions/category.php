@@ -4,7 +4,7 @@
 function ldl_action__category( $cat_id ) {
     global $post;
 
-    $tpl = ldl::tpl();
+    $tpl = ldl_get_template_object();
 
 
     $listings = get_posts( array(
@@ -48,11 +48,12 @@ function ldl_action__category( $cat_id ) {
                 $phone   = $meta['phone'];
             $social = ldl_get_social( $id, 'default', false );
 
-            $link       = add_query_arg( array(
+/*            $link       = add_query_arg( array(
                 'show'  => 'listing',
                 't'     => $listing->post_name,
-            ) );
+            ) );*/
 
+	        $link = get_permalink( $id );
 
 
             // the following is used to build our title, and the logo
@@ -103,7 +104,7 @@ function ldl_action__category( $cat_id ) {
             $output .= '</row>';
     } // if
 
-    $tpl = ldl::tpl();
+    $tpl = ldl_get_template_object();
 
     $tpl->assign( 'header', ldl_get_header( 'category' ) );
     $tpl->assign( 'home', remove_query_arg( array(

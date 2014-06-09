@@ -29,7 +29,6 @@
                         <i class="search-icon fa fa-search"></i>
                         <input id="directory-search" name="t" type="text" value="{$terms}" class="form-control search-query">
                     </div>
-                    <input type="hidden" name="n" value="{$nonce}">
                 </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

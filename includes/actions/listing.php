@@ -16,7 +16,7 @@ function ldl_action__listing( $listing ) {
         $term_name = $terms[0]->name;
     }
 
-    $tpl = ldl::tpl();
+    $tpl = ldl_get_template_object();
 
     $post_id = $listing->ID;
     $title = $listing->post_title;
@@ -86,7 +86,7 @@ function ldl_action__listing( $listing ) {
         if ( !$to )
             return;
 
-        $modal = ldl::tpl();
+        $modal = ldl_get_template_object();
         $modal->assign( 'to', $to );
         $modal->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
         $modal->assign( 'nonce', wp_create_nonce( 'contact-form-nonce' ) );

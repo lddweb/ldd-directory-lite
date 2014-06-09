@@ -14,7 +14,7 @@
 
 function ldl_enqueue() {
 
-    if ( !ldl::setting( 'disable_bootstrap' ) ) {
+    if ( !ldl_get_setting( 'disable_bootstrap' ) ) {
         wp_enqueue_style( 'lddlite-bootstrap' );
         wp_enqueue_script( 'lddlite-bootstrap' );
     }

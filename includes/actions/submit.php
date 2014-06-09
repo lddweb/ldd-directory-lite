@@ -17,8 +17,8 @@ function ldl_append_tos() {
     if ( !ldl_use_tos() )
         return;
 
-    $tpl = ldl::tpl();
-    $tpl->assign( 'tos', ldl::setting( 'submit_tos' ) );
+    $tpl = ldl_get_template_object();
+    $tpl->assign( 'tos', ldl_get_setting( 'submit_tos' ) );
     $tpl->draw( 'modal-tos' );
 
 }
@@ -27,25 +27,25 @@ add_action( 'wp_footer', 'ldl_append_tos' );
 
 function ldl_submit__email_admin( array $data, $post_id ) {
 
-    $subject = ldl::setting( 'email_toadmin_subject' );
-    $message = ldl::setting( 'email_toadmin_body' );
+    $subject = ldl_get_setting( 'email_toadmin_subject' );
+    $message = ldl_get_setting( 'email_toadmin_body' );
 
     $message = str_replace( '{aprove_link}', admin_url( 'post.php?post=' . $post_id . '&action=edit' ), $message );
     $message = str_replace( '{title}', $data['title'], $message );
     $message = str_replace( '{description}', $data['description'], $message );
 
-    ldl_mail( ldl::setting( 'email_admin' ), $subject, $message );
+    ldl_mail( ldl_get_setting( 'email_admin' ), $subject, $message );
 }
 
 
 function ldl_submit__email_owner( array $data ) {
 
-    $subject = ldl::setting( 'email_onsubmit_subject' );
-    $message = ldl::setting( 'email_onsubmit_body' );
+    $subject = ldl_get_setting( 'email_onsubmit_subject' );
+    $message = ldl_get_setting( 'email_onsubmit_body' );
 
     $message = str_replace( '{site_title}', get_bloginfo( 'name' ), $message );
-    $message = str_replace( '{directory_title}', ldl::setting( 'directory_label' ), $message );
-    $message = str_replace( '{directory_email}', ldl::setting( 'email_admin' ), $message );
+    $message = str_replace( '{directory_title}', ldl_get_setting( 'directory_label' ), $message );
+    $message = str_replace( '{directory_email}', ldl_get_setting( 'email_admin' ), $message );
     $message = str_replace( '{title}', $data['title'], $message );
     $message = str_replace( '{description}', $data['description'], $message );
 
@@ -59,7 +59,7 @@ function ldl_action__submit( $term = false ) {
     wp_enqueue_script( 'lddlite-responsiveslides' );
     wp_enqueue_script( 'lddlite-submit' );
 
-    $tpl = ldl::tpl();
+    $tpl = ldl_get_template_object();
     $tpl->assign( 'header', ldl_get_header() );
     $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
 
@@ -93,7 +93,11 @@ function ldl_action__submit( $term = false ) {
         } else {
 
             // Create the user and insert a post for this listing
-            $user_id = ldl_submit__create_user( $data['username'], $data['email'] );
+	        if ( is_user_logged_in() ) {
+		        $user_id = get_current_user_id();
+	        } else {
+		        $user_id = ldl_submit__create_user( $data['username'], $data['email'] );
+	        }
             $post_id = ldl_submit__create_listing( $data['title'], $data['description'], $data['category'], $user_id );
 
             // Add all the post meta fields
@@ -129,6 +133,17 @@ function ldl_action__submit( $term = false ) {
     $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
     $tpl->assign( 'nonce', wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ) );
 
+	$settings =   array(
+		'wpautop' => true,
+		'media_buttons' => false,
+		'textarea_name' => 'ld_s_description',
+		'textarea_rows' => 4,
+		'tabindex' => '',
+		'editor_class' => 'form-control',
+		'teeny' => true,
+	);
+
+
     $category_args = array(
         'hide_empty'    => 0,
         'echo'          => 0,
@@ -153,8 +168,8 @@ function ldl_action__submit( $term = false ) {
     $tpl->assign( 'country_dropdown', ldl_dropdown_country( 'ld_s_country', $data ) );
     $tpl->assign( 'subdivision_dropdown', ldl_dropdown_subdivision( $subdivision, $data, 10 ) );
 
-    $tpl->assign( 'use_tos', ldl::setting( 'submit_use_tos' ) );
-    $tpl->assign( 'tos', ldl::setting( 'submit_tos' ) );
+    $tpl->assign( 'use_tos', ldl_get_setting( 'submit_use_tos' ) );
+    $tpl->assign( 'tos', ldl_get_setting( 'submit_tos' ) );
 
 
     if ( !empty( $data ) ) {
@@ -162,7 +177,7 @@ function ldl_action__submit( $term = false ) {
         if ( isset( $data['url'] ) ) {
             $urls = $data['url'];
             unset( $data['url'] );
-            $tpl->assign( 'url', array_map( 'htmlentities', $urls ) );
+
         }
 
         $data = array_map( 'htmlentities', $data );
@@ -175,7 +190,8 @@ function ldl_action__submit( $term = false ) {
     $panel_general   = $tpl->draw( 'submit-general', 1 );
     $panel_geography = $tpl->draw( 'submit-geography', 1 );
     $panel_urls      = $tpl->draw( 'submit-urls', 1 );
-    $panel_account   = $tpl->draw( 'submit-account', 1 );
+	if ( !is_user_logged_in() )
+        $panel_account   = $tpl->draw( 'submit-account', 1 );
 
     $tpl->assign( 'panel_general',   $panel_general );
     $tpl->assign( 'panel_geography', $panel_geography );

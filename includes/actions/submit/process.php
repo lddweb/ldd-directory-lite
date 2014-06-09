@@ -102,10 +102,11 @@ function ldl_submit_validate_form( $data) {
     if ( !empty( $data['contact_phone'] ) )
         ldl_submit_validate_phone( $data['contact_phone'] );
 
-    ldl_submit_validate_user( $data['username'], $data['email'] );
+	if ( !is_user_logged_in() )
+	    ldl_submit_validate_user( $data['username'], $data['email'] );
 
 
-	if ( ldl::setting( 'submit_require_address' ) ) {
+	if ( ldl_get_setting( 'submit_require_address' ) ) {
 		if ( empty( $data['address_one'] ) )
 			ldl_submit_add_errors( 'address_one_required' );
 

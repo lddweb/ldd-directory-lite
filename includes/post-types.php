@@ -96,11 +96,11 @@ function ldl_action__send_approved_email( $post ) {
     $post_slug = $post->post_name;
     $permalink = get_permalink( ldl_get_page_haz_shortcode() );
 
-    $subject = ldl::setting( 'email_onapprove_subject' );
-    $message = ldl::setting( 'email_onapprove_body' );
+    $subject = ldl_get_setting( 'email_onapprove_subject' );
+    $message = ldl_get_setting( 'email_onapprove_body' );
 
     $message = str_replace( '{site_title}', get_bloginfo( 'name' ), $message );
-    $message = str_replace( '{directory_title}', ldl::setting( 'directory_label' ), $message );
+    $message = str_replace( '{directory_title}', ldl_get_setting( 'directory_label' ), $message );
     $message = str_replace( '{link}', add_query_arg( array( 'show' => 'listing', 't' => $post_slug ), $permalink ), $message );
 
     ldl_mail( $user_email, $subject, $message );

@@ -41,7 +41,7 @@
                     <li>{$panel_general}</li>
                     <li>{$panel_geography}</li>
                     <li>{$panel_urls}</li>
-                    <li>{$panel_account}</li>
+                    {if="isset($panel_account)"}<li>{$panel_account}</li>{/if}
                 </ul>
             </div>
 

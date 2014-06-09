@@ -30,13 +30,36 @@ class LDD_Directory_Admin {
 
 
     public function action_filters() {
+	    $basename = plugin_basename( __FILE__ );
+	    add_filter( 'plugin_action_links_' . $basename, array( $this, 'add_action_links' ) );
+
         add_action( 'admin_init', array( $this, 'register_settings' ) );
         add_action( 'admin_menu', array( $this, 'add_settings_menu' ) );
-	    if ( true !== ldl::setting( 'allow_tracking_popup_done' ) )
+	    if ( true !== ldl_get_setting( 'allow_tracking_popup_done' ) )
 		    add_action( 'admin_enqueue_scripts', array( 'LDL_Pointers', 'get_instance' ) );
-	    if ( true === ldl::setting( 'allow_tracking' ) )
+	    if ( true === ldl_get_setting( 'allow_tracking' ) )
 		    add_action( 'directory_lite_tracking', array( 'LDL_Tracking', 'get_instance' ) );
     }
+
+
+	/**
+	 * Add a 'Settings' link on the Plugins page for easier access.
+	 *
+	 * @since 0.5.0
+	 * @param $links array Passed by the filter
+	 * @return array The modified $links array
+	 */
+	public function add_action_links( $links ) {
+
+		return array_merge(
+			array(
+				'settings'   => '<a href="' . admin_url( 'edit.php?post_type=' . LDDLITE_POST_TYPE . '&page=lddlite-settings' ) . '">' . __( 'Settings', 'lddlite' ) . '</a>',
+				'addlisting' => '<a href="' . admin_url( 'post-new.php?post_type=' . LDDLITE_POST_TYPE ) . '">' . __( 'Add Listing', 'lddlite' ) . '</a>',
+			),
+			$links
+		);
+
+	}
 
 
     public function register_settings() {
@@ -53,19 +76,19 @@ class LDD_Directory_Admin {
         add_settings_field( 'lddlite_settings[google_maps]',           __( 'Use Google Maps', 'lddlite' ),                                                                  '_f_google_maps',           'lddlite_settings_general', 'lddlite_settings_general' );
 
         function _f_directory_label() {
-            echo '<input id="lite-directory_label" type="text" size="80" name="lddlite_settings[directory_label]" value="' . ldl::setting( 'directory_label', 1 ) . '">';
+            echo '<input id="lite-directory_label" type="text" size="80" name="lddlite_settings[directory_label]" value="' . ldl_get_setting( 'directory_label', 1 ) . '">';
             echo '<p class="description">' . __( 'Name your directory; "My Business Directory", "Local Restaurant Feed", "John\'s List of Links", etc.', 'lddlite' ) . '</p>';
         }
 
         function _f_directory_description() {
-            wp_editor( ldl::setting( 'directory_description' ), 'lite-directory_description', array( 'textarea_name' => 'lddlite_settings[directory_description]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl_get_setting( 'directory_description' ), 'lite-directory_description', array( 'textarea_name' => 'lddlite_settings[directory_description]', 'textarea_rows' => 5 ) );
         }
 
         function _f_directory_page() {
             $args = array(
                 'name'              => 'lddlite_settings[directory_page]',
                 'id'                => 'lite-directory_page',
-                'selected'          => ldl::setting( 'directory_page' ),
+                'selected'          => ldl_get_setting( 'directory_page' ),
                 'show_option_none'  => 'Select a page...',
                 'option_none_value' => '',
             );
@@ -74,24 +97,24 @@ class LDD_Directory_Admin {
         }
 
         function _f_allow_tracking() {
-            echo '<label for="lite-allow_tracking"><input id="lite-allow_tracking" type="checkbox" name="lddlite_settings[allow_tracking]" value="1" ' . checked( ldl::setting( 'allow_tracking' ), 1, 0 ) . '> <span>Allow anonymous usage tracking</span></label>';
+            echo '<label for="lite-allow_tracking"><input id="lite-allow_tracking" type="checkbox" name="lddlite_settings[allow_tracking]" value="1" ' . checked( ldl_get_setting( 'allow_tracking' ), 1, 0 ) . '> <span>Allow anonymous usage tracking</span></label>';
             echo '<p class="description">' . __( 'Your privacy is important to us, and all information collected is completely anonymous. Information collected is used only to improve future versions of the plugin, and is never shared with anyone who is not directly involved in developing LDD Directory Lite.', 'lddlite' ) . '</p>';
         }
 
         function _f_disable_bootstrap() {
-            echo '<label for="lite-disable_bootstrap"><input id="lite-disable_bootstrap" type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked( ldl::setting( 'disable_bootstrap' ), 1, 0 ) . '> <span>Disable</span></label>';
+            echo '<label for="lite-disable_bootstrap"><input id="lite-disable_bootstrap" type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked( ldl_get_setting( 'disable_bootstrap' ), 1, 0 ) . '> <span>Disable</span></label>';
             echo '<p class="description">' . __( 'A lot of themes already use bootstrap; if yours is one, disable the plugin from loading another copy.', 'lddlite' ) . '</p>';
         }
 
         function _f_public_or_private() {
-            echo '<label for="lite-public_or_private-yes" title="Allow public interaction"><input id="lite-public_or_private-yes" type="radio" name="lddlite_settings[public_or_private]" value="1" ' . checked( ldl::setting( 'public_or_private' ), 1, 0 ) . '> <span>Yes</span></label><br />';
-            echo '<label for="lite-public_or_private-no" title="Disallow public interaction"><input id="lite-public_or_private-no" type="radio" name="lddlite_settings[public_or_private]" value="0" ' . checked( ldl::setting( 'public_or_private' ), 0, 0 ) . '> <span>No</span></label><br />';
+            echo '<label for="lite-public_or_private-yes" title="Allow public interaction"><input id="lite-public_or_private-yes" type="radio" name="lddlite_settings[public_or_private]" value="1" ' . checked( ldl_get_setting( 'public_or_private' ), 1, 0 ) . '> <span>Yes</span></label><br />';
+            echo '<label for="lite-public_or_private-no" title="Disallow public interaction"><input id="lite-public_or_private-no" type="radio" name="lddlite_settings[public_or_private]" value="0" ' . checked( ldl_get_setting( 'public_or_private' ), 0, 0 ) . '> <span>No</span></label><br />';
             echo '<p class="description">' . __( 'Determines whether features such as "Submit a Listing" are available.', 'lddlite' ) . '</p>';
         }
 
         function _f_google_maps() {
-            echo '<label for="lite-google_maps-yes" title="Enable Google Maps"><input id="lite-google_maps-yes" type="radio" name="lddlite_settings[google_maps]" value="1" ' . checked( ldl::setting( 'google_maps' ), 1, 0 ) . '> <span>Yes</span></label><br />';
-            echo '<label for="lite-google_maps-no" title="Disable Google Maps"><input id="lite-google_maps-no" type="radio" name="lddlite_settings[google_maps]" value="0" ' . checked( ldl::setting( 'google_maps' ), 0, 0 ) . '> <span>No</span></label><br />';
+            echo '<label for="lite-google_maps-yes" title="Enable Google Maps"><input id="lite-google_maps-yes" type="radio" name="lddlite_settings[google_maps]" value="1" ' . checked( ldl_get_setting( 'google_maps' ), 1, 0 ) . '> <span>Yes</span></label><br />';
+            echo '<label for="lite-google_maps-no" title="Disable Google Maps"><input id="lite-google_maps-no" type="radio" name="lddlite_settings[google_maps]" value="0" ' . checked( ldl_get_setting( 'google_maps' ), 0, 0 ) . '> <span>No</span></label><br />';
             echo '<p class="description">' . __( 'Display Google Maps on listing pages?', 'lddlite' ) . '</p>';
 
         }
@@ -108,39 +131,39 @@ class LDD_Directory_Admin {
         add_settings_field( 'lddlite_settings[email_onapprove_body]',    '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>', '_f_email_onapprove_body',    'lddlite_settings_email', 'lddlite_settings_email' );
 
         function _f_email_admin() {
-            echo '<input id="email_admin" type="text" size="80" name="lddlite_settings[email_admin]" value="' . ldl::setting( 'email_admin', 1 ) . '">';
+            echo '<input id="email_admin" type="text" size="80" name="lddlite_settings[email_admin]" value="' . ldl_get_setting( 'email_admin', 1 ) . '">';
             echo '<p class="description" style="margin-bottom: 2em;">' . __( 'This is the email address that will appear in the "from" field of outgoing messages. Directory notifications will be sent to ', 'lddlite' ) . get_bloginfo( 'admin_email' ) . '</p>';
         }
 
         function _f_email_toadmin_subject() {
-            echo '<input id="email_toadmin_subject" type="text" size="80" name="lddlite_settings[email_toadmin_subject]" value="' . ldl::setting( 'email_toadmin_subject', 1 ) . '">';
+            echo '<input id="email_toadmin_subject" type="text" size="80" name="lddlite_settings[email_toadmin_subject]" value="' . ldl_get_setting( 'email_toadmin_subject', 1 ) . '">';
             echo '<p class="description">' . __( 'Sent to the site administrator when a listing is submitted and pending approval.', 'lddlite' ) . '</p>';
         }
 
         function _f_email_toadmin_body() {
-            wp_editor( ldl::setting( 'email_toadmin_body' ), 'lite-email_toadmin_body', array( 'textarea_name' => 'lddlite_settings[email_toadmin_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl_get_setting( 'email_toadmin_body' ), 'lite-email_toadmin_body', array( 'textarea_name' => 'lddlite_settings[email_toadmin_body]', 'textarea_rows' => 5 ) );
         }
 
         function _f_email_onsubmit_subject() {
-            echo '<input id="email_onsubmit_subject" type="text" size="80" name="lddlite_settings[email_onsubmit_subject]" value="' . ldl::setting( 'email_onsubmit_subject', 1 ) . '">';
+            echo '<input id="email_onsubmit_subject" type="text" size="80" name="lddlite_settings[email_onsubmit_subject]" value="' . ldl_get_setting( 'email_onsubmit_subject', 1 ) . '">';
             echo '<p class="description">' . __( 'Sent to the listing owner on submission of their information, prior to approval.', 'lddlite' ) . '</p>';
         }
 
         function _f_email_onsubmit_body() {
-            wp_editor( ldl::setting( 'email_onsubmit_body' ), 'lite-email_onsubmit_body', array( 'textarea_name' => 'lddlite_settings[email_onsubmit_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl_get_setting( 'email_onsubmit_body' ), 'lite-email_onsubmit_body', array( 'textarea_name' => 'lddlite_settings[email_onsubmit_body]', 'textarea_rows' => 5 ) );
         }
 
         function _f_email_onapprove_subject() {
-            echo '<input id="email_onapprove_subject" type="text" size="80" name="lddlite_settings[email_onapprove_subject]" value="' . ldl::setting( 'email_onapprove_subject', 1 ) . '">';
+            echo '<input id="email_onapprove_subject" type="text" size="80" name="lddlite_settings[email_onapprove_subject]" value="' . ldl_get_setting( 'email_onapprove_subject', 1 ) . '">';
             echo '<p class="description">' . __( 'Sent to the listing owner when the site administrator approves their listing.', 'lddlite' ) . '</p>';
         }
 
         function _f_email_onapprove_body() {
-            wp_editor( ldl::setting( 'email_onapprove_body' ), 'ld_email_onapprove_body', array( 'textarea_name' => 'lddlite_settings[email_onapprove_body]', 'textarea_rows' => 5 ) );
+            wp_editor( ldl_get_setting( 'email_onapprove_body' ), 'ld_email_onapprove_body', array( 'textarea_name' => 'lddlite_settings[email_onapprove_body]', 'textarea_rows' => 5 ) );
         }
 
 
-        if ( ldl::setting( 'public_or_private' ) ) {
+        if ( ldl_get_setting( 'public_or_private' ) ) {
             add_settings_section( 'lddlite_settings_submit', __return_null(), '__return_false', 'lddlite_settings_submit' );
 
             add_settings_field( 'lddlite_settings[submit_use_tos]',         __( 'Include Terms', 'lddlite' ),                                                 '_f_submit_use_tos',         'lddlite_settings_submit', 'lddlite_settings_submit' );
@@ -155,23 +178,23 @@ class LDD_Directory_Admin {
             }
 
             function _f_submit_use_tos() {
-                echo '<label for="lite-submit_use_tos"><input id="lite-submit_use_tos" type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked( ldl::setting( 'submit_use_tos' ), 1, 0 ) . '> <span>' . __( 'If checked, submission form will include terms of service', 'lddlite' ) . '</span></label>';
+                echo '<label for="lite-submit_use_tos"><input id="lite-submit_use_tos" type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked( ldl_get_setting( 'submit_use_tos' ), 1, 0 ) . '> <span>' . __( 'If checked, submission form will include terms of service', 'lddlite' ) . '</span></label>';
             }
 
             function _f_submit_tos() {
-                wp_editor( ldl::setting( 'submit_tos' ), 'ldl_submit_tos', array( 'textarea_name' => 'lddlite_settings[submit_tos]', 'textarea_rows' => 5 ) );
+                wp_editor( ldl_get_setting( 'submit_tos' ), 'ldl_submit_tos', array( 'textarea_name' => 'lddlite_settings[submit_tos]', 'textarea_rows' => 5 ) );
             }
 
             function _f_submit_use_locale() {
-                echo '<label for="lite-submit_use_locale"><input type="checkbox" name="lddlite_settings[submit_use_locale]" value="1" ' . checked( ldl::setting( 'submit_use_locale' ), 1, 0 ) . '> <span>' . __( 'If checked, set locale below', 'lddlite' ) . '</span></label>';
+                echo '<label for="lite-submit_use_locale"><input type="checkbox" name="lddlite_settings[submit_use_locale]" value="1" ' . checked( ldl_get_setting( 'submit_use_locale' ), 1, 0 ) . '> <span>' . __( 'If checked, set locale below', 'lddlite' ) . '</span></label>';
             }
 
             function _f_submit_locale() {
-                echo ldl_dropdown_country( 'lddlite_settings[submit_locale]', ldl::setting( 'submit_locale' ) );
+                echo ldl_dropdown_country( 'lddlite_settings[submit_locale]', ldl_get_setting( 'submit_locale' ) );
             }
 
 	        function _f_submit_require_address() {
-		        echo '<label for="lite-submit_require_address"><input id="lite-submit_require_address" type="checkbox" name="lddlite_settings[submit_require_address]" value="1" ' . checked( ldl::setting( 'submit_require_address' ), 1, 0 ) . '> <span>' . __( 'If checked, users will be required to enter their address', 'lddlite' ) . '</span></label>';
+		        echo '<label for="lite-submit_require_address"><input id="lite-submit_require_address" type="checkbox" name="lddlite_settings[submit_require_address]" value="1" ' . checked( ldl_get_setting( 'submit_require_address' ), 1, 0 ) . '> <span>' . __( 'If checked, users will be required to enter their address', 'lddlite' ) . '</span></label>';
 	        }
         }
 
@@ -215,15 +238,15 @@ class LDD_Directory_Admin {
 
         ?>
         <div class="wrap directory-lite">
-            <h2 class="heading"><?php _e( 'LDD Directory Lite', 'lddlite' ); ?></h2>
+            <h2 class="heading"><?php _e( 'Directory Settings', 'lddlite' ); ?></h2>
 
             <div class="sub-heading">
-                <p>Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.</p>
+                <p><?php _e( 'Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.', 'lddlite' ); ?></p>
                 <ul id="directory-links">
-                    <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues" title="Submit a bug or feature request on GitHub" class="bold-link"><i class="fa fa-exclamation-triangle fa-fw"></i> Submit an Issue</a></li>
-                    <li class="right"><i class="fa fa-wordpress fa-fw"></i> Visit us on <a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Come visit the plugin homepage on WordPress.org">WordPress.org</a></li>
-                    <li><a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Visit the LDD Directory Lite Support Forums on WordPress.org" class="bold-link"><i class="fa fa-comments fa-fw"></i> Support Forums</a></li>
-                    <li class="right"><i class="fa fa-github-alt fa-fw"></i> Visit us on <a href="https://github.com/mwaterous/ldd-directory-lite" title="We do most of our development from GitHub, come join us!">GitHub.com</a></li>
+                    <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues" title="Submit a bug or feature request on GitHub" class="bold-link"><i class="fa fa-exclamation-triangle fa-fw"></i> <?php _e( 'Submit an Issue', 'lddlite' ); ?></a></li>
+                    <li class="right"><i class="fa fa-wordpress fa-fw"></i> Visit us on <a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Come visit the plugin homepage on WordPress.org"><?php _e( 'WordPress.org', 'lddlite' ); ?></a></li>
+                    <li><a href="http://wordpress.org/support/plugin/ldd-directory-lite" title="Visit the LDD Directory Lite Support Forums on WordPress.org" class="bold-link"><i class="fa fa-comments fa-fw"></i> <?php _e( 'Support Forums', 'lddlite' ); ?></a></li>
+                    <li class="right"><i class="fa fa-github-alt fa-fw"></i> Visit us on <a href="https://github.com/mwaterous/ldd-directory-lite" title="We do most of our development from GitHub, come join us!"><?php _e( 'GitHub.com', 'lddlite' ); ?></a></li>
                 </ul>
             </div>
 
@@ -232,7 +255,7 @@ class LDD_Directory_Admin {
             <h2 class="nav-tab-wrapper">
                 <a href="<?php echo add_query_arg( 'tab', 'general', remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e( 'General', 'lddlite' ); ?></a>
                 <a href="<?php echo add_query_arg( 'tab', 'email',   remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'email' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Email', 'lddlite' ); ?></a>
-                <?php if ( ldl::setting( 'public_or_private' ) ): ?><a href="<?php echo add_query_arg( 'tab', 'submit',  remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'submit' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Submit Form', 'lddlite' ); ?></a><?php endif; ?>
+                <?php if ( ldl_get_setting( 'public_or_private' ) ): ?><a href="<?php echo add_query_arg( 'tab', 'submit',  remove_query_arg( 'settings-updated' ) ); ?>" class="nav-tab <?php echo $active_tab == 'submit' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Submit Form', 'lddlite' ); ?></a><?php endif; ?>
             </h2>
 
             <div id="tab_container">

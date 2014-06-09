@@ -15,7 +15,7 @@
 
 function ldl_ajax__search_directory() {
     global $post;
-mdd( $_POST );
+
     $args = array(
         'post_type'     => LDDLITE_POST_TYPE,
         'post_status'   => 'publish',
@@ -28,7 +28,8 @@ mdd( $_POST );
     $nth = 0;
 
     // @todo NEARLY IDENTICAL TO CATEGORY RESULTS
-    $tpl = ldl::tpl();
+	// @TODO There's code repetition occurring now between this, the physical search results and the category list.
+    $tpl = ldl_get_template_object();
 
     if ( $search->have_posts() ) {
 
@@ -241,7 +242,7 @@ function ldl_store_tracking_response() {
 	if ( !wp_verify_nonce( $_POST['nonce'], 'lite_allow_tracking_nonce' ) )
 		die();
 
-	$ldl = ldl::load();
+	$ldl = ldl_load();
 
 	$ldl->update_setting( 'allow_tracking_popup_done', true );
 

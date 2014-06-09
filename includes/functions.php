@@ -10,40 +10,165 @@
  */
 
 
+/**
+ * Settings Functions
+ */
+
+
+function ldl_get_default_settings() {
+	$site_title = get_bloginfo( 'name' );
+	$admin_email = get_bloginfo( 'admin_email' );
+
+	$signature = <<<SIG
+
+
+*****************************************
+This is an automated message from {$site_title}
+Please do not respond directly to this email
+SIG;
+
+	$email = array();
+
+	$email['to_admin']   = <<<EM
+<p><strong>A new listing is pending review!</strong></p>
+
+<p>This submission is awaiting approval. Please visit the link to view and approve the new listing:</p>
+
+<p>{approve_link}</p>
+
+<ul>
+    <li>Listing Name: <strong>{title}</strong></li>
+    <li>Listing Description: <strong>{description}</strong></li>
+</ul>
+EM;
+	$email['on_submit']  = <<<EM
+<p><strong>Thank you for submitting a listing to {site_title}!</strong></p>
+
+<p>Your listing is pending approval.</p>
+<p>Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at {directory_email}.</p>
+
+<ul>
+    <li>Listing Name: <strong>{title}</strong></li>
+    <li>Listing Description: <strong>{description}</strong></li>
+</ul>
+EM;
+	$email['on_approve'] = <<<EM
+<p><strong>Thank you for submitting a listing to {site_title}!</strong></p>
+
+<p>Your listing has been approved! You can now view it online:</p>
+<p>{link}</p>
+EM;
+
+	foreach ( $email as $key => $msg )
+		$email[ $key ] = $msg . $signature;
+
+	$defaults = apply_filters( 'lddlite_default_options', array(
+		'directory_label'           => get_bloginfo( 'name' ),
+		'directory_description'     => '',
+		'directory_page'            => '',
+		'disable_bootstrap'         => 0,
+		'public_or_private'         => 1,
+		'google_maps'               => 1,
+		'email_admin'             => get_bloginfo( 'admin_email' ),
+		'email_toadmin_subject'     => 'A new listing has been submitted for review!',
+		'email_toadmin_body'        => $email['to_admin'],
+		'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
+		'email_onsubmit_body'       => $email['on_submit'],
+		'email_onapprove_subject'   => 'Your listing on ' . $site_title . ' was approved!',
+		'email_onapprove_body'      => $email['on_approve'],
+		'submit_use_tos'            => 0,
+		'submit_tos'                => '',
+		'submit_use_locale'         => 0,
+		'submit_locale'             => 'US',
+		'submit_require_address'    => 1,
+		'allow_tracking_popup_done' => 0,
+		'allow_tracking'            => 0,
+	) );
+
+	return $defaults;
+}
+
+
+
+function ldl_get_setting( $key, $esc = false ) {
+
+	$ldl = ldl_load();
+	$value = $ldl->get_setting( $key );
+
+	if ( $esc )
+		$value = esc_attr( $value );
+
+	return $value;
+}
+
+
+function ldl_update_setting( $key, $new_val = '' ) {
+
+	$ldl = ldl_load();
+	$old_val = $ldl->get_setting( $key );
+
+	if ( $new_val == $old_val )
+		return;
+
+	$ldl->update_setting( $key, $new_val );
+	$ldl->save_settings();
+
+}
+
+
+/**
+ * Template Functions
+ */
+
+
+function ldl_get_template_object() {
+
+	if ( !class_exists( 'raintpl' ) )
+		require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
+
+	raintpl::configure( 'tpl_ext',      'tpl' );
+	raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
+	raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
+	raintpl::configure( 'path_replace', false );
+
+	return new raintpl;
+}
+
+
 function ldl_get_loading_gif() {
     $img = '<img src="' . LDDLITE_URL . '/public/images/loading.gif" width="32" height="32">';
     return $img;
 }
 
 function ldl_use_tos() {
-    return ldl::setting( 'submit_use_tos' );
+    return ldl_get_setting( 'submit_use_tos' );
 }
 
 
 function ldl_use_locale() {
-    return ldl::setting( 'submit_use_locale' );
+    return ldl_get_setting( 'submit_use_locale' );
 }
 
 
 function ldl_get_locale() {
-    return ldl_use_locale() ? ldl::setting( 'submit_locale' ) : 'US';
+    return ldl_use_locale() ? ldl_get_setting( 'submit_locale' ) : 'US';
 }
 
 
 function ldl_is_public() {
-    return ldl::setting( 'public_or_private' );
+    return ldl_get_setting( 'public_or_private' );
 }
 
 
 function ldl_use_google_maps() {
-    return ldl::setting( 'google_maps' );
+    return ldl_get_setting( 'google_maps' );
 }
 
 
 function ldl_get_page_haz_shortcode( $force = false) {
 
-    if ( ldl::setting( 'directory_page' ) )
-        return ldl::setting( 'directory_page' );
+    if ( ldl_get_setting( 'directory_page' ) )
+        return ldl_get_setting( 'directory_page' );
 
     $shortcode_id = get_transient( 'ldd_shortcode_id' );
 
@@ -88,11 +213,11 @@ function  ldl_get_header( $show_label = 0 ) {
 
     wp_enqueue_script( 'lddlite-search' );
 
-    $tpl = ldl::tpl();
+    $tpl = ldl_get_template_object();
 
     $tpl->assign( 'show_label', $show_label );
-    $tpl->assign( 'directory_label', ldl::setting( 'directory_label' ) );
-    $tpl->assign( 'directory_description', ldl::setting( 'directory_description' ) );
+    $tpl->assign( 'directory_label', ldl_get_setting( 'directory_label' ) );
+    $tpl->assign( 'directory_description', ldl_get_setting( 'directory_description' ) );
 
     $tpl->assign( 'public', ldl_is_public() );
     $tpl->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
@@ -206,7 +331,7 @@ function ldl_get_listing_meta( $id ) {
 
     if ( false !== $address ) {
 
-        $address = $meta['address_one'];
+        $address = '<i class="fa fa-map-marker"></i>  ' . $meta['address_one'];
         if ( !empty( $meta['address_two'] ) )
             $address .= '<br>' . $meta['address_two'];
         $address .= ',<br>' . $meta['city'] . ', ' . $meta['subdivision'] . ' ' . $meta['post_code'];
@@ -222,7 +347,7 @@ function ldl_get_listing_meta( $id ) {
 
     $website = get_post_meta( $id, '_lddlite_url_website', 1 );
     if ( $website )
-        $meta['website'] = apply_filters( 'lddlite_listing_website', sprintf( '<a href="%1$s"><i class="fa fa-external-link"></i>  %1$s</a>', esc_url( $website ) ) );
+        $meta['website'] = apply_filters( 'lddlite_listing_website', sprintf( '<a href="%1$s"><i class="fa fa-link"></i>  %1$s</a>', esc_url( $website ) ) );
 
     $meta['email'] = get_post_meta( $id, '_lddlite_contact_email', 1 );
 

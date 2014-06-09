@@ -16,14 +16,14 @@
 function ldl_tracking_additions( $options ) {
 
 	$options['directory_lite'] = array(
-		'directory_page'            => ldl::setting( 'directory_page' ),
-		'disable_bootstrap'         => ldl::setting( 'disable_bootstrap' ),
-		'public_or_private'         => ldl::setting( 'public_or_private' ),
-		'google_maps'               => ldl::setting( 'google_maps' ),
-		'submit_use_tos'            => ldl::setting( 'submit_use_tos' ),
-		'submit_use_locale'         => ldl::setting( 'submit_use_locale' ),
-		'submit_locale'             => ldl::setting( 'submit_locale' ),
-		'submit_require_address'    => ldl::setting( 'submit_require_address' ),
+		'directory_page'            => ldl_get_setting( 'directory_page' ),
+		'disable_bootstrap'         => ldl_get_setting( 'disable_bootstrap' ),
+		'public_or_private'         => ldl_get_setting( 'public_or_private' ),
+		'google_maps'               => ldl_get_setting( 'google_maps' ),
+		'submit_use_tos'            => ldl_get_setting( 'submit_use_tos' ),
+		'submit_use_locale'         => ldl_get_setting( 'submit_use_locale' ),
+		'submit_locale'             => ldl_get_setting( 'submit_locale' ),
+		'submit_require_address'    => ldl_get_setting( 'submit_require_address' ),
 	);
 	return $options;
 }
