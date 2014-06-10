@@ -107,6 +107,7 @@ function ldl_action__category( $cat_id ) {
     $tpl = ldl_get_template_object();
 
     $tpl->assign( 'header', ldl_get_header( 'category' ) );
+	$tpl->assign( 'loading', ldl_get_loading_gif() );
     $tpl->assign( 'home', remove_query_arg( array(
         'show',
         't',

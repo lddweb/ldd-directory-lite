@@ -1,22 +1,22 @@
-<section class="directory-lite directory-category">
+<section class="directory-lite directory-listing">
 
     <header class="directory-header">
         {$header}
+
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="l-breadcrumb">
+                    <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="{$term_link}">{$term_name}</a></li>
+                    <li class="active"><span>View Listing</span></li>
+                </ol>
+            </div>
+        </div>
     </header>
 
 
-    <div class="row">
-        <div class="col-md-12">
-            <ol class="l-breadcrumb">
-                <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="{$term_link}">{$term_name}</a></li>
-                <li class="active"><span>View Listing</span></li>
-            </ol>
-        </div>
-    </div>
-
+    <div id="search-loading">{$loading}</div>
     <div id="search-directory-results"></div>
-
 
     <article id="listing-{$id}" class="directory-content listing-{$id} listing type-listing listing-full">
         <div class="container-fluid">

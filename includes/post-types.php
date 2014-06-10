@@ -146,8 +146,8 @@ function ldl_swap_post_page( $template ) {
 
 
 
-//add_filter( 'term_link', 'ldl_filter__term_link' );
-//add_filter( 'post_type_link', 'ldl_filter__post_type_link', 10, 2 );
+add_filter( 'term_link', 'ldl_filter__term_link' );
+add_filter( 'post_type_link', 'ldl_filter__post_type_link', 10, 2 );
 add_filter( 'enter_title_here', 'ldl_filter__enter_title_here' );
 add_filter( 'admin_post_thumbnail_html', 'ldl_filter__admin_post_thumbnail_html' );
 add_filter( 'get_shortlink', 'ldl_filter__get_shortlink' );

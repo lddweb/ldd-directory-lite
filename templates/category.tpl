@@ -10,7 +10,9 @@
                     <li class="active"><span>{$category_title}</span></li>
                 </ol>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-12 view-types" style="text-align: right">
                 <div class="btn-group">
                     <a href="{$list_link}" class="btn btn-default"><i class="fa fa-list"></i></a>
@@ -21,6 +23,7 @@
     </header>
 
 
+    <div id="search-loading">{$loading}</div>
     <div id="search-directory-results"></div>
 
     <section class="directory-content">

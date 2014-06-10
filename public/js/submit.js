@@ -12,26 +12,29 @@ jQuery(function($) {
 
 jQuery(document).ready(function($) {
 
-    $("#country").change(function() {
-        var newSubdivision = this.value
-        var request = $.ajax({
-            url: ajaxurl,
-            type: "POST",
+    var loadChangeRequest = function( url, requestMethod, newKey ) {
+        $.ajax({
+            type: requestMethod,
+            url:  url,
             data: {
                 action: "dropdown_change",
-                subdivision: newSubdivision,
+                subdivision: newKey,
             },
             beforeSend: function() {
                 $(".submit-ajax-replace").hide();
+            },
+            success: function( msg ) {
+                console.log( msg )
+                var response = $.parseJSON( msg )
+                $("#subdivision_control").html( response.input )
+                $("#subdivision_label").text( response.sub )
+                $("#post_code_label").text( response.code )
+                $(".submit-ajax-replace").show();
             }
         })
-        request.done(function( msg ) {
-            var response = $.parseJSON( msg )
-            $("#subdivision_control").html( response.input )
-            $("#subdivision_label").text( response.sub )
-            $("#post_code_label").text( response.code )
-            $(".submit-ajax-replace").show();
-        })
+    }
+    $("#country").change(function() {
+        loadChangeRequest( ajaxurl, "POST", this.value )
     })
 
 

@@ -116,6 +116,7 @@ $pure-blue:         #0078e7;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
   #search-loading {
+    display: none;
     padding: 10em 0;
     text-align: center;
   }
@@ -284,7 +285,7 @@ span.website {
 
 span.social-meta {
   display: block;
-  text-align: center;
+
   a {
     display: inline-block;
     margin: 4px 4px 0 0;
@@ -295,6 +296,9 @@ span.social-meta {
       color: rgba(119, 119, 119, 0.9);
     }
   }
+}
+.listing-full span.social-meta {
+  text-align: center;
 }
 
 #map_wrapper {

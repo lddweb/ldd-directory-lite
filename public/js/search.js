@@ -7,7 +7,7 @@
         settings: {
             url: '/search',
             dom_id: '#results',
-            wrapper: '',
+            wrapper: '.directory-content',
             delay: 100,
             loading_css: '#loading'
         },
@@ -26,10 +26,11 @@
 
         process: function(terms) {
 
-console.log( terms )
             if ( terms ) {
                 $.post( $.searchbox.settings.url, { action: "search_directory", s: terms })
                     .done(function( data ) {
+                        $(".view-types").hide()
+                        $($.searchbox.settings.wrapper).hide()
                         $($.searchbox.settings.dom_id).show()
                         $($.searchbox.settings.dom_id).html(data)
                     })
@@ -37,6 +38,7 @@ console.log( terms )
             } else {
                 $($.searchbox.settings.dom_id).hide()
                 $($.searchbox.settings.wrapper).show()
+                $(".view-types").hide()
             }
         },
 

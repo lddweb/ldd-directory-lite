@@ -71,7 +71,7 @@ function ldl_sanitize__post( $data ) {
     if ( is_array( $output['url'] ) ) {
         foreach ( $output['url'] as $key => $value ) {
             if ( in_array( $key, array( 'facebook', 'linkedin' ) ) )
-                $output['url'][ $key ] = ldl_sanitize_https( $value );
+                $output['url'][ $key ] = ldl_force_https( $value );
             else if ( 'twitter' == $key )
                 $output['url'][ $key ] = ldl_sanitize_twitter( $value );
             else if ( strpos( $url, 'http') !== 0 )

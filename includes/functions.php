@@ -259,7 +259,7 @@ function ldl_get_page_haz_shortcode( $force = false) {
 }
 
 
-function  ldl_get_header( $show_label = 0 ) {
+function  ldl_get_header( $show_label = 0, $nosearch = 0 ) {
 
     wp_enqueue_script( 'lddlite-search' );
 
@@ -278,6 +278,8 @@ function  ldl_get_header( $show_label = 0 ) {
     $tpl->assign( 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 
     $tpl->assign( 'is_logged_in', (int) is_user_logged_in() );
+
+	$tpl->assign( 'nosearch', $nosearch );
 
     return $tpl->draw( 'header', 1 );
 }
@@ -412,45 +414,6 @@ function ldl_get_listing_meta( $id ) {
 }
 
 
-function ldl_get_social( $id, $class = 'btn btn-success', $email_btn = true ) {
-
-    if ( !is_int( $id ) )
-        return false;
-
-    $titles = array(
-        'facebook-square' => 'Visit %1$s on Facebook',
-        'linkedin'        => 'Connect with %1$s on LinkedIn',
-        'twitter'         => 'Follow %1$s on Twitter',
-        'default'         => 'Visit %1$s on %2$s',
-    );
-
-    $output = '';
-    $name = get_the_title( $id );
-    $class = !empty( $class ) ? ' class="' . $class . '" ' : '';
-
-    if ( $email_btn ) {
-        $email = get_post_meta( $id, '_lddlite_contact_email', 1 );
-        if ( $email ) $output = '<a href="" ' . $class . ' data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
-    }
-
-    $social = array(
-        'facebook-square' =>  'http://', //get_post_meta( $id, '_lddlite_url_facebook', 1 ),
-        'linkedin'        =>  'http://', //get_post_meta( $id, '_lddlite_url_linkedin', 1 ),
-        'twitter'         =>  'http://', //get_post_meta( $id, '_lddlite_url_twitter', 1 ),
-    );
-
-    foreach ( $social as $key => $url ) {
-        if ( !empty( $url ) ) {
-            $title_key = array_key_exists( $key, $titles ) ? $titles[ $key ] : $titles['default'];
-            $title = sprintf( $title_key, $name, $key );
-
-            $output .= '<a href="' . esc_url( $url ) . '" title="' . $title . '" ' . $class . '>';
-            $output .= '<i class="fa fa-' . $key . '"></i></a>';
-        }
-    }
-
-    return $output;
-}
 
 
 function ldl_dropdown_subdivision( $subdivision, $data, $tabindex = 0 ) {
@@ -522,25 +485,22 @@ function ldl_get_listing_email( $id ) {
 }
 
 
-function ldl_sanitize_twitter( $input ) {
+function ldl_sanitize_twitter( $url ) {
 
-    $output = preg_replace( '/[^A-Za-z0-9\/:.]/', '', $input );
+	if ( empty( $url ) )
+		return;
 
-    if ( strpos( $output, '/' ) !== false )
-        $output = substr( $input, strrpos( $output, '/' ) + 1 );
+    $url = preg_replace( '/[^A-Za-z0-9\/:.]/', '', $url );
 
-    $output = 'https://twitter.com/' . $output;
+    if ( strpos( $url, '/' ) !== false )
+        $url = substr( $url, strrpos( $url, '/' ) + 1 );
 
-    return $output;
+    $url = 'https://twitter.com/' . $url;
+
+    return $url;
 }
 
-function ldl_sanitize_https( $url ) {
 
-    if ( strpos( $url, 'http') !== 0 )
-        $url = esc_url_raw( $url );
-
-    return preg_replace( '~http:~', 'https:', $url );
-}
 
 
 /**
@@ -650,4 +610,72 @@ function ldl_mail($to, $subject, $message, $headers = '' ) {
     wp_mail($to, $subject, $message, $headers);
     ob_end_clean();
 
+}
+
+/**
+ * Output Functions
+ * =====================================================================================================================
+ */
+
+/**
+ * Replaces the protocol with HTTPS
+ *
+ * @since 0.5.3
+ * @param string $url The URL
+ * @return string The modified URL
+ */
+function ldl_force_https( $url ) {
+
+	if ( strpos( $url, 'http') !== 0 )
+		$url = esc_url_raw( $url );
+
+	return preg_replace( '~http:~', 'https:', $url );
+}
+
+
+/**
+ * @param int $id The listing/post ID
+ * @param string $class
+ * @param bool $email_btn
+ *
+ * @return string
+ */
+function ldl_get_social( $id, $class = 'btn btn-success', $email_btn = true ) {
+
+	if ( !is_int( $id ) )
+		return false;
+
+	$titles = array(
+		'facebook-square' => 'Visit %1$s on Facebook',
+		'linkedin'        => 'Connect with %1$s on LinkedIn',
+		'twitter'         => 'Follow %1$s on Twitter',
+		'default'         => 'Visit %1$s on %2$s',
+	);
+
+	$output = '';
+	$name = get_the_title( $id );
+	$class = !empty( $class ) ? ' class="' . $class . '" ' : '';
+
+	if ( $email_btn ) {
+		$email = get_post_meta( $id, '_lddlite_contact_email', 1 );
+		if ( $email ) $output = '<a href="" ' . $class . ' data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
+	}
+
+	$social = array(
+		'facebook-square' =>  ldl_force_https( get_post_meta( $id, '_lddlite_url_facebook', 1 ) ),
+		'linkedin'        =>  ldl_force_https( get_post_meta( $id, '_lddlite_url_linkedin', 1 ) ),
+		'twitter'         =>  ldl_sanitize_twitter( get_post_meta( $id, '_lddlite_url_twitter', 1 ) ),
+	);
+
+	foreach ( $social as $key => $url ) {
+		if ( !empty( $url ) ) {
+			$title_key = array_key_exists( $key, $titles ) ? $titles[ $key ] : $titles['default'];
+			$title = sprintf( $title_key, $name, $key );
+
+			$output .= '<a href="' . ldl_force_https( $url ) . '" title="' . $title . '" ' . $class . '>';
+			$output .= '<i class="fa fa-' . $key . '"></i></a>';
+		}
+	}
+
+	return $output;
 }

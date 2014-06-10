@@ -3,12 +3,18 @@
     <header class="directory-header">
         {$header}
 
-        <ol class="l-breadcrumb" style="margin-bottom: 1em;">
-            <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
-            <li class="active"><span>Submit a Listing</span></li>
-        </ol>
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="l-breadcrumb" style="margin-bottom: 1em;">
+                    <li><a href="{$home}"><i class="fa fa-home"></i> Home</a></li>
+                    <li class="active"><span>Submit a Listing</span></li>
+                </ol>
+            </div>
+        </div>
     </header>
 
+
+    <div id="search-loading">{$loading}</div>
     <div id="search-directory-results"></div>
 
     <section class="directory-content">

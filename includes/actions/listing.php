@@ -49,6 +49,7 @@ function ldl_action__listing( $listing ) {
 
 
     $tpl->assign( 'header',     ldl_get_header( 'category' ) );
+	$tpl->assign( 'loading', ldl_get_loading_gif() );
 
     $tpl->assign( 'home',       remove_query_arg( array(
         'show',

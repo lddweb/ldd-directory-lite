@@ -207,9 +207,9 @@ function ldl_upgrade() {
                 'promotion'     => sprintf( '%s', $listing->promoDescription ),
                 'other'         => $listing->other_info,
                 'url_website'   => empty( $listing->url ) ? '' : esc_url_raw( $listing->url ),
-                'url_facebook'  => empty( $listing->facebook ) ? '' : ldl_sanitize_https( $listing->facebook ),
+                'url_facebook'  => empty( $listing->facebook ) ? '' : ldl_force_https( $listing->facebook ),
                 'url_twitter'   => empty( $listing->twitter ) ? '' : ldl_sanitize_twitter( $listing->twitter ),
-                'url_linkedin'  => empty( $listing->linkedin ) ? '' : ldl_sanitize_https( $listing->linkedin ),
+                'url_linkedin'  => empty( $listing->linkedin ) ? '' : ldl_force_https( $listing->linkedin ),
             );
 
             foreach ( $post_meta as $key => $value ) {

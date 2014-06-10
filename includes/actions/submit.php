@@ -60,7 +60,7 @@ function ldl_action__submit( $term = false ) {
     wp_enqueue_script( 'lddlite-submit' );
 
     $tpl = ldl_get_template_object();
-    $tpl->assign( 'header', ldl_get_header() );
+    $tpl->assign( 'header', ldl_get_header( 0, 1 ) );
     $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
 
 
@@ -199,6 +199,7 @@ function ldl_action__submit( $term = false ) {
     $tpl->assign( 'panel_account',   $panel_account );
 
 
-    return $tpl->draw( 'submit', 1 );
+
+	return $tpl->draw( 'submit', 1 );
 
 }

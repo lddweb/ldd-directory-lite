@@ -1,4 +1,4 @@
-<section class="directory-lite directory-category">
+<section class="directory-lite directory-search">
 
     <header class="directory-header">
         {$header}
@@ -10,7 +10,9 @@
                     <li class="active"><span>Search results for "{$terms}"</span></li>
                 </ol>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-12 view-types" style="text-align: right;">
                 <div class="btn-group">
                     <a href="{$list_link}" class="btn btn-default"><i class="fa fa-list"></i></a>
@@ -20,8 +22,6 @@
         </div>
     </header>
 
-
-    <div id="search-directory-results"></div>
 
     <section class="directory-content">
         {$listings}
