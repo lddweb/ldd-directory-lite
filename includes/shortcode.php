@@ -101,25 +101,10 @@ function ldl_shortcode__display() {
             if ( is_array( $exists ) )
                 $term = $exists['term_id'];
 
-        } else if ( 'listing' == $action ) {
-
-            $listing = get_posts( array(
-                'name'              => $t,
-                'post_type'         => LDDLITE_POST_TYPE,
-                'post_status'       => 'publish',
-                'posts_per_page'    => 1,
-                'no_found_rows'     => true,
-            ) );
-
-            if ( !empty( $listing ) ) {
-                $term = $listing[0];
-                ldl_set_listing_id( $listing[0]->ID );
-            }
-
-        } else if ( 'submit' == $action ) {
-            $term = 'listing';
-        } else if ( 'search' == $action ) {
+        } else if ( 'listing' == $action || 'search' == $action) {
             $term = $t;
+        } else if ( 'submit' == $action && !is_user_logged_in() ) {
+            $term = 'listing';
         }
 
         if ( empty( $term ) )
@@ -153,8 +138,9 @@ function ldl_display( $echo = true ) {
 }
 
 
-add_shortcode( 'directory_lite',        'ldl_shortcode__display' );
+add_shortcode( 'directory',          'ldl_shortcode__display' );
 /**
- * @deprecated since version 0.5.0, please use [directory_lite] instead
+ * @deprecated since version 0.5.0, please use [directory] instead
  */
-add_shortcode( 'business_directory',    'ldl_shortcode__display' );
+add_shortcode( 'business_directory', 'ldl_shortcode__display' );
+add_shortcode( 'directory_lite',     'ldl_shortcode__display' );

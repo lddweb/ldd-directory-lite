@@ -18,6 +18,10 @@
             {$featured}
         </div>
 
+        <div class="row">
+            {$new}
+        </div>
+
         <div class="panel panel-default">
             <div class="panel-heading panel-primary">Categories</div>
             <div class="list-group">

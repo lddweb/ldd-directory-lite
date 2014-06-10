@@ -112,22 +112,27 @@ function ldl_setup__register_scripts() {
 }
 
 
+function ldl_setup__custom_appearance() {
+
+    $panel_background = ldl_get_setting( 'appearance_panel_background' );
+    $panel_foreground = ldl_get_setting( 'appearance_panel_foreground' );
+
+    $css = <<<CSS
+<style media="all">
+    .panel-primary > .panel-heading {
+        background-color: {$panel_background};
+        border-color: {$panel_background};
+        color: {$panel_foreground};
+    }
+</style>
+CSS;
+
+    echo $css;
+}
+
+
 add_action( 'init', 'ldl_setup__register_custom', 5 );
 add_action( 'init', 'ldl_setup__register_scripts', 5 );
 
 
-/**
- * Initialize all Ajax hooks
- */
-require_once( LDDLITE_PATH . '/includes/ajax.php' );
-
-add_action( 'wp_ajax_search_directory',        'ldl_ajax__search_directory' );
-add_action( 'wp_ajax_nopriv_search_directory', 'ldl_ajax__search_directory' );
-
-add_action( 'wp_ajax_contact_form',        'ldl_ajax__contact_form' );
-add_action( 'wp_ajax_nopriv_contact_form', 'ldl_ajax__contact_form' );
-
-add_action( 'wp_ajax_dropdown_change',        'ldl_ajax__dropdown_change' );
-add_action( 'wp_ajax_nopriv_dropdown_change', 'ldl_ajax__dropdown_change' );
-
-add_action( 'wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response' );
+add_action( 'wp_footer', 'ldl_setup__custom_appearance', 20 );

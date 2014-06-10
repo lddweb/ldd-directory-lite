@@ -5,6 +5,52 @@
  */
 
 
+function ldl_get_thumbnail( $type, $listing ) {
+
+    if ( 'new' != $type )
+        $type = 'featured';
+
+    if ( !is_object( $listing ) )
+        return;
+
+    $tpl = ldl_get_template_object();
+
+    $id = $listing->ID;
+    $summary = $listing->post_excerpt;
+    $slug = $listing->post_name;
+    $title = $listing->post_title;
+    $link = add_query_arg( array(
+        'show'  => 'listing',
+        't'     => $slug,
+    ) );
+
+    if ( empty( $summary ) ) {
+        $summary = $listing->post_content;
+
+        $summary = strip_shortcodes( $summary );
+
+        $summary = apply_filters( 'lddlite_the_content', $summary );
+        $summary = str_replace( ']]>', ']]&gt;', $summary );
+
+        $excerpt_length = apply_filters( 'lddlite_featured_excerpt_length', 25 );
+        $summary = wp_trim_words( $summary, $excerpt_length, '&hellip;' );
+    }
+
+    $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';
+
+    if ( has_post_thumbnail( $id ) )
+        $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing-featured', array( 'class' => 'img-rounded' ) ) );
+    else
+        $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">' );
+
+    $tpl->assign( 'thumbnail', $thumbnail );
+    $tpl->assign( 'title',     $title );
+    $tpl->assign( 'summary',   $summary );
+    $tpl->assign( 'link',      $link );
+
+    return $tpl->draw( 'thumbnail-' . $type, 1 );
+}
+
 function ldl_action__home( $term = false ) {
     global $post;
 
@@ -13,6 +59,7 @@ function ldl_action__home( $term = false ) {
 
     $featured_args = array(
         'posts_per_page'    => 3,
+        'no_found_rows'     => true,
         'post_type'         => LDDLITE_POST_TYPE,
         'tax_query' => array(
             array(
@@ -28,47 +75,30 @@ function ldl_action__home( $term = false ) {
         $rand_keys = array_rand( $featured, 3 );
         shuffle( $rand_keys );
 
-        // @todo can we filter guid once and use that as our url?
         foreach ( $rand_keys as $key ) {
-            $listing = $featured[ $key ];
-            $featured_tpl = ldl_get_template_object();
-
-            $id = $listing->ID;
-            $summary = $listing->post_excerpt;
-            $slug = $listing->post_name;
-            $title = $listing->post_title;
-            $link = add_query_arg( array(
-                'show'  => 'listing',
-                't'     => $slug,
-            ) );
-
-            if ( empty( $summary ) ) {
-                $summary = $listing->post_content;
-
-                $summary = strip_shortcodes( $summary );
-
-                $summary = apply_filters( 'lddlite_the_content', $summary );
-                $summary = str_replace( ']]>', ']]&gt;', $summary );
-
-                $excerpt_length = apply_filters( 'lddlite_featured_excerpt_length', 25 );
-                $summary = wp_trim_words( $summary, $excerpt_length, '&hellip;' );
-            }
-
-            $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';
-
-            if ( has_post_thumbnail( $id ) )
-                $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing-featured', array( 'class' => 'img-rounded' ) ) );
-            else
-                $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">' );
-
-            $featured_tpl->assign( 'thumbnail', $thumbnail );
-            $featured_tpl->assign( 'title',     $title );
-            $featured_tpl->assign( 'summary',   $summary );
-            $featured_tpl->assign( 'link',      $link );
-
-            $featured_output .= $featured_tpl->draw( 'featured', 1 );
+            $featured_output .= ldl_get_thumbnail( 'featured', $featured[ $key ] );
         }
 
+    }
+
+
+    // Retrieve all new listings
+    $new_output = '';
+
+    if ( ldl_get_setting( 'appearance_display_new' ) ) {
+        $new_args = array(
+            'posts_per_page'    => 3,
+            'no_found_rows'     => true,
+            'post_type'         => LDDLITE_POST_TYPE,
+
+        );
+        $new_listings = get_posts( $new_args );
+
+        if ( $new_listings ) {
+            foreach ( $new_listings as $listing ) {
+                $new_output .= ldl_get_thumbnail( 'new', $listing );
+            }
+        }
     }
 
 
@@ -87,9 +117,10 @@ function ldl_action__home( $term = false ) {
 
     $tpl = ldl_get_template_object();
 
-    $tpl->assign( 'header', ldl_get_header( 1 ) );
-    $tpl->assign( 'loading', ldl_get_loading_gif() );
-    $tpl->assign( 'featured', $featured_output );
+    $tpl->assign( 'header',     ldl_get_header( 1 ) );
+    $tpl->assign( 'loading',    ldl_get_loading_gif() );
+    $tpl->assign( 'featured',   $featured_output );
+    $tpl->assign( 'new',        $new_output );
     $tpl->assign( 'categories', $categories );
 
     return $tpl->draw( 'home', 1 );

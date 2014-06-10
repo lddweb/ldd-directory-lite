@@ -213,13 +213,28 @@ class LDD_Directory_Admin {
         }
 
 
-        add_settings_section( 'lddlite_settings_appearance', __return_null(), '__return_false', 'lddlite_settings_appearance' );
+        add_settings_section( 'lddlite_settings_appearance', __return_null(), '_s_settings_appearance', 'lddlite_settings_appearance' );
 
-        add_settings_field( 'lddlite_settings[appearance_primary]', '<label for="submit_locale">' . __( 'Primary Color', 'lddlite' ) . '</label>', '_f_appearance_primary', 'lddlite_settings_appearance', 'lddlite_settings_appearance' );
+        add_settings_field( 'lddlite_settings[appearance_display_new]',      __( 'Display New Listings', 'lddlite' ),                                                                  '_f_appearance_display_new',      'lddlite_settings_appearance', 'lddlite_settings_appearance' );
+        add_settings_field( 'lddlite_settings[appearance_panel_background]', '<label for="appearance_panel_background">' . __( 'Homepage Header Background', 'lddlite' ) . '</label>', '_f_appearance_panel_background', 'lddlite_settings_appearance', 'lddlite_settings_appearance' );
+        add_settings_field( 'lddlite_settings[appearance_panel_foreground]', '<label for="appearance_panel_foreground">' . __( 'Homepage Header Foreground', 'lddlite' ) . '</label>', '_f_appearance_panel_foreground', 'lddlite_settings_appearance', 'lddlite_settings_appearance' );
 
-        function _f_appearance_primary() {
-            echo '<input id="appearance_primary" type="text" name="lddlite_settings[appearance_primary]" value="' . ldl_get_setting( 'appearance_primary' ) . '" class="my-color-field" data-default-color="#3bafda">';
-            echo '<p class="description">' . __( 'The primary color used in the plugins header (displaying your directory name) and other locations such as buttons, badges, and more.', 'lddlite' ) . '</p>';
+        function _s_settings_appearance() {
+            echo '<p>' . __( "This section is brand new and currently not very all encompassing. Don't worry, there's a lot more yet to come!", 'lddlite' ) . '</p>';
+        }
+
+        function _f_appearance_display_new() {
+            echo '<label for="lite-appearance_display_new"><input type="checkbox" name="lddlite_settings[appearance_display_new]" value="1" ' . checked( ldl_get_setting( 'appearance_display_new' ), 1, 0 ) . '> <span>' . __( 'If checked, front page will display thumbnails of your most recently added listings', 'lddlite' ) . '</span></label>';
+        }
+
+        function _f_appearance_panel_background() {
+            echo '<input id="appearance_panel_background" type="text" name="lddlite_settings[appearance_panel_background]" value="' . ldl_get_setting( 'appearance_panel_background' ) . '" class="my-color-field" data-default-color="#3bafda">';
+            echo '<p class="description">' . __( 'Controls the background color of the header used to display your directories name on the front page of the plugin.', 'lddlite' ) . '</p>';
+        }
+
+        function _f_appearance_panel_foreground() {
+            echo '<input id="appearance_panel_foreground" type="text" name="lddlite_settings[appearance_panel_foreground]" value="' . ldl_get_setting( 'appearance_panel_foreground' ) . '" class="my-color-field" data-default-color="#fff">';
+            echo '<p class="description">' . __( 'Same as the above, except for the foreground.', 'lddlite' ) . '</p>';
         }
 
 
@@ -232,7 +247,9 @@ class LDD_Directory_Admin {
         if ( empty( $_POST['_wp_http_referer'] ) )
             return $input;
 
-        $options = get_option( 'lddlite_settings' );
+        $settings = wp_parse_args(
+            get_option( 'lddlite_settings' ),
+            ldl_get_default_settings() );
 
         parse_str( $_POST['_wp_http_referer'], $referrer );
         $tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'general';
@@ -240,7 +257,7 @@ class LDD_Directory_Admin {
         $input = $input ? $input : array();
         $input = apply_filters( 'lddlite_settings_' . $tab . '_sanitize', $input );
 
-        $output = array_merge( $options, $input );
+        $output = array_merge( $settings, $input );
 
         add_settings_error( 'lddlite_settings', '', __( 'Settings updated.', 'lddlite' ), 'updated' );
 
@@ -327,9 +344,9 @@ LDD_Directory_Admin::get_in();
 function lddlite_settings_general_sanitize( $input ) {
 
     $input['directory_label']   = wp_filter_nohtml_kses( $input['directory_label'] );
-    $input['disable_bootstrap'] = ( '1' == $input['disable_bootstrap'] ) ? 1 : 0;
-    $input['public_or_private'] = ( '0' == $input['public_or_private'] ) ? 0 : 1;
-    $input['google_maps']       = ( '0' == $input['google_maps'] ) ? 0 : 1;
+    $input['disable_bootstrap'] = '1' == $input['disable_bootstrap'] ? 1 : 0;
+    $input['public_or_private'] = '0' == $input['public_or_private'] ? 0 : 1;
+    $input['google_maps']       = '0' == $input['google_maps'] ? 0 : 1;
 
     return $input;
 }
@@ -342,8 +359,8 @@ function lddlite_settings_email_sanitize( $input ) {
         add_settings_error( 'lddlite_settings', '', __( 'Please enter a valid email address.', 'lddlite' ), 'error' );
     }
 
-    $input['email_toadmin_subject'] = wp_filter_nohtml_kses( $input['email_toadmin_subject'] );
-    $input['email_onsubmit_subject'] = wp_filter_nohtml_kses( $input['email_onsubmit_subject'] );
+    $input['email_toadmin_subject']   = wp_filter_nohtml_kses( $input['email_toadmin_subject'] );
+    $input['email_onsubmit_subject']  = wp_filter_nohtml_kses( $input['email_onsubmit_subject'] );
     $input['email_onapprove_subject'] = wp_filter_nohtml_kses( $input['email_onapprove_subject'] );
 
     return $input;
@@ -353,15 +370,28 @@ function lddlite_settings_email_sanitize( $input ) {
 function lddlite_settings_submit_sanitize( $input ) {
 
 
-    $input['submit_use_tos'] = ( '1' == $input['submit_use_tos'] ) ? 1 : 0;
-    $input['submit_tos']   = wp_filter_nohtml_kses( $input['submit_tos'] );
-	$input['submit_use_locale'] = ( '1' == $input['submit_use_locale'] ) ? 1 : 0;
-	$input['submit_require_address'] = ( '1' == $input['submit_require_address'] ) ? 1 : 0;
+    $input['submit_use_tos']         = '1' == $input['submit_use_tos'] ? 1 : 0;
+    $input['submit_tos']             = wp_filter_nohtml_kses( $input['submit_tos'] );
+	$input['submit_use_locale']      = '1' == $input['submit_use_locale'] ? 1 : 0;
+	$input['submit_require_address'] = '1' == $input['submit_require_address'] ? 1 : 0;
 
     return $input;
 }
 
 
+function lddlite_settings_appearance_sanitize( $input ) {
+
+    $input['appearance_display_new'] = '1' == $input['appearance_display_new'] ? 1 : 0;
+
+    if ( !preg_match( '~#([a-fA-F0-9]){3}(([a-fA-F0-9]){3})?\b~', $input['appearance_panel_background'] ) )
+        $input['appearance_primary'] = '#c0ffee';
+    if ( !preg_match( '~#([a-fA-F0-9]){3}(([a-fA-F0-9]){3})?\b~', $input['appearance_panel_foreground'] ) )
+        $input['appearance_primary'] = '#fff';
+
+    return $input;
+}
+
 add_filter( 'lddlite_settings_general_sanitize', 'lddlite_settings_general_sanitize' );
 add_filter( 'lddlite_settings_email_sanitize', 'lddlite_settings_email_sanitize' );
 add_filter( 'lddlite_settings_submit_sanitize', 'lddlite_settings_submit_sanitize' );
+add_filter( 'lddlite_settings_appearance_sanitize', 'lddlite_settings_appearance_sanitize' );

@@ -13,7 +13,7 @@ function ldl_submit__create_user( $username, $email ) {
 }
 
 
-function ldl_submit__create_listing( $name, $description, $cat_id, $user_id ) {
+function ldl_submit__create_listing( $name, $description, $cat_ID, $user_id ) {
 
     $listing = array(
         'post_content'  => $description,
@@ -22,10 +22,16 @@ function ldl_submit__create_listing( $name, $description, $cat_id, $user_id ) {
         'post_type'     => LDDLITE_POST_TYPE,
         'post_author'   => $user_id,
         'post_date'     => date( 'Y-m-d H:i:s' ),
-        'tax_input'     => array( LDDLITE_TAX_CAT => $cat_id ),
     );
 
-    return wp_insert_post( $listing );
+    $post_ID = wp_insert_post( $listing );
+
+    if ( $post_ID ) {
+        wp_set_object_terms( $post_ID, (int) $cat_ID, LDDLITE_TAX_CAT );
+        return $post_ID;
+    }
+
+    return false;
 }
 
 

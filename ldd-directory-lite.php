@@ -96,6 +96,7 @@ class LDD_Directory_Lite {
 	    require_once( LDDLITE_PATH . '/includes/class.tracking.php' );
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/setup.php' );
+        require_once( LDDLITE_PATH . '/includes/ajax.php' );
 
         if ( is_admin() ) {
             require_once( LDDLITE_PATH . '/includes/admin/metaboxes.php' );
@@ -146,7 +147,6 @@ class LDD_Directory_Lite {
      */
     public function action_filters() {
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-
     }
 
 

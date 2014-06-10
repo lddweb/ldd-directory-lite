@@ -5,7 +5,21 @@
  */
 
 
-function ldl_action__listing( $listing ) {
+function ldl_action__listing( $term ) {
+
+    $listing = get_posts( array(
+        'name'              => $term,
+        'post_type'         => LDDLITE_POST_TYPE,
+        'post_status'       => 'publish',
+        'posts_per_page'    => 1,
+        'no_found_rows'     => true,
+    ) );
+
+    if ( !empty( $listing ) ) {
+        $listing = $listing[0];
+        ldl_set_listing_id( $listing->ID );
+    }
+
 
     $terms = wp_get_post_terms($listing->ID, LDDLITE_TAX_CAT);
     if ( isset( $terms[0] ) ) {

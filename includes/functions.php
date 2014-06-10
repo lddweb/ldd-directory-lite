@@ -69,27 +69,29 @@ EM;
     }
 
 	$defaults = apply_filters( 'lddlite_default_settings_array', array(
-		'directory_label'           => get_bloginfo( 'name' ),
-		'directory_description'     => '',
-		'directory_page'            => '',
-		'disable_bootstrap'         => 0,
-		'public_or_private'         => 1,
-		'google_maps'               => 1,
-		'email_admin'               => get_bloginfo( 'admin_email' ),
-		'email_toadmin_subject'     => 'A new listing has been submitted for review!',
-		'email_toadmin_body'        => $email['to_admin'],
-		'email_onsubmit_subject'    => 'Your listing on ' . $site_title . ' is pending review!',
-		'email_onsubmit_body'       => $email['on_submit'],
-		'email_onapprove_subject'   => 'Your listing on ' . $site_title . ' was approved!',
-		'email_onapprove_body'      => $email['on_approve'],
-		'submit_use_tos'            => 0,
-		'submit_tos'                => '',
-		'submit_use_locale'         => 0,
-		'submit_locale'             => 'US',
-		'submit_require_address'    => 1,
-		'allow_tracking_popup_done' => 0,
-		'allow_tracking'            => 0,
-        'appearance_primary'         => '#3bafda',
+		'directory_label'             => get_bloginfo( 'name' ),
+		'directory_description'       => '',
+		'directory_page'              => '',
+		'disable_bootstrap'           => 0,
+		'public_or_private'           => 1,
+		'google_maps'                 => 1,
+		'email_admin'                 => get_bloginfo( 'admin_email' ),
+		'email_toadmin_subject'       => 'A new listing has been submitted for review!',
+		'email_toadmin_body'          => $email['to_admin'],
+		'email_onsubmit_subject'      => 'Your listing on ' . $site_title . ' is pending review!',
+		'email_onsubmit_body'         => $email['on_submit'],
+		'email_onapprove_subject'     => 'Your listing on ' . $site_title . ' was approved!',
+		'email_onapprove_body'        => $email['on_approve'],
+		'submit_use_tos'              => 0,
+		'submit_tos'                  => '',
+		'submit_use_locale'           => 0,
+		'submit_locale'               => 'US',
+		'submit_require_address'      => 1,
+		'allow_tracking_popup_done'   => 0,
+		'allow_tracking'              => 0,
+        'appearance_display_new'      => 1,
+        'appearance_panel_background' => '#3bafda',
+        'appearance_panel_foreground' => '#fff',
 	) );
 
 	return $defaults;
@@ -269,7 +271,9 @@ function  ldl_get_header( $show_label = 0, $nosearch = 0 ) {
     $tpl->assign( 'directory_label', ldl_get_setting( 'directory_label' ) );
     $tpl->assign( 'directory_description', ldl_get_setting( 'directory_description' ) );
 
-    $tpl->assign( 'public', ldl_is_public() );
+    $tpl->assign( 'public', is_user_logged_in() ? 0 : ldl_is_public() ); // Temporary stopgap for the beta version
+    // Logged in users don't have a dashboard yet, so it's easier to just disallow them to submit multiple listings
+    // Until we can remedy the issues happening there.
     $tpl->assign( 'submit_link', add_query_arg( array( 'show' => 'submit', 't' => 'listing' ) ) );
 
     $tpl->assign( 'form_action', '' );
