@@ -10,8 +10,193 @@
  * @copyright 2014 LDD Consulting, Inc
  *
  */
-
 if ( ! defined( 'WPINC' ) ) die;
+
+global $wpdb;
+
+define( 'UPFROM_MAIN_TABLE', $wpdb->prefix . 'lddbusinessdirectory' );
+define( 'UPFROM_DOC_TABLE', $wpdb->prefix . 'lddbusinessdirectory_docs' );
+define( 'UPFROM_CAT_TABLE', $wpdb->prefix . 'lddbusinessdirectory_cats' );
+
+
+class LDL_Upgrade {
+
+    public $posts;
+    public $authors;
+    public $terms;
+
+    public $term_map;
+    public $author_map;
+    public $post_map;
+
+
+    public function __construct() {
+
+        set_time_limit(0);
+
+        $this->start();
+
+        $this->upgrade_terms();
+        $this->upgrade_authors();
+        $this->upgrade_posts();
+        $this->upgrade_meta();
+
+        $this->end();
+
+    }
+
+    public function start() {
+        global $wpdb;
+
+//        wp_defer_term_counting( true );
+//        wp_defer_comment_counting( true );
+
+        $this->_get_terms();
+        $this->_get_posts();
+
+        $wpdb->flush();
+
+        do_action( 'ldl_upgrade_start' );
+    }
+    public function end() {
+        wp_cache_flush();
+
+//        wp_defer_term_counting( false );
+//        wp_defer_comment_counting( false );
+
+        do_action( 'ldl_upgrade_end' );
+    }
+
+
+    public function upgrade_terms() {
+
+        $this->terms = apply_filters( 'ldl_upgrade_terms', $this->terms );
+        $this->term_map = array();
+
+        if ( empty( $this->terms ) )
+            return;
+
+        foreach ( $this->terms as $map_id => $term ) {
+
+            $term_id = term_exists( $term, LDDLITE_TAX_CAT );
+            if ( !$term_id ) {
+                $term_id = wp_insert_term( $term, LDDLITE_TAX_CAT );
+                if ( is_wp_error( $term_id ) )
+                    continue;
+            }
+
+            $this->term_map[ $map_id ] = is_array( $term_id ) ? $term_id['term_id'] : $term_id;
+
+        }
+md( $this->term_map );
+        unset( $this->terms );
+
+    }
+
+
+    public function upgrade_authors() {
+
+        $this->authors = apply_filters( 'ldl_upgrade_authors', $this->authors );
+
+        if ( empty( $this->authors ) )
+            return;
+
+        foreach ( $this->authors as $hash => $row ) {
+
+            $has_at = strpos( $row['login'], '@' );
+            if ( false === $has_at ) {
+                $author_login = sanitize_user( $row['login'], 1 );
+            } else if ( false !== $has_at && 0 === strpos( strtolower( $row['login'] ), 'admin' ) ) {
+                $author_login = sanitize_user( substr( $row['login'], ( strpos( $row['login'], '@' ) + 1 ) ), 1 );
+            } else {
+                $author_login = sanitize_user( substr( $row['login'], 0, strpos( $row['login'], '@' ) ) , 1 );
+            }
+
+            $author_email = ( empty( $row['email'] ) && false !== $has_at ) ? $row['login'] : $row['email'];
+
+            $author_id = username_exists( $author_login );
+            if ( !$author_id ) {
+                $author_id = email_exists( $author_email );
+                if ( !$author_id ) {
+                    // Passwords in the original plugin were stored in plaintext, so we're generating new passwords
+                    // and forcing users to reset their accounts.
+                    $author_id = wp_create_user( $author_login, wp_generate_password(), $author_email );
+                }
+            }
+
+            $this->author_map[ $hash ] = ( !$author_id  || 1 == $author_id ) ? (int) get_current_user_id() : $author_id;
+
+        }
+md( $this->author_map );
+        unset( $this->authors );
+
+    }
+
+    public function upgrade_posts() {}
+    public function upgrade_meta() {}
+
+
+    private function _get_terms() {
+        global $wpdb;
+
+        $this->terms = array();
+
+        $query = sprintf("
+                SELECT id, name
+                FROM `%s`
+            ", UPFROM_CAT_TABLE );
+        $results = $wpdb->get_results( $query );
+
+        if ( !empty( $results ) ) {
+            foreach ( $results as $cat ) {
+                $this->terms[ $cat->id ] = $cat->name;
+            }
+        }
+
+    }
+
+    
+    private function _get_posts() {
+        global $wpdb;
+
+        $this->posts = array();
+
+        $query = sprintf("
+                SELECT createDate, name, description, categories, address_street, address_city, address_state, address_zip,
+                       address_country, phone, fax, email, contact, url, facebook, twitter, linkedin, promoDescription,
+                       logo, login, password, approved, other_info
+                FROM `%s`
+            ", UPFROM_MAIN_TABLE );
+        $results = $wpdb->get_results( $query );
+
+        foreach ( $results as $row ) {
+            $hash = md5( $row->createDate . $row->name );
+            $this->authors[ $hash ] = array(
+                'login'    => $row->login,
+                'email'    => $row->email,
+            );
+        }
+
+        if ( !empty( $results ) )
+            $this->posts = $results;
+
+    }
+
+}
+
+
+function ldl_upgrade_init() {
+    new LDL_Upgrade();
+}
+
+
+
+
+
+
+
+
+
 
 function _ldup_get_tables() {
     global $wpdb;
