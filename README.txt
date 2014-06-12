@@ -3,7 +3,7 @@ Contributors: lddwebdesign, delayedinsanity
 Tags: directory, listings, listing directory, business, business directory, custom directory, catalog, index, yellow pages, white pages, 411, company listing
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 0.5.3-beta
+Stable tag: 0.5.4-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -54,17 +54,14 @@ We have a variety of premium extensions in the works for further extending the c
 *You should always back up your data before making major changes to the way your production web site functions.*
 
 Installation is easiest when done through your WordPress Dashboard:
-Select the **Add New** option under your **Plugins** menu, type in *LDD Directory Lite* and install directly from the repository.
+1. Select **Plugins >> Add New** from your sites WordPress dashboard.
+2. Type **LDD Directory Lite** into the search field and press enter.
+3. Click **Install Now** when you see LDD Directory Lite appear in the search results.
+4. Select **Activate Plugin** after you see *Successfully installed the plugin LDD Directory Lite* appear on your screen.
 
-If you prefer to install manually, follow these steps;
+If you prefer to install manually, [see the guide on Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
-1. Download the latest stable version from [WordPress.org](http://wordpress.org/plugins/ldd-directory-lite/)
-2. Upload the archive contents to your `/wp-content/plugins/` directory
-3. Activate the plugin from the **Plugins** menu on your dashboard
-4. Navigate to the **Directory Lite** menu option, and customize the settings to your needs
-5. Insert the `[directory]` shortcode on to any page you want the directory to appear on (this can even be your home page).
-
-If you have any questions or are unsure about any part of the process, don't hesitate to ask for help in the [WordPress.org Support Forums](http://wordpress.org/support/plugin/ldd-directory-lite)
+If you have any questions or are unsure about any part of the process, don't hesitate to ask for help in our [Support Forum](http://wordpress.org/support/plugin/ldd-directory-lite).
 
 = Upgrading from LDD Business Directory =
 
@@ -81,6 +78,17 @@ As of now the plugin *does not* remove the data from the original Directory plug
 While this does leave some clutter behind, it also ensures a painless upgrade path. Until the plugin has successfully been upgraded on a few hundred more sites, we chose not to remove your old data in case you either wanted to roll back to using the original plugin, or on the chance that something went awry with the beta.
 
 A future version of LDD Directory Lite will scan for this leftover data and ask if you want to remove it.
+
+
+== Frequently Asked Questions ==
+
+= Where can I suggest a new feature or report a bug? =
+
+Please use our [issue tracker](https://github.com/mwaterous/ldd-directory-lite/issues) on the plugins [GitHub repo](https://github.com/mwaterous/ldd-directory-lite).
+
+= How do I add featured listing thumbnails to the home page? =
+
+From the Edit Listing screen on your WordPress dashboard, add "featured" as one of the tags for any listing you want to display on the home page. This feature will pick up to three random listings at a time, so feel free to add as many as you like!
 
 
 == Screenshots ==
@@ -105,6 +113,8 @@ Please try to include as much information as possible, including steps that we c
 **Feature requests can also be posted on the [GitHub Issue Tracker](https://github.com/mwaterous/ldd-directory-lite/issues).**
 
 == Changelog ==
+
+= 0.5.4-beta =
 
 = 0.5.3-beta =
 * Added opt-in anonymous usage tracking

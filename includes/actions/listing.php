@@ -51,24 +51,25 @@ function ldl_action__listing( $term ) {
     if ( !empty( $meta['geocode'] ) ) {
 
         $get_address = 'http://maps.google.com/maps/api/geocode/json?address=' . $meta['geocode'] . '&sensor=false';
-        $geocode = wp_remote_get( $get_address );
+        $data = wp_remote_get( $get_address );
 
-        $output = json_decode( $geocode['body'] );
+        if ( isset( $data['response'] ) && '200' == $data['response']['code'] ) {
 
-        $geocode['lat'] = $output->results[0]->geometry->location->lat;
-        $geocode['lng'] = $output->results[0]->geometry->location->lng;
+            $output = json_decode( $data['body'] );
+
+            $geocode = array(
+                'lat' => $output->results[0]->geometry->location->lat,
+                'lng' => $output->results[0]->geometry->location->lng,
+            );
+
+        }
 
     }
 
-
-
-    $tpl->assign( 'header',     ldl_get_header( 'category' ) );
+    $tpl->assign( 'header',  ldl_get_header( 'category' ) );
 	$tpl->assign( 'loading', ldl_get_loading_gif() );
 
-    $tpl->assign( 'home',       remove_query_arg( array(
-        'show',
-        't',
-    ) ) );
+    $tpl->assign( 'home', remove_query_arg( array( 'show', 't' ) ) );
 
 
     $tpl->assign( 'id',         $post_id );

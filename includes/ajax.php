@@ -271,6 +271,13 @@ function ldl_store_tracking_response() {
 }
 
 
+function ldl_hide_upgrade_notice() {
+    if( wp_verify_nonce( $_POST['nonce'], 'directory-upgrade-nononce' ) ) {
+        if( update_option( 'lddlite_upgraded_from_original', true ) ) die( '1' );
+        else die( '0' );
+    }
+}
+
 add_action( 'wp_ajax_search_directory',        'ldl_ajax__search_directory' );
 add_action( 'wp_ajax_nopriv_search_directory', 'ldl_ajax__search_directory' );
 
@@ -281,3 +288,4 @@ add_action( 'wp_ajax_dropdown_change',        'ldl_ajax__dropdown_change' );
 add_action( 'wp_ajax_nopriv_dropdown_change', 'ldl_ajax__dropdown_change' );
 
 add_action( 'wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response' );
+add_action( 'wp_ajax_hide_directoryup_notice', 'ldl_hide_upgrade_notice' );

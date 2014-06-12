@@ -62,9 +62,9 @@ function ldl_uninstall_data() {
         }
     }
 
-    delete_option( 'lddlite-options' );
     delete_option( 'lddlite_settings' );
     delete_option( 'lddlite_version' );
+    delete_option( 'lddlite_upgraded_from_original' );
 
 }
 

@@ -10,7 +10,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.5.3-beta
+ * Version:           0.5.4-beta
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -25,7 +25,7 @@ if ( ! defined( 'WPINC' ) ) die;
 /**
  * Define constants
  */
-define( 'LDDLITE_VERSION',      '0.5.3-beta' );
+define( 'LDDLITE_VERSION',      '0.5.4-beta' );
 
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
 define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
@@ -40,6 +40,7 @@ define( 'LDDLITE_PFX',          '_lddlite_' );
 /**
  * Flush the rewrites for custom post types
  */
+register_activation_hook( __FILE__, 'ldl_check_for_upgrade' );
 register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
@@ -93,6 +94,16 @@ class LDD_Directory_Lite {
      * @since 0.5.0
      */
     public function include_files() {
+
+        $plugin = 'ldd-business-directory/lddbd_core.php';
+        $dir = dirname( __FILE__ );
+        $plugin_path = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/' . $plugin;
+//        delete_option( 'lddlite_upgraded_from_original' );
+//        md( get_transient( '_lddlite_upgrading' ), 'd' );
+//        md( get_option( 'lddlite_upgraded_from_original' ), 'd' );
+        if ( file_exists( $plugin_path ) && false == get_option( 'lddlite_upgraded_from_original' ) )
+            require_once( LDDLITE_PATH . '/upgrade.php' );
+
 	    require_once( LDDLITE_PATH . '/includes/class.tracking.php' );
         require_once( LDDLITE_PATH . '/includes/post-types.php' );
         require_once( LDDLITE_PATH . '/includes/setup.php' );
@@ -115,25 +126,13 @@ class LDD_Directory_Lite {
      */
     public function populate_options() {
 
-        $settings = wp_parse_args(
+        $this->settings = wp_parse_args(
             get_option( 'lddlite_settings' ),
             ldl_get_default_settings() );
 
-        $version = get_option( 'lddlite_version' );
+        $this->version = get_option( 'lddlite_version' );
 
-//      require_once( LDDLITE_PATH . '/uninstall.php' );
-        if ( !$version ) {
-            $dir = dirname( __FILE__ );
-            $old_plugin = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/ldd-business-directory/lddbd_core.php';
-            if ( file_exists( $old_plugin ) ) {
-                require_once( LDDLITE_PATH . '/upgrade.php' );
-                add_action( 'init', 'ldl_upgrade', 20 ); // This has to fire later, so we know our CPT's are registered
-                add_action( 'admin_init', 'ldl_disable_old' );
-            }
-        }
-
-        $this->settings = $settings;
-        $this->version = $version;
+        //require_once( LDDLITE_PATH . '/uninstall.php' );
 
     }
 
@@ -149,13 +148,13 @@ class LDD_Directory_Lite {
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
     }
 
-
     /**
      * Load the related i18n files into the appropriate domain.
      *
      * @since 0.5.0
      */
     public function load_plugin_textdomain() {
+
 
         $lang_dir = LDDLITE_PATH . '/languages/';
         $lang_dir = apply_filters( 'lddlite_languages_directory', $lang_dir );
@@ -267,5 +266,3 @@ function ldl_get_instance() {
  * Das boot
  */
 ldl_get_instance();
-
-
