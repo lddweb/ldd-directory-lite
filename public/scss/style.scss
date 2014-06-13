@@ -112,7 +112,6 @@ $pure-blue:         #0078e7;
     font-family: sans-serif; // 1
     -ms-text-size-adjust: 100%; // 2
     -webkit-text-size-adjust: 100%; // 2
-    font-size: 62.5%;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
   #search-loading {
@@ -382,4 +381,15 @@ span.social-meta {
   z-index: 99999;
   font-style: normal;
   text-align: left;
+}
+
+/**
+ * FIXES - The following all fix a CSS conflict discovered in theme compatibility. They are placed here into
+ *         their inclusion in the main stylesheet becomes finalized (and it's found that they don't cause
+ *         any additional conflicts!)
+ **********************************************************************************************************************
+ */
+
+#navbar-directory {
+  position: static;
 }

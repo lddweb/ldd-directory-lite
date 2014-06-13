@@ -18,10 +18,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                {if="$public"}<a class="navbar-brand" href="{$submit_link}">Submit Listing</a>{/if}
+                <a class="navbar-brand" href="{$submit_link}">Submit Listing</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div id="navbar-directory" class="collapse navbar-collapse">
 
                 <form class="navbar-form navbar-right" role="search" {if="$nosearch"}style="display: none;"{/if}>
                     <input type="hidden" name="show" value="search">
@@ -40,7 +40,7 @@
         if ( typeof ajaxurl === "undefined" )
             var ajaxurl = "{$ajaxurl}"
 
-        {if="!$nosearch"}
+/*
         jQuery(document).ready(function($) {
             $("input[id=directory-search]").searchbox({
                 url: ajaxurl,
@@ -49,5 +49,5 @@
                 loading_css: '#search-loading'
             })
         })
-        {/if}
+*/
     </script>
