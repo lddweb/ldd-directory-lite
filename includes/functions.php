@@ -75,7 +75,9 @@ EM;
 		'disable_bootstrap'           => 0,
 		'public_or_private'           => 1,
 		'google_maps'                 => 1,
-		'email_admin'                 => get_bloginfo( 'admin_email' ),
+        'email_from_name'             => get_bloginfo( 'name' ),
+        'email_from_address'          => get_bloginfo( 'admin_email' ),
+        'email_notification_address'  => get_bloginfo( 'admin_email' ),
 		'email_toadmin_subject'       => 'A new listing has been submitted for review!',
 		'email_toadmin_body'          => $email['to_admin'],
 		'email_onsubmit_subject'      => 'Your listing on ' . $site_title . ' is pending review!',
@@ -607,7 +609,7 @@ function ldl_mail($to, $subject, $message, $headers = '' ) {
     if (empty($headers)) {
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= 'From: LDD Business Directory <' . get_option('admin_email') . '>' . "\r\n";
+        $headers .= sprintf( 'From: %s <%s>', ldl_get_setting( 'email_from_name' ), ldl_get_setting( 'email_from_address' ) ) . "\r\n";
     }
 
     ob_start();

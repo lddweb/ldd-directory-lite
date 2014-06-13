@@ -10,84 +10,56 @@
  *
  */
 
-//if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) die;
+if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) die;
 
+global $wpdb;
 
-function ldl_uninstall_data() {
-    global $wpdb;
+$query = sprintf( "SELECT id FROM %s WHERE post_type = '%s'", $wpdb->posts, LDDLITE_POST_TYPE );
+$post_ids = $wpdb->get_col( $query );
 
-    $query = sprintf( "SELECT id FROM %s WHERE post_type = '%s'", $wpdb->posts, LDDLITE_POST_TYPE );
-    $post_ids = $wpdb->get_col( $query );
+if ( $post_ids ) {
+    foreach ( $post_ids as $id ) {
+        $attachments = get_posts( array(
+            'post_type'      => 'attachment',
+            'posts_per_page' => -1,
+            'post_status'    => 'any',
+            'post_parent'    => $id,
+            'no_found_rows'  => true,
+        ) );
 
-    if ( !empty( $post_ids ) ) {
-        foreach ( $post_ids as $id ) {
-            $attachments = get_posts( array(
-                'post_type'      => 'attachment',
-                'posts_per_page' => -1,
-                'post_status'    => 'any',
-                'post_parent'    => $id
-            ) );
+        if ( !$attachments )
+            continue;
 
-            if ( empty( $attachments ) )
-                continue;
-
-            foreach ( $attachments as $attachment )
-                wp_delete_attachment( $attachment->ID );
-        }
-    }
-
-    $wpdb->query( sprintf( "DELETE FROM %s WHERE post_id IN ( SELECT id FROM %s WHERE post_type = '%s' ) ", $wpdb->postmeta, $wpdb->posts, LDDLITE_POST_TYPE ) );
-    $wpdb->query( sprintf( "DELETE FROM %s WHERE post_type = '%s'", $wpdb->posts, LDDLITE_POST_TYPE ) );
-
-
-    $categories = get_terms(
-        LDDLITE_TAX_CAT,
-        array( 'hide_empty' => false, 'fields' => 'ids' )
-    );
-
-    if ( $categories ) {
-        foreach ( $categories as $term_id ) {
-            wp_delete_term( $term_id, LDDLITE_TAX_CAT );
-        }
-    }
-
-    $tags = get_terms(
-        LDDLITE_TAX_TAG,
-        array( 'hide_empty' => false, 'fields' => 'ids' )
-    );
-
-    if ( $tags ) {
-        foreach ( $tags as $term_id ) {
-            wp_delete_term( $term_id, LDDLITE_TAX_TAG );
-        }
-    }
-
-    delete_option( 'lddlite_settings' );
-    delete_option( 'lddlite_version' );
-    delete_option( 'lddlite_upgraded_from_original' );
-
-}
-
-
-function ldl_uninstall() {
-    global $wpdb;
-
-    if ( is_multisite() ) {
-
-        $blogs = $wpdb->get_results( "SELECT blog_id FROM {$wpdb->blogs}", ARRAY_A );
-        if ( $blogs ) {
-
-            foreach ( $blogs as $blog ) {
-                switch_to_blog( $blog['blog_id'] );
-                ldl_uninstall_data();
-                restore_current_blog();
-            }
-        }
-
-    } else {
-        ldl_uninstall_data();
+        foreach ( $attachments as $attachment )
+            wp_delete_attachment( $attachment->ID );
     }
 }
 
-add_action( 'init', 'ldl_uninstall', 20 );
+$wpdb->query( sprintf( "DELETE FROM %s WHERE post_id IN ( SELECT id FROM %s WHERE post_type = '%s' ) ", $wpdb->postmeta, $wpdb->posts, LDDLITE_POST_TYPE ) );
+$wpdb->query( sprintf( "DELETE FROM %s WHERE post_type = '%s'", $wpdb->posts, LDDLITE_POST_TYPE ) );
 
+foreach ( array( LDDLITE_TAX_CAT, LDDLITE_TAX_TAG ) as $taxonomy ) {
+
+    $results = $wpdb->get_results( sprintf("
+            SELECT t.*, tt.*
+            FROM $wpdb->terms AS t
+                INNER JOIN $wpdb->term_taxonomy AS tt
+                ON t.term_id = tt.term_id
+            WHERE tt.taxonomy IN ('%s')
+            ORDER BY t.name ASC
+        ", $taxonomy ) );
+
+    if ( !$results )
+        continue;
+
+    foreach ( $results as $term ) {
+        $wpdb->delete( $wpdb->term_taxonomy, array( 'term_taxonomy_id' => $term->term_taxonomy_id ) );
+        $wpdb->delete( $wpdb->terms, array( 'term_id' => $term->term_id ) );
+    }
+
+    $wpdb->delete( $wpdb->term_taxonomy, array( 'taxonomy' => $taxonomy ), array( '%s' ) );
+}
+
+delete_option( 'lddlite_settings' );
+delete_option( 'lddlite_version' );
+delete_option( 'lddlite_upgraded_from_original' );

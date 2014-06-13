@@ -13,15 +13,8 @@
  */
 
 function ldl_enqueue() {
-
-    if ( !ldl_get_setting( 'disable_bootstrap' ) ) {
-        wp_enqueue_style( 'lddlite-bootstrap' );
-        wp_enqueue_script( 'lddlite-bootstrap' );
-    }
-
     wp_enqueue_style( 'lddlite' );
     wp_enqueue_style( 'font-awesome' );
-
 }
 
 

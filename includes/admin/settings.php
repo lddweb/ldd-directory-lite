@@ -52,6 +52,11 @@ class LDD_Directory_Admin {
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
         wp_enqueue_script( 'lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array( 'wp-color-picker' ), false, true );
+
+        wp_enqueue_style( 'lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', array(), LDDLITE_VERSION );
+        wp_enqueue_script( 'bootstrap-tagsinput', LDDLITE_URL . '/public/js/bootstrap-tagsinput.min.js', array( 'lddlite-bootstrap' ), false, true );
+        wp_enqueue_style( 'bootstrap-tagsinput', LDDLITE_URL . '/public/css/bootstrap-tagsinput.css' );
+
     }
 
 
@@ -82,11 +87,13 @@ class LDD_Directory_Admin {
         add_settings_field( 'lddlite_settings[directory_label]',       '<label for="lite-directory_label">' . __( 'Directory Label' , 'lddlite' ) . '</label>',             '_f_directory_label',       'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[directory_description]', '<label for="lite-directory_description">' . __( 'Directory Description' , 'lddlite' ) . '</label>', '_f_directory_description', 'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[directory_page]',        '<label for="lite-directory_page">' . __( 'Directory Page' , 'lddlite' ) . '</label>',               '_f_directory_page',        'lddlite_settings_general', 'lddlite_settings_general' );
-        add_settings_field( 'lddlite_settings[other_separator]',       '<span style="font-size: 18px">' . __( 'Other Settings', 'lddlite' ) . '</span>',                    '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings_other_separator',        '<span style="font-size: 18px">' . __( 'Other Settings', 'lddlite' ) . '</span>',                    '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[allow_tracking]',        __( 'Allow Tracking', 'lddlite' ),                                                                   '_f_allow_tracking',        'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[disable_bootstrap]',     __( 'Disable Bootstrap', 'lddlite' ),                                                                '_f_disable_bootstrap',     'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[public_or_private]',     __( 'Public Directory', 'lddlite' ),                                                                 '_f_public_or_private',     'lddlite_settings_general', 'lddlite_settings_general' );
         add_settings_field( 'lddlite_settings[google_maps]',           __( 'Use Google Maps', 'lddlite' ),                                                                  '_f_google_maps',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'lddlite_settings_debug_separator]',       '<span style="font-size: 18px">' . __( 'Debug Tools', 'lddlite' ) . '</span>',                       '__return_false',           'lddlite_settings_general', 'lddlite_settings_general' );
+        add_settings_field( 'debug_uninstall',                         '<span>Uninstall Data</span>',                                                  '_f_debug_uninstall',       'lddlite_settings_general', 'lddlite_settings_general' );
 
         function _f_directory_label() {
             echo '<input id="lite-directory_label" type="text" size="80" name="lddlite_settings[directory_label]" value="' . ldl_get_setting( 'directory_label', 1 ) . '">';
@@ -129,23 +136,40 @@ class LDD_Directory_Admin {
             echo '<label for="lite-google_maps-yes" title="Enable Google Maps"><input id="lite-google_maps-yes" type="radio" name="lddlite_settings[google_maps]" value="1" ' . checked( ldl_get_setting( 'google_maps' ), 1, 0 ) . '> <span>Yes</span></label><br />';
             echo '<label for="lite-google_maps-no" title="Disable Google Maps"><input id="lite-google_maps-no" type="radio" name="lddlite_settings[google_maps]" value="0" ' . checked( ldl_get_setting( 'google_maps' ), 0, 0 ) . '> <span>No</span></label><br />';
             echo '<p class="description">' . __( 'Display Google Maps on listing pages?', 'lddlite' ) . '</p>';
+        }
 
+        function _f_debug_uninstall() {
+            echo '<label for="lite-debug_uninstall"><input id="lite-debug_uninstall" type="checkbox" name="lddlite_settings[debug_uninstall]" value="1"> <span>Confirm</span></label>';
+            echo '<p class="description warning">Only select this option if you know what you are doing! This will remove ALL of your Directory Lite posts and taxonomies.</p>';
         }
 
 
         add_settings_section( 'lddlite_settings_email', __return_null(), '__return_false', 'lddlite_settings_email' );
 
-        add_settings_field( 'lddlite_settings[email_admin]',             '<label for="email_admin">' . __( 'Directory Email' , 'lddlite' ) . '</label>',                                '_f_email_admin',           'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_toadmin_subject]',   '<label for="email_toadmin_subject">' . __( 'Administrator Notification Email' , 'lddlite' ) . '</label>',     '_f_email_toadmin_subject',   'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_toadmin_body]',      '<label for="email_toadmin_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>',   '_f_email_toadmin_body',      'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onsubmit_subject]',  '<label for="email_onsubmit_subject">' . __( 'Listing Submission' , 'lddlite' ) . '</label>',                  '_f_email_onsubmit_subject',  'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onsubmit_body]',     '<label for="email_onsubmit_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>',  '_f_email_onsubmit_body',     'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onapprove_subject]', '<label for="email_onapprove_subject">' . __( 'Listing Approval' , 'lddlite' ) . '</label>',                   '_f_email_onapprove_subject', 'lddlite_settings_email', 'lddlite_settings_email' );
-        add_settings_field( 'lddlite_settings[email_onapprove_body]',    '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>', '_f_email_onapprove_body',    'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_from_name]',            '<label for="email_from_name">' . __( 'From - Name' , 'lddlite' ) . '</label>',                                '_f_email_from_name',            'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_from_address]',         '<label for="email_from_address">' . __( 'From - Address' , 'lddlite' ) . '</label>',                          '_f_email_from_Address',         'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_notification_address]', '<label for="email_notification_address">' . __( 'Notify' , 'lddlite' ) . '</label>',                          '_f_email_notification_address', 'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings_other_separator',             '<span style="font-size: 18px">' . __( 'Message Contents', 'lddlite' ) . '</span>',                            '__return_false',                'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_toadmin_subject]',      '<label for="email_toadmin_subject">' . __( 'Administrator Notification Email' , 'lddlite' ) . '</label>',     '_f_email_toadmin_subject',      'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_toadmin_body]',         '<label for="email_toadmin_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>',   '_f_email_toadmin_body',         'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onsubmit_subject]',     '<label for="email_onsubmit_subject">' . __( 'Listing Submission' , 'lddlite' ) . '</label>',                  '_f_email_onsubmit_subject',     'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onsubmit_body]',        '<label for="email_onsubmit_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>',  '_f_email_onsubmit_body',        'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onapprove_subject]',    '<label for="email_onapprove_subject">' . __( 'Listing Approval' , 'lddlite' ) . '</label>',                   '_f_email_onapprove_subject',    'lddlite_settings_email', 'lddlite_settings_email' );
+        add_settings_field( 'lddlite_settings[email_onapprove_body]',       '<label for="email_onapprove_body" class="screen-reader-text">' . __( 'Email Body' , 'lddlite' ) . '</label>', '_f_email_onapprove_body',       'lddlite_settings_email', 'lddlite_settings_email' );
 
-        function _f_email_admin() {
-            echo '<input id="email_admin" type="text" size="80" name="lddlite_settings[email_admin]" value="' . ldl_get_setting( 'email_admin', 1 ) . '">';
-            echo '<p class="description" style="margin-bottom: 2em;">' . __( 'This is the email address that will appear in the "from" field of outgoing messages. Directory notifications will be sent to ', 'lddlite' ) . get_bloginfo( 'admin_email' ) . '</p>';
+        function _f_email_from_name() {
+            echo '<input id="email_from_name" type="text" size="80" name="lddlite_settings[email_from_name]" value="' . ldl_get_setting( 'email_from_name', 1 ) . '">';
+            echo '<p class="description">' . __( 'This forms the first part of outgoing messages, ', 'lddlite' ) . sprintf( ' From: <strong>%s</strong> &lt;%s&gt;', ldl_get_setting( 'email_from_name' ), ldl_get_setting( 'email_from_address' ) ) . '</p>';
+        }
+
+        function _f_email_from_address() {
+            echo '<input id="email_from_address" type="text" size="80" name="lddlite_settings[email_from_address]" value="' . ldl_get_setting( 'email_from_address', 1 ) . '">';
+            echo '<p class="description">' . __( 'This forms the second part of outgoing messages, ', 'lddlite' ) . sprintf( ' From: %s &lt;<strong>%s</strong>&gt;', ldl_get_setting( 'email_from_name' ), ldl_get_setting( 'email_from_address' ) ) . '</p>';
+        }
+
+        function _f_email_notification_address() {
+            echo '<input id="email_notification_address" type="text" size="80" data-role="tagsinput" name="lddlite_settings[email_notification_address]" value="' . ldl_get_setting( 'email_notification_address', 1 ) . '">';
+            echo '<p class="description">' . __( 'This is where administrative notifications will get sent. Separate multiple emails with a ; ', 'lddlite' ) . '</p>';
         }
 
         function _f_email_toadmin_subject() {
@@ -327,14 +351,6 @@ class LDD_Directory_Admin {
     }
 
 
-/*    public function enqueue_scripts() {
-        global $post_type;
-
-        if( LDDLITE_POST_TYPE == $post_type )
-            wp_enqueue_script( 'post' );
-
-    }*/
-
 }
 
 // Get... in!
@@ -342,6 +358,11 @@ LDD_Directory_Admin::get_in();
 
 
 function lddlite_settings_general_sanitize( $input ) {
+
+    if ( isset( $input['debug_uninstall'] ) ) {
+        define( 'WP_UNINSTALL_PLUGIN', true );
+        require_once( LDDLITE_PATH . '/uninstall.php' );
+    }
 
     $input['directory_label']   = wp_filter_nohtml_kses( $input['directory_label'] );
     $input['disable_bootstrap'] = '1' == $input['disable_bootstrap'] ? 1 : 0;
@@ -353,11 +374,6 @@ function lddlite_settings_general_sanitize( $input ) {
 
 
 function lddlite_settings_email_sanitize( $input ) {
-
-    if ( !is_email( $input['email_admin'] ) ) {
-        $input['email_admin'] = '';
-        add_settings_error( 'lddlite_settings', '', __( 'Please enter a valid email address.', 'lddlite' ), 'error' );
-    }
 
     $input['email_toadmin_subject']   = wp_filter_nohtml_kses( $input['email_toadmin_subject'] );
     $input['email_onsubmit_subject']  = wp_filter_nohtml_kses( $input['email_onsubmit_subject'] );

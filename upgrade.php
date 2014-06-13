@@ -181,7 +181,7 @@ class LDL_Upgrade {
 
         }
 
-        printf( '<p>' . __( 'Completed import of %d categories.', 'lddlite' ) . '</p>', count( $this->term_map ) );
+        printf( '<p>' . __( 'Added %d listing categories.', 'lddlite' ) . '</p>', count( $this->term_map ) );
         unset( $this->terms );
 
     }
@@ -312,12 +312,14 @@ class LDL_Upgrade {
                 // Only map newly created posts, so existing posts are skipped during $this->upgrade_meta()
                 // This should stay here...
                 $this->post_map[ $hash ] = $post_id;
-                printf( '<p>' . __( 'Added %d new listings.', 'lddlite' ) . '</p>', count( $this->post_map ) );
+                printf( __( 'Added listing', 'lddlite' ) . ': <em>%s</em><br>', esc_html( $new['post_title'] ) );
 
             }
             // ...and not be moved here.
 
         }
+
+        printf( '<p>' . __( 'Added a total of %d new listings.', 'lddlite' ) . '</p>', count( $this->post_map ) );
 
     }
 
@@ -603,6 +605,11 @@ class LDL_Upgrade_From_Notice {
     }
 
     public function display_notice() {
+        $screen = get_current_screen();
+
+        if ( LDDLITE_POST_TYPE != $screen->post_type )
+            return;
+
         $html = '<div id="directory-upgrade-notification" class="updated">';
         $html .= '<p style="font-size:120%;font-weight:700;">' . __( 'Existing data has been detected!', 'lddlite' ) . '</p>';
         $html .= '<p style="font-weight:700;">' . __( 'It looks like you have data from the LDD Business Directory plugin! Would you like to import this?', 'lddlite' );

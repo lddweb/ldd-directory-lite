@@ -3,7 +3,7 @@ Contributors: lddwebdesign, delayedinsanity
 Tags: directory, listings, listing directory, business, business directory, custom directory, catalog, index, yellow pages, white pages, 411, company listing
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 0.5.4-beta
+Stable tag: 0.5.5-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -53,6 +53,8 @@ We have a variety of premium extensions in the works for further extending the c
 
 *You should always back up your data before making major changes to the way your production web site functions.*
 
+This plugin
+
 Installation is easiest when done through your WordPress Dashboard:
 1. Select **Plugins >> Add New** from your sites WordPress dashboard.
 2. Type **LDD Directory Lite** into the search field and press enter.
@@ -67,17 +69,14 @@ If you have any questions or are unsure about any part of the process, don't hes
 
 This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/). As such, you can upgrade to LDD Directory Lite from LDD Business Directory *without* losing any of your content.
 
-**You do not need to deactivate or uninstall the LDD Business Directory plugin before activating LDD Directory Lite.**
+*You do not need to deactivate or uninstall the LDD Business Directory plugin before activating LDD Directory Lite.*
 
+1. Install and activate the plugin using the above instructions.
+2. Once installed, if data is detected from the original plugin it will automatically notify you with a rather large message at the top of your Directory Lite dashboard screens.
+3. Press the "Import Data" button, and you will be taken to the upgrade page.
+4. All done!
 
-1. Install and activate the plugin using the instructions [here](http://wordpress.org/plugins/ldd-directory-lite/installation/).
-2. The plugin will collect all your existing content and import it automatically.
-
-As of now the plugin *does not* remove the data from the original Directory plugin. It also does not store any of its own data in the same locations, so the two datasets are completely separate.
-
-While this does leave some clutter behind, it also ensures a painless upgrade path. Until the plugin has successfully been upgraded on a few hundred more sites, we chose not to remove your old data in case you either wanted to roll back to using the original plugin, or on the chance that something went awry with the beta.
-
-A future version of LDD Directory Lite will scan for this leftover data and ask if you want to remove it.
+**LDD Directory Lite only imports this data, it does nothing to alter or remove it. If you decide to revert to the original plugin because of errors encountered while using this beta release, you will have all you original content waiting for you.**
 
 
 == Frequently Asked Questions ==
@@ -114,7 +113,12 @@ Please try to include as much information as possible, including steps that we c
 
 == Changelog ==
 
+= 0.5.5-beta =
+* Enqueued Bootstrap core as early as possible so that theme styles will cascade after
+* Fixed outgoing emails hardcoded From: address
+
 = 0.5.4-beta =
+* Major update to the upgrade functionality for people migrating from [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/)
 
 = 0.5.3-beta =
 * Added opt-in anonymous usage tracking

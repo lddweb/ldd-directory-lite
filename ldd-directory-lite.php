@@ -10,7 +10,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.5.4-beta
+ * Version:           0.5.5-beta
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -25,7 +25,7 @@ if ( ! defined( 'WPINC' ) ) die;
 /**
  * Define constants
  */
-define( 'LDDLITE_VERSION',      '0.5.4-beta' );
+define( 'LDDLITE_VERSION',      '0.5.5-beta' );
 
 define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
 define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
@@ -98,9 +98,6 @@ class LDD_Directory_Lite {
         $plugin = 'ldd-business-directory/lddbd_core.php';
         $dir = dirname( __FILE__ );
         $plugin_path = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/' . $plugin;
-//        delete_option( 'lddlite_upgraded_from_original' );
-//        md( get_transient( '_lddlite_upgrading' ), 'd' );
-//        md( get_option( 'lddlite_upgraded_from_original' ), 'd' );
         if ( file_exists( $plugin_path ) && false == get_option( 'lddlite_upgraded_from_original' ) )
             require_once( LDDLITE_PATH . '/upgrade.php' );
 
@@ -131,8 +128,6 @@ class LDD_Directory_Lite {
             ldl_get_default_settings() );
 
         $this->version = get_option( 'lddlite_version' );
-
-        //require_once( LDDLITE_PATH . '/uninstall.php' );
 
     }
 

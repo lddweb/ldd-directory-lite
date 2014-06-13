@@ -126,4 +126,8 @@ I tend to spend a lot of time coding; not only is it my day job, but it's also o
 **Where:** [WP Github Flavored Markdown Comments](https://github.com/evansolomon/wp-github-flavored-markdown-comments/blob/master/github-flavored-markdown-comments.php)<br>
 **Why:** Because markdown! Markdown is slowly being integrated in to the front end of the plugin, which will allow users to have some measure of control over the way their listings appear (should the site administrator choose to enable it).
 
+**Who:** [Tim Schlechter](https://github.com/TimSchlechter)<br>
+**Where:** [Bootstrap Tags Input](https://timschlechter.github.io/bootstrap-tagsinput/examples/)<br>
+**Why:** This was added initially on the dashboard to group multiple notification email addresses, but I can see it easily having a future on the front end of the plugin as well.
+
 If I forgot anyone, it wasn't intentional and will be added to future updates of this file.

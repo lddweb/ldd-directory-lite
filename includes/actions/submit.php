@@ -34,7 +34,7 @@ function ldl_submit__email_admin( array $data, $post_id ) {
     $message = str_replace( '{title}', $data['title'], $message );
     $message = str_replace( '{description}', $data['description'], $message );
 
-    ldl_mail( ldl_get_setting( 'email_admin' ), $subject, $message );
+    ldl_mail( ldl_get_setting( 'email_notifications' ), $subject, $message );
 }
 
 
@@ -45,7 +45,7 @@ function ldl_submit__email_owner( array $data ) {
 
     $message = str_replace( '{site_title}', get_bloginfo( 'name' ), $message );
     $message = str_replace( '{directory_title}', ldl_get_setting( 'directory_label' ), $message );
-    $message = str_replace( '{directory_email}', ldl_get_setting( 'email_admin' ), $message );
+    $message = str_replace( '{directory_email}', ldl_get_setting( 'email_from_address' ), $message );
     $message = str_replace( '{title}', $data['title'], $message );
     $message = str_replace( '{description}', $data['description'], $message );
 
