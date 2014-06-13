@@ -324,6 +324,12 @@ class LDL_Upgrade {
     }
 
 
+    /**
+     * Using $this->post_map the next stage is to add all the post meta to each listing. Additionally handles
+     * renaming the logo file and adding it as the post thumbnail.
+     *
+     * @todo There's only one filesystem command, but we should still use WP_Filesystem
+     */
     public function upgrade_meta() {
 
         echo '<p>' . __( 'Adding listing meta information...', 'lddlite' );
