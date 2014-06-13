@@ -116,6 +116,7 @@ Please try to include as much information as possible, including steps that we c
 = 0.5.5-beta =
 * Enqueued Bootstrap core as early as possible so that theme styles will cascade after
 * Fixed outgoing emails hardcoded From: address
+* Fixed an out of memory error being caused by `ldl_get_page_haz_shortcode()`, shortcode detection is now attempted during `save_post`
 
 = 0.5.4-beta =
 * Major update to the upgrade functionality for people migrating from [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/)

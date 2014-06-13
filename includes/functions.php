@@ -219,48 +219,45 @@ function ldl_use_google_maps() {
 }
 
 
-function ldl_get_page_haz_shortcode( $force = false) {
-
-    if ( ldl_get_setting( 'directory_page' ) )
-        return ldl_get_setting( 'directory_page' );
-
-    $shortcode_id = get_transient( 'ldd_shortcode_id' );
-
-    if ( false !== $shortcode_id )
-        return $shortcode_id;
-
-    $posts = get_posts( array(
-        'posts_per_page'    => -1,
-        'post_type'         => 'page',
-    ) );
-
+/**
+ * This scans post content for the existence of our shortcode. If discovered, it updates the `directory_page`
+ * setting so that any filters or actions returning a link to the directories home page has a post_id to work with.
+ *
+ * @param int $post_ID Post ID.
+ * @param WP_Post $post Post object.
+ */
+function ldl_haz_shortcode( $post_id, $post ) {
     global $shortcode_tags;
+
+    // Run as little as possible
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+        return;
+
+    if ( wp_is_post_revision( $post_id ) )
+        return;
+
+    if ( empty( $post->post_content ) )
+        return;
 
     // Store this, we don't want to permanently change it
     $old_shortcode_tags = $shortcode_tags;
 
-    // Remove everything but our shortcodes
+    // Remove everything but our shortcode
     $shortcode_tags = array_intersect_key( $shortcode_tags, array(
         'directory' => '',
+        'directory_lite' => '',
         'business_directory' => '',
     ) );
 
     $pattern = get_shortcode_regex();
-    foreach ( $posts as $post ) {
-        if ( preg_match( "/$pattern/s", $post->post_content ) ) {
-            $shortcode_id = $post->ID;
-            break;
-        }
-    }
+    if ( preg_match( "/$pattern/s", $post->post_content ) )
+        ldl_update_setting( 'directory_page', $post_id );
 
     // Reset the global array
     $shortcode_tags = $old_shortcode_tags;
 
-    if ( false !== $shortcode_id )
-        set_transient( 'ldd_shortcode_id', $shortcode_id, 3600 );
-
-    return $shortcode_id;
 }
+add_action( 'save_post', 'ldl_haz_shortcode', 10, 2 );
 
 
 function  ldl_get_header( $show_label = 0, $nosearch = 0 ) {

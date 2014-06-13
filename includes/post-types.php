@@ -32,16 +32,29 @@ function ldl_filter__term_link( $termlink ) {
 }
 
 
+/**
+ * Generates a permalink for the listing based on the post_id of where the shortcode is located.
+ *
+ * @param string $post_link The post's permalink.
+ * @param WP_Post $post The post object.
+ * @return string Original permalink if the wrong post type, blank if directory_page isn't set, and the link if it is
+ */
 function ldl_filter__post_type_link( $post_link, $post ) {
 
     if ( LDDLITE_POST_TYPE != get_post_type( $post->ID ) )
         return $post_link;
 
-    $shortcode_id = ldl_get_page_haz_shortcode();
+    $post_id = ldl_get_setting( 'directory_page' );
 
-    $permalink = get_permalink( $shortcode_id );
+    if ( !$post_id )
+        return '';
 
-    return ( $permalink . '?show=listing&t=' . $post->post_name );
+    $permalink = get_permalink( $post_id );
+
+    return add_query_arg( array(
+        'show' => 'listing',
+        't'    => $post->post_name,
+    ), $permalink );
 }
 
 
@@ -94,14 +107,14 @@ function ldl_action__send_approved_email( $post ) {
     $user_email = $user->data->user_email;
 
     $post_slug = $post->post_name;
-    $permalink = get_permalink( ldl_get_page_haz_shortcode() );
+    $permalink = add_query_arg( array( 'show' => 'listing', 't' => $post_slug ), ldl_get_setting( 'directory_page' ) );
 
     $subject = ldl_get_setting( 'email_onapprove_subject' );
     $message = ldl_get_setting( 'email_onapprove_body' );
 
     $message = str_replace( '{site_title}', get_bloginfo( 'name' ), $message );
     $message = str_replace( '{directory_title}', ldl_get_setting( 'directory_label' ), $message );
-    $message = str_replace( '{link}', add_query_arg( array( 'show' => 'listing', 't' => $post_slug ), $permalink ), $message );
+    $message = str_replace( '{link}', $permalink, $message );
 
     ldl_mail( $user_email, $subject, $message );
     update_post_meta( $post->ID, '_approved', 1 );

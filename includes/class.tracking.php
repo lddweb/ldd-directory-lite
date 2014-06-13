@@ -64,12 +64,8 @@ class LDL_Tracking {
 	 */
 	public function tracking() {
 
-		$data = get_transient( 'lite_tracking_cache' );
-
-		// bail if transient is set and valid
-		if( $data !== false ) {
+		if( get_transient( 'lite_tracking_cache' ) )
 			return;
-		}
 
 		// Start of Metrics
 		global $blog_id, $wpdb;

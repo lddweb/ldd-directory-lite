@@ -40,7 +40,6 @@ define( 'LDDLITE_PFX',          '_lddlite_' );
 /**
  * Flush the rewrites for custom post types
  */
-register_activation_hook( __FILE__, 'ldl_check_for_upgrade' );
 register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
