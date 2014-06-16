@@ -129,7 +129,7 @@ function ldl_custom_content( $content ) {
 
         ldl_enqueue();
 
-        require_once( LDDLITE_PATH . '/includes/actions/listing.php' );
+        require_once( LDDLITE_PATH . 'includes/actions/listing.php' );
 
         return ldl_action__listing( $post );
     }
@@ -158,7 +158,6 @@ function ldl_swap_post_page( $template ) {
 //add_filter( 'template_include', 'ldl_swap_post_page' );
 
 
-
 add_filter( 'term_link', 'ldl_filter__term_link' );
 add_filter( 'post_type_link', 'ldl_filter__post_type_link', 10, 2 );
 add_filter( 'enter_title_here', 'ldl_filter__enter_title_here' );
@@ -171,3 +170,20 @@ add_action( '_admin_menu', 'ldl_action__submenu_title' );
 add_action( 'pending_to_publish', 'ldl_action__send_approved_email' );
 
 
+
+function ldl_relabel( $translations, $text, $domain ) {
+
+	if ( LDDLITE_POST_TYPE != get_post_type() )
+		return $translations;
+
+	$hot_swap = array(
+		'Excerpt' => 'Promotion',
+		'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '',
+	);
+
+	if ( array_key_exists( $text, $hot_swap ) )
+		$translations = $hot_swap[ $text ];
+
+	return $translations;
+}
+add_filter( 'gettext', 'ldl_relabel', 10, 3 );

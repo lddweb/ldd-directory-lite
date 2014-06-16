@@ -55,3 +55,18 @@ ul#directory-links li.right {
 .wp-editor-wrap {
     margin-bottom: 2em;
 }
+
+.map_wrapper {
+    width: 100%;
+    height: 340px;
+    border-radius: 8px;
+}
+.cmb-type-geo_location th {
+     display: none;
+ }
+.cmb-type-geo_location td {
+    text-align: center;
+}
+.cmb-type-geo_location #_lddlite_geo {
+    margin-bottom: .5em;
+}

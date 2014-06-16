@@ -51,11 +51,11 @@ class LDD_Directory_Admin {
 
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
-        wp_enqueue_script( 'lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array( 'wp-color-picker' ), false, true );
+        wp_enqueue_script( 'lddlite-admin', LDDLITE_URL . 'public/js/admin.js', array( 'wp-color-picker' ), false, true );
 
-        wp_enqueue_style( 'lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', array(), LDDLITE_VERSION );
-        wp_enqueue_script( 'bootstrap-tagsinput', LDDLITE_URL . '/public/js/bootstrap-tagsinput.min.js', array( 'lddlite-bootstrap' ), false, true );
-        wp_enqueue_style( 'bootstrap-tagsinput', LDDLITE_URL . '/public/css/bootstrap-tagsinput.css' );
+        wp_enqueue_style( 'lddlite-bootstrap', LDDLITE_URL . 'public/css/bootstrap.css', array(), LDDLITE_VERSION );
+        wp_enqueue_script( 'bootstrap-tagsinput', LDDLITE_URL . 'public/js/bootstrap-tagsinput.min.js', array( 'lddlite-bootstrap' ), false, true );
+        wp_enqueue_style( 'bootstrap-tagsinput', LDDLITE_URL . 'public/css/bootstrap-tagsinput.css' );
 
     }
 
@@ -361,7 +361,7 @@ function lddlite_settings_general_sanitize( $input ) {
 
     if ( isset( $input['debug_uninstall'] ) ) {
         define( 'WP_UNINSTALL_PLUGIN', true );
-        require_once( LDDLITE_PATH . '/uninstall.php' );
+        require_once( LDDLITE_PATH . 'uninstall.php' );
     }
 
     $input['directory_label']   = wp_filter_nohtml_kses( $input['directory_label'] );

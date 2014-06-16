@@ -12,7 +12,7 @@
  * @copyright 2014 LDD Consulting, Inc
  */
 
-require_once( LDDLITE_PATH . '/includes/shortcode.php' );
+require_once( LDDLITE_PATH . 'includes/shortcode.php' );
 
 add_image_size( 'directory-listing-featured', 200, 200 );
 add_image_size( 'directory-listing', 300, 300 );
@@ -92,20 +92,20 @@ function ldl_setup__register_custom() {
 
 function ldl_setup__register_scripts() {
 
-    wp_register_script( 'lddlite-responsiveslides', LDDLITE_URL . '/public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
-    wp_register_script( 'lddlite-search',           LDDLITE_URL . '/public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
-    wp_register_script( 'lddlite-bootstrap',        LDDLITE_URL . '/public/js/bootstrap.min.js', array( 'jquery' ), '3.1.1', true );
-    wp_register_script( 'lddlite-submit',           LDDLITE_URL . '/public/js/submit.js', array( 'jquery' ), LDDLITE_VERSION, true );
-    wp_register_script( 'lddlite-happy',            LDDLITE_URL . '/public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( 'lddlite-responsiveslides', LDDLITE_URL . 'public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
+    wp_register_script( 'lddlite-search',           LDDLITE_URL . 'public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( 'lddlite-bootstrap',        LDDLITE_URL . 'public/js/bootstrap.min.js', array( 'jquery' ), '3.1.1', true );
+    wp_register_script( 'lddlite-submit',           LDDLITE_URL . 'public/js/submit.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( 'lddlite-happy',            LDDLITE_URL . 'public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true );
 
-    wp_register_style( 'lddlite',           LDDLITE_URL . '/public/css/style.css', false, LDDLITE_VERSION );
+    wp_register_style( 'lddlite',           LDDLITE_URL . 'public/css/style.css', false, LDDLITE_VERSION );
 
 
     wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', false, '4.1.0' );
 
     // Admin
-    wp_register_script( 'lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array( 'jquery-ui-dialog' ), LDDLITE_VERSION, 1 );
-    wp_register_style(  'lddlite-admin', LDDLITE_URL . '/public/css/admin.css', false, LDDLITE_VERSION );
+    wp_register_script( 'lddlite-admin', LDDLITE_URL . 'public/js/admin.js', array( 'jquery-ui-dialog' ), LDDLITE_VERSION, 1 );
+    wp_register_style(  'lddlite-admin', LDDLITE_URL . 'public/css/admin.css', false, LDDLITE_VERSION );
 
 }
 
@@ -137,7 +137,7 @@ function ldl_enqueue_bootstrap() {
     if ( ldl_get_setting( 'disable_bootstrap' ) )
         return;
 
-    wp_enqueue_style( 'lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', array(), LDDLITE_VERSION );
+    wp_enqueue_style( 'lddlite-bootstrap', LDDLITE_URL . 'public/css/bootstrap.css', array(), LDDLITE_VERSION );
     wp_enqueue_script( 'lddlite-bootstrap' );
 
 }

@@ -178,11 +178,11 @@ function ldl_get_listing_id() {
 function ldl_get_template_object() {
 
 	if ( !class_exists( 'raintpl' ) )
-		require_once( LDDLITE_PATH . '/includes/class.raintpl.php' );
+		require_once( LDDLITE_PATH . 'includes/class.raintpl.php' );
 
 	raintpl::configure( 'tpl_ext',      'tpl' );
-	raintpl::configure( 'tpl_dir',      LDDLITE_PATH . '/templates/' );
-	raintpl::configure( 'cache_dir',    LDDLITE_PATH . '/cache/' );
+	raintpl::configure( 'tpl_dir',      LDDLITE_PATH . 'templates/' );
+	raintpl::configure( 'cache_dir',    LDDLITE_PATH . 'cache/' );
 	raintpl::configure( 'path_replace', false );
 
 	return new raintpl;
@@ -190,7 +190,7 @@ function ldl_get_template_object() {
 
 
 function ldl_get_loading_gif() {
-    $img = '<img src="' . LDDLITE_URL . '/public/images/loading.gif" width="32" height="32">';
+    $img = '<img src="' . LDDLITE_URL . 'public/images/loading.gif" width="32" height="32">';
     return $img;
 }
 
@@ -316,7 +316,7 @@ function ldl_split_file_into_array( $arrfile ) {
 
 function ldl_get_subdivision_array( $subdivision ) {
 
-    $subdivision_file = LDDLITE_PATH . '/includes/actions/select/subdivision.' . strtolower( $subdivision ) . '.inc';
+    $subdivision_file = LDDLITE_PATH . 'includes/actions/select/subdivision.' . strtolower( $subdivision ) . '.inc';
 
     if ( !file_exists( $subdivision_file ) )
         return false;
@@ -327,7 +327,7 @@ function ldl_get_subdivision_array( $subdivision ) {
 
 function ldl_get_country_array() {
 
-    $country_file = LDDLITE_PATH . '/includes/actions/select/countries.inc';
+    $country_file = LDDLITE_PATH . 'includes/actions/select/countries.inc';
 
     if ( !file_exists( $country_file ) )
         return false;

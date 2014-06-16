@@ -110,7 +110,8 @@ This release addresses a variety of theme compatibility issues, and fixes a seve
 = 0.5.5-beta =
 * Enqueued Bootstrap core as early as possible so that theme styles will cascade after
 * Fixed outgoing emails hardcoded From: address
-* Fixed an out of memory error being caused by `ldl_get_page_haz_shortcode()`, shortcode detection is now attempted during `save_post`
+* Fixed an out of memory error being caused by `ldl_get_page_haz_shortcode()`, shortcode detection is now done during `save_post`
+* Moved away from handling addresses internally, utilizing Google API more effectively
 
 = 0.5.4-beta =
 * Major update to the upgrade functionality for people migrating from [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/)

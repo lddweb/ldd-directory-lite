@@ -190,7 +190,7 @@ function ldl_metaboxes__swap() {
 
 function ldl_metaboxes__init_cmb() {
     if ( !class_exists( 'cmb_Meta_Box' ) )
-        require_once( LDDLITE_PATH . '/includes/cmb/init.php' );
+        require_once( LDDLITE_PATH . 'includes/cmb/init.php' );
 }
 
 
@@ -200,70 +200,23 @@ function ldl_metaboxes__setup_cmb( array $meta_boxes ) {
 
     $meta_boxes['listings_address'] = array(
         'id'            => 'listings_address',
-        'title'         => __( 'Business Address', 'lddlite' ),
+        'title'         => __( 'Location', 'lddlite' ),
         'pages'         => array( LDDLITE_POST_TYPE ),
         'context'       => 'normal',
         'priority'      => 'core',
         'show_names'    => true,
         'fields'        => array(
-            array(
-                'name'  => __( 'Address 1', 'lddlite' ),
-                'id'    => LDDLITE_PFX . 'address_one',
-                'type'  => 'text',
-            ),
-            array(
-                'name'  => __( 'Address 2', 'lddlite' ),
-                'id'    => LDDLITE_PFX . 'address_two',
-                'type'  => 'text',
-            ),
-            array(
-                'name'  => __( 'City', 'lddlite' ),
-                'id'    => LDDLITE_PFX . 'city',
-                'type'  => 'text_medium',
-            ),
-            array(
-                'name'  => __( 'State / Province', 'lddlite' ),
-                'id'    => LDDLITE_PFX . 'subdivision',
-            ),
-            array(
-                'name'  => __( 'Zip / Post Code', 'lddlite' ),
-                'id'    => LDDLITE_PFX . 'post_code',
-                'type'  => 'text_small',
-            ),
+	        array(
+		        'name' => 'Address',
+		        'id'   => LDDLITE_PFX . '_geo',
+		        'type' => 'geo_location',
+	        ),
         ),
     );
 
-    if ( $use_locale ) {
-
-        $subdivision = ldl_get_setting( 'submit_locale' );
-        $subdivision_array = ldl_get_subdivision_array( $subdivision );
-
-        if ( $subdivision_array) {
-            $meta_boxes['listings_address']['fields'][3]['type']    = 'select';
-            $meta_boxes['listings_address']['fields'][3]['options'] = $subdivision_array;
-        } else {
-            $meta_boxes['listings_address']['fields'][3]['type']    = 'text_medium';
-        }
-
-    } else {
-
-        $meta_boxes['listings_address']['fields'][3]['type']    = 'text_medium';
-
-        $country = array(
-            'name'    => __( 'Country', 'lddlite' ),
-            'id'      => LDDLITE_PFX . 'country',
-            'type'    => 'select',
-            'options' => ldl_get_country_array(),
-        );
-
-        array_unshift( $meta_boxes['listings_address']['fields'], $country );
-
-    }
-
-
     $meta_boxes['listings_web'] = array(
         'id'         => 'listings_web',
-        'title'      => __( 'Web Addresses', 'lddlite' ),
+        'title'      => __( '', 'lddlite' ),
         'pages'      => array( LDDLITE_POST_TYPE ),
         'context'    => 'normal',
         'priority'   => 'core',
@@ -272,25 +225,25 @@ function ldl_metaboxes__setup_cmb( array $meta_boxes ) {
             array(
                 'name' => __( 'Website', 'lddlite' ),
                 'desc' => __( 'Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', 'lddlite' ),
-                'id'   => LDDLITE_PFX . 'url_website',
+                'id'   => LDDLITE_PFX . '_url_website',
                 'type' => 'text',
             ),
             array(
                 'name' => __( 'Facebook', 'lddlite' ),
                 'desc' => __( 'This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', 'lddlite' ),
-                'id'   => LDDLITE_PFX . 'url_facebook',
+                'id'   => LDDLITE_PFX . '_url_facebook',
                 'type' => 'text',
             ),
             array(
                 'name' => __( 'Twitter', 'lddlite' ),
                 'desc' => __( 'Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', 'lddlite' ),
-                'id'   => LDDLITE_PFX . 'url_twitter',
+                'id'   => LDDLITE_PFX . '_url_twitter',
                 'type' => 'text',
             ),
             array(
                 'name' => __( 'LinkedIn', 'lddlite' ),
                 'desc' => __( 'This should start with <code>www.linkedin.com</code>', 'lddlite' ),
-                'id'   => LDDLITE_PFX . 'url_linkedin',
+                'id'   => LDDLITE_PFX . '_url_linkedin',
                 'type' => 'text',
             ),
         ),
@@ -306,17 +259,17 @@ function ldl_metaboxes__setup_cmb( array $meta_boxes ) {
         'fields'     => array(
             array(
                 'name' => __( 'Email', 'lddlite' ),
-                'id'   => LDDLITE_PFX . 'contact_email',
+                'id'   => LDDLITE_PFX . '_contact_email',
                 'type' => 'text_medium',
             ),
             array(
                 'name' => __( 'Phone', 'lddlite' ),
-                'id'   => LDDLITE_PFX . 'contact_phone',
+                'id'   => LDDLITE_PFX . '_contact_phone',
                 'type' => 'text_small',
             ),
             array(
                 'name' => __( 'Fax', 'lddlite' ),
-                'id'   => LDDLITE_PFX . 'contact_fax',
+                'id'   => LDDLITE_PFX . '_contact_fax',
                 'type' => 'text_small',
             ),
         ),
@@ -377,4 +330,26 @@ function ldl_metaboxes__sanitize( $post_id ) {
     }
 
 }
+
+
+//
+// CMB ADDITIONS
+// *********************************************************************************************************************
+
+function ldl_render_geo_location_field( $field, $meta ) {
+
+	wp_enqueue_script( 'google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places' );
+	wp_enqueue_script( 'lddlite-admin' );
+	wp_enqueue_style( 'lddlite-admin' );
+
+	echo '<input type="text" class="map_search" id="' . $field['id'] . '" value="' . ( isset( $meta['formattted'] ) ? $meta['formattted'] : '' ) . '">';
+	echo '<div class="map_wrapper"></div>';
+	echo '<input type="hidden" class="formatted" name="' . $field['id'] . '[formattted]" value="' . ( isset( $meta['formattted'] ) ? $meta['formattted'] : '' ) . '">';
+	echo '<input type="hidden" class="lat" name="' . $field['id'] . '[lat]" value="' . ( isset( $meta['lat'] ) ? $meta['lat'] : '' ) . '">';
+	echo '<input type="hidden" class="lng" name="' . $field['id'] . '[lng]" value="' . ( isset( $meta['lng'] ) ? $meta['lng'] : '' ) . '">';
+
+	if ( ! empty( $field['desc'] ) ) echo '<p class="cmb_metabox_description">' . $field['desc'] . '</p>';
+}
+
+add_action( 'cmb_render_geo_location', 'ldl_render_geo_location_field', 10, 2 );
 

@@ -9,7 +9,7 @@
  * @copyright 2014 LDD Consulting, Inc
  */
 
-require_once( LDDLITE_PATH . '/includes/actions/submit/process.php' );
+require_once( LDDLITE_PATH . 'includes/actions/submit/process.php' );
 
 
 function ldl_append_tos() {

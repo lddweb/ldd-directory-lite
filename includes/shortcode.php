@@ -32,7 +32,7 @@ function ldl_get_template( $slug, $name = '' ) {
     $locations = array(
         'child'  => STYLESHEETPATH . '/directory/' . $_template,
         'parent' => TEMPLATEPATH . '/directory/' . $_template,
-        'plugin' => LDDLITE_PATH . '/templates/' . $_template,
+        'plugin' => LDDLITE_PATH . 'templates/' . $_template,
     );
 
     foreach ( $locations as $path ) {
@@ -106,7 +106,7 @@ function ldl_shortcode__display() {
     }
 
 
-    require_once( LDDLITE_PATH . '/includes/actions/' . $action . '.php' );
+    require_once( LDDLITE_PATH . 'includes/actions/' . $action . '.php' );
 
     $func = 'ldl_action__' . $action;
 

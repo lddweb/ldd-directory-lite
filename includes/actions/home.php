@@ -41,7 +41,7 @@ function ldl_get_thumbnail( $type, $listing ) {
     if ( has_post_thumbnail( $id ) )
         $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing-featured', array( 'class' => 'img-rounded' ) ) );
     else
-        $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">' );
+        $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . 'public/images/noimage.png" class="img-rounded">' );
 
     $tpl->assign( 'thumbnail', $thumbnail );
     $tpl->assign( 'title',     $title );

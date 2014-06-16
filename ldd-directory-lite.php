@@ -27,14 +27,14 @@ if ( ! defined( 'WPINC' ) ) die;
  */
 define( 'LDDLITE_VERSION',      '0.5.5-beta' );
 
-define( 'LDDLITE_PATH',         WP_PLUGIN_DIR.'/'.basename( dirname( __FILE__ ) ) );
-define( 'LDDLITE_URL',          plugins_url().'/'.basename( dirname( __FILE__ ) ) );
+define( 'LDDLITE_PATH',         trailingslashit( dirname( __FILE__ ) ) );
+define( 'LDDLITE_URL',          plugin_dir_url( __FILE__ ) );
 
 define( 'LDDLITE_POST_TYPE',    'directory_listings' );
 define( 'LDDLITE_TAX_CAT',      'listing_category' );
 define( 'LDDLITE_TAX_TAG',      'listing_tag' );
 
-define( 'LDDLITE_PFX',          '_lddlite_' );
+define( 'LDDLITE_PFX',          '_lddlite' );
 
 
 /**
@@ -76,10 +76,10 @@ class LDD_Directory_Lite {
      */
     public static function get_instance() {
         if ( null === self::$_instance ) {
-	        require_once( LDDLITE_PATH . '/includes/functions.php' );
+	        require_once( LDDLITE_PATH . 'includes/functions.php' );
 
             self::$_instance = new self;
-            self::$_instance->populate_options(); // This should always happen before anything else
+            self::$_instance->init();
             self::$_instance->include_files();
             self::$_instance->action_filters();
         }
@@ -87,47 +87,84 @@ class LDD_Directory_Lite {
     }
 
 
-    /**
+	/**
+	 * Populate the settings property based on a set of defaults and information pulled from
+	 * the database. This will also check for and fire an upgrade if necessary.
+	 *
+	 * @since 0.5.0
+	 */
+	public function init() {
+
+		$this->settings = wp_parse_args(
+			get_option( 'lddlite_settings' ),
+			ldl_get_default_settings() );
+
+		$version = get_option( 'lddlite_version' );
+
+/*		$urls = array(
+			'website'  => get_post_meta( 42, '_lddlite_url_website', true ),
+			'linkedin' => get_post_meta( 42, '_lddlite_url_linkedin', true ),
+			'facebook' => get_post_meta( 42, '_lddlite_url_facebook', true ),
+			'twitter'  => get_post_meta( 42, '_lddlite_url_twitter', true ),
+		);
+		update_post_meta( 42, '_lddlite_urls', $urls );
+		md( get_post_meta( 42, '_lddlite_geo', true ) );
+		mdd( $urls );*/
+		if ( LDDLITE_VERSION != $version.'v' ) {
+			global $upgrades;
+
+			$upgrades = array(
+				'0.5.5-beta' => false,
+			);
+
+			foreach ( $upgrades as $upgrade => $trigger ) {
+
+				if ( version_compare( $version, $upgrade, '<' ) ) {
+					$upgrade_available = true;
+					$upgrades[ $upgrade ] = true;
+				}
+
+			}
+
+			if ( isset( $upgrade_available ) )
+				require_once( LDDLITE_PATH . 'upgrade.php' );
+
+			$version = LDDLITE_VERSION;
+			update_option( 'lddlite_version', $version );
+
+		}
+
+		$this->version = $version;
+
+	}
+
+
+	/**
      * Include all the files we'll need to function.
      *
      * @since 0.5.0
      */
     public function include_files() {
 
-        $plugin = 'ldd-business-directory/lddbd_core.php';
-        $dir = dirname( __FILE__ );
-        $plugin_path = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/' . $plugin;
-        if ( file_exists( $plugin_path ) && false == get_option( 'lddlite_upgraded_from_original' ) )
-            require_once( LDDLITE_PATH . '/upgrade.php' );
+	    { // Check for the existence of the old plugin and offer to import any data
+		    $plugin = 'ldd-business-directory/lddbd_core.php';
+		    $dir = dirname( __FILE__ );
+		    $plugin_path = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/' . $plugin;
+		    if ( file_exists( $plugin_path ) && false == get_option( 'lddlite_upgraded_from_original' ) )
+			    require_once( LDDLITE_PATH . 'import-lddbd.php' );
+	    }
 
-	    require_once( LDDLITE_PATH . '/includes/class.tracking.php' );
-        require_once( LDDLITE_PATH . '/includes/post-types.php' );
-        require_once( LDDLITE_PATH . '/includes/setup.php' );
-        require_once( LDDLITE_PATH . '/includes/ajax.php' );
+	    require_once( LDDLITE_PATH . 'includes/class.tracking.php' );
+        require_once( LDDLITE_PATH . 'includes/post-types.php' );
+        require_once( LDDLITE_PATH . 'includes/setup.php' );
+        require_once( LDDLITE_PATH . 'includes/ajax.php' );
 
         if ( is_admin() ) {
-            require_once( LDDLITE_PATH . '/includes/admin/metaboxes.php' );
-            require_once( LDDLITE_PATH . '/includes/admin/pointers.php' );
-            require_once( LDDLITE_PATH . '/includes/admin/settings.php' );
-            require_once( LDDLITE_PATH . '/includes/admin/help.php' );
+            require_once( LDDLITE_PATH . 'includes/admin/metaboxes.php' );
+            require_once( LDDLITE_PATH . 'includes/admin/pointers.php' );
+            require_once( LDDLITE_PATH . 'includes/admin/settings.php' );
+            require_once( LDDLITE_PATH . 'includes/admin/help.php' );
         }
-    }
-
-
-    /**
-     * Populate the options property based on a set of defaults and information pulled from
-     * the database. This will also check for and fire an upgrade if necessary.
-     *
-     * @since 0.5.0
-     */
-    public function populate_options() {
-
-        $this->settings = wp_parse_args(
-            get_option( 'lddlite_settings' ),
-            ldl_get_default_settings() );
-
-        $this->version = get_option( 'lddlite_version' );
-
     }
 
 
@@ -150,7 +187,7 @@ class LDD_Directory_Lite {
     public function load_plugin_textdomain() {
 
 
-        $lang_dir = LDDLITE_PATH . '/languages/';
+        $lang_dir = LDDLITE_PATH . 'languages/';
         $lang_dir = apply_filters( 'lddlite_languages_directory', $lang_dir );
 
         $locale = apply_filters( 'plugin_locale', get_locale(), 'lddlite' );

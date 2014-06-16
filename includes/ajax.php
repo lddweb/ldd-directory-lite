@@ -71,7 +71,7 @@ function ldl_ajax__search_directory() {
             if ( has_post_thumbnail( $id ) )
                 $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing', array( 'class' => 'img-rounded' ) ) );
             else
-                $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">' );
+                $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . 'public/images/noimage.png" class="img-rounded">' );
 
             if ( empty( $summary ) ) {
                 $summary = $post->post_content;

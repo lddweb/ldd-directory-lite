@@ -44,7 +44,7 @@ function ldl_action__listing( $term ) {
     if ( has_post_thumbnail( $post_id ) )
         $thumbnail = get_the_post_thumbnail( $post_id, 'directory-listing', array( 'class' => 'img-rounded' ) );
     else
-        $thumbnail = '<img src="' . LDDLITE_URL . '/public/images/noimage.png" class="img-rounded">';
+        $thumbnail = '<img src="' . LDDLITE_URL . 'public/images/noimage.png" class="img-rounded">';
 
     $geocode = false;
 
