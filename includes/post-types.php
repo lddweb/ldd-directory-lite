@@ -122,44 +122,31 @@ function ldl_action__send_approved_email( $post ) {
 }
 
 
-function ldl_custom_content( $content ) {
-    global $post;
-
-    if( is_singular() && is_main_query() && LDDLITE_POST_TYPE == get_post_type() ) {
-
-        ldl_enqueue();
-
-        require_once( LDDLITE_PATH . 'includes/actions/listing.php' );
-
-        return ldl_action__listing( $post );
-    }
-    return $content;
-}
-add_filter( 'the_content', 'ldl_custom_content' );
 
 
-function ldl_swap_post_page( $template ) {
+function ldl_template_include( $template ) {
 
-    if ( is_archive() && LDDLITE_POST_TYPE == get_post_type() ) {
-
+    if ( LDDLITE_POST_TYPE == get_post_type() ) {
 
         $templates = array();
 
-        $templates[] = 'single-' . LDDLITE_POST_TYPE . '.php';
-        $templates[] = 'single.php';
-        $templates[] = 'page.php';
+        if ( is_single() ) { $templates[] = 'single.php'; }
+        else if ( is_archive() ) { $templates[] = 'category.php'; }
 
-        return get_query_template( 'single', $templates );
+        $located = ldl_locate_template( $templates, false, false );
+
+        if ( $located )
+            return $located;
 
     }
 
     return $template;
 }
-//add_filter( 'template_include', 'ldl_swap_post_page' );
+add_filter( 'template_include', 'ldl_template_include' );
 
 
-add_filter( 'term_link', 'ldl_filter__term_link' );
-add_filter( 'post_type_link', 'ldl_filter__post_type_link', 10, 2 );
+//add_filter( 'term_link', 'ldl_filter__term_link' );
+//add_filter( 'post_type_link', 'ldl_filter__post_type_link', 10, 2 );
 add_filter( 'enter_title_here', 'ldl_filter__enter_title_here' );
 add_filter( 'admin_post_thumbnail_html', 'ldl_filter__admin_post_thumbnail_html' );
 add_filter( 'get_shortlink', 'ldl_filter__get_shortlink' );

@@ -260,7 +260,7 @@ function ldl_haz_shortcode( $post_id, $post ) {
 add_action( 'save_post', 'ldl_haz_shortcode', 10, 2 );
 
 
-function  ldl_get_header( $show_label = 0, $nosearch = 0 ) {
+function  ldl_OLD_get_header( $show_label = 0, $nosearch = 0 ) {
 
     wp_enqueue_script( 'lddlite-search' );
 
@@ -349,6 +349,21 @@ function ldl_format_phone( $phone, $locale = 'US' ) {
     return $phone; // because I lost it
 }
 
+
+/**
+ * Wrapper to collect post meta for a listing
+ *
+ * @param $id
+ * @param $field
+ */
+function ldl_get_meta( $key ) {
+    $post_id = get_the_ID();
+
+    if ( !is_int( $post_id ) )
+        return false;
+
+    return get_metadata( 'post', $post_id, '_lddlite_' . $key, true );
+}
 
 function ldl_get_listing_meta( $id ) {
 
@@ -632,7 +647,7 @@ function ldl_force_https( $url ) {
 	if ( strpos( $url, 'http') !== 0 )
 		$url = esc_url_raw( $url );
 
-	return preg_replace( '~http:~', 'https:', $url );
+    return set_url_scheme( $url, 'https' );
 }
 
 
@@ -658,11 +673,6 @@ function ldl_get_social( $id, $class = 'btn btn-success', $email_btn = true ) {
 	$output = '';
 	$name = get_the_title( $id );
 	$class = !empty( $class ) ? ' class="' . $class . '" ' : '';
-
-	if ( $email_btn ) {
-		$email = get_post_meta( $id, '_lddlite_contact_email', 1 );
-		if ( $email ) $output = '<a href="" ' . $class . ' data-toggle="modal" data-target="#contact-listing-owner"><i class="fa fa-envelope"></i></a>';
-	}
 
 	$social = array(
 		'facebook-square' =>  ldl_force_https( get_post_meta( $id, '_lddlite_url_facebook', 1 ) ),

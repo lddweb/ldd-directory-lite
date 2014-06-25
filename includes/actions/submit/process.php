@@ -262,3 +262,52 @@ function ldl_submit_get_error_message( $error_slug ) {
 
     return false;
 }
+
+
+function ldl_submit__process( $data ) {
+    $data = ldl_sanitize__post( $data );
+    $valid = ldl_submit_validate_form( $data );
+
+    if ( is_wp_error( $valid ) ) {
+
+        $errors = array();
+        $codes = $valid->get_error_codes();
+
+        foreach ( $codes as $code ) {
+            $key = substr( $code, 0, strrpos( $code, '_' ) );
+            $errors[ $key ] = '<span class="fa fa-exclamation form-control-feedback"></span><span class="submit-error">' . $valid->get_error_message( $code ) . '</span>';
+        }
+
+    } else {
+
+        // Create the user and insert a post for this listing
+        if ( is_user_logged_in() ) {
+            $user_id = get_current_user_id();
+        } else {
+            $user_id = ldl_submit__create_user( $data['username'], $data['email'] );
+        }
+        $post_id = ldl_submit__create_listing( $data['title'], $data['description'], $data['category'], $user_id );
+
+        // Add all the post meta fields
+        ldl_submit__create_meta( $data, $post_id );
+
+        // Upload their logo if one was submitted
+        if ( isset( $_FILES['ld_s_logo'] ) ) {
+            // These files need to be included as dependencies when on the front end.
+            require_once( ABSPATH . 'wp-admin/includes/image.php' );
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+            require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+            $attachment_id = media_handle_upload( 'ld_s_logo', 0 );
+            set_post_thumbnail( $post_id, $attachment_id );
+        }
+
+        ldl_submit__email_admin( $data, $post_id );
+        ldl_submit__email_owner( $data );
+
+        $success = true;
+        $data = array();
+
+    }
+
+}

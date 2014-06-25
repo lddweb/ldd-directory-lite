@@ -5,7 +5,7 @@
  */
 
 
-function ldl_get_thumbnail( $type, $listing ) {
+function ldl_build_thumbnail( $type, $listing ) {
 
     if ( 'new' != $type )
         $type = 'featured';
@@ -101,6 +101,14 @@ function ldl_action__home( $term = false ) {
         }
     }
 
+    set_query_var( 'featured',   $featured_output );
+    set_query_var( 'new',        $new_output );
+
+    ldl_get_template_part( 'home' );
+}
+
+
+function ldl_get_parent_categories() {
 
     $directory_terms = get_terms( LDDLITE_TAX_CAT, array(
         'parent'         => 0,
@@ -108,21 +116,13 @@ function ldl_action__home( $term = false ) {
 
     $categories = '';
     foreach ( $directory_terms as $category ) {
-        $term_link = add_query_arg( array(
+        $term_link = get_term_link( $category );
+/*        $term_link = add_query_arg( array(
             'show'  => 'category',
             't'     => $category->slug,
-        ) );
-        $categories .= sprintf( '<a href="%1$s" class="list-group-item"><span class="badge badge-default">%3$d</span>%2$s</a>', $term_link, $category->name, $category->count );
+        ) );*/
+        $categories .= sprintf( '<a href="%1$s" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>', $term_link, $category->name, $category->count );
     }
 
-    $tpl = ldl_get_template_object();
-
-    $tpl->assign( 'header',     ldl_get_header( 1 ) );
-    $tpl->assign( 'loading',    ldl_get_loading_gif() );
-    $tpl->assign( 'featured',   $featured_output );
-    $tpl->assign( 'new',        $new_output );
-    $tpl->assign( 'categories', $categories );
-
-    return $tpl->draw( 'home', 1 );
+    return $categories;
 }
-

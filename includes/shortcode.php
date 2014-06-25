@@ -12,45 +12,6 @@
  * @copyright 2014 LDD Consulting, Inc
  */
 
-function ldl_enqueue() {
-    wp_enqueue_style( 'lddlite' );
-    wp_enqueue_style( 'font-awesome' );
-}
-
-
-function ldl_get_template( $slug, $name = '' ) {
-
-    do_action( "lddlite_get_template_part_{$slug}", $slug, $name );
-
-    if ( '' !== $name )
-        $_template = "{$slug}-{$name}.php";
-    else
-        $_template = "{$slug}.php";
-
-    $located = '';
-
-    $locations = array(
-        'child'  => STYLESHEETPATH . '/directory/' . $_template,
-        'parent' => TEMPLATEPATH . '/directory/' . $_template,
-        'plugin' => LDDLITE_PATH . 'templates/' . $_template,
-    );
-
-    foreach ( $locations as $path ) {
-        if ( file_exists( $path ) ) {
-            $located = $path;
-            break;
-        }
-    }
-
-    if ( '' != $located ) {
-        ob_start();
-        require( $located );
-        $located = ob_get_contents();
-        ob_end_clean;
-    }
-
-    return $located;
-}
 
 
 function ldl_get_allowed_actions() {
@@ -115,21 +76,64 @@ function ldl_shortcode__display() {
 }
 
 
-/**
- * This is an alias of ldl_shortcode__display() if anyone wants to embed the directory via PHP
- *
- * @param bool $echo Whether to echo or return
- * @return mixed The output of ldl_shortcode__display() if $echo is false
- */
-function ldl_display( $echo = true ) {
+function ldl_shortcode__submit() {
+    global $post;
 
-    if ( $echo )
-        echo ldl_shortcode__display();
-    else
-        return ldl_shortcode__display();
+    ldl_enqueue();
+
+    wp_enqueue_script( 'lddlite-responsiveslides' );
+    wp_enqueue_script( 'lddlite-submit' );
+
+    $valid = false;
+
+    $data = array();
+    $urls = array();
+    $errors = array();
+
+    $success = false;
+
+    if ( isset( $_POST['nonce_field'] ) && !empty( $_POST['nonce_field'] ) ) {
+
+        if ( !wp_verify_nonce( $_POST['nonce_field'], 'submit-listing-nonce' ) || !empty( $_POST['ld_s_summary'] ) )
+            die( "No, kitty! That's a bad kitty!" );
+
+        ldl_submit__process( $_POST );
+
+    }
+
+    $category_args = array(
+        'hide_empty'    => 0,
+        'echo'          => 0,
+        'selected'      => isset( $data['category'] ) ? $data['category'] : 0,
+        'hierarchical'  => 1,
+        'name'          => 'ld_s_category',
+        'id'            => 'category',
+        'class'         => 'form-control',
+        'tab_index'     => 2,
+        'taxonomy'      => LDDLITE_TAX_CAT,
+    );
+    set_query_var( 'category_args', $category_args );
+
+
+    if ( !empty( $data ) ) {
+        if ( isset( $data['url'] ) ) {
+            $urls = $data['url'];
+            unset( $data['url'] );
+        }
+
+        $data = array_map( 'htmlentities', $data );
+    }
+
+    set_query_var( 'data', $data );
+    set_query_var( 'errors', $errors );
+    set_query_var( 'success', $success );
+
+    ldl_get_template_part( 'submit' );
 
 }
 
+
+add_shortcode( 'lddlite_submit', 'ldl_shortcode__submit' );
 
 add_shortcode( 'directory',          'ldl_shortcode__display' );
 /**

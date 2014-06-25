@@ -216,7 +216,7 @@ function ldl_metaboxes__setup_cmb( array $meta_boxes ) {
 
     $meta_boxes['listings_web'] = array(
         'id'         => 'listings_web',
-        'title'      => __( '', 'lddlite' ),
+        'title'      => __( 'Web Addresses', 'lddlite' ),
         'pages'      => array( LDDLITE_POST_TYPE ),
         'context'    => 'normal',
         'priority'   => 'core',
@@ -342,9 +342,9 @@ function ldl_render_geo_location_field( $field, $meta ) {
 	wp_enqueue_script( 'lddlite-admin' );
 	wp_enqueue_style( 'lddlite-admin' );
 
-	echo '<input type="text" class="map_search" id="' . $field['id'] . '" value="' . ( isset( $meta['formattted'] ) ? $meta['formattted'] : '' ) . '">';
+	echo '<input type="text" class="map_search" id="' . $field['id'] . '" value="' . ( isset( $meta['formatted'] ) ? $meta['formatted'] : '' ) . '">';
 	echo '<div class="map_wrapper"></div>';
-	echo '<input type="hidden" class="formatted" name="' . $field['id'] . '[formattted]" value="' . ( isset( $meta['formattted'] ) ? $meta['formattted'] : '' ) . '">';
+	echo '<input type="hidden" class="formatted" name="' . $field['id'] . '[formatted]" value="' . ( isset( $meta['formatted'] ) ? $meta['formatted'] : '' ) . '">';
 	echo '<input type="hidden" class="lat" name="' . $field['id'] . '[lat]" value="' . ( isset( $meta['lat'] ) ? $meta['lat'] : '' ) . '">';
 	echo '<input type="hidden" class="lng" name="' . $field['id'] . '[lng]" value="' . ( isset( $meta['lng'] ) ? $meta['lng'] : '' ) . '">';
 

@@ -1,19 +1,12 @@
 <section class="directory-lite directory-home">
 
     <header class="directory-header">
-        {$header}
+        <?php echo ldl_get_header(); ?>
     </header>
-
-    <div id="search-loading">{$loading}</div>
-    <div id="search-directory-results"></div>
 
     <section class="directory-content">
 
-        <ol class="l-breadcrumb l-breadcrumb-arrow" style="margin-bottom: 1em; display:none;">
-            <li><a href="#"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-            <li class="active"><span>You Are Here</span></li>
-        </ol>
-
+        <!--
         <div class="row">
             {$featured}
         </div>
@@ -21,12 +14,10 @@
         <div class="row">
             {$new}
         </div>
+        -->
 
-        <div class="panel panel-default">
-            <div class="panel-heading panel-primary">Categories</div>
-            <div class="list-group">
-                {$categories}
-            </div>
+        <div class="list-group">
+            <?php echo ldl_get_parent_categories(); ?>
         </div>
 
         <div class="row" style="display: none;">

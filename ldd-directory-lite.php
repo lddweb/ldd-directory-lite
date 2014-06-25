@@ -44,6 +44,7 @@ register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite'
 register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
 
 
+
 /**
  * Primary controller class, this handles set up for the entire plugin.
  *
@@ -101,16 +102,7 @@ class LDD_Directory_Lite {
 
 		$version = get_option( 'lddlite_version' );
 
-/*		$urls = array(
-			'website'  => get_post_meta( 42, '_lddlite_url_website', true ),
-			'linkedin' => get_post_meta( 42, '_lddlite_url_linkedin', true ),
-			'facebook' => get_post_meta( 42, '_lddlite_url_facebook', true ),
-			'twitter'  => get_post_meta( 42, '_lddlite_url_twitter', true ),
-		);
-		update_post_meta( 42, '_lddlite_urls', $urls );
-		md( get_post_meta( 42, '_lddlite_geo', true ) );
-		mdd( $urls );*/
-		if ( LDDLITE_VERSION != $version.'v' ) {
+		if ( LDDLITE_VERSION != $version ) {
 			global $upgrades;
 
 			$upgrades = array(
@@ -154,6 +146,7 @@ class LDD_Directory_Lite {
 			    require_once( LDDLITE_PATH . 'import-lddbd.php' );
 	    }
 
+        require_once( LDDLITE_PATH . 'includes/template-functions.php' );
 	    require_once( LDDLITE_PATH . 'includes/class.tracking.php' );
         require_once( LDDLITE_PATH . 'includes/post-types.php' );
         require_once( LDDLITE_PATH . 'includes/setup.php' );
@@ -297,3 +290,4 @@ function ldl_get_instance() {
  * Das boot
  */
 ldl_get_instance();
+

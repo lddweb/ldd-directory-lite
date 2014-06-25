@@ -3,7 +3,7 @@ Contributors: lddwebdesign, delayedinsanity
 Tags: directory, listings, listing directory, business, business directory, custom directory, catalog, index, yellow pages, white pages, 411, company listing
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 0.5.5-beta
+Stable tag: 0.5.4-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -107,23 +107,34 @@ This release addresses a variety of theme compatibility issues, and fixes a seve
 
 == Changelog ==
 
-= 0.5.5-beta =
+= 0.5.4-beta =
+
+**enhancements**
+
+* Major update to the upgrade functionality for people migrating from [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/)
 * Enqueued Bootstrap core as early as possible so that theme styles will cascade after
-* Fixed outgoing emails hardcoded From: address
-* Fixed an out of memory error being caused by `ldl_get_page_haz_shortcode()`, shortcode detection is now done during `save_post`
 * Moved away from handling addresses internally, utilizing Google API more effectively
 
-= 0.5.4-beta =
-* Major update to the upgrade functionality for people migrating from [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/)
+**fixes**
+
+* Fixed outgoing emails hardcoded From: address
+* Fixed an out of memory error being caused by `ldl_get_page_haz_shortcode()`, shortcode detection is now done during `save_post`
 
 = 0.5.3-beta =
+
+**enhancements**
+
 * Added opt-in anonymous usage tracking
-* Fixed an issue with the search, submitting the form now takes you to physical search results
 * Trimmed a lot of excess from Bootstrap, and removed it from the global scope (it shouldn't affect the theme anymore)
 * Condensed Bootflat into the main style sheet
 
+**fixes**
+
+* Fixed an issue with the search, submitting the form now takes you to physical search results
+
 = 0.5.1-beta =
 * Initial commit of the forked [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin.
+
 
 == Issues & Bugs ==
 
