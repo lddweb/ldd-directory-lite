@@ -1,7 +1,15 @@
 <?php
-
 /**
+ * Handles setup of the [directory] shortcode.
  *
+ * Post types are registered in setup.php, all actions and filters in this file are related
+ * to customizing the way WordPress handles our custom post types and taxonomies.
+ *
+ * @package   ldd_directory_lite
+ * @author    LDD Web Design <info@lddwebdesign.com>
+ * @license   GPL-2.0+
+ * @link      http://lddwebdesign.com
+ * @copyright 2014 LDD Consulting, Inc
  */
 
 
@@ -13,7 +21,7 @@ function ldl_build_thumbnail( $type, $listing ) {
     if ( !is_object( $listing ) )
         return;
 
-    $tpl = ldl_get_template_object();
+    $tpl = new stdClass();
 
     $id = $listing->ID;
     $summary = $listing->post_excerpt;
@@ -51,8 +59,12 @@ function ldl_build_thumbnail( $type, $listing ) {
     return $tpl->draw( 'thumbnail-' . $type, 1 );
 }
 
-function ldl_action__home( $term = false ) {
+
+function ldl_shortcode__directory() {
     global $post;
+
+    ldl_enqueue();
+
 
     // Retrieve all featured listings
     $featured_output = '';
@@ -105,24 +117,13 @@ function ldl_action__home( $term = false ) {
     set_query_var( 'new',        $new_output );
 
     ldl_get_template_part( 'home' );
+
 }
 
 
-function ldl_get_parent_categories() {
-
-    $directory_terms = get_terms( LDDLITE_TAX_CAT, array(
-        'parent'         => 0,
-    ) );
-
-    $categories = '';
-    foreach ( $directory_terms as $category ) {
-        $term_link = get_term_link( $category );
-/*        $term_link = add_query_arg( array(
-            'show'  => 'category',
-            't'     => $category->slug,
-        ) );*/
-        $categories .= sprintf( '<a href="%1$s" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>', $term_link, $category->name, $category->count );
-    }
-
-    return $categories;
-}
+add_shortcode( 'directory',          'ldl_shortcode__directory' );
+/**
+ * @deprecated since version 0.5.0, please use [directory] instead
+ */
+add_shortcode( 'business_directory', 'ldl_shortcode__directory' );
+add_shortcode( 'directory_lite',     'ldl_shortcode__directory' );

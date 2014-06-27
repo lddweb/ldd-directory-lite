@@ -13,107 +13,6 @@
  */
 
 
-
-/**
- * This responds to the AJAX live search request. Results returned by this function, at least at present, should
- * only consist of the listings themselves. The results are displayed inside the <section> markup of the content.
- *
- * @since 0.5.3
- * @todo Code duplication exists between this, the category view, and the physical search results view. Should be reduced.
- */
-function ldl_ajax__search_directory() {
-    global $post;
-
-    $args = array(
-        'post_type'     => LDDLITE_POST_TYPE,
-        'post_status'   => 'publish',
-        's'             => sanitize_text_field( $_POST['s'] ),
-    );
-
-    $search = new WP_Query( $args );
-
-    $output = '';
-    $nth = 0;
-
-    $tpl = ldl_get_template_object();
-
-    if ( $search->have_posts() ) {
-
-        while ( $search->have_posts() ) {
-            $search->the_post();
-
-            $nth_class = ( $nth % 2 ) ? 'odd' : 'even';
-            $nth++;
-
-            $id         = $post->ID;
-            $title      = $post->post_title;
-            $summary    = $post->post_excerpt;
-            $meta = ldl_get_listing_meta( $id );
-            $address = $meta['address'];
-            $website = $meta['website'];
-            $email   = $meta['email'];
-            $phone   = $meta['phone'];
-
-            $link       = add_query_arg( array(
-                'show'  => 'listing',
-                't'     => $post->post_name,
-            ) );
-
-            // @todo BAD HACK!
-            $link = explode( '?', $link );
-
-            $link = $_SERVER['HTTP_REFERER'] . '?' . $link[1];
-
-            // the following is used to build our title, and the logo
-            $link_mask = '<a href="' . $link . '" title="' . esc_attr( $title ) . '">%1$s</a>';
-
-            // the logo
-            if ( has_post_thumbnail( $id ) )
-                $thumbnail = sprintf( $link_mask, get_the_post_thumbnail( $id, 'directory-listing', array( 'class' => 'img-rounded' ) ) );
-            else
-                $thumbnail = sprintf( $link_mask, '<img src="' . LDDLITE_URL . 'public/images/noimage.png" class="img-rounded">' );
-
-            if ( empty( $summary ) ) {
-                $summary = $post->post_content;
-
-                $summary = strip_shortcodes( $summary );
-
-                $summary = apply_filters( 'lddlite_the_content', $summary );
-                $summary = str_replace( ']]>', ']]&gt;', $summary );
-
-                $excerpt_length = apply_filters( 'lddlite_excerpt_length', 35 );
-                $excerpt_more = apply_filters( 'lddlite_excerpt_more', '&hellip;' );
-
-                $summary = wp_trim_words( $summary, $excerpt_length, $excerpt_more );
-            }
-
-            $tpl->assign( 'id',         $id );
-            $tpl->assign( 'nth',        $nth_class );
-            $tpl->assign( 'thumbnail',  $thumbnail );
-            $tpl->assign( 'title',      sprintf( $link_mask, $title ) );
-
-            $tpl->assign( 'address',    $meta['address'] );
-            $tpl->assign( 'website',    $meta['website'] );
-            $tpl->assign( 'email',      $meta['email'] );
-            $tpl->assign( 'phone',      $meta['phone'] );
-
-            $tpl->assign( 'summary',    $summary );
-
-            $output .= $tpl->draw( 'listing-compact', 1 );
-
-        }
-
-    } else { // Nothing found
-
-        $output = $tpl->draw( 'search-notfound', 1 );
-
-    }
-
-    echo $output;
-    die;
-}
-
-
 /**
  * This function responds to the "contact_form" AJAX action. All data is sanitized and double checked for validity
  * before being sent to the email on file for the listing. There's a honeypot and a math question to combat spam and
@@ -278,8 +177,6 @@ function ldl_hide_upgrade_notice() {
     }
 }
 
-add_action( 'wp_ajax_search_directory',        'ldl_ajax__search_directory' );
-add_action( 'wp_ajax_nopriv_search_directory', 'ldl_ajax__search_directory' );
 
 add_action( 'wp_ajax_contact_form',        'ldl_ajax__contact_form' );
 add_action( 'wp_ajax_nopriv_contact_form', 'ldl_ajax__contact_form' );

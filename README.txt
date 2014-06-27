@@ -156,10 +156,6 @@ I tend to spend a lot of time coding; not only is it my day job, but it's also o
 **Where:** [Custom Metaboxes and Fields for WordPress](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)<br>
 **Why:** Used to build the administrative user interface for the directory listings custom post types.
 
-**Who:** Federico Ulfo<br>
-**Where:** [Rain.TPL](http://www.raintpl.com/)<br>
-**Why:** This amazing but lightweight template parser helps keep our views sorted away from our programming logic. It hasn't yet been decided whether or not this will be permanent (to capitalize on the caching abilities) or temporary (to run straight PHP templates for speed), it is an amazing parser that has helped me focus on other areas of programming.
-
 **Who:** [yoast](https://yoast.com)<br>
 **Where:** [WordPress SEO](https://yoast.com/wordpress/plugins/#wpseo) Usage Tracking<br>
 **Why:** Code from the WordPress SEO plugin was integrated into this plugin in order to quickly add anonymous usage tracking. The information supplied by those who opt in to this program allows us a fantastic insight as to what configurations the plugin is being used on, and how to test future releases.

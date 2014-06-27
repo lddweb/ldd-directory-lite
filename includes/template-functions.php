@@ -181,3 +181,77 @@ function ldl_get_address( $key = 'formatted' ) {
 
     return false;
 }
+
+
+function ldl_get_parent_categories() {
+
+    $directory_terms = get_terms( LDDLITE_TAX_CAT, array(
+        'parent'         => 0,
+    ) );
+
+    $categories = '';
+    foreach ( $directory_terms as $category ) {
+        $term_link = get_term_link( $category );
+        /*        $term_link = add_query_arg( array(
+                    'show'  => 'category',
+                    't'     => $category->slug,
+                ) );*/
+        $categories .= sprintf( '<a href="%1$s" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>', $term_link, $category->name, $category->count );
+    }
+
+    return $categories;
+}
+
+
+
+function ldl_use_google_maps() {
+    return ldl_get_setting( 'google_maps' );
+}
+
+
+function ldl_is_public() {
+    return ldl_get_setting( 'public_or_private' );
+}
+
+
+/**
+ * @param int $id The listing/post ID
+ * @param string $class
+ * @param bool $email_btn
+ *
+ * @return string
+ */
+function ldl_get_social( $id, $class = 'btn btn-success', $email_btn = true ) {
+
+    if ( !is_int( $id ) )
+        return false;
+
+    $titles = array(
+        'facebook-square' => 'Visit %1$s on Facebook',
+        'linkedin'        => 'Connect with %1$s on LinkedIn',
+        'twitter'         => 'Follow %1$s on Twitter',
+        'default'         => 'Visit %1$s on %2$s',
+    );
+
+    $output = '';
+    $name = get_the_title( $id );
+    $class = !empty( $class ) ? ' class="' . $class . '" ' : '';
+
+    $social = array(
+        'facebook-square' =>  ldl_force_https( get_post_meta( $id, '_lddlite_url_facebook', 1 ) ),
+        'linkedin'        =>  ldl_force_https( get_post_meta( $id, '_lddlite_url_linkedin', 1 ) ),
+        'twitter'         =>  ldl_sanitize_twitter( get_post_meta( $id, '_lddlite_url_twitter', 1 ) ),
+    );
+
+    foreach ( $social as $key => $url ) {
+        if ( !empty( $url ) ) {
+            $title_key = array_key_exists( $key, $titles ) ? $titles[ $key ] : $titles['default'];
+            $title = sprintf( $title_key, $name, $key );
+
+            $output .= '<a href="' . ldl_force_https( $url ) . '" title="' . $title . '" ' . $class . '>';
+            $output .= '<i class="fa fa-' . $key . '"></i></a>';
+        }
+    }
+
+    return $output;
+}

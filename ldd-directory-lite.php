@@ -146,9 +146,13 @@ class LDD_Directory_Lite {
 			    require_once( LDDLITE_PATH . 'import-lddbd.php' );
 	    }
 
+        // functions.php is included when the object is instantiated
         require_once( LDDLITE_PATH . 'includes/template-functions.php' );
-	    require_once( LDDLITE_PATH . 'includes/class.tracking.php' );
+        require_once( LDDLITE_PATH . 'includes/class.phone.php' );
+        require_once( LDDLITE_PATH . 'includes/class.tracking.php' );
         require_once( LDDLITE_PATH . 'includes/post-types.php' );
+        require_once( LDDLITE_PATH . 'includes/shortcodes/directory.php' );
+        require_once( LDDLITE_PATH . 'includes/shortcodes/submit.php' );
         require_once( LDDLITE_PATH . 'includes/setup.php' );
         require_once( LDDLITE_PATH . 'includes/ajax.php' );
 
@@ -249,30 +253,6 @@ class LDD_Directory_Lite {
 		if ( !empty( $this->settings ) )
 			update_option( 'lddlite_settings', $this->settings );
 	}
-
-
-    /**
-     * This is a hack way of memorizing what listing we're viewing, necessary due to the current way we're
-     * displaying UI elements. This will most likely deprecate if and when the plugin moves to using internal
-     * rewrites provided by the custom post type and taxonomy API.
-     *
-     * @since 0.5.3
-     * @param int $listing_ID The listing/post ID for the currently active listing
-     */
-    public function set_listing_id( $listing_ID ) {
-        $this->listing_ID = $listing_ID;
-    }
-
-
-    /**
-     * Get the previously stored listing ID.
-     *
-     * @since 0.5.3
-     * @return int The currently active listing ID
-     */
-    public function get_listing_id() {
-        return $this->listing_ID;
-    }
 
 }
 

@@ -2,15 +2,6 @@
 
     <header class="directory-header">
         <?php ldl_get_header(); ?>
-
-        <div class="row">
-            <div class="col-md-12">
-                <ol class="l-breadcrumb" style="margin-bottom: 1em;">
-                    <li><a href="<?php echo ldl_get_home_url(); ?>"><i class="fa fa-home"></i> Home</a></li>
-                    <li class="active"><span>Submit a Listing</span></li>
-                </ol>
-            </div>
-        </div>
     </header>
 
     <section class="directory-content">
@@ -34,23 +25,18 @@
 
 
         <form id="submit-listing" name="submit-listing" method="post" enctype="multipart/form-data" novalidate>
-            <input type="hidden" name="__T__action" value="submit_form">
+            <input type="hidden" name="action" value="submit_form">
             <?php echo wp_nonce_field( 'submit-listing-nonce','nonce_field', 1, 0 ); ?>
 
-            <div id="submit-items"></div>
+            <?php ldl_get_template_part( 'panel', 'general' ); ?>
+            <?php ldl_get_template_part( 'panel', 'geography' ); ?>
+            <?php ldl_get_template_part( 'panel', 'urls' ); ?>
+            <?php if ( !is_user_logged_in() ): ?>
+                <?php ldl_get_template_part( 'panel', 'account' ); ?>
+            <?php endif; ?>
 
-            <div class="submit-form-wrap">
-                <ul id="submit-panels">
-                    <li><?php ldl_get_template_part( 'panel', 'general' ); ?></li>
-                    <li><?php ldl_get_template_part( 'panel', 'geography' ); ?></li>
-                    <li><?php ldl_get_template_part( 'panel', 'urls' ); ?></li>
-                    <?php if ( !is_user_logged_in() ): ?>
-                        <li><?php ldl_get_template_part( 'panel', 'account' ); ?></li>
-                    <?php endif; ?>
-                </ul>
-            </div>
 
-            <div class="submit-form-wrap submit-confirm" style="display: none;">
+            <div class="submit-form-wrap submit-confirm">
                 <fieldset>
                     <legend>Confirm</legend>
                     <p>Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.</p>
@@ -71,3 +57,9 @@
         color: #fff;
     }
 </style>
+
+
+<?php
+/*    if ( ldl_get_setting( 'submit_use_tos' ) )
+        ldl_get_template_part( 'modal', 'tos' );*/
+?>
