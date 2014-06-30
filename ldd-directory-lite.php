@@ -40,8 +40,8 @@ define( 'LDDLITE_PFX',          '_lddlite' );
 /**
  * Flush the rewrites for custom post types
  */
-register_activation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
-register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrite' ) );
+register_activation_hook( __FILE__, array( 'ldd_directory_lite', 'flush_rewrite' ) );
+register_deactivation_hook( __FILE__, array( 'ldd_directory_lite', 'flush_rewrite' ) );
 
 
 
@@ -50,7 +50,7 @@ register_deactivation_hook( __FILE__, array( 'LDD_Directory_Lite', 'flush_rewrit
  *
  * @since the_beginning
  */
-class LDD_Directory_Lite {
+class ldd_directory_lite {
 
     /**
      * @var $_instance An instance of ones own instance
@@ -73,7 +73,7 @@ class LDD_Directory_Lite {
      * and lording over it's configuration settings.
      *
      * @since 0.5.0
-     * @return LDD_Directory_Lite An instance of the LDD_Directory_Lite class
+     * @return ldd_directory_lite An instance of the ldd_directory_lite class
      */
     public static function get_instance() {
         if ( null === self::$_instance ) {
@@ -258,12 +258,12 @@ class LDD_Directory_Lite {
 
 
 /**
- * An alias for the LDD_Directory_Lite get_instance() method.
+ * An alias for the ldd_directory_lite get_instance() method.
  *
- * @return LDD_Directory_Lite The controller singleton
+ * @return ldd_directory_lite The controller singleton
  */
 function ldl_get_instance() {
-	return LDD_Directory_Lite::get_instance();
+	return ldd_directory_lite::get_instance();
 }
 
 /**

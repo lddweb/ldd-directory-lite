@@ -93,57 +93,6 @@
 }
 
 
-.submit-form-wrap {
-  padding: 2em 0 1em;
-  margin-bottom: 1em;
-
-  .row.bump {
-    margin-bottom: 1.5em;
-  }
-
-  &.submit-confirm {
-    padding: 1em;
-    text-align: center;
-  }
-
-  fieldset {
-    span.description {
-      margin: 5px 0 0 3px;
-      display: inline-block;
-      color: #AAB2BD;
-      font-size: .9em;
-    }
-
-  }
-
-  .pager {
-    padding: 0 1em;
-  }
-
-}
-
-
-#submit-listing{
-
-  fieldset {
-    margin: 0 0 .5em;
-    padding: 0;
-    border: 0;
-
-    legend {
-      display: none;
-    }
-
-  }
-  label {
-    span {
-      cursor: pointer;
-      display: block;
-      margin: 5px 0;
-      font-weight: 700;
-    }
-  }
-}
 
 .submit-success {
 
@@ -161,13 +110,4 @@
 
 }
 
-@media screen and (min-width: 767px) {
-  #submit-items {
-    ul {
-      > li {
-        display: table-cell;
-        margin: 0;
-      }
-    }
-  }
-}
+

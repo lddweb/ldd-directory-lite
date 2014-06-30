@@ -13,22 +13,36 @@
  */
 
 
-
 add_image_size( 'directory-listing-featured', 200, 200 );
 add_image_size( 'directory-listing', 300, 300 );
 add_image_size( 'directory-listing-compact', 105, 300 );
 add_image_size( 'directory-listing-search', 100, 100 );
 
 
+/**
+ * Register an autoloader for the plugins helper classes
+ *
+ * @since 0.5.5
+ * @param string $class The class being instantiated
+ */
+function ldl_autoload( $class ) {
+
+	$file_bit = str_replace( 'ldd_directory_lite_', '', $class );
+	$class_file = LDDLITE_PATH . 'includes/class.' . $file_bit . '.php';
+
+	if ( file_exists( $class_file ) )
+		require_once( $class_file );
+
+}
+spl_autoload_register( 'ldl_autoload' );
+
 
 /**
  * Registers our custom taxonomies and post types.
  *
  * @since 0.5.0
- * @todo (low priority) Can we use the internal rewrites effectively?
  */
-function ldl_setup__register_custom()
-{
+function ldl_setup__register_custom() {
 
     register_taxonomy(LDDLITE_TAX_CAT, LDDLITE_POST_TYPE, array(
         'hierarchical' => true,
@@ -103,7 +117,7 @@ function ldl_setup__register_scripts() {
 
 //    wp_register_script( 'lddlite-responsiveslides', LDDLITE_URL . 'public/js/responsiveslides.js', array( 'jquery' ), '1.54', true );
 //    wp_register_script( 'lddlite-search',           LDDLITE_URL . 'public/js/search.js', array( 'jquery' ), LDDLITE_VERSION, true );
-//    wp_register_script( 'lddlite-submit',           LDDLITE_URL . 'public/js/submit.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script( 'lddlite-submit',           LDDLITE_URL . 'public/js/submit.js', array( 'jquery' ), LDDLITE_VERSION, true );
 //    wp_register_script( 'lddlite-happy',            LDDLITE_URL . 'public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true );
 
 
@@ -142,19 +156,14 @@ function ldl_enqueue_bootstrap() {
     if ( ldl_get_setting( 'disable_bootstrap' ) || is_admin() )
         return;
 
-    wp_enqueue_style( 'lddlite-bootstrap',  LDDLITE_URL . 'public/css/dev/bootstrap.min.css', array(), LDDLITE_VERSION );
+    wp_enqueue_style( 'lddlite-bootstrap',  LDDLITE_URL . 'public/css/dev/bootstrap.css', array(), LDDLITE_VERSION );
     wp_enqueue_script( 'lddlite-bootstrap', LDDLITE_URL . 'public/js/bootstrap.min.js', array( 'jquery' ), '3.1.1', true );
 
 }
 
 function ldl_enqueue() {
-
-    if ( LDDLITE_POST_TYPE == get_post_type() ) {
-        //wp_enqueue_style( 'lddlite-bootflat' );
-        wp_enqueue_style( 'lddlite' );
-        wp_enqueue_style( 'font-awesome' );
-    }
-
+    wp_enqueue_style( 'lddlite' );
+    wp_enqueue_style( 'font-awesome' );
 }
 
 

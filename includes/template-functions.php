@@ -238,8 +238,8 @@ function ldl_get_social( $id, $class = 'btn btn-success', $email_btn = true ) {
     $class = !empty( $class ) ? ' class="' . $class . '" ' : '';
 
     $social = array(
-        'facebook-square' =>  ldl_force_https( get_post_meta( $id, '_lddlite_url_facebook', 1 ) ),
-        'linkedin'        =>  ldl_force_https( get_post_meta( $id, '_lddlite_url_linkedin', 1 ) ),
+        'facebook-square' =>  ldl_force_scheme( get_post_meta( $id, '_lddlite_url_facebook', 1 ) ),
+        'linkedin'        =>  ldl_force_scheme( get_post_meta( $id, '_lddlite_url_linkedin', 1 ) ),
         'twitter'         =>  ldl_sanitize_twitter( get_post_meta( $id, '_lddlite_url_twitter', 1 ) ),
     );
 
@@ -248,10 +248,11 @@ function ldl_get_social( $id, $class = 'btn btn-success', $email_btn = true ) {
             $title_key = array_key_exists( $key, $titles ) ? $titles[ $key ] : $titles['default'];
             $title = sprintf( $title_key, $name, $key );
 
-            $output .= '<a href="' . ldl_force_https( $url ) . '" title="' . $title . '" ' . $class . '>';
+            $output .= '<a href="' . ldl_force_scheme( $url ) . '" title="' . $title . '" ' . $class . '>';
             $output .= '<i class="fa fa-' . $key . '"></i></a>';
         }
     }
 
     return $output;
 }
+

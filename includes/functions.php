@@ -352,12 +352,12 @@ function ldl_mail($to, $subject, $message, $headers = '' ) {
  * @param string $url The URL
  * @return string The modified URL
  */
-function ldl_force_https( $url ) {
+function ldl_force_scheme( $url, $scheme = 'https' ) {
 
-	if ( strpos( $url, 'http') !== 0 )
+	if ( 0 !== strpos( $url, 'http') )
 		$url = esc_url_raw( $url );
 
-    return set_url_scheme( $url, 'https' );
+    return set_url_scheme( $url, $scheme );
 }
 
 

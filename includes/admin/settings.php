@@ -10,17 +10,14 @@ function ldl_schedule_tracking( $value, $force_unschedule = false ) {
 	}
 }
 
-class LDD_Directory_Admin {
+class ldd_directory_lite_admin {
 
-    /**
-     * @var $_instance An instance of ones own instance
-     */
     protected static $_instance = null;
 
 
-    public static function get_in() {
+    public static function get_instance() {
 
-        if ( !isset( self::$_instance ) && !( self::$_instance instanceof LDD_Directory_Admin ) ) {
+	    if ( null === self::$_instance ) {
             self::$_instance = new self;
             self::$_instance->action_filters();
         }
@@ -354,7 +351,7 @@ class LDD_Directory_Admin {
 }
 
 // Get... in!
-LDD_Directory_Admin::get_in();
+ldd_directory_lite_admin::get_instance();
 
 
 function lddlite_settings_general_sanitize( $input ) {

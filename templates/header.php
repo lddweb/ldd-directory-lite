@@ -12,17 +12,18 @@
         </div>
 
         <div id="navbar-directory" class="collapse navbar-collapse">
-
-            <form action="<?php echo ldl_get_home_url(); ?>" class="navbar-form navbar-right" role="search">
+	        <form action="<?php echo ldl_get_home_url(); ?>" class="navbar-form navbar-right" role="search">
                 <input type="hidden" name="show" value="search">
-                <div class="form-search search-only">
-                    <input id="directory-search" name="t" type="text" class="form-control search-query" placeholder="Search Listings">
-                </div>
+	            <div class="form-group">
+		            <input type="text" class="form-control" placeholder="Search">
+	            </div>
+	            <button type="submit" class="btn btn-warning">Submit</button>
             </form>
         </div>
     </div>
 </nav>
 
+
 <script>
-    var ajaxurl = <?php echo admin_url( 'admin-ajax.php' ); ?>
+    var ajaxurl = "<?php echo admin_url( 'admin-ajax.php' ); ?>"
 </script>

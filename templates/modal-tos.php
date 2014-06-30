@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
 
-                <textarea class="form-control" rows="6">{$tos}</textarea>
+                <textarea class="form-control" rows="6"><?php echo ldl_get_setting( 'submit_tos' ); ?></textarea>
 
             </div>
             <div class="modal-footer">
