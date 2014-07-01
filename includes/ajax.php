@@ -24,16 +24,16 @@
  */
 function ldl_ajax__contact_form() {
 
-    if ( !wp_verify_nonce( $_POST['nonce'], 'contact-form-nonce' ) )
-        die( 'You shall not pass!' );
+    if (!wp_verify_nonce($_POST['nonce'], 'contact-form-nonce'))
+        die('You shall not pass!');
 
     $hpt_field = 'last_name';
 
-    if ( !empty( $_POST[ $hpt_field ] ) ) {
-        echo json_encode( array(
-            'success'   => 1,
-            'msg'       => '<p>' . __( 'Your message has been successfully sent to the email address we have on file!', 'lddlite' ) . '</p>',
-        ) );
+    if (!empty($_POST[$hpt_field])) {
+        echo json_encode(array(
+            'success' => 1,
+            'msg'     => '<p>' . __('Your message has been successfully sent to the email address we have on file!', 'lddlite') . '</p>',
+        ));
         die;
     }
 
@@ -42,65 +42,64 @@ function ldl_ajax__contact_form() {
         'fourteen'
     );
 
-    $name = sanitize_text_field( $_POST['first_name'] );
-    $email = sanitize_text_field( $_POST['email'] );
-    $subject = sanitize_text_field( $_POST['subject'] );
-    $message = esc_html( sanitize_text_field( $_POST['message'] ) );
+    $name = sanitize_text_field($_POST['first_name']);
+    $email = sanitize_text_field($_POST['email']);
+    $subject = sanitize_text_field($_POST['subject']);
+    $message = esc_html(sanitize_text_field($_POST['message']));
 
-    $answer = sanitize_text_field( strtolower( $_POST['other_name'] ) );
-    if ( !is_numeric( $answer ) )
-        $answer = strtolower( $answer );
-    else
-        $answer = intval( $answer );
+    $answer = sanitize_text_field(strtolower($_POST['other_name']));
+    if (!is_numeric($answer))
+        $answer = strtolower($answer); else
+        $answer = intval($answer);
 
     $errors = array();
 
-    if ( empty( $name ) || strlen( $name ) < 3 )
+    if (empty($name) || strlen($name) < 3)
         $errors['name'] = 'You must enter your name';
 
-    if ( empty( $email ) || !is_email( $email ) )
+    if (empty($email) || !is_email($email))
         $errors['email'] = 'Please enter a valid email address';
 
-    if ( empty( $subject ) || strlen( $subject ) < 3 )
+    if (empty($subject) || strlen($subject) < 3)
         $errors['subject'] = 'You must enter a subject';
 
-    if ( empty( $message ) || strlen( $message ) < 20 )
+    if (empty($message) || strlen($message) < 20)
         $errors['message'] = 'Please enter a longer message';
 
-    if ( empty( $answer ) || !in_array( $answer, array( '14', 'fourteen' ) ) )
+    if (empty($answer) || !in_array($answer, array('14', 'fourteen')))
         $errors['math'] = 'Your math is wrong';
 
-    if ( !empty( $errors ) ) {
-        echo json_encode( array(
-            'success'   => false,
-            'errors'    => serialize( $errors ),
-            'msg'       => '<p>There were errors with your form submission. Please back up and try again.</p>',
-        ) );
+    if (!empty($errors)) {
+        echo json_encode(array(
+            'success' => false,
+            'errors'  => serialize($errors),
+            'msg'     => '<p>There were errors with your form submission. Please back up and try again.</p>',
+        ));
         die;
     }
 
-    $post_id = intval( $_POST['post_id'] );
-    $contact_email = get_post_meta( $post_id, '_lddlite_contact_email', 1 );
-    $listing_title = get_the_title( $post_id );
+    $post_id = intval($_POST['post_id']);
+    $contact_email = get_post_meta($post_id, '_lddlite_contact_email', 1);
+    $listing_title = get_the_title($post_id);
 
-    $headers = sprintf( "From: %s <%s>\r\n", $name, $email );
+    $headers = sprintf("From: %s <%s>\r\n", $name, $email);
 
-    $result = wp_mail( 'mark@watero.us', $subject, $message, $headers );
-//    $result = wp_mail( $contact_email, $subject, $message, $headers );
+    $result = wp_mail('mark@watero.us', $subject, $message, $headers);
+    //    $result = wp_mail( $contact_email, $subject, $message, $headers );
 
-    if ( $result ) {
+    if ($result) {
         $response = array(
-            'success'   => 1,
-            'msg'       => '<p>Your message has been successfully sent to the email address we have on file for <strong style="font-style: italic;">' . $listing_title . '</strong>!</p><p>The listing owner is responsible for getting back to you. Please do not contact us directly if you have not heard back from <strong style="font-style: italic;">' . $listing_title . '</strong> in response to your message. We apologize for any inconvenience this may cause.</p>',
+            'success' => 1,
+            'msg'     => '<p>Your message has been successfully sent to the email address we have on file for <strong style="font-style: italic;">' . $listing_title . '</strong>!</p><p>The listing owner is responsible for getting back to you. Please do not contact us directly if you have not heard back from <strong style="font-style: italic;">' . $listing_title . '</strong> in response to your message. We apologize for any inconvenience this may cause.</p>',
         );
     } else {
         $response = array(
-            'success'   => 0,
-            'msg'       => '<p>There were unknown errors with your form submission.</p><p>Please wait a while and then try again.</p>',
+            'success' => 0,
+            'msg'     => '<p>There were unknown errors with your form submission.</p><p>Please wait a while and then try again.</p>',
         );
     }
 
-    echo json_encode( $response );
+    echo json_encode($response);
     die;
 
 }
@@ -130,22 +129,22 @@ function ldl_ajax__dropdown_change() {
         'code' => 'Zip / Postal Code',
     );
 
-    if ( isset( $labels[ $subdivision ] ) ) {
-        $sub  = $labels[ $subdivision ]['sub'];
-        $code = $labels[ $subdivision ]['code'];
+    if (isset($labels[$subdivision])) {
+        $sub = $labels[$subdivision]['sub'];
+        $code = $labels[$subdivision]['code'];
     } else {
         //$sub  = '"' . $subdivision . '"' . $defaults['sub'];
-        $sub  = $defaults['sub'];
+        $sub = $defaults['sub'];
         $code = $defaults['code'];
     }
 
-    $output = ldl_dropdown_subdivision( $subdivision, '', 9 );
-    echo json_encode( array(
+    $output = ldl_dropdown_subdivision($subdivision, '', 9);
+    echo json_encode(array(
         'subdivision' => $subdivision,
-        'input' => $output,
-        'sub'   => $sub,
-        'code'  => $code,
-    ) );
+        'input'       => $output,
+        'sub'         => $sub,
+        'code'        => $code,
+    ));
 
     die;
 }
@@ -153,36 +152,36 @@ function ldl_ajax__dropdown_change() {
 
 function ldl_store_tracking_response() {
 
-	if ( !wp_verify_nonce( $_POST['nonce'], 'lite_allow_tracking_nonce' ) )
-		die();
+    if (!wp_verify_nonce($_POST['nonce'], 'lite_allow_tracking_nonce'))
+        die();
 
-	$ldl = ldl_get_instance();
+    $ldl = ldl_get_instance();
 
-	$ldl->update_setting( 'allow_tracking_popup_done', true );
+    $ldl->update_setting('allow_tracking_popup_done', true);
 
-	if ( $_POST['allow_tracking'] == 'yes' ) {
-		$ldl->update_setting( 'allow_tracking', true );
-	} else {
-		$ldl->update_setting( 'allow_tracking', false );
-	}
+    if ($_POST['allow_tracking'] == 'yes') {
+        $ldl->update_setting('allow_tracking', true);
+    } else {
+        $ldl->update_setting('allow_tracking', false);
+    }
 
-	$ldl->save_settings();
+    $ldl->save_settings();
 }
 
 
 function ldl_hide_upgrade_notice() {
-    if( wp_verify_nonce( $_POST['nonce'], 'directory-upgrade-nononce' ) ) {
-        if( update_option( 'lddlite_upgraded_from_original', true ) ) die( '1' );
-        else die( '0' );
+    if (wp_verify_nonce($_POST['nonce'], 'directory-upgrade-nononce')) {
+        if (update_option('lddlite_upgraded_from_original', true))
+            die('1'); else die('0');
     }
 }
 
 
-add_action( 'wp_ajax_contact_form',        'ldl_ajax__contact_form' );
-add_action( 'wp_ajax_nopriv_contact_form', 'ldl_ajax__contact_form' );
+add_action('wp_ajax_contact_form', 'ldl_ajax__contact_form');
+add_action('wp_ajax_nopriv_contact_form', 'ldl_ajax__contact_form');
 
-add_action( 'wp_ajax_dropdown_change',        'ldl_ajax__dropdown_change' );
-add_action( 'wp_ajax_nopriv_dropdown_change', 'ldl_ajax__dropdown_change' );
+add_action('wp_ajax_dropdown_change', 'ldl_ajax__dropdown_change');
+add_action('wp_ajax_nopriv_dropdown_change', 'ldl_ajax__dropdown_change');
 
-add_action( 'wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response' );
-add_action( 'wp_ajax_hide_directoryup_notice', 'ldl_hide_upgrade_notice' );
+add_action('wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response');
+add_action('wp_ajax_hide_directoryup_notice', 'ldl_hide_upgrade_notice');

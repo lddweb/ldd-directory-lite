@@ -133,10 +133,10 @@ function ldl_submit_create_user($username, $email) {
  * Create the post associated with the new listing. This takes information from the submit form, and a $user_id
  * that was generated previously in ldl_submit_create_user()
  *
- * @param string $name The listing/post title
+ * @param string $name        The listing/post title
  * @param string $description The description, which may contain markdown
- * @param int $cat_id The taxonomy ID for this listing
- * @param int $user_id The author of this listing
+ * @param int    $cat_id      The taxonomy ID for this listing
+ * @param int    $user_id     The author of this listing
  *
  * @return int|WP_Error A valid $post_id on success, and the WP_Error object on failure
  */
@@ -164,8 +164,8 @@ function ldl_submit_create_post($name, $description, $cat_id, $user_id) {
 /**
  * Removes non-meta fields from the processed data array and inserts the remaining values as post meta.
  *
- * @param array $data The processed data provided by the $lddlite_submit_processor object
- * @param int $post_id The post ID returned by ldl_submit_create_post()
+ * @param array $data    The processed data provided by the $lddlite_submit_processor object
+ * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
 function ldl_submit_create_meta($data, $post_id) {
 
@@ -183,8 +183,8 @@ function ldl_submit_create_meta($data, $post_id) {
 /**
  * Send an email notification to the email specified in the directory settings.
  *
- * @param array $data The processed data provided by the $lddlite_submit_processor object
- * @param int $post_id The post ID returned by ldl_submit_create_post()
+ * @param array $data    The processed data provided by the $lddlite_submit_processor object
+ * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
 function ldl_submit_notify_admin($data, $post_id) {
 
@@ -193,8 +193,8 @@ function ldl_submit_notify_admin($data, $post_id) {
     $message = ldl_get_setting('email_toadmin_body');
 
     $message = str_replace('{aprove_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
-    $message = str_replace('{title}', $data[ 'title' ], $message);
-    $message = str_replace('{description}', $data[ 'description' ], $message);
+    $message = str_replace('{title}', $data['title'], $message);
+    $message = str_replace('{description}', $data['description'], $message);
 
     ldl_mail($to, $subject, $message);
 }
@@ -204,20 +204,20 @@ function ldl_submit_notify_admin($data, $post_id) {
  * Send an email notification to the author of the listing, an easy way to supply them with a copy of the
  * information they submitted and any helpful advice while waiting for it to be approved.
  *
- * @param array $data The processed data provided by the $lddlite_submit_processor object
- * @param int $post_id The post ID returned by ldl_submit_create_post()
+ * @param array $data    The processed data provided by the $lddlite_submit_processor object
+ * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
 function ldl_submit_notify_author($data) {
 
-    $to = $data[ 'email' ];
+    $to = $data['email'];
     $subject = ldl_get_setting('email_onsubmit_subject');
     $message = ldl_get_setting('email_onsubmit_body');
 
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
     $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
     $message = str_replace('{directory_email}', ldl_get_setting('email_from_address'), $message);
-    $message = str_replace('{title}', $data[ 'title' ], $message);
-    $message = str_replace('{description}', $data[ 'description' ], $message);
+    $message = str_replace('{title}', $data['title'], $message);
+    $message = str_replace('{description}', $data['description'], $message);
 
     ldl_mail($to, $subject, $message);
 }
@@ -263,14 +263,14 @@ function ldl_submit_generate_listing() {
     // I considered storing the IDs as they were generated, and simply setting back on whatever failed,
     // but that won't work unless I have a way of disabling form fields on the fly.
 
-    $user_id = is_user_logged_in() ? get_current_user_id() : ldl_submit_create_user($data[ 'username' ], $data[ 'email' ]);
+    $user_id = is_user_logged_in() ? get_current_user_id() : ldl_submit_create_user($data['username'], $data['email']);
     if (is_wp_error($user_id)) {
         $lddlite_submit_processor->set_global_error(__('There was a problem creating your user account. Please try again later.', 'lddlite'));
 
         return false;
     }
 
-    $post_id = ldl_submit_create_post($data[ 'title' ], $data[ 'description' ], $data[ 'category' ], $user_id);
+    $post_id = ldl_submit_create_post($data['title'], $data['description'], $data['category'], $user_id);
     if (!$post_id) {
         $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'lddlite'));
         ldl_submit_rollback(array(
@@ -284,7 +284,7 @@ function ldl_submit_generate_listing() {
     ldl_submit_create_meta($data, $post_id);
 
     // Upload their logo if one was submitted
-    if (isset($_FILES[ 'ld_s_logo' ])) {
+    if (isset($_FILES['ld_s_logo'])) {
         // These files need to be included as dependencies when on the front end.
         require_once(ABSPATH . 'wp-admin/includes/image.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');

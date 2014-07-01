@@ -20,29 +20,29 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-if ( ! defined( 'WPINC' ) ) die;
+if (!defined('WPINC'))
+    die;
 
 /**
  * Define constants
  */
-define( 'LDDLITE_VERSION',      '0.5.5-beta' );
+define('LDDLITE_VERSION', '0.5.5-beta');
 
-define( 'LDDLITE_PATH',         trailingslashit( dirname( __FILE__ ) ) );
-define( 'LDDLITE_URL',          plugin_dir_url( __FILE__ ) );
+define('LDDLITE_PATH', trailingslashit(dirname(__FILE__)));
+define('LDDLITE_URL', plugin_dir_url(__FILE__));
 
-define( 'LDDLITE_POST_TYPE',    'directory_listings' );
-define( 'LDDLITE_TAX_CAT',      'listing_category' );
-define( 'LDDLITE_TAX_TAG',      'listing_tag' );
+define('LDDLITE_POST_TYPE', 'directory_listings');
+define('LDDLITE_TAX_CAT', 'listing_category');
+define('LDDLITE_TAX_TAG', 'listing_tag');
 
-define( 'LDDLITE_PFX',          '_lddlite' );
+define('LDDLITE_PFX', '_lddlite');
 
 
 /**
  * Flush the rewrites for custom post types
  */
-register_activation_hook( __FILE__, array( 'ldd_directory_lite', 'flush_rewrite' ) );
-register_deactivation_hook( __FILE__, array( 'ldd_directory_lite', 'flush_rewrite' ) );
-
+register_activation_hook(__FILE__, array('ldd_directory_lite', 'flush_rewrite'));
+register_deactivation_hook(__FILE__, array('ldd_directory_lite', 'flush_rewrite'));
 
 
 /**
@@ -76,91 +76,90 @@ class ldd_directory_lite {
      * @return ldd_directory_lite An instance of the ldd_directory_lite class
      */
     public static function get_instance() {
-        if ( null === self::$_instance ) {
-	        require_once( LDDLITE_PATH . 'includes/functions.php' );
+        if (null === self::$_instance) {
+            require_once(LDDLITE_PATH . 'includes/functions.php');
 
             self::$_instance = new self;
             self::$_instance->init();
             self::$_instance->include_files();
             self::$_instance->action_filters();
         }
+
         return self::$_instance;
     }
 
 
-	/**
-	 * Populate the settings property based on a set of defaults and information pulled from
-	 * the database. This will also check for and fire an upgrade if necessary.
-	 *
-	 * @since 0.5.0
-	 */
-	public function init() {
+    /**
+     * Populate the settings property based on a set of defaults and information pulled from
+     * the database. This will also check for and fire an upgrade if necessary.
+     *
+     * @since 0.5.0
+     */
+    public function init() {
 
-		$this->settings = wp_parse_args(
-			get_option( 'lddlite_settings' ),
-			ldl_get_default_settings() );
+        $this->settings = wp_parse_args(get_option('lddlite_settings'), ldl_get_default_settings());
 
-		$version = get_option( 'lddlite_version' );
+        $version = get_option('lddlite_version');
 
-		if ( LDDLITE_VERSION != $version ) {
-			global $upgrades;
+        if (LDDLITE_VERSION != $version) {
+            global $upgrades;
 
-			$upgrades = array(
-				'0.5.5-beta' => false,
-			);
+            $upgrades = array(
+                '0.5.5-beta' => false,
+            );
 
-			foreach ( $upgrades as $upgrade => $trigger ) {
+            foreach ($upgrades as $upgrade => $trigger) {
 
-				if ( version_compare( $version, $upgrade, '<' ) ) {
-					$upgrade_available = true;
-					$upgrades[ $upgrade ] = true;
-				}
+                if (version_compare($version, $upgrade, '<')) {
+                    $upgrade_available = true;
+                    $upgrades[$upgrade] = true;
+                }
 
-			}
+            }
 
-			if ( isset( $upgrade_available ) )
-				require_once( LDDLITE_PATH . 'upgrade.php' );
+            if (isset($upgrade_available))
+                require_once(LDDLITE_PATH . 'upgrade.php');
 
-			$version = LDDLITE_VERSION;
-			update_option( 'lddlite_version', $version );
+            $version = LDDLITE_VERSION;
+            update_option('lddlite_version', $version);
 
-		}
+        }
 
-		$this->version = $version;
+        $this->version = $version;
 
-	}
+    }
 
 
-	/**
+    /**
      * Include all the files we'll need to function.
      *
      * @since 0.5.0
      */
     public function include_files() {
 
-	    { // Check for the existence of the old plugin and offer to import any data
-		    $plugin = 'ldd-business-directory/lddbd_core.php';
-		    $dir = dirname( __FILE__ );
-		    $plugin_path = substr( $dir, 0, strrpos( $dir, '/' ) ) . '/' . $plugin;
-		    if ( file_exists( $plugin_path ) && false == get_option( 'lddlite_upgraded_from_original' ) )
-			    require_once( LDDLITE_PATH . 'import-lddbd.php' );
-	    }
+        { // Check for the existence of the old plugin and offer to import any data
+            $plugin = 'ldd-business-directory/lddbd_core.php';
+            $dir = dirname(__FILE__);
+            $plugin_path = substr($dir, 0, strrpos($dir, '/')) . '/' . $plugin;
+            if (file_exists($plugin_path) && false == get_option('lddlite_upgraded_from_original'))
+                require_once(LDDLITE_PATH . 'import-lddbd.php');
+        }
 
         // functions.php is included when the object is instantiated
-        require_once( LDDLITE_PATH . 'includes/template-functions.php' );
-        require_once( LDDLITE_PATH . 'includes/class.phone.php' );
-        require_once( LDDLITE_PATH . 'includes/class.tracking.php' );
-        require_once( LDDLITE_PATH . 'includes/post-types.php' );
-        require_once( LDDLITE_PATH . 'includes/shortcodes/directory.php' );
-        require_once( LDDLITE_PATH . 'includes/shortcodes/submit.php' );
-        require_once( LDDLITE_PATH . 'includes/setup.php' );
-        require_once( LDDLITE_PATH . 'includes/ajax.php' );
+        require_once(LDDLITE_PATH . 'includes/template-functions.php');
+        require_once(LDDLITE_PATH . 'includes/class.phone.php');
+        require_once(LDDLITE_PATH . 'includes/class.tracking.php');
+        require_once(LDDLITE_PATH . 'includes/post-types.php');
+        require_once(LDDLITE_PATH . 'includes/shortcodes/directory.php');
+        require_once(LDDLITE_PATH . 'includes/shortcodes/submit.php');
+        require_once(LDDLITE_PATH . 'includes/setup.php');
+        require_once(LDDLITE_PATH . 'includes/ajax.php');
 
-        if ( is_admin() ) {
-            require_once( LDDLITE_PATH . 'includes/admin/metaboxes.php' );
-            require_once( LDDLITE_PATH . 'includes/admin/pointers.php' );
-            require_once( LDDLITE_PATH . 'includes/admin/settings.php' );
-            require_once( LDDLITE_PATH . 'includes/admin/help.php' );
+        if (is_admin()) {
+            require_once(LDDLITE_PATH . 'includes/admin/metaboxes.php');
+            require_once(LDDLITE_PATH . 'includes/admin/pointers.php');
+            require_once(LDDLITE_PATH . 'includes/admin/settings.php');
+            require_once(LDDLITE_PATH . 'includes/admin/help.php');
         }
     }
 
@@ -173,7 +172,7 @@ class ldd_directory_lite {
      * @since 0.5.0
      */
     public function action_filters() {
-        add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+        add_action('init', array($this, 'load_plugin_textdomain'));
     }
 
     /**
@@ -185,15 +184,14 @@ class ldd_directory_lite {
 
 
         $lang_dir = LDDLITE_PATH . 'languages/';
-        $lang_dir = apply_filters( 'lddlite_languages_directory', $lang_dir );
+        $lang_dir = apply_filters('lddlite_languages_directory', $lang_dir);
 
-        $locale = apply_filters( 'plugin_locale', get_locale(), 'lddlite' );
+        $locale = apply_filters('plugin_locale', get_locale(), 'lddlite');
         $mofile = $lang_dir . 'lddlite' . $locale . '.mo';
 
-        if ( file_exists( $mofile ) )
-            load_textdomain( 'lddlite', $mofile );
-        else
-            load_plugin_textdomain( 'lddlite', false, $lang_dir );
+        if (file_exists($mofile))
+            load_textdomain('lddlite', $mofile); else
+            load_plugin_textdomain('lddlite', false, $lang_dir);
 
     }
 
@@ -204,45 +202,46 @@ class ldd_directory_lite {
      * be explicitly tested.
      *
      * @since 0.5.3
+     *
      * @param string $key The configuration setting we need the value of
+     *
      * @return mixed An empty string, or the setting value
      */
-    public function get_setting( $key ) {
+    public function get_setting($key) {
 
-        if ( empty( $this->settings ) )
-	        $this->populate_options();
+        if (empty($this->settings))
+            $this->populate_options();
 
-        return isset( $this->settings[ $key ] ) ? $this->settings[ $key ] : '';
+        return isset($this->settings[$key]) ? $this->settings[$key] : '';
     }
-
-
-    /**
-     * Update a configuration setting stored in the private $settings array
-     *
-     * @since 0.5.3
-     * @param string $key The configuration setting we're updating
-     * @param mixed $value The value for the configuration setting, leave empty to initialize
-     */
-    public function update_setting( $key, $value = '' ) {
-
-		if ( empty( $key ) || !isset( $this->settings[ $key ] ) )
-			return;
-
-		$this->settings[ $key ] = $value;
-	}
-
 
     /**
      * An alias for update_setting() at present, may have further use in the future.
      *
      * @since 0.5.3
-     * @param string $key The configuration setting we're updating
-     * @param mixed $value The value for the configuration setting, leave empty to initialize
+     *
+     * @param string $key   The configuration setting we're updating
+     * @param mixed  $value The value for the configuration setting, leave empty to initialize
      */
-    public function add_setting( $key, $value = '' ) {
-		$this->update_setting( $key, $value );
-	}
+    public function add_setting($key, $value = '') {
+        $this->update_setting($key, $value);
+    }
 
+    /**
+     * Update a configuration setting stored in the private $settings array
+     *
+     * @since 0.5.3
+     *
+     * @param string $key   The configuration setting we're updating
+     * @param mixed  $value The value for the configuration setting, leave empty to initialize
+     */
+    public function update_setting($key, $value = '') {
+
+        if (empty($key) || !isset($this->settings[$key]))
+            return;
+
+        $this->settings[$key] = $value;
+    }
 
     /**
      * Writes the $settings array to the database.
@@ -250,9 +249,9 @@ class ldd_directory_lite {
      * @since 0.5.3
      */
     public function save_settings() {
-		if ( !empty( $this->settings ) )
-			update_option( 'lddlite_settings', $this->settings );
-	}
+        if (!empty($this->settings))
+            update_option('lddlite_settings', $this->settings);
+    }
 
 }
 
@@ -263,7 +262,7 @@ class ldd_directory_lite {
  * @return ldd_directory_lite The controller singleton
  */
 function ldl_get_instance() {
-	return ldd_directory_lite::get_instance();
+    return ldd_directory_lite::get_instance();
 }
 
 /**

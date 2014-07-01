@@ -13,19 +13,19 @@
  */
 
 
-function ldl_filter__term_link( $termlink ) {
+function ldl_filter__term_link($termlink) {
     global $post;
 
-    $link = explode( '?', $termlink);
+    $link = explode('?', $termlink);
 
-    if ( count( $link ) < 2 || !is_object( $post ) )
+    if (count($link) < 2 || !is_object($post))
         return $termlink;
 
-    parse_str( $link[1], $link );
+    parse_str($link[1], $link);
 
-    $permalink = get_permalink( $post->ID );
+    $permalink = get_permalink($post->ID);
 
-    if ( $permalink && isset( $link[LDDLITE_TAX_CAT] ) )
+    if ($permalink && isset($link[LDDLITE_TAX_CAT]))
         $termlink = $permalink . '?show=category&t=' . $link[LDDLITE_TAX_CAT];
 
     return $termlink;
@@ -35,50 +35,51 @@ function ldl_filter__term_link( $termlink ) {
 /**
  * Generates a permalink for the listing based on the post_id of where the shortcode is located.
  *
- * @param string $post_link The post's permalink.
- * @param WP_Post $post The post object.
+ * @param string  $post_link The post's permalink.
+ * @param WP_Post $post      The post object.
+ *
  * @return string Original permalink if the wrong post type, blank if directory_page isn't set, and the link if it is
  */
-function ldl_filter__post_type_link( $post_link, $post ) {
+function ldl_filter__post_type_link($post_link, $post) {
 
-    if ( LDDLITE_POST_TYPE != get_post_type( $post->ID ) )
+    if (LDDLITE_POST_TYPE != get_post_type($post->ID))
         return $post_link;
 
-    $post_id = ldl_get_setting( 'directory_page' );
+    $post_id = ldl_get_setting('directory_page');
 
-    if ( !$post_id )
+    if (!$post_id)
         return '';
 
-    $permalink = get_permalink( $post_id );
+    $permalink = get_permalink($post_id);
 
-    return add_query_arg( array(
+    return add_query_arg(array(
         'show' => 'listing',
         't'    => $post->post_name,
-    ), $permalink );
+    ), $permalink);
 }
 
 
-function ldl_filter__enter_title_here ( $title ) {
-    if ( get_post_type() == LDDLITE_POST_TYPE )
-        $title = __( 'Listing Name', 'lddlite' );
+function ldl_filter__enter_title_here($title) {
+    if (get_post_type() == LDDLITE_POST_TYPE)
+        $title = __('Listing Name', 'lddlite');
 
     return $title;
 }
 
 
-function ldl_filter__admin_post_thumbnail_html( $content ) {
+function ldl_filter__admin_post_thumbnail_html($content) {
 
-    if ( LDDLITE_POST_TYPE == get_post_type() ) {
-        $content = str_replace( __( 'Set featured image' ), __( 'Upload A Logo', 'lddlite' ), $content);
-        $content = str_replace( __( 'Remove featured image' ), __( 'Remove Logo', 'lddlite' ), $content);
+    if (LDDLITE_POST_TYPE == get_post_type()) {
+        $content = str_replace(__('Set featured image'), __('Upload A Logo', 'lddlite'), $content);
+        $content = str_replace(__('Remove featured image'), __('Remove Logo', 'lddlite'), $content);
     }
 
     return $content;
 }
 
 
-function ldl_filter__get_shortlink( $shortlink ) {
-    if ( LDDLITE_POST_TYPE == get_post_type () )
+function ldl_filter__get_shortlink($shortlink) {
+    if (LDDLITE_POST_TYPE == get_post_type())
         return false;
 }
 
@@ -96,81 +97,83 @@ function ldl_action__submenu_title() {
 }
 
 
-function ldl_action__send_approved_email( $post ) {
+function ldl_action__send_approved_email($post) {
 
-    if ( LDDLITE_POST_TYPE != get_post_type() || 1 == get_post_meta( $post->ID, '_approved', true ) )
+    if (LDDLITE_POST_TYPE != get_post_type() || 1 == get_post_meta($post->ID, '_approved', true))
         return;
 
-    $user = get_userdata( $post->post_author );
+    $user = get_userdata($post->post_author);
 
     $user_nicename = $user->data->display_name;
     $user_email = $user->data->user_email;
 
     $post_slug = $post->post_name;
-    $permalink = add_query_arg( array( 'show' => 'listing', 't' => $post_slug ), ldl_get_setting( 'directory_page' ) );
+    $permalink = add_query_arg(array('show' => 'listing', 't' => $post_slug), ldl_get_setting('directory_page'));
 
-    $subject = ldl_get_setting( 'email_onapprove_subject' );
-    $message = ldl_get_setting( 'email_onapprove_body' );
+    $subject = ldl_get_setting('email_onapprove_subject');
+    $message = ldl_get_setting('email_onapprove_body');
 
-    $message = str_replace( '{site_title}', get_bloginfo( 'name' ), $message );
-    $message = str_replace( '{directory_title}', ldl_get_setting( 'directory_label' ), $message );
-    $message = str_replace( '{link}', $permalink, $message );
+    $message = str_replace('{site_title}', get_bloginfo('name'), $message);
+    $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
+    $message = str_replace('{link}', $permalink, $message);
 
-    ldl_mail( $user_email, $subject, $message );
-    update_post_meta( $post->ID, '_approved', 1 );
+    ldl_mail($user_email, $subject, $message);
+    update_post_meta($post->ID, '_approved', 1);
 
 }
 
 
+function ldl_template_include($template) {
 
-
-function ldl_template_include( $template ) {
-
-    if ( LDDLITE_POST_TYPE == get_post_type() ) {
+    if (LDDLITE_POST_TYPE == get_post_type()) {
 
         $templates = array();
 
-        if ( is_single() ) { $templates[] = 'single.php'; }
-        else if ( is_archive() ) { $templates[] = 'category.php'; }
+        if (is_single()) {
+            $templates[] = 'single.php';
+        } else if (is_archive()) {
+            $templates[] = 'category.php';
+        }
 
-        $located = ldl_locate_template( $templates, false, false );
+        $located = ldl_locate_template($templates, false, false);
 
-        if ( $located )
+        if ($located)
             return $located;
 
     }
 
     return $template;
 }
-add_filter( 'template_include', 'ldl_template_include' );
+
+add_filter('template_include', 'ldl_template_include');
 
 
 //add_filter( 'term_link', 'ldl_filter__term_link' );
 //add_filter( 'post_type_link', 'ldl_filter__post_type_link', 10, 2 );
-add_filter( 'enter_title_here', 'ldl_filter__enter_title_here' );
-add_filter( 'admin_post_thumbnail_html', 'ldl_filter__admin_post_thumbnail_html' );
-add_filter( 'get_shortlink', 'ldl_filter__get_shortlink' );
+add_filter('enter_title_here', 'ldl_filter__enter_title_here');
+add_filter('admin_post_thumbnail_html', 'ldl_filter__admin_post_thumbnail_html');
+add_filter('get_shortlink', 'ldl_filter__get_shortlink');
 
-add_action( 'admin_head', 'ldl_action__admin_menu_icon' );
-add_action( '_admin_menu', 'ldl_action__submenu_title' );
+add_action('admin_head', 'ldl_action__admin_menu_icon');
+add_action('_admin_menu', 'ldl_action__submenu_title');
 
-add_action( 'pending_to_publish', 'ldl_action__send_approved_email' );
+add_action('pending_to_publish', 'ldl_action__send_approved_email');
 
 
+function ldl_relabel($translations, $text, $domain) {
 
-function ldl_relabel( $translations, $text, $domain ) {
+    if (LDDLITE_POST_TYPE != get_post_type())
+        return $translations;
 
-	if ( LDDLITE_POST_TYPE != get_post_type() )
-		return $translations;
+    $hot_swap = array(
+        'Excerpt'                                                                                                                                                                                         => 'Promotion',
+        'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '',
+    );
 
-	$hot_swap = array(
-		'Excerpt' => 'Promotion',
-		'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '',
-	);
+    if (array_key_exists($text, $hot_swap))
+        $translations = $hot_swap[$text];
 
-	if ( array_key_exists( $text, $hot_swap ) )
-		$translations = $hot_swap[ $text ];
-
-	return $translations;
+    return $translations;
 }
-add_filter( 'gettext', 'ldl_relabel', 10, 3 );
+
+add_filter('gettext', 'ldl_relabel', 10, 3);
