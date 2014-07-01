@@ -13,7 +13,7 @@ foreach ($upgrades as $version => $trigger) {
 
     switch ($version) {
 
-        case '0.5.5-beta':
+        case '0.6.0-beta':
             global $wpdb;
 
             $IDs = ldl_upgrade__get_IDs();

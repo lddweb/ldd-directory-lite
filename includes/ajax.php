@@ -105,51 +105,6 @@ function ldl_ajax__contact_form() {
 }
 
 
-function ldl_ajax__dropdown_change() {
-
-    $subdivision = $_POST['subdivision'];
-
-    $labels = array(
-        'US' => array(
-            'sub'  => 'State',
-            'code' => 'Zip'
-        ),
-        'CA' => array(
-            'sub'  => 'Province',
-            'code' => 'Postal Code',
-        ),
-        'GB' => array(
-            'sub'  => 'County',
-            'code' => 'Post Code',
-        ),
-    );
-
-    $defaults = array(
-        'sub'  => 'State / Province / Locality',
-        'code' => 'Zip / Postal Code',
-    );
-
-    if (isset($labels[$subdivision])) {
-        $sub = $labels[$subdivision]['sub'];
-        $code = $labels[$subdivision]['code'];
-    } else {
-        //$sub  = '"' . $subdivision . '"' . $defaults['sub'];
-        $sub = $defaults['sub'];
-        $code = $defaults['code'];
-    }
-
-    $output = ldl_dropdown_subdivision($subdivision, '', 9);
-    echo json_encode(array(
-        'subdivision' => $subdivision,
-        'input'       => $output,
-        'sub'         => $sub,
-        'code'        => $code,
-    ));
-
-    die;
-}
-
-
 function ldl_store_tracking_response() {
 
     if (!wp_verify_nonce($_POST['nonce'], 'lite_allow_tracking_nonce'))

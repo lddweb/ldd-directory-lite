@@ -110,13 +110,9 @@ I tend to spend a lot of time coding; not only is it my day job, but it's also o
 **Where:** [WordPress SEO](https://yoast.com/wordpress/plugins/#wpseo) Usage Tracking<br>
 **Why:** Code from the WordPress SEO plugin was integrated into this plugin in order to quickly add anonymous usage tracking. The information supplied by those who opt in to this program allows us a fantastic insight as to what configurations the plugin is being used on, and how to test future releases.
 
-**Who:** [Bootstrap](http://getbootstrap.com/) & [Bootflat](http://bootflat.github.io/)<br>
+**Who:** [Bootstrap](http://getbootstrap.com/)<br>
 **Where:** Front end interface.<br>
-**Why:** A trimmed down copy of bootstrap (which can be disabled if your theme already uses it) and bootflat were used to rapidly define the front end interface for the plugin. These libraries are amazing feats of CSS prowess.
-
-**Who:** [Viljami S.](http://viljamis.com), [Henrik Joreteg, Adam Brault & Michael Garvin](http://happyjs.com/), [Ryan Heath](http://rpheath.com/)<br>
-**Where:** [Responsive Slides](http://responsiveslides.com), [Happy.js](http://happyjs.com/), and [searchbox](https://github.com/rpheath/searchbox)<br>
-**Why:** Various javascript elements all around the plugin are built on or with scripts originally coded by the above folk. As of this writing, my own javascript abilities are nowhere near as advanced as my ability to draw circles on my stomach and pat my head at the same time. Until they are, I seek out the knowledge of others.
+**Why:** A trimmed down copy of bootstrap was used to rapidly define the front end interface for the plugin.
 
 **Who:** [Evan Solomon](http://evansolomon.me/), [Michel Fortin](http://michelf.ca), & [John Gruber](http://daringfireball.net)<br>
 **Where:** [WP Github Flavored Markdown Comments](https://github.com/evansolomon/wp-github-flavored-markdown-comments/blob/master/github-flavored-markdown-comments.php)<br>

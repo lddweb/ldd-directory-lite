@@ -69,9 +69,12 @@ EM;
     }
 
     $defaults = apply_filters('lddlite_default_settings_array', array(
+        'directory_front_page'        => '',
+        'directory_submit_page'       => '',
+        'directory_archive_slug'      => 'directory',
+        'directory_listing_slug'      => 'listing',
         'directory_label'             => get_bloginfo('name'),
         'directory_description'       => '',
-        'directory_page'              => '',
         'disable_bootstrap'           => 0,
         'public_or_private'           => 1,
         'google_maps'                 => 1,
@@ -86,9 +89,6 @@ EM;
         'email_onapprove_body'        => $email['on_approve'],
         'submit_use_tos'              => 0,
         'submit_tos'                  => '',
-        'submit_use_locale'           => 0,
-        'submit_locale'               => 'US',
-        'submit_require_address'      => 1,
         'allow_tracking_popup_done'   => 0,
         'allow_tracking'              => 0,
         'appearance_display_new'      => 1,
@@ -260,10 +260,7 @@ function ldl_get_listing_meta($id) {
         $meta['website'] = apply_filters('lddlite_listing_website', sprintf('<a href="%1$s"><i class="fa fa-link"></i>  %1$s</a>', esc_url($website)));
 
     $meta['email'] = get_post_meta($id, '_lddlite_contact_email', 1);
-
-    $phone = get_post_meta($id, '_lddlite_contact_phone', 1);
-    if ($phone)
-        $meta['phone'] = ldl_format_phone($phone);
+    $meta['phone'] = get_post_meta($id, '_lddlite_contact_phone', 1);
 
     $meta = wp_parse_args($meta, $defaults);
 

@@ -17,7 +17,7 @@
 /**
  * This is the trailing name for the directory containing all directory templates.
  *
- * @since 0.5.5
+ * @since 0.6.0
  * @return string
  */
 function ldl_get_template_dir_name() {
@@ -29,7 +29,7 @@ function ldl_get_template_dir_name() {
  * Nearly identical to WordPress own get_template_part(), we're mainly duplicating this to swap out
  * locate_template() with our own helper function.
  *
- * @since 0.5.5
+ * @since 0.6.0
  * @uses  ldl_locate_template()
  *
  * @param string $slug The parent template we're looking for
@@ -57,7 +57,7 @@ function ldl_get_template_part($slug, $name = null) {
  *
  * @todo  How are we going to let developers know when there's major updates to a core template?
  *
- * @since 0.5.5
+ * @since 0.6.0
  *
  * @param array $templates    The array of templates to look for
  * @param bool  $load         Whether to return the path, or to load the template
@@ -110,7 +110,7 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
 /**
  * Get the link to the submit form
  *
- * @since 0.5.5
+ * @since 0.6.0
  * @todo  This will have to be updated once the submit is fully transitioned to its own shortcode/page
  */
 function ldl_get_submit_form_link() {
@@ -151,22 +151,13 @@ function ldl_get_thumbnail($post_id) {
 
     $link_mask = '<a href="' . $link . '" title="' . esc_attr($title) . '">%1$s</a>';
 
-    if (has_post_thumbnail($post_id))
-        $thumbnail = sprintf($link_mask, get_the_post_thumbnail($post_id, 'directory-listing', array('class' => 'img-rounded'))); else
+    if (has_post_thumbnail($post_id)) {
+        $thumbnail = sprintf($link_mask, get_the_post_thumbnail($post_id, 'directory-listing', array('class' => 'img-rounded')));
+    } else {
         $thumbnail = sprintf($link_mask, '<img src="' . LDDLITE_URL . 'public/images/noimage.png" class="img-rounded">');
+    }
 
     return $thumbnail;
-}
-
-function ldl_get_title() {
-    $post_id = get_the_ID();
-
-    if (!is_int($post_id))
-        return false;
-
-    $link_mask = '<a href="%1$s" title="%2$s">%2$s</a>';
-
-    return sprintf($link_mask, get_permalink($post_id), get_the_title($title));
 }
 
 
@@ -194,10 +185,6 @@ function ldl_get_parent_categories() {
     $categories = '';
     foreach ($directory_terms as $category) {
         $term_link = get_term_link($category);
-        /*        $term_link = add_query_arg( array(
-                    'show'  => 'category',
-                    't'     => $category->slug,
-                ) );*/
         $categories .= sprintf('<a href="%1$s" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>', $term_link, $category->name, $category->count);
     }
 
@@ -256,4 +243,5 @@ function ldl_get_social($id, $class = 'btn btn-success', $email_btn = true) {
 
     return $output;
 }
+
 

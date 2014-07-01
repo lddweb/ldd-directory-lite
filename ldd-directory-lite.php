@@ -10,7 +10,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.5.5-beta
+ * Version:           0.6.0-beta
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '0.5.5-beta');
+define('LDDLITE_VERSION', '0.6.0-beta');
 
 define('LDDLITE_PATH', trailingslashit(dirname(__FILE__)));
 define('LDDLITE_URL', plugin_dir_url(__FILE__));
@@ -41,8 +41,8 @@ define('LDDLITE_PFX', '_lddlite');
 /**
  * Flush the rewrites for custom post types
  */
-register_activation_hook(__FILE__, array('ldd_directory_lite', 'flush_rewrite'));
-register_deactivation_hook(__FILE__, array('ldd_directory_lite', 'flush_rewrite'));
+register_activation_hook(__FILE__, 'flush_rewrite_rules');
+register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 
 
 /**
@@ -52,20 +52,8 @@ register_deactivation_hook(__FILE__, array('ldd_directory_lite', 'flush_rewrite'
  */
 class ldd_directory_lite {
 
-    /**
-     * @var $_instance An instance of ones own instance
-     */
     private static $_instance = null;
-
-    /**
-     * @var array The plugins main settings array
-     */
     private $settings = array();
-
-    /**
-     * @var object This is a temporary storage facility for listings, transporting information between actions
-     */
-    private $listing_ID;
 
 
     /**
@@ -82,7 +70,6 @@ class ldd_directory_lite {
             self::$_instance = new self;
             self::$_instance->init();
             self::$_instance->include_files();
-            self::$_instance->action_filters();
         }
 
         return self::$_instance;
@@ -105,7 +92,7 @@ class ldd_directory_lite {
             global $upgrades;
 
             $upgrades = array(
-                '0.5.5-beta' => false,
+                '0.6.0-beta' => false,
             );
 
             foreach ($upgrades as $upgrade => $trigger) {
@@ -127,6 +114,9 @@ class ldd_directory_lite {
 
         $this->version = $version;
 
+        add_action('init', array($this, 'load_plugin_textdomain'));
+        //add_action('init', array('ldd_directory_lite_tracking', 'get_instance'));
+
     }
 
 
@@ -146,34 +136,20 @@ class ldd_directory_lite {
         }
 
         // functions.php is included when the object is instantiated
+        require_once(LDDLITE_PATH . 'includes/setup.php');
+        require_once(LDDLITE_PATH . 'includes/listings.php');
+        require_once(LDDLITE_PATH . 'includes/ajax.php');
         require_once(LDDLITE_PATH . 'includes/template-functions.php');
-        require_once(LDDLITE_PATH . 'includes/class.phone.php');
-        require_once(LDDLITE_PATH . 'includes/class.tracking.php');
-        require_once(LDDLITE_PATH . 'includes/post-types.php');
         require_once(LDDLITE_PATH . 'includes/shortcodes/directory.php');
         require_once(LDDLITE_PATH . 'includes/shortcodes/submit.php');
-        require_once(LDDLITE_PATH . 'includes/setup.php');
-        require_once(LDDLITE_PATH . 'includes/ajax.php');
 
         if (is_admin()) {
             require_once(LDDLITE_PATH . 'includes/admin/metaboxes.php');
-            require_once(LDDLITE_PATH . 'includes/admin/pointers.php');
             require_once(LDDLITE_PATH . 'includes/admin/settings.php');
             require_once(LDDLITE_PATH . 'includes/admin/help.php');
         }
     }
 
-
-    /**
-     * Really all this does at the moment is add the textdomain function, and given
-     * that there are no translations for the plugin at the moment, we're pretty much just
-     * going through the motions.
-     *
-     * @since 0.5.0
-     */
-    public function action_filters() {
-        add_action('init', array($this, 'load_plugin_textdomain'));
-    }
 
     /**
      * Load the related i18n files into the appropriate domain.
@@ -208,10 +184,6 @@ class ldd_directory_lite {
      * @return mixed An empty string, or the setting value
      */
     public function get_setting($key) {
-
-        if (empty($this->settings))
-            $this->populate_options();
-
         return isset($this->settings[$key]) ? $this->settings[$key] : '';
     }
 
@@ -265,8 +237,6 @@ function ldl_get_instance() {
     return ldd_directory_lite::get_instance();
 }
 
-/**
- * Das boot
- */
+/** Das boot */
 ldl_get_instance();
 

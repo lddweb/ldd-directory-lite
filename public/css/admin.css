@@ -4,10 +4,6 @@
     margin: -10px -22px 0;
 }
 
-.wrap.directory-lite .sub-heading {
-
-}
-
 .wrap h2.nav-tab-wrapper {
     margin-left: -8px;
     padding-left: 8px;
@@ -56,7 +52,7 @@ ul#directory-links li.right {
     margin-bottom: 2em;
 }
 
-.map_wrapper {
+.map-canvas {
     width: 100%;
     height: 340px;
     border-radius: 8px;

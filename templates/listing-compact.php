@@ -8,7 +8,7 @@
             <div class="col-sm-10">
                 <div class="listing-header row">
                     <div class="col-sm-8">
-                        <h2 class="listing-title"><?php echo ldl_get_title(); ?></h2>
+                        <h2 class="listing-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
                         <p class="website"><?php echo ldl_get_meta( 'url_website' ); ?></p>
                         <div class="listing-summary">
                             <?php the_excerpt(); ?>

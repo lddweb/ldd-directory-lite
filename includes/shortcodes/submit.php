@@ -228,7 +228,7 @@ function ldl_submit_notify_author($data) {
  * stopgap measure to allow the form to fail and be resubmitted. I think this can be better, but I want to get to
  * stable before I spend more time on it.
  *
- * @since 0.5.5
+ * @since 0.6.0
  *
  * @param array $ids An associate array identifying what needs to be deleted
  */
@@ -251,7 +251,7 @@ function ldl_submit_rollback($ids) {
  * should be sanitized and validated by now via the $lddlite_submit_processor object, however since errors are still
  * possible, I want this to be able to rollback on items that are created, or store their IDs for use on the next pass.
  *
- * @since 0.5.5
+ * @since 0.6.0
  * @return bool True only if successful, false if any errors occur
  */
 function ldl_submit_generate_listing() {
@@ -274,7 +274,7 @@ function ldl_submit_generate_listing() {
     if (!$post_id) {
         $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'lddlite'));
         ldl_submit_rollback(array(
-            'user_id' = $user_id,
+            'user_id' => $user_id,
         ));
 
         return false;
@@ -294,8 +294,8 @@ function ldl_submit_generate_listing() {
         if (is_wp_error($attachment_id)) {
             $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'lddlite'));
             ldl_submit_rollback(array(
-                'user_id' = $user_id,
-                'post_id' = $post_id,
+                'user_id' => $user_id,
+                'post_id' => $post_id,
             ));
 
             return false;
@@ -315,7 +315,7 @@ function ldl_submit_generate_listing() {
  * This is our shortcode callback for the submit listing form. It handles the display and the processing of the form
  * through delegation to the ldl_submit... functions found in this file.
  *
- * @since 0.5.5
+ * @since 0.6.0
  */
 function ldl_shortcode__submit() {
     global $lddlite_submit_processor;
@@ -330,7 +330,7 @@ function ldl_shortcode__submit() {
 
         if (ldl_submit_generate_listing()) {
             ldl_get_template_part('submit', 'success');
-            do_action('lddlite_submit_post_process' $lddlite_submit_processor);
+            do_action('lddlite_submit_post_process', $lddlite_submit_processor);
 
             return;
         }

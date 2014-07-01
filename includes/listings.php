@@ -13,52 +13,6 @@
  */
 
 
-function ldl_filter__term_link($termlink) {
-    global $post;
-
-    $link = explode('?', $termlink);
-
-    if (count($link) < 2 || !is_object($post))
-        return $termlink;
-
-    parse_str($link[1], $link);
-
-    $permalink = get_permalink($post->ID);
-
-    if ($permalink && isset($link[LDDLITE_TAX_CAT]))
-        $termlink = $permalink . '?show=category&t=' . $link[LDDLITE_TAX_CAT];
-
-    return $termlink;
-}
-
-
-/**
- * Generates a permalink for the listing based on the post_id of where the shortcode is located.
- *
- * @param string  $post_link The post's permalink.
- * @param WP_Post $post      The post object.
- *
- * @return string Original permalink if the wrong post type, blank if directory_page isn't set, and the link if it is
- */
-function ldl_filter__post_type_link($post_link, $post) {
-
-    if (LDDLITE_POST_TYPE != get_post_type($post->ID))
-        return $post_link;
-
-    $post_id = ldl_get_setting('directory_page');
-
-    if (!$post_id)
-        return '';
-
-    $permalink = get_permalink($post_id);
-
-    return add_query_arg(array(
-        'show' => 'listing',
-        't'    => $post->post_name,
-    ), $permalink);
-}
-
-
 function ldl_filter__enter_title_here($title) {
     if (get_post_type() == LDDLITE_POST_TYPE)
         $title = __('Listing Name', 'lddlite');
@@ -75,12 +29,6 @@ function ldl_filter__admin_post_thumbnail_html($content) {
     }
 
     return $content;
-}
-
-
-function ldl_filter__get_shortlink($shortlink) {
-    if (LDDLITE_POST_TYPE == get_post_type())
-        return false;
 }
 
 
@@ -122,6 +70,26 @@ function ldl_action__send_approved_email($post) {
 
 }
 
+function ldl_setup__customize_appearance() {
+
+    $panel_background = ldl_get_setting('appearance_panel_background');
+    $panel_foreground = ldl_get_setting('appearance_panel_foreground');
+
+    $css = <<<CSS
+<style media="all">
+    .panel-primary > .panel-heading {
+        background-color: {$panel_background};
+        border-color: {$panel_background};
+        color: {$panel_foreground};
+    }
+</style>
+CSS;
+
+    echo $css;
+}
+
+
+add_action('wp_footer', 'ldl_customize_appearance', 20);
 
 function ldl_template_include($template) {
 
@@ -147,33 +115,11 @@ function ldl_template_include($template) {
 
 add_filter('template_include', 'ldl_template_include');
 
-
-//add_filter( 'term_link', 'ldl_filter__term_link' );
-//add_filter( 'post_type_link', 'ldl_filter__post_type_link', 10, 2 );
 add_filter('enter_title_here', 'ldl_filter__enter_title_here');
 add_filter('admin_post_thumbnail_html', 'ldl_filter__admin_post_thumbnail_html');
-add_filter('get_shortlink', 'ldl_filter__get_shortlink');
 
 add_action('admin_head', 'ldl_action__admin_menu_icon');
 add_action('_admin_menu', 'ldl_action__submenu_title');
 
 add_action('pending_to_publish', 'ldl_action__send_approved_email');
 
-
-function ldl_relabel($translations, $text, $domain) {
-
-    if (LDDLITE_POST_TYPE != get_post_type())
-        return $translations;
-
-    $hot_swap = array(
-        'Excerpt'                                                                                                                                                                                         => 'Promotion',
-        'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '',
-    );
-
-    if (array_key_exists($text, $hot_swap))
-        $translations = $hot_swap[$text];
-
-    return $translations;
-}
-
-add_filter('gettext', 'ldl_relabel', 10, 3);

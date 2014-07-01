@@ -25,8 +25,8 @@ jQuery(document).ready(function($){
 (function ($) {
 
     $('.cmb-type-geo_location').each(function() {
-        var searchInput = $('.map_search', this).get(0)
-        var mapCanvas   = $('.map_wrapper', this).get(0)
+        var searchInput = $('.autocomplete', this).get(0)
+        var mapCanvas   = $('.map-canvas', this).get(0)
         var $lat = $('.lat', this)
         var $lng = $('.lng', this)
         var $formatted = $('.formatted', this)
