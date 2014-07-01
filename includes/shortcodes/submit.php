@@ -41,19 +41,39 @@ function ldl_submit_categories_dropdown($selected = 0, $id = 'category', $classe
 }
 
 
-function ldl_get_value($key) {
+/**
+ * Template alias for ldd_directory_lite_processor::get_value()
+ *
+ * @param string $field Identifies the value we're asking for
+ *
+ * @return mixed The value, empty if not a valid key
+ */
+function ldl_get_value($field) {
     global $lddlite_submit_processor;
 
-    return $lddlite_submit_processor->get_value($key);
+    return $lddlite_submit_processor->get_value($field);
 }
 
-function ldl_get_error($key) {
+
+/**
+ * Template alias for ldd_directory_lite_processor::get_value()
+ *
+ * @param string $field Identifies the error we're asking for
+ *
+ * @return mixed The error message or empty if none was found
+ */
+function ldl_get_error($field) {
     global $lddlite_submit_processor;
 
-    return $lddlite_submit_processor->get_error($key);
+    return $lddlite_submit_processor->get_error($field);
 }
 
 
+/**
+ * Template alias for ldd_directory_lite_processor::has_errors()
+ *
+ * @return bool True if errors exist, false otherwise
+ */
 function ldl_has_errors() {
     global $lddlite_submit_processor;
 
@@ -61,6 +81,11 @@ function ldl_has_errors() {
 }
 
 
+/**
+ * Template alias for ldd_directory_lite_processor::has_global_errors()
+ *
+ * @return bool True if global errors exist, false otherwise
+ */
 function ldl_has_global_errors() {
     global $lddlite_submit_processor;
 
@@ -68,6 +93,11 @@ function ldl_has_global_errors() {
 }
 
 
+/**
+ * Template alias for ldd_directory_lite_processor::get_global_errors()
+ *
+ * @return array Returns the current key value pair from the global errors array and advances the pointer
+ */
 function ldl_get_global_errors() {
     global $lddlite_submit_processor;
 
@@ -131,6 +161,12 @@ function ldl_submit_create_post($name, $description, $cat_id, $user_id) {
 }
 
 
+/**
+ * Removes non-meta fields from the processed data array and inserts the remaining values as post meta.
+ *
+ * @param array $data The processed data provided by the $lddlite_submit_processor object
+ * @param int $post_id The post ID returned by ldl_submit_create_post()
+ */
 function ldl_submit_create_meta($data, $post_id) {
 
     $remove_fields = array('title', 'category', 'description', 'summary', 'username', 'email',);
@@ -144,6 +180,12 @@ function ldl_submit_create_meta($data, $post_id) {
 }
 
 
+/**
+ * Send an email notification to the email specified in the directory settings.
+ *
+ * @param array $data The processed data provided by the $lddlite_submit_processor object
+ * @param int $post_id The post ID returned by ldl_submit_create_post()
+ */
 function ldl_submit_notify_admin($data, $post_id) {
 
     $to = ldl_get_setting('email_notifications');
@@ -158,6 +200,13 @@ function ldl_submit_notify_admin($data, $post_id) {
 }
 
 
+/**
+ * Send an email notification to the author of the listing, an easy way to supply them with a copy of the
+ * information they submitted and any helpful advice while waiting for it to be approved.
+ *
+ * @param array $data The processed data provided by the $lddlite_submit_processor object
+ * @param int $post_id The post ID returned by ldl_submit_create_post()
+ */
 function ldl_submit_notify_author($data) {
 
     $to = $data[ 'email' ];

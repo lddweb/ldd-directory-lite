@@ -1,7 +1,8 @@
 <?php
-
 /**
- * Submit a listing view controller and other functionality
+ * Handles all data submitted via the directories Submit Listing interface. Provides an encapsulated object
+ * which will contain a safe copy of the form data, validation errors and helper functions to interact with
+ * that data at the presentation layer.
  *
  * @package   ldd_directory_lite
  * @author    LDD Web Design <info@lddwebdesign.com>
@@ -11,18 +12,27 @@
  */
 class ldd_directory_lite_processor {
 
+	// Constantly
     const NONCE_FIELD = 'nonce_field';
     const NONCE_ACTION = 'submit-listing-nonce';
 
     const DATA_PREFIX = 'ld_s_';
 
-    protected $processing = false;
+	/**
+	 * @var bool True during form submission
+	 */
+	protected $processing = false;
+
+	// Storage facilities
     protected $extra_fields;
     protected $data;
     protected $errors;
     protected $global_errors;
 
-    protected $required_fields = array(
+	/**
+	 * @var array List of required fields, can be altered via the `lddlite_submit_required_fields` filter
+	 */
+	protected $required_fields = array(
         'title',
         'category',
         'description',
@@ -30,27 +40,40 @@ class ldd_directory_lite_processor {
     );
 
 
-    public function __construct() {
+	/**
+	 * Construct the $lddlite_submit_processor object. If a form has been submitted, process and validate the data
+	 * provided for use in generating a new listing.
+	 */
+	public function __construct() {
 
+		// Check if the form has been submitted
         if (!array_key_exists(self::NONCE_FIELD, $_POST))
             return;
 
-        $this->processing = true;
+		$this->_verify_nonce();
 
-        $this->_verify_nonce();
+		// If everything checks out, process and validate
+		$this->processing = true;
         $this->_process_data();
         $this->_validate();
 
     }
 
 
-    private function _verify_nonce() {
+	/**
+	 * Uses wp_verify_nonce() to authorize the form submission before continuing.
+	 */
+	private function _verify_nonce() {
         if (!wp_verify_nonce($_POST[ self::NONCE_FIELD ], self::NONCE_ACTION))
             die("No, kitty! That's a bad kitty!");
     }
 
 
-    private function _process_data() {
+	/**
+	 * Loop through the supplied data and perform any necessary operations prior to validation. Filters the
+	 * entire array through `lddlite_submit_process_data` to allow for possible additional processing by add-ons.
+	 */
+	private function _process_data() {
 
         $pfx_length = strlen(self::DATA_PREFIX);
 
@@ -61,38 +84,44 @@ class ldd_directory_lite_processor {
                 continue;
             }
 
-            $data_key = substr($key, $pfx_length);
+            $field = substr($key, $pfx_length);
 
             if (is_array($value)) {
-                $this->data[ $data_key ] = stripslashes_deep($value);
+                $this->data[ $field ] = stripslashes_deep($value);
             } else {
-                $this->data[ $data_key ] = stripslashes(trim($value));
+                $this->data[ $field ] = stripslashes(trim($value));
             }
 
         }
 
+		$this->data = apply_filters('lddlite_submit_process_data', $this->data);
     }
 
 
-    private function _validate() {
+	/**
+	 * Validates the data submitted, and sets errors for any fields that are missing required values. Additionally
+	 * passes each element through the `lddlite_validate_fields` filters allowing add-ons or core to require further
+	 * validation of any or all fields.
+	 */
+	private function _validate() {
 
+		// Acquire the list of required fields
         $required = apply_filters('lddlite_submit_required_fields', $this->required_fields);
 
-
-        foreach ($required as $key) {
-            if ('' == $this->data[ $key ]) {
-                $this->errors[ $key ] = __('This field is required.', 'lddlite');
+		// Loop through and check for required fields first
+        foreach ($required as $field) {
+            if ('' == $this->data[ $field ]) {
+                $this->errors[ $field ] = __('This field is required.', 'lddlite');
             }
         }
 
-        foreach ($this->data as $key => $value) {
-            // Use this if you want to add a single function to the validation process
-            $error = apply_filters('lddlite_validate_fields', '', $key, $value);
-            // Or this if you want to alter the validation of a single field
-            $error = apply_filters('lddlite_validate_field_' . $key, $error, $value);
+		// Proceed to advanced validation, if any
+        foreach ($this->data as $field => $value) {
+			// Attach additional methods to this filter, be sure to return it empty|false if it passes validation
+            $error = apply_filters('lddlite_validate_fields', '', $field, $value);
 
-            if (!empty($error)) {
-                $this->errors[ $key ] = $error;
+            if ($error) {
+                $this->errors[ $field ] = $error;
             }
 
         }
@@ -100,63 +129,107 @@ class ldd_directory_lite_processor {
     }
 
 
-    public function is_processing() {
+	/**
+	 * @return bool True if a form has been submitted, false otherwise
+	 */
+	public function is_processing() {
         return $this->processing;
     }
 
 
-    public function get_data() {
+	/**
+	 * @return array Returns the processed data for use in generating a listing|wp_post
+	 */
+	public function get_data() {
         return $this->data;
     }
 
 
-    public function get_value($key) {
-        return isset($this->data[ $key ]) ? $this->data[ $key ] : '';
+	/**
+	 * @param string $key Identify what value is being requested
+	 *
+	 * @return string Empty if no value exists for the key provided, otherwise the value
+	 */
+	public function get_value($field) {
+        return isset($this->data[ $field ]) ? $this->data[ $field ] : '';
     }
 
 
-    public function has_error($key) {
-        return isset($this->errors[ $key ]);
+	/**
+	 * @param string $field Identify the field
+	 *
+	 * @return bool True if an error exists, false otherwise
+	 */
+	public function has_error($field) {
+        return isset($this->errors[ $field ]);
     }
 
 
-    public function has_errors() {
+	/**
+	 * @return bool True if there are any errors set for any fields or globally, false otherwise
+	 */
+	public function has_errors() {
         return (!empty($this->errors) || !empty($this->global_errors));
     }
 
 
-    public function has_global_errors() {
-        return (!empty($this->global_errors));
+	/**
+	 * @return bool True if there are global errors set, false otherwise
+	 */
+	public function has_global_errors() {
+        return !empty($this->global_errors);
     }
 
 
-    public function get_error($key) {
-        if (isset($this->errors[ $key ])) {
-            echo '<span class="text-danger">' . $this->errors[ $key ] . '</span>';
-        }
+	/**
+	 * @param string $field Identify the field
+	 *
+	 * @return string The error message if found, empty string if none is set
+	 */
+	public function get_error($field) {
+        return isset($this->errors[ $field ]) ? '<span class="text-danger">' . $this->errors[ $field ] . '</span>' : '';
     }
 
 
-    public function set_global_error($errormsg) {
-        $this->global_errors[ ] = $errormsg;
+	/**
+	 * @param $errormsg The error message to be added to the global errors array
+	 */
+	public function set_global_error($errormsg) {
+        $this->global_errors[] = $errormsg;
     }
 
 
-    public function get_global_errors() {
+	/**
+	 * @return array Uses each() to return one element of the global errors array at a time
+	 */
+	public function get_global_errors() {
         return each($this->global_errors);
     }
+
 }
 
 
+/**
+ * This is all the internal validation we require, and is passed to the $lddlite_submit_processor object via
+ * the `lddlite_validate_fields` filter. Uses a switch() to determine the field being validated.
+ *
+ * @param string $error Should always be empty to begin
+ * @param string $field Identifies the field
+ * @param string $value The value for a particular field
+ *
+ * @return string Empty or false if passed validation, an error message otherwise
+ */
 function ldl_validate_fields($error, $field, $value) {
 
-    if (empty($value))
-        return $error;
+	// Nothing to validate?
+    if (empty($value)) {
+		return $error;
+	}
 
     switch ($field) {
         case 'contact_email':
             if (!is_email($value)) {
-                $error = __("That email address doesn't appear to be valid.", 'lddlite');
+                $error = __("The email address provided doesn't appear to be valid.", 'lddlite');
             }
             break;
         case 'url_website':
