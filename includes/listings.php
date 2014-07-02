@@ -45,51 +45,51 @@ function ldl_action__submenu_title() {
 }
 
 
-function ldl_action__send_approved_email($post) {
 
-    if (LDDLITE_POST_TYPE != get_post_type() || 1 == get_post_meta($post->ID, '_approved', true))
-        return;
 
-    $user = get_userdata($post->post_author);
+function ldl_customize_appearance() {
 
-    $user_nicename = $user->data->display_name;
-    $user_email = $user->data->user_email;
+    $css = '';
 
-    $post_slug = $post->post_name;
-    $permalink = add_query_arg(array('show' => 'listing', 't' => $post_slug), ldl_get_setting('directory_page'));
+    $primary_defaults = array(
+        'normal'     => '#3bafda',
+        'hover'      => '#3071a9',
+        'foreground' => '#fff',
+    );
 
-    $subject = ldl_get_setting('email_onapprove_subject');
-    $message = ldl_get_setting('email_onapprove_body');
+    $primary_custom = array(
+        'normal'     => ldl_get_setting('appearance_primary_normal'),
+        'hover'      => ldl_get_setting('appearance_primary_hover'),
+        'foreground' => ldl_get_setting('appearance_primary_foreground'),
+    );
 
-    $message = str_replace('{site_title}', get_bloginfo('name'), $message);
-    $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
-    $message = str_replace('{link}', $permalink, $message);
-
-    ldl_mail($user_email, $subject, $message);
-    update_post_meta($post->ID, '_approved', 1);
-
-}
-
-function ldl_setup__customize_appearance() {
-
-    $panel_background = ldl_get_setting('appearance_panel_background');
-    $panel_foreground = ldl_get_setting('appearance_panel_foreground');
-
-    $css = <<<CSS
-<style media="all">
-    .panel-primary > .panel-heading {
-        background-color: {$panel_background};
-        border-color: {$panel_background};
-        color: {$panel_foreground};
+    if (array_diff($primary_defaults, $primary_custom)) {
+        $css .= <<<CSS
+    .btn-primary {
+        background: {$primary_custom['normal']};
+        background-color: {$primary_custom['normal']};
+        border-color: {$primary_custom['normal']};
+        color: {$primary_custom['foreground']};
     }
-</style>
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.btn-primary.dropdown-toggle {
+        background: {$primary_custom['hover']};
+        background-color: {$primary_custom['hover']};
+        border-color: {$primary_custom['hover']};
+        color: {$primary_custom['foreground']};
+    }
+    .label-primary {
+        background-color: {$primary_custom['normal']};
+    }
 CSS;
+    }
 
-    echo $css;
+    if ($css) {
+        echo '<style media="all">' . $css . '</style>';
+    }
+
 }
+add_action('wp_head', 'ldl_customize_appearance', 20);
 
-
-add_action('wp_footer', 'ldl_customize_appearance', 20);
 
 function ldl_template_include($template) {
 
@@ -120,8 +120,6 @@ add_filter('admin_post_thumbnail_html', 'ldl_filter__admin_post_thumbnail_html')
 
 add_action('admin_head', 'ldl_action__admin_menu_icon');
 add_action('_admin_menu', 'ldl_action__submenu_title');
-
-add_action('pending_to_publish', 'ldl_action__send_approved_email');
 
 
 function ldl_filter_post_class($classes) {

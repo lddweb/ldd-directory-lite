@@ -117,7 +117,8 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
  * @todo  This will have to be updated once the submit is fully transitioned to its own shortcode/page
  */
 function ldl_get_submit_form_link() {
-    return add_query_arg(array('show' => 'submit', 't' => 'listing'));
+    $post_id = ldl_get_setting('directory_submit_page');
+    return get_permalink($post_id);
 }
 
 

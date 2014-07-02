@@ -3,7 +3,7 @@
 <div id="primary" class="site-content directory-lite">
     <div id="content" role="main">
 
-        <?php while ( have_posts() ) : the_post(); ?>
+        <?php while (have_posts()) : the_post(); ?>
 
         <header class="entry-header">
             <h1 class="entry-title"><?php the_title(); ?></h1>

@@ -186,12 +186,12 @@ function ldl_submit_create_meta($data, $post_id) {
  * @param array $data    The processed data provided by the $lddlite_submit_processor object
  * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
-function ldl_submit_notify_admin($data, $post_id) {
+function ldl_notify_admin($data, $post_id) {
 
     $to = ldl_get_setting('email_notifications');
     $subject = ldl_get_setting('email_toadmin_subject');
-    $message = ldl_get_setting('email_toadmin_body');
 
+    $message = ldl_get_setting('email_toadmin_body');
     $message = str_replace('{aprove_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
     $message = str_replace('{title}', $data['title'], $message);
     $message = str_replace('{description}', $data['description'], $message);
@@ -207,20 +207,50 @@ function ldl_submit_notify_admin($data, $post_id) {
  * @param array $data    The processed data provided by the $lddlite_submit_processor object
  * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
-function ldl_submit_notify_author($data) {
+function ldl_notify_author($data) {
 
     $to = $data['email'];
     $subject = ldl_get_setting('email_onsubmit_subject');
-    $message = ldl_get_setting('email_onsubmit_body');
 
+    $message = ldl_get_setting('email_onsubmit_body');
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
     $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
     $message = str_replace('{directory_email}', ldl_get_setting('email_from_address'), $message);
     $message = str_replace('{title}', $data['title'], $message);
-    $message = str_replace('{description}', $data['description'], $message);
 
     ldl_mail($to, $subject, $message);
 }
+
+
+/**
+ * Send an email to a listing author when their listing has been updateding from pending review to published.
+ *
+ * @param object $post The WP_Post object
+ */
+function ldl_notify_when_approved($post) {
+
+    // Don't send an email if this is the wrong post type or it's already been approved before
+    if (LDDLITE_POST_TYPE != get_post_type() || 1 == get_post_meta($post->ID, '_approved', true))
+        return;
+
+    $user = get_userdata($post->post_author);
+    $permalink = get_permalink($post->ID);
+    $title = get_the_title($post->ID);
+
+    $to = $user->data->user_email;
+    $subject = ldl_get_setting('email_onapprove_subject');
+
+    $message = ldl_get_setting('email_onapprove_body');
+    $message = str_replace('{site_title}', get_bloginfo('name'), $message);
+    $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
+    $message = str_replace('{title}', $title, $message);
+    $message = str_replace('{link}', $permalink, $message);
+
+    ldl_mail($to, $subject, $message);
+    update_post_meta($post->ID, '_approved', 1);
+
+}
+add_action('pending_to_publish', 'ldl_action__send_approved_email');
 
 
 /**
@@ -304,8 +334,8 @@ function ldl_submit_generate_listing() {
         }
     }
 
-    ldl_submit_notify_admin($data, $post_id); // Notification of new listing
-    ldl_submit_notify_author($data); // Receipt of submission
+    ldl_notify_admin($data, $post_id); // Notification of new listing
+    ldl_notify_author($data); // Receipt of submission
 
     return true;
 }

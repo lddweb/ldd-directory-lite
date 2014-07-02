@@ -87,14 +87,13 @@ class ldd_directory_lite_admin {
 
         add_settings_field('lddlite_settings[directory_front_page]', '<label for="lite-directory_front_page">' . __('Front Page', 'lddlite') . '</label>', '_f_directory_front_page', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[directory_submit_page]', '<label for="lite-directory_submit_page">' . __('Submit Page', 'lddlite') . '</label>', '_f_directory_submit_page', 'lddlite_settings_general', 'lddlite_settings_general');
-        add_settings_field('lddlite_settings[directory_archive_slug]', '<label for="lite-directory_archive_slug">' . __('Archives Permalink', 'lddlite') . '</label>', '_f_directory_archive_slug', 'lddlite_settings_general', 'lddlite_settings_general');
-        add_settings_field('lddlite_settings[directory_listing_slug]', '<label for="lite-directory_listing_slug">' . __('Listing Permalink', 'lddlite') . '</label>', '_f_directory_listing_slug', 'lddlite_settings_general', 'lddlite_settings_general');
+        add_settings_field('lddlite_settings[directory_taxonomy_slug]', '<label for="lite-directory_taxonomy_slug">' . __('Taxonomy Slug', 'lddlite') . '</label>', '_f_directory_taxonomy_slug', 'lddlite_settings_general', 'lddlite_settings_general');
+        add_settings_field('lddlite_settings[directory_post_type_slug]', '<label for="lite-directory_post_type_slug">' . __('Post Type Slug', 'lddlite') . '</label>', '_f_directory_post_type_slug', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings_information_separator', '<span style="font-size: 18px">' . __('Directory Information', 'lddlite') . '</span>', '__return_false', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[directory_label]', '<label for="lite-directory_label">' . __('Directory Label', 'lddlite') . '</label>', '_f_directory_label', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[directory_description]', '<label for="lite-directory_description">' . __('Directory Description', 'lddlite') . '</label>', '_f_directory_description', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings_other_separator', '<span style="font-size: 18px">' . __('Other Settings', 'lddlite') . '</span>', '__return_false', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[allow_tracking]', __('Allow Tracking', 'lddlite'), '_f_allow_tracking', 'lddlite_settings_general', 'lddlite_settings_general');
-        add_settings_field('lddlite_settings[disable_bootstrap]', __('Disable Bootstrap', 'lddlite'), '_f_disable_bootstrap', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[public_or_private]', __('Public Directory', 'lddlite'), '_f_public_or_private', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[google_maps]', __('Use Google Maps', 'lddlite'), '_f_google_maps', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings_debug_separator]', '<span style="font-size: 18px">' . __('Debug Tools', 'lddlite') . '</span>', '__return_false', 'lddlite_settings_general', 'lddlite_settings_general');
@@ -124,13 +123,13 @@ class ldd_directory_lite_admin {
             echo '<p class="description">' . __('This is the page where the <code>[directory_submit]</code> shortcode has been placed.', 'lddlite') . '</p>';
         }
 
-        function _f_directory_archive_slug() {
-            echo '<input id="lite-directory_archive_slug" type="text" size="20" name="lddlite_settings[directory_archive_slug]" value="' . ldl_get_setting('directory_archive_slug', 1) . '">';
+        function _f_directory_taxonomy_slug() {
+            echo '<input id="lite-directory_taxonomy_slug" type="text" size="20" name="lddlite_settings[directory_taxonomy_slug]" value="' . ldl_get_setting('directory_taxonomy_slug', 1) . '">';
             echo '<p class="description">' . __('This is the first part of the URL for category display pages.', 'lddlite') . '</p>';
         }
 
-        function _f_directory_listing_slug() {
-            echo '<input id="lite-directory_archive_slug" type="text" size="20" name="lddlite_settings[directory_listing_slug]" value="' . ldl_get_setting('directory_listing_slug', 1) . '">';
+        function _f_directory_post_type_slug() {
+            echo '<input id="lite-directory_taxonomy_slug" type="text" size="20" name="lddlite_settings[directory_post_type_slug]" value="' . ldl_get_setting('directory_post_type_slug', 1) . '">';
             echo '<p class="description">' . __('Same as above, but for the listing pages.', 'lddlite') . '</p>';
         }
 
@@ -148,11 +147,6 @@ class ldd_directory_lite_admin {
 
         function _f_allow_tracking() {
             echo '<label for="lite-allow_tracking"><input id="lite-allow_tracking" type="checkbox" name="lddlite_settings[allow_tracking]" value="1" ' . checked(ldl_get_setting('allow_tracking'), 1, 0) . '> <span>Allow anonymous usage tracking</span></label>';
-        }
-
-        function _f_disable_bootstrap() {
-            echo '<label for="lite-disable_bootstrap"><input id="lite-disable_bootstrap" type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked(ldl_get_setting('disable_bootstrap'), 1, 0) . '> <span>Disable</span></label>';
-            echo '<p class="description">' . __('You can disable the Bootstrap CSS library if your theme already loads a copy, or if you want completely custom CSS.', 'lddlite') . '</p>';
         }
 
         function _f_public_or_private() {
@@ -243,7 +237,6 @@ class ldd_directory_lite_admin {
 
             add_settings_field('lddlite_settings[submit_use_tos]', __('Include Terms', 'lddlite'), '_f_submit_use_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
             add_settings_field('lddlite_settings[submit_tos]', '<label for="submit_tos">' . __('Terms of Service', 'lddlite') . '</label>', '_f_submit_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
-            add_settings_field('lddlite_settings[submit_other_separator]', '<span style="font-size: 18px">' . __('Other Settings', 'lddlite') . '</span>', '__return_false', 'lddlite_settings_submit', 'lddlite_settings_submit');
 
             function _f_submit_use_tos() {
                 echo '<label for="lite-submit_use_tos"><input id="lite-submit_use_tos" type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked(ldl_get_setting('submit_use_tos'), 1, 0) . '> ';
@@ -262,28 +255,29 @@ class ldd_directory_lite_admin {
 
         add_settings_section('lddlite_settings_appearance', __return_null(), '_s_settings_appearance', 'lddlite_settings_appearance');
 
-        add_settings_field('lddlite_settings[appearance_display_new]', __('Display New Listings', 'lddlite'), '_f_appearance_display_new', 'lddlite_settings_appearance', 'lddlite_settings_appearance');
-        add_settings_field('lddlite_settings[appearance_panel_background]', '<label for="appearance_panel_background">' . __('Homepage Header Background', 'lddlite') . '</label>', '_f_appearance_panel_background', 'lddlite_settings_appearance', 'lddlite_settings_appearance');
-        add_settings_field('lddlite_settings[appearance_panel_foreground]', '<label for="appearance_panel_foreground">' . __('Homepage Header Foreground', 'lddlite') . '</label>', '_f_appearance_panel_foreground', 'lddlite_settings_appearance', 'lddlite_settings_appearance');
+        add_settings_field('lddlite_settings[disable_bootstrap]', __('Disable Bootstrap', 'lddlite'), '_f_disable_bootstrap', 'lddlite_settings_appearance', 'lddlite_settings_appearance');
+        add_settings_field('lddlite_settings[appearance_display_featured]', __('Display Featured Listings', 'lddlite'), '_f_appearance_display_featured', 'lddlite_settings_appearance', 'lddlite_settings_appearance');
+        add_settings_field('lddlite_settings[appearance_primary]', '<label for="appearance_primary">' . __('Primary Set', 'lddlite') . '</label>', '_f_appearance_primary_normal', 'lddlite_settings_appearance', 'lddlite_settings_appearance');
 
         function _s_settings_appearance() {
-            echo '<p>' . __("This section is brand new and currently not very all encompassing. Don't worry, there's a lot more yet to come!", 'lddlite') . '</p>';
+            echo '<p>' . __('This section is small at the moment, but will grow with the plugin to accommodate ease of integration with your chosen theme. If you have any suggestions for visual elements you would like to see configurable here, please use one of the links above to let us know.', 'lddlite') . '</p>';
         }
 
-        function _f_appearance_display_new() {
-            echo '<label for="lite-appearance_display_new"><input type="checkbox" name="lddlite_settings[appearance_display_new]" value="1" ' . checked(ldl_get_setting('appearance_display_new'), 1, 0) . '> <span>' . __('If checked, front page will display thumbnails of your most recently added listings', 'lddlite') . '</span></label>';
+        function _f_disable_bootstrap() {
+            echo '<label for="lite-disable_bootstrap"><input id="lite-disable_bootstrap" type="checkbox" name="lddlite_settings[disable_bootstrap]" value="1" ' . checked(ldl_get_setting('disable_bootstrap'), 1, 0) . '> <span>Disable</span></label>';
+            echo '<p class="description">' . __('You can disable the Bootstrap CSS library if your theme already loads a copy, or if you want to use entirely custom CSS.', 'lddlite') . '</p>';
         }
 
-        function _f_appearance_panel_background() {
-            echo '<input id="appearance_panel_background" type="text" name="lddlite_settings[appearance_panel_background]" value="' . ldl_get_setting('appearance_panel_background') . '" class="my-color-field" data-default-color="#3bafda">';
-            echo '<p class="description">' . __('Controls the background color of the header used to display your directories name on the front page of the plugin.', 'lddlite') . '</p>';
+        function _f_appearance_display_featured() {
+            echo '<label for="lite-appearance_display_featured"><input type="checkbox" name="lddlite_settings[appearance_display_featured]" value="1" ' . checked(ldl_get_setting('appearance_display_featured'), 1, 0) . '> <span>' . __('If checked, front page will display thumbnails of your most recently added listings', 'lddlite') . '</span></label>';
         }
 
-        function _f_appearance_panel_foreground() {
-            echo '<input id="appearance_panel_foreground" type="text" name="lddlite_settings[appearance_panel_foreground]" value="' . ldl_get_setting('appearance_panel_foreground') . '" class="my-color-field" data-default-color="#fff">';
-            echo '<p class="description">' . __('Same as the above, except for the foreground.', 'lddlite') . '</p>';
+        function _f_appearance_primary_normal() {
+            echo '<input id="appearance_primary_normal" type="text" name="lddlite_settings[appearance_primary_normal]" value="' . ldl_get_setting('appearance_primary_normal') . '" class="my-color-field" data-default-color="#3bafda">';
+            echo '<input id="appearance_primary_hover" type="text" name="lddlite_settings[appearance_primaryhover]" value="' . ldl_get_setting('appearance_primary_hover') . '" class="my-color-field" data-default-color="#3071a9">';
+            echo '<input id="appearance_primary_foreground" type="text" name="lddlite_settings[appearance_primary_foreground]" value="' . ldl_get_setting('appearance_primary_foreground') . '" class="my-color-field" data-default-color="#ffffff">';
+            echo '<p class="description">' . __('Set the <strong>normal / hover / foreground</strong> state for primary elements, including various buttons, labels and badges.', 'lddlite') . '</p>';
         }
-
 
         register_setting('lddlite_settings', 'lddlite_settings', array($this, 'validate_settings'));
     }

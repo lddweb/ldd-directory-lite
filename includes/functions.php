@@ -69,31 +69,32 @@ EM;
     }
 
     $defaults = apply_filters('lddlite_default_settings_array', array(
-        'directory_front_page'        => '',
-        'directory_submit_page'       => '',
-        'directory_archive_slug'      => 'directory',
-        'directory_listing_slug'      => 'listing',
-        'directory_label'             => get_bloginfo('name'),
-        'directory_description'       => '',
-        'disable_bootstrap'           => 0,
-        'public_or_private'           => 1,
-        'google_maps'                 => 1,
-        'email_from_name'             => get_bloginfo('name'),
-        'email_from_address'          => get_bloginfo('admin_email'),
-        'email_notification_address'  => get_bloginfo('admin_email'),
-        'email_toadmin_subject'       => 'A new listing has been submitted for review!',
-        'email_toadmin_body'          => $email['to_admin'],
-        'email_onsubmit_subject'      => 'Your listing on ' . $site_title . ' is pending review!',
-        'email_onsubmit_body'         => $email['on_submit'],
-        'email_onapprove_subject'     => 'Your listing on ' . $site_title . ' was approved!',
-        'email_onapprove_body'        => $email['on_approve'],
-        'submit_use_tos'              => 0,
-        'submit_tos'                  => '',
-        'allow_tracking_popup_done'   => 0,
-        'allow_tracking'              => 0,
-        'appearance_display_new'      => 1,
-        'appearance_panel_background' => '#3bafda',
-        'appearance_panel_foreground' => '#fff',
+        'directory_front_page'          => '',
+        'directory_submit_page'         => '',
+        'directory_taxonomy_slug'       => 'listings',
+        'directory_post_type_slug'      => 'listing',
+        'directory_label'               => get_bloginfo('name'),
+        'directory_description'         => '',
+        'disable_bootstrap'             => 0,
+        'public_or_private'             => 1,
+        'google_maps'                   => 1,
+        'email_from_name'               => get_bloginfo('name'),
+        'email_from_address'            => get_bloginfo('admin_email'),
+        'email_notification_address'    => get_bloginfo('admin_email'),
+        'email_toadmin_subject'         => 'A new listing has been submitted for review!',
+        'email_toadmin_body'            => $email['to_admin'],
+        'email_onsubmit_subject'        => 'Your listing on ' . $site_title . ' is pending review!',
+        'email_onsubmit_body'           => $email['on_submit'],
+        'email_onapprove_subject'       => 'Your listing on ' . $site_title . ' was approved!',
+        'email_onapprove_body'          => $email['on_approve'],
+        'submit_use_tos'                => 0,
+        'submit_tos'                    => '',
+        'allow_tracking_popup_done'     => 0,
+        'allow_tracking'                => 0,
+        'appearance_display_featured'   => 1,
+        'appearance_primary_normal'     => '#3bafda',
+        'appearance_primary_hover'      => '#3071a9',
+        'appearance_primary_foreground' => '#ffffff',
     ));
 
     return $defaults;
@@ -326,11 +327,21 @@ function ldl_sanitize_twitter($url) {
  */
 function ldl_mail($to, $subject, $message, $headers = '') {
 
+    $from_name = ldl_get_setting('email_from_name');
+    if (!$from_name) {
+        $from_name = get_bloginfo('name');
+    }
+
+    $from_email = ldl_get_setting('email_from_address');
+    if (!$from_email || !is_email($from_email)) {
+        $from_email = get_bloginfo('admin_email');
+    }
+
     // If we're not passing any headers, default to our internal from address
     if (empty($headers)) {
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= sprintf('From: %s <%s>', ldl_get_setting('email_from_name'), ldl_get_setting('email_from_address')) . "\r\n";
+        $headers .= sprintf('From: %s <%s>', $from_name, $from_email) . "\r\n";
     }
 
     ob_start();

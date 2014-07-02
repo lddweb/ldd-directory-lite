@@ -3,17 +3,15 @@
     <section id="primary" class="site-content directory-lite">
         <div id="content" role="main">
 
-            <?php if ( have_posts() ) : ?>
-                <?php echo ldl_get_header(); ?>
+            <?php echo ldl_get_header(); ?>
+            <?php if (have_posts()) : ?>
+
 
                 <?php
-                /* Start the Loop */
-                while ( have_posts() ) : the_post();
-
-                    ldl_get_template_part( 'listing', 'compact' );
-
-                endwhile;
-
+                while (have_posts()) {
+                    the_post();
+                    ldl_get_template_part('listing', 'compact');
+                }
                 ?>
 
             <?php else : ?>

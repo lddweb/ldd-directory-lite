@@ -46,16 +46,22 @@ spl_autoload_register('ldl_autoload');
  */
 function ldl_register_post_type() {
 
-    $archive_slug = ldl_get_setting('directory_archive_slug', 1);
-    $listing_slug = ldl_get_setting('directory_listing_slug', 1);
+    $taxonomy_slug = ldl_get_setting('directory_archive_slug', 1);
+    $post_type_slug = ldl_get_setting('directory_listing_slug', 1);
 
+    if (!$taxonomy_slug) {
+        $archive_slug = 'listings';
+    }
+    if (!$post_type_slug) {
+        $listing_slug = 'listing';
+    }
     register_taxonomy(LDDLITE_TAX_CAT, LDDLITE_POST_TYPE, array(
         'hierarchical'      => true,
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => array(
-            'slug'         => $archive_slug,
+            'slug'         => $taxonomy_slug,
             'heirarchical' => true,
         ),
     ));
@@ -98,7 +104,7 @@ function ldl_register_post_type() {
         'query_var'           => true,
         'can_export'          => true,
         'rewrite'             => array(
-            'slug'  => $listing_slug,
+            'slug'  => $post_type_slug,
             'feeds' => false,
             'pages' => false,
         ),
