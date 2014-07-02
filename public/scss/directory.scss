@@ -1,0 +1,19 @@
+@import "directory/fixes";
+@import "directory/utilities";
+
+@import "directory/forms";
+@import "directory/archives";
+@import "directory/single";
+
+
+.directory-lite {
+  position: relative;
+  width: 100%;
+  margin: 0;
+
+  .navbar {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+}

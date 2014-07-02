@@ -98,6 +98,9 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
 
         }
 
+        if ($located) {
+            break;
+        }
     }
 
     if (true == $load && false != $located)
@@ -201,6 +204,14 @@ function ldl_is_public() {
     return ldl_get_setting('public_or_private');
 }
 
+
+function ldl_the_tos() {
+    if (!ldl_get_setting('submit_use_tos')) {
+        return;
+    }
+
+    ldl_get_template_part('submit', 'tos');
+}
 
 /**
  * @param int    $id The listing/post ID

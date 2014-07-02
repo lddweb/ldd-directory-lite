@@ -16,22 +16,6 @@
 	</div>
 </div>
 
-
-<style>
-	.map_wrapper {
-		width: 100%;
-		height: 200px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-		/* box-shadow: inset 0 1px 1px rgba(0,0,0,0.075); */
-		-webkit-transition: bord
-	}
-	.map_wrapper img {
-		max-width: none;
-	}
-</style>
-
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;libraries=places&#038;ver=3.9.1'></script>
 <script>
 

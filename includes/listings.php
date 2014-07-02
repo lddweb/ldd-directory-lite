@@ -123,3 +123,13 @@ add_action('_admin_menu', 'ldl_action__submenu_title');
 
 add_action('pending_to_publish', 'ldl_action__send_approved_email');
 
+
+function ldl_filter_post_class($classes) {
+
+    if ( is_single() && LDDLITE_POST_TYPE == get_post_type() && in_array( 'directory_listings', $classes ) ) {
+        $classes[] = 'listing-single';
+    }
+
+    return $classes;
+}
+add_filter('post_class', 'ldl_filter_post_class');

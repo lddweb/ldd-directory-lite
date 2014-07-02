@@ -1,0 +1,61 @@
+.type-listing {
+  &.compact {
+
+    .img-rounded {
+      margin: 0;
+      max-width: 100% !important;
+      height: auto;
+    }
+
+    .listing-title {
+      margin: 0;
+      padding: 0;
+
+      font-size: 2em;
+      font-weight: normal;
+      line-height: 1;
+      text-align: left;
+    }
+
+    .website {
+      display: block;
+      margin: 1% 0 2%;
+      color: #888;
+      font-size: .9em;
+    }
+
+    .listing-summary {
+      margin: 1% 0;
+      padding: 0;
+      font-size: 1em;
+    }
+
+    .meta-column {
+      font-size: 90%;
+      line-height: 140%;
+      color: rgba(#777, .8);
+      margin: 0;
+
+      .social-meta {
+        display: block;
+        margin-top: 3%;
+        padding-top: 2%;
+        border-top: 1px solid #eee;
+        text-align: right;
+
+        a {
+          display: inline-block;
+          margin: 0 4px 0 0;
+          font-size: 1.5em;
+          & :hover {
+            color: rgba(119, 119, 119, 0.8);
+          }
+        }
+      }
+
+    }
+
+  }
+}
+
+

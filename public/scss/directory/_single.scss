@@ -1,0 +1,66 @@
+.directory_listings {
+  &.listing-single {
+
+    .entry-meta {
+      border: 1px solid #ddd;
+      background-color: rgba(221, 221, 221, 0.2);
+      margin: 1em 0;
+      padding: 1em 1em 0;
+
+      .listing-meta {
+        margin: 0 0 2em 1.5em;
+        font-size: .9em;
+        color: #555;
+        li {
+          margin: 0 0 .8em;
+          line-height: 1.2em;
+
+        }
+      }
+
+    }
+
+
+    #map_wrapper {
+      display: block;
+      height: 212px;
+      margin-bottom: 1.5em;
+    }
+    #map_canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+    #map_wrapper img,
+    #map_canvas img {
+      max-width: none;
+    }
+
+
+
+    .img-rounded {
+      margin: 0 auto 15px;
+      height: auto;
+      max-width: 100% !important;
+    }
+
+
+    .social-meta {
+      display: block;
+      margin-top: 3%;
+      padding: 2% 0 5%;
+      border-top: 1px solid #eee;
+      text-align: left;
+
+      a {
+        display: inline-block;
+        margin: 0 4px 0 0;
+        font-size: 1.5em;
+        & :hover {
+          color: rgba(119, 119, 119, 0.8);
+        }
+      }
+    }
+
+  }
+}

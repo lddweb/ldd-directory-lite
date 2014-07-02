@@ -1,0 +1,17 @@
+/**
+ * FIXES - The following all fix a CSS conflict discovered in theme compatibility. They are placed here into
+ *         their inclusion in the main stylesheet becomes finalized (and it's found that they don't cause
+ *         any additional conflicts!)
+ **********************************************************************************************************************
+ */
+
+
+#navbar-directory {
+  position: static;
+}
+.navbar input {
+  margin: 0;
+}
+.navbar .btn {
+  margin: 0;
+}

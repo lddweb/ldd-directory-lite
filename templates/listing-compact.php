@@ -9,19 +9,21 @@
                 <div class="listing-header row">
                     <div class="col-sm-8">
                         <h2 class="listing-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-                        <p class="website"><?php echo ldl_get_meta( 'url_website' ); ?></p>
+                        <span class="website"><a href="<?php echo ldl_get_meta( 'url_website' ); ?>"><?php echo ldl_get_meta( 'url_website' ); ?></a></span>
+
                         <div class="listing-summary">
                             <?php the_excerpt(); ?>
                         </div>
                     </div>
                     <div class="col-sm-4 meta-column">
-                        <span class="social-meta">
-                            <?php echo ldl_get_social( $id, 'default', false ); ?>
-                        </span>
                         <ul class="listing-meta fa-ul">
                             <li><i class="fa fa-phone fa-li"></i> <?php echo ldl_get_meta( 'contact_phone' ); ?></li>
                             <li><i class="fa fa-globe fa-li"></i> <?php echo ldl_get_address(); ?></li>
                         </ul>
+
+                        <span class="social-meta">
+                            <?php echo ldl_get_social( $id, 'default', false ); ?>
+                        </span>
                     </div>
                 </div>
             </div>

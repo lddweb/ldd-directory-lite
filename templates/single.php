@@ -1,15 +1,6 @@
-<?php
-/**
- * The Template for displaying all single posts
- *
- * @package WordPress
- * @subpackage Twenty_Twelve
- * @since Twenty Twelve 1.0
- */
+<?php get_header(); ?>
 
-get_header(); ?>
-
-<div id="primary" class="site-content">
+<div id="primary" class="site-content directory-lite">
     <div id="content" role="main">
 
         <?php while ( have_posts() ) : the_post(); ?>
@@ -18,57 +9,51 @@ get_header(); ?>
             <h1 class="entry-title"><?php the_title(); ?></h1>
         </header><!-- .entry-header -->
 
-        <section class="directory-lite directory-listing">
+        <?php ldl_get_header(); ?>
 
-            <header class="directory-header">
-                <?php ldl_get_header(); ?>
-            </header>
+        <article id="listing-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
 
-            <article id="listing-{$id}" class="directory-content listing-{$id} listing type-listing listing-full">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-8">
+                        <?php
+                        // Let's take a page from some other plugins and turn some of these into do_actions?
+                        if ( ldl_use_google_maps() ): ?>
+                            <div id="map_wrapper">
+                                <div id="map_canvas"></div>
+                            </div>
+                        <?php endif; ?>
 
-                            <?php
-                            // Let's take a page from some other plugins and turn some of these into do_actions?
-                            if ( ldl_use_google_maps() ): ?>
-                                <div id="map_wrapper">
-                                    <div id="map_canvas"></div>
-                                </div>
-                            <?php endif; ?>
+                        <div class="entry-content">
+                            <?php the_content(); ?>
+                        </div><!-- .entry-content -->
 
+                        <div class="entry-meta">
                             <ul class="listing-meta fa-ul">
-                                <li><i class="fa fa-link fa-lg fa-li"></i> http://www.google.com/<?php echo ldl_get_meta( 'url_website' ); ?></li>
-                                <li><i class="fa fa-phone fa-lg fa-li"></i> <?php echo ldl_get_meta( 'contact_phone' ); ?></li>
-                                <li><i class="fa fa-globe fa-lg fa-li"></i> <?php echo ldl_get_address(); ?></li>
+                                <?php if (ldl_has_meta('contact_phone')): ?><li><i class="fa fa-phone fa-fw fa-li"></i> <?php echo ldl_get_meta('contact_phone'); ?></li><?php endif; ?>
+                                <?php if (ldl_has_meta('geo')): ?><li><i class="fa fa-globe fa-fw fa-li"></i> <?php echo ldl_get_address(); ?></li><?php endif; ?>
                             </ul>
-
-                            <div class="entry-content">
-                                <?php the_content(); ?>
-                            </div><!-- .entry-content -->
-
-                            <span class="social-meta">
-                                <?php echo ldl_get_social( $post->ID, '' ); ?>
-                            </span>
-
+                            <ul class="listing-meta fa-ul">
+                                <?php if (ldl_has_meta('url_website')): ?><li><i class="fa fa-link fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_website' ); ?>"><?php echo ldl_get_meta( 'url_website' ); ?></a></li><?php endif; ?>
+                                <?php if (ldl_has_meta('url_facebook')): ?><li><i class="fa fa-facebook fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_facebook' ); ?>"><?php echo ldl_get_meta( 'url_facebook' ); ?></a></li><?php endif; ?>
+                                <?php if (ldl_has_meta('url_twitter')): ?><li><i class="fa fa-twitter fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_twitter' ); ?>"><?php echo ldl_get_meta( 'url_twitter' ); ?></a></li><?php endif; ?>
+                                <?php if (ldl_has_meta('url_linkedin')): ?><li><i class="fa fa-linkedin fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_linkedin' ); ?>"><?php echo ldl_get_meta( 'url_linkedin' ); ?></a></li><?php endif; ?>
+                            </ul>
                         </div>
-                        <div class="col-md-4">
-                            <?php echo ldl_get_thumbnail( $post->ID ); ?>
 
-                            <?php ldl_get_template_part( 'contact', 'sidebar' ); ?>
-                        </div>
                     </div>
+                    <div class="col-md-4">
+                        <?php echo ldl_get_thumbnail( $post->ID ); ?>
 
-
-
+                        <?php ldl_get_template_part( 'contact', 'sidebar' ); ?>
+                    </div>
                 </div>
 
+            </div>
+
+        </article>
 
 
-            </article>
-
-
-        </section>
 
         <?php if ( ldl_use_google_maps() ): ?>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbaw0hFglsihePOsFpMnLQwJZtOChIoDg&sensor=false"></script>
@@ -102,42 +87,6 @@ get_header(); ?>
 
     </div><!-- #content -->
 </div><!-- #primary -->
-
-
-
-<style>
-    .listing-meta {
-        margin: 0 0 1.5em;
-        font-size: 14px;
-    }
-    .listing-meta li {
-        margin: 0 0 10px;
-        line-height: 17px;
-    }
-    .listing-meta li > i {
-        color: #999;
-    }
-    #map_wrapper {
-        display: block;
-        height: 200px;
-        margin-bottom: 1.5em;
-    }
-    #map_canvas {
-        width: 100%;
-        height: 100%;
-        border-radius: 8px;
-    }
-    #map_wrapper img,
-    #map_canvas img {
-        max-width: none;
-    }
-    .type-listing.listing-full .img-rounded {
-        margin: 0 0 1.5em;
-        height: auto;
-    }
-
-</style>
-
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

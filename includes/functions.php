@@ -65,7 +65,7 @@ EM;
 EM;
 
     foreach ($email as $key => $msg) {
-        $email[$key] = $msg . $signature;
+        $email[ $key ] = $msg . $signature;
     }
 
     $defaults = apply_filters('lddlite_default_settings_array', array(
@@ -195,11 +195,24 @@ add_action('save_post', 'ldl_haz_shortcode', 10, 2);
  * @param $id
  * @param $field
  */
+function ldl_has_meta($key) {
+    return ldl_get_meta($key) ?: false;
+}
+
+
+/**
+ * Wrapper to collect post meta for a listing
+ *
+ * @param $id
+ * @param $field
+ */
 function ldl_get_meta($key) {
+
     $post_id = get_the_ID();
 
-    if (!is_int($post_id))
+    if (!$post_id) {
         return false;
+    }
 
     return get_metadata('post', $post_id, '_lddlite_' . $key, true);
 }

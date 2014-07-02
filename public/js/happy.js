@@ -1,3 +1,4 @@
+/*global $*/
 (function happyJS($) {
     function trim(el) {
         return (''.trim) ? el.val().trim() : $.trim(el.val());
@@ -92,8 +93,13 @@
                 }
 
                 if (error) {
-                    el.addClass(fieldErrorClass)
-                    el.closest('div').after(errorEl)
+                    var hasWrapper = el.closest('.input-group');
+                    el.addClass(fieldErrorClass);
+                    if (1 == hasWrapper.length) {
+                        hasWrapper.after(errorEl);
+                    } else {
+                        el.after(errorEl)
+                    }
                     return false;
                 } else {
                     temp = errorEl.get(0);
