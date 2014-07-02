@@ -36,6 +36,7 @@ define('LDDLITE_TAX_CAT', 'listing_category');
 define('LDDLITE_TAX_TAG', 'listing_tag');
 
 define('LDDLITE_PFX', '_lddlite');
+define('LDDLITE_NOLOGO', plugin_dir_url(__FILE__).'public/images/noimage.png');
 
 
 /**

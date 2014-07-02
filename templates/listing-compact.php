@@ -22,7 +22,7 @@
                         </ul>
 
                         <span class="social-meta">
-                            <?php echo ldl_get_social( $id, 'default', false ); ?>
+                            <?php echo ldl_get_social( get_the_ID() ); ?>
                         </span>
                     </div>
                 </div>

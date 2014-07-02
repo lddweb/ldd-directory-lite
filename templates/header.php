@@ -12,12 +12,12 @@
         </div>
 
         <div id="navbar-directory" class="collapse navbar-collapse">
-	        <form action="<?php echo ldl_get_home_url(); ?>" class="navbar-form navbar-right" role="search">
-                <input type="hidden" name="show" value="search">
+	        <form role="search" method="get" action="<?php echo ldl_get_home_url(); ?>" class="navbar-form navbar-right">
+                <input type="hidden" name="post_type" value="<?php echo LDDLITE_POST_TYPE; ?>">
 	            <div class="form-group">
-		            <input type="text" class="form-control" placeholder="Search">
+		            <input id="directory-search" class="form-control" name="s" type="search" value="<?php echo get_search_query(); ?>" placeholder="Search">
 	            </div>
-	            <button type="submit" class="btn btn-primary">Submit</button>
+	            <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
     </div>

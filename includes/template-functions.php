@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Template Functions
- *
- * Most of the following functions are modified core functionality to help render plugin templates in a fashion
- * that's intuitive to the way WordPress handles templates.
  *
  * @package   ldd_directory_lite
  * @author    LDD Web Design <info@lddwebdesign.com>
@@ -15,7 +11,7 @@
 
 
 /**
- * This is the trailing name for the directory containing all directory templates.
+ * This defines where the plugin should look for custom templates under a parent or child theme directory.
  *
  * @since 0.6.0
  * @return string
@@ -26,34 +22,8 @@ function ldl_get_template_dir_name() {
 
 
 /**
- * Nearly identical to WordPress own get_template_part(), we're mainly duplicating this to swap out
- * locate_template() with our own helper function.
- *
- * @since 0.6.0
- * @uses  ldl_locate_template()
- *
- * @param string $slug The parent template we're looking for
- * @param string $name The specific type of a particular parent template, if any
- */
-function ldl_get_template_part($slug, $name = null) {
-
-    do_action('get_template_part_' . $slug, $slug, $name);
-
-    $templates = array();
-    $name = (string) $name;
-    if ('' !== $name)
-        $templates[] = "{$slug}-{$name}.php";
-
-    $templates[] = "{$slug}.php";
-
-    // Using the array, locate a template and return it
-    return ldl_locate_template($templates, true, false);
-}
-
-
-/**
- * Again, almost identical to the core functionality for locate_template(), this version creates an array of
- * path names to search in, starting with the child theme, parent theme and ending with our default plugin templates.
+ * This is a modified version of the core locate_template() function, providing for multiple paths to search
+ * in before returning a template for use in presentation.
  *
  * @todo  How are we going to let developers know when there's major updates to a core template?
  *
@@ -70,13 +40,13 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
     // No template found yet
     $located = false;
 
-    // Build an array of locations to search
-    $template_trailing = ldl_get_template_dir_name();
+    $custom_path = ldl_get_template_dir_name();
 
+    // Build an array of locations to search
     $template_paths = array(
-        trailingslashit(get_stylesheet_directory()) . $template_trailing,
-        trailingslashit(get_template_directory()) . $template_trailing,
-        trailingslashit(LDDLITE_PATH . 'templates'),
+        trailingslashit(get_stylesheet_directory()) . $custom_path,
+        trailingslashit(get_template_directory()) . $custom_path,
+        trailingslashit(LDDLITE_PATH . 'templates'), // Default
     );
 
     foreach ((array) $templates as $template) {
@@ -109,6 +79,34 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
     return $located;
 }
 
+
+/**
+ * This duplicates get_template_part() verbatim, with the single exception of using our ldl_locate_template()
+ * instead of the core locate_template()
+ *
+ * @since 0.6.0
+ * @uses  ldl_locate_template()
+ *
+ * @param string $slug The parent template we're looking for
+ * @param string $name The specific type of a particular parent template, if any
+ */
+function ldl_get_template_part($slug, $name = null) {
+
+    do_action('get_template_part_' . $slug, $slug, $name);
+
+    $templates = array();
+    $name = (string) $name;
+    if ('' !== $name)
+        $templates[] = "{$slug}-{$name}.php";
+
+    $templates[] = "{$slug}.php";
+
+    // Using the array, locate a template and return it
+    return ldl_locate_template($templates, true, false);
+}
+
+
+/** URL HELPERS */
 
 /**
  * Get the link to the submit form
@@ -147,24 +145,112 @@ function ldl_get_home_url($path = '', $scheme = null) {
 }
 
 
-function  ldl_get_header() {
+/** CONDITIONALS */
+
+/**
+ * Are google maps turned on?
+ *
+ * @return bool True or false
+ */
+function ldl_use_google_maps() {
+    return ldl_get_setting('google_maps');
+}
+
+
+/**
+ * Is this a public directory?
+ *
+ * @return bool True or false
+ */
+function ldl_is_public() {
+    return ldl_get_setting('public_or_private');
+}
+
+
+/** TEMPLATE UTILITIES */
+
+/**
+ * An alias for returning the header template (the header template has our navbar)
+ */
+function ldl_get_header() {
     ldl_get_template_part('header');
 }
 
-function ldl_get_thumbnail($post_id) {
 
-    $link_mask = '<a href="' . $link . '" title="' . esc_attr($title) . '">%1$s</a>';
+/**
+ * An alias for ldl_get_categories that defaults to the top level categories.
+ */
+function ldl_get_parent_categories() {
+    return ldl_get_categories(0);
+}
 
-    if (has_post_thumbnail($post_id)) {
-        $thumbnail = sprintf($link_mask, get_the_post_thumbnail($post_id, 'directory-listing', array('class' => 'img-rounded')));
-    } else {
-        $thumbnail = sprintf($link_mask, '<img src="' . LDDLITE_URL . 'public/images/noimage.png" class="img-rounded">');
+/**
+ * Obtain a list of categories based on the provided parent ID, and return a formatted list for display
+ * via one of the plugin templates.
+ *
+ * @param int $parent The term ID to retrieve categories from
+ *
+ * @return string Return a formatted string containing all category elements
+ */
+function ldl_get_categories( $parent = 0 ) {
+
+    $terms = get_terms(LDDLITE_TAX_CAT, array(
+        'parent' => $parent,
+    ));
+
+    $mask = '<a href="%1$s" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
+
+    $categories = array();
+    foreach ($terms as $category) {
+        $term_link = get_term_link($category);
+        $categories[] = sprintf($mask, $term_link, $category->name, $category->count);
     }
 
-    return $thumbnail;
+    $categories = apply_filters('lddlite_filter_presentation_categories', $categories, $terms, $mask);
+    return implode(' ', $categories);
 }
 
 
+/**
+ * Returns a post thumbnail/logo for the provided ID. If none is found, a default image is returned.
+ *
+ * @param int $post_id The post ID
+ *
+ * @return string
+ */
+function ldl_get_thumbnail($post_id, $size = 'directory-listing', $class = 'img-rounded') {
+
+    if (has_post_thumbnail($post_id)) {
+        $thumbnail = get_the_post_thumbnail($post_id, $size, array('class' => $class));
+    } else {
+        $thumbnail = '<img src="' . LDDLITE_NOLOGO . '" class="' . $class . '">';
+    }
+
+    return apply_filters('lddlite_filter_presentation_thumbnail', $thumbnail, $post_id, $size, $class);
+}
+
+
+/**
+ * Single helper function for determining if a terms of service section should be displayed on the submit form. If
+ * set to true and content has been provided, get the appropriate template part.
+ */
+function ldl_the_tos() {
+    if (!ldl_get_setting('submit_use_tos') || '' == ldl_get_setting('submit_tos')) {
+        return;
+    }
+
+    ldl_get_template_part('submit', 'tos');
+}
+
+/** LISTING META UTILITES */
+
+/**
+ * Return a piece of the _lddlite_geo post meta.
+ *
+ * @param string $key Should be one of 'formatted', 'lat', or 'lng'
+ *
+ * @return string|false Returns the value for the requested key if found, false otherwise
+ */
 function ldl_get_address($key = 'formatted') {
     $post_id = get_the_ID();
 
@@ -180,80 +266,55 @@ function ldl_get_address($key = 'formatted') {
 }
 
 
-function ldl_get_parent_categories() {
-
-    $directory_terms = get_terms(LDDLITE_TAX_CAT, array(
-        'parent' => 0,
-    ));
-
-    $categories = '';
-    foreach ($directory_terms as $category) {
-        $term_link = get_term_link($category);
-        $categories .= sprintf('<a href="%1$s" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>', $term_link, $category->name, $category->count);
-    }
-
-    return $categories;
-}
-
-
-function ldl_use_google_maps() {
-    return ldl_get_setting('google_maps');
-}
-
-
-function ldl_is_public() {
-    return ldl_get_setting('public_or_private');
-}
-
-
-function ldl_the_tos() {
-    if (!ldl_get_setting('submit_use_tos')) {
-        return;
-    }
-
-    ldl_get_template_part('submit', 'tos');
-}
-
 /**
- * @param int    $id The listing/post ID
- * @param string $class
- * @param bool   $email_btn
+ * Get an array of social media links for the designated post, and return it as a string to be used
+ * in various templates.
+ *
+ * @param int    $post_id The post ID
  *
  * @return string
  */
-function ldl_get_social($id, $class = 'btn btn-success', $email_btn = true) {
+function ldl_get_social($post_id) {
 
-    if (!is_int($id))
+    if (!is_int($post_id))
         return false;
 
+    // Get the links for this listing
+    $social = array(
+        'facebook' => ldl_force_scheme(get_post_meta($post_id, '_lddlite_url_facebook', 1)),
+        'linkedin' => ldl_force_scheme(get_post_meta($post_id, '_lddlite_url_linkedin', 1)),
+        'twitter'  => ldl_sanitize_twitter(get_post_meta($post_id, '_lddlite_url_twitter', 1)),
+    );
+
     $titles = array(
-        'facebook-square' => 'Visit %1$s on Facebook',
+        'facebook' => 'Visit %1$s on Facebook',
         'linkedin'        => 'Connect with %1$s on LinkedIn',
         'twitter'         => 'Follow %1$s on Twitter',
         'default'         => 'Visit %1$s on %2$s',
     );
 
-    $output = '';
-    $name = get_the_title($id);
-    $class = !empty($class) ? ' class="' . $class . '" ' : '';
+    $name = get_the_title($post_id);
 
-    $social = array(
-        'facebook-square' => ldl_force_scheme(get_post_meta($id, '_lddlite_url_facebook', 1)),
-        'linkedin'        => ldl_force_scheme(get_post_meta($id, '_lddlite_url_linkedin', 1)),
-        'twitter'         => ldl_sanitize_twitter(get_post_meta($id, '_lddlite_url_twitter', 1)),
-    );
+
+    // Start building an array of links
+    $output = array();
 
     foreach ($social as $key => $url) {
         if (!empty($url)) {
             $title_key = array_key_exists($key, $titles) ? $titles[$key] : $titles['default'];
             $title = sprintf($title_key, $name, $key);
 
-            $output .= '<a href="' . ldl_force_scheme($url) . '" title="' . $title . '" ' . $class . '>';
-            $output .= '<i class="fa fa-' . $key . '"></i></a>';
+            $output[] = '<a href="' . $url . '" title="' . $title . '"><i class="fa fa-' . $key . '-square"></i></a>';
         }
     }
 
-    return $output;
+    /**
+     * Allow developers to filter these links before returning them to the template
+     *
+     * @param array $output  An array of social links
+     * @param int   $post_id The post ID
+     */
+    $output = apply_filters('lddlite_filter_presentation_social', $output, $post_id);
+
+    return implode(' ', $output);
 }
-
-
