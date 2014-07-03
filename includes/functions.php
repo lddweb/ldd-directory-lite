@@ -11,9 +11,20 @@
 
 
 /**
- * Settings Functions
- * =====================================================================================================================
+ * Pull an array of directory post IDs for use in updating all the information.
  */
+function ldl_get_all_IDs() {
+    global $wpdb;
+
+    $query = sprintf("
+					SELECT ID
+					FROM `%s`
+					WHERE post_type = '%s'
+						AND post_status NOT IN ( 'auto-draft', 'inherit' )
+				", $wpdb->posts, LDDLITE_POST_TYPE);
+
+    return $wpdb->get_col($query);
+}
 
 
 /**

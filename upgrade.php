@@ -1,91 +1,29 @@
 <?php
+/**
+ * Boosts, enhancements, increasements, advancements, betterments, progressments, and functions that make strides.
+ *
+ * @package   ldd_directory_lite
+ * @author    LDD Web Design <info@lddwebdesign.com>
+ * @license   GPL-2.0+
+ * @link      http://lddwebdesign.com
+ * @copyright 2014 LDD Consulting, Inc
+ */
 
 global $upgrades;
-
-/**
- * The switch handles the various upgrades, while the trigger is used to determine if we need
- * to fire that upgrade.
- */
-foreach ($upgrades as $version => $trigger) {
-
-    if (!$trigger)
-        continue;
-
-    switch ($version) {
-
-        case '0.6.0-beta':
-            global $wpdb;
-
-            $IDs = ldl_upgrade__get_IDs();
-
-            if ($IDs) {
-                ldl_upgrade__promo($IDs);
-                ldl_upgrade__geolocation($IDs);
-            }
-
-    }
-
-}
-
-
-/**
- * Pull an array of directory post IDs for use in updating all the information.
- */
-function ldl_upgrade__get_IDs() {
-    global $wpdb;
-
-    $query = sprintf("
-					SELECT ID, post_status
-					FROM `%s`
-					WHERE post_type = '%s'
-						AND post_status IN ( 'publish', 'pending' )
-				", $wpdb->posts, LDDLITE_POST_TYPE);
-
-    return $wpdb->get_col($query);
-}
-
-/**
- * A lot of people are asking where the promo information went. Let's bring it back and see if we can
- * use it in place of the post_excerpt.
- *
- * @param array $IDs Array of Post IDs
- */
-function ldl_upgrade__promo($IDs) {
-    global $wpdb;
-
-    if (!is_array($IDs) || empty($IDs))
-        return;
-
-    foreach ($IDs as $post_id) {
-
-        // These were stored in meta during the upgrade from the old plugin
-        $promo = get_post_meta($post_id, LDDLITE_PFX . '_promotion', true);
-
-        // But that doesn't mean they upgraded from the old plugin
-        if ($promo) {
-            $wpdb->update($wpdb->posts, array('post_excerpt' => $promo), array('ID' => $post_id), array('%s'), array('%d'));
-        }
-
-        // Make sure there's no clutter left behind
-        delete_post_meta($post_id, LDDLITE_PFX . '_promotion');
-    }
-
-}
 
 
 /**
  * Collects the address post_meta and combines it to retrieve geocoded location information
- * from Google. Instead of writing a huge class to handles i18n addresses, it seems likely it
- * would never quite be on par with theirs...
+ * from Google. This and handling other meta information such as phone numbers could easily get
+ * ridiculously cumbersome. Let's attempt to keep it as simple as possible, as much as possible.
  *
- * @param array $IDs Array of Post IDs
+ * @param array $post_ids Array of Post IDs
  */
-function ldl_upgrade__geolocation($IDs) {
+function ldl_060_address_to_geo($post_ids) {
 
-    if (!is_array($IDs) || empty($IDs))
-        return;
+    if (!is_array($post_ids) || empty($post_ids)) { return; }
 
-    foreach ($IDs as $post_id) {
+    foreach ($post_ids as $post_id) {
 
         // Gather the existing meta data
         $address = get_post_meta($post_id, '_lddlite_address_one', 1);
@@ -97,7 +35,6 @@ function ldl_upgrade__geolocation($IDs) {
         // Put it together
         $address = $address . ', ' . $city . ', ' . $subdivision . ' ' . $post_code . ', ' . $country;
 
-        // If there's no data, we still want to initialize the new meta information
         $geo = array(
             'formatted' => '',
             'lat'       => '',
@@ -117,6 +54,7 @@ function ldl_upgrade__geolocation($IDs) {
                 $geo['lat'] = $body->results[0]->geometry->location->lat;
                 $geo['lng'] = $body->results[0]->geometry->location->lng;
             } else {
+                // If the geocoder fails, this should kickstart the dashboard autocomplete
                 $geo['formatted'] = $address;
             }
 
@@ -135,4 +73,30 @@ function ldl_upgrade__geolocation($IDs) {
 
     }
 
+}
+
+
+$post_ids = ldl_get_all_IDs();
+
+if ($post_ids) {
+
+    /**
+     * The switch handles the various upgrades, while the trigger is used to determine if we need
+     * to fire that upgrade.
+     */
+    foreach ($upgrades as $version => $trigger) {
+
+        if (!$trigger) { continue; }
+
+            switch ($version) {
+
+                case '0.6.0-beta':
+                    ldl_060_address_to_geo($post_ids);
+                    break;
+
+            }
+
+        }
+
+    }
 }

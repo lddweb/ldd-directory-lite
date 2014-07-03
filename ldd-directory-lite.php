@@ -85,6 +85,17 @@ class ldd_directory_lite {
      */
     public function init() {
 
+        // IMPORT
+        $plugin = 'ldd-business-directory/lddbd_core.php';
+        $dir = dirname(__FILE__);
+        $plugin_path = substr($dir, 0, strrpos($dir, '/')) . '/' . $plugin;
+
+        if (file_exists($plugin_path) && false == get_option('lddlite_upgraded_from_original')) {
+            require_once(LDDLITE_PATH . 'import-lddbd.php');
+        }
+        // IMPORT
+
+
         $this->settings = wp_parse_args(get_option('lddlite_settings'), ldl_get_default_settings());
 
         $version = get_option('lddlite_version');
@@ -97,23 +108,20 @@ class ldd_directory_lite {
             );
 
             foreach ($upgrades as $upgrade => $trigger) {
-
                 if (version_compare($version, $upgrade, '<')) {
                     $upgrade_available = true;
                     $upgrades[$upgrade] = true;
                 }
-
             }
 
-            if (isset($upgrade_available))
+            if (isset($upgrade_available)) {
                 require_once(LDDLITE_PATH . 'upgrade.php');
+            }
 
-            $version = LDDLITE_VERSION;
-            update_option('lddlite_version', $version);
+            update_option('lddlite_version', LDDLITE_VERSION);
 
         }
 
-        $this->version = $version;
 
         add_action('init', array($this, 'load_plugin_textdomain'));
         //add_action('init', array('ldd_directory_lite_tracking', 'get_instance'));
@@ -128,15 +136,7 @@ class ldd_directory_lite {
      */
     public function include_files() {
 
-        { // Check for the existence of the old plugin and offer to import any data
-            $plugin = 'ldd-business-directory/lddbd_core.php';
-            $dir = dirname(__FILE__);
-            $plugin_path = substr($dir, 0, strrpos($dir, '/')) . '/' . $plugin;
-            if (file_exists($plugin_path) && false == get_option('lddlite_upgraded_from_original'))
-                require_once(LDDLITE_PATH . 'import-lddbd.php');
-        }
-
-        // functions.php is included when the object is instantiated
+        // functions.php is included via the constructor
         require_once(LDDLITE_PATH . 'includes/setup.php');
         require_once(LDDLITE_PATH . 'includes/listings.php');
         require_once(LDDLITE_PATH . 'includes/ajax.php');
@@ -149,6 +149,7 @@ class ldd_directory_lite {
             require_once(LDDLITE_PATH . 'includes/admin/settings.php');
             require_once(LDDLITE_PATH . 'includes/admin/help.php');
         }
+
     }
 
 
@@ -158,7 +159,6 @@ class ldd_directory_lite {
      * @since 0.5.0
      */
     public function load_plugin_textdomain() {
-
 
         $lang_dir = LDDLITE_PATH . 'languages/';
         $lang_dir = apply_filters('lddlite_languages_directory', $lang_dir);

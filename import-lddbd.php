@@ -1,19 +1,17 @@
 <?php
 /**
- * The LDL_Import_LDDBD class is solely for the purpose of upgrading from LDD Business Directory
- * to the new LDD Directory Lite plugin. If future version bumps require an upgrade, this
- * may not be the best class to utilize.
+ * The ldd_directory_lite_import_from_plugin class is for the purpose of upgrading from LDD Business Directory
+ * to the new LDD Directory Lite plugin. The general outline of this class came from studying WP_Import to learn how
+ * it handled itself when encountering large amounts of data... my original attempt was running out of memory far
+ * too easily. Lots'o'fun this one was.
  *
- * The general outline of this class came from studying WP_Import to learn how it handled large
- * amounts of data. I would like this to run with as little impact to the user as possible.
- *
- * @package   LDDBD
+ * @package   ldd_directory_lite
  * @author    LDD Web Design <info@lddwebdesign.com>
  * @license   GPL-2.0+
  * @link      http://lddwebdesign.com
  * @copyright 2014 LDD Consulting, Inc
- *
  */
+
 if (!defined('WPINC'))
     die;
 
@@ -31,7 +29,7 @@ define('UPFROM_CAT_TABLE', $wpdb->prefix . 'lddbusinessdirectory_cats');
  *
  * @since 0.5.4
  */
-class LDL_Import_LDDBD {
+class ldd_directory_lite_import_from_plugin {
 
     // The data collected for the upgrade
     public $posts = array();
@@ -46,7 +44,7 @@ class LDL_Import_LDDBD {
 
 
     /**
-     * Main controller class, when our upgrade object is created this directs the procession.
+     * Main controller class, when our object is created this directs the procession.
      */
     public function __construct() {
 
@@ -54,7 +52,7 @@ class LDL_Import_LDDBD {
             return;
 
         delete_transient('_lddlite_upgrading');
-
+        die('what?');
         update_option('lddlite_version', LDDLITE_VERSION);
 
         add_action('admin_menu', array($this, 'add_page'));
@@ -63,17 +61,17 @@ class LDL_Import_LDDBD {
 
 
     /**
-     * Register the page that we'll use to display the upgrade process
+     * Register the page that we'll use to display the whole process
      */
     public function add_page() {
-        add_dashboard_page(__('Upgrading from LDD Business Directory', 'lddlite'), __('LDD Upgrade', 'lddlite'), 'manage_options', 'lddlite-upgrade', array(
+        add_dashboard_page(__('Upgrading from LDD Business Directory', 'lddlite'), __('LDD Upgrade', 'lddlite'), 'manage_options', 'lddlite-import', array(
                 $this,
-                'upgrade'
+                'import'
             ));
     }
 
     /**
-     * Don't show the upgrade page on the menu
+     * Don't show the registered page on the menu
      */
     public function hide_page() {
         remove_submenu_page('index.php', 'lddlite-upgrade');
@@ -81,9 +79,9 @@ class LDL_Import_LDDBD {
 
 
     /**
-     * Handles the sequence of events for upgrading from the LDD Business Directory plugin
+     * Handles the sequence of events for upgrading/importing from the LDD Business Directory plugin
      */
-    public function upgrade() {
+    public function import() {
 
         ?>
         <div class="wrap">
@@ -138,7 +136,7 @@ class LDL_Import_LDDBD {
 
         if (!empty($results)) {
             foreach ($results as $cat) {
-                $this->terms[$cat->id] = $cat->name;
+                $this->terms[ $cat->id ] = $cat->name;
             }
         }
 
@@ -160,7 +158,7 @@ class LDL_Import_LDDBD {
 
         foreach ($results as $row) {
             $hash = hash('md5', $row->createDate . $row->name);
-            $this->authors[$hash] = array(
+            $this->authors[ $hash ] = array(
                 'login' => $row->login,
                 'email' => $row->email,
             );
@@ -173,7 +171,6 @@ class LDL_Import_LDDBD {
 
     /**
      * Create all custom category terms from the old business directory table.
-     *
      * This skips any terms that already exist, but creates a complete map for use elsewhere.
      */
     public function upgrade_terms() {
@@ -196,7 +193,7 @@ class LDL_Import_LDDBD {
                 }
             }
 
-            $this->term_map[$old_id] = is_array($term_id) ? $term_id['term_id'] : $term_id;
+            $this->term_map[ $old_id ] = is_array($term_id) ? $term_id['term_id'] : $term_id;
 
         }
 
@@ -207,7 +204,6 @@ class LDL_Import_LDDBD {
 
     /**
      * Create all the author accounts using built in WordPress logins.
-     *
      * Data for this process can't be trusted whatsoever, and passwords aren't reused due to the insecure
      * way they had been previously stored.
      */
@@ -247,7 +243,7 @@ class LDL_Import_LDDBD {
                 }
             }
 
-            $this->author_map[$hash] = (!$author_id || 1 == $author_id) ? (int) get_current_user_id() : $author_id;
+            $this->author_map[ $hash ] = (!$author_id || 1 == $author_id) ? (int) get_current_user_id() : $author_id;
 
         }
 
@@ -258,7 +254,6 @@ class LDL_Import_LDDBD {
 
     /**
      * Create posts from the imported listing data.
-     *
      * Checking for the posts existence should hopefully negate the need to put the site into maintenance mode,
      * which seems to be too disruptive.
      */
@@ -291,7 +286,7 @@ class LDL_Import_LDDBD {
                 printf('<p><strong>' . __('Listing already exists', 'lddlite') . ':</strong> %s</p>', esc_html($new['post_title']));
             } else {
 
-                $author_id = $this->author_map[$hash];
+                $author_id = $this->author_map[ $hash ];
                 $term_ids = array();
 
                 // Failsafe
@@ -317,7 +312,7 @@ class LDL_Import_LDDBD {
                             // We're not checking if the term exists here and trusting that it will only be mapped
                             // if it was successfully created.
                             if (array_key_exists($old_id, $this->term_map))
-                                $term_ids[] = $this->term_map[$old_id];
+                                $term_ids[] = $this->term_map[ $old_id ];
                         }
 
                         wp_set_post_terms($post_id, $term_ids, LDDLITE_TAX_CAT);
@@ -328,7 +323,7 @@ class LDL_Import_LDDBD {
 
                 // Only map newly created posts, so existing posts are skipped during $this->upgrade_meta()
                 // This should stay here...
-                $this->post_map[$hash] = $post_id;
+                $this->post_map[ $hash ] = $post_id;
                 printf(__('Added listing', 'lddlite') . ': <em>%s</em><br>', esc_html($new['post_title']));
 
             }
@@ -355,9 +350,12 @@ class LDL_Import_LDDBD {
         if (!function_exists('wp_generate_attachment_metadata'))
             require_once(ABSPATH . 'wp-admin/includes/image.php');
 
-        $countries = ldl_get_country_array();
         $wp_upload_dir = wp_upload_dir();
 
+        $creds = request_filesystem_credentials('');
+        if (WP_Filesystem($creds)) {
+            global $wp_filesystem;
+        }
 
         foreach ($this->posts as $post) {
 
@@ -366,35 +364,37 @@ class LDL_Import_LDDBD {
             if (!array_key_exists($hash, $this->post_map))
                 continue;
 
-            $post_id = $this->post_map[$hash];
+            $post_id = $this->post_map[ $hash ];
 
-            // This is hardly the best case for everyone, but it should help get the US, Canada, the UK and maybe
-            // some others under way.
-            if ('United Kingdom' == $post->address_country) {
-                $country = 'GB';
+            // Put the address together as best we can for the geocoder
+            $address = $post->address_street . ', ' . $post->address_city . ', ' . $post->address_state . ' ' . $post->address_zip . ', ' . $post->address_country;
 
-                if (strpos($post->address_city, ',') !== false) {
-                    $pos = strrpos($post->address_city, ',');
-                    $city = trim(substr($post->address_city, 0, $pos));
-                    $subdivision = trim(substr($post->address_city, $pos + 1));
+            $geo = array(
+                'formatted' => '',
+                'lat'       => '',
+                'lng'       => '',
+            );
+
+            // Make sure we have something to work with
+            if ('' != trim($address, ' ,')) {
+
+                $get_address = 'http://maps.google.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
+                $data = wp_remote_get($get_address);
+
+                // Use the data from Google's geocoder API to display addresses and set map coordinates
+                if ('200' == $data['response']['code']) {
+                    $body = json_decode($data['body']);
+                    $geo['formatted'] = $body->results[0]->formatted_address;
+                    $geo['lat'] = $body->results[0]->geometry->location->lat;
+                    $geo['lng'] = $body->results[0]->geometry->location->lng;
                 } else {
-                    $city = '';
-                    $subdivision = $post->address_city;
+                    // If the geocoder fails, this should kickstart the dashboard autocomplete
+                    $geo['formatted'] = $address;
                 }
 
-            } else {
-                $country = array_search($post->address_country, $countries);
-                $city = $post->address_city;
-                $subdivision = $post->address_state;
             }
 
-            $post_meta = array(
-                'country'     => $country,
-                'address_one' => $post->address_street,
-                'city'        => $city,
-                'subdivision' => $subdivision,
-                'post_code'   => $post->address_zip,
-            );
+            update_post_meta($post_id, LDDLITE_PFX . '_geo', $geo);
 
             if (!empty($post->email))
                 $post_meta['contact_email'] = $post->email;
@@ -408,45 +408,44 @@ class LDL_Import_LDDBD {
             if (!empty($post->url))
                 $post_meta['url_website'] = esc_url_raw($post->url);
             if (!empty($post->facebook))
-                $post_meta['url_facebook'] = ldl_force_https($post->facebook);
+                $post_meta['url_facebook'] = ldl_force_scheme($post->facebook);
             if (!empty($post->linkedin))
-                $post_meta['url_linkedin'] = ldl_force_https($post->linkedin);
+                $post_meta['url_linkedin'] = ldl_force_scheme($post->linkedin);
             if (!empty($post->twitter))
                 $post_meta['url_twitter'] = ldl_sanitize_twitter($post->twitter);
 
-            foreach ($post_meta as $key => $value) {
-                add_post_meta($post_id, LDDLITE_PFX . $key, $value);
-            }
 
+            if ($wp_filesystem) {
+                if (!empty($post->logo) && file_exists($wp_upload_dir['basedir'] . '/' . $post->logo)) {
 
-            if (!empty($post->logo) && file_exists($wp_upload_dir['basedir'] . '/' . $post->logo)) {
+                    $old = $wp_upload_dir['basedir'] . '/' . $post->logo;
+                    $new = $wp_upload_dir['path'] . '/' . basename($post->logo);
 
-                $old = $wp_upload_dir['basedir'] . '/' . $post->logo;
-                $new = $wp_upload_dir['path'] . '/' . basename($post->logo);
+                    // Don't delete, in case users want to roll back
+                    // @todo When there's a stable release, add a utility to offer clean-up
+                    if ($wp_filesystem->copy($old, $new)) {
 
-                // No old content is deleted by the upgrade
-                if (copy($old, $new)) {
+                        $filetype = wp_check_filetype($new);
+                        $attachment = array(
+                            'guid'           => $wp_upload_dir['url'] . '/' . basename($new),
+                            'post_mime_type' => $filetype['type'],
+                            'post_title'     => sanitize_title(substr(basename($new), 0, -4)),
+                            'post_content'   => '',
+                            'post_status'    => 'inherit'
+                        );
 
-                    $filetype = wp_check_filetype($new);
-                    $attachment = array(
-                        'guid'           => $wp_upload_dir['url'] . '/' . basename($new),
-                        'post_mime_type' => $filetype['type'],
-                        'post_title'     => sanitize_title(substr(basename($new), 0, -4)),
-                        'post_content'   => '',
-                        'post_status'    => 'inherit'
-                    );
+                        $attached = wp_insert_attachment($attachment, $new, $post_id);
 
-                    $attached = wp_insert_attachment($attachment, $new, $post_id);
+                        if ($attached) {
+                            $attach_data = wp_generate_attachment_metadata($attached, $new);
+                            wp_update_attachment_metadata($attached, $attach_data);
 
-                    if ($attached) {
-                        $attach_data = wp_generate_attachment_metadata($attached, $new);
-                        wp_update_attachment_metadata($attached, $attach_data);
+                            set_post_thumbnail($post_id, $attached);
+                        }
 
-                        set_post_thumbnail($post_id, $attached);
                     }
 
                 }
-
             }
 
         }
@@ -458,7 +457,6 @@ class LDL_Import_LDDBD {
 
     /**
      * Bring any attached files over and make sure they're associated with the proper post.
-     *
      * It seems the original plugin borked a few uploads and deleted file extensions. I can't justify the extra
      * cycles to try and save these files when this process is already pretty CPU intensive to begin with. Sorry!
      */
@@ -469,8 +467,9 @@ class LDL_Import_LDDBD {
         $wp_upload_dir = wp_upload_dir();
         $uploads_base = $wp_upload_dir['basedir'] . '/directory-lite';
 
-        if (!function_exists('request_filesystem_credentials'))
+        if (!function_exists('request_filesystem_credentials')) {
             require_once(ABSPATH . 'wp-admin/includes/file.php');
+        }
 
         $creds = request_filesystem_credentials('');
         if (WP_Filesystem($creds)) {
@@ -486,26 +485,29 @@ class LDL_Import_LDDBD {
 
         foreach ($this->document_map as $hash => $doc) {
 
-            if (!array_key_exists($hash, $this->post_map))
+            if (!array_key_exists($hash, $this->post_map)) {
                 continue;
+            }
 
             $old = $wp_upload_dir['basedir'] . '/' . $doc['path'];
 
-            if (!file_exists($old))
+            if (!file_exists($old)) {
                 continue;
+            }
 
             $filetype = wp_check_filetype($old);
 
             // It's not worth the cycles to try and save files that were corrupted by the Business Directory upload
-            if (!$filetype['type'])
+            if (!$filetype['type']) {
                 continue;
+            }
 
             $new = $uploads_base . '/' . sanitize_file_name(basename($doc['path']));
 
             // Say it with me, copy, don't move.
             if (!$wp_filesystem->copy($old, $new)) {
 
-                $post_id = $this->post_map[$hash];
+                $post_id = $this->post_map[ $hash ];
 
                 $attachment = array(
                     'guid'           => $wp_upload_dir['url'] . '/' . sanitize_file_name(basename($doc['path'])),
@@ -533,7 +535,7 @@ class LDL_Import_LDDBD {
     }
 
     /**
-     * Run clean up after the upgrade has completed.
+     * Run clean up after the import has completed.
      */
     public function end() {
 
@@ -541,8 +543,9 @@ class LDL_Import_LDDBD {
         wp_defer_term_counting(false);
 
         // Attempt to disable the old plugin
-        if (!function_exists('deactivate_plugins'))
+        if (!function_exists('deactivate_plugins')) {
             require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+        }
         deactivate_plugins('ldd-business-directory/lddbd_core.php', true);
 
         do_action('ldl_upgrade_end');
@@ -556,7 +559,7 @@ class LDL_Import_LDDBD {
     }
 
     /**
-     * Documents aren't currently in use with the Lite plugin, but will be soon. Don't leave them behind.
+     * Documents are not currently in use with the Lite plugin, but will be soon. Don't leave them behind.
      */
     private function _get_files_list() {
         global $wpdb;
@@ -571,7 +574,7 @@ class LDL_Import_LDDBD {
         $results = $wpdb->get_results($query);
 
         foreach ($results as $row) {
-            $this->document_map[$row->hash] = array(
+            $this->document_map[ $row->hash ] = array(
                 'path'  => $row->doc_path,
                 'title' => $row->doc_name,
                 'desc'  => $row->description,
@@ -584,23 +587,22 @@ class LDL_Import_LDDBD {
 
 
 /**
- * This class is derived wholly or in part from the ajax-notification github repository. Thanks Tom!
+ * This class is derived wholly or in part or mostly from the ajax-notification github repository. Thanks Tom!
  *
  * @since 0.5.4
  * @link  https://github.com/tommcfarlin/ajax-notification Tom's Ajax-Notification
  */
-class LDL_Import_LDDBD_Notice {
+class ldd_directory_lite_import_from_notice {
 
     public function __construct() {
 
-        set_transient('_lddlite_upgrading', true, 120);
         add_action('admin_head', array($this, 'add_scripts'));
 
         // Don't append this notice on the actual upgrade page
         $curr = isset($_GET['page']) ? $_GET['page'] : '';
-        if (false == get_option('lddlite_upgraded_from_original') && 'lddlite-upgrade' != $curr)
+        if (false == get_option('lddlite_upgraded_from_original') && 'lddlite-upgrade' != $curr) {
             add_action('admin_notices', array($this, 'display_notice'));
-
+        }
 
     }
 
@@ -613,6 +615,8 @@ class LDL_Import_LDDBD_Notice {
 
         if (LDDLITE_POST_TYPE != $screen->post_type)
             return;
+
+        set_transient('_lddlite_upgrading', true, 120);
 
         $html = '<div id="directory-upgrade-notification" class="updated">';
         $html .= '<p style="font-size:120%;font-weight:700;">' . __('Existing data has been detected!', 'lddlite') . '</p>';
@@ -627,5 +631,5 @@ class LDL_Import_LDDBD_Notice {
 
 }
 
-new LDL_Import_LDDBD_Notice;
-new LDL_Import_LDDBD();
+new ldd_directory_lite_import_from_plugin;
+new ldd_directory_lite_import_from_notice;
