@@ -100,6 +100,8 @@ EM;
         'email_onapprove_body'          => $email['on_approve'],
         'submit_use_tos'                => 0,
         'submit_tos'                    => '',
+        'submit_intro'                  => '<p>' . __('Please tell us a little bit about the organization you would like to see listed in our directory. Try to include as much information as you can, and be as descriptive as possible where asked.', 'lddlite') . '</p>',
+        'submit_success'                => '<h3>' . __('Congratulations!', 'lddlite') . '</h3><p>' . __('Your listing has been successfully submitted for review. Please allow us sufficient time to review the listing and approve it for public display in our directory.', 'lddlite') . '</p>',
         'allow_tracking_popup_done'     => 0,
         'allow_tracking'                => 0,
         'appearance_display_featured'   => 1,
@@ -291,22 +293,6 @@ function ldl_get_listing_meta($id) {
 
     return $meta;
 
-}
-
-
-/**
- * @deprecated Ripping this out and heading to Geocoder country.
- */
-function ldl_dropdown_subdivision($subdivision, $data, $tabindex = 0) {
-    return '<input id="subdivision" class="form-control" name="ld_s_subdivision" type="text" value="' . $selected . '" ' . $tabindex . ' required>';
-}
-
-
-/**
- * @deprecated Ripping this out and heading to Geocoder country.
- */
-function ldl_dropdown_country($name, $data = '', $tabindex = 0) {
-    return '<input id="country" class="form-control" name="' . $name . '" type="text" ' . $tabindex . ' required>';
 }
 
 

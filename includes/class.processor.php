@@ -17,7 +17,7 @@ class ldd_directory_lite_processor {
     const NONCE_FIELD = 'nonce_field';
     const NONCE_ACTION = 'submit-listing-nonce';
 
-    const DATA_PREFIX = 'ld_s_';
+    const DATA_PREFIX = 'n_';
 
     /**
      * @var bool True during form submission
@@ -108,17 +108,18 @@ class ldd_directory_lite_processor {
 
         // Acquire the list of required fields
         $required = apply_filters('lddlite_submit_required_fields', $this->required_fields);
+        $required_errmsg = __('This field is required.', 'lddlite');
 
         // Loop through and check for required fields first
         foreach ($required as $field) {
             if ('' == $this->data[$field]) {
-                $this->errors[$field] = __('This field is required.', 'lddlite');
+                $this->errors[$field] = apply_filters('lddlite_presentation_required_errmsg', $required_errmsg, $field);
             }
         }
 
-        // Proceed to advanced validation, if any
+        // Any additional validation gets run now
         foreach ($this->data as $field => $value) {
-            // Attach additional methods to this filter, be sure to return it empty|false if it passes validation
+            // Attach validation to this filter, be sure to return it empty|false if it passes validation
             $error = apply_filters('lddlite_validate_fields', '', $field, $value);
 
             if ($error) {
@@ -188,7 +189,10 @@ class ldd_directory_lite_processor {
      * @return string The error message if found, empty string if none is set
      */
     public function get_error($field) {
-        return isset($this->errors[$field]) ? '<span class="text-danger">' . $this->errors[$field] . '</span>' : '';
+        $default_wrapper = '<span class="bg-danger text-danger">%s</span>';
+        $error_wrapper = apply_filters('lddlite_presentation_error_wrapper', $default_wrapper, $field );
+
+        return isset($this->errors[$field]) ? sprintf($error_wrapper, $this->errors[$field]) : '';
     }
 
 
@@ -236,15 +240,13 @@ function ldl_validate_fields($error, $field, $value) {
         case 'url_website':
         case 'url_facebook':
         case 'url_linkedin':
-            if (0 !== strpos($value, 'http')) {
-                $value = esc_url($value);
-            }
-            if (false != filter_var($value, FILTER_VALIDATE_URL)) {
+            $value = esc_url($value);
+            if ($value != filter_var($value, FILTER_VALIDATE_URL)) {
                 $error = __('We were unable to verify that URL, please check it and try again.', 'lddlite');
             }
             break;
         case 'geo':
-            if (!is_array($value) || 3 != count($value) || in_array('', $value) || !preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $value['lat'] . ',' . $value['lng'])) {
+            if (!is_array($value) || 2 != count($value) || in_array('', $value) || !preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $value['lat'] . ',' . $value['lng'])) {
                 $error = __('Something went wrong validating that location, please try again.', 'lddlite');
             }
             break;
@@ -252,5 +254,24 @@ function ldl_validate_fields($error, $field, $value) {
 
     return $error;
 }
-
 add_filter('lddlite_validate_fields', 'ldl_validate_fields', 10, 3);
+
+
+function ldl_require_tos($required) {
+
+    if (ldl_get_setting('submit_use_tos'))
+        $required[] = 'tos';
+
+    return $required;
+}
+add_filter('lddlite_submit_required_fields', 'ldl_require_tos');
+
+
+function ldl_require_tos_errmsg($errmsg, $field) {
+
+    if ('tos' == $field)
+        $errmsg = __('Please verify that you have read and agree to our terms of service before continuing.', 'lddlite');
+
+    return $errmsg;
+}
+add_filter('lddlite_presentation_required_errmsg', 'ldl_require_tos_errmsg', 10, 2);

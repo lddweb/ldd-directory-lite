@@ -3,27 +3,22 @@
 
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-directory">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only"><?php _e('Toggle navigation', 'lddlite'); ?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo ldl_get_submit_form_link(); ?>">Submit Listing</a>
+            <a class="navbar-brand" href="<?php echo ldl_get_submit_form_link(); ?>"><?php _e('Submit Listing', 'lddlite'); ?></a>
         </div>
 
         <div id="navbar-directory" class="collapse navbar-collapse">
 	        <form role="search" method="get" action="<?php echo ldl_get_home_url(); ?>" class="navbar-form navbar-right">
                 <input type="hidden" name="post_type" value="<?php echo LDDLITE_POST_TYPE; ?>">
 	            <div class="form-group">
-		            <input id="directory-search" class="form-control" name="s" type="search" value="<?php echo get_search_query(); ?>" placeholder="Search">
+		            <input id="directory-search" class="form-control" name="s" type="search" value="<?php echo get_search_query(); ?>" placeholder="<?php _e('Search', 'lddlite'); ?>">
 	            </div>
-	            <button type="submit" class="btn btn-primary">Search</button>
+	            <button type="submit" class="btn btn-primary"><?php _e('Search', 'lddlite'); ?></button>
             </form>
         </div>
     </div>
 </nav>
-
-
-<script>
-    var ajaxurl = "<?php echo admin_url( 'admin-ajax.php' ); ?>"
-</script>

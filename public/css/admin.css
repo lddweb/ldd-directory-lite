@@ -66,3 +66,11 @@ ul#directory-links li.right {
 .cmb-type-geo_location #_lddlite_geo {
     margin-bottom: .5em;
 }
+
+#wp-ldl_submit_intro-wrap.wp-editor-wrap,
+#wp-ldl_submit_success-wrap.wp-editor-wrap {
+    margin-bottom: .5em;
+}
+.form-table td .wp-editor-wrap + p {
+    margin-bottom: 1em;
+}

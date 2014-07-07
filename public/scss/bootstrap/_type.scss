@@ -6,7 +6,7 @@
 // Headings
 // -------------------------
 
-h1, h2, h3, h4, h5, h6,
+/*h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: $headings-font-family;
   font-weight: $headings-font-weight;
@@ -89,7 +89,7 @@ mark,
 .mark {
   background-color: $state-warning-bg;
   padding: .2em;
-}
+}*/
 
 // Alignment
 .text-left           { text-align: left; }
@@ -136,6 +136,7 @@ mark,
 
 @include bg-variant('.bg-danger', $state-danger-bg);
 
+/*
 
 // Page header
 // -------------------------
@@ -302,3 +303,4 @@ address {
   font-style: normal;
   line-height: $line-height-base;
 }
+*/

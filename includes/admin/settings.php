@@ -237,6 +237,8 @@ class ldd_directory_lite_admin {
 
             add_settings_field('lddlite_settings[submit_use_tos]', __('Include Terms', 'lddlite'), '_f_submit_use_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
             add_settings_field('lddlite_settings[submit_tos]', '<label for="submit_tos">' . __('Terms of Service', 'lddlite') . '</label>', '_f_submit_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
+            add_settings_field('lddlite_settings[submit_intro]', '<label for="submit_intro">' . __('Submit Introduction', 'lddlite') . '</label>', '_f_submit_intro', 'lddlite_settings_submit', 'lddlite_settings_submit');
+            add_settings_field('lddlite_settings[submit_success]', '<label for="submit_success">' . __('Submit Success', 'lddlite') . '</label>', '_f_submit_success', 'lddlite_settings_submit', 'lddlite_settings_submit');
 
             function _f_submit_use_tos() {
                 echo '<label for="lite-submit_use_tos"><input id="lite-submit_use_tos" type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked(ldl_get_setting('submit_use_tos'), 1, 0) . '> ';
@@ -245,9 +247,25 @@ class ldd_directory_lite_admin {
 
             function _f_submit_tos() {
                 wp_editor(ldl_get_setting('submit_tos'), 'ldl_submit_tos', array(
-                        'textarea_name' => 'lddlite_settings[submit_tos]',
-                        'textarea_rows' => 5
-                    ));
+                    'textarea_name' => 'lddlite_settings[submit_tos]',
+                    'textarea_rows' => 5
+                ));
+            }
+
+            function _f_submit_intro() {
+                wp_editor(ldl_get_setting('submit_intro'), 'ldl_submit_intro', array(
+                    'textarea_name' => 'lddlite_settings[submit_intro]',
+                    'textarea_rows' => 5
+                ));
+                echo '<p class="description">' . __('This will be displayed at the top of the submit listing form.', 'lddlite') . '</p>';
+            }
+
+            function _f_submit_success() {
+                wp_editor(ldl_get_setting('submit_success'), 'ldl_submit_success', array(
+                    'textarea_name' => 'lddlite_settings[submit_success]',
+                    'textarea_rows' => 5
+                ));
+                echo '<p class="description">' . __('Displayed following a successful listing submission.', 'lddlite') . '</p>';
             }
 
         }

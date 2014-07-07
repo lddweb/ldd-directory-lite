@@ -31,7 +31,7 @@ function ldl_submit_categories_dropdown($selected = 0, $id = 'category', $classe
         'selected'     => $selected,
         'hierarchical' => 1,
         'name'         => $name,
-        'id'           => $id,
+        'id'           => 'f_' . $id,
         'class'        => implode(' ', $classes),
         'tab_index'    => 2,
         'taxonomy'     => LDDLITE_TAX_CAT,
@@ -314,13 +314,14 @@ function ldl_submit_generate_listing() {
     ldl_submit_create_meta($data, $post_id);
 
     // Upload their logo if one was submitted
-    if (isset($_FILES['ld_s_logo'])) {
+    if (isset($_FILES['n_logo']) && 0 === $_FILES['n_logo']['error']) {
+
         // These files need to be included as dependencies when on the front end.
         require_once(ABSPATH . 'wp-admin/includes/image.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/media.php');
 
-        $attachment_id = media_handle_upload('ld_s_logo', 0);
+        $attachment_id = media_handle_upload('n_logo', 0);
         if (is_wp_error($attachment_id)) {
             $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'lddlite'));
             ldl_submit_rollback(array(
@@ -371,6 +372,10 @@ function ldl_shortcode__submit() {
         }
 
     }
+
+    wp_enqueue_script('jquery-ui-autocomplete');
+    wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=3.9.1');
+    wp_enqueue_script('lddlite-submit', ldl_plugin_url('public/js/submit.js'), 'maps-autocomplete', LDDLITE_VERSION);
 
     ldl_get_template_part('submit');
 

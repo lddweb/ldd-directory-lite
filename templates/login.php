@@ -17,12 +17,12 @@
     <?php endif; ?>
 
 
-    <p>To submit a listing you must be logged in. Please log in, or register a new user account.</p>
+    <p><?php _e('Please log in, or register a new user account.', 'lddlite' ); ?></p>
 
     <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="#login" role="tab" data-toggle="tab">Login</a></li>
-        <li><a href="#register" role="tab" data-toggle="tab">Register</a></li>
-        <li><a href="#lost-password" role="tab" data-toggle="tab">Lost Password</a></li>
+        <li class="active"><a href="#login" role="tab" data-toggle="tab"><?php _e('Login', 'lddlite'); ?></a></li>
+        <li><a href="#register" role="tab" data-toggle="tab"><?php _e('Register', 'lddlite'); ?></a></li>
+        <li><a href="#lost-password" role="tab" data-toggle="tab"><?php _e('Lost Password', 'lddlite'); ?></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -34,13 +34,13 @@
                 <input type="hidden" name="user-cookie" value="1">
 
                 <div class="form-group">
-                    <label for="user_login" class="col-sm-3 control-label">Username</label>
+                    <label for="user_login" class="col-sm-3 control-label"><?php _e('Username', 'lddlite'); ?></label>
                     <div class="col-sm-6">
                         <input id="user_login" class="form-control" type="text" name="log">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="user_pass" class="col-sm-3 control-label">Password</label>
+                    <label for="user_pass" class="col-sm-3 control-label"><?php _e('Password', 'lddlite'); ?></label>
                     <div class="col-sm-6">
                         <input id="user_pass" class="form-control" type="password" name="pwd">
                     </div>
@@ -49,14 +49,14 @@
                     <div class="col-sm-offset-3 col-sm-9">
                         <div class="checkbox">
                             <label>
-                                <input id="rememberme" type="checkbox" name="rememberme" value="forever"> Remember me
+                                <input id="rememberme" type="checkbox" name="rememberme" value="forever"> <?php _e('Remember me', 'lddlite'); ?>
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-default">Sign in</button>
+                        <button type="submit" class="btn btn-default"><?php _e('Sign in', 'lddlite'); ?></button>
                     </div>
                 </div>
             </form>
@@ -68,20 +68,20 @@
                 <input type="hidden" name="redirect_to" value="<?php echo add_query_arg('registered', true); ?>">
                 <input type="hidden" name="user-cookie" value="1">
                 <div class="form-group">
-                    <label for="user_login" class="col-sm-3 control-label">Username</label>
+                    <label for="user_login" class="col-sm-3 control-label"><?php _e('Username', 'lddlite'); ?></label>
                     <div class="col-sm-6">
                         <input id="user_login" class="form-control" type="text" name="user_login">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="user_email" class="col-sm-3 control-label">Your Email</label>
+                    <label for="user_email" class="col-sm-3 control-label"><?php _e('Your Email', 'lddlite'); ?></label>
                     <div class="col-sm-6">
                         <input id="user_email" class="form-control" type="email" name="user_email">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-default">Register</button>
+                        <button type="submit" class="btn btn-default"><?php _e('Register', 'lddlite'); ?></button>
                     </div>
                 </div>
             </form>
@@ -93,14 +93,14 @@
                 <input type="hidden" name="redirect_to" value="<?php echo add_query_arg('reset', true); ?>">
                 <input type="hidden" name="user-cookie" value="1">
                 <div class="form-group">
-                    <label for="user_login" class="col-sm-3 control-label">Your Email</label>
+                    <label for="user_login" class="col-sm-3 control-label"><?php _e('Your Email', 'lddlite'); ?></label>
                     <div class="col-sm-6">
                         <input id="user_login" class="form-control" type="text" name="user_login">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-default">Register</button>
+                        <button type="submit" class="btn btn-default"><?php _e('Register', 'lddlite'); ?></button>
                     </div>
                 </div>
             </form>
@@ -110,28 +110,3 @@
 
 
 </div>
-
-
-<script>
-jQuery("#sample-data").click(function(e) {
-    e.preventDefault()
-
-    var sampleData = {
-        title: "Sample Listing",
-        category: 9,
-        description: "Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem.",
-        summary: "Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
-        contact_email: "mark@watero.us",
-        contact_phone: "505.123.4567",
-        url_website: "mark.watero.us",
-        url_facebook: "facebook.com/mwaterous",
-        url_twitter: "markwaterous",
-        geo: "450 Michelle Cir, Bernalillo NM 87004"
-    }
-
-    jQuery.each( sampleData, function( key, value) {
-        jQuery('#' + key).val( value )
-    })
-
-})
-</script>
