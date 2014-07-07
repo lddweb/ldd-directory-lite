@@ -47,14 +47,6 @@ class ldd_directory_lite_import_from_plugin {
      * Main controller class, when our object is created this directs the procession.
      */
     public function __construct() {
-
-        if (!get_transient('_lddlite_importing'))
-            return;
-
-        delete_transient('_lddlite_importing');
-
-        update_option('lddlite_version', LDDLITE_VERSION);
-
         add_action('admin_menu', array($this, 'add_page'));
         add_action('admin_head', array($this, 'hide_page'));
     }
@@ -583,7 +575,6 @@ class ldd_directory_lite_import_from_notice {
 
     public function __construct() {
 
-        set_transient('_lddlite_importing', true, 120);
         add_action('admin_head', array($this, 'add_scripts'));
 
         // Don't append this notice on the actual upgrade page
