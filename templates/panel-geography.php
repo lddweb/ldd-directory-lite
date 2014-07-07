@@ -1,17 +1,47 @@
 <div class="container-fluid">
-	<div class="row bump-down">
+    <div class="row">
+        <div class="col-md-12">
+            <p class="section">Providing an address for your listing is optional, however if you would like for people to know where you are located we suggest including it.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label" for="title">Address</label>
+                <input type="text" id="title" class="form-control" name="ld_s_address_one" value="<?php echo ldl_get_value( 'address_one' ); ?>" required>
+                <input type="text" id="title" class="form-control bump-down" name="ld_s_address_two" value="<?php echo ldl_get_value( 'address_two' ); ?>" required>
+                <?php echo ldl_get_error( 'address_one' ); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label" for="category">Postal Code</label>
+                <input type="text" id="title" class="form-control" name="ld_s_address_one" value="<?php echo ldl_get_value( 'address_one' ); ?>" required>
+                <?php echo ldl_get_error( 'category' ); ?>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label" for="category">Country</label>
+                <input type="text" id="title" class="form-control" name="ld_s_address_one" value="<?php echo ldl_get_value( 'address_one' ); ?>" required>
+                <?php echo ldl_get_error( 'category' ); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row bump-down">
 		<div class="col-md-12">
-			<p>Tell us where your organization is located, and we'll include a map on your listing page. As before, if you don't wish to include this information, leave the field blank.</p>
+			<p>If you would like to include a Google map with your listing, you can set one here. Type in part of your address to use the autocomplete feature, or drag the marker on the map to your location.</p>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12 submit_form_geo_wrapper">
-			<label class="control-label" for="">Location</label>
-			<input type="text" id="geo" class="map_search form-control bump-up">
-			<div class="map_wrapper"></div>
-			<input type="hidden" class="formatted" name="ld_s_geo[formatted]" >
-			<input type="hidden" class="lat" name="ld_s_geo[lat]" >
-			<input type="hidden" class="lng" name="ld_s_geo[lng]" >
+			<label class="control-label" for="">Set Marker</label>
+			<input type="text" id="geo" class="form-control autocomplete-control">
+			<div id="map-canvas"></div>
+			<input type="hidden" id="lat" name="ld_s_geo[lat]" >
+			<input type="hidden" id="lng" name="ld_s_geo[lng]" >
 		</div>
 	</div>
 </div>
@@ -19,72 +49,52 @@
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;libraries=places&#038;ver=3.9.1'></script>
 <script>
 
-	(function ($) {
+		jQuery(document).ready(function($) {
+			var searchInput = $('#geo')
+			var $lat = $('#lat')
+			var $lng = $('#lng')
 
-		$('.submit_form_geo_wrapper').ready(function() {
-			var searchInput = $('.map_search', this).get(0)
-			var mapCanvas   = $('.map_wrapper', this).get(0)
-			var $lat = $('.lat', this)
-			var $lng = $('.lng', this)
-			var $formatted = $('.formatted', this)
-
-			var latLng = new google.maps.LatLng( 39.97712028761926, -102.70019568750001 )
-			var zoom = 6
+			var latLng = new google.maps.LatLng(39.97712028761926, -102.70019568750001)
+			var zoom = 4
 			var geocoder = new google.maps.Geocoder();
 
-			if ( $lat.val().length > 0 && $lng.val().length > 0 ) {
-				latLng = new google.maps.LatLng( $lat.val(), $lng.val() )
-				zoom = 16
-			}
-
-			var mapOptions = {
+            var mapCanvas   = $('#map-canvas')
+            var mapOptions = {
 				center: latLng,
 				zoom: zoom,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			}
-			var map = new google.maps.Map( mapCanvas, mapOptions )
+			var map = new google.maps.Map(mapCanvas, mapOptions)
 
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
 			var markerOptions = {
 				position: latLng,
 				map: map,
 				draggable: true,
 			}
-			var marker = new google.maps.Marker( markerOptions )
+			var marker = new google.maps.Marker(markerOptions)
 
-			if( $lat.val().length > 0 && $lng.val().length > 0 ) {
-				marker.setPosition( latLng )
-			}
-
-			google.maps.event.addListener( marker, 'drag', function() {
-				geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-					if (status == google.maps.GeocoderStatus.OK) {
-						if (results[0]) {
-							$(searchInput).val( results[0].formatted_address );
-							$formatted.val( results[0].formatted_address );
-						}
-					}
-				});
+			google.maps.event.addListener(marker, 'drag', function() {
 				$lat.val( marker.getPosition().lat() )
 				$lng.val( marker.getPosition().lng() )
 			})
 
-			var autocomplete = new google.maps.places.Autocomplete( searchInput )
-			autocomplete.bindTo( 'bounds', map )
+			var autocomplete = new google.maps.places.Autocomplete(searchInput)
+			autocomplete.bindTo('bounds', map)
 
-			google.maps.event.addListener( autocomplete, 'place_changed', function() {
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
 				var place = autocomplete.getPlace()
-				if ( place.geometry.viewport ) {
-					map.fitBounds( place.geometry.viewport )
+				if (place.geometry.viewport) {
+					map.fitBounds(place.geometry.viewport)
 				} else {
-					map.setCenter( place.geometry.location )
-					map.setZoom( 16 )
+					map.setCenter(place.geometry.location)
+					map.setZoom(16)
 				}
 
-				marker.setPosition( place.geometry.location )
+				marker.setPosition(place.geometry.location)
 
-				$formatted.val( place.formatted_address )
-				$lat.val( place.geometry.location.lat() )
-				$lng.val( place.geometry.location.lng() )
+				$lat.val(place.geometry.location.lat())
+				$lng.val(place.geometry.location.lng())
 			})
 
 			$(searchInput).keypress( function(e) {
@@ -94,5 +104,4 @@
 			})
 		})
 
-	}(jQuery))
 </script>

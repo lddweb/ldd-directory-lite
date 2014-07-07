@@ -355,6 +355,11 @@ function ldl_shortcode__submit() {
     // Set up the processor
     $lddlite_submit_processor = new ldd_directory_lite_processor;
 
+    if (!is_user_logged_in()) {
+        ldl_get_template_part('login');
+        return;
+    }
+
     if ($lddlite_submit_processor->is_processing() && !$lddlite_submit_processor->has_errors()) {
         do_action('lddlite_submit_pre_process', $lddlite_submit_processor);
 

@@ -86,17 +86,17 @@ if ($post_ids) {
      */
     foreach ($upgrades as $version => $trigger) {
 
-        if (!$trigger) { continue; }
+        if (!$trigger)
+            continue;
 
-            switch ($version) {
+        switch ($version) {
 
-                case '0.6.0-beta':
-                    ldl_060_address_to_geo($post_ids);
-                    break;
-
-            }
+            case '0.6.0-beta':
+                ldl_060_address_to_geo($post_ids);
+                break;
 
         }
 
     }
+
 }

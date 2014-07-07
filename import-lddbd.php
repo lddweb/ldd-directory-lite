@@ -31,7 +31,7 @@ define('UPFROM_CAT_TABLE', $wpdb->prefix . 'lddbusinessdirectory_cats');
  */
 class ldd_directory_lite_import_from_plugin {
 
-    // The data collected for the upgrade
+    // The data collected for the import
     public $posts = array();
     public $authors = array();
     public $terms = array();
@@ -48,11 +48,11 @@ class ldd_directory_lite_import_from_plugin {
      */
     public function __construct() {
 
-        if (!get_transient('_lddlite_upgrading'))
+        if (!get_transient('_lddlite_importing'))
             return;
 
-        delete_transient('_lddlite_upgrading');
-        die('what?');
+        delete_transient('_lddlite_importing');
+
         update_option('lddlite_version', LDDLITE_VERSION);
 
         add_action('admin_menu', array($this, 'add_page'));
@@ -64,7 +64,7 @@ class ldd_directory_lite_import_from_plugin {
      * Register the page that we'll use to display the whole process
      */
     public function add_page() {
-        add_dashboard_page(__('Upgrading from LDD Business Directory', 'lddlite'), __('LDD Upgrade', 'lddlite'), 'manage_options', 'lddlite-import', array(
+        add_dashboard_page(__('Running Import for LDD Business Directory', 'lddlite'), __('LDD Import', 'lddlite'), 'manage_options', 'lddlite-import', array(
                 $this,
                 'import'
             ));
@@ -74,7 +74,7 @@ class ldd_directory_lite_import_from_plugin {
      * Don't show the registered page on the menu
      */
     public function hide_page() {
-        remove_submenu_page('index.php', 'lddlite-upgrade');
+        remove_submenu_page('index.php', 'lddlite-import');
     }
 
 
@@ -92,11 +92,11 @@ class ldd_directory_lite_import_from_plugin {
 
             $this->start();
 
-            $this->upgrade_terms();
-            $this->upgrade_authors();
-            $this->upgrade_posts();
-            $this->upgrade_meta();
-            $this->upgrade_files();
+            $this->import_terms();
+            $this->import_authors();
+            $this->import_posts();
+            $this->import_meta();
+            $this->import_files();
 
             $this->end();
 
@@ -119,7 +119,7 @@ class ldd_directory_lite_import_from_plugin {
         $this->_get_posts();
         echo ' ' . __('done.', 'lddlite') . '<p>';
 
-        do_action('ldl_upgrade_start');
+        do_action('ldl_import_start');
     }
 
     /**
@@ -173,9 +173,9 @@ class ldd_directory_lite_import_from_plugin {
      * Create all custom category terms from the old business directory table.
      * This skips any terms that already exist, but creates a complete map for use elsewhere.
      */
-    public function upgrade_terms() {
+    public function import_terms() {
 
-        $this->terms = apply_filters('ldl_upgrade_terms', $this->terms);
+        $this->terms = apply_filters('ldl_import_terms', $this->terms);
 
         // Nothing to do
         if (empty($this->terms))
@@ -207,9 +207,9 @@ class ldd_directory_lite_import_from_plugin {
      * Data for this process can't be trusted whatsoever, and passwords aren't reused due to the insecure
      * way they had been previously stored.
      */
-    public function upgrade_authors() {
+    public function import_authors() {
 
-        $this->authors = apply_filters('ldl_upgrade_authors', $this->authors);
+        $this->authors = apply_filters('ldl_import_authors', $this->authors);
 
         if (empty($this->authors))
             return;
@@ -257,8 +257,8 @@ class ldd_directory_lite_import_from_plugin {
      * Checking for the posts existence should hopefully negate the need to put the site into maintenance mode,
      * which seems to be too disruptive.
      */
-    public function upgrade_posts() {
-        $this->posts = apply_filters('ldl_upgrade_posts', $this->posts);
+    public function import_posts() {
+        $this->posts = apply_filters('ldl_import_posts', $this->posts);
 
         if (!function_exists('post_exists'))
             require_once(ABSPATH . 'wp-admin/includes/post.php');
@@ -321,7 +321,7 @@ class ldd_directory_lite_import_from_plugin {
 
                 }
 
-                // Only map newly created posts, so existing posts are skipped during $this->upgrade_meta()
+                // Only map newly created posts, so existing posts are skipped during $this->import_meta()
                 // This should stay here...
                 $this->post_map[ $hash ] = $post_id;
                 printf(__('Added listing', 'lddlite') . ': <em>%s</em><br>', esc_html($new['post_title']));
@@ -341,7 +341,7 @@ class ldd_directory_lite_import_from_plugin {
      *
      * @todo There's only one filesystem command, but we should still use WP_Filesystem
      */
-    public function upgrade_meta() {
+    public function import_meta() {
 
         echo '<p>' . __('Adding listing meta information...', 'lddlite');
 
@@ -366,32 +366,19 @@ class ldd_directory_lite_import_from_plugin {
 
             $post_id = $this->post_map[ $hash ];
 
-            // Put the address together as best we can for the geocoder
-            $address = $post->address_street . ', ' . $post->address_city . ', ' . $post->address_state . ' ' . $post->address_zip . ', ' . $post->address_country;
-
             $geo = array(
                 'formatted' => '',
                 'lat'       => '',
                 'lng'       => '',
             );
 
-            // Make sure we have something to work with
+            // Put the address together as best we can for the geocoder
+            $address = $post->address_street . ', ' . $post->address_city . ', ' . $post->address_state . ' ' . $post->address_zip . ', ' . $post->address_country;
+
+            // It will overload the API to geocode everything right now.
             if ('' != trim($address, ' ,')) {
-
-                $get_address = 'http://maps.google.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
-                $data = wp_remote_get($get_address);
-
-                // Use the data from Google's geocoder API to display addresses and set map coordinates
-                if ('200' == $data['response']['code']) {
-                    $body = json_decode($data['body']);
-                    $geo['formatted'] = $body->results[0]->formatted_address;
-                    $geo['lat'] = $body->results[0]->geometry->location->lat;
-                    $geo['lng'] = $body->results[0]->geometry->location->lng;
-                } else {
-                    // If the geocoder fails, this should kickstart the dashboard autocomplete
-                    $geo['formatted'] = $address;
-                }
-
+                $geo['formatted'] = $address;
+                set_transient( '_geocode_post_' . $post_id, true, WEEK_IN_SECONDS * 4);
             }
 
             update_post_meta($post_id, LDDLITE_PFX . '_geo', $geo);
@@ -460,7 +447,7 @@ class ldd_directory_lite_import_from_plugin {
      * It seems the original plugin borked a few uploads and deleted file extensions. I can't justify the extra
      * cycles to try and save these files when this process is already pretty CPU intensive to begin with. Sorry!
      */
-    public function upgrade_files() {
+    public function import_files() {
 
         echo '<p>' . __('Updating file attachments...', 'lddlite');
 
@@ -548,13 +535,13 @@ class ldd_directory_lite_import_from_plugin {
         }
         deactivate_plugins('ldd-business-directory/lddbd_core.php', true);
 
-        do_action('ldl_upgrade_end');
+        do_action('ldl_import_end');
 
         echo '<p><strong>' . __('All done!', 'lddlite') . '</strong><br>' . __('Passwords have been reset for security purposes, please notify your users!', 'lddlite') . '</p>';
         echo '<p><a href="' . admin_url() . '">' . __('Return to WordPress Dashboard', 'lddlite') . '</a>' . ' | ';
         echo '<a href="' . admin_url('edit.php?post_type=' . LDDLITE_POST_TYPE . '&page=lddlite-settings') . '">' . __('Directory Settings', 'lddlite') . '</a></p>';
 
-        update_option('lddlite_upgraded_from_original', true);
+        update_option('lddlite_imported_from_original', true);
 
     }
 
@@ -596,18 +583,19 @@ class ldd_directory_lite_import_from_notice {
 
     public function __construct() {
 
+        set_transient('_lddlite_importing', true, 120);
         add_action('admin_head', array($this, 'add_scripts'));
 
         // Don't append this notice on the actual upgrade page
         $curr = isset($_GET['page']) ? $_GET['page'] : '';
-        if (false == get_option('lddlite_upgraded_from_original') && 'lddlite-upgrade' != $curr) {
+        if (false == get_option('lddlite_imported_from_original') && 'lddlite-import' != $curr) {
             add_action('admin_notices', array($this, 'display_notice'));
         }
 
     }
 
     public function add_scripts() {
-        echo '<script>(function(e){"use strict";e(function(){e("#dismiss-upgrade-notice").length>0&&e("#dismiss-upgrade-notice").click(function(t){t.preventDefault();e.post(ajaxurl,{action:"hide_directoryup_notice",nonce:e.trim(e("#directory-upgrade-nononce").text())},function(t){"1"===t?e("#directory-upgrade-notification").fadeOut("slow"):e("#directory-upgrade-notification").removeClass("updated").addClass("error")})})})})(jQuery);</script>';
+        echo '<script>(function(e){"use strict";e(function(){e("#dismiss-import-notice").length>0&&e("#dismiss-import-notice").click(function(t){t.preventDefault();e.post(ajaxurl,{action:"hide_import_notice",nonce:e.trim(e("#directory-import-nononce").text())},function(t){"1"===t?e("#directory-upgrade-notification").fadeOut("slow"):e("#directory-upgrade-notification").removeClass("updated").addClass("error")})})})})(jQuery);</script>';
     }
 
     public function display_notice() {
@@ -616,14 +604,12 @@ class ldd_directory_lite_import_from_notice {
         if (LDDLITE_POST_TYPE != $screen->post_type)
             return;
 
-        set_transient('_lddlite_upgrading', true, 120);
-
         $html = '<div id="directory-upgrade-notification" class="updated">';
         $html .= '<p style="font-size:120%;font-weight:700;">' . __('Existing data has been detected!', 'lddlite') . '</p>';
         $html .= '<p style="font-weight:700;">' . __('It looks like you have data from the LDD Business Directory plugin! Would you like to import this?', 'lddlite');
-        $html .= ' &nbsp; <a href="' . admin_url('admin.php?page=lddlite-upgrade') . '" class="button">' . __('Import Data.', 'lddlite') . '</a>';
-        $html .= '<p>' . __('If you do not wish to upgrade, you can', 'lddlite') . ' <a href="javascript:;" id="dismiss-upgrade-notice">' . __('dismiss', 'lddlite') . '</a> ' . __('this notice. Once you dismiss this notice, you will have to reinstall the plugin in order to upgrade.', 'lddlite') . '</p>';
-        $html .= '<span id="directory-upgrade-nononce" class="hidden">' . wp_create_nonce('directory-upgrade-nononce') . '</span>';
+        $html .= ' &nbsp; <a href="' . admin_url('admin.php?page=lddlite-import') . '" class="button">' . __('Import Data.', 'lddlite') . '</a>';
+        $html .= '<p>' . __('If you do not wish to import your existing data, you can', 'lddlite') . ' <a href="javascript:;" id="dismiss-import-notice">' . __('dismiss', 'lddlite') . '</a> ' . __('this notice.', 'lddlite') . '</p>';
+        $html .= '<span id="directory-import-nononce" class="hidden">' . wp_create_nonce('directory-import-nononce') . '</span>';
         $html .= '</div>';
 
         echo $html;

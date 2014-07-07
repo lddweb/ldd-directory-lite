@@ -85,22 +85,21 @@ class ldd_directory_lite {
      */
     public function init() {
 
-        // IMPORT
+        // ldd business directory import
         $plugin = 'ldd-business-directory/lddbd_core.php';
         $dir = dirname(__FILE__);
         $plugin_path = substr($dir, 0, strrpos($dir, '/')) . '/' . $plugin;
 
-        if (file_exists($plugin_path) && false == get_option('lddlite_upgraded_from_original')) {
+        if (file_exists($plugin_path) && false == get_option('lddlite_imported_from_original')) {
             require_once(LDDLITE_PATH . 'import-lddbd.php');
         }
-        // IMPORT
 
 
         $this->settings = wp_parse_args(get_option('lddlite_settings'), ldl_get_default_settings());
 
         $version = get_option('lddlite_version');
 
-        if (LDDLITE_VERSION != $version) {
+        if ($version && LDDLITE_VERSION != $version) {
             global $upgrades;
 
             $upgrades = array(
@@ -147,6 +146,7 @@ class ldd_directory_lite {
         if (is_admin()) {
             require_once(LDDLITE_PATH . 'includes/admin/metaboxes.php');
             require_once(LDDLITE_PATH . 'includes/admin/settings.php');
+            require_once(LDDLITE_PATH . 'includes/admin/sanitize.php');
             require_once(LDDLITE_PATH . 'includes/admin/help.php');
         }
 
@@ -166,9 +166,11 @@ class ldd_directory_lite {
         $locale = apply_filters('plugin_locale', get_locale(), 'lddlite');
         $mofile = $lang_dir . 'lddlite' . $locale . '.mo';
 
-        if (file_exists($mofile))
-            load_textdomain('lddlite', $mofile); else
+        if (file_exists($mofile)) {
+            load_textdomain('lddlite', $mofile);
+        } else {
             load_plugin_textdomain('lddlite', false, $lang_dir);
+        }
 
     }
 
@@ -240,4 +242,3 @@ function ldl_get_instance() {
 
 /** Das boot */
 ldl_get_instance();
-

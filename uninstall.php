@@ -10,8 +10,8 @@
  *
  */
 
-if (!defined('WP_UNINSTALL_PLUGIN'))
-    die;
+//if (!defined('WP_UNINSTALL_PLUGIN'))
+//    die;
 
 global $wpdb;
 
@@ -22,22 +22,24 @@ global $wpdb;
 function ldl_uninstall_attachments() {
 
     $post_ids = ldl_get_all_IDs();
-    if (!$post_ids) { return; }
+    if (!$post_ids)
+        return;
 
-    foreach ($post_ids as $id) {
-        $attachments = get_posts(array(
-            'post_type'      => 'attachment',
-            'posts_per_page' => -1,
-            'post_status'    => 'any',
-            'post_parent'    => $id,
-            'no_found_rows'  => true,
-        ));
+    //
+    $post_ids = implode(',', $post_ids);
 
-        if (!$attachments)
-            continue;
+    $attachments = get_posts(array(
+        'post_type'      => 'attachment',
+        'posts_per_page' => -1,
+        'post_status'    => 'any',
+        'post_parent_in' => $post_ids,
+        'no_found_rows'  => true,
+    ));
 
-        foreach ($attachments as $attachment)
+    if ($attachments) {
+        foreach ($attachments as $attachment) {
             wp_delete_attachment($attachment->ID);
+        }
     }
 
 }
@@ -47,6 +49,7 @@ function ldl_uninstall_attachments() {
  * Delete everything with as little of a footprint as we can muster, to try and ensure this process succeeds.
  */
 function ldl_uninstall_posts() {
+    global $wpdb;
 
     // Delete postmeta and posts
     $wpdb->query(sprintf("DELETE FROM %s WHERE post_id IN ( SELECT id FROM %s WHERE post_type = '%s' ) ", $wpdb->postmeta, $wpdb->posts, LDDLITE_POST_TYPE));
@@ -86,4 +89,4 @@ ldl_uninstall_posts();
 
 delete_option('lddlite_settings');
 delete_option('lddlite_version');
-delete_option('lddlite_upgraded_from_original');
+delete_option('lddlite_imported_from_original');

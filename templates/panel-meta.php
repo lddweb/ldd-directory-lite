@@ -2,7 +2,7 @@
 <div class="container-fluid">
 	<div class="row bump-down">
 		<div class="col-md-12">
-			<p>The following information pertains specifically to the listing and how it will appear in our directory. If you do not wish for visitors to be able to contact you via any of the below methods, please omit the information and it will not be included.</p>
+			<p class="section">Include as much of the following as you would like to be publicly available. Your email address will not be displayed; if it is provided, a contact form will be embedded with your listing.</p>
 		</div>
 	</div>
 	<div class="row">
@@ -30,30 +30,28 @@
 		</div>
 	</div>
 	<div class="row bump-down">
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="form-group">
 				<label class="control-label" for="">Website</label>
 				<input type="text" id="url_website" class="form-control" name="ld_s_url_website" value="<?php echo ldl_get_value( 'url_website' ); ?>">
 				<p class="help-block">Examples include; 'http://www.yoursite.com', 'mysite.org'</p>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="form-group">
 				<label class="control-label" for="">Facebook</label>
 				<input type="text" id="url_facebook" class="form-control" name="ld_s_url_facebook" value="<?php echo ldl_get_value( 'url_facebook' ); ?>">
 				<p class="help-block">Help locating and customizing your <a href="https://www.facebook.com/help/www/329992603752372" title="Your Facebook Web Address | Facebook Help Center">Facebook profile URL</a></p>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="form-group">
 				<label class="control-label" for="">Twitter</label>
 				<input type="text" id="url_twitter" class="form-control" name="ld_s_url_twitter" value="<?php echo ldl_get_value( 'url_twitter' ); ?>">
 				<p class="help-block">This will always be similar to 'https://twitter.com/<strong>username</strong>'</p>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="form-group">
 				<label class="control-label" for="">Linkedin</label>
 				<input type="text" id="url_linkedin" class="form-control" name="ld_s_url_linkedin" value="<?php echo ldl_get_value( 'url_linkedin' ); ?>">

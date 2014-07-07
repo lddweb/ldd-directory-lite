@@ -173,7 +173,9 @@ function ldl_is_public() {
  * An alias for returning the header template (the header template has our navbar)
  */
 function ldl_get_header() {
-    ldl_get_template_part('header');
+    $show_header = apply_filters('lddlite_filter_presentation_header', true);
+    if ($show_header)
+        ldl_get_template_part('header');
 }
 
 
