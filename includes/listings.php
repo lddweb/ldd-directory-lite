@@ -99,12 +99,12 @@ function ldl_template_include($template) {
 
         if (is_single()) {
             $templates[] = 'single.php';
-        } else if (is_archive()) {
-            $templates[] = 'category.php';
         } else if (is_search()) {
             $templates[] = 'search.php';
+        } else if (is_archive()) {
+            $templates[] = 'category.php';
         }
-
+md($templates);
         $located = ldl_locate_template($templates, false, false);
 
         if ($located)

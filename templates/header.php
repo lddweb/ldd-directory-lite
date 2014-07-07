@@ -12,7 +12,7 @@
         </div>
 
         <div id="navbar-directory" class="collapse navbar-collapse">
-	        <form role="search" method="get" action="<?php echo ldl_get_home_url(); ?>" class="navbar-form navbar-right">
+	        <form role="search" method="get" action="<?php echo site_url(); ?>" class="navbar-form navbar-right">
                 <input type="hidden" name="post_type" value="<?php echo LDDLITE_POST_TYPE; ?>">
 	            <div class="form-group">
 		            <input id="directory-search" class="form-control" name="s" type="search" value="<?php echo get_search_query(); ?>" placeholder="<?php _e('Search', 'lddlite'); ?>">

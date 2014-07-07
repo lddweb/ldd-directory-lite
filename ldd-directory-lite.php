@@ -43,7 +43,12 @@ define('LDDLITE_NOLOGO', plugin_dir_url(__FILE__).'public/images/noimage.png');
  * Flush the rewrites for custom post types
  */
 register_activation_hook(__FILE__, 'flush_rewrite_rules');
+register_activation_hook(__FILE__, 'ldl_install_pages');
 register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
+
+function ldl_install_pages() {
+    add_action( 'admin_notices', array( $this, 'plugin_activation' ) )
+}
 
 
 /**
