@@ -5,7 +5,8 @@
     <?php if ( ldl_has_errors() ): ?>
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong>We're sorry!</strong> There were some errors with the information you provided. <strong>Errors are marked in red.</strong>
+            <strong><?php _e("We're sorry!", 'lddlite'); ?></strong> <?php _e('There were some errors with the information you provided.', 'lddlite'); ?><br>
+            <strong><?php _e('Errors are marked in red.', 'lddlite'); ?></strong>
         </div>
     <?php endif; ?>
 
@@ -32,9 +33,9 @@
         <div class="container-fluid">
             <div class="row bump-down-more">
                 <div class="col-md-12">
-                    <p class="text-success">Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.</p>
+                    <p class="text-success"><?php _e('Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.', 'lddlite'); ?></p>
                     <?php ldl_the_tos(); ?>
-                    <button type="submit" class="btn btn-primary">Submit Listing</button>
+                    <button type="submit" class="btn btn-primary"><?php _e('Submit Listing', 'lddlite'); ?></button>
                 </div>
             </div>
         </div>
