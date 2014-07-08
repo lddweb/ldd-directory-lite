@@ -10,8 +10,8 @@
  *
  */
 
-//if (!defined('WP_UNINSTALL_PLUGIN'))
-//    die;
+if (!defined('WP_UNINSTALL_PLUGIN'))
+    die;
 
 global $wpdb;
 
@@ -25,7 +25,6 @@ function ldl_uninstall_attachments() {
     if (!$post_ids)
         return;
 
-    //
     $post_ids = implode(',', $post_ids);
 
     $attachments = get_posts(array(
@@ -54,6 +53,15 @@ function ldl_uninstall_posts() {
     // Delete postmeta and posts
     $wpdb->query(sprintf("DELETE FROM %s WHERE post_id IN ( SELECT id FROM %s WHERE post_type = '%s' ) ", $wpdb->postmeta, $wpdb->posts, LDDLITE_POST_TYPE));
     $wpdb->query(sprintf("DELETE FROM %s WHERE post_type = '%s'", $wpdb->posts, LDDLITE_POST_TYPE));
+
+}
+
+
+/**
+ * Deletes all taxonomy data
+ */
+function ldl_uninstall_taxonomies() {
+    global $wpdb;
 
     // Loop through our taxonomies and destroy
     foreach (array(LDDLITE_TAX_CAT, LDDLITE_TAX_TAG) as $taxonomy) {
@@ -86,6 +94,7 @@ function ldl_uninstall_posts() {
  */
 ldl_uninstall_attachments();
 ldl_uninstall_posts();
+ldl_uninstall_taxonomies();
 
 delete_option('lddlite_settings');
 delete_option('lddlite_version');
