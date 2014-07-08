@@ -43,12 +43,7 @@ define('LDDLITE_NOLOGO', plugin_dir_url(__FILE__).'public/images/noimage.png');
  * Flush the rewrites for custom post types
  */
 register_activation_hook(__FILE__, 'flush_rewrite_rules');
-register_activation_hook(__FILE__, 'ldl_install_pages');
 register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
-
-function ldl_install_pages() {
-    add_action( 'admin_notices', array( $this, 'plugin_activation' ) )
-}
 
 
 /**
@@ -124,6 +119,9 @@ class ldd_directory_lite {
 
             update_option('lddlite_version', LDDLITE_VERSION);
 
+        } else if (!$version) {
+            add_action('admin_notices', array($this, 'install_pages'));
+            update_option('lddlite_version', LDDLITE_VERSION);
         }
 
 
@@ -154,6 +152,41 @@ class ldd_directory_lite {
             require_once(LDDLITE_PATH . 'includes/admin/sanitize.php');
             require_once(LDDLITE_PATH . 'includes/admin/help.php');
         }
+
+    }
+
+
+    public function install_pages() {
+
+        $directory_page = array(
+            'post_content'  => '[directory]',
+            'post_name'     => 'directory',
+            'post_title'    => __('Directory', 'lddlite'),
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_date'     => date('Y-m-d H:i:s'),
+            'post_date_gmt' => gmdate('Y-m-d H:i:s'),
+        );
+
+        $submit_page = array(
+            'post_content'  => '[directory_submit]',
+            'post_name'     => 'submit-listing',
+            'post_title'    => __('Submit a Listing', 'lddlite'),
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_date'     => date('Y-m-d H:i:s'),
+            'post_date_gmt' => gmdate('Y-m-d H:i:s'),
+        );
+
+        wp_insert_post($directory_page);
+        wp_insert_post($submit_page);
+
+        $html = '<div class="updated"><p>';
+        $html .= '<strong>' . __('[ldd directory lite installation notice]', 'lddlite') . '</strong><br>';
+        $html .= sprintf(__('Required directory pages have been installed for you, please visit the <a href="%s">Edit Pages</a> screen to make any necessary adjustments.', 'lddlite'), admin_url('edit.php?post_type=page'));
+        $html .= '</p></div>';
+
+        echo $html;
 
     }
 
