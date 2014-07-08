@@ -174,7 +174,7 @@ function ldl_submit_create_meta($data, $post_id) {
     $data = array_diff_key($data, array_flip($remove_fields));
 
     foreach ($data as $key => $value) {
-        add_post_meta($post_id, LDDLITE_PFX . $key, $value);
+        add_post_meta($post_id, ldl_pfx($key), $value);
     }
 
 }

@@ -88,6 +88,7 @@ class ldd_directory_lite_import_from_plugin {
             $this->import_authors();
             $this->import_posts();
             $this->import_meta();
+            $this->import_logo();
             $this->import_files();
 
             $this->end();
@@ -330,24 +331,10 @@ class ldd_directory_lite_import_from_plugin {
     /**
      * Using $this->post_map the next stage is to add all the post meta to each listing. Additionally handles
      * renaming the logo file and adding it as the post thumbnail.
-     *
-     * @todo There's only one filesystem command, but we should still use WP_Filesystem
      */
     public function import_meta() {
 
         echo '<p>' . __('Adding listing meta information...', 'lddlite');
-
-        if (!function_exists('ldl_use_locale'))
-            require_once(LDDLITE_PATH . 'includes/functions.php');
-        if (!function_exists('wp_generate_attachment_metadata'))
-            require_once(ABSPATH . 'wp-admin/includes/image.php');
-
-        $wp_upload_dir = wp_upload_dir();
-
-        $creds = request_filesystem_credentials('');
-        if (WP_Filesystem($creds)) {
-            global $wp_filesystem;
-        }
 
         foreach ($this->posts as $post) {
 
@@ -358,22 +345,16 @@ class ldd_directory_lite_import_from_plugin {
 
             $post_id = $this->post_map[ $hash ];
 
-            $geo = array(
-                'formatted' => '',
-                'lat'       => '',
-                'lng'       => '',
+            $post_meta = array(
+                'country'     => $post->address_country,
+                'post_code'   => $post->address_zip,
+                'address_one' => $post->address_street,
+                'address_two' => $post->address_city . (empty($post->address_state) ?: ' ' . $post->address_state),
+                'geo'         => array(
+                    'lat'       => '',
+                    'lng'       => '',
+                ),
             );
-
-            // Put the address together as best we can for the geocoder
-            $address = $post->address_street . ', ' . $post->address_city . ', ' . $post->address_state . ' ' . $post->address_zip . ', ' . $post->address_country;
-
-            // It will overload the API to geocode everything right now.
-            if ('' != trim($address, ' ,')) {
-                $geo['formatted'] = $address;
-                set_transient( '_geocode_post_' . $post_id, true, WEEK_IN_SECONDS * 4);
-            }
-
-            update_post_meta($post_id, LDDLITE_PFX . '_geo', $geo);
 
             if (!empty($post->email))
                 $post_meta['contact_email'] = $post->email;
@@ -393,38 +374,75 @@ class ldd_directory_lite_import_from_plugin {
             if (!empty($post->twitter))
                 $post_meta['url_twitter'] = ldl_sanitize_twitter($post->twitter);
 
+            foreach ($post_meta as $key => $value) {
+                add_post_meta($post_id, ldl_pfx($key), $value);
+            }
 
-            if ($wp_filesystem) {
-                if (!empty($post->logo) && file_exists($wp_upload_dir['basedir'] . '/' . $post->logo)) {
+        }
 
-                    $old = $wp_upload_dir['basedir'] . '/' . $post->logo;
-                    $new = $wp_upload_dir['path'] . '/' . basename($post->logo);
+        echo ' ' . __('done.', 'lddlite') . '<p>';
 
-                    // Don't delete, in case users want to roll back
-                    // @todo When there's a stable release, add a utility to offer clean-up
-                    if ($wp_filesystem->copy($old, $new)) {
+        unset($this->posts);
+    }
 
-                        $filetype = wp_check_filetype($new);
-                        $attachment = array(
-                            'guid'           => $wp_upload_dir['url'] . '/' . basename($new),
-                            'post_mime_type' => $filetype['type'],
-                            'post_title'     => sanitize_title(substr(basename($new), 0, -4)),
-                            'post_content'   => '',
-                            'post_status'    => 'inherit'
-                        );
+    /**
+     * Using $this->post_map the next stage is to add all the post meta to each listing. Additionally handles
+     * renaming the logo file and adding it as the post thumbnail.
+     */
+    public function import_logo() {
 
-                        $attached = wp_insert_attachment($attachment, $new, $post_id);
+        echo '<p>' . __("Importing logo's...", 'lddlite');
 
-                        if ($attached) {
-                            $attach_data = wp_generate_attachment_metadata($attached, $new);
-                            wp_update_attachment_metadata($attached, $attach_data);
+        if (!function_exists('wp_generate_attachment_metadata'))
+            require_once(ABSPATH . 'wp-admin/includes/image.php');
 
-                            set_post_thumbnail($post_id, $attached);
-                        }
+        $wp_upload_dir = wp_upload_dir();
 
+        $creds = request_filesystem_credentials('');
+        if (WP_Filesystem($creds)) {
+            global $wp_filesystem;
+        } else {
+            return;
+        }
+
+        foreach ($this->posts as $post) {
+
+            // Do we need to generate meta for this post?
+            $hash = md5($post->createDate . $post->name);
+            if (!array_key_exists($hash, $this->post_map))
+                continue;
+
+            if ($post->logo && file_exists($wp_upload_dir['basedir'] . '/' . $post->logo)) {
+
+                $post_id = $this->post_map[ $hash ];
+
+                $old = $wp_upload_dir['basedir'] . '/' . $post->logo;
+                $new = $wp_upload_dir['path'] . '/' . basename($post->logo);
+
+                // Don't delete, in case users want to roll back
+                // @todo When there's a stable release, add a utility to offer clean-up
+                if ($wp_filesystem->copy($old, $new)) {
+
+                    $filetype = wp_check_filetype($new);
+                    $attachment = array(
+                        'guid'           => $wp_upload_dir['url'] . '/' . basename($new),
+                        'post_mime_type' => $filetype['type'],
+                        'post_title'     => sanitize_title(substr(basename($new), 0, -4)),
+                        'post_content'   => '',
+                        'post_status'    => 'inherit'
+                    );
+
+                    $attached = wp_insert_attachment($attachment, $new, $post_id);
+
+                    if ($attached) {
+                        $attach_data = wp_generate_attachment_metadata($attached, $new);
+                        wp_update_attachment_metadata($attached, $attach_data);
+
+                        set_post_thumbnail($post_id, $attached);
                     }
 
                 }
+
             }
 
         }
@@ -446,9 +464,8 @@ class ldd_directory_lite_import_from_plugin {
         $wp_upload_dir = wp_upload_dir();
         $uploads_base = $wp_upload_dir['basedir'] . '/directory-lite';
 
-        if (!function_exists('request_filesystem_credentials')) {
+        if (!function_exists('request_filesystem_credentials'))
             require_once(ABSPATH . 'wp-admin/includes/file.php');
-        }
 
         $creds = request_filesystem_credentials('');
         if (WP_Filesystem($creds)) {
@@ -458,28 +475,28 @@ class ldd_directory_lite_import_from_plugin {
         }
 
         if (!file_exists($uploads_base)) {
-            if (!$wp_filesystem->mkdir($uploads_base))
+            if (!$wp_filesystem->mkdir($uploads_base)) {
                 return;
+            }
         }
 
         foreach ($this->document_map as $hash => $doc) {
 
-            if (!array_key_exists($hash, $this->post_map)) {
+            if (!array_key_exists($hash, $this->post_map))
                 continue;
-            }
 
             $old = $wp_upload_dir['basedir'] . '/' . $doc['path'];
 
-            if (!file_exists($old)) {
+            if (!file_exists($old))
                 continue;
-            }
+
 
             $filetype = wp_check_filetype($old);
 
             // It's not worth the cycles to try and save files that were corrupted by the Business Directory upload
-            if (!$filetype['type']) {
+            if (!$filetype['type'])
                 continue;
-            }
+
 
             $new = $uploads_base . '/' . sanitize_file_name(basename($doc['path']));
 
@@ -522,9 +539,9 @@ class ldd_directory_lite_import_from_plugin {
         wp_defer_term_counting(false);
 
         // Attempt to disable the old plugin
-        if (!function_exists('deactivate_plugins')) {
+        if (!function_exists('deactivate_plugins'))
             require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-        }
+
         deactivate_plugins('ldd-business-directory/lddbd_core.php', true);
 
         do_action('ldl_import_end');

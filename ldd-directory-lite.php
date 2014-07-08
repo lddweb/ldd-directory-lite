@@ -35,7 +35,7 @@ define('LDDLITE_POST_TYPE', 'directory_listings');
 define('LDDLITE_TAX_CAT', 'listing_category');
 define('LDDLITE_TAX_TAG', 'listing_tag');
 
-define('LDDLITE_PFX', '_lddlite');
+define('LDDLITE_PFX', 'lddlite');
 define('LDDLITE_NOLOGO', plugin_dir_url(__FILE__).'public/images/noimage.png');
 
 
@@ -156,6 +156,10 @@ class ldd_directory_lite {
     }
 
 
+    /**
+     * Automatically install required pages on initial plugin activation. This feature should ultimately ask, and
+     * could have some more interaction from the user, but this will suffice between now and a stable release.
+     */
     public function install_pages() {
 
         $directory_page = array(
@@ -178,8 +182,15 @@ class ldd_directory_lite {
             'post_date_gmt' => gmdate('Y-m-d H:i:s'),
         );
 
-        wp_insert_post($directory_page);
-        wp_insert_post($submit_page);
+        $post_id = wp_insert_post($directory_page);
+        if ($post_id)
+            $this->settings['directory_front_page'] = $post_id;
+
+        $post_id = wp_insert_post($submit_page);
+        if ($post_id)
+            $this->settings['directory_submit_page'] = $post_id;
+
+        $this->save_settings();
 
         $html = '<div class="updated"><p>';
         $html .= '<strong>' . __('[ldd directory lite installation notice]', 'lddlite') . '</strong><br>';

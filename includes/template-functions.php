@@ -257,7 +257,7 @@ function ldl_the_tos() {
 /** LISTING META UTILITES */
 
 /**
- * Return a piece of the _lddlite_geo post meta.
+ * Return a piece of the geo post meta.
  *
  * @param string $key Should be one of 'formatted', 'lat', or 'lng'
  *
@@ -269,7 +269,7 @@ function ldl_get_address($key = 'formatted') {
     if (!is_int($post_id))
         return false;
 
-    $geo = get_post_meta($post_id, '_lddlite_geo', true);
+    $geo = get_post_meta($post_id, ldl_pfx('geo'), true);
 
     if (array_key_exists($key, $geo))
         return $geo[$key];
@@ -293,9 +293,9 @@ function ldl_get_social($post_id) {
 
     // Get the links for this listing
     $social = array(
-        'facebook' => ldl_force_scheme(get_post_meta($post_id, '_lddlite_url_facebook', 1)),
-        'linkedin' => ldl_force_scheme(get_post_meta($post_id, '_lddlite_url_linkedin', 1)),
-        'twitter'  => ldl_sanitize_twitter(get_post_meta($post_id, '_lddlite_url_twitter', 1)),
+        'facebook' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_facebook'), 1)),
+        'linkedin' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_linkedin'), 1)),
+        'twitter'  => ldl_sanitize_twitter(get_post_meta($post_id, ldl_pfx('url_twitter'), 1)),
     );
 
     $titles = array(

@@ -228,7 +228,21 @@ function ldl_get_meta($key) {
         return false;
     }
 
-    return get_metadata('post', $post_id, '_lddlite_' . $key, true);
+    return get_metadata('post', $post_id, ldl_pfx($key), true);
+}
+
+
+/**
+ * Appends the plugin prefix to key/field identifiers to maintain readability in other functions
+ *
+ * @param string $key The field identifier to be prefixed
+ *
+ * @return string A prefixed string
+ */
+function ldl_pfx($key) {
+    $prefixed = '_' . trim(LDDLITE_PFX, '_') . '_';
+
+    return $prefixed . $key;
 }
 
 
@@ -250,11 +264,11 @@ function ldl_get_listing_meta($id) {
         'phone'       => '',
     );
 
-    $meta['address_one'] = get_post_meta($id, '_lddlite_address_one', 1);
-    $meta['address_two'] = get_post_meta($id, '_lddlite_address_two', 1);
-    $meta['city'] = get_post_meta($id, '_lddlite_city', 1);
-    $meta['subdivision'] = get_post_meta($id, '_lddlite_subdivision', 1);
-    $meta['post_code'] = get_post_meta($id, '_lddlite_post_code', 1);
+    $meta['address_one'] = get_post_meta($id, ldl_pfx('address_one'), 1);
+    $meta['address_two'] = get_post_meta($id, ldl_pfx('address_two'), 1);
+    $meta['city'] = get_post_meta($id, ldl_pfx('city'), 1);
+    $meta['subdivision'] = get_post_meta($id, ldl_pfx('subdivision'), 1);
+    $meta['post_code'] = get_post_meta($id, ldl_pfx('post_code'), 1);
 
     $address = '';
     $geocode = '';
@@ -282,12 +296,12 @@ function ldl_get_listing_meta($id) {
     $meta['address'] = $address;
     $meta['geocode'] = $geocode;
 
-    $website = get_post_meta($id, '_lddlite_url_website', 1);
+    $website = get_post_meta($id, ldl_pfx('url_website'), 1);
     if ($website)
         $meta['website'] = apply_filters('lddlite_listing_website', sprintf('<a href="%1$s"><i class="fa fa-link"></i>  %1$s</a>', esc_url($website)));
 
-    $meta['email'] = get_post_meta($id, '_lddlite_contact_email', 1);
-    $meta['phone'] = get_post_meta($id, '_lddlite_contact_phone', 1);
+    $meta['email'] = get_post_meta($id, ldl_pfx('contact_email'), 1);
+    $meta['phone'] = get_post_meta($id, ldl_pfx('contact_phone'), 1);
 
     $meta = wp_parse_args($meta, $defaults);
 

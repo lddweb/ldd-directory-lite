@@ -55,16 +55,15 @@ ul#directory-links li.right {
 .map-canvas {
     width: 100%;
     height: 340px;
-    border-radius: 8px;
 }
-.cmb-type-geo_location th {
-     display: none;
- }
-.cmb-type-geo_location td {
-    text-align: center;
-}
-.cmb-type-geo_location #_lddlite_geo {
-    margin-bottom: .5em;
+table.cmb_metabox input[type=text].autocomplete {
+    margin-top: 6px;
+    border-radius: 2px;
+    height: 30px;
+    width: 60%;
+    -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    -moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
 #wp-ldl_submit_intro-wrap.wp-editor-wrap,

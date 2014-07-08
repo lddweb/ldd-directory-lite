@@ -79,7 +79,7 @@ function ldl_ajax__contact_form() {
     }
 
     $post_id = intval($_POST['post_id']);
-    $contact_email = get_post_meta($post_id, '_lddlite_contact_email', 1);
+    $contact_email = get_post_meta($post_id, ldl_pfx('contact_email'), 1);
     $listing_title = get_the_title($post_id);
 
     $headers = sprintf("From: %s <%s>\r\n", $name, $email);
