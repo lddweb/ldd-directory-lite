@@ -348,7 +348,7 @@ function ldl_submit_generate_listing() {
  *
  * @since 0.6.0
  */
-function ldl_shortcode__submit() {
+function ldl_shortcode_directory_submit() {
     global $lddlite_submit_processor;
 
     ldl_enqueue();
@@ -380,5 +380,4 @@ function ldl_shortcode__submit() {
     ldl_get_template_part('submit');
 
 }
-
-add_shortcode('directory_submit', 'ldl_shortcode__submit');
+add_shortcode('directory_submit', 'ldl_shortcode_directory_submit');

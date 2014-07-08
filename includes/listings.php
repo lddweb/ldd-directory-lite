@@ -104,7 +104,7 @@ function ldl_template_include($template) {
         } else if (is_archive()) {
             $templates[] = 'category.php';
         }
-md($templates);
+
         $located = ldl_locate_template($templates, false, false);
 
         if ($located)

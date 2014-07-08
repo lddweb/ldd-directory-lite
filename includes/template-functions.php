@@ -163,7 +163,12 @@ function ldl_plugin_url($path = '') {
  * @return bool True or false
  */
 function ldl_use_google_maps() {
-    return ldl_get_setting('google_maps');
+    global $geo;
+
+    if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl_get_setting('google_maps'))
+        return false;
+
+    return true;
 }
 
 
@@ -263,18 +268,27 @@ function ldl_the_tos() {
  *
  * @return string|false Returns the value for the requested key if found, false otherwise
  */
-function ldl_get_address($key = 'formatted') {
+function ldl_get_address() {
+
     $post_id = get_the_ID();
 
     if (!is_int($post_id))
         return false;
 
-    $geo = get_post_meta($post_id, ldl_pfx('geo'), true);
+    $address_one = get_post_meta($post_id, ldl_pfx('address_one'), true);
+    $address_two = get_post_meta($post_id, ldl_pfx('address_two'), true);
+    $postal_code = get_post_meta($post_id, ldl_pfx('postal_code'), true);
+    $country = get_post_meta($post_id, ldl_pfx('country'), true);
 
-    if (array_key_exists($key, $geo))
-        return $geo[$key];
+    $output = '';
+    $output .= empty($address_one) ? '' : $address_one;
+    $output .= empty($address_two) ? '' : ', ' . $address_two;
+    $output .= empty($postal_code) ? '' : ', ' . $postal_code;
+    $output .= empty($country) ? '' : ', ' . $country;
 
-    return false;
+    $output = apply_filters('lddlite_presentation_get_address', $output, $post_id, compact('address_one', 'address_two', 'postal_code', 'country'));
+
+    return $output ? $output : false;
 }
 
 

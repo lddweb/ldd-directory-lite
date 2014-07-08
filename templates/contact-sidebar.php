@@ -41,10 +41,10 @@
     </div>
     <div class="row bump-down">
         <div class="col-xs-12">
-            <label for="senders_name" class="sr-only"><?php _e('What is 7 + seven?', 'lddlite'); ?></label>
+            <label for="math" class="sr-only"><?php _e('What is 7 + seven?', 'lddlite'); ?></label>
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-plus fa-fw"></i></span>
-                <input id="other_name" name="other_name" type="text" class="form-control" placeholder="<?php _e('What is seven &#43; s&#101;v&#101;n?', 'lddlite'); ?>" required>
+                <input id="math" name="math" type="text" class="form-control" placeholder="<?php _e('What is seven &#43; s&#101;v&#101;n?', 'lddlite'); ?>" required>
             </div>
         </div>
     </div>
@@ -63,7 +63,9 @@
             fields: {
                 '#senders_name': {
                     required: true,
-                    message: '<?php _e('Your name is required.', 'lddlite'); ?>'
+                    message: '<?php _e('Please enter a valid name.', 'lddlite'); ?>',
+                    test: happy.minLength,
+                    arg: 3
                 },
                 '#email': {
                     required: true,
@@ -78,17 +80,30 @@
                     required: true,
                     message: '<?php _e('Please enter a message.', 'lddlite'); ?>',
                 },
-                '#other_name': {
+                '#math': {
                     required: true,
-                    message: '<?php _e("That doesn't appear correct.", 'lddlite'); ?>',
+                    message: "<?php _e("That doesn't appear correct.", 'lddlite'); ?>",
                     test: happy.math
                 }
-            },
-            happy: function(e) {
-                $form.hide()
-                return false
             }
         })
 
+
+        $("#contact-form").submit(function() {
+            var params = $('#contact-form').serialize()
+
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                data: params,
+                dataType: 'json',
+
+                success: function(string){
+                    console.log(string);
+                }
+
+            });
+
+        })
     })
 </script>

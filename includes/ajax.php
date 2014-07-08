@@ -22,7 +22,7 @@
  * @since 5.3.0
  * @todo
  */
-function ldl_ajax__contact_form() {
+function ldl_ajax_contact_form() {
 
     if (!wp_verify_nonce($_POST['nonce'], 'contact-form-nonce'))
         die('You shall not pass!');
@@ -42,15 +42,20 @@ function ldl_ajax__contact_form() {
         'fourteen'
     );
 
-    $name = sanitize_text_field($_POST['first_name']);
+
+    $name = sanitize_text_field($_POST['senders_name']);
     $email = sanitize_text_field($_POST['email']);
     $subject = sanitize_text_field($_POST['subject']);
     $message = esc_html(sanitize_text_field($_POST['message']));
 
-    $answer = sanitize_text_field(strtolower($_POST['other_name']));
-    if (!is_numeric($answer))
-        $answer = strtolower($answer); else
+    $answer = sanitize_text_field($_POST['math']);
+
+    if (!is_numeric($answer)) {
+        $answer = strtolower($answer);
+    } else {
         $answer = intval($answer);
+    }
+
 
     $errors = array();
 
@@ -103,6 +108,8 @@ function ldl_ajax__contact_form() {
     die;
 
 }
+add_action('wp_ajax_contact_form', 'ldl_ajax_contact_form');
+add_action('wp_ajax_nopriv_contact_form', 'ldl_ajax_contact_form');
 
 
 function ldl_store_tracking_response() {
@@ -122,6 +129,7 @@ function ldl_store_tracking_response() {
 
     $ldl->save_settings();
 }
+add_action('wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response');
 
 
 function ldl_hide_import_notice() {
@@ -130,13 +138,4 @@ function ldl_hide_import_notice() {
             die('1'); else die('0');
     }
 }
-
-
-add_action('wp_ajax_contact_form', 'ldl_ajax__contact_form');
-add_action('wp_ajax_nopriv_contact_form', 'ldl_ajax__contact_form');
-
-add_action('wp_ajax_dropdown_change', 'ldl_ajax__dropdown_change');
-add_action('wp_ajax_nopriv_dropdown_change', 'ldl_ajax__dropdown_change');
-
-add_action('wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response');
 add_action('wp_ajax_hide_import_notice', 'ldl_hide_import_notice');

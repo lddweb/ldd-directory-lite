@@ -349,7 +349,7 @@ class ldd_directory_lite_import_from_plugin {
                 'country'     => $post->address_country,
                 'post_code'   => $post->address_zip,
                 'address_one' => $post->address_street,
-                'address_two' => $post->address_city . (empty($post->address_state) ?: ' ' . $post->address_state),
+                'address_two' => $post->address_city . (empty($post->address_state) ? '' : ' ' . $post->address_state),
                 'geo'         => array(
                     'lat'       => '',
                     'lng'       => '',
