@@ -48,7 +48,7 @@ get_header(); ?>
                     <div class="col-md-4">
                         <?php echo ldl_get_thumbnail( $post->ID ); ?>
 
-                        <?php ldl_get_template_part( 'contact', 'sidebar' ); ?>
+                        <?php ldl_get_contact_form(); ?>
                     </div>
                 </div>
 

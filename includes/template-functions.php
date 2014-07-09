@@ -194,6 +194,22 @@ function ldl_get_header() {
 }
 
 
+function ldl_get_contact_form() {
+    $post_id = get_the_ID();
+
+    if (!$post_id)
+        return;
+
+    if (!get_post_meta($post_id, ldl_pfx('contact_email'), 1))
+        return;
+
+    echo '<script>var ajaxurl = "' . admin_url('admin-ajax.php') . '"</script>';
+
+    wp_enqueue_script('lddlite-contact');
+    ldl_get_template_part('contact', 'sidebar');
+}
+
+
 /**
  * An alias for ldl_get_categories that defaults to the top level categories.
  */
