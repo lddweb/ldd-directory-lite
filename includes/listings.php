@@ -1,7 +1,6 @@
 <?php
 /**
  * Filters related to our custom post type.
- *
  * Post types are registered in setup.php, all actions and filters in this file are related
  * to customizing the way WordPress handles our custom post types and taxonomies.
  *
@@ -13,40 +12,44 @@
  */
 
 
-function ldl_filter__enter_title_here($title) {
-    if (get_post_type() == LDDLITE_POST_TYPE)
-        $title = __('Listing Name', 'lddlite');
-
-    return $title;
-}
-
-
-function ldl_filter__admin_post_thumbnail_html($content) {
+/**
+ * Intercept the template_include string and replace it with our own built in templates of the same (or similar) name.
+ *
+ * @since 0.7
+ *
+ * @param $template The original located template
+ *
+ * @return string The new template location if found, original if not
+ */
+function ldl_template_include($template) {
 
     if (LDDLITE_POST_TYPE == get_post_type()) {
-        $content = str_replace(__('Set featured image'), __('Upload A Logo', 'lddlite'), $content);
-        $content = str_replace(__('Remove featured image'), __('Remove Logo', 'lddlite'), $content);
+
+        $templates = array();
+
+        if (is_single()) {
+            $templates[] = 'single.php';
+        } else if (is_search()) {
+            $templates[] = 'search.php';
+        } else if (is_archive()) {
+            $templates[] = 'category.php';
+        }
+
+        $located = ldl_locate_template($templates, false, false);
+
+        if ($located)
+            return $located;
+
     }
 
-    return $content;
+    return $template;
 }
+add_filter('template_include', 'ldl_template_include');
 
 
-function ldl_action__admin_menu_icon() {
-    echo "\n\t<style>";
-    echo '#adminmenu .menu-icon-' . LDDLITE_POST_TYPE . ' div.wp-menu-image:before { content: \'\\f307\'; }';
-    echo '</style>';
-}
-
-
-function ldl_action__submenu_title() {
-    global $submenu;
-    $submenu['edit.php?post_type=' . LDDLITE_POST_TYPE][5][0] = 'All Listings';
-}
-
-
-
-
+/**
+ * This outputs custom CSS to the <head> if and only if there are changes to the defaults.
+ */
 function ldl_customize_appearance() {
 
     $css = '';
@@ -91,47 +94,19 @@ CSS;
 add_action('wp_head', 'ldl_customize_appearance', 20);
 
 
-function ldl_template_include($template) {
-
-    if (LDDLITE_POST_TYPE == get_post_type()) {
-
-        $templates = array();
-
-        if (is_single()) {
-            $templates[] = 'single.php';
-        } else if (is_search()) {
-            $templates[] = 'search.php';
-        } else if (is_archive()) {
-            $templates[] = 'category.php';
-        }
-
-        $located = ldl_locate_template($templates, false, false);
-
-        if ($located)
-            return $located;
-
-    }
-
-    return $template;
-}
-
-add_filter('template_include', 'ldl_template_include');
-
-add_filter('enter_title_here', 'ldl_filter__enter_title_here');
-add_filter('admin_post_thumbnail_html', 'ldl_filter__admin_post_thumbnail_html');
-
-add_action('admin_head', 'ldl_action__admin_menu_icon');
-add_action('_admin_menu', 'ldl_action__submenu_title');
-
-
+/**
+ * Add some of our own post classes when viewing a single listing.
+ *
+ * @param $classes An array of post classes
+ *
+ * @return array Modified array
+ */
 function ldl_filter_post_class($classes) {
 
-    if ( is_single() && LDDLITE_POST_TYPE == get_post_type() && in_array( 'directory_listings', $classes ) ) {
+    if (is_single() && LDDLITE_POST_TYPE == get_post_type() && in_array('directory_listings', $classes)) {
         $classes[] = 'listing-single';
     }
 
     return $classes;
 }
 add_filter('post_class', 'ldl_filter_post_class');
-
-

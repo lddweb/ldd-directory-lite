@@ -58,8 +58,8 @@ class ldd_directory_lite {
 
 
     /**
-     * Singleton pattern, returns an instance of the class responsible for setting up the plugin
-     * and lording over it's configuration settings.
+     * Return a single instance of the class responsible for setting up the plugin (also include functions.php here
+     * so that we know some functionality is available prior to full init).
      *
      * @since 0.5.0
      * @return ldd_directory_lite An instance of the ldd_directory_lite class
@@ -78,8 +78,9 @@ class ldd_directory_lite {
 
 
     /**
-     * Populate the settings property based on a set of defaults and information pulled from
-     * the database. This will also check for and fire an upgrade if necessary.
+     * Handles all pre-ignition, including checking for any necessary upgrades and populating the settings property.
+     *
+     * @todo Anonymous usage tracking back in before stable
      *
      * @since 0.5.0
      */
@@ -90,9 +91,8 @@ class ldd_directory_lite {
         $dir = dirname(__FILE__);
         $plugin_path = substr($dir, 0, strrpos($dir, '/')) . '/' . $plugin;
 
-        if (file_exists($plugin_path) && false == get_option('lddlite_imported_from_original')) {
+        if (file_exists($plugin_path) && false == get_option('lddlite_imported_from_original'))
             require_once(LDDLITE_PATH . 'import-lddbd.php');
-        }
 
 
         $this->settings = wp_parse_args(get_option('lddlite_settings'), ldl_get_default_settings());
@@ -113,9 +113,8 @@ class ldd_directory_lite {
                 }
             }
 
-            if (isset($upgrade_available)) {
+            if (isset($upgrade_available))
                 require_once(LDDLITE_PATH . 'upgrade.php');
-            }
 
             update_option('lddlite_version', LDDLITE_VERSION);
 
@@ -138,7 +137,7 @@ class ldd_directory_lite {
      */
     public function include_files() {
 
-        // functions.php is included via the constructor
+        // functions.php is included in the constructor
         require_once(LDDLITE_PATH . 'includes/setup.php');
         require_once(LDDLITE_PATH . 'includes/listings.php');
         require_once(LDDLITE_PATH . 'includes/ajax.php');
@@ -149,6 +148,7 @@ class ldd_directory_lite {
         if (is_admin()) {
             require_once(LDDLITE_PATH . 'includes/admin/metaboxes.php');
             require_once(LDDLITE_PATH . 'includes/admin/settings.php');
+            require_once(LDDLITE_PATH . 'includes/admin/filters.php');
             require_once(LDDLITE_PATH . 'includes/admin/sanitize.php');
             require_once(LDDLITE_PATH . 'includes/admin/help.php');
         }
@@ -159,6 +159,9 @@ class ldd_directory_lite {
     /**
      * Automatically install required pages on initial plugin activation. This feature should ultimately ask, and
      * could have some more interaction from the user, but this will suffice between now and a stable release.
+     *
+     * @todo Migrate this to a notice that checks if directory_submit_page and directory_front_page are set; if
+     *       they aren't, recommend installing the pages for the user. Put a button on it. People like buttons.
      */
     public function install_pages() {
 
@@ -203,15 +206,13 @@ class ldd_directory_lite {
 
 
     /**
-     * Load the related i18n files into the appropriate domain.
+     * Loads the related i18n files into the appropriate domain.
      *
      * @since 0.5.0
      */
     public function load_plugin_textdomain() {
 
         $lang_dir = LDDLITE_PATH . 'languages/';
-        $lang_dir = apply_filters('lddlite_languages_directory', $lang_dir);
-
         $locale = apply_filters('plugin_locale', get_locale(), 'lddlite');
         $mofile = $lang_dir . 'lddlite' . $locale . '.mo';
 
@@ -273,8 +274,9 @@ class ldd_directory_lite {
      * @since 0.5.3
      */
     public function save_settings() {
-        if (!empty($this->settings))
+        if (!empty($this->settings)) {
             update_option('lddlite_settings', $this->settings);
+        }
     }
 
 }

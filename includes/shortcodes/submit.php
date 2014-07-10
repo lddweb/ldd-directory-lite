@@ -351,8 +351,6 @@ function ldl_submit_generate_listing() {
 function ldl_shortcode_directory_submit() {
     global $lddlite_submit_processor;
 
-    ldl_enqueue();
-
     // Set up the processor
     $lddlite_submit_processor = new ldd_directory_lite_processor;
 
