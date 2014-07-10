@@ -27,7 +27,7 @@ We are also very developer friendly! Our plugin has another home on [GitHub](htt
 = Here are just a few of the many features =
 
 * Easy to install, easy to configure
-* Add the `[directory]` shortcode to any page (automatically installed for you, but feel free to change them)
+* Add the `[directory]` and `[directory_submit]` shortcode to any page (automatically installed for you, but feel free to change them)
 * Customize the look and feel as much, or as little as you want
 * Features can easily be enabled or disabled on the dashboard
 * Fully customizable email notifications, for the admin and the user
