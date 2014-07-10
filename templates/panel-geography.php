@@ -30,6 +30,7 @@
             </div>
         </div>
     </div>
+    <?php if (ldl_use_google_maps()): ?>
     <div class="row bump-down">
 		<div class="col-md-12">
 			<p><?php _e('If you would like to include a Google map with your listing, set a marker on this map for your address. Type in part of your address to use the autocomplete feature, or drag the marker on the map directly to your location.', 'lddlite'); ?></p>
@@ -44,4 +45,5 @@
 			    <input type="hidden" id="lng" name="n_geo[lng]" >
 		</div>
 	</div>
+    <?php endif; ?>
 </div>

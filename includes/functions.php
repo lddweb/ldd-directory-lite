@@ -87,7 +87,6 @@ EM;
         'directory_label'               => get_bloginfo('name'),
         'directory_description'         => '',
         'disable_bootstrap'             => 0,
-        'public_or_private'             => 1,
         'google_maps'                   => 1,
         'email_from_name'               => get_bloginfo('name'),
         'email_from_address'            => get_bloginfo('admin_email'),

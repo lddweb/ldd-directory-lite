@@ -12,7 +12,7 @@
                 <label for="senders_name" class="sr-only"><?php _e('Your Name', 'lddlite'); ?></label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                    <input id="senders_name" name="senders_name" type="text" class="form-control" placeholder="<?php _e('Your name...', 'lddlite'); ?>" value="Mark" required>
+                    <input id="senders_name" name="senders_name" type="text" class="form-control" placeholder="<?php _e('Your name...', 'lddlite'); ?>" required>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
                 <label for="email" class="sr-only"><?php _e('Your Email Address', 'lddlite'); ?></label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-                    <input id="email" name="email" type="email" class="form-control" placeholder="<?php _e('Your email...', 'lddlite'); ?>" value="mark@watero.us" required>
+                    <input id="email" name="email" type="email" class="form-control" placeholder="<?php _e('Your email...', 'lddlite'); ?>" required>
                 </div>
             </div>
         </div>
@@ -31,14 +31,14 @@
                 <label for="subject" class="sr-only"><?php _e('Message Subject', 'lddlite'); ?></label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
-                    <input id="subject" name="subject" type="text" class="form-control" placeholder="<?php _e('What is this in regards to?', 'lddlite'); ?>" value="What is this in regards to?" required>
+                    <input id="subject" name="subject" type="text" class="form-control" placeholder="<?php _e('What is this in regards to?', 'lddlite'); ?>" required>
                 </div>
             </div>
         </div>
         <div class="row bump-down">
             <div class="col-xs-12">
                 <label for="message" class="sr-only"><?php _e('Message', 'lddlite'); ?></label>
-                <textarea id="message" name="message" class="form-control" rows="4" required>What is this in regards to?</textarea>
+                <textarea id="message" name="message" class="form-control" rows="4" placeholder="<?php _e('Enter your message here.', 'lddlite'); ?>" required></textarea>
             </div>
         </div>
         <div class="row bump-down">
@@ -46,7 +46,7 @@
                 <label for="math" class="sr-only"><?php _e('What is 7 + seven?', 'lddlite'); ?></label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-plus fa-fw"></i></span>
-                    <input id="math" name="math" type="text" class="form-control" placeholder="<?php _e('What is seven &#43; s&#101;v&#101;n?', 'lddlite'); ?>" value="14" required>
+                    <input id="math" name="math" type="text" class="form-control" placeholder="<?php _e('What is seven &#43; s&#101;v&#101;n?', 'lddlite'); ?>" required>
                 </div>
             </div>
         </div>
@@ -56,7 +56,10 @@
     </form>
 </div>
 
-<div id="contact-messages" class="bump-down"></div>
+<div id="contact-messages" class="bump-down">
+    <div id="message-error" class="alert alert-danger" style="display:none;" role="alert"></div>
+    <div id="message-success" class="alert alert-success" style="display:none;" role="alert"></div>
+</div>
 
 <script>
     jQuery(document).ready( function($) {

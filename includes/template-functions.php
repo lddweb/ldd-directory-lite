@@ -116,7 +116,7 @@ function ldl_get_template_part($slug, $name = null) {
  */
 function ldl_get_submit_form_link() {
     $post_id = ldl_get_setting('directory_submit_page');
-    return get_permalink($post_id);
+    return ($post_id) ? get_permalink($post_id) : '';
 }
 
 
@@ -163,22 +163,17 @@ function ldl_plugin_url($path = '') {
  * @return bool True or false
  */
 function ldl_use_google_maps() {
-    global $geo;
 
-    if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl_get_setting('google_maps'))
-        return false;
+    if (is_single()) {
+        global $geo;
 
-    return true;
-}
+        if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl_get_setting('google_maps'))
+            return false;
 
+        return true;
+    }
 
-/**
- * Is this a public directory?
- *
- * @return bool True or false
- */
-function ldl_is_public() {
-    return ldl_get_setting('public_or_private');
+    return ldl_get_setting('google_maps');
 }
 
 

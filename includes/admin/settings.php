@@ -94,7 +94,6 @@ class ldd_directory_lite_admin {
         add_settings_field('lddlite_settings[directory_description]', '<label for="lite-directory_description">' . __('Directory Description', 'lddlite') . '</label>', '_f_directory_description', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings_other_separator', '<span style="font-size: 18px">' . __('Other Settings', 'lddlite') . '</span>', '__return_false', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[allow_tracking]', __('Allow Tracking', 'lddlite'), '_f_allow_tracking', 'lddlite_settings_general', 'lddlite_settings_general');
-        add_settings_field('lddlite_settings[public_or_private]', __('Public Directory', 'lddlite'), '_f_public_or_private', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[google_maps]', __('Use Google Maps', 'lddlite'), '_f_google_maps', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings_debug_separator]', '<span style="font-size: 18px">' . __('Debug Tools', 'lddlite') . '</span>', '__return_false', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('debug_uninstall', '<span>Uninstall Data</span>', '_f_debug_uninstall', 'lddlite_settings_general', 'lddlite_settings_general');
@@ -147,12 +146,6 @@ class ldd_directory_lite_admin {
 
         function _f_allow_tracking() {
             echo '<label for="lite-allow_tracking"><input id="lite-allow_tracking" type="checkbox" name="lddlite_settings[allow_tracking]" value="1" ' . checked(ldl_get_setting('allow_tracking'), 1, 0) . '> <span>Allow anonymous usage tracking</span></label>';
-        }
-
-        function _f_public_or_private() {
-            echo '<label for="lite-public_or_private-yes" title="Allow public interaction"><input id="lite-public_or_private-yes" type="radio" name="lddlite_settings[public_or_private]" value="1" ' . checked(ldl_get_setting('public_or_private'), 1, 0) . '> <span>Yes</span></label><br />';
-            echo '<label for="lite-public_or_private-no" title="Disallow public interaction"><input id="lite-public_or_private-no" type="radio" name="lddlite_settings[public_or_private]" value="0" ' . checked(ldl_get_setting('public_or_private'), 0, 0) . '> <span>No</span></label><br />';
-            echo '<p class="description">' . __('Can people submit listings to the directory?', 'lddlite') . '</p>';
         }
 
         function _f_google_maps() {
@@ -232,42 +225,39 @@ class ldd_directory_lite_admin {
         }
 
 
-        if (ldl_get_setting('public_or_private')) {
-            add_settings_section('lddlite_settings_submit', __return_null(), '__return_false', 'lddlite_settings_submit');
+        add_settings_section('lddlite_settings_submit', __return_null(), '__return_false', 'lddlite_settings_submit');
 
-            add_settings_field('lddlite_settings[submit_use_tos]', __('Include Terms', 'lddlite'), '_f_submit_use_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
-            add_settings_field('lddlite_settings[submit_tos]', '<label for="submit_tos">' . __('Terms of Service', 'lddlite') . '</label>', '_f_submit_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
-            add_settings_field('lddlite_settings[submit_intro]', '<label for="submit_intro">' . __('Submit Introduction', 'lddlite') . '</label>', '_f_submit_intro', 'lddlite_settings_submit', 'lddlite_settings_submit');
-            add_settings_field('lddlite_settings[submit_success]', '<label for="submit_success">' . __('Submit Success', 'lddlite') . '</label>', '_f_submit_success', 'lddlite_settings_submit', 'lddlite_settings_submit');
+        add_settings_field('lddlite_settings[submit_use_tos]', __('Include Terms', 'lddlite'), '_f_submit_use_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
+        add_settings_field('lddlite_settings[submit_tos]', '<label for="submit_tos">' . __('Terms of Service', 'lddlite') . '</label>', '_f_submit_tos', 'lddlite_settings_submit', 'lddlite_settings_submit');
+        add_settings_field('lddlite_settings[submit_intro]', '<label for="submit_intro">' . __('Submit Introduction', 'lddlite') . '</label>', '_f_submit_intro', 'lddlite_settings_submit', 'lddlite_settings_submit');
+        add_settings_field('lddlite_settings[submit_success]', '<label for="submit_success">' . __('Submit Success', 'lddlite') . '</label>', '_f_submit_success', 'lddlite_settings_submit', 'lddlite_settings_submit');
 
-            function _f_submit_use_tos() {
-                echo '<label for="lite-submit_use_tos"><input id="lite-submit_use_tos" type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked(ldl_get_setting('submit_use_tos'), 1, 0) . '> ';
-                echo '<span>' . __('Check this to require users agree to your terms of service (defined below) before submitting a listing.', 'lddlite') . '</span></label>';
-            }
+        function _f_submit_use_tos() {
+            echo '<label for="lite-submit_use_tos"><input id="lite-submit_use_tos" type="checkbox" name="lddlite_settings[submit_use_tos]" value="1" ' . checked(ldl_get_setting('submit_use_tos'), 1, 0) . '> ';
+            echo '<span>' . __('Check this to require users agree to your terms of service (defined below) before submitting a listing.', 'lddlite') . '</span></label>';
+        }
 
-            function _f_submit_tos() {
-                wp_editor(ldl_get_setting('submit_tos'), 'ldl_submit_tos', array(
-                    'textarea_name' => 'lddlite_settings[submit_tos]',
-                    'textarea_rows' => 5
-                ));
-            }
+        function _f_submit_tos() {
+            wp_editor(ldl_get_setting('submit_tos'), 'ldl_submit_tos', array(
+                'textarea_name' => 'lddlite_settings[submit_tos]',
+                'textarea_rows' => 5
+            ));
+        }
 
-            function _f_submit_intro() {
-                wp_editor(ldl_get_setting('submit_intro'), 'ldl_submit_intro', array(
-                    'textarea_name' => 'lddlite_settings[submit_intro]',
-                    'textarea_rows' => 5
-                ));
-                echo '<p class="description">' . __('This will be displayed at the top of the submit listing form.', 'lddlite') . '</p>';
-            }
+        function _f_submit_intro() {
+            wp_editor(ldl_get_setting('submit_intro'), 'ldl_submit_intro', array(
+                'textarea_name' => 'lddlite_settings[submit_intro]',
+                'textarea_rows' => 5
+            ));
+            echo '<p class="description">' . __('This will be displayed at the top of the submit listing form.', 'lddlite') . '</p>';
+        }
 
-            function _f_submit_success() {
-                wp_editor(ldl_get_setting('submit_success'), 'ldl_submit_success', array(
-                    'textarea_name' => 'lddlite_settings[submit_success]',
-                    'textarea_rows' => 5
-                ));
-                echo '<p class="description">' . __('Displayed following a successful listing submission.', 'lddlite') . '</p>';
-            }
-
+        function _f_submit_success() {
+            wp_editor(ldl_get_setting('submit_success'), 'ldl_submit_success', array(
+                'textarea_name' => 'lddlite_settings[submit_success]',
+                'textarea_rows' => 5
+            ));
+            echo '<p class="description">' . __('Displayed following a successful listing submission.', 'lddlite') . '</p>';
         }
 
 
@@ -369,9 +359,8 @@ class ldd_directory_lite_admin {
                    class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General', 'lddlite'); ?></a>
                 <a href="<?php echo add_query_arg('tab', 'email', remove_query_arg('settings-updated')); ?>"
                    class="nav-tab <?php echo $active_tab == 'email' ? 'nav-tab-active' : ''; ?>"><?php _e('Email', 'lddlite'); ?></a>
-                <?php if (ldl_get_setting('public_or_private')): ?><a
-                    href="<?php echo add_query_arg('tab', 'submit', remove_query_arg('settings-updated')); ?>"
-                    class="nav-tab <?php echo $active_tab == 'submit' ? 'nav-tab-active' : ''; ?>"><?php _e('Submit Form', 'lddlite'); ?></a><?php endif; ?>
+                <a href="<?php echo add_query_arg('tab', 'submit', remove_query_arg('settings-updated')); ?>"
+                    class="nav-tab <?php echo $active_tab == 'submit' ? 'nav-tab-active' : ''; ?>"><?php _e('Submit Form', 'lddlite'); ?></a>
                 <a href="<?php echo add_query_arg('tab', 'appearance', remove_query_arg('settings-updated')); ?>"
                    class="nav-tab <?php echo $active_tab == 'appearance' ? 'nav-tab-active' : ''; ?>"><?php _e('Appearance', 'lddlite'); ?></a>
             </h2>

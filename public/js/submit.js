@@ -4,55 +4,59 @@ jQuery(function($) {
     $("#f_country").autocomplete({source: countries})
 
     var searchInput = $('#geo')[ 0 ]
-    var mapCanvas   = $('#map-canvas')[ 0 ]
-    var $lat = $('#lat')
-    var $lng = $('#lng')
 
-    var latLng = new google.maps.LatLng(39.97712028761926, -102.70019568750001)
-    var zoom = 4
-    var geocoder = new google.maps.Geocoder()
+    if ('object' == typeof searchInput) {
+        var mapCanvas   = $('#map-canvas')[ 0 ]
+        var $lat = $('#lat')
+        var $lng = $('#lng')
 
-    var mapOptions = {
-        center: latLng,
-        zoom: zoom,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(mapCanvas, mapOptions)
+        var latLng = new google.maps.LatLng(39.97712028761926, -102.70019568750001)
+        var zoom = 4
+        var geocoder = new google.maps.Geocoder()
 
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
-    var markerOptions = {
-        position: latLng,
-        map: map,
-        draggable: true,
-    }
-    var marker = new google.maps.Marker(markerOptions)
-
-    google.maps.event.addListener(marker, 'drag', function() {
-        $lat.val( marker.getPosition().lat() )
-        $lng.val( marker.getPosition().lng() )
-    })
-
-    var autocomplete = new google.maps.places.Autocomplete(searchInput)
-    autocomplete.bindTo('bounds', map)
-
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        var place = autocomplete.getPlace()
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport)
-        } else {
-            map.setCenter(place.geometry.location)
-            map.setZoom(16)
+        var mapOptions = {
+            center: latLng,
+            zoom: zoom,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
 
-        marker.setPosition(place.geometry.location)
-
-        $lat.val(place.geometry.location.lat())
-        $lng.val(place.geometry.location.lng())
-    })
-
-    $(searchInput).keypress( function(e) {
-        if(e.keyCode == 13) {
-            e.preventDefault()
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
+        var markerOptions = {
+            position: latLng,
+            map: map,
+            draggable: true,
         }
-    })
+        var marker = new google.maps.Marker(markerOptions)
+
+        google.maps.event.addListener(marker, 'drag', function() {
+            $lat.val( marker.getPosition().lat() )
+            $lng.val( marker.getPosition().lng() )
+        })
+
+        var autocomplete = new google.maps.places.Autocomplete(searchInput)
+        autocomplete.bindTo('bounds', map)
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            var place = autocomplete.getPlace()
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport)
+            } else {
+                map.setCenter(place.geometry.location)
+                map.setZoom(16)
+            }
+
+            marker.setPosition(place.geometry.location)
+
+            $lat.val(place.geometry.location.lat())
+            $lng.val(place.geometry.location.lng())
+        })
+
+        $(searchInput).keypress( function(e) {
+            if(e.keyCode == 13) {
+                e.preventDefault()
+            }
+        })
+    }
+
 })
