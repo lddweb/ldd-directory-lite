@@ -5,8 +5,7 @@
     <?php if ( ldl_has_errors() ): ?>
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong><?php _e("We're sorry!", 'lddlite'); ?></strong> <?php _e('There were some errors with the information you provided.', 'lddlite'); ?><br>
-            <strong><?php _e('Errors are marked in red.', 'lddlite'); ?></strong>
+            <strong><?php _e("We're sorry!", 'lddlite'); ?></strong> <?php _e('There were some errors with the information you provided. Please check your submission and try again.', 'lddlite'); ?><br>
         </div>
     <?php endif; ?>
 
