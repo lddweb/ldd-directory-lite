@@ -277,7 +277,7 @@ class ldd_directory_lite_admin {
         }
 
         function _f_appearance_display_featured() {
-            echo '<label for="lite-appearance_display_featured"><input type="checkbox" name="lddlite_settings[appearance_display_featured]" value="1" ' . checked(ldl_get_setting('appearance_display_featured'), 1, 0) . '> <span>' . __('If checked, front page will display thumbnails of your most recently added listings', 'lddlite') . '</span></label>';
+            echo '<label for="lite-appearance_display_featured"><input type="checkbox" name="lddlite_settings[appearance_display_featured]" value="1" ' . checked(ldl_get_setting('appearance_display_featured'), 1, 0) . '> <span>' . __('If checked, listings tagged with <code>featured</code> will be shown on your directory home page', 'lddlite') . '</span></label>';
         }
 
         function _f_appearance_primary_normal() {

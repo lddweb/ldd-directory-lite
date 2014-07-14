@@ -10,6 +10,7 @@
                     <?php echo ldl_get_parent_categories(); ?>
                 </div>
             </div>
+            <?php if (ldl_get_setting('appearance_display_featured')): ?>
             <div class="col-md-12">
 
                 <h2><?php _e('Featured Listings', 'lddlite'); ?></h2>
@@ -31,6 +32,7 @@
                 <?php endwhile; endif; ?>
 
             </div>
+            <?php endif; ?>
         </div>
 
     </div>

@@ -84,6 +84,9 @@ add_filter('lddlite_settings_submit_sanitize', 'lddlite_settings_submit_sanitize
  */
 function lddlite_settings_appearance_sanitize($input) {
 
+    $input['disable_bootstrap'] = '1' == $input['disable_bootstrap'] ? 1 : 0;
+    $input['appearance_display_featured'] = '1' == $input['appearance_display_featured'] ? 1 : 0;
+
     $input['appearance_display_new'] = '1' == $input['appearance_display_new'] ? 1 : 0;
 
     if (!preg_match('~#([a-fA-F0-9]){3}(([a-fA-F0-9]){3})?\b~', $input['appearance_panel_background']))
