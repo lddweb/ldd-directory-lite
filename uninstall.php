@@ -99,3 +99,7 @@ echo 'IN HERE?!';
 delete_option('lddlite_settings');
 delete_option('lddlite_version');
 delete_option('lddlite_imported_from_original');
+
+// mdd?\s?\(
+// test: md() mdd()
+// Never ship a release with either of those two commands anywhere but here.

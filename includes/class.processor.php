@@ -127,7 +127,7 @@ class ldd_directory_lite_processor {
             }
 
         }
-md($this->errors);
+
     }
 
 

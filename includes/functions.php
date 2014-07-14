@@ -356,8 +356,7 @@ function ldl_mail($to, $subject, $message, $headers = '') {
 
     ob_start();
     wp_mail($to, $subject, $message, $headers);
-    //ob_end_clean();
-    md(ob_get_clean());
+    ob_end_clean();
 
 }
 

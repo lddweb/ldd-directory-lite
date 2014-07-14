@@ -140,10 +140,11 @@ function ldl_submit_create_user($username, $email) {
  *
  * @return int|WP_Error A valid $post_id on success, and the WP_Error object on failure
  */
-function ldl_submit_create_post($name, $description, $cat_id, $user_id) {
+function ldl_submit_create_post($name, $description, $summary, $cat_id, $user_id) {
 
     $args = array(
         'post_content' => $description,
+        'post_excerpt' => $summary,
         'post_title'   => $name,
         'post_status'  => 'pending',
         'post_type'    => LDDLITE_POST_TYPE,
@@ -195,7 +196,7 @@ function ldl_notify_admin($data, $post_id) {
     $message = str_replace('{aprove_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
     $message = str_replace('{title}', $data['title'], $message);
     $message = str_replace('{description}', $data['description'], $message);
-md(array('notify_admin',$to,$subject,$message));
+
     ldl_mail($to, $subject, $message);
 }
 
@@ -219,7 +220,7 @@ function ldl_notify_author($data) {
     $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
     $message = str_replace('{directory_email}', ldl_get_setting('email_from_address'), $message);
     $message = str_replace('{title}', $data['title'], $message);
-    md(array('notify_author',$to,$subject,$message));
+
     ldl_mail($to, $subject, $message);
 }
 
@@ -302,7 +303,7 @@ function ldl_submit_generate_listing() {
         return false;
     }
 
-    $post_id = ldl_submit_create_post($data['title'], $data['description'], $data['category'], $user_id);
+    $post_id = ldl_submit_create_post($data['title'], $data['description'], $data['summary'], $data['category'], $user_id);
     if (!$post_id) {
         $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'lddlite'));
         ldl_submit_rollback(array(
