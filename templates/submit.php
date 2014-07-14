@@ -22,9 +22,6 @@
         <?php echo wp_nonce_field( 'submit-listing-nonce','nonce_field', 0, 0 ); ?>
         <?php do_action( 'lddlite_submit_listing_hidden_fields' ); ?>
 
-        <!-- TESTING ONLY -->
-        <a id="sample-data" href="" style="padding:.5em;background:#fff;position:fixed;top:50px;left:20px;">Sample Data</a>
-
         <?php ldl_get_template_part( 'panel', 'general' ); ?>
         <?php ldl_get_template_part( 'panel', 'meta' ); ?>
         <?php ldl_get_template_part( 'panel', 'geography' ); ?>
@@ -41,32 +38,3 @@
     </form>
 
 </div>
-
-
-<script>
-jQuery("#sample-data").click(function(e) {
-    e.preventDefault()
-
-    var sampleData = {
-        f_title: "Sample Listing",
-        f_category: 143,
-        f_description: "Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem.",
-        f_summary: "Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
-        f_contact_email: "mark@watero.us",
-        f_contact_phone: "505.123.4567",
-        f_url_website: "http://mark.watero.us",
-        f_url_facebook: "facebook.com/mwaterous",
-        f_url_twitter: "markwaterous",
-        f_address_one: "450 Michelle Cir",
-        f_address_two: "Bernalillo NM",
-        f_postal_code: "87004",
-        f_country: "United States",
-        geo: "450 Michelle Cir",
-    }
-
-    jQuery.each( sampleData, function( key, value) {
-        jQuery('#' + key).val( value )
-    })
-
-})
-</script>

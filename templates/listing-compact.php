@@ -17,8 +17,8 @@
                     </div>
                     <div class="col-sm-4 meta-column">
                         <ul class="listing-meta fa-ul">
-                            <li><i class="fa fa-phone fa-li"></i> <?php echo ldl_get_meta( 'contact_phone' ); ?></li>
-                            <li><i class="fa fa-globe fa-li"></i> <?php echo ldl_get_address(); ?></li>
+                            <?php if (ldl_has_meta('contact_phone')): ?><li><i class="fa fa-phone fa-li"></i> <?php echo ldl_get_meta( 'contact_phone' ); ?></li><?php endif; ?>
+                            <?php if (ldl_get_address()): ?><li><i class="fa fa-globe fa-li"></i> <?php echo ldl_get_address(); ?></li><?php endif; ?>
                         </ul>
 
                         <span class="social-meta">
