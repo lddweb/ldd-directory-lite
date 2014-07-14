@@ -21,7 +21,15 @@ global $wpdb;
  */
 function ldl_uninstall_attachments() {
 
-    $post_ids = ldl_get_all_IDs();
+    $query = sprintf("
+					SELECT ID
+					FROM `%s`
+					WHERE post_type = '%s'
+						AND post_status NOT IN ( 'auto-draft', 'inherit' )
+				", $wpdb->posts, LDDLITE_POST_TYPE);
+
+    $post_ids = $wpdb->get_col($query);
+
     if (!$post_ids)
         return;
 
