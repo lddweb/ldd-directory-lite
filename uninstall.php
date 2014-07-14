@@ -95,7 +95,11 @@ function ldl_uninstall_taxonomies() {
 ldl_uninstall_attachments();
 ldl_uninstall_posts();
 ldl_uninstall_taxonomies();
-
+echo 'IN HERE?!';
 delete_option('lddlite_settings');
 delete_option('lddlite_version');
 delete_option('lddlite_imported_from_original');
+
+// mdd?\s?\(
+// test: md() mdd()
+// Never ship a release with either of those two commands anywhere but here.

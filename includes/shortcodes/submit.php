@@ -140,10 +140,11 @@ function ldl_submit_create_user($username, $email) {
  *
  * @return int|WP_Error A valid $post_id on success, and the WP_Error object on failure
  */
-function ldl_submit_create_post($name, $description, $cat_id, $user_id) {
+function ldl_submit_create_post($name, $description, $summary, $cat_id, $user_id) {
 
     $args = array(
         'post_content' => $description,
+        'post_excerpt' => $summary,
         'post_title'   => $name,
         'post_status'  => 'pending',
         'post_type'    => LDDLITE_POST_TYPE,
@@ -188,7 +189,7 @@ function ldl_submit_create_meta($data, $post_id) {
  */
 function ldl_notify_admin($data, $post_id) {
 
-    $to = ldl_get_setting('email_notifications');
+    $to = ldl_get_setting('email_notification_address');
     $subject = ldl_get_setting('email_toadmin_subject');
 
     $message = ldl_get_setting('email_toadmin_body');
@@ -208,8 +209,10 @@ function ldl_notify_admin($data, $post_id) {
  * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
 function ldl_notify_author($data) {
+    global $lddlite_submit_processor;
 
-    $to = $data['email'];
+    $to = $lddlite_submit_processor->get_data()['contact_email'];
+
     $subject = ldl_get_setting('email_onsubmit_subject');
 
     $message = ldl_get_setting('email_onsubmit_body');
@@ -250,7 +253,7 @@ function ldl_notify_when_approved($post) {
     update_post_meta($post->ID, '_approved', 1);
 
 }
-add_action('pending_to_publish', 'ldl_action__send_approved_email');
+add_action('pending_to_publish', 'ldl_notify_when_approved');
 
 
 /**
@@ -300,7 +303,7 @@ function ldl_submit_generate_listing() {
         return false;
     }
 
-    $post_id = ldl_submit_create_post($data['title'], $data['description'], $data['category'], $user_id);
+    $post_id = ldl_submit_create_post($data['title'], $data['description'], $data['summary'], $data['category'], $user_id);
     if (!$post_id) {
         $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'lddlite'));
         ldl_submit_rollback(array(
@@ -351,7 +354,12 @@ function ldl_submit_generate_listing() {
 function ldl_shortcode_directory_submit() {
     global $lddlite_submit_processor;
 
-    ldl_enqueue();
+    ldl_enqueue(1);
+
+    $terms = get_terms(LDDLITE_TAX_CAT, array('hide_empty' => false));
+    if (!$terms) {
+        wp_insert_term('Miscellaneous', LDDLITE_TAX_CAT);
+    }
 
     // Set up the processor
     $lddlite_submit_processor = new ldd_directory_lite_processor;

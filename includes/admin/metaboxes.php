@@ -16,7 +16,7 @@
  * @param $post The WP_Post object
  */
 function ldl_excerpt_meta_box($post) {
-    echo '<label class="screen-reader-text" for="excerpt">' . __('Promotion', 'lddlite') . '</label><textarea rows="1" cols="40" name="excerpt" id="excerpt">' . $post->post_excerpt . '</textarea>';
+    echo '<label class="screen-reader-text" for="excerpt">' . __('Summary', 'lddlite') . '</label><textarea rows="1" cols="40" name="excerpt" id="excerpt">' . $post->post_excerpt . '</textarea>';
 }
 
 
@@ -32,7 +32,7 @@ function ldl_metaboxes__swap() {
         remove_meta_box('postexcerpt', LDDLITE_POST_TYPE, 'normal');
         add_meta_box('postimagediv', __('Logo', 'lddlite'), 'post_thumbnail_meta_box', null, 'side', 'high');
         add_meta_box('authordiv', __('Owner', 'lddlite'), 'post_author_meta_box', null, 'side', 'high');
-        add_meta_box('postexcerpt', __('Promotion', 'lddlite'), 'ldl_excerpt_meta_box', null, 'side', 'low');
+        add_meta_box('postexcerpt', __('Summary', 'lddlite'), 'ldl_excerpt_meta_box', null, 'normal', 'high');
     }
 }
 

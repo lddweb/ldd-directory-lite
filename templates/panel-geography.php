@@ -1,3 +1,10 @@
+<?php
+$geo = ldl_get_value('geo');
+if (!is_array($geo)) {
+    $geo = array('lat'=>'','lng'=>'');
+}
+?>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -41,8 +48,9 @@
 			<label class="control-label" for="geo"><?php _e('Set Marker', 'lddlite'); ?></label>
 			<input type="text" id="geo" class="form-control autocomplete-control">
 			<div id="map-canvas"></div>
-			    <input type="hidden" id="lat" name="n_geo[lat]" >
-			    <input type="hidden" id="lng" name="n_geo[lng]" >
+			    <input type="hidden" id="lat" name="n_geo[lat]" value="<?php echo $geo['lat']; ?>">
+			    <input type="hidden" id="lng" name="n_geo[lng]" value="<?php echo $geo['lng']; ?>">
+            <?php echo ldl_get_error('geo'); ?>
 		</div>
 	</div>
     <?php endif; ?>

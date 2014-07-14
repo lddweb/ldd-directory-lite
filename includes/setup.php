@@ -13,10 +13,7 @@
  */
 
 
-add_image_size('directory-listing-featured', 200, 200);
 add_image_size('directory-listing', 300, 300);
-add_image_size('directory-listing-compact', 105, 300);
-add_image_size('directory-listing-search', 100, 100);
 
 
 /**
@@ -35,7 +32,6 @@ function ldl_autoload($class) {
         require_once($class_file);
 
 }
-
 spl_autoload_register('ldl_autoload');
 
 
@@ -82,12 +78,12 @@ function ldl_register_post_type() {
             'add_new'            => 'Add Listing',
             'add_new_item'       => 'Add New Listing',
             'edit_item'          => 'Edit Listing',
-            'new_item'           => 'New Directory Listing',
-            'view_item'          => 'View Directory Listing',
-            'search_items'       => 'Search Directory Listings',
-            'not_found'          => 'No directory listings found',
-            'not_found_in_trash' => 'No directory listings found in Trash',
-            'parent_item_colon'  => 'Parent Directory Listing',
+            'new_item'           => 'New Listing',
+            'view_item'          => 'View Listing',
+            'search_items'       => 'Search Listings',
+            'not_found'          => 'No listings found',
+            'not_found_in_trash' => 'No listings found in Trash',
+            'parent_item_colon'  => 'Parent Listing',
             'menu_name'          => 'Directory'
         ),
         'hierarchical'        => false,
@@ -115,8 +111,12 @@ function ldl_register_post_type() {
     register_post_type(LDDLITE_POST_TYPE, $args);
 
 }
+add_action('init', 'ldl_register_post_type', 5);
 
 
+/**
+ * Register all global styles and scripts.
+ */
 function ldl_register_scripts() {
 
     wp_register_style('lddlite', LDDLITE_URL . 'public/css/directory.min.css', false, LDDLITE_VERSION);
@@ -128,6 +128,7 @@ function ldl_register_scripts() {
     wp_register_script('lddlite-admin', LDDLITE_URL . 'public/js/admin.js', array('jquery-ui-dialog'), LDDLITE_VERSION, 1);
 
 }
+add_action('init', 'ldl_register_scripts', 5);
 
 
 /**
@@ -140,22 +141,30 @@ function ldl_enqueue_bootstrap() {
         return;
 
     wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . 'public/css/bootstrap.min.css', array(), LDDLITE_VERSION);
-//    wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . 'public/css/dev/bootstrap.css', array(), LDDLITE_VERSION);
     wp_enqueue_script('lddlite-bootstrap', LDDLITE_URL . 'public/js/bootstrap.min.js', array('jquery'), '3.1.1', true);
 
 }
-
-function ldl_enqueue() {
-    wp_enqueue_style('lddlite');
-    wp_enqueue_style('font-awesome');
-
-    wp_enqueue_script('lddlite-happy');
-}
-
-
-add_action('init', 'ldl_register_post_type', 5);
-add_action('init', 'ldl_register_scripts', 5);
-
 add_action('init', 'ldl_enqueue_bootstrap', 1);
-add_action('wp_head', 'ldl_enqueue');
 
+
+/**
+ * Enqueue scripts
+ */
+function ldl_enqueue($force = false) {
+
+    if (is_admin())
+        return;
+
+/*    $front_page = ldl_get_setting('directory_front_page');
+    $submit_page = ldl_get_setting('directory_submit_page');
+    $post_id = get_the_ID();*/
+
+    if (LDDLITE_POST_TYPE == get_post_type() || $force) {
+        wp_enqueue_style('lddlite');
+        wp_enqueue_style('font-awesome');
+
+        wp_enqueue_script('lddlite-happy');
+    }
+
+}
+add_action('wp_head', 'ldl_enqueue');

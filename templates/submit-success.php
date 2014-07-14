@@ -1,4 +1,6 @@
-<?php ldl_get_header(); ?>
+<div class="directory-lite">
+    <?php ldl_get_header(); ?>
 
-<?php echo ldl_get_setting('submit_success'); ?>
+    <?php echo ldl_get_setting('submit_success'); ?>
+</div>
 
