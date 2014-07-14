@@ -116,7 +116,7 @@ function ldl_get_template_part($slug, $name = null) {
  */
 function ldl_get_submit_form_link() {
     $post_id = ldl_get_setting('directory_submit_page');
-    return get_permalink($post_id);
+    return ($post_id) ? get_permalink($post_id) : '';
 }
 
 
@@ -145,6 +145,16 @@ function ldl_get_home_url($path = '', $scheme = null) {
 }
 
 
+function ldl_plugin_url($path = '') {
+    $url = LDDLITE_URL;
+
+    if ($path && is_string($path))
+        $url .= ltrim($path, '/');
+
+    return $url;
+}
+
+
 /** CONDITIONALS */
 
 /**
@@ -153,17 +163,17 @@ function ldl_get_home_url($path = '', $scheme = null) {
  * @return bool True or false
  */
 function ldl_use_google_maps() {
+
+    if (is_single()) {
+        global $geo;
+
+        if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl_get_setting('google_maps'))
+            return false;
+
+        return true;
+    }
+
     return ldl_get_setting('google_maps');
-}
-
-
-/**
- * Is this a public directory?
- *
- * @return bool True or false
- */
-function ldl_is_public() {
-    return ldl_get_setting('public_or_private');
 }
 
 
@@ -173,7 +183,25 @@ function ldl_is_public() {
  * An alias for returning the header template (the header template has our navbar)
  */
 function ldl_get_header() {
-    ldl_get_template_part('header');
+    $show_header = apply_filters('lddlite_filter_presentation_header', true);
+    if ($show_header)
+        ldl_get_template_part('header');
+}
+
+
+function ldl_get_contact_form() {
+    $post_id = get_the_ID();
+
+    if (!$post_id)
+        return;
+
+    if (!get_post_meta($post_id, ldl_pfx('contact_email'), 1))
+        return;
+
+    echo '<script>var ajaxurl = "' . admin_url('admin-ajax.php') . '"</script>';
+
+    wp_enqueue_script('lddlite-contact');
+    ldl_get_template_part('contact', 'sidebar');
 }
 
 
@@ -245,24 +273,33 @@ function ldl_the_tos() {
 /** LISTING META UTILITES */
 
 /**
- * Return a piece of the _lddlite_geo post meta.
+ * Return a piece of the geo post meta.
  *
  * @param string $key Should be one of 'formatted', 'lat', or 'lng'
  *
  * @return string|false Returns the value for the requested key if found, false otherwise
  */
-function ldl_get_address($key = 'formatted') {
+function ldl_get_address() {
+
     $post_id = get_the_ID();
 
     if (!is_int($post_id))
         return false;
 
-    $geo = get_post_meta($post_id, '_lddlite_geo', true);
+    $address_one = get_post_meta($post_id, ldl_pfx('address_one'), true);
+    $address_two = get_post_meta($post_id, ldl_pfx('address_two'), true);
+    $postal_code = get_post_meta($post_id, ldl_pfx('postal_code'), true);
+    $country = get_post_meta($post_id, ldl_pfx('country'), true);
 
-    if (array_key_exists($key, $geo))
-        return $geo[$key];
+    $output = '';
+    $output .= empty($address_one) ? '' : $address_one;
+    $output .= empty($address_two) ? '' : ', ' . $address_two;
+    $output .= empty($postal_code) ? '' : ', ' . $postal_code;
+    $output .= empty($country) ? '' : ', ' . $country;
 
-    return false;
+    $output = apply_filters('lddlite_presentation_get_address', $output, $post_id, compact('address_one', 'address_two', 'postal_code', 'country'));
+
+    return $output ? $output : false;
 }
 
 
@@ -281,9 +318,9 @@ function ldl_get_social($post_id) {
 
     // Get the links for this listing
     $social = array(
-        'facebook' => ldl_force_scheme(get_post_meta($post_id, '_lddlite_url_facebook', 1)),
-        'linkedin' => ldl_force_scheme(get_post_meta($post_id, '_lddlite_url_linkedin', 1)),
-        'twitter'  => ldl_sanitize_twitter(get_post_meta($post_id, '_lddlite_url_twitter', 1)),
+        'facebook' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_facebook'), 1)),
+        'linkedin' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_linkedin'), 1)),
+        'twitter'  => ldl_sanitize_twitter(get_post_meta($post_id, ldl_pfx('url_twitter'), 1)),
     );
 
     $titles = array(

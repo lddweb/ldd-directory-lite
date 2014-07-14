@@ -3,22 +3,22 @@ Contributors: lddwebdesign, delayedinsanity
 Tags: directory, listings, listing directory, business, business directory, custom directory, catalog, index, yellow pages, white pages, 411, company listing
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 0.5.4-beta
+Stable tag: 0.7-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 
-LDD Directory Lite allows you to add a powerful and fully integrated listing of local businesses or other organizations to your WordPress web site.
+The ldd directory lite plugin allows you to add a powerful directory listing of local businesses or other organizations to your WordPress web site.
 
 == Description ==
 
-LDD Directory Lite is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
+The ldd directory lite plugin is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
 
-Within minutes you can install and configure LDD Directory Lite and start accepting submissions, or populating the content with your own listings. This is the best and easiest way to start any kind of directory you can think of, be it of local businesses (restaurants, coffee shops, craft stores, etc), or any other type of organization you would like to build around.
+Within minutes you can install and configure ldd directory lite and start accepting submissions, or populating the content with your own listings. This is the best and easiest way to start any kind of directory you can think of, be it of local businesses (restaurants, coffee shops, craft stores, etc), or any other type of organization you would like to build around.
 
 The Directory is extremely user friendly, ready to go pretty much out of the box. One of our primary focuses is ensuring that it integrates with almost any theme, anywhere, anytime, and we have utilized the power of Bootstrap to ensure that the Directory is 100% mobile ready and responsive. It won't break all that hard work you've put into making sure your site works on any medium.
 
-We are also very developer friendly! LDD Directory Lite has another home on [GitHub](https://github.com/mwaterous/ldd-directory-lite), where you can get involved in making it even better.
+We are also very developer friendly! Our plugin has another home on [GitHub](https://github.com/mwaterous/ldd-directory-lite), where you can get involved in making it even better.
 
 = This plugin is a beta release. =
 
@@ -27,39 +27,37 @@ We are also very developer friendly! LDD Directory Lite has another home on [Git
 = Here are just a few of the many features =
 
 * Easy to install, easy to configure
-* Add the `[directory]` shortcode to any page
+* Add the `[directory]` and `[directory_submit]` shortcode to any page (automatically installed for you, but feel free to change them)
 * Customize the look and feel as much, or as little as you want
 * Features can easily be enabled or disabled on the dashboard
 * Fully customizable email notifications, for the admin and the user
-* Focus on internationalization, this plugin works for everyone
+* Strong focus on internationalization, we want this to work for everyone, everywhere
 * Clean, fully responsive interface
 * Social media integration, build traffic for your users
-* Google maps integration
-* Live search, see your results as you type
-* Powerful multi-part submission form
+* Google Maps integration
+* Lightweight but still powerful
 
 = Coming soon =
 
+* **Our web site! This will be the home of extended documentation, community forums, premium support and much more!**
 * User control panel, manage multiple listings and maintain full control over editing
 * Premium modules, extend the capabilities of the Directory with features like import/export
-* Shortcodes to display
+* Shortcodes to display single categories or listings where ever you want
 
 = Extensions =
 
-We have a variety of premium extensions in the works for further extending the capabilities of LDD Directory Lite. If you're a developer interested in working on premium extensions for the Directory, please contact us at [web@lddconsulting.com](mailto:web@lddconsulting.com)
+We have a variety of premium extensions in the works for further extending the capabilities of ldd directory lite. If you're a developer interested in working on premium extensions for the Directory, please contact us at [web@lddconsulting.com](mailto:web@lddconsulting.com)
 
 
 == Installation ==
 
-*You should always back up your data before making major changes to the way your production web site functions.*
-
-This plugin
+*You should always back up your data and/or test on a staging site before making major changes to the way your production web site functions.*
 
 Installation is easiest when done through your WordPress Dashboard:
 1. Select **Plugins >> Add New** from your sites WordPress dashboard.
-2. Type **LDD Directory Lite** into the search field and press enter.
-3. Click **Install Now** when you see LDD Directory Lite appear in the search results.
-4. Select **Activate Plugin** after you see *Successfully installed the plugin LDD Directory Lite* appear on your screen.
+2. Type **ldd directory lite** into the search field and press enter.
+3. Click **Install Now** when you see ldd directory lite appear in the search results.
+4. Select **Activate Plugin** after you see *Successfully installed the plugin ldd directory lite* appear on your screen.
 
 If you prefer to install manually, [see the guide on Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
@@ -67,16 +65,16 @@ If you have any questions or are unsure about any part of the process, don't hes
 
 = Upgrading from LDD Business Directory =
 
-This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/). As such, you can upgrade to LDD Directory Lite from LDD Business Directory *without* losing any of your content.
+This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/). As such, you can upgrade to ldd directory lite from LDD Business Directory *without* losing any of your content.
 
-*You do not need to deactivate or uninstall the LDD Business Directory plugin before activating LDD Directory Lite.*
+*You do not need to deactivate or uninstall the LDD Business Directory plugin before activating ldd directory lite.*
 
 1. Install and activate the plugin using the above instructions.
 2. Once installed, if data is detected from the original plugin it will automatically notify you with a rather large message at the top of your Directory Lite dashboard screens.
 3. Press the "Import Data" button, and you will be taken to the upgrade page.
 4. All done!
 
-**LDD Directory Lite only imports this data, it does nothing to alter or remove it. If you decide to revert to the original plugin because of errors encountered while using this beta release, you will have all you original content waiting for you.**
+**The plugin only imports this data, it does nothing to alter or remove it. If you decide to revert to the original plugin because of errors encountered while using this beta release, you will have all you original content waiting for you.**
 
 
 == Frequently Asked Questions ==
@@ -85,29 +83,23 @@ This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/pl
 
 Please use our [issue tracker](https://github.com/mwaterous/ldd-directory-lite/issues) on the plugins [GitHub repo](https://github.com/mwaterous/ldd-directory-lite).
 
-= How do I add featured listing thumbnails to the home page? =
-
-From the Edit Listing screen on your WordPress dashboard, add "featured" as one of the tags for any listing you want to display on the home page. This feature will pick up to three random listings at a time, so feel free to add as many as you like!
-
 
 == Screenshots ==
 
-1. We know some people love turning switches on and off, but we believe the most efficient use of your time is focusing on content. Configure everything once, and never worry about it again!
+1. Most of ldd directory lite's configuration can be ignored or set once and forgotten; focus on content, don't worry about getting caught up constantly having to change settings!
 2. Whether all your content is user generated, or if it's entirely owner generated, there's an easy to use interface for adding, editing, or removing listings.
-3. The directory is built to be fully responsive, so they integrate without any fuss and are 100% mobile ready.
-4. Users can easily get in touch with organizations listed on your site, keeping them on your web site.
-5. The submission process is broken down into multiple pages. Never-ending one page forms can be intimidating; we encourage your users to get involved by making it as painless as possible!
+3. We have done our best to design the directory's front end interface to integrate easily and painlessly with almost any theme. While it's impossible to guarantee this happening with 100% of themes, the fully responsive minimal design will quite often seem right at home, straight out of the box.
 
 
 == Upgrade Notice ==
 
-= 0.5.5-beta =
-This release addresses a variety of theme compatibility issues, and fixes a severe memory problem on the admin dashboard.
+= 0.7-beta =
+This is a major update towards releasing a stable version of ldd directory lite, and addresses numerous issues reported by users with the earlier beta copies.
 
 
 == Changelog ==
 
-= 0.6.0-beta =
+= 0.7-beta =
 
 * Cleaned up code formatting and style considerably across the entire plugin, adding much needed inline documentation
 * Removed the RainTPL class in favor of using native PHP templates (this was a rapid deployment solution that had a terminal lifespan to begin with)
@@ -115,7 +107,9 @@ This release addresses a variety of theme compatibility issues, and fixes a seve
 * Removed a lot of my ugly JavaScript hacks (I'm getting better!)
 * Reduced dependence on internal styling; going forward the plugin should look "pretty enough" but leave most of the presentation to the end user
 * Multitude of bug fixes
-* ** Updated screenshots (don't actually forget to do this... ) **
+* Updated screenshots (don't actually forget to do this... )
+* Outlined an upgrade system for seamless transitions from one version to the next
+* Improved the import process for upgrading from LDD Business Directory
 
 = 0.5.4-beta =
 
@@ -150,7 +144,7 @@ Please try to include as much information as possible, including steps that we c
 
 == Credits ==
 
-I tend to spend a lot of time coding; not only is it my day job, but it's also one of the things I like to do in my spare time. No matter how much time I spend however, I'm just one person. This plugin is where it is thanks to the hard work and open source beliefs of more people than just myself. While I always try to make sure they are credited in the code itself, I would like to take the time to include them here as well. In no particular order:
+I tend to spend a lot of time coding; not only is it my day job, but it's also one of the things I like to do in my spare time. No matter how much time I spend however, I'm just one person. This plugin is where it is thanks to the hard work and open source beliefs of a great many people. While I always try to make sure they are credited in the code itself, I would like to take the time to include them here as well. In no particular order:
 
 **Who:** [WebDevStudios](http://webdevstudios.com/)<br>
 **Where:** [Custom Metaboxes and Fields for WordPress](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)<br>
@@ -167,7 +161,3 @@ I tend to spend a lot of time coding; not only is it my day job, but it's also o
 **Who:** [Evan Solomon](http://evansolomon.me/), [Michel Fortin](http://michelf.ca), & [John Gruber](http://daringfireball.net)<br>
 **Where:** [WP Github Flavored Markdown Comments](https://github.com/evansolomon/wp-github-flavored-markdown-comments/blob/master/github-flavored-markdown-comments.php)<br>
 **Why:** Because markdown! Markdown is slowly being integrated in to the front end of the plugin, which will allow users to have some measure of control over the way their listings appear (should the site administrator choose to enable it).
-
-**Who:** [Tim Schlechter](https://github.com/TimSchlechter)<br>
-**Where:** [Bootstrap Tags Input](https://timschlechter.github.io/bootstrap-tagsinput/examples/)<br>
-**Why:** This was added initially on the dashboard to group multiple notification email addresses, but I can see it easily having a future on the front end of the plugin as well.

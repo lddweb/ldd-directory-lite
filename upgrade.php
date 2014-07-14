@@ -19,57 +19,37 @@ global $upgrades;
  *
  * @param array $post_ids Array of Post IDs
  */
-function ldl_060_address_to_geo($post_ids) {
+function ldl_060_address_format($post_ids) {
 
     if (!is_array($post_ids) || empty($post_ids)) { return; }
 
     foreach ($post_ids as $post_id) {
 
         // Gather the existing meta data
-        $address = get_post_meta($post_id, '_lddlite_address_one', 1);
-        $city = get_post_meta($post_id, '_lddlite_city', 1);
-        $subdivision = get_post_meta($post_id, '_lddlite_subdivision', 1);
-        $post_code = get_post_meta($post_id, '_lddlite_post_code', 1);
-        $country = get_post_meta($post_id, '_lddlite_country', 1);
+        $address = get_post_meta($post_id, ldl_pfx('address_one'), 1);
+        $city = get_post_meta($post_id, ldl_pfx('city'), 1);
+        $subdivision = get_post_meta($post_id, ldl_pfx('subdivision'), 1);
+        $post_code = get_post_meta($post_id, ldl_pfx('post_code'), 1);
+        $country = get_post_meta($post_id, ldl_pfx('country'), 1);
 
-        // Put it together
-        $address = $address . ', ' . $city . ', ' . $subdivision . ' ' . $post_code . ', ' . $country;
-
-        $geo = array(
-            'formatted' => '',
-            'lat'       => '',
-            'lng'       => '',
+        $post_meta = array(
+            'country'     => $country,
+            'post_code'   => $post_code,
+            'address_one' => $address,
+            'address_two' => $city . (empty($subdivision) ? '' : ' ' . $subdivision),
+            'geo'         => array(
+                'lat'       => '',
+                'lng'       => '',
+            ),
         );
 
-        // Make sure we have something to work with
-        if ('' != trim($address, ' ,')) {
-
-            $get_address = 'http://maps.google.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
-            $data = wp_remote_get($get_address);
-
-            // Use the data from Google's geocoder API to display addresses and set map coordinates
-            if ('200' == $data['response']['code']) {
-                $body = json_decode($data['body']);
-                $geo['formatted'] = $body->results[0]->formatted_address;
-                $geo['lat'] = $body->results[0]->geometry->location->lat;
-                $geo['lng'] = $body->results[0]->geometry->location->lng;
-            } else {
-                // If the geocoder fails, this should kickstart the dashboard autocomplete
-                $geo['formatted'] = $address;
-            }
-
+        foreach ($post_meta as $key => $value) {
+            add_post_meta($post_id, ldl_pfx($key), $value);
         }
 
-        update_post_meta($post_id, LDDLITE_PFX . '_geo', $geo);
-
-        // Don't delete until we hear silence, or hear back that everyone is happy with the new paradigm
-
-        /*		delete_post_meta( $post_id, '_lddlite_address_one' );
-                delete_post_meta( $post_id, '_lddlite_address_two' );
-                delete_post_meta( $post_id, '_lddlite_city' );
-                delete_post_meta( $post_id, '_lddlite_subdivision' );
-                delete_post_meta( $post_id, '_lddlite_post_code' );
-                delete_post_meta( $post_id, '_lddlite_country' );*/
+        // Delete leftovers
+        delete_post_meta( $post_id, ldl_pfx('city') );
+        delete_post_meta( $post_id, ldl_pfx('subdivision') );
 
     }
 
@@ -86,17 +66,17 @@ if ($post_ids) {
      */
     foreach ($upgrades as $version => $trigger) {
 
-        if (!$trigger) { continue; }
+        if (!$trigger)
+            continue;
 
-            switch ($version) {
+        switch ($version) {
 
-                case '0.6.0-beta':
-                    ldl_060_address_to_geo($post_ids);
-                    break;
-
-            }
+            case '0.6.0-beta':
+                ldl_060_address_format($post_ids);
+                break;
 
         }
 
     }
+
 }

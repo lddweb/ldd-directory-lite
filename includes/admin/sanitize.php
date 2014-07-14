@@ -28,7 +28,6 @@ function lddlite_settings_general_sanitize($input) {
     $input['directory_listing_slug'] = sanitize_title($input['directory_listing_slug']);
     $input['directory_label'] = wp_filter_nohtml_kses($input['directory_label']);
     $input['disable_bootstrap'] = '1' == $input['disable_bootstrap'] ? 1 : 0;
-    $input['public_or_private'] = '0' == $input['public_or_private'] ? 0 : 1;
     $input['google_maps'] = '0' == $input['google_maps'] ? 0 : 1;
 
     flush_rewrite_rules();
@@ -84,6 +83,9 @@ add_filter('lddlite_settings_submit_sanitize', 'lddlite_settings_submit_sanitize
  * @return array The sanitized $input array
  */
 function lddlite_settings_appearance_sanitize($input) {
+
+    $input['disable_bootstrap'] = '1' == $input['disable_bootstrap'] ? 1 : 0;
+    $input['appearance_display_featured'] = '1' == $input['appearance_display_featured'] ? 1 : 0;
 
     $input['appearance_display_new'] = '1' == $input['appearance_display_new'] ? 1 : 0;
 

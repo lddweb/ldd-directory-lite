@@ -191,7 +191,7 @@ $input-border-radius:            $border-radius-base !default;
 $input-border-focus:             #66afe9 !default;
 
 //** Placeholder text color
-$input-color-placeholder:        $gray-light !default;
+$input-color-placeholder:        lighten(#000, 80%) !default;
 
 //** Default `.form-control` height
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;

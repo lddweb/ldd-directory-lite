@@ -87,7 +87,6 @@ EM;
         'directory_label'               => get_bloginfo('name'),
         'directory_description'         => '',
         'disable_bootstrap'             => 0,
-        'public_or_private'             => 1,
         'google_maps'                   => 1,
         'email_from_name'               => get_bloginfo('name'),
         'email_from_address'            => get_bloginfo('admin_email'),
@@ -100,6 +99,8 @@ EM;
         'email_onapprove_body'          => $email['on_approve'],
         'submit_use_tos'                => 0,
         'submit_tos'                    => '',
+        'submit_intro'                  => '<p>' . __('Please tell us a little bit about the organization you would like to see listed in our directory. Try to include as much information as you can, and be as descriptive as possible where asked.', 'lddlite') . '</p>',
+        'submit_success'                => '<h3>' . __('Congratulations!', 'lddlite') . '</h3><p>' . __('Your listing has been successfully submitted for review. Please allow us sufficient time to review the listing and approve it for public display in our directory.', 'lddlite') . '</p>',
         'allow_tracking_popup_done'     => 0,
         'allow_tracking'                => 0,
         'appearance_display_featured'   => 1,
@@ -226,7 +227,21 @@ function ldl_get_meta($key) {
         return false;
     }
 
-    return get_metadata('post', $post_id, '_lddlite_' . $key, true);
+    return get_metadata('post', $post_id, ldl_pfx($key), true);
+}
+
+
+/**
+ * Appends the plugin prefix to key/field identifiers to maintain readability in other functions
+ *
+ * @param string $key The field identifier to be prefixed
+ *
+ * @return string A prefixed string
+ */
+function ldl_pfx($key) {
+    $prefixed = '_' . trim(LDDLITE_PFX, '_') . '_';
+
+    return $prefixed . $key;
 }
 
 
@@ -248,11 +263,11 @@ function ldl_get_listing_meta($id) {
         'phone'       => '',
     );
 
-    $meta['address_one'] = get_post_meta($id, '_lddlite_address_one', 1);
-    $meta['address_two'] = get_post_meta($id, '_lddlite_address_two', 1);
-    $meta['city'] = get_post_meta($id, '_lddlite_city', 1);
-    $meta['subdivision'] = get_post_meta($id, '_lddlite_subdivision', 1);
-    $meta['post_code'] = get_post_meta($id, '_lddlite_post_code', 1);
+    $meta['address_one'] = get_post_meta($id, ldl_pfx('address_one'), 1);
+    $meta['address_two'] = get_post_meta($id, ldl_pfx('address_two'), 1);
+    $meta['city'] = get_post_meta($id, ldl_pfx('city'), 1);
+    $meta['subdivision'] = get_post_meta($id, ldl_pfx('subdivision'), 1);
+    $meta['post_code'] = get_post_meta($id, ldl_pfx('post_code'), 1);
 
     $address = '';
     $geocode = '';
@@ -280,33 +295,17 @@ function ldl_get_listing_meta($id) {
     $meta['address'] = $address;
     $meta['geocode'] = $geocode;
 
-    $website = get_post_meta($id, '_lddlite_url_website', 1);
+    $website = get_post_meta($id, ldl_pfx('url_website'), 1);
     if ($website)
         $meta['website'] = apply_filters('lddlite_listing_website', sprintf('<a href="%1$s"><i class="fa fa-link"></i>  %1$s</a>', esc_url($website)));
 
-    $meta['email'] = get_post_meta($id, '_lddlite_contact_email', 1);
-    $meta['phone'] = get_post_meta($id, '_lddlite_contact_phone', 1);
+    $meta['email'] = get_post_meta($id, ldl_pfx('contact_email'), 1);
+    $meta['phone'] = get_post_meta($id, ldl_pfx('contact_phone'), 1);
 
     $meta = wp_parse_args($meta, $defaults);
 
     return $meta;
 
-}
-
-
-/**
- * @deprecated Ripping this out and heading to Geocoder country.
- */
-function ldl_dropdown_subdivision($subdivision, $data, $tabindex = 0) {
-    return '<input id="subdivision" class="form-control" name="ld_s_subdivision" type="text" value="' . $selected . '" ' . $tabindex . ' required>';
-}
-
-
-/**
- * @deprecated Ripping this out and heading to Geocoder country.
- */
-function ldl_dropdown_country($name, $data = '', $tabindex = 0) {
-    return '<input id="country" class="form-control" name="' . $name . '" type="text" ' . $tabindex . ' required>';
 }
 
 

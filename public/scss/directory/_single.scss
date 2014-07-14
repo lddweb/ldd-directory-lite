@@ -1,13 +1,13 @@
 .directory_listings {
   &.listing-single {
 
-    .entry-meta {
+    .listing-meta {
       border: 1px solid #ddd;
       background-color: rgba(221, 221, 221, 0.2);
       margin: 1em 0;
       padding: 1em 1em 0;
 
-      .listing-meta {
+      ul {
         margin: 0 0 2em 1.5em;
         font-size: .9em;
         color: #555;

@@ -16,7 +16,7 @@
  * @param $post The WP_Post object
  */
 function ldl_excerpt_meta_box($post) {
-    echo '<label class="screen-reader-text" for="excerpt">' . __('Promotion', 'lddlite') . '</label><textarea rows="1" cols="40" name="excerpt" id="excerpt">' . $post->post_excerpt . '</textarea>';
+    echo '<label class="screen-reader-text" for="excerpt">' . __('Summary', 'lddlite') . '</label><textarea rows="1" cols="40" name="excerpt" id="excerpt">' . $post->post_excerpt . '</textarea>';
 }
 
 
@@ -32,7 +32,7 @@ function ldl_metaboxes__swap() {
         remove_meta_box('postexcerpt', LDDLITE_POST_TYPE, 'normal');
         add_meta_box('postimagediv', __('Logo', 'lddlite'), 'post_thumbnail_meta_box', null, 'side', 'high');
         add_meta_box('authordiv', __('Owner', 'lddlite'), 'post_author_meta_box', null, 'side', 'high');
-        add_meta_box('postexcerpt', __('Promotion', 'lddlite'), 'ldl_excerpt_meta_box', null, 'side', 'low');
+        add_meta_box('postexcerpt', __('Summary', 'lddlite'), 'ldl_excerpt_meta_box', null, 'normal', 'high');
     }
 }
 
@@ -74,9 +74,29 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
         'show_names' => true,
         'fields'     => array(
             array(
-                'name' => 'Address',
+                'name' => 'Address One',
+                'id'   => ldl_pfx('address_one'),
+                'type' => 'text',
+            ),
+            array(
+                'name' => 'Address Two',
+                'id'   => ldl_pfx('address_two'),
+                'type' => 'text',
+            ),
+            array(
+                'name' => 'Zip / Postal Code',
+                'id'   => ldl_pfx('postal_code'),
+                'type' => 'text_medium',
+            ),
+            array(
+                'name' => 'Country',
+                'id'   => ldl_pfx('country'),
+                'type' => 'text_medium',
+            ),
+            array(
+                'name' => 'Set Map Marker',
                 'desc' => __('Use the map above to set the location for this listing. The text field will attempt to autocomplete any address you enter, or you can drag the marker directly on the map to set the location.', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_geo',
+                'id'   => ldl_pfx('geo'),
                 'type' => 'geo_location',
             ),
         ),
@@ -94,25 +114,25 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
             array(
                 'name' => __('Website', 'lddlite'),
                 'desc' => __('Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_url_website',
+                'id'   => ldl_pfx('url_website'),
                 'type' => 'text',
             ),
             array(
                 'name' => __('Facebook', 'lddlite'),
                 'desc' => __('This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_url_facebook',
+                'id'   => ldl_pfx('url_facebook'),
                 'type' => 'text',
             ),
             array(
                 'name' => __('Twitter', 'lddlite'),
                 'desc' => __('Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_url_twitter',
+                'id'   => ldl_pfx('url_twitter'),
                 'type' => 'text',
             ),
             array(
                 'name' => __('LinkedIn', 'lddlite'),
                 'desc' => __('This should start with <code>www.linkedin.com</code>', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_url_linkedin',
+                'id'   => ldl_pfx('url_linkedin'),
                 'type' => 'text',
             ),
         ),
@@ -129,17 +149,17 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
         'fields'     => array(
             array(
                 'name' => __('Email', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_contact_email',
+                'id'   => ldl_pfx('contact_email'),
                 'type' => 'text_medium',
             ),
             array(
                 'name' => __('Phone', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_contact_phone',
+                'id'   => ldl_pfx('contact_phone'),
                 'type' => 'text_small',
             ),
             array(
                 'name' => __('Fax', 'lddlite'),
-                'id'   => LDDLITE_PFX . '_contact_fax',
+                'id'   => ldl_pfx('contact_fax'),
                 'type' => 'text_small',
             ),
         ),
@@ -165,17 +185,15 @@ function ldl_render_geo_location_field($field, $meta) {
 
     wp_enqueue_style('lddlite-admin');
 
-    echo '<input type="text" class="autocomplete" id="' . $field['id'] . '" value="' . (isset($meta['formatted']) ? $meta['formatted'] : '') . '">';
-    echo '<div class="map-canvas"></div>';
-
-    echo '<input type="hidden" class="formatted" name="' . $field['id'] . '[formatted]" value="' . (isset($meta['formatted']) ? $meta['formatted'] : '') . '">';
+    echo '<input type="text" class="autocomplete" id="' . $field['id'] . '">';
     echo '<input type="hidden" class="lat" name="' . $field['id'] . '[lat]" value="' . (isset($meta['lat']) ? $meta['lat'] : '') . '">';
     echo '<input type="hidden" class="lng" name="' . $field['id'] . '[lng]" value="' . (isset($meta['lng']) ? $meta['lng'] : '') . '">';
+    echo '<div class="map-canvas"></div>';
 
     if (!empty($field['desc']))
         echo '<p class="cmb_metabox_description">' . $field['desc'] . '</p>';
-}
 
+}
 add_action('cmb_render_geo_location', 'ldl_render_geo_location_field', 10, 2);
 
 

@@ -2,17 +2,6 @@
 
     <?php echo ldl_get_header(); ?>
 
-
-    <!--
-    <div class="row">
-        {$featured}
-    </div>
-
-    <div class="row">
-        {$new}
-    </div>
-    -->
-
     <div class="container-fluid">
 
         <div class="row">
@@ -21,9 +10,10 @@
                     <?php echo ldl_get_parent_categories(); ?>
                 </div>
             </div>
+            <?php if (ldl_get_setting('appearance_display_featured')): ?>
             <div class="col-md-12">
 
-                <h2>Featured Listings</h2>
+                <h2><?php _e('Featured Listings', 'lddlite'); ?></h2>
                 <?php
                 $args = array(
                     'post_type'      => LDDLITE_POST_TYPE,
@@ -42,6 +32,7 @@
                 <?php endwhile; endif; ?>
 
             </div>
+            <?php endif; ?>
         </div>
 
     </div>
