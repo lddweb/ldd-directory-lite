@@ -17,7 +17,7 @@
     <?php endwhile; endif; ?>
 
 
-    <form id="submit-listing" name="submit-listing" method="post" enctype="multipart/form-data">
+    <form id="submit-listing" name="submit-listing" method="post" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="action" value="submit_form">
         <?php echo wp_nonce_field( 'submit-listing-nonce','nonce_field', 0, 0 ); ?>
         <?php do_action( 'lddlite_submit_listing_hidden_fields' ); ?>

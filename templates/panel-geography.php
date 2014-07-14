@@ -50,6 +50,7 @@ if (!is_array($geo)) {
 			<div id="map-canvas"></div>
 			    <input type="hidden" id="lat" name="n_geo[lat]" value="<?php echo $geo['lat']; ?>">
 			    <input type="hidden" id="lng" name="n_geo[lng]" value="<?php echo $geo['lng']; ?>">
+            <?php echo ldl_get_error('geo'); ?>
 		</div>
 	</div>
     <?php endif; ?>

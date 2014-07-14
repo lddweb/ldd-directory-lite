@@ -188,14 +188,14 @@ function ldl_submit_create_meta($data, $post_id) {
  */
 function ldl_notify_admin($data, $post_id) {
 
-    $to = ldl_get_setting('email_notifications');
+    $to = ldl_get_setting('email_notification_address');
     $subject = ldl_get_setting('email_toadmin_subject');
 
     $message = ldl_get_setting('email_toadmin_body');
     $message = str_replace('{aprove_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
     $message = str_replace('{title}', $data['title'], $message);
     $message = str_replace('{description}', $data['description'], $message);
-
+md(array('notify_admin',$to,$subject,$message));
     ldl_mail($to, $subject, $message);
 }
 
@@ -208,8 +208,10 @@ function ldl_notify_admin($data, $post_id) {
  * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
 function ldl_notify_author($data) {
+    global $lddlite_submit_processor;
 
-    $to = $data['email'];
+    $to = $lddlite_submit_processor->get_data()['contact_email'];
+
     $subject = ldl_get_setting('email_onsubmit_subject');
 
     $message = ldl_get_setting('email_onsubmit_body');
@@ -217,7 +219,7 @@ function ldl_notify_author($data) {
     $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
     $message = str_replace('{directory_email}', ldl_get_setting('email_from_address'), $message);
     $message = str_replace('{title}', $data['title'], $message);
-
+    md(array('notify_author',$to,$subject,$message));
     ldl_mail($to, $subject, $message);
 }
 
@@ -250,7 +252,7 @@ function ldl_notify_when_approved($post) {
     update_post_meta($post->ID, '_approved', 1);
 
 }
-add_action('pending_to_publish', 'ldl_action__send_approved_email');
+add_action('pending_to_publish', 'ldl_notify_when_approved');
 
 
 /**

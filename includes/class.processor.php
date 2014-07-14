@@ -127,7 +127,7 @@ class ldd_directory_lite_processor {
             }
 
         }
-
+md($this->errors);
     }
 
 
@@ -227,7 +227,7 @@ class ldd_directory_lite_processor {
 function ldl_validate_fields($error, $field, $value) {
 
     // Nothing to validate?
-    if (empty($value)) {
+    if (empty($value) || (is_array($value) && in_array('', $value))) {
         return $error;
     }
 
@@ -246,7 +246,7 @@ function ldl_validate_fields($error, $field, $value) {
             }
             break;
         case 'geo':
-            if (!is_array($value) || 2 != count($value) || in_array('', $value) || !preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $value['lat'] . ',' . $value['lng'])) {
+            if (2 != count($value) || !preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $value['lat'] . ',' . $value['lng'])) {
                 $error = __('Something went wrong validating that location, please try again.', 'lddlite');
             }
             break;
