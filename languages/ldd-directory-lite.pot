@@ -2,9 +2,10 @@
 # This file is distributed under the same license as the LDD Directory Lite package.
 msgid ""
 msgstr ""
-"Project-Id-Version: LDD Directory Lite 0.5.1-beta\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/ldd-directory-lite\n"
-"POT-Creation-Date: 2014-05-28 15:48:27+00:00\n"
+"Project-Id-Version: LDD Directory Lite 0.7.1-beta\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/ldd-directory-"
+"lite\n"
+"POT-Creation-Date: 2014-07-14 18:54:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,67 +13,135 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: includes/actions/submit/process.php:234
-msgid "You need a title for your listing"
+#: import-lddbd.php:59
+msgid "Running Import for LDD Business Directory"
 msgstr ""
 
-#: includes/actions/submit/process.php:235
-msgid "Please select a category"
+#: import-lddbd.php:59
+msgid "LDD Import"
 msgstr ""
 
-#: includes/actions/submit/process.php:236
-msgid "Please add a description for your listing"
+#: import-lddbd.php:80
+msgid "Importing content from LDD Business Directory"
 msgstr ""
 
-#: includes/actions/submit/process.php:237
-msgid "Please enter a valid email address"
+#: import-lddbd.php:110
+msgid "Collecting data from original plugin..."
 msgstr ""
 
-#: includes/actions/submit/process.php:238
-msgid "Please enter a phone number"
+#: import-lddbd.php:113 import-lddbd.php:383 import-lddbd.php:449
+#: import-lddbd.php:526
+msgid "done."
 msgstr ""
 
-#: includes/actions/submit/process.php:239
-msgid "That is not a valid phone number"
+#: import-lddbd.php:184
+msgid "Failed to import category %s"
 msgstr ""
 
-#: includes/actions/submit/process.php:240
-msgid "A username is required"
+#: import-lddbd.php:193
+msgid "Added %d listing categories."
 msgstr ""
 
-#: includes/actions/submit/process.php:241
-msgid "That is not a valid username"
+#: import-lddbd.php:233
+msgid "Failed to import owner %s"
 msgstr ""
 
-#: includes/actions/submit/process.php:242
-msgid "That username already exists"
+#: import-lddbd.php:243
+msgid "Added %d listing owners."
 msgstr ""
 
-#: includes/actions/submit/process.php:243
-msgid "An email address is required"
+#: import-lddbd.php:279
+msgid "Listing already exists"
 msgstr ""
 
-#: includes/actions/submit/process.php:244
-msgid "That email is already in use"
+#: import-lddbd.php:294
+msgid "Failed to add listing %s"
 msgstr ""
 
-#: includes/actions/submit/process.php:245
-msgid "Please enter your street address"
+#: import-lddbd.php:320
+msgid "Added listing"
 msgstr ""
 
-#: includes/actions/submit/process.php:246
-msgid "Please enter a city"
+#: import-lddbd.php:327
+msgid "Added a total of %d new listings."
 msgstr ""
 
-#: includes/actions/submit/process.php:247
-msgid "Please enter a state"
+#: import-lddbd.php:337
+msgid "Adding listing meta information..."
 msgstr ""
 
-#: includes/actions/submit/process.php:248
-msgid "Please enter your zip"
+#: import-lddbd.php:393
+msgid "Importing logo's..."
 msgstr ""
 
-#: includes/admin/help.php:17
+#: import-lddbd.php:461
+msgid "Updating file attachments..."
+msgstr ""
+
+#: import-lddbd.php:548
+msgid "All done!"
+msgstr ""
+
+#: import-lddbd.php:548
+msgid ""
+"Passwords have been reset for security purposes, please notify your users!"
+msgstr ""
+
+#: import-lddbd.php:549
+msgid "Return to WordPress Dashboard"
+msgstr ""
+
+#: import-lddbd.php:550 includes/admin/settings.php:332
+msgid "Directory Settings"
+msgstr ""
+
+#: import-lddbd.php:615
+msgid "Existing data has been detected!"
+msgstr ""
+
+#: import-lddbd.php:616
+msgid ""
+"It looks like you have data from the LDD Business Directory plugin! Would "
+"you like to import this?"
+msgstr ""
+
+#: import-lddbd.php:617
+msgid "Import Data."
+msgstr ""
+
+#: import-lddbd.php:618
+msgid "If you do not wish to import your existing data, you can"
+msgstr ""
+
+#: import-lddbd.php:618
+msgid "dismiss"
+msgstr ""
+
+#: import-lddbd.php:618
+msgid "this notice."
+msgstr ""
+
+#: includes/admin/filters.php:45
+msgid "Listing Name"
+msgstr ""
+
+#: includes/admin/filters.php:62
+msgid "Set featured image"
+msgstr ""
+
+#: includes/admin/filters.php:62
+msgid "Upload A Logo"
+msgstr ""
+
+#: includes/admin/filters.php:63
+msgid "Remove featured image"
+msgstr ""
+
+#: includes/admin/filters.php:63
+msgid "Remove Logo"
+msgstr ""
+
+#: includes/admin/help.php:18
 msgid "Helpful Links:"
 msgstr ""
 
@@ -82,411 +151,638 @@ msgid ""
 "other documentation."
 msgstr ""
 
-#: includes/admin/help.php:19
+#: includes/admin/help.php:18
 msgid "Found a bug?"
 msgstr ""
 
-#: includes/admin/help.php:20
+#: includes/admin/help.php:18
 msgid "<a href=\"%s\">Submit issues</a> on <a href=\"%s\">GitHub</a>."
 msgstr ""
 
+#: includes/admin/help.php:20
+msgid ""
+"The general settings tab is where you'll configure most of the primary "
+"operations for your directory. This includes identifying pages where the "
+"shortcodes have been embedded, defining permalink slugs, and more."
+msgstr ""
+
+#: includes/admin/help.php:20
+msgid "Page Settings"
+msgstr ""
+
+#: includes/admin/help.php:20
+msgid ""
+"The first two settings on this tab tell the plugin where you've placed the "
+"shortcodes <code>[directory]</code> and <code>[directory_submit]</code>. "
+"Don't forget to set these, as a few functions rely on them to return proper "
+"permalinks."
+msgstr ""
+
+#: includes/admin/help.php:20
+msgid "Custom Slugs"
+msgstr ""
+
+#: includes/admin/help.php:20
+msgid ""
+"The taxonomy and post type slugs determine how a URL will appear when "
+"viewing either the category display pages or an individual listing. Remember "
+"that you probably want these to be different from the page slugs where you "
+"placed the shortcodes."
+msgstr ""
+
+#: includes/admin/help.php:20 includes/admin/settings.php:92
+msgid "Directory Information"
+msgstr ""
+
+#: includes/admin/help.php:20
+msgid ""
+"Tell us a little about your directory here. The information you provide can "
+"be displyed by using the <code>[directory_info]</code> shortcode, or via "
+"macros in email notifications."
+msgstr ""
+
+#: includes/admin/help.php:20 includes/admin/settings.php:95
+msgid "Other Settings"
+msgstr ""
+
+#: includes/admin/help.php:20
+msgid ""
+"Most of the settings found under the \"Other\" heading are set once and "
+"forget type features. From here you can enable or disable anonymous usage "
+"tracking (we recommend enabling it, this information helps us improve future "
+"versions of the plugin), determine whether your directory accepts public "
+"submissions and more."
+msgstr ""
+
+#: includes/admin/help.php:23
+msgid "General Settings"
+msgstr ""
+
 #: includes/admin/help.php:28
-msgid "General Help"
+msgid ""
+"The settings available on the Email tab of your directory plugin settings "
+"allows you to control how email notifications appear."
+msgstr ""
+
+#: includes/admin/help.php:29 includes/admin/settings.php:169
+msgid "New Listing Notification"
 msgstr ""
 
 #: includes/admin/help.php:29
 msgid ""
-"Directory [lite] is designed to work out of the box with as little effort on "
-"your part as possible. Use this page to define any custom configuration "
-"options you would like for your web site."
+"This is sent to the administrative email (will default to WordPress settings "
+"if not configured) and is to notify site owners that a new listing is "
+"pending their review. Available macros include:"
 msgstr ""
 
-#: includes/admin/help.php:34
-msgid "Email Settings"
+#: includes/admin/help.php:30
+msgid ""
+"This will provide a clickable link straight to the dashboard for reviewing "
+"and approving listings."
+msgstr ""
+
+#: includes/admin/help.php:31
+msgid "This is the title of the newly submitted listing."
+msgstr ""
+
+#: includes/admin/help.php:32
+msgid "This is an excerpt of the the listing description."
+msgstr ""
+
+#: includes/admin/help.php:33 includes/admin/settings.php:171
+msgid "Author Receipt"
+msgstr ""
+
+#: includes/admin/help.php:33
+msgid ""
+"This is a receipt sent to the author of a new listing, and a good place to "
+"keep them informed of your terms, and approval times. Available macros "
+"include:"
+msgstr ""
+
+#: includes/admin/help.php:34 includes/admin/help.php:39
+msgid "The site title as defined in your WordPress settings."
+msgstr ""
+
+#: includes/admin/help.php:35 includes/admin/help.php:40
+msgid "The directory label, set on the General tab."
 msgstr ""
 
 #: includes/admin/help.php:36
+msgid "The from email address set on the Email tab."
+msgstr ""
+
+#: includes/admin/help.php:37 includes/admin/help.php:41
+msgid "The title of the listing they submitted."
+msgstr ""
+
+#: includes/admin/help.php:38 includes/admin/settings.php:173
+msgid "Listing Approved"
+msgstr ""
+
+#: includes/admin/help.php:38
 msgid ""
-"The email settings allow you to customize the notifications sent from your "
-"directory installation."
-msgstr ""
-
-#: includes/admin/help.php:37
-msgid "Variables available in all email templates include;"
-msgstr ""
-
-#: includes/admin/help.php:39
-msgid "<em>{title}</em> The title of the listing as the owner defined it."
-msgstr ""
-
-#: includes/admin/help.php:40
-msgid "<em>{description}</em> The listing description."
+"Sent to the listing author when their listing status is updated from Pending "
+"Review to Approved. This will only be sent once, so if a listing status is "
+"changed and later set back to Approved a second email will not be sent. "
+"Available macros include:"
 msgstr ""
 
 #: includes/admin/help.php:42
+msgid "A clickable link to view the newly approved listing."
+msgstr ""
+
+#: includes/admin/help.php:45
+msgid "Email Settings"
+msgstr ""
+
+#: includes/admin/help.php:50
 msgid ""
-"<strong>Administrator Notification</strong> - This is the email sent to you, "
-"as the site owner, when someone submits a new listing for review. Additional "
-"variables include;"
+"In most directories the submission process will play an integral role in "
+"developing relationships and generating quality content."
 msgstr ""
 
-#: includes/admin/help.php:44
+#: includes/admin/help.php:50
 msgid ""
-"<em>{link}</em> Direct link to the administrator page where you can review "
-"and approve or reject the listing."
+"As mentioned in the help section for the Appearance tab, there is a template "
+"that you can modify to more closely match the Submit Form with your sites "
+"look and feel. This template is <code>/templates/submit.php</code> and can "
+"be placed in your theme directory under <code>/lddlite_templates/submit.php</"
+"code> to ensure your edits aren't overwritten."
 msgstr ""
 
-#: includes/admin/help.php:46
+#: includes/admin/help.php:50 includes/admin/settings.php:231
+msgid "Terms of Service"
+msgstr ""
+
+#: includes/admin/help.php:50
 msgid ""
-"<strong>Listing Submission</strong> - This email is sent to the listing "
-"owner when they submit a new listing, prior to it being approved by the site "
-"administrator."
+"A default terms of service agreement isn't included with the plugin since it "
+"would be too difficult to craft one that covered every individual situation. "
+"If you wish to include an agreement that your users must accept prior to "
+"submitting new listings, configure it here."
 msgstr ""
 
-#: includes/admin/help.php:47
+#: includes/admin/help.php:53
+msgid "Submit Form Settings"
+msgstr ""
+
+#: includes/admin/help.php:57
 msgid ""
-"<strong>Listing Approved</strong> - This email is sent to the listing owner "
-"after their new listing has been approved and is now availble publicly on "
-"the directory. Additional variables include;"
+"The Appearance tab allows you to customize some basic presentation features "
+"to help match the look and feel of the directory with your WordPress theme."
 msgstr ""
 
-#: includes/admin/help.php:49
+#: includes/admin/help.php:58
 msgid ""
-"<em>{link}</em> Direct link to their new listing as it appears on your "
-"directory."
+"We tried to design the plugin in such a way that it would fit in with most "
+"themes straight out of the box, but given the sheer number of available "
+"themes or the fact that you may be using this plugin within a completely "
+"bespoke design, it is impossible to anticipate every situation."
 msgstr ""
 
-#: includes/admin/metaboxes.php:24 includes/cmb/init.php:1155
-msgid "Save"
+#: includes/admin/help.php:59
+msgid "Colors"
 msgstr ""
 
-#: includes/admin/metaboxes.php:30
-msgid "Save Draft"
+#: includes/admin/help.php:59
+msgid ""
+"Unless otherwise noted, these will always be in the order of normal state, "
+"hover state, and foreground. In some cases these will affect multiple "
+"elements with and without hover states, so always be sure to check after "
+"making changes."
 msgstr ""
 
-#: includes/admin/metaboxes.php:32
-msgid "Save as Pending"
+#: includes/admin/help.php:60
+msgid "Template Files"
 msgstr ""
 
-#: includes/admin/metaboxes.php:41
-msgid "Status:"
+#: includes/admin/help.php:60
+msgid ""
+"Most of the presentation is generated through the use of template files, "
+"just like those used in a WordPress theme."
 msgstr ""
 
-#: includes/admin/metaboxes.php:46
-msgid "Privately Listed Business"
+#: includes/admin/help.php:61
+msgid ""
+"These are all located in the <code>/templates</code> sub-directory of your "
+"directory plugin files. To avoid losing any customizations the next time the "
+"plugin updates, you can copy these (in whole or part) to a <code>/"
+"lddlite_templates</code> sub-directory of your theme. Only copy the files "
+"you need to customize!"
 msgstr ""
 
-#: includes/admin/metaboxes.php:49 includes/admin/metaboxes.php:71
-msgid "Approved"
+#: includes/admin/help.php:62
+msgid ""
+"Any presentation not controlled by a template should have a WordPress filter "
+"attached to it. These will always be in the format of "
+"'lddlite_filter_presentation_{name}' and developer documentation will be "
+"available on our web site soon."
 msgstr ""
 
-#: includes/admin/metaboxes.php:52 includes/admin/metaboxes.php:75
-msgid "Scheduled"
+#: includes/admin/help.php:65
+msgid "Appearance Settings"
 msgstr ""
 
-#: includes/admin/metaboxes.php:55 includes/admin/metaboxes.php:77
-msgid "Pending Review"
+#: includes/admin/metaboxes.php:19 includes/admin/metaboxes.php:35
+#: templates/panel-general.php:47
+msgid "Summary"
 msgstr ""
 
-#: includes/admin/metaboxes.php:59 includes/admin/metaboxes.php:79
-#: includes/admin/metaboxes.php:81
-msgid "Disabled"
-msgstr ""
-
-#: includes/admin/metaboxes.php:65 includes/admin/metaboxes.php:116
-msgid "Edit"
-msgstr ""
-
-#: includes/admin/metaboxes.php:73
-msgid "Privately Listed"
-msgstr ""
-
-#: includes/admin/metaboxes.php:84
-msgid "OK"
-msgstr ""
-
-#: includes/admin/metaboxes.php:85
-msgid "Cancel"
-msgstr ""
-
-#. translators: Publish box date format, see http:php.net/date
-#: includes/admin/metaboxes.php:93
-msgid "M j, Y @ G:i"
-msgstr ""
-
-#: includes/admin/metaboxes.php:96
-msgid "Scheduled for: <b>%1$s</b>"
-msgstr ""
-
-#: includes/admin/metaboxes.php:98
-msgid "Approved on: <b>%1$s</b>"
-msgstr ""
-
-#: includes/admin/metaboxes.php:100
-msgid "Approve <b>immediately</b>"
-msgstr ""
-
-#: includes/admin/metaboxes.php:102
-msgid "Schedule for: <b>%1$s</b>"
-msgstr ""
-
-#: includes/admin/metaboxes.php:104
-msgid "List on: <b>%1$s</b>"
-msgstr ""
-
-#: includes/admin/metaboxes.php:108
-msgid "Publish <b>immediately</b>"
-msgstr ""
-
-#: includes/admin/metaboxes.php:132
-msgid "Delete Permanently"
-msgstr ""
-
-#: includes/admin/metaboxes.php:134
-msgid "Move to Trash"
-msgstr ""
-
-#: includes/admin/metaboxes.php:146 includes/admin/metaboxes.php:147
-msgid "Schedule"
-msgstr ""
-
-#: includes/admin/metaboxes.php:149
-msgid "Publish"
-msgstr ""
-
-#: includes/admin/metaboxes.php:150
-msgid "Approve"
-msgstr ""
-
-#: includes/admin/metaboxes.php:153 includes/admin/metaboxes.php:154
-msgid "Submit for Review"
-msgstr ""
-
-#: includes/admin/metaboxes.php:158 includes/admin/metaboxes.php:159
-msgid "Update"
-msgstr ""
-
-#: includes/admin/metaboxes.php:184
-msgid "Owner"
-msgstr ""
-
-#: includes/admin/metaboxes.php:185
+#: includes/admin/metaboxes.php:33 templates/panel-general.php:28
 msgid "Logo"
 msgstr ""
 
-#: includes/admin/metaboxes.php:186
-msgid "Approval"
+#: includes/admin/metaboxes.php:34
+msgid "Owner"
 msgstr ""
 
-#: includes/admin/metaboxes.php:203
-msgid "Business Address"
+#: includes/admin/metaboxes.php:70
+msgid "Location"
 msgstr ""
 
-#: includes/admin/metaboxes.php:210
-msgid "Address 1"
+#: includes/admin/metaboxes.php:98
+msgid ""
+"Use the map above to set the location for this listing. The text field will "
+"attempt to autocomplete any address you enter, or you can drag the marker "
+"directly on the map to set the location."
 msgstr ""
 
-#: includes/admin/metaboxes.php:215
-msgid "Address 2"
-msgstr ""
-
-#: includes/admin/metaboxes.php:220
-msgid "City"
-msgstr ""
-
-#: includes/admin/metaboxes.php:225
-msgid "State / Province"
-msgstr ""
-
-#: includes/admin/metaboxes.php:229
-msgid "Zip / Post Code"
-msgstr ""
-
-#: includes/admin/metaboxes.php:253
-msgid "Country"
-msgstr ""
-
-#: includes/admin/metaboxes.php:266
+#: includes/admin/metaboxes.php:108
 msgid "Web Addresses"
 msgstr ""
 
-#: includes/admin/metaboxes.php:273
+#: includes/admin/metaboxes.php:115 templates/panel-meta.php:36
 msgid "Website"
 msgstr ""
 
-#: includes/admin/metaboxes.php:274
+#: includes/admin/metaboxes.php:116
 msgid ""
 "Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</"
 "code>, or <code>www.hosting.com/mysite/mypage.html</code>"
 msgstr ""
 
-#: includes/admin/metaboxes.php:279
+#: includes/admin/metaboxes.php:121 templates/panel-meta.php:44
 msgid "Facebook"
 msgstr ""
 
-#: includes/admin/metaboxes.php:280
+#: includes/admin/metaboxes.php:122
 msgid ""
 "This should always start with <code>facebook.com/</code> or <code>www."
 "facebook.com</code>."
 msgstr ""
 
-#: includes/admin/metaboxes.php:285
+#: includes/admin/metaboxes.php:127 templates/panel-meta.php:52
 msgid "Twitter"
 msgstr ""
 
-#: includes/admin/metaboxes.php:286
+#: includes/admin/metaboxes.php:128
 msgid ""
 "Enter the entire url (<code>www.twitter.com/username</code>) or just the "
 "username."
 msgstr ""
 
-#: includes/admin/metaboxes.php:291
+#: includes/admin/metaboxes.php:133
 msgid "LinkedIn"
 msgstr ""
 
-#: includes/admin/metaboxes.php:292
+#: includes/admin/metaboxes.php:134
 msgid "This should start with <code>www.linkedin.com</code>"
 msgstr ""
 
-#: includes/admin/metaboxes.php:301
+#: includes/admin/metaboxes.php:144
 msgid "Contact Information"
 msgstr ""
 
-#: includes/admin/metaboxes.php:308 includes/admin/settings.php:216
+#: includes/admin/metaboxes.php:151 includes/admin/settings.php:361
+#: templates/panel-meta.php:11
 msgid "Email"
 msgstr ""
 
-#: includes/admin/metaboxes.php:313
+#: includes/admin/metaboxes.php:156 templates/panel-meta.php:20
 msgid "Phone"
 msgstr ""
 
-#: includes/admin/metaboxes.php:318
+#: includes/admin/metaboxes.php:161 templates/panel-meta.php:27
 msgid "Fax"
 msgstr ""
 
-#: includes/admin/pointers.php:60
+#: includes/admin/metaboxes.php:217
+msgid "Approve"
+msgstr ""
+
+#: includes/admin/metaboxes.php:220
+msgid "Approved"
+msgstr ""
+
+#: includes/admin/metaboxes.php:223
+msgid "Approved on: <b>%1$s</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:226
+msgid "Approve <b>immediately</b>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:229
+msgid "Approve on: <b>%1$s</b>"
+msgstr ""
+
+#: includes/admin/settings.php:77
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/settings.php:78
+msgid "Add Listing"
+msgstr ""
+
+#: includes/admin/settings.php:88
+msgid "Front Page"
+msgstr ""
+
+#: includes/admin/settings.php:89
+msgid "Submit Page"
+msgstr ""
+
+#: includes/admin/settings.php:90
+msgid "Taxonomy Slug"
+msgstr ""
+
+#: includes/admin/settings.php:91
+msgid "Post Type Slug"
+msgstr ""
+
+#: includes/admin/settings.php:93
+msgid "Directory Label"
+msgstr ""
+
+#: includes/admin/settings.php:94
+msgid "Directory Description"
+msgstr ""
+
+#: includes/admin/settings.php:96
+msgid "Allow Tracking"
+msgstr ""
+
+#: includes/admin/settings.php:97
+msgid "Use Google Maps"
+msgstr ""
+
+#: includes/admin/settings.php:98
+msgid "Debug Tools"
+msgstr ""
+
+#: includes/admin/settings.php:110
+msgid ""
+"This is the page where the <code>[directory]</code> shortcode has been "
+"placed."
+msgstr ""
+
+#: includes/admin/settings.php:122
+msgid ""
+"This is the page where the <code>[directory_submit]</code> shortcode has "
+"been placed."
+msgstr ""
+
+#: includes/admin/settings.php:127
+msgid "This is the first part of the URL for category display pages."
+msgstr ""
+
+#: includes/admin/settings.php:132
+msgid "Same as above, but for the listing pages."
+msgstr ""
+
+#: includes/admin/settings.php:137
+msgid ""
+"Name your directory; \"My Business Directory\", \"Local Restaurant Feed\", "
+"\"John's List of Links\", etc."
+msgstr ""
+
+#: includes/admin/settings.php:154
+msgid ""
+"This toggles the display of Google Maps for listings that have an address "
+"set."
+msgstr ""
+
+#: includes/admin/settings.php:165
+msgid "From Name"
+msgstr ""
+
+#: includes/admin/settings.php:166
+msgid "From Email Address"
+msgstr ""
+
+#: includes/admin/settings.php:167
+msgid "Notify"
+msgstr ""
+
+#: includes/admin/settings.php:168
+msgid "Message Contents"
+msgstr ""
+
+#: includes/admin/settings.php:170 includes/admin/settings.php:172
+#: includes/admin/settings.php:174
+msgid "Email Body"
+msgstr ""
+
+#: includes/admin/settings.php:178
+msgid "This forms the first part of outgoing messages, "
+msgstr ""
+
+#: includes/admin/settings.php:183
+msgid "This forms the second part of outgoing messages, "
+msgstr ""
+
+#: includes/admin/settings.php:188
+msgid ""
+"This is the email where you want notifications sent. Use a comma to separate "
+"multipl email addresses."
+msgstr ""
+
+#: includes/admin/settings.php:193
+msgid "Sent to the email(s) listed above when a listing is awaiting approval."
+msgstr ""
+
+#: includes/admin/settings.php:205
+msgid ""
+"Sent to the author after they submit a new listing. Use this to remind them "
+"of your terms, inform them of average wait times or other important "
+"information. "
+msgstr ""
+
+#: includes/admin/settings.php:217
+msgid ""
+"Sent to the author when their listing has been approved and is available "
+"publicly.."
+msgstr ""
+
+#: includes/admin/settings.php:230
+msgid "Include Terms"
+msgstr ""
+
+#: includes/admin/settings.php:232
+msgid "Submit Introduction"
+msgstr ""
+
+#: includes/admin/settings.php:233
+msgid "Submit Success"
+msgstr ""
+
+#: includes/admin/settings.php:237
+msgid ""
+"Check this to require users agree to your terms of service (defined below) "
+"before submitting a listing."
+msgstr ""
+
+#: includes/admin/settings.php:252
+msgid "This will be displayed at the top of the submit listing form."
+msgstr ""
+
+#: includes/admin/settings.php:260
+msgid "Displayed following a successful listing submission."
+msgstr ""
+
+#: includes/admin/settings.php:266
+msgid "Disable Bootstrap"
+msgstr ""
+
+#: includes/admin/settings.php:267
+msgid "Display Featured Listings"
+msgstr ""
+
+#: includes/admin/settings.php:268
+msgid "Primary Set"
+msgstr ""
+
+#: includes/admin/settings.php:271
+msgid ""
+"This section is small at the moment, but will grow with the plugin to "
+"accommodate ease of integration with your chosen theme. If you have any "
+"suggestions for visual elements you would like to see configurable here, "
+"please use one of the links above to let us know."
+msgstr ""
+
+#: includes/admin/settings.php:276
+msgid ""
+"You can disable the Bootstrap CSS library if your theme already loads a "
+"copy, or if you want to use entirely custom CSS."
+msgstr ""
+
+#: includes/admin/settings.php:280
+msgid ""
+"If checked, listings tagged with <code>featured</code> will be shown on your "
+"directory home page"
+msgstr ""
+
+#: includes/admin/settings.php:287
+msgid ""
+"Set the <strong>normal / hover / foreground</strong> state for primary "
+"elements, including various buttons, labels and badges."
+msgstr ""
+
+#: includes/admin/settings.php:309
+msgid "Settings updated."
+msgstr ""
+
+#: includes/admin/settings.php:335
+msgid ""
+"Customize your Directory using the settings found on the following pages. If "
+"you require support or would like to make a suggestion for improving this "
+"plugin, please refer to the following links."
+msgstr ""
+
+#: includes/admin/settings.php:339
+msgid "Submit an Issue"
+msgstr ""
+
+#: includes/admin/settings.php:343
+msgid "WordPress.org"
+msgstr ""
+
+#: includes/admin/settings.php:347
+msgid "Support Forums"
+msgstr ""
+
+#: includes/admin/settings.php:350
+msgid "GitHub.com"
+msgstr ""
+
+#: includes/admin/settings.php:359
+msgid "General"
+msgstr ""
+
+#: includes/admin/settings.php:363
+msgid "Submit Form"
+msgstr ""
+
+#: includes/admin/settings.php:365
+msgid "Appearance"
+msgstr ""
+
+#: includes/ajax.php:35
+msgid ""
+"Your message has been successfully sent to the email address we have on file!"
+msgstr ""
+
+#: includes/ajax.php:75
+msgid "There were errors with your form submission. Please try again."
+msgstr ""
+
+#: includes/ajax.php:90
+msgid "Your message has been successfully sent to <em>%s</em>!"
+msgstr ""
+
+#: includes/ajax.php:95
+msgid ""
+"There were unknown errors with your form submission.</p><p>Please wait a "
+"while and then try again."
+msgstr ""
+
+#: includes/class.processor.php:111
+msgid "This field is required."
+msgstr ""
+
+#: includes/class.processor.php:237
+msgid "The email address provided doesn't appear to be valid."
+msgstr ""
+
+#: includes/class.processor.php:245
+msgid "We were unable to verify that URL, please check it and try again."
+msgstr ""
+
+#: includes/class.processor.php:250
+msgid "Something went wrong validating that location, please try again."
+msgstr ""
+
+#: includes/class.processor.php:273
+msgid ""
+"Please verify that you have read and agree to our terms of service before "
+"continuing."
+msgstr ""
+
+#: includes/class.tracking.php:235
 msgid ""
 "Thank you for updating to the latest LDD Directory version! You can add, "
 "edit or remove listings from this menu. Some new features have been added "
 "since last time, so be sure to review your settings!"
 msgstr ""
 
-#: includes/admin/settings.php:33
-msgid "Directory Label"
+#: includes/class.tracking.php:286
+msgid "Help improve LDD Directory Lite"
 msgstr ""
 
-#: includes/admin/settings.php:34
-msgid "Directory Description"
-msgstr ""
-
-#: includes/admin/settings.php:35
-msgid "Directory Page"
-msgstr ""
-
-#: includes/admin/settings.php:36 includes/admin/settings.php:133
-msgid "Other Settings"
-msgstr ""
-
-#: includes/admin/settings.php:37
-msgid "Disable Bootstrap"
-msgstr ""
-
-#: includes/admin/settings.php:38
-msgid "Public Directory"
-msgstr ""
-
-#: includes/admin/settings.php:39
-msgid "Use Google Maps"
-msgstr ""
-
-#: includes/admin/settings.php:43
+#: includes/class.tracking.php:287
 msgid ""
-"Name your directory; \"My Business Directory\", \"Local Restaurant Feed\", "
-"\"John's List of Links\", etc."
+"Usage tracking is completely anonymous and allows us to know what "
+"configurations, plugins and themes we should be testing future versions of "
+"our plugin with."
 msgstr ""
 
-#: includes/admin/settings.php:59
-msgid "Contains the <code>[directory_lite]</code> shortcode."
+#: includes/class.tracking.php:313
+msgid "Do not allow tracking"
 msgstr ""
 
-#: includes/admin/settings.php:83
-msgid "Directory Email"
-msgstr ""
-
-#: includes/admin/settings.php:84
-msgid "Administrator Notification Email"
-msgstr ""
-
-#: includes/admin/settings.php:85 includes/admin/settings.php:87
-#: includes/admin/settings.php:89
-msgid "Email Body"
-msgstr ""
-
-#: includes/admin/settings.php:86
-msgid "Listing Submission"
-msgstr ""
-
-#: includes/admin/settings.php:88
-msgid "Listing Approval"
-msgstr ""
-
-#: includes/admin/settings.php:92
-msgid ""
-"The following configuration options control how outgoing emails from "
-"Business Directory [lite] are handled."
-msgstr ""
-
-#: includes/admin/settings.php:97
-msgid ""
-"This is the email address that will appear in the \"from\" field of outgoing "
-"messages. Directory notifications will be sent to "
-msgstr ""
-
-#: includes/admin/settings.php:131
-msgid "Include Terms"
-msgstr ""
-
-#: includes/admin/settings.php:132
-msgid "Terms of Service"
-msgstr ""
-
-#: includes/admin/settings.php:134
-msgid "Use Locale"
-msgstr ""
-
-#: includes/admin/settings.php:135
-msgid "Directory Locale"
-msgstr ""
-
-#: includes/admin/settings.php:138
-msgid ""
-"Control the way your submit form appears to people, and the information that "
-"is displayed on it."
-msgstr ""
-
-#: includes/admin/settings.php:180
-msgid "Settings updated."
-msgstr ""
-
-#: includes/admin/settings.php:200
-msgid "LDD Directory [lite]"
-msgstr ""
-
-#: includes/admin/settings.php:215
-msgid "General"
-msgstr ""
-
-#: includes/admin/settings.php:217
-msgid "Submit Form"
-msgstr ""
-
-#: includes/admin/settings.php:274
-msgid "Please enter a valid email address."
-msgstr ""
-
-#: includes/ajax.php:120
-msgid ""
-"Your message has been successfully sent to the email address we have on file!"
+#: includes/class.tracking.php:325
+msgid "Allow tracking"
 msgstr ""
 
 #: includes/cmb/example-functions.php:28
@@ -817,28 +1113,311 @@ msgstr ""
 msgid "Current Color"
 msgstr ""
 
-#: includes/post-types.php:50
-msgid "Listing Name"
+#: includes/cmb/init.php:1155
+msgid "Save"
 msgstr ""
 
-#: includes/post-types.php:59
-msgid "Set featured image"
+#: includes/functions.php:102
+msgid ""
+"Please tell us a little bit about the organization you would like to see "
+"listed in our directory. Try to include as much information as you can, and "
+"be as descriptive as possible where asked."
 msgstr ""
 
-#: includes/post-types.php:59
-msgid "Upload A Logo"
+#: includes/functions.php:103
+msgid "Congratulations!"
 msgstr ""
 
-#: includes/post-types.php:60
-msgid "Remove featured image"
+#: includes/functions.php:103
+msgid ""
+"Your listing has been successfully submitted for review. Please allow us "
+"sufficient time to review the listing and approve it for public display in "
+"our directory."
 msgstr ""
 
-#: includes/post-types.php:60
-msgid "Remove Logo"
+#: includes/shortcodes/submit.php:301
+msgid "There was a problem creating your user account. Please try again later."
 msgstr ""
 
-#: ldd-directory-lite.php:175
-msgid "Settings"
+#: includes/shortcodes/submit.php:308
+msgid "There was a problem creating your listing. Please try again later."
+msgstr ""
+
+#: includes/shortcodes/submit.php:329
+msgid "There was a problem uploading your logo. Please try again!"
+msgstr ""
+
+#: ldd-directory-lite.php:172
+msgid "Directory"
+msgstr ""
+
+#: ldd-directory-lite.php:182
+msgid "Submit a Listing"
+msgstr ""
+
+#: ldd-directory-lite.php:200
+msgid "[ldd directory lite installation notice]"
+msgstr ""
+
+#: ldd-directory-lite.php:201
+msgid ""
+"Required directory pages have been installed for you, please visit the <a "
+"href=\"%s\">Edit Pages</a> screen to make any necessary adjustments."
+msgstr ""
+
+#: templates/contact-sidebar.php:2
+msgid "Send a Message"
+msgstr ""
+
+#: templates/contact-sidebar.php:12
+msgid "Your Name"
+msgstr ""
+
+#: templates/contact-sidebar.php:15
+msgid "Your name..."
+msgstr ""
+
+#: templates/contact-sidebar.php:21
+msgid "Your Email Address"
+msgstr ""
+
+#: templates/contact-sidebar.php:24
+msgid "Your email..."
+msgstr ""
+
+#: templates/contact-sidebar.php:31
+msgid "Message Subject"
+msgstr ""
+
+#: templates/contact-sidebar.php:34
+msgid "What is this in regards to?"
+msgstr ""
+
+#: templates/contact-sidebar.php:40
+msgid "Message"
+msgstr ""
+
+#: templates/contact-sidebar.php:41
+msgid "Enter your message here."
+msgstr ""
+
+#: templates/contact-sidebar.php:46
+msgid "What is 7 + seven?"
+msgstr ""
+
+#: templates/contact-sidebar.php:49
+msgid "What is seven &#43; s&#101;v&#101;n?"
+msgstr ""
+
+#: templates/contact-sidebar.php:54
+msgid "Send"
+msgstr ""
+
+#: templates/contact-sidebar.php:70
+msgid "Please enter a valid name."
+msgstr ""
+
+#: templates/contact-sidebar.php:76
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: templates/contact-sidebar.php:81
+msgid "Please enter a valid subject."
+msgstr ""
+
+#: templates/contact-sidebar.php:87
+msgid "Please enter a longer message."
+msgstr ""
+
+#: templates/contact-sidebar.php:93
+msgid "That doesn't appear correct."
+msgstr ""
+
+#: templates/header.php:6
+msgid "Toggle navigation"
+msgstr ""
+
+#: templates/header.php:11 templates/submit.php:34
+msgid "Submit Listing"
+msgstr ""
+
+#: templates/header.php:18 templates/header.php:20
+msgid "Search"
+msgstr ""
+
+#: templates/home.php:16
+msgid "Featured Listings"
+msgstr ""
+
+#: templates/login.php:9
+msgid ""
+"A password has been sent to your email address. Thank you for registering!"
+msgstr ""
+
+#: templates/login.php:15
+msgid "An email with information on how to reset your password has been sent."
+msgstr ""
+
+#: templates/login.php:20
+msgid "Please log in, or register a new user account."
+msgstr ""
+
+#: templates/login.php:23
+msgid "Login"
+msgstr ""
+
+#: templates/login.php:24 templates/login.php:84 templates/login.php:103
+msgid "Register"
+msgstr ""
+
+#: templates/login.php:25
+msgid "Lost Password"
+msgstr ""
+
+#: templates/login.php:37 templates/login.php:71
+msgid "Username"
+msgstr ""
+
+#: templates/login.php:43
+msgid "Password"
+msgstr ""
+
+#: templates/login.php:52
+msgid "Remember me"
+msgstr ""
+
+#: templates/login.php:59
+msgid "Sign in"
+msgstr ""
+
+#: templates/login.php:77 templates/login.php:96
+msgid "Your Email"
+msgstr ""
+
+#: templates/panel-general.php:12
+msgid "Title"
+msgstr ""
+
+#: templates/panel-general.php:19
+msgid "Category"
+msgstr ""
+
+#: templates/panel-general.php:37
+msgid "Description"
+msgstr ""
+
+#: templates/panel-general.php:40
+msgid ""
+"The description you include here will make up a major portion of your "
+"listing when viewed individually. You may use <a href=\"%s\">markdown</a> to "
+"format your description, though we reserve the right to remove excess "
+"formatting before approving your listing."
+msgstr ""
+
+#: templates/panel-general.php:50
+msgid ""
+"Please provide a short summary of your listing that will appear in search "
+"results."
+msgstr ""
+
+#: templates/panel-geography.php:11
+msgid "Providing an address for your listing is optional."
+msgstr ""
+
+#: templates/panel-geography.php:17
+msgid "Address"
+msgstr ""
+
+#: templates/panel-geography.php:18
+msgid "2101 Massachusetts Ave, NW"
+msgstr ""
+
+#: templates/panel-geography.php:19
+msgid "Washington, DC"
+msgstr ""
+
+#: templates/panel-geography.php:27
+msgid "Zip / Postal Code"
+msgstr ""
+
+#: templates/panel-geography.php:28
+msgid "20008"
+msgstr ""
+
+#: templates/panel-geography.php:34
+msgid "Country"
+msgstr ""
+
+#: templates/panel-geography.php:35
+msgid "United States"
+msgstr ""
+
+#: templates/panel-geography.php:43
+msgid ""
+"If you would like to include a Google map with your listing, set a marker on "
+"this map for your address. Type in part of your address to use the "
+"autocomplete feature, or drag the marker on the map directly to your "
+"location."
+msgstr ""
+
+#: templates/panel-geography.php:48
+msgid "Set Marker"
+msgstr ""
+
+#: templates/panel-meta.php:5
+msgid ""
+"The following information will help generate more traffic for your "
+"organization, the more the better. Your email address is not publicly "
+"available, instead a contact form will be embedded with your listing."
+msgstr ""
+
+#: templates/panel-meta.php:38
+msgid "Examples include; 'http://www.yoursite.com', 'mysite.org'"
+msgstr ""
+
+#: templates/panel-meta.php:46
+msgid ""
+"Help locating and customizing your <a href=\"https://www.facebook.com/help/"
+"www/329992603752372\" title=\"Your Facebook Web Address | Facebook Help "
+"Center\">Facebook profile URL</a>"
+msgstr ""
+
+#: templates/panel-meta.php:54
+msgid ""
+"This will always be similar to 'https://twitter.com/<strong>username</"
+"strong>'"
+msgstr ""
+
+#: templates/panel-meta.php:60
+msgid "Linkedin"
+msgstr ""
+
+#: templates/panel-meta.php:62
+msgid ""
+"Help locating and customizing your <a href=\"http://help.linkedin.com/app/"
+"answers/detail/a_id/85/~/promoting-your-public-profile\" title=\"Promoting "
+"Your Public Profile | LinkedIn Help Center\">LinkedIn profile URL</a>"
+msgstr ""
+
+#: templates/submit-tos.php:4
+msgid "By submitting, you agree your listing abides by our terms of service."
+msgstr ""
+
+#: templates/submit.php:8
+msgid "We're sorry!"
+msgstr ""
+
+#: templates/submit.php:8
+msgid ""
+"There were some errors with the information you provided. Please check your "
+"submission and try again."
+msgstr ""
+
+#: templates/submit.php:32
+msgid ""
+"Please verify all information on this form before submitting. Your listing "
+"will not appear immediately as we review all submissions for accuracy and "
+"content, to ensure that listings fall within our terms of service."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -851,8 +1430,8 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Powerful yet simple to use, easily add a business directory to your "
-"WordPress site."
+"Powerful and simple to use, add a directory of business or other "
+"organizations to your web site."
 msgstr ""
 
 #. Author of the plugin/theme
