@@ -150,16 +150,16 @@ add_action('init', 'ldl_enqueue_bootstrap', 1);
 /**
  * Enqueue scripts
  */
-function ldl_enqueue() {
+function ldl_enqueue($force = false) {
 
     if (is_admin())
         return;
 
-    $front_page = ldl_get_setting('directory_front_page');
+/*    $front_page = ldl_get_setting('directory_front_page');
     $submit_page = ldl_get_setting('directory_submit_page');
-    $post_id = get_the_ID();
+    $post_id = get_the_ID();*/
 
-    if (LDDLITE_POST_TYPE == get_post_type() || in_array($post_id, array($front_page, $submit_page))) {
+    if (LDDLITE_POST_TYPE == get_post_type() || $force) {
         wp_enqueue_style('lddlite');
         wp_enqueue_style('font-awesome');
 

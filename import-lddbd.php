@@ -382,7 +382,6 @@ class ldd_directory_lite_import_from_plugin {
 
         echo ' ' . __('done.', 'lddlite') . '<p>';
 
-        unset($this->posts);
     }
 
     /**

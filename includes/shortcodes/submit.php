@@ -351,6 +351,13 @@ function ldl_submit_generate_listing() {
 function ldl_shortcode_directory_submit() {
     global $lddlite_submit_processor;
 
+    ldl_enqueue(1);
+
+    $terms = get_terms(LDDLITE_TAX_CAT, array('hide_empty' => false));
+    if (!$terms) {
+        wp_insert_term('Miscellaneous', LDDLITE_TAX_CAT);
+    }
+
     // Set up the processor
     $lddlite_submit_processor = new ldd_directory_lite_processor;
 

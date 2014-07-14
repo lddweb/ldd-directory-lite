@@ -17,6 +17,8 @@
  * The [directory] shortcode.
  */
 function ldl_shortcode_directory() {
+    ldl_enqueue(1);
+
     ldl_get_template_part('home');
 }
 add_shortcode('directory', 'ldl_shortcode_directory');

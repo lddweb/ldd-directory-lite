@@ -67,6 +67,7 @@ class ldd_directory_lite {
     public static function get_instance() {
         if (null === self::$_instance) {
             require_once(LDDLITE_PATH . 'includes/functions.php');
+            require_once(LDDLITE_PATH . 'includes/setup.php');
 
             self::$_instance = new self;
             self::$_instance->init();
@@ -99,7 +100,12 @@ class ldd_directory_lite {
 
         $version = get_option('lddlite_version');
 
-        if ($version && LDDLITE_VERSION != $version) {
+        if (!$version) {
+
+            add_action('admin_notices', array($this, 'install_pages'));
+            update_option('lddlite_version', LDDLITE_VERSION);
+
+        } else if ($version && LDDLITE_VERSION != $version) {
             global $upgrades;
 
             $upgrades = array(
@@ -118,11 +124,7 @@ class ldd_directory_lite {
 
             update_option('lddlite_version', LDDLITE_VERSION);
 
-        } else if (!$version) {
-            add_action('admin_notices', array($this, 'install_pages'));
-            update_option('lddlite_version', LDDLITE_VERSION);
         }
-
 
         add_action('init', array($this, 'load_plugin_textdomain'));
         //add_action('init', array('ldd_directory_lite_tracking', 'get_instance'));
@@ -138,7 +140,6 @@ class ldd_directory_lite {
     public function include_files() {
 
         // functions.php is included in the constructor
-        require_once(LDDLITE_PATH . 'includes/setup.php');
         require_once(LDDLITE_PATH . 'includes/listings.php');
         require_once(LDDLITE_PATH . 'includes/ajax.php');
         require_once(LDDLITE_PATH . 'includes/template-functions.php');
