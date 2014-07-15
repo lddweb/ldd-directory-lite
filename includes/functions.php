@@ -164,6 +164,8 @@ function ldl_update_setting($key, $new_val = '') {
  * This scans post content for the existence of our shortcode. If discovered, it updates the `directory_page`
  * setting so that any filters or actions returning a link to the directories home page has a post_id to work with.
  *
+ * @todo This can be removed once we have a notice in place for installing the necessary pages
+ *
  * @param int     $post_ID Post ID.
  * @param WP_Post $post    Post object.
  */
@@ -192,32 +194,21 @@ function ldl_haz_shortcode($post_id, $post) {
 
     $pattern = get_shortcode_regex();
     if (preg_match("/$pattern/s", $post->post_content))
-        ldl_update_setting('directory_page', $post_id);
+        ldl_update_setting('directory_front_page', $post_id);
 
     // Reset the global array
     $shortcode_tags = $old_shortcode_tags;
 
 }
-
 add_action('save_post', 'ldl_haz_shortcode', 10, 2);
 
 
 /**
- * Wrapper to collect post meta for a listing
+ * Identify and return meta data for the current listing. See @todo for ldl_get_url()
  *
- * @param $id
- * @param $field
- */
-function ldl_has_meta($key) {
-    return ldl_get_meta($key) ?: false;
-}
-
-
-/**
- * Wrapper to collect post meta for a listing
+ * @param string $key The meta identifier
  *
- * @param $id
- * @param $field
+ * @return array|bool|string False if nothing is found, the listing metadata otherwise
  */
 function ldl_get_meta($key) {
 
@@ -230,6 +221,39 @@ function ldl_get_meta($key) {
     return get_metadata('post', $post_id, ldl_pfx($key), true);
 }
 
+
+/**
+ * For now, nothing more than an alias for esc_url(). Consider how to evolve this to help with URLs across the
+ * entire plugin.
+ *
+ * @todo This seems like it should be in template-functions.php; confirm if there's any reason why the get_meta
+ *       family needs to be in functions.php and if not, move it over.
+ *
+ * @param string $key The URL identifier
+ * @return bool|string False if nothing is found, the escaped URL otherwise
+ */
+function ldl_get_url($key) {
+
+    $url = false;
+    $key = 'url_' . $key;
+
+    if (ldl_has_meta($key)) {
+        $url = esc_url(ldl_get_meta($key));
+    }
+
+    return $url;
+}
+
+
+/**
+ * Wrapper to collect post meta for a listing
+ *
+ * @param $id
+ * @param $field
+ */
+function ldl_has_meta($key) {
+    return ldl_get_meta($key) ? true : false;
+}
 
 /**
  * Appends the plugin prefix to key/field identifiers to maintain readability in other functions

@@ -3,7 +3,7 @@ Contributors: lddwebdesign, delayedinsanity
 Tags: directory, listings, listing directory, business, business directory, custom directory, catalog, index, yellow pages, white pages, 411, company listing
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 0.7.1-beta
+Stable tag: 0.7.2-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -93,13 +93,13 @@ Please use our [issue tracker](https://github.com/mwaterous/ldd-directory-lite/i
 
 == Upgrade Notice ==
 
-= 0.7.1-beta =
+= 0.7.2-beta =
 This is a major update towards releasing a stable version of ldd directory lite, and addresses numerous issues reported by users with the earlier beta copies.
 
 
 == Changelog ==
 
-= 0.7.1-beta =
+= 0.7.2-beta =
 
 * Cleaned up code formatting and style considerably across the entire plugin, adding much needed inline documentation
 * Removed the RainTPL class in favor of using native PHP templates (this was a rapid deployment solution that had a terminal lifespan to begin with)
@@ -110,6 +110,7 @@ This is a major update towards releasing a stable version of ldd directory lite,
 * Updated screenshots (don't actually forget to do this... )
 * Outlined an upgrade system for seamless transitions from one version to the next
 * Improved the import process for upgrading from LDD Business Directory
+* Fixed a compatibility issue with ldl_has_meta()
 
 = 0.5.4-beta =
 
