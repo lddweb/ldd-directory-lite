@@ -13,13 +13,13 @@
 if (!defined('WP_UNINSTALL_PLUGIN'))
     die;
 
-global $wpdb;
-
+require_once(dirname(__FILE__) . '/ldd-directory-lite.php');
 
 /**
  * Collect and then delete all attachments
  */
 function ldl_uninstall_attachments() {
+    global $wpdb;
 
     $query = sprintf("
 					SELECT ID
@@ -103,7 +103,7 @@ function ldl_uninstall_taxonomies() {
 ldl_uninstall_attachments();
 ldl_uninstall_posts();
 ldl_uninstall_taxonomies();
-echo 'IN HERE?!';
+
 delete_option('lddlite_settings');
 delete_option('lddlite_version');
 delete_option('lddlite_imported_from_original');

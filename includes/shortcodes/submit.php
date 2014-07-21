@@ -211,7 +211,7 @@ function ldl_notify_admin($data, $post_id) {
 function ldl_notify_author($data) {
     global $lddlite_submit_processor;
 
-    $to = $lddlite_submit_processor->get_data()['contact_email'];
+    $to = $lddlite_submit_processor->get_value('contact_email');
 
     $subject = ldl_get_setting('email_onsubmit_subject');
 
