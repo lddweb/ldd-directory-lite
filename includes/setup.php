@@ -71,6 +71,9 @@ function ldl_register_post_type() {
         'rewrite'           => false,
     ));
 
+    $supports = array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions');
+    $supports = apply_filters('lddlite_post_type_supports', $supports);
+
     $args = array(
         'labels'              => array(
             'name'               => 'Directory Listings',
@@ -87,7 +90,7 @@ function ldl_register_post_type() {
             'menu_name'          => 'Directory'
         ),
         'hierarchical'        => false,
-        'supports'            => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions'),
+        'supports'            => $supports,
         'taxonomies'          => array(LDDLITE_TAX_CAT, LDDLITE_TAX_TAG),
         'public'              => true,
         'show_ui'             => true,

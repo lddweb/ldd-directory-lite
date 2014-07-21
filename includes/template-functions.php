@@ -26,7 +26,6 @@ function ldl_get_template_dir_name() {
  * in before returning a template for use in presentation.
  *
  * @todo  How are we going to let developers know when there's major updates to a core template?
- *
  * @since 0.6.0
  *
  * @param array $templates    The array of templates to look for
@@ -116,6 +115,7 @@ function ldl_get_template_part($slug, $name = null) {
  */
 function ldl_get_submit_form_link() {
     $post_id = ldl_get_setting('directory_submit_page');
+
     return ($post_id) ? get_permalink($post_id) : '';
 }
 
@@ -220,7 +220,7 @@ function ldl_get_parent_categories() {
  *
  * @return string Return a formatted string containing all category elements
  */
-function ldl_get_categories( $parent = 0 ) {
+function ldl_get_categories($parent = 0) {
 
     $terms = get_terms(LDDLITE_TAX_CAT, array(
         'parent' => $parent,
@@ -235,6 +235,7 @@ function ldl_get_categories( $parent = 0 ) {
     }
 
     $categories = apply_filters('lddlite_filter_presentation_categories', $categories, $terms, $mask);
+
     return implode(' ', $categories);
 }
 
@@ -307,7 +308,7 @@ function ldl_get_address() {
  * Get an array of social media links for the designated post, and return it as a string to be used
  * in various templates.
  *
- * @param int    $post_id The post ID
+ * @param int $post_id The post ID
  *
  * @return string
  */
@@ -325,9 +326,9 @@ function ldl_get_social($post_id) {
 
     $titles = array(
         'facebook' => 'Visit %1$s on Facebook',
-        'linkedin'        => 'Connect with %1$s on LinkedIn',
-        'twitter'         => 'Follow %1$s on Twitter',
-        'default'         => 'Visit %1$s on %2$s',
+        'linkedin' => 'Connect with %1$s on LinkedIn',
+        'twitter'  => 'Follow %1$s on Twitter',
+        'default'  => 'Visit %1$s on %2$s',
     );
 
     $name = get_the_title($post_id);
@@ -338,7 +339,7 @@ function ldl_get_social($post_id) {
 
     foreach ($social as $key => $url) {
         if (!empty($url)) {
-            $title_key = array_key_exists($key, $titles) ? $titles[$key] : $titles['default'];
+            $title_key = array_key_exists($key, $titles) ? $titles[ $key ] : $titles['default'];
             $title = sprintf($title_key, $name, $key);
 
             $output[] = '<a href="' . $url . '" title="' . $title . '"><i class="fa fa-' . $key . '-square"></i></a>';
@@ -354,4 +355,49 @@ function ldl_get_social($post_id) {
     $output = apply_filters('lddlite_filter_presentation_social', $output, $post_id);
 
     return implode(' ', $output);
+}
+
+/**
+ * Get Featured Posts
+ */
+function ldl_get_featured_posts($args = null) {
+
+    $defaults = array(
+        'post_type'      => LDDLITE_POST_TYPE,
+        'tax_query'      => array(
+            'taxonomy' => LDDLITE_TAX_TAG,
+            'field'    => 'slug',
+            'terms'    => 'featured',
+        ),
+        'orderby'        => 'rand',
+        'posts_per_page' => '3'
+    );
+
+    $args = wp_parse_args($args, $defaults);
+
+    return new WP_Query($args);
+}
+
+
+/**
+ * Get listings by user
+ */
+function ldl_get_listings_by_current_author() {
+
+    $user_ID = get_current_user_id();
+
+    $args = array(
+        'post_type' => LDDLITE_POST_TYPE,
+        'author'    => $user_ID,
+    );
+
+    return new WP_Query($args);
+}
+
+
+/**
+ * Return a link for use on the manage listings page which opens up the listing editor
+ */
+function ldl_edit_link($post_id) {
+    echo add_query_arg(array('e' => $post_id));
 }

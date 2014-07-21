@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
     })
 });
 
-(function ($) {
+(function($) {
 
     $('.cmb-type-geo_location').each(function () {
         var searchInput = $('.autocomplete', this)[ 0 ]

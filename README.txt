@@ -83,6 +83,11 @@ This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/pl
 
 Please use our [issue tracker](https://github.com/mwaterous/ldd-directory-lite/issues) on the plugins [GitHub repo](https://github.com/mwaterous/ldd-directory-lite).
 
+= How can I avoid having my template customizations overwritten when the plugin is updated? =
+
+All the template files found in `/ldd-directory-lite/templates` can be copied to a directory in your theme called *lddlite_templates*.
+
+For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templates/category.php`, you can copy it to `/wp-content/themes/your-theme-directory/lddlite_templates/category.php`. While you can copy the entire directory verbatim, it is recommended that you only copy the files you need.
 
 == Screenshots ==
 

@@ -144,7 +144,8 @@ class ldd_directory_lite {
         require_once(LDDLITE_PATH . 'includes/ajax.php');
         require_once(LDDLITE_PATH . 'includes/template-functions.php');
         require_once(LDDLITE_PATH . 'includes/shortcodes/directory.php');
-        require_once(LDDLITE_PATH . 'includes/shortcodes/submit.php');
+        require_once(LDDLITE_PATH . 'includes/shortcodes/_submit.php');
+        require_once(LDDLITE_PATH . 'includes/shortcodes/_user.php');
 
         if (is_admin()) {
             require_once(LDDLITE_PATH . 'includes/admin/metaboxes.php');
