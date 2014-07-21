@@ -10,7 +10,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.7.1-beta
+ * Version:           0.7.3-beta
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '0.7.1-beta');
+define('LDDLITE_VERSION', '0.7.3-beta');
 
 define('LDDLITE_PATH', trailingslashit(dirname(__FILE__)));
 define('LDDLITE_URL', plugin_dir_url(__FILE__));
@@ -214,8 +214,8 @@ class ldd_directory_lite {
     public function load_plugin_textdomain() {
 
         $lang_dir = LDDLITE_PATH . 'languages/';
-        $locale = apply_filters('plugin_locale', get_locale(), 'lddlite');
-        $mofile = $lang_dir . 'lddlite' . $locale . '.mo';
+        $locale = apply_filters('plugin_locale', get_locale());
+        $mofile = $lang_dir . $locale . '.mo';
 
         if (file_exists($mofile)) {
             load_textdomain('lddlite', $mofile);
@@ -293,4 +293,5 @@ function ldl_get_instance() {
 }
 
 /** Das boot */
-ldl_get_instance();
+if (!defined('WP_UNINSTALL_PLUGIN'))
+    ldl_get_instance();

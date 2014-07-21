@@ -209,7 +209,7 @@ add_action('save_post', 'ldl_haz_shortcode', 10, 2);
  * @param $field
  */
 function ldl_has_meta($key) {
-    return ldl_get_meta($key) ?: false;
+    return ldl_get_meta($key) ? true : false;
 }
 
 
