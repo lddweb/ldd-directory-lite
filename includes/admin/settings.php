@@ -52,12 +52,10 @@ class ldd_directory_lite_admin {
             return;
 
         wp_enqueue_style('wp-color-picker');
+        wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . 'public/css/bootstrap.css', array(), LDDLITE_VERSION);
+
         wp_enqueue_script('wp-color-picker');
         wp_enqueue_script('lddlite-admin', LDDLITE_URL . 'public/js/admin.js', array('wp-color-picker'), false, true);
-
-        wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . 'public/css/bootstrap.css', array(), LDDLITE_VERSION);
-        wp_enqueue_script('bootstrap-tagsinput', LDDLITE_URL . 'public/js/bootstrap-tagsinput.min.js', array('lddlite-bootstrap'), false, true);
-        wp_enqueue_style('bootstrap-tagsinput', LDDLITE_URL . 'public/css/bootstrap-tagsinput.css');
 
     }
 
@@ -282,7 +280,7 @@ class ldd_directory_lite_admin {
 
         function _f_appearance_primary_normal() {
             echo '<input id="appearance_primary_normal" type="text" name="lddlite_settings[appearance_primary_normal]" value="' . ldl_get_setting('appearance_primary_normal') . '" class="my-color-field" data-default-color="#3bafda">';
-            echo '<input id="appearance_primary_hover" type="text" name="lddlite_settings[appearance_primaryhover]" value="' . ldl_get_setting('appearance_primary_hover') . '" class="my-color-field" data-default-color="#3071a9">';
+            echo '<input id="appearance_primary_hover" type="text" name="lddlite_settings[appearance_primary_hover]" value="' . ldl_get_setting('appearance_primary_hover') . '" class="my-color-field" data-default-color="#3071a9">';
             echo '<input id="appearance_primary_foreground" type="text" name="lddlite_settings[appearance_primary_foreground]" value="' . ldl_get_setting('appearance_primary_foreground') . '" class="my-color-field" data-default-color="#ffffff">';
             echo '<p class="description">' . __('Set the <strong>normal / hover / foreground</strong> state for primary elements, including various buttons, labels and badges.', 'lddlite') . '</p>';
         }

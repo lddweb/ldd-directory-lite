@@ -214,8 +214,8 @@ class ldd_directory_lite {
     public function load_plugin_textdomain() {
 
         $lang_dir = LDDLITE_PATH . 'languages/';
-        $locale = apply_filters('plugin_locale', get_locale(), 'lddlite');
-        $mofile = $lang_dir . 'lddlite' . $locale . '.mo';
+        $locale = apply_filters('plugin_locale', get_locale());
+        $mofile = $lang_dir . $locale . '.mo';
 
         if (file_exists($mofile)) {
             load_textdomain('lddlite', $mofile);
@@ -293,4 +293,5 @@ function ldl_get_instance() {
 }
 
 /** Das boot */
-ldl_get_instance();
+if (!defined('WP_UNINSTALL_PLUGIN'))
+    ldl_get_instance();
