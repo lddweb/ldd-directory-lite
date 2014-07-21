@@ -88,9 +88,9 @@ class ldd_directory_lite_processor {
             $field = substr($key, $pfx_length);
 
             if (is_array($value)) {
-                $this->data[$field] = stripslashes_deep($value);
+                $this->data[ $field ] = stripslashes_deep($value);
             } else {
-                $this->data[$field] = stripslashes(trim($value));
+                $this->data[ $field ] = stripslashes(trim($value));
             }
 
         }
@@ -112,8 +112,8 @@ class ldd_directory_lite_processor {
 
         // Loop through and check for required fields first
         foreach ($required as $field) {
-            if ('' == $this->data[$field]) {
-                $this->errors[$field] = apply_filters('lddlite_presentation_required_errmsg', $required_errmsg, $field);
+            if ('' == $this->data[ $field ]) {
+                $this->errors[ $field ] = apply_filters('lddlite_presentation_required_errmsg', $required_errmsg, $field);
             }
         }
 
@@ -123,7 +123,7 @@ class ldd_directory_lite_processor {
             $error = apply_filters('lddlite_validate_fields', '', $field, $value);
 
             if ($error) {
-                $this->errors[$field] = $error;
+                $this->errors[ $field ] = $error;
             }
 
         }
@@ -153,7 +153,7 @@ class ldd_directory_lite_processor {
      * @return string Empty if no value exists for the key provided, otherwise the value
      */
     public function get_value($field) {
-        return isset($this->data[$field]) ? $this->data[$field] : '';
+        return isset($this->data[ $field ]) ? $this->data[ $field ] : '';
     }
 
 
@@ -163,7 +163,7 @@ class ldd_directory_lite_processor {
      * @return bool True if an error exists, false otherwise
      */
     public function has_error($field) {
-        return isset($this->errors[$field]);
+        return isset($this->errors[ $field ]);
     }
 
 
@@ -192,7 +192,7 @@ class ldd_directory_lite_processor {
         $default_wrapper = '<span class="bg-danger text-danger">%s</span>';
         $error_wrapper = apply_filters('lddlite_presentation_error_wrapper', $default_wrapper, $field );
 
-        return isset($this->errors[$field]) ? sprintf($error_wrapper, $this->errors[$field]) : '';
+        return isset($this->errors[ $field ]) ? sprintf($error_wrapper, $this->errors[ $field ]) : '';
     }
 
 

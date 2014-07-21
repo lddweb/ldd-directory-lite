@@ -13,13 +13,12 @@
 if (!defined('WP_UNINSTALL_PLUGIN'))
     die;
 
-global $wpdb;
-
 
 /**
  * Collect and then delete all attachments
  */
 function ldl_uninstall_attachments() {
+    global $wpdb;
 
     $query = sprintf("
 					SELECT ID
