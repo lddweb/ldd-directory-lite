@@ -398,6 +398,12 @@ function ldl_get_listings_by_current_author() {
 /**
  * Return a link for use on the manage listings page which opens up the listing editor
  */
-function ldl_edit_link($post_id) {
-    echo add_query_arg(array('e' => $post_id));
+function ldl_edit_link($post_id, $action) {
+    echo add_query_arg(
+        array(
+            'id'  => $post_id,
+            'edit' => $action,
+        ),
+        remove_query_arg('msg')
+    );
 }

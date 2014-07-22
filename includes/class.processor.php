@@ -15,8 +15,6 @@ class ldd_directory_lite_processor {
 
     // Constantly
     const NONCE_FIELD = 'nonce_field';
-    const NONCE_ACTION = 'submit-listing-nonce';
-
     const DATA_PREFIX = 'n_';
 
     /**
@@ -51,12 +49,16 @@ class ldd_directory_lite_processor {
         if (!array_key_exists(self::NONCE_FIELD, $_POST))
             return;
 
-        $this->_verify_nonce();
+        $nonce = apply_filters('lddlite_processor_nonce_action', '' );
 
-        // If everything checks out, process and validate
-        $this->processing = true;
-        $this->_process_data();
-        $this->_validate();
+        if ($nonce) {
+            $this->_verify_nonce($nonce);
+
+            // If everything checks out, process and validate
+            $this->processing = true;
+            $this->_process_data();
+            $this->_validate();
+        }
 
     }
 
@@ -64,8 +66,8 @@ class ldd_directory_lite_processor {
     /**
      * Uses wp_verify_nonce() to authorize the form submission before continuing.
      */
-    private function _verify_nonce() {
-        if (!wp_verify_nonce($_POST[self::NONCE_FIELD], self::NONCE_ACTION))
+    private function _verify_nonce($nonce) {
+        if (!wp_verify_nonce($_POST[self::NONCE_FIELD], $nonce))
             die("No, kitty! That's a bad kitty!");
     }
 
@@ -112,7 +114,7 @@ class ldd_directory_lite_processor {
 
         // Loop through and check for required fields first
         foreach ($required as $field) {
-            if ('' == $this->data[ $field ]) {
+            if (array_key_exists($field, $this->data) && '' == $this->data[ $field ]) {
                 $this->errors[ $field ] = apply_filters('lddlite_presentation_required_errmsg', $required_errmsg, $field);
             }
         }
@@ -144,6 +146,15 @@ class ldd_directory_lite_processor {
      */
     public function get_data() {
         return $this->data;
+    }
+
+
+    /**
+     *
+     */
+    public function push_data(array $data) {
+        if (!$this->processing)
+            $this->data = $data;
     }
 
 
