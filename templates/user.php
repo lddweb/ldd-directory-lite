@@ -24,7 +24,7 @@
         <?php while ($listings->have_posts()): $listings->the_post(); ?>
             <tr>
 
-                <td><?php echo ldl_get_thumbnail(get_the_ID(), array(32, 32)); ?></td>
+                <td><div style="width: 40px;"><?php echo ldl_get_thumbnail(get_the_ID(), array(32, 32)); ?></div></td>
                 <td>
                     <strong><a href="<?php the_permalink(get_the_ID()); ?>"><?php the_title(); ?></a></strong><br>
                     <a href="<?php ldl_edit_link(get_the_ID(), 'details'); ?>">Edit Details</a> |
