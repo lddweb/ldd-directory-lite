@@ -10,13 +10,15 @@
  */
 
 
-/*
- * @todo ADD ERROR CHECKING TO MAKE SURE USER IS ALLOWED TO EDIT THIS POST
+/**
+ * Update the main details for a particular listing.
+ *
+ * @param int $post_id The post ID for the listing being updated
+ * @param string $title The title for the updated listing
+ * @param string $description This is the main post_content
+ * @param string $summary This is the post_excerpt
+ * @param int $cat_id Category ID for the listing to be associated with
  */
-
-
-
-
 function ldl_edit_update_post($post_id, $title, $description, $summary, $cat_id) {
 
     $args = array(
@@ -29,9 +31,16 @@ function ldl_edit_update_post($post_id, $title, $description, $summary, $cat_id)
     wp_update_post($args);
     wp_set_object_terms($post_id, (int) $cat_id, LDDLITE_TAX_CAT);
 
-    return true;
 }
 
+
+/**
+ * Generate a nonce name for the processor based on the edit action taking place.
+ *
+ * @param string $nonce_action The filter should alway send an empty string
+ *
+ * @return string The nonce name
+ */
 function ldl_edit_listing_nonces($nonce_action) {
 
     if (!isset($_GET['edit']))
@@ -42,8 +51,15 @@ function ldl_edit_listing_nonces($nonce_action) {
 add_filter('lddlite_processor_nonce_action', 'ldl_edit_listing_nonces');
 
 
+/**
+ * Handles all the submitted data once the processor class is done sanitizing and validating it. This is hooked to
+ * init in order to send a redirect header on successful updates.
+ */
 function ldl_process_edit_form() {
     global $lddlite_submit_processor;
+
+    if (!is_user_logged_in())
+        return;
 
     $lddlite_submit_processor = new ldd_directory_lite_processor;
 
@@ -52,17 +68,18 @@ function ldl_process_edit_form() {
 
     $post = get_post($_GET['id']);
     $post_id = $post->ID;
+    // Verify that the current user can edit this listing
+    // current_user_can() doesn't work here because a subscriber doesn't have edit_post capabilities
     $can_edit = $post->post_author == get_current_user_id();
 
     if (!$can_edit)
         return;
 
-
     if ($lddlite_submit_processor->is_processing() && !$lddlite_submit_processor->has_errors()) {
-
 
         $data = $lddlite_submit_processor->get_data();
 
+        // The data is valid, decide where it goes
         switch($_GET['edit']) {
             case 'details':
                 ldl_edit_update_post($post_id, $data['title'], $data['description'], $data['summary'], $data['category']);
@@ -95,6 +112,7 @@ function ldl_process_edit_form() {
 
         }
 
+        // Redirect back to the manage listings screen with a success message
         $location = add_query_arg(array('msg' => 'updated'), remove_query_arg(array('id', 'edit')));
         wp_safe_redirect($location);
     }
@@ -102,7 +120,12 @@ function ldl_process_edit_form() {
 add_action('init', 'ldl_process_edit_form');
 
 
-function ldl_shortcode_directory_user() {
+/**
+ * The shortcode callback for [directory_manage], this will display the login/registration form if the user
+ * isn't currently logged in. If the user is logged in and has submitted listings, they will appear here in a table
+ * with related links to edit the content.
+ */
+function ldl_shortcode_directory_manage() {
     global $lddlite_submit_processor;
 
     ldl_enqueue(1);
@@ -181,11 +204,8 @@ function ldl_shortcode_directory_user() {
         ldl_get_template_part('edit', $_GET['edit']);
 
     } else {
-        ldl_get_template_part('user');
+        ldl_get_template_part('manage');
     }
 
 }
-add_shortcode('directory_user', 'ldl_shortcode_directory_user');
-
-
-
+add_shortcode('directory_manage', 'ldl_shortcode_directory_manage');

@@ -113,7 +113,7 @@ function ldl_get_template_part($slug, $name = null) {
  * @since 0.6.0
  * @todo  This will have to be updated once the submit is fully transitioned to its own shortcode/page
  */
-function ldl_get_submit_form_link() {
+function ldl_get_submit_link() {
     $post_id = ldl_get_setting('directory_submit_page');
 
     return ($post_id) ? get_permalink($post_id) : '';

@@ -10,7 +10,10 @@
  */
 
 
-/** The following are template functions relevant only to this shortcode **/
+function ldl_submit_listing_nonce($nonce_action) {
+    return 'submit-listing';
+}
+add_filter('lddlite_processor_nonce_action', 'ldl_submit_listing_nonce');
 
 /**
  * Alias for wp_dropdown_categories() that uses our settings array to determine the output.

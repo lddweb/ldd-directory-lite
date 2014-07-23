@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <?php if (ldl_get_setting('directory_submit_page')): ?><a class="navbar-brand" href="<?php echo ldl_get_submit_form_link(); ?>"><?php _e('Submit Listing', 'lddlite'); ?></a><?php endif; ?>
+            <?php if (ldl_get_setting('directory_submit_page')): ?><a class="navbar-brand" href="<?php echo ldl_get_submit_link(); ?>"><?php _e('Submit Listing', 'lddlite'); ?></a><?php endif; ?>
         </div>
 
         <div id="navbar-directory" class="collapse navbar-collapse">
