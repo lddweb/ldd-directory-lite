@@ -46,7 +46,7 @@ add_action('add_meta_boxes', 'ldl_metaboxes__swap', 5);
  */
 function ldl_metaboxes_init_cmb() {
     if (!class_exists('cmb_Meta_Box'))
-        require_once(LDDLITE_PATH . 'includes/cmb/init.php');
+        require_once(LDDLITE_PATH . '/includes/cmb/init.php');
 }
 
 add_action('init', 'ldl_metaboxes_init_cmb');

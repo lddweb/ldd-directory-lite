@@ -21,7 +21,7 @@ function lddlite_settings_general_sanitize($input) {
 
     if (isset($input['debug_uninstall'])) {
         define('WP_UNINSTALL_PLUGIN', true);
-        require_once(LDDLITE_PATH . 'uninstall.php');
+        require_once(LDDLITE_PATH . '/uninstall.php');
     }
 
     $input['directory_archive_slug'] = sanitize_title($input['directory_archive_slug']);

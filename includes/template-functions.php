@@ -45,7 +45,7 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
     $template_paths = array(
         trailingslashit(get_stylesheet_directory()) . $custom_path,
         trailingslashit(get_template_directory()) . $custom_path,
-        trailingslashit(LDDLITE_PATH . 'templates'), // Default
+        trailingslashit(LDDLITE_PATH . '/templates'), // Default
     );
 
     foreach ((array) $templates as $template) {
@@ -111,10 +111,22 @@ function ldl_get_template_part($slug, $name = null) {
  * Get the link to the submit form
  *
  * @since 0.6.0
- * @todo  This will have to be updated once the submit is fully transitioned to its own shortcode/page
  */
 function ldl_get_submit_link() {
     $post_id = ldl_get_setting('directory_submit_page');
+
+    return ($post_id) ? get_permalink($post_id) : '';
+}
+
+
+/**
+ * Get the link to the management page
+ *
+ * @since 0.7.2
+ * @TODO Code repetitititition, single function in the future? url helper class?
+ */
+function ldl_get_manage_link() {
+    $post_id = ldl_get_setting('directory_manage_page');
 
     return ($post_id) ? get_permalink($post_id) : '';
 }

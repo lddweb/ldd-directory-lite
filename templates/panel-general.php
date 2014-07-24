@@ -37,7 +37,6 @@
 				<label class="control-label" for="f_description"><?php _e('Description', 'lddlite'); ?></label>
 				<textarea id="f_description" class="form-control" name="n_description" rows="5" required><?php echo ldl_get_value('description'); ?></textarea>
 				<?php echo ldl_get_error('description'); ?>
-				<p class="help-block"><?php printf(__('The description you include here will make up a major portion of your listing when viewed individually. You may use <a href="%s">markdown</a> to format your description, though we reserve the right to remove excess formatting before approving your listing.', 'lddlite'), 'https://help.github.com/articles/markdown-basics'); ?></p>
 			</div>
 		</div>
 	</div>

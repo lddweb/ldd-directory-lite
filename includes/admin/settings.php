@@ -52,10 +52,10 @@ class ldd_directory_lite_admin {
             return;
 
         wp_enqueue_style('wp-color-picker');
-        wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . 'public/css/bootstrap.css', array(), LDDLITE_VERSION);
+        wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', array(), LDDLITE_VERSION);
 
         wp_enqueue_script('wp-color-picker');
-        wp_enqueue_script('lddlite-admin', LDDLITE_URL . 'public/js/admin.js', array('wp-color-picker'), false, true);
+        wp_enqueue_script('lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array('wp-color-picker'), false, true);
 
     }
 
@@ -85,6 +85,7 @@ class ldd_directory_lite_admin {
 
         add_settings_field('lddlite_settings[directory_front_page]', '<label for="lite-directory_front_page">' . __('Front Page', 'lddlite') . '</label>', '_f_directory_front_page', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[directory_submit_page]', '<label for="lite-directory_submit_page">' . __('Submit Page', 'lddlite') . '</label>', '_f_directory_submit_page', 'lddlite_settings_general', 'lddlite_settings_general');
+        add_settings_field('lddlite_settings[directory_manage_page]', '<label for="lite-directory_manage_page">' . __('Management Page', 'lddlite') . '</label>', '_f_directory_manage_page', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[directory_taxonomy_slug]', '<label for="lite-directory_taxonomy_slug">' . __('Taxonomy Slug', 'lddlite') . '</label>', '_f_directory_taxonomy_slug', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings[directory_post_type_slug]', '<label for="lite-directory_post_type_slug">' . __('Post Type Slug', 'lddlite') . '</label>', '_f_directory_post_type_slug', 'lddlite_settings_general', 'lddlite_settings_general');
         add_settings_field('lddlite_settings_information_separator', '<span style="font-size: 18px">' . __('Directory Information', 'lddlite') . '</span>', '__return_false', 'lddlite_settings_general', 'lddlite_settings_general');
@@ -118,6 +119,18 @@ class ldd_directory_lite_admin {
             );
             wp_dropdown_pages($args);
             echo '<p class="description">' . __('This is the page where the <code>[directory_submit]</code> shortcode has been placed.', 'lddlite') . '</p>';
+        }
+
+        function _f_directory_manage_page() {
+            $args = array(
+                'name'              => 'lddlite_settings[directory_manage_page]',
+                'id'                => 'lite-directory_manage_page',
+                'selected'          => ldl_get_setting('directory_manage_page'),
+                'show_option_none'  => 'Select a page...',
+                'option_none_value' => '',
+            );
+            wp_dropdown_pages($args);
+            echo '<p class="description">' . __('This is the page where the <code>[directory_manage]</code> shortcode has been placed.', 'lddlite') . '</p>';
         }
 
         function _f_directory_taxonomy_slug() {
