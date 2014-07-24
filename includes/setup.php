@@ -126,8 +126,8 @@ function ldl_register_scripts() {
     wp_register_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', false, '4.1.0');
     wp_register_style('lddlite-admin', LDDLITE_URL . '/public/css/admin.css', false, LDDLITE_VERSION);
 
-    wp_register_script( 'lddlite-happy', LDDLITE_URL . '/public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true );
-    wp_register_script( 'lddlite-contact', LDDLITE_URL . '/public/js/contact.js', array( 'jquery' ), LDDLITE_VERSION, true );
+    wp_register_script('lddlite-happy', LDDLITE_URL . '/public/js/happy.js', array( 'jquery' ), LDDLITE_VERSION, true);
+    wp_register_script('lddlite-contact', LDDLITE_URL . '/public/js/contact.js', array( 'jquery' ), LDDLITE_VERSION, true);
     wp_register_script('lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array('jquery-ui-dialog'), LDDLITE_VERSION, 1);
 
 }
