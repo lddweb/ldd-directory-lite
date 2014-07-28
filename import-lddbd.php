@@ -602,7 +602,7 @@ class ldd_directory_lite_import_from_notice {
     }
 
     public function add_scripts() {
-        echo '<script>(function(e){"use strict";e(function(){e("#dismiss-import-notice").length>0&&e("#dismiss-import-notice").click(function(t){t.preventDefault();e.post(ajaxurl,{action:"hide_import_notice",nonce:e.trim(e("#directory-import-nononce").text())},function(t){"1"===t?e("#directory-upgrade-notification").fadeOut("slow"):e("#directory-upgrade-notification").removeClass("updated").addClass("error")})})})})(jQuery);</script>';
+        echo '<script>(function(e){"use strict";e(function(){e("#dismiss-import-notice").length>0&&e("#dismiss-import-notice").click(function(t){t.preventDefault();e.post(ajaxurl,{action:"hide_import_notice",nonce:e.trim(e("#lddlite-import-nonce").text())},function(t){"1"===t?e("#directory-upgrade-notification").fadeOut("slow"):e("#directory-upgrade-notification").removeClass("updated").addClass("error")})})})})(jQuery);</script>';
     }
 
     public function display_notice() {
@@ -616,7 +616,7 @@ class ldd_directory_lite_import_from_notice {
         $html .= '<p style="font-weight:700;">' . __('It looks like you have data from the LDD Business Directory plugin! Would you like to import this?', 'ldd-directory-lite');
         $html .= ' &nbsp; <a href="' . admin_url('admin.php?page=lddlite-import') . '" class="button">' . __('Import Data.', 'ldd-directory-lite') . '</a>';
         $html .= '<p>' . __('If you do not wish to import your existing data, you can', 'ldd-directory-lite') . ' <a href="javascript:;" id="dismiss-import-notice">' . __('dismiss', 'ldd-directory-lite') . '</a> ' . __('this notice.', 'ldd-directory-lite') . '</p>';
-        $html .= '<span id="directory-import-nononce" class="hidden">' . wp_create_nonce('directory-import-nononce') . '</span>';
+        $html .= '<span id="lddlite-import-nonce" class="hidden">' . wp_create_nonce('lddlite-import-nonce') . '</span>';
         $html .= '</div>';
 
         echo $html;

@@ -6,7 +6,7 @@ class SetupTest extends WP_UnitTestCase {
 
     function setUp() {
         parent::setUp();
-        $this->plugin = ldl_get_instance();
+        $this->plugin = ldl();
     }
     function testInstance() {
         $this->assertTrue(is_object($this->plugin), 'Missing the primary singleton');

@@ -126,7 +126,7 @@ EM;
  */
 function ldl_get_setting($key, $esc = false) {
 
-    $ldl = ldl_get_instance();
+    $ldl = ldl();
     $value = $ldl->get_setting($key);
 
     if ($esc)
@@ -148,7 +148,7 @@ function ldl_get_setting($key, $esc = false) {
  */
 function ldl_update_setting($key, $new_val = '') {
 
-    $ldl = ldl_get_instance();
+    $ldl = ldl();
     $old_val = $ldl->get_setting($key);
 
     if ($new_val == $old_val)

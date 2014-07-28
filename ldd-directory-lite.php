@@ -280,10 +280,10 @@ class ldd_directory_lite {
  *
  * @return ldd_directory_lite The controller singleton
  */
-function ldl_get_instance() {
+function ldl() {
     return ldd_directory_lite::get_instance();
 }
 
 /** Das boot */
 if (!defined('WP_UNINSTALL_PLUGIN'))
-    ldl_get_instance();
+    ldl();
