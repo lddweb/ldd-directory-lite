@@ -41,9 +41,11 @@
                 <div class="row bump-down">
                     <div class="col-md-12">
                         <p><?php _e('To set a marker, use the location field to search the address. If the search is unable to find the exact address, you can drag the marker anywhere on the map.', 'lddlite'); ?></p>
+                        <a href="#" id="clear-marker" class="btn btn-default btn-sm" role="button" disabled="disabled">Clear Marker</a>
+                        <a href="#" id="center-marker" class="btn btn-default btn-sm" role="button">Center Marker</a>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row bump-down">
                     <div class="col-md-12">
                         <label class="control-label" for="geo"><?php _e('Set Marker', 'lddlite'); ?></label>
                         <input type="text" id="geo" class="form-control autocomplete-control">
@@ -60,3 +62,25 @@
     </form>
 
 </div>
+
+<script>
+
+    var btn = jQuery("#clear-marker");
+    var lat = jQuery("#lat");
+    var lng = jQuery("#lng");
+
+    (function(){
+
+        if ('' != lat.val() && '' != lng.val) {
+            btn.removeAttr('disabled');
+        }
+
+        btn.on("click", function(e) {
+            e.preventDefault();
+            lat.val('');
+            lng.val('');
+            jQuery(this).attr('disabled','disabled');
+        })
+    }(jQuery))
+
+</script>

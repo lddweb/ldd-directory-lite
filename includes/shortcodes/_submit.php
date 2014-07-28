@@ -386,7 +386,7 @@ function ldl_shortcode_directory_submit() {
 
     wp_enqueue_script('jquery-ui-autocomplete');
     wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=3.9.1');
-    wp_enqueue_script('lddlite-submit', ldl_plugin_url('public/js/submit.js'), 'maps-autocomplete', LDDLITE_VERSION);
+    wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
 
     ldl_get_template_part('submit');
 

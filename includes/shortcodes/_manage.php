@@ -132,7 +132,7 @@ function ldl_shortcode_directory_manage() {
 
     if (!is_user_logged_in()) {
         ldl_get_template_part('login');
-        return;
+        return false;
     }
 
     $listing = isset($_GET['id']) ? get_post($_GET['id']) : false;
@@ -186,7 +186,7 @@ function ldl_shortcode_directory_manage() {
                     // @TODO Repetitious code alert, here and _submit.php
                     wp_enqueue_script('jquery-ui-autocomplete');
                     wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=3.9.1');
-                    wp_enqueue_script('lddlite-submit', ldl_plugin_url('public/js/submit.js'), 'maps-autocomplete', LDDLITE_VERSION);
+                    wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
                     $data = array(
                         'title' => get_the_title($listing->ID),
                         'geo'   => get_metadata('post', $listing->ID, ldl_pfx('geo'), true),

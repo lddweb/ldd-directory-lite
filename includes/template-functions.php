@@ -157,16 +157,6 @@ function ldl_get_home_url($path = '', $scheme = null) {
 }
 
 
-function ldl_plugin_url($path = '') {
-    $url = LDDLITE_URL;
-
-    if ($path && is_string($path))
-        $url .= ltrim($path, '/');
-
-    return $url;
-}
-
-
 /** CONDITIONALS */
 
 /**
