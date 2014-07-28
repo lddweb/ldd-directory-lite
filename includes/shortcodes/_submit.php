@@ -10,7 +10,10 @@
  */
 
 
-/** The following are template functions relevant only to this shortcode **/
+function ldl_submit_listing_nonce($nonce_action) {
+    return 'submit-listing';
+}
+add_filter('lddlite_processor_nonce_action', 'ldl_submit_listing_nonce');
 
 /**
  * Alias for wp_dropdown_categories() that uses our settings array to determine the output.
@@ -298,14 +301,14 @@ function ldl_submit_generate_listing() {
 
     $user_id = is_user_logged_in() ? get_current_user_id() : ldl_submit_create_user($data['username'], $data['email']);
     if (is_wp_error($user_id)) {
-        $lddlite_submit_processor->set_global_error(__('There was a problem creating your user account. Please try again later.', 'lddlite'));
+        $lddlite_submit_processor->set_global_error(__('There was a problem creating your user account. Please try again later.', 'ldd-directory-lite'));
 
         return false;
     }
 
     $post_id = ldl_submit_create_post($data['title'], $data['description'], $data['summary'], $data['category'], $user_id);
     if (!$post_id) {
-        $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'lddlite'));
+        $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'ldd-directory-lite'));
         ldl_submit_rollback(array(
             'user_id' => $user_id,
         ));
@@ -326,7 +329,7 @@ function ldl_submit_generate_listing() {
 
         $attachment_id = media_handle_upload('n_logo', 0);
         if (is_wp_error($attachment_id)) {
-            $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'lddlite'));
+            $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'ldd-directory-lite'));
             ldl_submit_rollback(array(
                 'user_id' => $user_id,
                 'post_id' => $post_id,
@@ -383,7 +386,7 @@ function ldl_shortcode_directory_submit() {
 
     wp_enqueue_script('jquery-ui-autocomplete');
     wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=3.9.1');
-    wp_enqueue_script('lddlite-submit', ldl_plugin_url('public/js/submit.js'), 'maps-autocomplete', LDDLITE_VERSION);
+    wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
 
     ldl_get_template_part('submit');
 

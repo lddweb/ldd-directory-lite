@@ -99,8 +99,8 @@ EM;
         'email_onapprove_body'          => $email['on_approve'],
         'submit_use_tos'                => 0,
         'submit_tos'                    => '',
-        'submit_intro'                  => '<p>' . __('Please tell us a little bit about the organization you would like to see listed in our directory. Try to include as much information as you can, and be as descriptive as possible where asked.', 'lddlite') . '</p>',
-        'submit_success'                => '<h3>' . __('Congratulations!', 'lddlite') . '</h3><p>' . __('Your listing has been successfully submitted for review. Please allow us sufficient time to review the listing and approve it for public display in our directory.', 'lddlite') . '</p>',
+        'submit_intro'                  => '<p>' . __('Please tell us a little bit about the organization you would like to see listed in our directory. Try to include as much information as you can, and be as descriptive as possible where asked.', 'ldd-directory-lite') . '</p>',
+        'submit_success'                => '<h3>' . __('Congratulations!', 'ldd-directory-lite') . '</h3><p>' . __('Your listing has been successfully submitted for review. Please allow us sufficient time to review the listing and approve it for public display in our directory.', 'ldd-directory-lite') . '</p>',
         'allow_tracking_popup_done'     => 0,
         'allow_tracking'                => 0,
         'appearance_display_featured'   => 1,
@@ -126,7 +126,7 @@ EM;
  */
 function ldl_get_setting($key, $esc = false) {
 
-    $ldl = ldl_get_instance();
+    $ldl = ldl();
     $value = $ldl->get_setting($key);
 
     if ($esc)
@@ -148,7 +148,7 @@ function ldl_get_setting($key, $esc = false) {
  */
 function ldl_update_setting($key, $new_val = '') {
 
-    $ldl = ldl_get_instance();
+    $ldl = ldl();
     $old_val = $ldl->get_setting($key);
 
     if ($new_val == $old_val)

@@ -3,7 +3,7 @@ Contributors: lddwebdesign, delayedinsanity
 Tags: directory, listings, listing directory, business, business directory, custom directory, catalog, index, yellow pages, white pages, 411, company listing
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 0.7.3-beta
+Stable tag: 0.8-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -30,6 +30,7 @@ We are also very developer friendly! Our plugin has another home on [GitHub](htt
 * Add the `[directory]` and `[directory_submit]` shortcode to any page (automatically installed for you, but feel free to change them)
 * Customize the look and feel as much, or as little as you want
 * Features can easily be enabled or disabled on the dashboard
+* Users can easily maintain their listings through a front end control panel
 * Fully customizable email notifications, for the admin and the user
 * Strong focus on internationalization, we want this to work for everyone, everywhere
 * Clean, fully responsive interface
@@ -40,7 +41,6 @@ We are also very developer friendly! Our plugin has another home on [GitHub](htt
 = Coming soon =
 
 * **Our web site! This will be the home of extended documentation, community forums, premium support and much more!**
-* User control panel, manage multiple listings and maintain full control over editing
 * Premium modules, extend the capabilities of the Directory with features like import/export
 * Shortcodes to display single categories or listings where ever you want
 
@@ -83,6 +83,11 @@ This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/pl
 
 Please use our [issue tracker](https://github.com/mwaterous/ldd-directory-lite/issues) on the plugins [GitHub repo](https://github.com/mwaterous/ldd-directory-lite).
 
+= How can I avoid having my template customizations overwritten when the plugin is updated? =
+
+All the template files found in `/ldd-directory-lite/templates` can be copied to a directory in your theme called *lddlite_templates*.
+
+For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templates/category.php`, you can copy it to `/wp-content/themes/your-theme-directory/lddlite_templates/category.php`. While you can copy the entire directory verbatim, it is recommended that you only copy the files you need.
 
 == Screenshots ==
 
@@ -93,11 +98,16 @@ Please use our [issue tracker](https://github.com/mwaterous/ldd-directory-lite/i
 
 == Upgrade Notice ==
 
-= 0.7.3-beta =
-0.7.x is a major update to the functionality found in the older 0.5.x versions, please update immediately! 0.7.3 fixes some PHP backwards compatibility issues.
+= 0.8-beta =
+This latest version includes the ability for users to edit their own listings. Include the [directory_manage] shortcode on any page!
 
 
 == Changelog ==
+
+= 0.8-beta =
+
+* Added the front end interface for users to maintain their approved listings
+* Fixed a bug in the plugin localization that wasn't properly loading mo files
 
 = 0.7.3-beta =
 
@@ -160,6 +170,6 @@ I tend to spend a lot of time coding; not only is it my day job, but it's also o
 **Where:** Front end interface.<br>
 **Why:** A trimmed down copy of bootstrap was used to rapidly define the front end interface for the plugin.
 
-**Who:** [Evan Solomon](http://evansolomon.me/), [Michel Fortin](http://michelf.ca), & [John Gruber](http://daringfireball.net)<br>
-**Where:** [WP Github Flavored Markdown Comments](https://github.com/evansolomon/wp-github-flavored-markdown-comments/blob/master/github-flavored-markdown-comments.php)<br>
-**Why:** Because markdown! Markdown is slowly being integrated in to the front end of the plugin, which will allow users to have some measure of control over the way their listings appear (should the site administrator choose to enable it).
+**Who:** [HappyJS](http://happyjs.com/)<br>
+**Where:** Single listing view.<br>
+**Why:** Happy.js is used on the listing page where strong validation is critical prior to a contact form being submitted.

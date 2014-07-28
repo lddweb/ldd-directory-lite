@@ -65,7 +65,7 @@ get_header(); ?>
                     center: mapLatLng,
                     zoom: 16,
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    panControl: false,
+                    panControl: false
                 }
                 var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions)
 

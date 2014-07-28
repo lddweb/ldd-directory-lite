@@ -42,7 +42,7 @@ add_action('admin_head', 'ldl_action_admin_menu_icon');
  */
 function ldl_filter_enter_title_here($title) {
     if (get_post_type() == LDDLITE_POST_TYPE)
-        $title = __('Listing Name', 'lddlite');
+        $title = __('Listing Name', 'ldd-directory-lite');
 
     return $title;
 }
@@ -59,8 +59,8 @@ add_filter('enter_title_here', 'ldl_filter_enter_title_here');
 function ldl_filter_admin_post_thumbnail_html($content) {
 
     if (LDDLITE_POST_TYPE == get_post_type()) {
-        $content = str_replace(__('Set featured image'), __('Upload A Logo', 'lddlite'), $content);
-        $content = str_replace(__('Remove featured image'), __('Remove Logo', 'lddlite'), $content);
+        $content = str_replace(__('Set featured image'), __('Upload A Logo', 'ldd-directory-lite'), $content);
+        $content = str_replace(__('Remove featured image'), __('Remove Logo', 'ldd-directory-lite'), $content);
     }
 
     return $content;
