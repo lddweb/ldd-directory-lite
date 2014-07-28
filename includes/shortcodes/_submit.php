@@ -301,14 +301,14 @@ function ldl_submit_generate_listing() {
 
     $user_id = is_user_logged_in() ? get_current_user_id() : ldl_submit_create_user($data['username'], $data['email']);
     if (is_wp_error($user_id)) {
-        $lddlite_submit_processor->set_global_error(__('There was a problem creating your user account. Please try again later.', 'lddlite'));
+        $lddlite_submit_processor->set_global_error(__('There was a problem creating your user account. Please try again later.', 'ldd-directory-lite'));
 
         return false;
     }
 
     $post_id = ldl_submit_create_post($data['title'], $data['description'], $data['summary'], $data['category'], $user_id);
     if (!$post_id) {
-        $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'lddlite'));
+        $lddlite_submit_processor->set_global_error(__('There was a problem creating your listing. Please try again later.', 'ldd-directory-lite'));
         ldl_submit_rollback(array(
             'user_id' => $user_id,
         ));
@@ -329,7 +329,7 @@ function ldl_submit_generate_listing() {
 
         $attachment_id = media_handle_upload('n_logo', 0);
         if (is_wp_error($attachment_id)) {
-            $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'lddlite'));
+            $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'ldd-directory-lite'));
             ldl_submit_rollback(array(
                 'user_id' => $user_id,
                 'post_id' => $post_id,

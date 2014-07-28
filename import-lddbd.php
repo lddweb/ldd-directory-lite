@@ -56,7 +56,7 @@ class ldd_directory_lite_import_from_plugin {
      * Register the page that we'll use to display the whole process
      */
     public function add_page() {
-        add_dashboard_page(__('Running Import for LDD Business Directory', 'lddlite'), __('LDD Import', 'lddlite'), 'manage_options', 'lddlite-import', array(
+        add_dashboard_page(__('Failed to import owner %s', 'ldd-directory-lite'), __('Failed to import owner %s', 'ldd-directory-lite'), 'manage_options', 'lddlite-import', array(
                 $this,
                 'import'
             ));
@@ -107,10 +107,10 @@ class ldd_directory_lite_import_from_plugin {
 
         wp_defer_term_counting(true);
 
-        echo '<p>' . __('Collecting data from original plugin...', 'lddlite');
+        echo '<p>' . __('Failed to import owner %s', 'ldd-directory-lite');
         $this->_get_terms();
         $this->_get_posts();
-        echo ' ' . __('done.', 'lddlite') . '<p>';
+        echo ' ' . __('Failed to import owner %s', 'ldd-directory-lite') . '<p>';
 
         do_action('ldl_import_start');
     }
@@ -181,7 +181,7 @@ class ldd_directory_lite_import_from_plugin {
                 $term_id = wp_insert_term($term, LDDLITE_TAX_CAT);
                 // Discard errors, and don't add this to the map
                 if (is_wp_error($term_id)) {
-                    printf(__('Failed to import category %s', 'lddlite'), esc_html($term));
+                    printf(__('Failed to import owner %s', 'ldd-directory-lite'), esc_html($term));
                     echo ': ' . $term_id->get_error_message() . '<br>';
                 }
             }
@@ -190,7 +190,7 @@ class ldd_directory_lite_import_from_plugin {
 
         }
 
-        printf('<p>' . __('Added %d listing categories.', 'lddlite') . '</p>', count($this->term_map));
+        printf('<p>' . __('Failed to import owner %s', 'ldd-directory-lite') . '</p>', count($this->term_map));
         unset($this->terms);
 
     }
@@ -230,7 +230,7 @@ class ldd_directory_lite_import_from_plugin {
                     // Force users to reset accounts through "lost password"
                     $author_id = wp_create_user($author_login, wp_generate_password(), $author_email);
                     if (is_wp_error($author_id)) {
-                        printf(__('Failed to import owner %s', 'lddlite'), esc_html($author_login));
+                        printf(__('Failed to import owner %s', 'ldd-directory-lite'), esc_html($author_login));
                         echo ': ' . $author_id->get_error_message() . '<br>';
                     }
                 }
@@ -240,7 +240,7 @@ class ldd_directory_lite_import_from_plugin {
 
         }
 
-        printf('<p>' . __('Added %d listing owners.', 'lddlite') . '</p>', count($this->author_map));
+        printf('<p>' . __('Added %d listing owners.', 'ldd-directory-lite') . '</p>', count($this->author_map));
         unset($this->authors);
 
     }
@@ -276,7 +276,7 @@ class ldd_directory_lite_import_from_plugin {
             $post_id = post_exists($new['post_title'], '', $new['post_date']);
 
             if ($post_id) {
-                printf('<p><strong>' . __('Listing already exists', 'lddlite') . ':</strong> %s</p>', esc_html($new['post_title']));
+                printf('<p><strong>' . __('Listing already exists', 'ldd-directory-lite') . ':</strong> %s</p>', esc_html($new['post_title']));
             } else {
 
                 $author_id = $this->author_map[ $hash ];
@@ -291,7 +291,7 @@ class ldd_directory_lite_import_from_plugin {
                 $post_id = wp_insert_post($new);
 
                 if (is_wp_error($post_id)) {
-                    printf(__('Failed to add listing %s', 'lddlite'), esc_html($new['post_title']));
+                    printf(__('Failed to add listing %s', 'ldd-directory-lite'), esc_html($new['post_title']));
                     echo ': ' . $post_id->get_error_message() . '<br>';
                 } else {
 
@@ -317,14 +317,14 @@ class ldd_directory_lite_import_from_plugin {
                 // Only map newly created posts, so existing posts are skipped during $this->import_meta()
                 // This should stay here...
                 $this->post_map[ $hash ] = $post_id;
-                printf(__('Added listing', 'lddlite') . ': <em>%s</em><br>', esc_html($new['post_title']));
+                printf(__('Added listing', 'ldd-directory-lite') . ': <em>%s</em><br>', esc_html($new['post_title']));
 
             }
             // ...and not be moved here.
 
         }
 
-        printf('<p>' . __('Added a total of %d new listings.', 'lddlite') . '</p>', count($this->post_map));
+        printf('<p>' . __('Added a total of %d new listings.', 'ldd-directory-lite') . '</p>', count($this->post_map));
 
     }
 
@@ -334,7 +334,7 @@ class ldd_directory_lite_import_from_plugin {
      */
     public function import_meta() {
 
-        echo '<p>' . __('Adding listing meta information...', 'lddlite');
+        echo '<p>' . __('Adding listing meta information...', 'ldd-directory-lite');
 
         foreach ($this->posts as $post) {
 
@@ -380,7 +380,7 @@ class ldd_directory_lite_import_from_plugin {
 
         }
 
-        echo ' ' . __('done.', 'lddlite') . '<p>';
+        echo ' ' . __('done.', 'ldd-directory-lite') . '<p>';
 
     }
 
@@ -446,7 +446,7 @@ class ldd_directory_lite_import_from_plugin {
 
         }
 
-        echo ' ' . __('done.', 'lddlite') . '<p>';
+        echo ' ' . __('done.', 'ldd-directory-lite') . '<p>';
 
         unset($this->posts);
     }
@@ -458,7 +458,7 @@ class ldd_directory_lite_import_from_plugin {
      */
     public function import_files() {
 
-        echo '<p>' . __('Updating file attachments...', 'lddlite');
+        echo '<p>' . __('Updating file attachments...', 'ldd-directory-lite');
 
         $wp_upload_dir = wp_upload_dir();
         $uploads_base = $wp_upload_dir['basedir'] . '/directory-lite';
@@ -523,7 +523,7 @@ class ldd_directory_lite_import_from_plugin {
 
         }
 
-        echo ' ' . __('done.', 'lddlite') . '<p>';
+        echo ' ' . __('done.', 'ldd-directory-lite') . '<p>';
 
         unset($this->document_map);
 
@@ -545,9 +545,9 @@ class ldd_directory_lite_import_from_plugin {
 
         do_action('ldl_import_end');
 
-        echo '<p><strong>' . __('All done!', 'lddlite') . '</strong><br>' . __('Passwords have been reset for security purposes, please notify your users!', 'lddlite') . '</p>';
-        echo '<p><a href="' . admin_url() . '">' . __('Return to WordPress Dashboard', 'lddlite') . '</a>' . ' | ';
-        echo '<a href="' . admin_url('edit.php?post_type=' . LDDLITE_POST_TYPE . '&page=lddlite-settings') . '">' . __('Directory Settings', 'lddlite') . '</a></p>';
+        echo '<p><strong>' . __('All done!', 'ldd-directory-lite') . '</strong><br>' . __('Passwords have been reset for security purposes, please notify your users!', 'ldd-directory-lite') . '</p>';
+        echo '<p><a href="' . admin_url() . '">' . __('Return to WordPress Dashboard', 'ldd-directory-lite') . '</a>' . ' | ';
+        echo '<a href="' . admin_url('edit.php?post_type=' . LDDLITE_POST_TYPE . '&page=lddlite-settings') . '">' . __('Directory Settings', 'ldd-directory-lite') . '</a></p>';
 
         update_option('lddlite_imported_from_original', true);
 
@@ -612,10 +612,10 @@ class ldd_directory_lite_import_from_notice {
             return;
 
         $html = '<div id="directory-upgrade-notification" class="updated">';
-        $html .= '<p style="font-size:120%;font-weight:700;">' . __('Existing data has been detected!', 'lddlite') . '</p>';
-        $html .= '<p style="font-weight:700;">' . __('It looks like you have data from the LDD Business Directory plugin! Would you like to import this?', 'lddlite');
-        $html .= ' &nbsp; <a href="' . admin_url('admin.php?page=lddlite-import') . '" class="button">' . __('Import Data.', 'lddlite') . '</a>';
-        $html .= '<p>' . __('If you do not wish to import your existing data, you can', 'lddlite') . ' <a href="javascript:;" id="dismiss-import-notice">' . __('dismiss', 'lddlite') . '</a> ' . __('this notice.', 'lddlite') . '</p>';
+        $html .= '<p style="font-size:120%;font-weight:700;">' . __('Existing data has been detected!', 'ldd-directory-lite') . '</p>';
+        $html .= '<p style="font-weight:700;">' . __('It looks like you have data from the LDD Business Directory plugin! Would you like to import this?', 'ldd-directory-lite');
+        $html .= ' &nbsp; <a href="' . admin_url('admin.php?page=lddlite-import') . '" class="button">' . __('Import Data.', 'ldd-directory-lite') . '</a>';
+        $html .= '<p>' . __('If you do not wish to import your existing data, you can', 'ldd-directory-lite') . ' <a href="javascript:;" id="dismiss-import-notice">' . __('dismiss', 'ldd-directory-lite') . '</a> ' . __('this notice.', 'ldd-directory-lite') . '</p>';
         $html .= '<span id="directory-import-nononce" class="hidden">' . wp_create_nonce('directory-import-nononce') . '</span>';
         $html .= '</div>';
 

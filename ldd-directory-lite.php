@@ -15,7 +15,7 @@
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
- * Text Domain:       lddlite
+ * Text Domain:       ldd-directory-lite
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
@@ -170,7 +170,7 @@ class ldd_directory_lite {
         $directory_page = array(
             'post_content'  => '[directory]',
             'post_name'     => 'directory',
-            'post_title'    => __('Directory', 'lddlite'),
+            'post_title'    => __('Directory', 'ldd-directory-lite'),
             'post_status'   => 'publish',
             'post_type'     => 'page',
             'post_date'     => date('Y-m-d H:i:s'),
@@ -180,7 +180,7 @@ class ldd_directory_lite {
         $submit_page = array(
             'post_content'  => '[directory_submit]',
             'post_name'     => 'submit-listing',
-            'post_title'    => __('Submit a Listing', 'lddlite'),
+            'post_title'    => __('Submit a Listing', 'ldd-directory-lite'),
             'post_status'   => 'publish',
             'post_type'     => 'page',
             'post_date'     => date('Y-m-d H:i:s'),
@@ -198,8 +198,8 @@ class ldd_directory_lite {
         $this->save_settings();
 
         $html = '<div class="updated"><p>';
-        $html .= '<strong>' . __('[ldd directory lite installation notice]', 'lddlite') . '</strong><br>';
-        $html .= sprintf(__('Required directory pages have been installed for you, please visit the <a href="%s">Edit Pages</a> screen to make any necessary adjustments.', 'lddlite'), admin_url('edit.php?post_type=page'));
+        $html .= '<strong>' . __('[ldd directory lite installation notice]', 'ldd-directory-lite') . '</strong><br>';
+        $html .= sprintf(__('Required directory pages have been installed for you, please visit the <a href="%s">Edit Pages</a> screen to make any necessary adjustments.', 'ldd-directory-lite'), admin_url('edit.php?post_type=page'));
         $html .= '</p></div>';
 
         echo $html;
@@ -213,17 +213,8 @@ class ldd_directory_lite {
      * @since 0.5.0
      */
     public function load_plugin_textdomain() {
-
-        $lang_dir = LDDLITE_PATH . '/languages/';
-        $locale = apply_filters('plugin_locale', get_locale());
-        $mofile = $lang_dir . $locale . '.mo';
-
-        if (file_exists($mofile)) {
-            load_textdomain('lddlite', $mofile);
-        } else {
-            load_plugin_textdomain('lddlite', false, $lang_dir);
-        }
-
+        $lang_dir = apply_filters('lddlite_languages_path', dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain('ldd-directory-lite', false, $lang_dir);
     }
 
 

@@ -16,7 +16,7 @@
  * @param $post The WP_Post object
  */
 function ldl_excerpt_meta_box($post) {
-    echo '<label class="screen-reader-text" for="excerpt">' . __('Summary', 'lddlite') . '</label><textarea rows="1" cols="40" name="excerpt" id="excerpt">' . $post->post_excerpt . '</textarea>';
+    echo '<label class="screen-reader-text" for="excerpt">' . __('Summary', 'ldd-directory-lite') . '</label><textarea rows="1" cols="40" name="excerpt" id="excerpt">' . $post->post_excerpt . '</textarea>';
 }
 
 
@@ -30,9 +30,9 @@ function ldl_metaboxes__swap() {
         remove_meta_box('postimagediv', LDDLITE_POST_TYPE, 'side');
         remove_meta_box('authordiv', LDDLITE_POST_TYPE, 'side');
         remove_meta_box('postexcerpt', LDDLITE_POST_TYPE, 'normal');
-        add_meta_box('postimagediv', __('Logo', 'lddlite'), 'post_thumbnail_meta_box', null, 'side', 'high');
-        add_meta_box('authordiv', __('Owner', 'lddlite'), 'post_author_meta_box', null, 'side', 'high');
-        add_meta_box('postexcerpt', __('Summary', 'lddlite'), 'ldl_excerpt_meta_box', null, 'normal', 'high');
+        add_meta_box('postimagediv', __('Logo', 'ldd-directory-lite'), 'post_thumbnail_meta_box', null, 'side', 'high');
+        add_meta_box('authordiv', __('Owner', 'ldd-directory-lite'), 'post_author_meta_box', null, 'side', 'high');
+        add_meta_box('postexcerpt', __('Summary', 'ldd-directory-lite'), 'ldl_excerpt_meta_box', null, 'normal', 'high');
     }
 }
 
@@ -67,7 +67,7 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
     // Set up a custom meta box to display a google map for visually defining a listings geographical location
     $meta_boxes['listings_geo'] = array(
         'id'         => 'listings_geo',
-        'title'      => __('Location', 'lddlite'),
+        'title'      => __('Location', 'ldd-directory-lite'),
         'pages'      => array(LDDLITE_POST_TYPE),
         'context'    => 'normal',
         'priority'   => 'core',
@@ -95,7 +95,7 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
             ),
             array(
                 'name' => 'Set Map Marker',
-                'desc' => __('Use the map above to set the location for this listing. The text field will attempt to autocomplete any address you enter, or you can drag the marker directly on the map to set the location.', 'lddlite'),
+                'desc' => __('Use the map above to set the location for this listing. The text field will attempt to autocomplete any address you enter, or you can drag the marker directly on the map to set the location.', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('geo'),
                 'type' => 'geo_location',
             ),
@@ -105,33 +105,33 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
     // Set up a custom meta box to encapsulate all URLs related to this listing
     $meta_boxes['listings_web'] = array(
         'id'         => 'listings_web',
-        'title'      => __('Web Addresses', 'lddlite'),
+        'title'      => __('Web Addresses', 'ldd-directory-lite'),
         'pages'      => array(LDDLITE_POST_TYPE),
         'context'    => 'normal',
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
             array(
-                'name' => __('Website', 'lddlite'),
-                'desc' => __('Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', 'lddlite'),
+                'name' => __('Website', 'ldd-directory-lite'),
+                'desc' => __('Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('url_website'),
                 'type' => 'text',
             ),
             array(
-                'name' => __('Facebook', 'lddlite'),
-                'desc' => __('This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', 'lddlite'),
+                'name' => __('Facebook', 'ldd-directory-lite'),
+                'desc' => __('This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('url_facebook'),
                 'type' => 'text',
             ),
             array(
-                'name' => __('Twitter', 'lddlite'),
-                'desc' => __('Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', 'lddlite'),
+                'name' => __('Twitter', 'ldd-directory-lite'),
+                'desc' => __('Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('url_twitter'),
                 'type' => 'text',
             ),
             array(
-                'name' => __('LinkedIn', 'lddlite'),
-                'desc' => __('This should start with <code>www.linkedin.com</code>', 'lddlite'),
+                'name' => __('LinkedIn', 'ldd-directory-lite'),
+                'desc' => __('This should start with <code>www.linkedin.com</code>', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('url_linkedin'),
                 'type' => 'text',
             ),
@@ -141,24 +141,24 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
     // Groups together all contact information for a listing
     $meta_boxes['listings_contact'] = array(
         'id'         => 'listings_contact',
-        'title'      => __('Contact Information', 'lddlite'),
+        'title'      => __('Contact Information', 'ldd-directory-lite'),
         'pages'      => array(LDDLITE_POST_TYPE),
         'context'    => 'side',
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
             array(
-                'name' => __('Email', 'lddlite'),
+                'name' => __('Email', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('contact_email'),
                 'type' => 'text_medium',
             ),
             array(
-                'name' => __('Phone', 'lddlite'),
+                'name' => __('Phone', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('contact_phone'),
                 'type' => 'text_small',
             ),
             array(
-                'name' => __('Fax', 'lddlite'),
+                'name' => __('Fax', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('contact_fax'),
                 'type' => 'text_small',
             ),
@@ -214,19 +214,19 @@ function ldl_relabel($translation, $text, $domain) {
 
     switch ($translation) {
         case 'Publish':
-            $translation = __('Approve', 'lddlite');
+            $translation = __('Approve', 'ldd-directory-lite');
             break;
         case 'Published':
-            $translation = __('Approved', 'lddlite');
+            $translation = __('Approved', 'ldd-directory-lite');
             break;
         case 'Published on: <b>%1$s</b>':
-            $translation = __('Approved on: <b>%1$s</b>', 'lddlite');
+            $translation = __('Approved on: <b>%1$s</b>', 'ldd-directory-lite');
             break;
         case 'Publish <b>immediately</b>':
-            $translation = __('Approve <b>immediately</b>', 'lddlite');
+            $translation = __('Approve <b>immediately</b>', 'ldd-directory-lite');
             break;
         case 'Publish on: <b>%1$s</b>':
-            $translation = __('Approve on: <b>%1$s</b>', 'lddlite');
+            $translation = __('Approve on: <b>%1$s</b>', 'ldd-directory-lite');
             break;
     }
 

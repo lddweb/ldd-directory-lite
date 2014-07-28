@@ -32,7 +32,7 @@ function ldl_ajax_contact_form() {
     if (!empty($_POST[$hpt_field])) {
         echo json_encode(array(
             'success' => 1,
-            'msg'     => '<p>' . __('Your message has been successfully sent to the email address we have on file!', 'lddlite') . '</p>',
+            'msg'     => '<p>' . __('Your message has been successfully sent to the email address we have on file!', 'ldd-directory-lite') . '</p>',
         ));
         die;
     }
@@ -72,7 +72,7 @@ function ldl_ajax_contact_form() {
         echo json_encode(array(
             'success' => 0,
             'errors'  => serialize($errors),
-            'msg'     => '<p>' . __('There were errors with your form submission. Please try again.', 'lddlite') . '</p>',
+            'msg'     => '<p>' . __('There were errors with your form submission. Please try again.', 'ldd-directory-lite') . '</p>',
         ));
         die;
     }
@@ -87,12 +87,12 @@ function ldl_ajax_contact_form() {
     if (wp_mail($contact_email, $subject, $message, $headers)) {
         $response = array(
             'success' => 1,
-            'msg'     => '<p>' . sprintf(__('Your message has been successfully sent to <em>%s</em>!', 'lddlite'), $listing_title) . '</p>',
+            'msg'     => '<p>' . sprintf(__('Your message has been successfully sent to <em>%s</em>!', 'ldd-directory-lite'), $listing_title) . '</p>',
         );
     } else {
         $response = array(
             'success' => 0,
-            'msg'     => '<p>' . __('There were unknown errors with your form submission.</p><p>Please wait a while and then try again.', 'lddlite') . '</p>',
+            'msg'     => '<p>' . __('There were unknown errors with your form submission.</p><p>Please wait a while and then try again.', 'ldd-directory-lite') . '</p>',
         );
     }
 

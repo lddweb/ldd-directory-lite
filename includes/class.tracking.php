@@ -283,8 +283,8 @@ class ldd_directory_lite_pointers {
 
         $nonce = wp_create_nonce('lite_allow_tracking_nonce');
 
-        $content = '<h3>' . __('Help improve LDD Directory Lite', 'lddlite') . '</h3>';
-        $content .= '<p>' . __('Usage tracking is completely anonymous and allows us to know what configurations, plugins and themes we should be testing future versions of our plugin with.', 'lddlite') . '</p>';
+        $content = '<h3>' . __('Help improve LDD Directory Lite', 'ldd-directory-lite') . '</h3>';
+        $content .= '<p>' . __('Usage tracking is completely anonymous and allows us to know what configurations, plugins and themes we should be testing future versions of our plugin with.', 'ldd-directory-lite') . '</p>';
 
         $opt_arr = array(
             'content'  => $content,

@@ -94,7 +94,7 @@ function ldl_process_edit_form() {
 
                     $attachment_id = media_handle_upload('n_logo', 0);
                     if (is_wp_error($attachment_id)) {
-                        $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'lddlite'));
+                        $lddlite_submit_processor->set_global_error(__('There was a problem uploading your logo. Please try again!', 'ldd-directory-lite'));
                         return false;
                     } else {
                         set_post_thumbnail($post_id, $attachment_id);
