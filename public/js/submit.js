@@ -48,7 +48,7 @@
             });
         }
 
-        google.maps.event.addListener(marker, 'drag', function () {
+        google.maps.event.addListener(marker, 'dragend', function () {
             geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
@@ -59,6 +59,10 @@
             $lat.val(marker.getPosition().lat())
             $lng.val(marker.getPosition().lng())
         })
+
+        google.maps.event.addListener(map, 'center_changed', function() {
+            map.getBounds().contains(marker.getPosition())
+        });
 
         var autocomplete = new google.maps.places.Autocomplete(searchInput)
         autocomplete.bindTo('bounds', map)

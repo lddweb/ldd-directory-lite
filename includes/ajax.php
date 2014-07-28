@@ -1,7 +1,6 @@
 <?php
 /**
  * Front End AJAX
- *
  * AJAX calls from the front end are hooked during setup.php; all the functionality for those hooks
  * resides here.
  *
@@ -20,7 +19,6 @@
  * contact email address in their listing details.
  *
  * @since 5.3.0
- * @todo
  */
 function ldl_ajax_contact_form() {
 
@@ -29,10 +27,10 @@ function ldl_ajax_contact_form() {
 
     $hpt_field = 'last_name';
 
-    if (!empty($_POST[$hpt_field])) {
+    if (!empty($_POST[ $hpt_field ])) {
         echo json_encode(array(
             'success' => 1,
-            'msg'     => '<p>' . __('Your message has been successfully sent to the email address we have on file!', 'lddlite') . '</p>',
+            'msg'     => '<p>' . __('Your message has been successfully sent to the email address we have on file!', 'ldd-directory-lite') . '</p>',
         ));
         die;
     }
@@ -58,21 +56,21 @@ function ldl_ajax_contact_form() {
     $errors = array();
 
     if (empty($name) || strlen($name) < 3)
-        $errors['name'] = 'You must enter your name';
+        $errors['name'] = __('You must enter your name', 'ldd-directory-lite');
     if (empty($email) || !is_email($email))
-        $errors['email'] = 'Please enter a valid email address';
+        $errors['email'] = __('Please enter a valid email address', 'ldd-directory-lite');
     if (empty($subject) || strlen($subject) < 6)
-        $errors['subject'] = 'You must enter a subject';
+        $errors['subject'] = __('You must enter a subject', 'ldd-directory-lite');
     if (empty($message) || strlen($message) < 10)
-        $errors['message'] = 'Please enter a longer message';
+        $errors['message'] = __('Please enter a longer message', 'ldd-directory-lite');
     if (empty($answer) || !in_array($answer, $answers))
-        $errors['math'] = 'Your math is wrong';
+        $errors['math'] = __('Your math is wrong', 'ldd-directory-lite');
 
     if (!empty($errors)) {
         echo json_encode(array(
             'success' => 0,
             'errors'  => serialize($errors),
-            'msg'     => '<p>' . __('There were errors with your form submission. Please try again.', 'lddlite') . '</p>',
+            'msg'     => '<p>' . __('There were errors with your form submission. Please try again.', 'ldd-directory-lite') . '</p>',
         ));
         die;
     }
@@ -87,12 +85,12 @@ function ldl_ajax_contact_form() {
     if (wp_mail($contact_email, $subject, $message, $headers)) {
         $response = array(
             'success' => 1,
-            'msg'     => '<p>' . sprintf(__('Your message has been successfully sent to <em>%s</em>!', 'lddlite'), $listing_title) . '</p>',
+            'msg'     => '<p>' . sprintf(__('Your message has been successfully sent to <em>%s</em>!', 'ldd-directory-lite'), $listing_title) . '</p>',
         );
     } else {
         $response = array(
             'success' => 0,
-            'msg'     => '<p>' . __('There were unknown errors with your form submission.</p><p>Please wait a while and then try again.', 'lddlite') . '</p>',
+            'msg'     => '<p>' . __('There were unknown errors with your form submission.</p><p>Please wait a while and then try again.', 'ldd-directory-lite') . '</p>',
         );
     }
 
@@ -100,35 +98,41 @@ function ldl_ajax_contact_form() {
     die;
 
 }
+
 add_action('wp_ajax_contact_form', 'ldl_ajax_contact_form');
 add_action('wp_ajax_nopriv_contact_form', 'ldl_ajax_contact_form');
 
 
-
+/**
+ * Stores an option to ensure the allow tracking pointer is only shown once. Also stores their answer, whether tracking
+ * is allowed or not, this can also be updated via the settings screen.
+ */
 function ldl_store_tracking_response() {
 
-    if (!wp_verify_nonce($_POST['nonce'], 'lite_allow_tracking_nonce'))
+    if (!wp_verify_nonce($_POST['nonce'], 'lddlite-allow-tracking-nonce'))
         die();
 
-    $ldl = ldl_get_instance();
+    ldl()->update_setting('allow_tracking_popup_done', true);
+    ldl()->update_setting('allow_tracking', $_POST['allow_tracking'] == 'yes' ? true : false);
 
-    $ldl->update_setting('allow_tracking_popup_done', true);
+    ldl()->save_settings();
+    die;
 
-    if ($_POST['allow_tracking'] == 'yes') {
-        $ldl->update_setting('allow_tracking', true);
-    } else {
-        $ldl->update_setting('allow_tracking', false);
-    }
-
-    $ldl->save_settings();
 }
+
 add_action('wp_ajax_lite_allow_tracking', 'ldl_store_tracking_response');
 
 
+/**
+ * Once the notice has been dismissed, don't display it again.
+ */
 function ldl_hide_import_notice() {
-    if (wp_verify_nonce($_POST['nonce'], 'directory-import-nononce')) {
-        if (update_option('lddlite_imported_from_original', true))
-            die('1'); else die('0');
+
+    if (wp_verify_nonce($_POST['nonce'], 'lddlite-import-nonce')) {
+        echo update_option('lddlite_imported_from_original', true) ? '1' : '0';
     }
+
+    die;
 }
+
 add_action('wp_ajax_hide_import_notice', 'ldl_hide_import_notice');

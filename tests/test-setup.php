@@ -6,7 +6,7 @@ class SetupTest extends WP_UnitTestCase {
 
     function setUp() {
         parent::setUp();
-        $this->plugin = ldl_get_instance();
+        $this->plugin = ldl();
     }
     function testInstance() {
         $this->assertTrue(is_object($this->plugin), 'Missing the primary singleton');
@@ -52,7 +52,7 @@ class SetupTest extends WP_UnitTestCase {
         );
 
         foreach ($styles as $handle) {
-            $this->assertTrue(wp_script_is($handle, 'registered'), 'Missing style registration: ' . $handle);
+            $this->assertTrue(wp_style_is($handle, 'registered'), 'Missing style registration: ' . $handle);
         }
 
         foreach ($scripts as $handle) {

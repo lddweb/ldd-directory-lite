@@ -110,7 +110,7 @@ class ldd_directory_lite_processor {
 
         // Acquire the list of required fields
         $required = apply_filters('lddlite_submit_required_fields', $this->required_fields);
-        $required_errmsg = __('This field is required.', 'lddlite');
+        $required_errmsg = __('This field is required.', 'ldd-directory-lite');
 
         // Loop through and check for required fields first
         foreach ($required as $field) {
@@ -253,12 +253,12 @@ function ldl_validate_fields($error, $field, $value) {
         case 'url_linkedin':
             $value = esc_url($value);
             if ($value != filter_var($value, FILTER_VALIDATE_URL)) {
-                $error = __('We were unable to verify that URL, please check it and try again.', 'lddlite');
+                $error = __('We were unable to verify that URL, please check it and try again.', 'ldd-directory-lite');
             }
             break;
         case 'geo':
             if (2 != count($value) || !preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $value['lat'] . ',' . $value['lng'])) {
-                $error = __('Something went wrong validating that location, please try again.', 'lddlite');
+                $error = __('Something went wrong validating that location, please try again.', 'ldd-directory-lite');
             }
             break;
     }
@@ -281,7 +281,7 @@ add_filter('lddlite_submit_required_fields', 'ldl_require_tos');
 function ldl_require_tos_errmsg($errmsg, $field) {
 
     if ('tos' == $field)
-        $errmsg = __('Please verify that you have read and agree to our terms of service before continuing.', 'lddlite');
+        $errmsg = __('Please verify that you have read and agree to our terms of service before continuing.', 'ldd-directory-lite');
 
     return $errmsg;
 }

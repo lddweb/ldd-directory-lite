@@ -157,16 +157,6 @@ function ldl_get_home_url($path = '', $scheme = null) {
 }
 
 
-function ldl_plugin_url($path = '') {
-    $url = LDDLITE_URL;
-
-    if ($path && is_string($path))
-        $url .= ltrim($path, '/');
-
-    return $url;
-}
-
-
 /** CONDITIONALS */
 
 /**
@@ -201,6 +191,9 @@ function ldl_get_header() {
 }
 
 
+/**
+ * This will check if we need a contact form, and if so enqueues the scripts and retrieves the appropriate template.
+ */
 function ldl_get_contact_form() {
     $post_id = get_the_ID();
 
