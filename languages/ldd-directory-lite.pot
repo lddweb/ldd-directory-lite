@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: LDD Directory Lite 0.8-beta\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/ldd-directory-"
 "lite\n"
-"POT-Creation-Date: 2014-07-28 17:36:45+00:00\n"
+"POT-Creation-Date: 2014-07-28 18:20:02+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -476,7 +476,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/settings.php:76
+#: includes/admin/settings.php:76 includes/setup.php:81
 msgid "Add Listing"
 msgstr ""
 
@@ -713,20 +713,40 @@ msgstr ""
 msgid "Appearance"
 msgstr ""
 
-#: includes/ajax.php:35
+#: includes/ajax.php:33
 msgid ""
 "Your message has been successfully sent to the email address we have on file!"
 msgstr ""
 
-#: includes/ajax.php:75
+#: includes/ajax.php:59
+msgid "You must enter your name"
+msgstr ""
+
+#: includes/ajax.php:61
+msgid "Please enter a valid email address"
+msgstr ""
+
+#: includes/ajax.php:63
+msgid "You must enter a subject"
+msgstr ""
+
+#: includes/ajax.php:65
+msgid "Please enter a longer message"
+msgstr ""
+
+#: includes/ajax.php:67
+msgid "Your math is wrong"
+msgstr ""
+
+#: includes/ajax.php:73
 msgid "There were errors with your form submission. Please try again."
 msgstr ""
 
-#: includes/ajax.php:90
+#: includes/ajax.php:88
 msgid "Your message has been successfully sent to <em>%s</em>!"
 msgstr ""
 
-#: includes/ajax.php:95
+#: includes/ajax.php:93
 msgid ""
 "There were unknown errors with your form submission.</p><p>Please wait a "
 "while and then try again."
@@ -1130,6 +1150,50 @@ msgid ""
 "our directory."
 msgstr ""
 
+#: includes/setup.php:79
+msgid "Directory Listings"
+msgstr ""
+
+#: includes/setup.php:80
+msgid "Directory Listing"
+msgstr ""
+
+#: includes/setup.php:82
+msgid "Add New Listing"
+msgstr ""
+
+#: includes/setup.php:83
+msgid "Edit Listing"
+msgstr ""
+
+#: includes/setup.php:84
+msgid "New Listing"
+msgstr ""
+
+#: includes/setup.php:85
+msgid "View Listing"
+msgstr ""
+
+#: includes/setup.php:86
+msgid "Search Listings"
+msgstr ""
+
+#: includes/setup.php:87
+msgid "No listings found"
+msgstr ""
+
+#: includes/setup.php:88
+msgid "No listings found in Trash"
+msgstr ""
+
+#: includes/setup.php:89
+msgid "Parent Listing"
+msgstr ""
+
+#: includes/setup.php:90 ldd-directory-lite.php:173
+msgid "Directory"
+msgstr ""
+
 #: includes/shortcodes/_manage.php:97 includes/shortcodes/_submit.php:332
 msgid "There was a problem uploading your logo. Please try again!"
 msgstr ""
@@ -1140,10 +1204,6 @@ msgstr ""
 
 #: includes/shortcodes/_submit.php:311
 msgid "There was a problem creating your listing. Please try again later."
-msgstr ""
-
-#: ldd-directory-lite.php:173
-msgid "Directory"
 msgstr ""
 
 #: ldd-directory-lite.php:183
