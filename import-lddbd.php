@@ -56,7 +56,7 @@ class ldd_directory_lite_import_from_plugin {
      * Register the page that we'll use to display the whole process
      */
     public function add_page() {
-        add_dashboard_page(__('Running Import for LDD Business Directory', 'lddlite'), __('LDD Import', 'lddlite'), 'manage_options', 'lddlite-import', array(
+        add_dashboard_page(__('Running Import for LDD Business Directory', 'ldd-directory-lite'), __('LDD Import', 'ldd-directory-lite'), 'manage_options', 'lddlite-import', array(
             $this,
             'import'
         ));
@@ -77,7 +77,7 @@ class ldd_directory_lite_import_from_plugin {
 
         ?>
         <div class="wrap">
-            <h2><?php _e('Importing content from LDD Business Directory', 'lddlite'); ?></h2>
+            <h2><?php _e('Importing content from LDD Business Directory', 'ldd-directory-lite'); ?></h2>
             <?php
 
             set_time_limit(0);
@@ -107,10 +107,10 @@ class ldd_directory_lite_import_from_plugin {
 
         wp_defer_term_counting(true);
 
-        echo '<p>' . __('Collecting data from original plugin...', 'lddlite');
+        echo '<p>' . __('Collecting data from original plugin...', 'ldd-directory-lite');
         $this->_get_terms();
         $this->_get_posts();
-        echo ' ' . __('done.', 'lddlite') . '<p>';
+        echo ' ' . __('done.', 'ldd-directory-lite') . '<p>';
 
         do_action('ldl_import_start');
     }
@@ -181,7 +181,7 @@ class ldd_directory_lite_import_from_plugin {
                 $term_id = wp_insert_term($term, LDDLITE_TAX_CAT);
                 // Discard errors, and don't add this to the map
                 if (is_wp_error($term_id)) {
-                    printf(__('Failed to import category %s', 'lddlite'), esc_html($term));
+                    printf(__('Failed to import category %s', 'ldd-directory-lite'), esc_html($term));
                     echo ': ' . $term_id->get_error_message() . '<br>';
                 }
             }
@@ -190,7 +190,7 @@ class ldd_directory_lite_import_from_plugin {
 
         }
 
-        printf('<p>' . __('Added %d listing categories.', 'lddlite') . '</p>', count($this->term_map));
+        printf('<p>' . __('Added %d listing categories.', 'ldd-directory-lite') . '</p>', count($this->term_map));
         unset($this->terms);
 
     }
@@ -390,7 +390,7 @@ class ldd_directory_lite_import_from_plugin {
      */
     public function import_logo() {
 
-        echo '<p>' . __("Importing logo's...", 'lddlite');
+        echo '<p>' . __("Importing logo's...", 'ldd-directory-lite');
 
         if (!function_exists('wp_generate_attachment_metadata'))
             require_once(ABSPATH . 'wp-admin/includes/image.php');

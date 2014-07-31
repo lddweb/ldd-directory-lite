@@ -310,7 +310,7 @@ class ldd_directory_lite_pointers {
 
                 lite_pointer_options = $.extend(lite_pointer_options, {
                     buttons: function (event, t) {
-                        var button = jQuery('<a id="pointer-close" style="margin-left:5px;" class="button-secondary">' + '<?php _e( 'Do not allow tracking', 'lddlite' ) ?>' + '</a>');
+                        var button = jQuery('<a id="pointer-close" style="margin-left:5px;" class="button-secondary">' + '<?php _e( 'Do not allow tracking', 'ldd-directory-lite' ) ?>' + '</a>');
                         button.bind('click.pointer', function () {
                             t.element.pointer('close');
                         });
@@ -322,7 +322,7 @@ class ldd_directory_lite_pointers {
 
                 setup = function () {
                     $('#wpadminbar').pointer(lite_pointer_options).pointer('open');
-                    jQuery('#pointer-close').after('<a id="pointer-primary" class="button-primary">' + '<?php _e( 'Allow tracking', 'lddlite' ) ?>' + '</a>');
+                    jQuery('#pointer-close').after('<a id="pointer-primary" class="button-primary">' + '<?php _e( 'Allow tracking', 'ldd-directory-lite' ) ?>' + '</a>');
                     jQuery('#pointer-primary').click(function () {
                         ldl_store_answer("yes", "<?php echo $nonce ?>")
                     });

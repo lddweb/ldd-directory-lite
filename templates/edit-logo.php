@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label class="control-label" for="f_logo"><?php _e('Select New Logo:', 'lddlite'); ?></label>
+                        <label class="control-label" for="f_logo"><?php _e('Select New Logo:', 'ldd-directory-lite'); ?></label>
                         <input type="file" id="f_logo" class="form-control" name="n_logo">
                         <?php echo ldl_get_error('category'); ?>
                     </div>

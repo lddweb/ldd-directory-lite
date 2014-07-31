@@ -13,21 +13,21 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="control-label" for=""><?php _e('Email', 'lddlite'); ?></label>
+                        <label class="control-label" for=""><?php _e('Email', 'ldd-directory-lite'); ?></label>
                         <input type="text" id="f_contact_email" class="form-control" name="n_contact_email" value="<?php echo ldl_get_value('contact_email'); ?>">
                         <?php echo ldl_get_error('contact_email'); ?>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="control-label" for=""><?php _e('Phone', 'lddlite'); ?></label>
+                        <label class="control-label" for=""><?php _e('Phone', 'ldd-directory-lite'); ?></label>
                         <input type="text" id="f_contact_phone" class="form-control" name="n_contact_phone" value="<?php echo ldl_get_value('contact_phone'); ?>">
                         <?php echo ldl_get_error('contact_phone'); ?>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="control-label" for=""><?php _e('Fax', 'lddlite'); ?></label>
+                        <label class="control-label" for=""><?php _e('Fax', 'ldd-directory-lite'); ?></label>
                         <input type="text" id="f_contact_fax" class="form-control" name="n_contact_fax" value="<?php echo ldl_get_value('contact_fax'); ?>">
                         <?php echo ldl_get_error('contact_fax'); ?>
                     </div>

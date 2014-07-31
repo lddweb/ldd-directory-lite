@@ -59,7 +59,7 @@ function ldl_get_registered_settings() {
                 ),
                 'information_separator' => array(
                     'id' => 'information_separator',
-                    'name' => '<strong>' . __( 'Directory Information', 'ldd-directory-lite') . '</strong>',
+                    'name' => '<h3 class="title">' . __( 'Directory Information', 'ldd-directory-lite') . '</h3>',
                     'type' => 'header'
                 ),
                 'directory_label' => array(
@@ -75,7 +75,7 @@ function ldl_get_registered_settings() {
                 ),
                 'other_separator' => array(
                     'id' => 'directory_information',
-                    'name' => '<strong>' . __( 'Other', 'ldd-directory-lite') . '</strong>',
+                    'name' => '<h3 class="title">' . __( 'Other', 'ldd-directory-lite') . '</h3>',
                     'type' => 'header'
                 ),
                 'allow_tracking' => array(

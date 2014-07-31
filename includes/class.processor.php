@@ -245,7 +245,7 @@ function ldl_validate_fields($error, $field, $value) {
     switch ($field) {
         case 'contact_email':
             if (!is_email($value)) {
-                $error = __("The email address provided doesn't appear to be valid.", 'lddlite');
+                $error = __("The email address provided doesn't appear to be valid.", 'ldd-directory-lite');
             }
             break;
         case 'url_website':

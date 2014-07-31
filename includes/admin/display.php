@@ -35,25 +35,25 @@ function ldl_settings_page() {
 
     ?>
     <div class="wrap directory-lite">
-        <h2 class="heading"><?php _e('Directory Settings', 'lddlite'); ?></h2>
+        <h2 class="heading"><?php _e('Directory Settings', 'ldd-directory-lite'); ?></h2>
 
         <div class="sub-heading">
-            <p><?php _e('Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.', 'lddlite'); ?></p>
+            <p><?php _e('Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.', 'ldd-directory-lite'); ?></p>
             <ul id="directory-links">
                 <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues"
                        title="Submit a bug or feature request on GitHub" class="bold-link"><i
-                            class="fa fa-exclamation-triangle fa-fw"></i> <?php _e('Submit an Issue', 'lddlite'); ?>
+                            class="fa fa-exclamation-triangle fa-fw"></i> <?php _e('Submit an Issue', 'ldd-directory-lite'); ?>
                     </a></li>
                 <li class="right"><i class="fa fa-wordpress fa-fw"></i> Visit us on <a
                         href="http://wordpress.org/support/plugin/ldd-directory-lite"
-                        title="Come visit the plugin homepage on WordPress.org"><?php _e('WordPress.org', 'lddlite'); ?></a>
+                        title="Come visit the plugin homepage on WordPress.org"><?php _e('WordPress.org', 'ldd-directory-lite'); ?></a>
                 </li>
                 <li><a href="http://wordpress.org/support/plugin/ldd-directory-lite"
                        title="Visit the LDD Directory Lite Support Forums on WordPress.org" class="bold-link"><i
-                            class="fa fa-comments fa-fw"></i> <?php _e('Support Forums', 'lddlite'); ?></a></li>
+                            class="fa fa-comments fa-fw"></i> <?php _e('Support Forums', 'ldd-directory-lite'); ?></a></li>
                 <li class="right"><i class="fa fa-github-alt fa-fw"></i> Visit us on <a
                         href="https://github.com/mwaterous/ldd-directory-lite"
-                        title="We do most of our development from GitHub, come join us!"><?php _e('GitHub.com', 'lddlite'); ?></a>
+                        title="We do most of our development from GitHub, come join us!"><?php _e('GitHub.com', 'ldd-directory-lite'); ?></a>
                 </li>
             </ul>
         </div>

@@ -13,7 +13,7 @@
             <?php if (ldl()->get_option('appearance_display_featured')): ?>
             <div class="col-md-12">
 
-                <h2><?php _e('Featured Listings', 'lddlite'); ?></h2>
+                <h2><?php _e('Featured Listings', 'ldd-directory-lite'); ?></h2>
 
                 <?php $featured = ldl_get_featured_posts(); ?>
 
