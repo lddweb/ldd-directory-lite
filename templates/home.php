@@ -10,7 +10,7 @@
                     <?php echo ldl_get_parent_categories(); ?>
                 </div>
             </div>
-            <?php if (ldl_get_setting('appearance_display_featured')): ?>
+            <?php if (ldl()->get_option('appearance_display_featured')): ?>
             <div class="col-md-12">
 
                 <h2><?php _e('Featured Listings', 'lddlite'); ?></h2>

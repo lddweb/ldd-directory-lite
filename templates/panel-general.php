@@ -1,8 +1,8 @@
 <div class="container-fluid">
-	<?php if (ldl_get_setting('submit_intro')): ?>
+	<?php if (ldl()->get_option('submit_intro')): ?>
     <div class="row">
 		<div class="col-md-12">
-            <?php echo wpautop(ldl_get_setting('submit_intro')); ?>
+            <?php echo wpautop(ldl()->get_option('submit_intro')); ?>
 		</div>
 	</div>
     <?php endif; ?>

@@ -1,7 +1,5 @@
 jQuery(document).ready(function ($) {
-    $('#appearance_primary_normal').wpColorPicker();
-    $('#appearance_primary_hover').wpColorPicker();
-    $('#appearance_primary_foreground').wpColorPicker();
+    $('.lddlite-color-picker').wpColorPicker();
 
     var uninstallCheck = $("input[id=lite-debug_uninstall]");
     var warningStack = $("p.warning");

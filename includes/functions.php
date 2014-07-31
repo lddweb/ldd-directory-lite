@@ -114,95 +114,6 @@ EM;
 
 
 /**
- * An alias for the LDL_Directory_Lite get_setting() method which handles loading the singleton and also
- * allows for escaping the value if necessary.
- *
- * @since 0.5.3
- *
- * @param string $key The configuration setting
- * @param bool   $esc Whether or not to escape the output
- *
- * @return mixed Returns empty if the setting doesn't exist, or the value if it does
- */
-function ldl_get_setting($key, $esc = false) {
-
-    $ldl = ldl();
-    $value = $ldl->get_setting($key);
-
-    if ($esc)
-        $value = esc_attr($value);
-
-    return $value;
-}
-
-
-/**
- * An alias for the LDL_Directory_Lite update_setting() method that also handles loading the singleton. This
- * function automatically saves the settings after update, requiring only one function call to handle the entire
- * process.
- *
- * @since 0.5.3
- *
- * @param string $key     The configuration setting we're updating
- * @param string $new_val The new value, leave empty to initialize
- */
-function ldl_update_setting($key, $new_val = '') {
-
-    $ldl = ldl();
-    $old_val = $ldl->get_setting($key);
-
-    if ($new_val == $old_val)
-        return;
-
-    $ldl->update_setting($key, $new_val);
-    $ldl->save_settings();
-
-}
-
-
-/**
- * This scans post content for the existence of our shortcode. If discovered, it updates the `directory_page`
- * setting so that any filters or actions returning a link to the directories home page has a post_id to work with.
- *
- * @param int     $post_ID Post ID.
- * @param WP_Post $post    Post object.
- */
-function ldl_haz_shortcode($post_id, $post) {
-    global $shortcode_tags;
-
-    // Run as little as possible
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-        return;
-
-    if (wp_is_post_revision($post_id))
-        return;
-
-    if (empty($post->post_content))
-        return;
-
-    // Store this, we don't want to permanently change it
-    $old_shortcode_tags = $shortcode_tags;
-
-    // Remove everything but our shortcode
-    $shortcode_tags = array_intersect_key($shortcode_tags, array(
-        'directory'          => '',
-        'directory_lite'     => '',
-        'business_directory' => '',
-    ));
-
-    $pattern = get_shortcode_regex();
-    if (preg_match("/$pattern/s", $post->post_content))
-        ldl_update_setting('directory_page', $post_id);
-
-    // Reset the global array
-    $shortcode_tags = $old_shortcode_tags;
-
-}
-
-add_action('save_post', 'ldl_haz_shortcode', 10, 2);
-
-
-/**
  * Wrapper to collect post meta for a listing
  *
  * @param $id
@@ -337,15 +248,8 @@ function ldl_sanitize_twitter($url) {
  */
 function ldl_mail($to, $subject, $message, $headers = '') {
 
-    $from_name = ldl_get_setting('email_from_name');
-    if (!$from_name) {
-        $from_name = get_bloginfo('name');
-    }
-
-    $from_email = ldl_get_setting('email_from_address');
-    if (!$from_email || !is_email($from_email)) {
-        $from_email = get_bloginfo('admin_email');
-    }
+    $from_name = ldl()->get_option('email_from_name', get_bloginfo('name'));
+    $from_email = ldl()->get_option('email_from_address', get_bloginfo('admin_email'));
 
     // If we're not passing any headers, default to our internal from address
     if (empty($headers)) {

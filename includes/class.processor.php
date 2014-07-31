@@ -270,7 +270,7 @@ add_filter('lddlite_validate_fields', 'ldl_validate_fields', 10, 3);
 
 function ldl_require_tos($required) {
 
-    if (ldl_get_setting('submit_use_tos'))
+    if (ldl()->get_option('submit_use_tos'))
         $required[] = 'tos';
 
     return $required;

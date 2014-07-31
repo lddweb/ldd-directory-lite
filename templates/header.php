@@ -12,8 +12,8 @@
 
         <div id="navbar-directory" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <?php if (ldl_get_setting('directory_submit_page')): ?><li><a href="<?php echo ldl_get_submit_link(); ?>"><?php _e('Submit Listing', 'lddlite'); ?></a></li><?php endif; ?>
-                <?php if (ldl_get_setting('directory_manage_page')): ?><li><a href="<?php echo ldl_get_manage_link(); ?>"><?php _e('Manage Listings', 'lddlite'); ?></a></li><?php endif; ?>
+                <?php if (ldl()->get_option('directory_submit_page')): ?><li><a href="<?php echo ldl_get_submit_link(); ?>"><?php _e('Submit Listing', 'lddlite'); ?></a></li><?php endif; ?>
+                <?php if (ldl()->get_option('directory_manage_page')): ?><li><a href="<?php echo ldl_get_manage_link(); ?>"><?php _e('Manage Listings', 'lddlite'); ?></a></li><?php endif; ?>
             </ul>
 	        <form role="search" method="get" action="<?php echo site_url(); ?>" class="navbar-form navbar-right">
                 <input type="hidden" name="post_type" value="<?php echo LDDLITE_POST_TYPE; ?>">

@@ -42,15 +42,8 @@ spl_autoload_register('ldl_autoload');
  */
 function ldl_register_post_type() {
 
-    $taxonomy_slug = ldl_get_setting('directory_taxonomy_slug', 1);
-    $post_type_slug = ldl_get_setting('directory_post_type_slug', 1);
-
-    if (!$taxonomy_slug) {
-        $taxonomy_slug = 'listings';
-    }
-    if (!$post_type_slug) {
-        $post_type_slug = 'listing';
-    }
+    $taxonomy_slug = ldl()->get_option('directory_taxonomy_slug', 'listings');
+    $post_type_slug = ldl()->get_option('directory_post_type_slug', 'listing');
 
     register_taxonomy(LDDLITE_TAX_CAT, LDDLITE_POST_TYPE, array(
         'hierarchical'      => true,
@@ -141,7 +134,7 @@ add_action('init', 'ldl_register_scripts', 5);
  */
 function ldl_enqueue_bootstrap() {
 
-    if (ldl_get_setting('disable_bootstrap') || is_admin())
+    if (ldl()->get_option('disable_bootstrap') || is_admin())
         return;
 
     wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', array(), LDDLITE_VERSION);

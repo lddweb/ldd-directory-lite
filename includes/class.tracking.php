@@ -18,13 +18,13 @@
 function ldl_tracking_additions($options) {
 
     $options['directory_lite'] = array(
-        'directory_page'         => ldl_get_setting('directory_page'),
-        'disable_bootstrap'      => ldl_get_setting('disable_bootstrap'),
-        'google_maps'            => ldl_get_setting('google_maps'),
-        'submit_use_tos'         => ldl_get_setting('submit_use_tos'),
-        'submit_use_locale'      => ldl_get_setting('submit_use_locale'),
-        'submit_locale'          => ldl_get_setting('submit_locale'),
-        'submit_require_address' => ldl_get_setting('submit_require_address'),
+        'directory_page'         => ldl()->get_option('directory_page'),
+        'disable_bootstrap'      => ldl()->get_option('disable_bootstrap'),
+        'google_maps'            => ldl()->get_option('google_maps'),
+        'submit_use_tos'         => ldl()->get_option('submit_use_tos'),
+        'submit_use_locale'      => ldl()->get_option('submit_use_locale'),
+        'submit_locale'          => ldl()->get_option('submit_locale'),
+        'submit_require_address' => ldl()->get_option('submit_require_address'),
     );
 
     return $options;
@@ -257,7 +257,7 @@ class ldd_directory_lite_pointers {
      * Class constructor.
      */
     private function __construct() {
-        if (current_user_can('manage_options') && !ldl_get_setting('allow_tracking_pointer_done')) {
+        if (current_user_can('manage_options') && !ldl()->get_option('allow_tracking_pointer_done')) {
             wp_enqueue_style('wp-pointer');
             wp_enqueue_script('jquery-ui');
             wp_enqueue_script('wp-pointer');

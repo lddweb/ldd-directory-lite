@@ -56,10 +56,10 @@ class ldd_directory_lite_import_from_plugin {
      * Register the page that we'll use to display the whole process
      */
     public function add_page() {
-        add_dashboard_page(__('Failed to import owner %s', 'ldd-directory-lite'), __('Failed to import owner %s', 'ldd-directory-lite'), 'manage_options', 'lddlite-import', array(
-                $this,
-                'import'
-            ));
+        add_dashboard_page(__('Running Import for LDD Business Directory', 'lddlite'), __('LDD Import', 'lddlite'), 'manage_options', 'lddlite-import', array(
+            $this,
+            'import'
+        ));
     }
 
     /**
@@ -107,10 +107,10 @@ class ldd_directory_lite_import_from_plugin {
 
         wp_defer_term_counting(true);
 
-        echo '<p>' . __('Failed to import owner %s', 'ldd-directory-lite');
+        echo '<p>' . __('Collecting data from original plugin...', 'lddlite');
         $this->_get_terms();
         $this->_get_posts();
-        echo ' ' . __('Failed to import owner %s', 'ldd-directory-lite') . '<p>';
+        echo ' ' . __('done.', 'lddlite') . '<p>';
 
         do_action('ldl_import_start');
     }
@@ -181,7 +181,7 @@ class ldd_directory_lite_import_from_plugin {
                 $term_id = wp_insert_term($term, LDDLITE_TAX_CAT);
                 // Discard errors, and don't add this to the map
                 if (is_wp_error($term_id)) {
-                    printf(__('Failed to import owner %s', 'ldd-directory-lite'), esc_html($term));
+                    printf(__('Failed to import category %s', 'lddlite'), esc_html($term));
                     echo ': ' . $term_id->get_error_message() . '<br>';
                 }
             }
@@ -190,7 +190,7 @@ class ldd_directory_lite_import_from_plugin {
 
         }
 
-        printf('<p>' . __('Failed to import owner %s', 'ldd-directory-lite') . '</p>', count($this->term_map));
+        printf('<p>' . __('Added %d listing categories.', 'lddlite') . '</p>', count($this->term_map));
         unset($this->terms);
 
     }
