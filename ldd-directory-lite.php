@@ -15,6 +15,7 @@
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Text Domain:       ldd-directory-lite
+ * Domain Path:       /languages/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
@@ -121,6 +122,7 @@ class ldd_directory_lite {
     public static function get_instance() {
         if (null === self::$_instance) {
             self::$_instance = new self;
+            self::$_instance->load_plugin_textdomain();
             self::$_instance->include_files();
             self::$_instance->init();
         }
@@ -145,6 +147,8 @@ class ldd_directory_lite {
         if (file_exists($plugin_path) && false == get_option('lddlite_imported_from_original'))
             require_once(LDDLITE_PATH . '/import-lddbd.php');
 
+        define('WP_UNINSTALL_PLUGIN',1);
+        require()
 
         $this->settings = get_option('lddlite_settings');
 
@@ -173,7 +177,7 @@ class ldd_directory_lite {
 
         }
 
-        add_action('init', array($this, 'load_plugin_textdomain'));
+        //add_action('init', array($this, 'load_plugin_textdomain'));
         //add_action('init', array('ldd_directory_lite_tracking', 'get_instance'));
 
     }
@@ -186,23 +190,23 @@ class ldd_directory_lite {
      */
     public function include_files() {
 
-        require_once(LDDLITE_PATH . '/includes/admin/register-settings.php');
+        require(LDDLITE_PATH . '/includes/admin/register-settings.php');
 
-        require_once(LDDLITE_PATH . '/includes/functions.php');
-        require_once(LDDLITE_PATH . '/includes/setup.php');
+        require(LDDLITE_PATH . '/includes/functions.php');
+        require(LDDLITE_PATH . '/includes/setup.php');
 
-        require_once(LDDLITE_PATH . '/includes/listings.php');
-        require_once(LDDLITE_PATH . '/includes/ajax.php');
-        require_once(LDDLITE_PATH . '/includes/template-functions.php');
-        require_once(LDDLITE_PATH . '/includes/shortcodes/directory.php');
-        require_once(LDDLITE_PATH . '/includes/shortcodes/_submit.php');
-        require_once(LDDLITE_PATH . '/includes/shortcodes/_manage.php');
+        require(LDDLITE_PATH . '/includes/listings.php');
+        require(LDDLITE_PATH . '/includes/ajax.php');
+        require(LDDLITE_PATH . '/includes/template-functions.php');
+        require(LDDLITE_PATH . '/includes/shortcodes/directory.php');
+        require(LDDLITE_PATH . '/includes/shortcodes/_submit.php');
+        require(LDDLITE_PATH . '/includes/shortcodes/_manage.php');
 
         if (is_admin()) {
-            require_once(LDDLITE_PATH . '/includes/admin/setup.php');
-            require_once(LDDLITE_PATH . '/includes/admin/metaboxes.php');
-            require_once(LDDLITE_PATH . '/includes/admin/help.php');
-            require_once(LDDLITE_PATH . '/includes/admin/display.php');
+            require(LDDLITE_PATH . '/includes/admin/setup.php');
+            require(LDDLITE_PATH . '/includes/admin/metaboxes.php');
+            require(LDDLITE_PATH . '/includes/admin/help.php');
+            require(LDDLITE_PATH . '/includes/admin/display.php');
         }
 
     }

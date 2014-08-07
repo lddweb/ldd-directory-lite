@@ -132,7 +132,7 @@ function ldl_get_registered_settings() {
                     'id' => 'email_toadmin_body',
                     'name' => __( 'Notification Message', 'ldd-directory-lite'),
                     'type' => 'rich_editor',
-                    'std'  => __('A new listing is pending review!', 'ldd-directory-lite') . "\n\n" . __('This submission is awaiting approval. Please visit the link to view and approve the new listing:', 'ldd-directory-lite') . "\n\n{approve_link}\n\n" . __('Listing Name:', 'ldd-directory-lite') . " {title}\n" . __('Listing Description:', 'ldd-directory-lite') . " {description}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {$site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
+                    'std'  => __('A new listing is pending review!', 'ldd-directory-lite') . "\n\n" . __('This submission is awaiting approval. Please visit the link to view and approve the new listing:', 'ldd-directory-lite') . "\n\n{approve_link}\n\n" . __('Listing Name:', 'ldd-directory-lite') . " {title}\n" . __('Listing Description:', 'ldd-directory-lite') . " {description}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
                 ),
                 'email_onsubmit_subject' => array(
                     'id' => 'email_onsubmit_subject',
@@ -145,7 +145,7 @@ function ldl_get_registered_settings() {
                     'id' => 'email_onsubmit_body',
                     'name' => __( 'Notification Message', 'ldd-directory-lite'),
                     'type' => 'rich_editor',
-                    'std'  => __('Thank you for submitting a listing to', 'ldd-directory-lite') . " {site_title}!\n\n" . __('Your listing is pending approval.', 'ldd-directory-lite') . "\n\n" . __('Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at', 'ldd-directory-lite') . " {directory_email}.\n\n" . __('Listing Name:', 'ldd-directory-lite') . " {title}\n" . __('Listing Description:', 'ldd-directory-lite') . " {description}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {$site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
+                    'std'  => __('Thank you for submitting a listing to', 'ldd-directory-lite') . " {site_title}!\n\n" . __('Your listing is pending approval.', 'ldd-directory-lite') . "\n\n" . __('Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at', 'ldd-directory-lite') . " {directory_email}.\n\n" . __('Listing Name:', 'ldd-directory-lite') . " {title}\n" . __('Listing Description:', 'ldd-directory-lite') . " {description}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
                 ),
                 'email_onapprove_subject' => array(
                     'id' => 'email_onapprove_subject',
@@ -158,7 +158,7 @@ function ldl_get_registered_settings() {
                     'id' => 'email_onapprove_body',
                     'name' => __( 'Notification Message', 'ldd-directory-lite'),
                     'type' => 'rich_editor',
-                    'std'  => __('Thank you for submitting a listing to', 'ldd-directory-lite') . " {site_title}!\n\n" . __('Your listing has been approved! You can now view it online:', 'ldd-directory-lite') . "\n\n{link}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {$site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
+                    'std'  => __('Thank you for submitting a listing to', 'ldd-directory-lite') . " {site_title}!\n\n" . __('Your listing has been approved! You can now view it online:', 'ldd-directory-lite') . "\n\n{link}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
                 ),
             )
         ),
@@ -333,6 +333,7 @@ function ldl_settings_sanitize( $input = array() ) {
 	$output = array_merge( $ldl_settings, $input );
 
 	add_settings_error( 'lddlite-notices', '', __( 'Settings updated.', 'ldd-directory-lite'), 'updated' );
+    flush_rewrite_rules();
 
 	return $output;
 }

@@ -44,7 +44,7 @@ function ldl_register_post_type() {
 
     $taxonomy_slug = ldl()->get_option('directory_taxonomy_slug', 'listings');
     $post_type_slug = ldl()->get_option('directory_post_type_slug', 'listing');
-
+//mdd(array($taxonomy_slug,$post_type_slug));
     register_taxonomy(LDDLITE_TAX_CAT, LDDLITE_POST_TYPE, array(
         'hierarchical'      => true,
         'show_ui'           => true,
