@@ -21,7 +21,7 @@ class SetupTest extends WP_UnitTestCase {
         $defaults = ldl_get_default_settings();
 
         foreach ($defaults as $k => $v) {
-            $setting = $this->plugin->get_setting($k);
+            $setting = $this->plugin->get_option($k);
             $this->assertTrue($v == $setting);
         }
     }
@@ -30,10 +30,10 @@ class SetupTest extends WP_UnitTestCase {
 
         $default_settings = ldl_get_default_settings();
         $key = key($default_settings);
-        $value = 'testing update_setting()';
+        $value = 'testing update_option()';
 
-        $this->plugin->update_setting($key, $value);
-        $this->assertTrue($value == $this->plugin->get_setting($key));
+        $this->plugin->update_option($key, $value);
+        $this->assertTrue($value == $this->plugin->get_option($key));
     }
 
 

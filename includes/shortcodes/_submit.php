@@ -192,10 +192,10 @@ function ldl_submit_create_meta($data, $post_id) {
  */
 function ldl_notify_admin($data, $post_id) {
 
-    $to = ldl_get_setting('email_notification_address');
-    $subject = ldl_get_setting('email_toadmin_subject');
+    $to = ldl()->get_option('email_notification_address');
+    $subject = ldl()->get_option('email_toadmin_subject');
 
-    $message = ldl_get_setting('email_toadmin_body');
+    $message = ldl()->get_option('email_toadmin_body');
     $message = str_replace('{aprove_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
     $message = str_replace('{title}', $data['title'], $message);
     $message = str_replace('{description}', $data['description'], $message);
@@ -216,12 +216,12 @@ function ldl_notify_author($data) {
 
     $to = $lddlite_submit_processor->get_value('contact_email');
 
-    $subject = ldl_get_setting('email_onsubmit_subject');
+    $subject = ldl()->get_option('email_onsubmit_subject');
 
-    $message = ldl_get_setting('email_onsubmit_body');
+    $message = ldl()->get_option('email_onsubmit_body');
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
-    $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
-    $message = str_replace('{directory_email}', ldl_get_setting('email_from_address'), $message);
+    $message = str_replace('{directory_title}', ldl()->get_option('directory_label'), $message);
+    $message = str_replace('{directory_email}', ldl()->get_option('email_from_address'), $message);
     $message = str_replace('{title}', $data['title'], $message);
 
     ldl_mail($to, $subject, $message);
@@ -244,11 +244,11 @@ function ldl_notify_when_approved($post) {
     $title = get_the_title($post->ID);
 
     $to = $user->data->user_email;
-    $subject = ldl_get_setting('email_onapprove_subject');
+    $subject = ldl()->get_option('email_onapprove_subject');
 
-    $message = ldl_get_setting('email_onapprove_body');
+    $message = ldl()->get_option('email_onapprove_body');
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
-    $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
+    $message = str_replace('{directory_title}', ldl()->get_option('directory_label'), $message);
     $message = str_replace('{title}', $title, $message);
     $message = str_replace('{link}', $permalink, $message);
 

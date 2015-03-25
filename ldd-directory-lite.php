@@ -5,17 +5,17 @@
  * @license   GPL-2.0+
  * @link      http://lddwebdesign.com
  * @copyright 2014 LDD Consulting, Inc
- *
  * @wordpress-plugin
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.8-beta
+ * Version:           0.8.1-beta
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Text Domain:       ldd-directory-lite
+ * Domain Path:       /languages/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '0.8-beta');
+define('LDDLITE_VERSION', '0.8.1-beta');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -36,14 +36,69 @@ define('LDDLITE_TAX_CAT', 'listing_category');
 define('LDDLITE_TAX_TAG', 'listing_tag');
 
 define('LDDLITE_PFX', 'lddlite');
-define('LDDLITE_NOLOGO', plugin_dir_url(__FILE__).'public/images/noimage.png');
+define('LDDLITE_NOLOGO', plugin_dir_url(__FILE__) . 'public/images/noimage.png');
 
 
 /**
  * Flush the rewrites for custom post types
  */
-register_activation_hook(__FILE__, 'flush_rewrite_rules');
+register_activation_hook(__FILE__, 'install_ldd_directory_lite');
 register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
+
+
+function install_ldd_directory_lite() {
+
+    flush_rewrite_rules();
+
+    $ldl_settings = get_option('lddlite_settings', array());
+
+    if (!isset($settings['directory_front_page'])) {
+        $directory = wp_insert_post(array(
+            'post_title'     => __('Directory', 'ldd-directory-lite'),
+            'post_name'      => 'directory',
+            'post_content'   => '[directory]',
+            'post_status'    => 'publish',
+            'post_type'      => 'page',
+            'comment_status' => 'closed',
+        ));
+
+        $submit = wp_insert_post(array(
+            'post_title'    => __('Submit a Listing', 'ldd-directory-lite'),
+            'post_name'     => 'submit-listing',
+            'post_content'  => '[directory_submit]',
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_parent'    => $directory,
+            'comment_status' => 'closed',
+        ));
+
+        $manage = wp_insert_post(array(
+            'post_title'    => __('Manage Listings', 'ldd-directory-lite'),
+            'post_name'     => 'manage-listings',
+            'post_content'  => '[directory_manage]',
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_parent'    => $directory,
+            'comment_status' => 'closed',
+        ));
+
+        $ldl_settings['directory_front_page'] = $directory;
+        $ldl_settings['directory_submit_page'] = $submit;
+        $ldl_settings['directory_manage_page'] = $manage;
+    }
+
+    foreach (ldl_get_default_settings() as $tab => $settings) {
+        foreach ($settings as $option) {
+
+            if ('checkbox' == $option['type'] && !empty($option['std'])) {
+                $ldl_settings[ $option['id'] ] = '1';
+            }
+
+        }
+    }
+
+    update_option('lddlite_settings', $ldl_settings);
+}
 
 
 /**
@@ -66,12 +121,10 @@ class ldd_directory_lite {
      */
     public static function get_instance() {
         if (null === self::$_instance) {
-            require_once(LDDLITE_PATH . '/includes/functions.php');
-            require_once(LDDLITE_PATH . '/includes/setup.php');
-
             self::$_instance = new self;
-            self::$_instance->init();
+            self::$_instance->load_plugin_textdomain();
             self::$_instance->include_files();
+            self::$_instance->init();
         }
 
         return self::$_instance;
@@ -81,8 +134,7 @@ class ldd_directory_lite {
     /**
      * Handles all pre-ignition, including checking for any necessary upgrades and populating the settings property.
      *
-     * @todo Anonymous usage tracking back in before stable
-     *
+     * @todo  Anonymous usage tracking back in before stable
      * @since 0.5.0
      */
     public function init() {
@@ -95,16 +147,15 @@ class ldd_directory_lite {
         if (file_exists($plugin_path) && false == get_option('lddlite_imported_from_original'))
             require_once(LDDLITE_PATH . '/import-lddbd.php');
 
+        define('WP_UNINSTALL_PLUGIN',1);
+        require()
 
-        $this->settings = wp_parse_args(get_option('lddlite_settings'), ldl_get_default_settings());
+        $this->settings = get_option('lddlite_settings');
 
         $version = get_option('lddlite_version');
 
         if (!$version) {
-
-            add_action('admin_notices', array($this, 'install_pages'));
             update_option('lddlite_version', LDDLITE_VERSION);
-
         } else if ($version && LDDLITE_VERSION != $version) {
             global $upgrades;
 
@@ -115,7 +166,7 @@ class ldd_directory_lite {
             foreach ($upgrades as $upgrade => $trigger) {
                 if (version_compare($version, $upgrade, '<')) {
                     $upgrade_available = true;
-                    $upgrades[$upgrade] = true;
+                    $upgrades[ $upgrade ] = true;
                 }
             }
 
@@ -126,7 +177,7 @@ class ldd_directory_lite {
 
         }
 
-        add_action('init', array($this, 'load_plugin_textdomain'));
+        //add_action('init', array($this, 'load_plugin_textdomain'));
         //add_action('init', array('ldd_directory_lite_tracking', 'get_instance'));
 
     }
@@ -139,70 +190,24 @@ class ldd_directory_lite {
      */
     public function include_files() {
 
-        // functions.php is included in the constructor
-        require_once(LDDLITE_PATH . '/includes/listings.php');
-        require_once(LDDLITE_PATH . '/includes/ajax.php');
-        require_once(LDDLITE_PATH . '/includes/template-functions.php');
-        require_once(LDDLITE_PATH . '/includes/shortcodes/directory.php');
-        require_once(LDDLITE_PATH . '/includes/shortcodes/_submit.php');
-        require_once(LDDLITE_PATH . '/includes/shortcodes/_manage.php');
+        require(LDDLITE_PATH . '/includes/admin/register-settings.php');
+
+        require(LDDLITE_PATH . '/includes/functions.php');
+        require(LDDLITE_PATH . '/includes/setup.php');
+
+        require(LDDLITE_PATH . '/includes/listings.php');
+        require(LDDLITE_PATH . '/includes/ajax.php');
+        require(LDDLITE_PATH . '/includes/template-functions.php');
+        require(LDDLITE_PATH . '/includes/shortcodes/directory.php');
+        require(LDDLITE_PATH . '/includes/shortcodes/_submit.php');
+        require(LDDLITE_PATH . '/includes/shortcodes/_manage.php');
 
         if (is_admin()) {
-            require_once(LDDLITE_PATH . '/includes/admin/metaboxes.php');
-            require_once(LDDLITE_PATH . '/includes/admin/settings.php');
-            require_once(LDDLITE_PATH . '/includes/admin/filters.php');
-            require_once(LDDLITE_PATH . '/includes/admin/sanitize.php');
-            require_once(LDDLITE_PATH . '/includes/admin/help.php');
+            require(LDDLITE_PATH . '/includes/admin/setup.php');
+            require(LDDLITE_PATH . '/includes/admin/metaboxes.php');
+            require(LDDLITE_PATH . '/includes/admin/help.php');
+            require(LDDLITE_PATH . '/includes/admin/display.php');
         }
-
-    }
-
-
-    /**
-     * Automatically install required pages on initial plugin activation. This feature should ultimately ask, and
-     * could have some more interaction from the user, but this will suffice between now and a stable release.
-     *
-     * @todo Migrate this to a notice that checks if directory_submit_page and directory_front_page are set; if
-     *       they aren't, recommend installing the pages for the user. Put a button on it. People like buttons.
-     */
-    public function install_pages() {
-
-        $directory_page = array(
-            'post_content'  => '[directory]',
-            'post_name'     => 'directory',
-            'post_title'    => __('Directory', 'ldd-directory-lite'),
-            'post_status'   => 'publish',
-            'post_type'     => 'page',
-            'post_date'     => date('Y-m-d H:i:s'),
-            'post_date_gmt' => gmdate('Y-m-d H:i:s'),
-        );
-
-        $submit_page = array(
-            'post_content'  => '[directory_submit]',
-            'post_name'     => 'submit-listing',
-            'post_title'    => __('Submit a Listing', 'ldd-directory-lite'),
-            'post_status'   => 'publish',
-            'post_type'     => 'page',
-            'post_date'     => date('Y-m-d H:i:s'),
-            'post_date_gmt' => gmdate('Y-m-d H:i:s'),
-        );
-
-        $post_id = wp_insert_post($directory_page);
-        if ($post_id)
-            $this->settings['directory_front_page'] = $post_id;
-
-        $post_id = wp_insert_post($submit_page);
-        if ($post_id)
-            $this->settings['directory_submit_page'] = $post_id;
-
-        $this->save_settings();
-
-        $html = '<div class="updated"><p>';
-        $html .= '<strong>' . __('[ldd directory lite installation notice]', 'ldd-directory-lite') . '</strong><br>';
-        $html .= sprintf(__('Required directory pages have been installed for you, please visit the <a href="%s">Edit Pages</a> screen to make any necessary adjustments.', 'ldd-directory-lite'), admin_url('edit.php?post_type=page'));
-        $html .= '</p></div>';
-
-        echo $html;
 
     }
 
@@ -218,62 +223,48 @@ class ldd_directory_lite {
     }
 
 
+    public function has_option($key) {
+        return isset($this->settings[ $key ]);
+    }
+
+
     /**
      * Gets a setting from the private $settings array and returns it. An empty string is returned if the setting
      * is not found in order to avoid triggering a false negative. Settings that may have a true|false value should
      * be explicitly tested.
      *
      * @since 0.5.3
-     *
-     * @param string $key The configuration setting we need the value of
-     *
-     * @return mixed An empty string, or the setting value
+     * @param string $key     Identify what setting is being requested
+     * @param mixed  $default Provide a default if the setting is not found
+     * @return mixed The value of the setting being requested
      */
-    public function get_setting($key) {
-        return isset($this->settings[$key]) ? $this->settings[$key] : '';
+    public function get_option($key, $default = '') {
+        $value = !empty($this->settings[ $key ]) ? $this->settings[ $key ] : $default;
+        $value = apply_filters('lddlite_get_option', $value, $key, $default);
+        return apply_filters('lddlite_get_option_' . $key, $value, $key, $default);
     }
 
-    /**
-     * An alias for update_setting() at present, may have further use in the future.
-     *
-     * @since 0.5.3
-     *
-     * @param string $key   The configuration setting we're updating
-     * @param mixed  $value The value for the configuration setting, leave empty to initialize
-     */
-    public function add_setting($key, $value = '') {
-        $this->update_setting($key, $value);
-    }
 
     /**
-     * Update a configuration setting stored in the private $settings array
+     * Update a setting and save it.
      *
      * @since 0.5.3
-     *
-     * @param string $key   The configuration setting we're updating
-     * @param mixed  $value The value for the configuration setting, leave empty to initialize
+     * @param string $key   Identifies the setting being updated
+     * @param mixed  $value The new value
      */
-    public function update_setting($key, $value = '') {
+    public function update_option($key, $value = '') {
 
-        if (empty($key) || !isset($this->settings[$key]))
+        if (empty($key))
             return;
 
-        $this->settings[$key] = $value;
-    }
+        $old_value = !empty($$this->settings[ $key ]) ? $this->settings[ $key ] : '';
+        $value = apply_filters('lddlite_update_option', $value, $key, $old_value);
+        $this->settings[ $value ] = apply_filters('lddlite_update_option_' . $key, $value, $key, $old_value);
+        return update_option('lddlite_settings', $this->settings);
 
-    /**
-     * Writes the $settings array to the database.
-     *
-     * @since 0.5.3
-     */
-    public function save_settings() {
-        if (!empty($this->settings)) {
-            update_option('lddlite_settings', $this->settings);
-        }
     }
 
 }
-
 
 /**
  * An alias for the ldd_directory_lite get_instance() method.

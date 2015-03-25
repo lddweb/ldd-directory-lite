@@ -113,7 +113,7 @@ function ldl_get_template_part($slug, $name = null) {
  * @since 0.6.0
  */
 function ldl_get_submit_link() {
-    $post_id = ldl_get_setting('directory_submit_page');
+    $post_id = ldl()->get_option('directory_submit_page');
 
     return ($post_id) ? get_permalink($post_id) : '';
 }
@@ -126,34 +126,9 @@ function ldl_get_submit_link() {
  * @TODO Code repetitititition, single function in the future? url helper class?
  */
 function ldl_get_manage_link() {
-    $post_id = ldl_get_setting('directory_manage_page');
+    $post_id = ldl()->get_option('directory_manage_page');
 
     return ($post_id) ? get_permalink($post_id) : '';
-}
-
-
-/**
- * Similar to WordPress core home_url(), this uses the directory_page setting to return a permalink
- * to the directory home page.
- *
- * @param string $path   Optional path relative to the home url.
- * @param string $scheme Optional scheme to use
- *
- * @return string Full permalink to the home page of our directory
- */
-function ldl_get_home_url($path = '', $scheme = null) {
-
-    $url = get_permalink(ldl_get_setting('directory_page'));
-
-    if (!in_array($scheme, array('http', 'https', 'relative')))
-        $scheme = is_ssl() ? 'https' : parse_url($url, PHP_URL_SCHEME);
-
-    $url = set_url_scheme($url, $scheme);
-
-    if ($path && is_string($path))
-        $url .= '/' . ltrim($path, '/');
-
-    return apply_filters('ldl_home_url', $url, $path);
 }
 
 
@@ -169,13 +144,13 @@ function ldl_use_google_maps() {
     if (is_single()) {
         global $geo;
 
-        if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl_get_setting('google_maps'))
+        if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl()->get_option('google_maps'))
             return false;
 
         return true;
     }
 
-    return ldl_get_setting('google_maps');
+    return ldl()->get_option('google_maps');
 }
 
 
@@ -269,7 +244,7 @@ function ldl_get_thumbnail($post_id, $size = 'directory-listing', $class = 'img-
  * set to true and content has been provided, get the appropriate template part.
  */
 function ldl_the_tos() {
-    if (!ldl_get_setting('submit_use_tos') || '' == ldl_get_setting('submit_tos')) {
+    if (!ldl()->get_option('submit_use_tos') || '' == ldl()->get_option('submit_tos')) {
         return;
     }
 

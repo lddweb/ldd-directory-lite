@@ -57,13 +57,13 @@ function ldl_customize_appearance() {
     $primary_defaults = array(
         'normal'     => '#3bafda',
         'hover'      => '#3071a9',
-        'foreground' => '#fff',
+        'foreground' => '#ffffff',
     );
 
     $primary_custom = array(
-        'normal'     => ldl_get_setting('appearance_primary_normal'),
-        'hover'      => ldl_get_setting('appearance_primary_hover'),
-        'foreground' => ldl_get_setting('appearance_primary_foreground'),
+        'normal'     => ldl()->get_option('appearance_primary_normal', '#3bafda'),
+        'hover'      => ldl()->get_option('appearance_primary_hover', '#3071a9'),
+        'foreground' => ldl()->get_option('appearance_primary_foreground', '#ffffff'),
     );
 
     if (array_diff($primary_defaults, $primary_custom)) {

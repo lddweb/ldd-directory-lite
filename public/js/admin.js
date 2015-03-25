@@ -1,7 +1,5 @@
 jQuery(document).ready(function ($) {
-    $('#appearance_primary_normal').wpColorPicker();
-    $('#appearance_primary_hover').wpColorPicker();
-    $('#appearance_primary_foreground').wpColorPicker();
+    $('.lddlite-color-picker').wpColorPicker();
 
     var uninstallCheck = $("input[id=lite-debug_uninstall]");
     var warningStack = $("p.warning");
@@ -25,20 +23,28 @@ jQuery(document).ready(function ($) {
 
 (function($) {
 
+    function setLatLng(position) {
+        window.latLng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+        window.latLng = 'something?';
+        console.log(window.latLng);
+    }
+
     $('.cmb-type-geo_location').each(function () {
-        var searchInput = $('.autocomplete', this)[ 0 ]
-        var mapCanvas = $('.map-canvas', this)[ 0 ]
-        var $lat = $('.lat', this)
-        var $lng = $('.lng', this)
+        var latLng;
+        var zoom = 16;
+
+        var searchInput = $('.autocomplete', this)[ 0 ];
+        var mapCanvas = $('.map-canvas', this)[ 0 ];
+        var $lat = $('.lat', this);
+        var $lng = $('.lng', this);
 
         var geocoder = new google.maps.Geocoder();
 
         if ($lat.val().length > 0 && $lng.val().length > 0) {
-            var latLng = new google.maps.LatLng($lat.val(), $lng.val())
-            var zoom = 16
+            latLng = new google.maps.LatLng($lat.val(), $lng.val())
         } else {
-            var latLng = new google.maps.LatLng(39.97712028761926, -102.70019568750001)
-            var zoom = 4
+            latLng = new google.maps.LatLng(39.97712028761926, -102.70019568750001)
+            zoom = 4
         }
 
         var mapOptions = {

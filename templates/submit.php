@@ -5,7 +5,7 @@
     <?php if ( ldl_has_errors() ): ?>
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong><?php _e("We're sorry!", 'lddlite'); ?></strong> <?php _e('There were some errors with the information you provided. Please check your submission and try again.', 'lddlite'); ?><br>
+            <strong><?php _e("We're sorry!", 'ldd-directory-lite'); ?></strong> <?php _e('There were some errors with the information you provided. Please check your submission and try again.', 'ldd-directory-lite'); ?><br>
         </div>
     <?php endif; ?>
 
@@ -32,9 +32,9 @@
         <div class="container-fluid">
             <div class="row bump-down-more">
                 <div class="col-md-12">
-                    <p class="text-success"><?php _e('Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.', 'lddlite'); ?></p>
+                    <p class="text-success"><?php _e('Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.', 'ldd-directory-lite'); ?></p>
                     <?php ldl_the_tos(); ?>
-                    <button type="submit" class="btn btn-primary"><?php _e('Submit Listing', 'lddlite'); ?></button>
+                    <button type="submit" class="btn btn-primary"><?php _e('Submit Listing', 'ldd-directory-lite'); ?></button>
                 </div>
             </div>
         </div>
