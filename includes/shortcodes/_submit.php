@@ -10,11 +10,6 @@
  */
 
 
-function ldl_submit_listing_nonce($nonce_action) {
-    return 'submit-listing';
-}
-add_filter('lddlite_processor_nonce_action', 'ldl_submit_listing_nonce');
-
 /**
  * Alias for wp_dropdown_categories() that uses our settings array to determine the output.
  */
@@ -43,6 +38,87 @@ function ldl_submit_categories_dropdown($selected = 0, $id = 'category', $classe
     echo wp_dropdown_categories($category_args);
 }
 
+/**
+ * Alias for wp_dropdown_categories() that uses our settings array to determine the output.
+ * Multiple categories selection.
+ */
+function ldl_submit_multi_categories_dropdown($selected = 0, $id = 'category', $classes = array('form-control')) {
+
+    $result = "";
+
+    if (is_string($classes)):
+        $classes = explode(' ', $classes);
+    endif;
+
+    $classes = apply_filters('lddlite_categories_dropdown_class', $classes);
+
+    $pfx = ldd_directory_lite_processor::DATA_PREFIX;
+    $name = $pfx . $id."[]";
+
+    $args_arr = array(
+        'orderby'	    => 'name',
+        'order'         => 'ASC',
+        'hide_empty'    => false,
+        'hierarchical'  => 1,
+        'parent'        => 0
+    );
+    $categories =  get_terms(LDDLITE_TAX_CAT,$args_arr);
+
+    $result = "<select name='$name' id='f_$id' class='".implode(' ', $classes)." multi_select_chosen' required multiple>";
+
+    foreach ($categories as $key => $cat) {
+        $result .= "<option ".get_selected($selected,$cat->term_id)." value='".$cat->term_id."'>".$cat->name."</option>";
+        $result .= get_child_categories($cat->term_id,LDDLITE_TAX_CAT);
+    }
+
+    $result .= "</select>";
+
+    echo $result;
+}
+
+/**
+ * get_selected()
+ * @param mixed $row
+ * @param mixed $value
+ * @return string
+ */
+function get_selected($row, $value) {
+    if(is_array($row)):
+        if(in_array($value,$row)):
+            return "selected=\"selected\"";
+        endif;
+    else:
+        if ($row == $value):
+            return "selected=\"selected\"";
+        endif;
+    endif;
+}
+
+/**
+ * get_child_categories()
+ * @param int $parent_id
+ * @param string $tax
+ * @return string
+ */
+function get_child_categories($parent_id,$tax,$indent = 1){
+    $result = "";
+
+    $args_arr = array(
+        'orderby'	    => 'name',
+        'order'         => 'ASC',
+        'hide_empty'    => false,
+        'hierarchical'  => 1,
+        'parent'        => $parent_id
+    );
+
+    $child_terms = get_terms($tax, $args_arr);
+    foreach ( $child_terms as $child_term ) {
+        $child_cat_name = str_repeat("&nbsp&nbsp&nbsp", $indent).$child_term->name;
+        $result .= '<option value="' . $child_term->term_id . '">' . $child_cat_name . '</option>';
+        $result .= get_child_categories($child_term->term_id,$tax,$indent+1);
+    }
+    return $result;
+}
 
 /**
  * Template alias for ldd_directory_lite_processor::get_value()
@@ -53,7 +129,7 @@ function ldl_submit_categories_dropdown($selected = 0, $id = 'category', $classe
  */
 function ldl_get_value($field) {
     global $lddlite_submit_processor;
-
+		
     return $lddlite_submit_processor->get_value($field);
 }
 
@@ -145,6 +221,13 @@ function ldl_submit_create_user($username, $email) {
  */
 function ldl_submit_create_post($name, $description, $summary, $cat_id, $user_id) {
 
+    if(is_array($cat_id)):
+        $cat_id = array_map( 'intval', $cat_id );
+        $cat_id = array_unique( $cat_id );
+    else:
+        $cat_id = (int) $cat_id;
+    endif;
+
     $args = array(
         'post_content' => $description,
         'post_excerpt' => $summary,
@@ -158,7 +241,7 @@ function ldl_submit_create_post($name, $description, $summary, $cat_id, $user_id
     $post_id = wp_insert_post($args);
 
     if (!is_wp_error($post_id)) {
-        wp_set_object_terms($post_id, (int) $cat_id, LDDLITE_TAX_CAT);
+        wp_set_object_terms($post_id, $cat_id, LDDLITE_TAX_CAT);
     }
 
     return $post_id;
@@ -192,10 +275,10 @@ function ldl_submit_create_meta($data, $post_id) {
  */
 function ldl_notify_admin($data, $post_id) {
 
-    $to = ldl_get_setting('email_notification_address');
-    $subject = ldl_get_setting('email_toadmin_subject');
+    $to = ldl()->get_option('email_notification_address');
+    $subject = ldl()->get_option('email_toadmin_subject');
 
-    $message = ldl_get_setting('email_toadmin_body');
+    $message = ldl()->get_option('email_toadmin_body');
     $message = str_replace('{aprove_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
     $message = str_replace('{title}', $data['title'], $message);
     $message = str_replace('{description}', $data['description'], $message);
@@ -216,12 +299,12 @@ function ldl_notify_author($data) {
 
     $to = $lddlite_submit_processor->get_value('contact_email');
 
-    $subject = ldl_get_setting('email_onsubmit_subject');
+    $subject = ldl()->get_option('email_onsubmit_subject');
 
-    $message = ldl_get_setting('email_onsubmit_body');
+    $message = ldl()->get_option('email_onsubmit_body');
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
-    $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
-    $message = str_replace('{directory_email}', ldl_get_setting('email_from_address'), $message);
+    $message = str_replace('{directory_title}', ldl()->get_option('directory_label'), $message);
+    $message = str_replace('{directory_email}', ldl()->get_option('email_from_address'), $message);
     $message = str_replace('{title}', $data['title'], $message);
 
     ldl_mail($to, $subject, $message);
@@ -244,11 +327,11 @@ function ldl_notify_when_approved($post) {
     $title = get_the_title($post->ID);
 
     $to = $user->data->user_email;
-    $subject = ldl_get_setting('email_onapprove_subject');
+    $subject = ldl()->get_option('email_onapprove_subject');
 
-    $message = ldl_get_setting('email_onapprove_body');
+    $message = ldl()->get_option('email_onapprove_body');
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
-    $message = str_replace('{directory_title}', ldl_get_setting('directory_label'), $message);
+    $message = str_replace('{directory_title}', ldl()->get_option('directory_label'), $message);
     $message = str_replace('{title}', $title, $message);
     $message = str_replace('{link}', $permalink, $message);
 

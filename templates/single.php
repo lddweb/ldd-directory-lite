@@ -7,7 +7,6 @@ get_header(); ?>
 
 <div id="primary" class="site-content directory-lite">
     <div id="content" role="main">
-
         <?php while (have_posts()) : the_post(); ?>
 
         <header class="entry-header">
@@ -15,6 +14,11 @@ get_header(); ?>
         </header><!-- .entry-header -->
 
         <?php ldl_get_header(); ?>
+        <ol class="breadcrumb bc-ldd">
+          <li><a href="<?php echo ldl_get_directory_link(); ?>">Home</a></li>
+          <li><a href="#"><?php echo get_the_term_list(get_the_id(),LDDLITE_TAX_CAT,"",", "); ?></a></li>
+          <li class="active"><?php the_title(); ?></li>
+        </ol>
 
         <article id="listing-<?php the_ID(); ?>" <?php post_class(); ?>>
             <div class="container-fluid">

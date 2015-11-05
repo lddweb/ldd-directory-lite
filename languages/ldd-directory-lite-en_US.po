@@ -1,0 +1,1850 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: LDD Directory Lite v0.8.4-beta\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/ldd-directory-lite\n"
+"POT-Creation-Date: 2014-07-28 18:20:02+00:00\n"
+"PO-Revision-Date: 2015-01-06 15:47:17+0000\n"
+"Last-Translator: Farjad Tahir <farjad.t@allshoreresources.com>\n"
+"Language-Team: LDD Web Design <info@lddwebdesign.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.7.1\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: import-lddbd.php:233
+#, php-format
+#@ ldd-directory-lite
+msgid "Failed to import owner %s"
+msgstr "Failed to import owner %s"
+
+#: import-lddbd.php:80
+#@ ldd-directory-lite
+msgid "Importing content from LDD Business Directory"
+msgstr "Importing content from LDD Business Directory"
+
+#: import-lddbd.php:243
+#, php-format
+#@ ldd-directory-lite
+msgid "Added %d listing owners."
+msgstr "Added %d listing owners."
+
+#: import-lddbd.php:279
+#@ ldd-directory-lite
+msgid "Listing already exists"
+msgstr "Listing already exists"
+
+#: import-lddbd.php:294
+#, php-format
+#@ ldd-directory-lite
+msgid "Failed to add listing %s"
+msgstr "Failed to add listing %s"
+
+#: import-lddbd.php:320
+#@ ldd-directory-lite
+msgid "Added listing"
+msgstr "Added listing"
+
+#: import-lddbd.php:327
+#, php-format
+#@ ldd-directory-lite
+msgid "Added a total of %d new listings."
+msgstr "Added a total of %d new listings."
+
+#: import-lddbd.php:337
+#@ ldd-directory-lite
+msgid "Adding listing meta information..."
+msgstr "Adding listing meta information..."
+
+#: import-lddbd.php:113
+#: import-lddbd.php:383
+#: import-lddbd.php:449
+#: import-lddbd.php:526
+#@ ldd-directory-lite
+msgid "done."
+msgstr "done."
+
+#: import-lddbd.php:393
+#@ ldd-directory-lite
+msgid "Importing logo's..."
+msgstr "Importing logo's..."
+
+#: import-lddbd.php:461
+#@ ldd-directory-lite
+msgid "Updating file attachments..."
+msgstr "Updating file attachments..."
+
+#: import-lddbd.php:548
+#@ ldd-directory-lite
+msgid "All done!"
+msgstr "All done!"
+
+#: import-lddbd.php:548
+#@ ldd-directory-lite
+msgid "Passwords have been reset for security purposes, please notify your users!"
+msgstr "Passwords have been reset for security purposes, please notify your users!"
+
+#: import-lddbd.php:549
+#@ ldd-directory-lite
+msgid "Return to WordPress Dashboard"
+msgstr "Return to WordPress Dashboard"
+
+#: import-lddbd.php:550
+#: includes/admin/display.php:38
+#@ ldd-directory-lite
+msgid "Directory Settings"
+msgstr "Directory Settings"
+
+#: import-lddbd.php:615
+#@ ldd-directory-lite
+msgid "Existing data has been detected!"
+msgstr "Existing data has been detected!"
+
+#: import-lddbd.php:616
+#@ ldd-directory-lite
+msgid "It looks like you have data from the LDD Business Directory plugin! Would you like to import this?"
+msgstr "It looks like you have data from the LDD Business Directory plugin! Would you like to import this?"
+
+#: import-lddbd.php:617
+#@ ldd-directory-lite
+msgid "Import Data."
+msgstr "Import Data."
+
+#: import-lddbd.php:618
+#@ ldd-directory-lite
+msgid "If you do not wish to import your existing data, you can"
+msgstr "If you do not wish to import your existing data, you can"
+
+#: import-lddbd.php:618
+#@ ldd-directory-lite
+msgid "dismiss"
+msgstr "dismiss"
+
+#: import-lddbd.php:618
+#@ ldd-directory-lite
+msgid "this notice."
+msgstr "this notice."
+
+#: includes/admin/setup.php:61
+#@ ldd-directory-lite
+msgid "Listing Name"
+msgstr "Listing Name"
+
+#: includes/admin/setup.php:78
+#@ default
+msgid "Set featured image"
+msgstr "Set featured image"
+
+#: includes/admin/setup.php:78
+#@ ldd-directory-lite
+msgid "Upload A Logo"
+msgstr "Upload A Logo"
+
+#: includes/admin/setup.php:79
+#@ default
+msgid "Remove featured image"
+msgstr "Remove featured image"
+
+#: includes/admin/setup.php:79
+#@ ldd-directory-lite
+msgid "Remove Logo"
+msgstr "Remove Logo"
+
+#: includes/admin/help.php:18
+#@ ldd-directory-lite
+msgid "Helpful Links:"
+msgstr "Helpful Links:"
+
+#: includes/admin/help.php:18
+#, php-format
+#@ ldd-directory-lite
+msgid "Please visit us on <a href=\"%s\">WordPress.org</a> for help, faqs, and other documentation."
+msgstr "Please visit us on <a href=\"%s\">WordPress.org</a> for help, faqs, and other documentation."
+
+#: includes/admin/help.php:18
+#@ ldd-directory-lite
+msgid "Found a bug?"
+msgstr "Found a bug?"
+
+#: includes/admin/help.php:18
+#, php-format
+#@ ldd-directory-lite
+msgid "<a href=\"%s\">Submit issues</a> on <a href=\"%s\">GitHub</a>."
+msgstr "<a href=\"%s\">Submit issues</a> on <a href=\"%s\">GitHub</a>."
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "The general settings tab is where you'll configure most of the primary operations for your directory. This includes identifying pages where the shortcodes have been embedded, defining permalink slugs, and more."
+msgstr "The general settings tab is where you'll configure most of the primary operations for your directory. This includes identifying pages where the shortcodes have been embedded, defining permalink slugs, and more."
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "Page Settings"
+msgstr "Page Settings"
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "The first two settings on this tab tell the plugin where you've placed the shortcodes <code>[directory]</code> and <code>[directory_submit]</code>. Don't forget to set these, as a few functions rely on them to return proper permalinks."
+msgstr "The first two settings on this tab tell the plugin where you've placed the shortcodes <code>[directory]</code> and <code>[directory_submit]</code>. Don't forget to set these, as a few functions rely on them to return proper permalinks."
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "Custom Slugs"
+msgstr "Custom Slugs"
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "The taxonomy and post type slugs determine how a URL will appear when viewing either the category display pages or an individual listing. Remember that you probably want these to be different from the page slugs where you placed the shortcodes."
+msgstr "The taxonomy and post type slugs determine how a URL will appear when viewing either the category display pages or an individual listing. Remember that you probably want these to be different from the page slugs where you placed the shortcodes."
+
+#: includes/admin/help.php:20
+#: includes/admin/register-settings.php:62
+#@ ldd-directory-lite
+msgid "Directory Information"
+msgstr "Directory Information"
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "Tell us a little about your directory here. The information you provide can be displyed by using the <code>[directory_info]</code> shortcode, or via macros in email notifications."
+msgstr "Tell us a little about your directory here. The information you provide can be displyed by using the <code>[directory_info]</code> shortcode, or via macros in email notifications."
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "Other Settings"
+msgstr "Other Settings"
+
+#: includes/admin/help.php:20
+#@ ldd-directory-lite
+msgid "Most of the settings found under the \"Other\" heading are set once and forget type features. From here you can enable or disable anonymous usage tracking (we recommend enabling it, this information helps us improve future versions of the plugin), determine whether your directory accepts public submissions and more."
+msgstr "Most of the settings found under the \"Other\" heading are set once and forget type features. From here you can enable or disable anonymous usage tracking (we recommend enabling it, this information helps us improve future versions of the plugin), determine whether your directory accepts public submissions and more."
+
+#: includes/admin/help.php:23
+#@ ldd-directory-lite
+msgid "General Settings"
+msgstr "General Settings"
+
+#: includes/admin/help.php:28
+#@ ldd-directory-lite
+msgid "The settings available on the Email tab of your directory plugin settings allows you to control how email notifications appear."
+msgstr "The settings available on the Email tab of your directory plugin settings allows you to control how email notifications appear."
+
+#: includes/admin/help.php:29
+#@ ldd-directory-lite
+msgid "New Listing Notification"
+msgstr "New Listing Notification"
+
+#: includes/admin/help.php:29
+#@ ldd-directory-lite
+msgid "This is sent to the administrative email (will default to WordPress settings if not configured) and is to notify site owners that a new listing is pending their review. Available macros include:"
+msgstr "This is sent to the administrative email (will default to WordPress settings if not configured) and is to notify site owners that a new listing is pending their review. Available macros include:"
+
+#: includes/admin/help.php:30
+#@ ldd-directory-lite
+msgid "This will provide a clickable link straight to the dashboard for reviewing and approving listings."
+msgstr "This will provide a clickable link straight to the dashboard for reviewing and approving listings."
+
+#: includes/admin/help.php:31
+#@ ldd-directory-lite
+msgid "This is the title of the newly submitted listing."
+msgstr "This is the title of the newly submitted listing."
+
+#: includes/admin/help.php:32
+#@ ldd-directory-lite
+msgid "This is an excerpt of the the listing description."
+msgstr "This is an excerpt of the the listing description."
+
+#: includes/admin/help.php:33
+#@ ldd-directory-lite
+msgid "Author Receipt"
+msgstr "Author Receipt"
+
+#: includes/admin/help.php:33
+#@ ldd-directory-lite
+msgid "This is a receipt sent to the author of a new listing, and a good place to keep them informed of your terms, and approval times. Available macros include:"
+msgstr "This is a receipt sent to the author of a new listing, and a good place to keep them informed of your terms, and approval times. Available macros include:"
+
+#: includes/admin/help.php:34
+#: includes/admin/help.php:39
+#@ ldd-directory-lite
+msgid "The site title as defined in your WordPress settings."
+msgstr "The site title as defined in your WordPress settings."
+
+#: includes/admin/help.php:35
+#: includes/admin/help.php:40
+#@ ldd-directory-lite
+msgid "The directory label, set on the General tab."
+msgstr "The directory label, set on the General tab."
+
+#: includes/admin/help.php:36
+#@ ldd-directory-lite
+msgid "The from email address set on the Email tab."
+msgstr "The from email address set on the Email tab."
+
+#: includes/admin/help.php:37
+#: includes/admin/help.php:41
+#@ ldd-directory-lite
+msgid "The title of the listing they submitted."
+msgstr "The title of the listing they submitted."
+
+#: includes/admin/help.php:38
+#@ ldd-directory-lite
+msgid "Listing Approved"
+msgstr "Listing Approved"
+
+#: includes/admin/help.php:38
+#@ ldd-directory-lite
+msgid "Sent to the listing author when their listing status is updated from Pending Review to Approved. This will only be sent once, so if a listing status is changed and later set back to Approved a second email will not be sent. Available macros include:"
+msgstr "Sent to the listing author when their listing status is updated from Pending Review to Approved. This will only be sent once, so if a listing status is changed and later set back to Approved a second email will not be sent. Available macros include:"
+
+#: includes/admin/help.php:42
+#@ ldd-directory-lite
+msgid "A clickable link to view the newly approved listing."
+msgstr "A clickable link to view the newly approved listing."
+
+#: includes/admin/help.php:45
+#@ ldd-directory-lite
+msgid "Email Settings"
+msgstr "Email Settings"
+
+#: includes/admin/help.php:50
+#@ ldd-directory-lite
+msgid "In most directories the submission process will play an integral role in developing relationships and generating quality content."
+msgstr "In most directories the submission process will play an integral role in developing relationships and generating quality content."
+
+#: includes/admin/help.php:50
+#@ ldd-directory-lite
+msgid "As mentioned in the help section for the Appearance tab, there is a template that you can modify to more closely match the Submit Form with your sites look and feel. This template is <code>/templates/submit.php</code> and can be placed in your theme directory under <code>/lddlite_templates/submit.php</code> to ensure your edits aren't overwritten."
+msgstr "As mentioned in the help section for the Appearance tab, there is a template that you can modify to more closely match the Submit Form with your sites look and feel. This template is <code>/templates/submit.php</code> and can be placed in your theme directory under <code>/lddlite_templates/submit.php</code> to ensure your edits aren't overwritten."
+
+#: includes/admin/help.php:50
+#: includes/admin/register-settings.php:176
+#@ ldd-directory-lite
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+#: includes/admin/help.php:50
+#@ ldd-directory-lite
+msgid "A default terms of service agreement isn't included with the plugin since it would be too difficult to craft one that covered every individual situation. If you wish to include an agreement that your users must accept prior to submitting new listings, configure it here."
+msgstr "A default terms of service agreement isn't included with the plugin since it would be too difficult to craft one that covered every individual situation. If you wish to include an agreement that your users must accept prior to submitting new listings, configure it here."
+
+#: includes/admin/help.php:53
+#@ ldd-directory-lite
+msgid "Submit Form Settings"
+msgstr "Submit Form Settings"
+
+#: includes/admin/help.php:57
+#@ ldd-directory-lite
+msgid "The Appearance tab allows you to customize some basic presentation features to help match the look and feel of the directory with your WordPress theme."
+msgstr "The Appearance tab allows you to customize some basic presentation features to help match the look and feel of the directory with your WordPress theme."
+
+#: includes/admin/help.php:58
+#@ ldd-directory-lite
+msgid "We tried to design the plugin in such a way that it would fit in with most themes straight out of the box, but given the sheer number of available themes or the fact that you may be using this plugin within a completely bespoke design, it is impossible to anticipate every situation."
+msgstr "We tried to design the plugin in such a way that it would fit in with most themes straight out of the box, but given the sheer number of available themes or the fact that you may be using this plugin within a completely bespoke design, it is impossible to anticipate every situation."
+
+#: includes/admin/help.php:59
+#@ ldd-directory-lite
+msgid "Colors"
+msgstr "Colors"
+
+#: includes/admin/help.php:59
+#@ ldd-directory-lite
+msgid "Unless otherwise noted, these will always be in the order of normal state, hover state, and foreground. In some cases these will affect multiple elements with and without hover states, so always be sure to check after making changes."
+msgstr "Unless otherwise noted, these will always be in the order of normal state, hover state, and foreground. In some cases these will affect multiple elements with and without hover states, so always be sure to check after making changes."
+
+#: includes/admin/help.php:60
+#@ ldd-directory-lite
+msgid "Template Files"
+msgstr "Template Files"
+
+#: includes/admin/help.php:60
+#@ ldd-directory-lite
+msgid "Most of the presentation is generated through the use of template files, just like those used in a WordPress theme."
+msgstr "Most of the presentation is generated through the use of template files, just like those used in a WordPress theme."
+
+#: includes/admin/help.php:61
+#@ ldd-directory-lite
+msgid "These are all located in the <code>/templates</code> sub-directory of your directory plugin files. To avoid losing any customizations the next time the plugin updates, you can copy these (in whole or part) to a <code>/lddlite_templates</code> sub-directory of your theme. Only copy the files you need to customize!"
+msgstr "These are all located in the <code>/templates</code> sub-directory of your directory plugin files. To avoid losing any customizations the next time the plugin updates, you can copy these (in whole or part) to a <code>/lddlite_templates</code> sub-directory of your theme. Only copy the files you need to customize!"
+
+#: includes/admin/help.php:62
+#@ ldd-directory-lite
+msgid "Any presentation not controlled by a template should have a WordPress filter attached to it. These will always be in the format of 'lddlite_filter_presentation_{name}' and developer documentation will be available on our web site soon."
+msgstr "Any presentation not controlled by a template should have a WordPress filter attached to it. These will always be in the format of 'lddlite_filter_presentation_{name}' and developer documentation will be available on our web site soon."
+
+#: includes/admin/help.php:65
+#@ ldd-directory-lite
+msgid "Appearance Settings"
+msgstr "Appearance Settings"
+
+#: includes/admin/metaboxes.php:19
+#: includes/admin/metaboxes.php:35
+#: templates/edit-details.php:42
+#: templates/panel-general.php:46
+#@ ldd-directory-lite
+msgid "Summary"
+msgstr "Summary"
+
+#: includes/admin/metaboxes.php:33
+#: templates/panel-general.php:28
+#@ ldd-directory-lite
+msgid "Logo"
+msgstr "Logo"
+
+#: includes/admin/metaboxes.php:34
+#@ ldd-directory-lite
+msgid "Owner"
+msgstr "Owner"
+
+#: includes/admin/metaboxes.php:70
+#@ ldd-directory-lite
+msgid "Location"
+msgstr "Location"
+
+#: includes/admin/metaboxes.php:98
+#@ ldd-directory-lite
+msgid "Use the map above to set the location for this listing. The text field will attempt to autocomplete any address you enter, or you can drag the marker directly on the map to set the location."
+msgstr "Use the map above to set the location for this listing. The text field will attempt to autocomplete any address you enter, or you can drag the marker directly on the map to set the location."
+
+#: includes/admin/metaboxes.php:108
+#@ ldd-directory-lite
+msgid "Web Addresses"
+msgstr "Web Addresses"
+
+#: includes/admin/metaboxes.php:115
+#: templates/edit-social.php:16
+#: templates/panel-meta.php:36
+#@ ldd-directory-lite
+msgid "Website"
+msgstr "Website"
+
+#: includes/admin/metaboxes.php:116
+#@ ldd-directory-lite
+msgid "Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>"
+msgstr "Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>"
+
+#: includes/admin/metaboxes.php:121
+#: templates/edit-social.php:24
+#: templates/panel-meta.php:44
+#@ ldd-directory-lite
+msgid "Facebook"
+msgstr "Facebook"
+
+#: includes/admin/metaboxes.php:122
+#@ ldd-directory-lite
+msgid "This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>."
+msgstr "This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>."
+
+#: includes/admin/metaboxes.php:127
+#: templates/edit-social.php:32
+#: templates/panel-meta.php:52
+#@ ldd-directory-lite
+msgid "Twitter"
+msgstr "Twitter"
+
+#: includes/admin/metaboxes.php:128
+#@ ldd-directory-lite
+msgid "Enter the entire url (<code>www.twitter.com/username</code>) or just the username."
+msgstr "Enter the entire url (<code>www.twitter.com/username</code>) or just the username."
+
+#: includes/admin/metaboxes.php:133
+#@ ldd-directory-lite
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: includes/admin/metaboxes.php:134
+#@ ldd-directory-lite
+msgid "This should start with <code>www.linkedin.com</code>"
+msgstr "This should start with <code>www.linkedin.com</code>"
+
+#: includes/admin/metaboxes.php:144
+#@ ldd-directory-lite
+msgid "Contact Information"
+msgstr "Contact Information"
+
+#: includes/admin/metaboxes.php:151
+#: templates/edit-contact.php:16
+#: templates/panel-meta.php:11
+#@ ldd-directory-lite
+msgid "Email"
+msgstr "Email"
+
+#: includes/admin/metaboxes.php:156
+#: templates/edit-contact.php:23
+#: templates/panel-meta.php:20
+#@ ldd-directory-lite
+msgid "Phone"
+msgstr "Phone"
+
+#: includes/admin/metaboxes.php:161
+#: templates/edit-contact.php:30
+#: templates/panel-meta.php:27
+#@ ldd-directory-lite
+msgid "Fax"
+msgstr "Fax"
+
+#: includes/admin/metaboxes.php:222
+#@ ldd-directory-lite
+msgid "Approve"
+msgstr "Approve"
+
+#: includes/admin/metaboxes.php:225
+#@ ldd-directory-lite
+msgid "Approved"
+msgstr "Approved"
+
+#: includes/admin/metaboxes.php:228
+#, php-format
+#@ ldd-directory-lite
+msgid "Approved on: <b>%1$s</b>"
+msgstr "Approved on: <b>%1$s</b>"
+
+#: includes/admin/metaboxes.php:231
+#@ ldd-directory-lite
+msgid "Approve <b>immediately</b>"
+msgstr "Approve <b>immediately</b>"
+
+#: includes/admin/metaboxes.php:234
+#, php-format
+#@ ldd-directory-lite
+msgid "Approve on: <b>%1$s</b>"
+msgstr "Approve on: <b>%1$s</b>"
+
+#: includes/setup.php:74
+#@ ldd-directory-lite
+msgid "Add Listing"
+msgstr "Add Listing"
+
+#: includes/admin/register-settings.php:27
+#@ ldd-directory-lite
+msgid "Front Page"
+msgstr "Front Page"
+
+#: includes/admin/register-settings.php:48
+#@ ldd-directory-lite
+msgid "Taxonomy Slug"
+msgstr "Taxonomy Slug"
+
+#: includes/admin/register-settings.php:55
+#@ ldd-directory-lite
+msgid "Post Type Slug"
+msgstr "Post Type Slug"
+
+#: includes/admin/register-settings.php:67
+#@ ldd-directory-lite
+msgid "Directory Label"
+msgstr "Directory Label"
+
+#: includes/admin/register-settings.php:73
+#@ ldd-directory-lite
+msgid "Directory Description"
+msgstr "Directory Description"
+
+#: includes/admin/register-settings.php:83
+#@ ldd-directory-lite
+msgid "Allow Tracking"
+msgstr "Allow Tracking"
+
+#: includes/admin/register-settings.php:28
+#@ ldd-directory-lite
+msgid "This is the page where the <code>[directory]</code> shortcode has been placed."
+msgstr "This is the page where the <code>[directory]</code> shortcode has been placed."
+
+#: includes/admin/register-settings.php:35
+#@ ldd-directory-lite
+msgid "This is the page where the <code>[directory_submit]</code> shortcode has been placed."
+msgstr "This is the page where the <code>[directory_submit]</code> shortcode has been placed."
+
+#: includes/admin/register-settings.php:42
+#@ ldd-directory-lite
+msgid "This is the page where the <code>[directory_manage]</code> shortcode has been placed."
+msgstr "This is the page where the <code>[directory_manage]</code> shortcode has been placed."
+
+#: includes/admin/register-settings.php:68
+#@ ldd-directory-lite
+msgid "Name your directory; \"My Business Directory\", \"Local Restaurant Feed\", \"John's List of Links\", etc."
+msgstr "Name your directory; \"My Business Directory\", \"Local Restaurant Feed\", \"John's List of Links\", etc."
+
+#: includes/admin/register-settings.php:90
+#@ ldd-directory-lite
+msgid "This toggles the display of Google Maps for listings that have an address set."
+msgstr "This toggles the display of Google Maps for listings that have an address set."
+
+#: includes/admin/register-settings.php:100
+#@ ldd-directory-lite
+msgid "From Name"
+msgstr "From Name"
+
+#: includes/admin/register-settings.php:101
+#@ ldd-directory-lite
+msgid "This forms the first part of outgoing messages, "
+msgstr "This forms the first part of outgoing messages, "
+
+#: includes/admin/register-settings.php:108
+#@ ldd-directory-lite
+msgid "This forms the second part of outgoing messages, "
+msgstr "This forms the second part of outgoing messages, "
+
+#: includes/admin/register-settings.php:171
+#@ ldd-directory-lite
+msgid "Check this to require users agree to your terms of service (defined below) before submitting a listing."
+msgstr "Check this to require users agree to your terms of service (defined below) before submitting a listing."
+
+#: includes/admin/register-settings.php:182
+#@ ldd-directory-lite
+msgid "This will be displayed at the top of the submit listing form."
+msgstr "This will be displayed at the top of the submit listing form."
+
+#: includes/admin/register-settings.php:189
+#@ ldd-directory-lite
+msgid "Displayed following a successful listing submission."
+msgstr "Displayed following a successful listing submission."
+
+#: includes/admin/register-settings.php:200
+#@ ldd-directory-lite
+msgid "Disable Bootstrap"
+msgstr "Disable Bootstrap"
+
+#: includes/admin/register-settings.php:201
+#@ ldd-directory-lite
+msgid "You can disable the Bootstrap CSS library if your theme already loads a copy, or if you want to use entirely custom CSS."
+msgstr "You can disable the Bootstrap CSS library if your theme already loads a copy, or if you want to use entirely custom CSS."
+
+#: includes/admin/register-settings.php:335
+#@ ldd-directory-lite
+msgid "Settings updated."
+msgstr "Settings updated."
+
+#: includes/admin/display.php:41
+#@ ldd-directory-lite
+msgid "Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links."
+msgstr "Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links."
+
+#: includes/admin/display.php:45
+#@ ldd-directory-lite
+msgid "Submit an Issue"
+msgstr "Submit an Issue"
+
+#: includes/admin/display.php:49
+#@ ldd-directory-lite
+msgid "WordPress.org"
+msgstr "WordPress.org"
+
+#: includes/admin/display.php:53
+#@ ldd-directory-lite
+msgid "Support Forums"
+msgstr "Support Forums"
+
+#: includes/admin/display.php:56
+#@ ldd-directory-lite
+msgid "GitHub.com"
+msgstr "GitHub.com"
+
+#: includes/admin/register-settings.php:353
+#@ ldd-directory-lite
+msgid "General"
+msgstr "General"
+
+#: includes/admin/register-settings.php:356
+#@ ldd-directory-lite
+msgid "Appearance"
+msgstr "Appearance"
+
+#: includes/ajax.php:33
+#@ ldd-directory-lite
+msgid "Your message has been successfully sent to the email address we have on file!"
+msgstr "Your message has been successfully sent to the email address we have on file!"
+
+#: includes/ajax.php:59
+#@ ldd-directory-lite
+msgid "You must enter your name"
+msgstr "You must enter your name"
+
+#: includes/ajax.php:61
+#@ ldd-directory-lite
+msgid "Please enter a valid email address"
+msgstr "Please enter a valid email address"
+
+#: includes/ajax.php:63
+#@ ldd-directory-lite
+msgid "You must enter a subject"
+msgstr "You must enter a subject"
+
+#: includes/ajax.php:65
+#@ ldd-directory-lite
+msgid "Please enter a longer message"
+msgstr "Please enter a longer message"
+
+#: includes/ajax.php:67
+#@ ldd-directory-lite
+msgid "Your math is wrong"
+msgstr "Your math is wrong"
+
+#: includes/ajax.php:73
+#@ ldd-directory-lite
+msgid "There were errors with your form submission. Please try again."
+msgstr "There were errors with your form submission. Please try again."
+
+#: includes/ajax.php:88
+#, php-format
+#@ ldd-directory-lite
+msgid "Your message has been successfully sent to <em>%s</em>!"
+msgstr "Your message has been successfully sent to <em>%s</em>!"
+
+#: includes/ajax.php:93
+#@ ldd-directory-lite
+msgid "There were unknown errors with your form submission.</p><p>Please wait a while and then try again."
+msgstr "There were unknown errors with your form submission.</p><p>Please wait a while and then try again."
+
+#: includes/class.processor.php:113
+#@ ldd-directory-lite
+msgid "This field is required."
+msgstr "This field is required."
+
+#: includes/class.processor.php:251
+#@ ldd-directory-lite
+msgid "The email address provided doesn't appear to be valid."
+msgstr "The email address provided doesn't appear to be valid."
+
+#: includes/class.processor.php:259
+#@ ldd-directory-lite
+msgid "We were unable to verify that URL, please check it and try again."
+msgstr "We were unable to verify that URL, please check it and try again."
+
+#: includes/class.processor.php:264
+#@ ldd-directory-lite
+msgid "Something went wrong validating that location, please try again."
+msgstr "Something went wrong validating that location, please try again."
+
+#: includes/class.processor.php:287
+#@ ldd-directory-lite
+msgid "Please verify that you have read and agree to our terms of service before continuing."
+msgstr "Please verify that you have read and agree to our terms of service before continuing."
+
+#: includes/class.tracking.php:228
+#@ default
+msgid "Thank you for updating to the latest LDD Directory version! You can add, edit or remove listings from this menu. Some new features have been added since last time, so be sure to review your settings!"
+msgstr "Thank you for updating to the latest LDD Directory version! You can add, edit or remove listings from this menu. Some new features have been added since last time, so be sure to review your settings!"
+
+#: includes/class.tracking.php:279
+#@ ldd-directory-lite
+msgid "Help improve LDD Directory Lite"
+msgstr "Help improve LDD Directory Lite"
+
+#: includes/class.tracking.php:280
+#@ ldd-directory-lite
+msgid "Usage tracking is completely anonymous and allows us to know what configurations, plugins and themes we should be testing future versions of our plugin with."
+msgstr "Usage tracking is completely anonymous and allows us to know what configurations, plugins and themes we should be testing future versions of our plugin with."
+
+#: includes/class.tracking.php:305
+#@ ldd-directory-lite
+msgid "Do not allow tracking"
+msgstr "Do not allow tracking"
+
+#: includes/class.tracking.php:317
+#@ ldd-directory-lite
+msgid "Allow tracking"
+msgstr "Allow tracking"
+
+#: includes/cmb/example-functions.php:28
+#@ cmb
+msgid "Test Metabox"
+msgstr "Test Metabox"
+
+#: includes/cmb/example-functions.php:36
+#: includes/cmb/example-functions.php:269
+#@ cmb
+msgid "Test Text"
+msgstr "Test Text"
+
+#: includes/cmb/example-functions.php:37
+#: includes/cmb/example-functions.php:47
+#: includes/cmb/example-functions.php:54
+#: includes/cmb/example-functions.php:61
+#: includes/cmb/example-functions.php:69
+#: includes/cmb/example-functions.php:76
+#: includes/cmb/example-functions.php:88
+#: includes/cmb/example-functions.php:94
+#: includes/cmb/example-functions.php:101
+#: includes/cmb/example-functions.php:116
+#: includes/cmb/example-functions.php:124
+#: includes/cmb/example-functions.php:131
+#: includes/cmb/example-functions.php:137
+#: includes/cmb/example-functions.php:143
+#: includes/cmb/example-functions.php:155
+#: includes/cmb/example-functions.php:166
+#: includes/cmb/example-functions.php:177
+#: includes/cmb/example-functions.php:188
+#: includes/cmb/example-functions.php:196
+#: includes/cmb/example-functions.php:203
+#: includes/cmb/example-functions.php:211
+#: includes/cmb/example-functions.php:217
+#: includes/cmb/example-functions.php:229
+#: includes/cmb/example-functions.php:270
+#: includes/cmb/example-functions.php:335
+#: includes/cmb/example-functions.php:342
+#: includes/cmb/example-functions.php:349
+#: includes/cmb/example-functions.php:355
+#: includes/cmb/example-functions.php:361
+#: includes/cmb/example-functions.php:367
+#: includes/cmb/example-functions.php:373
+#: includes/cmb/example-functions.php:391
+#@ cmb
+msgid "field description (optional)"
+msgstr "field description (optional)"
+
+#: includes/cmb/example-functions.php:46
+#@ cmb
+msgid "Test Text Small"
+msgstr "Test Text Small"
+
+#: includes/cmb/example-functions.php:53
+#@ cmb
+msgid "Test Text Medium"
+msgstr "Test Text Medium"
+
+#: includes/cmb/example-functions.php:60
+#@ cmb
+msgid "Website URL"
+msgstr "Website URL"
+
+#: includes/cmb/example-functions.php:68
+#@ cmb
+msgid "Test Text Email"
+msgstr "Test Text Email"
+
+#: includes/cmb/example-functions.php:75
+#@ cmb
+msgid "Test Time"
+msgstr "Test Time"
+
+#: includes/cmb/example-functions.php:81
+#: includes/cmb/example-functions.php:82
+#@ cmb
+msgid "Time zone"
+msgstr "Time zone"
+
+#: includes/cmb/example-functions.php:87
+#@ cmb
+msgid "Test Date Picker"
+msgstr "Test Date Picker"
+
+#: includes/cmb/example-functions.php:93
+#@ cmb
+msgid "Test Date Picker (UNIX timestamp)"
+msgstr "Test Date Picker (UNIX timestamp)"
+
+#: includes/cmb/example-functions.php:100
+#@ cmb
+msgid "Test Date/Time Picker Combo (UNIX timestamp)"
+msgstr "Test Date/Time Picker Combo (UNIX timestamp)"
+
+#: includes/cmb/example-functions.php:115
+#@ cmb
+msgid "Test Money"
+msgstr "Test Money"
+
+#: includes/cmb/example-functions.php:123
+#@ cmb
+msgid "Test Color Picker"
+msgstr "Test Color Picker"
+
+#: includes/cmb/example-functions.php:130
+#@ cmb
+msgid "Test Text Area"
+msgstr "Test Text Area"
+
+#: includes/cmb/example-functions.php:136
+#@ cmb
+msgid "Test Text Area Small"
+msgstr "Test Text Area Small"
+
+#: includes/cmb/example-functions.php:142
+#@ cmb
+msgid "Test Text Area for Code"
+msgstr "Test Text Area for Code"
+
+#: includes/cmb/example-functions.php:148
+#@ cmb
+msgid "Test Title Weeeee"
+msgstr "Test Title Weeeee"
+
+#: includes/cmb/example-functions.php:149
+#@ cmb
+msgid "This is a title description"
+msgstr "This is a title description"
+
+#: includes/cmb/example-functions.php:154
+#@ cmb
+msgid "Test Select"
+msgstr "Test Select"
+
+#: includes/cmb/example-functions.php:159
+#: includes/cmb/example-functions.php:170
+#: includes/cmb/example-functions.php:181
+#@ cmb
+msgid "Option One"
+msgstr "Option One"
+
+#: includes/cmb/example-functions.php:160
+#: includes/cmb/example-functions.php:171
+#: includes/cmb/example-functions.php:182
+#@ cmb
+msgid "Option Two"
+msgstr "Option Two"
+
+#: includes/cmb/example-functions.php:161
+#: includes/cmb/example-functions.php:172
+#: includes/cmb/example-functions.php:183
+#@ cmb
+msgid "Option Three"
+msgstr "Option Three"
+
+#: includes/cmb/example-functions.php:165
+#@ cmb
+msgid "Test Radio inline"
+msgstr "Test Radio inline"
+
+#: includes/cmb/example-functions.php:176
+#@ cmb
+msgid "Test Radio"
+msgstr "Test Radio"
+
+#: includes/cmb/example-functions.php:187
+#@ cmb
+msgid "Test Taxonomy Radio"
+msgstr "Test Taxonomy Radio"
+
+#: includes/cmb/example-functions.php:195
+#@ cmb
+msgid "Test Taxonomy Select"
+msgstr "Test Taxonomy Select"
+
+#: includes/cmb/example-functions.php:202
+#@ cmb
+msgid "Test Taxonomy Multi Checkbox"
+msgstr "Test Taxonomy Multi Checkbox"
+
+#: includes/cmb/example-functions.php:210
+#@ cmb
+msgid "Test Checkbox"
+msgstr "Test Checkbox"
+
+#: includes/cmb/example-functions.php:216
+#@ cmb
+msgid "Test Multi Checkbox"
+msgstr "Test Multi Checkbox"
+
+#: includes/cmb/example-functions.php:221
+#@ cmb
+msgid "Check One"
+msgstr "Check One"
+
+#: includes/cmb/example-functions.php:222
+#@ cmb
+msgid "Check Two"
+msgstr "Check Two"
+
+#: includes/cmb/example-functions.php:223
+#@ cmb
+msgid "Check Three"
+msgstr "Check Three"
+
+#: includes/cmb/example-functions.php:228
+#@ cmb
+msgid "Test wysiwyg"
+msgstr "Test wysiwyg"
+
+#: includes/cmb/example-functions.php:235
+#@ cmb
+msgid "Test Image"
+msgstr "Test Image"
+
+#: includes/cmb/example-functions.php:236
+#@ cmb
+msgid "Upload an image or enter a URL."
+msgstr "Upload an image or enter a URL."
+
+#: includes/cmb/example-functions.php:241
+#@ cmb
+msgid "Multiple Files"
+msgstr "Multiple Files"
+
+#: includes/cmb/example-functions.php:242
+#@ cmb
+msgid "Upload or add multiple images/attachments."
+msgstr "Upload or add multiple images/attachments."
+
+#: includes/cmb/example-functions.php:248
+#@ cmb
+msgid "oEmbed"
+msgstr "oEmbed"
+
+#: includes/cmb/example-functions.php:249
+#@ cmb
+msgid "Enter a youtube, twitter, or instagram URL. Supports services listed at <a href=\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/Embeds</a>."
+msgstr "Enter a youtube, twitter, or instagram URL. Supports services listed at <a href=\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/Embeds</a>."
+
+#: includes/cmb/example-functions.php:261
+#@ cmb
+msgid "About Page Metabox"
+msgstr "About Page Metabox"
+
+#: includes/cmb/example-functions.php:282
+#@ cmb
+msgid "Repeating Field Group"
+msgstr "Repeating Field Group"
+
+#: includes/cmb/example-functions.php:288
+#@ cmb
+msgid "Generates reusable form entries"
+msgstr "Generates reusable form entries"
+
+#: includes/cmb/example-functions.php:290
+#@ cmb
+msgid "Add Another Entry"
+msgstr "Add Another Entry"
+
+#: includes/cmb/example-functions.php:291
+#@ cmb
+msgid "Remove Entry"
+msgstr "Remove Entry"
+
+#: includes/cmb/example-functions.php:328
+#@ cmb
+msgid "User Profile Metabox"
+msgstr "User Profile Metabox"
+
+#: includes/cmb/example-functions.php:334
+#@ cmb
+msgid "Extra Info"
+msgstr "Extra Info"
+
+#: includes/cmb/example-functions.php:341
+#@ cmb
+msgid "Avatar"
+msgstr "Avatar"
+
+#: includes/cmb/example-functions.php:348
+#@ cmb
+msgid "Facebook URL"
+msgstr "Facebook URL"
+
+#: includes/cmb/example-functions.php:354
+#@ cmb
+msgid "Twitter URL"
+msgstr "Twitter URL"
+
+#: includes/cmb/example-functions.php:360
+#@ cmb
+msgid "Google+ URL"
+msgstr "Google+ URL"
+
+#: includes/cmb/example-functions.php:366
+#@ cmb
+msgid "Linkedin URL"
+msgstr "Linkedin URL"
+
+#: includes/cmb/example-functions.php:372
+#@ cmb
+msgid "User Field"
+msgstr "User Field"
+
+#: includes/cmb/example-functions.php:386
+#@ cmb
+msgid "Theme Options Metabox"
+msgstr "Theme Options Metabox"
+
+#: includes/cmb/example-functions.php:390
+#@ cmb
+msgid "Site Background Color"
+msgstr "Site Background Color"
+
+#: includes/cmb/helpers/cmb_Meta_Box_ajax.php:47
+#@ cmb
+msgid "Please Try Again"
+msgstr "Please Try Again"
+
+#: includes/cmb/helpers/cmb_Meta_Box_ajax.php:131
+#@ cmb
+msgid "Remove Embed"
+msgstr "Remove Embed"
+
+#: includes/cmb/helpers/cmb_Meta_Box_ajax.php:134
+#, php-format
+#@ cmb
+msgid "No oEmbed Results Found for %s. View more info at"
+msgstr "No oEmbed Results Found for %s. View more info at"
+
+#: includes/cmb/helpers/cmb_Meta_Box_field.php:449
+#@ cmb
+msgid "Add Group"
+msgstr "Add Group"
+
+#: includes/cmb/helpers/cmb_Meta_Box_field.php:450
+#@ cmb
+msgid "Remove Group"
+msgstr "Remove Group"
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:249
+#@ cmb
+msgid "Add Row"
+msgstr "Add Row"
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:305
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:705
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+#@ cmb
+msgid "Remove"
+msgstr "Remove"
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:600
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:634
+#@ cmb
+msgid "No terms"
+msgstr "No terms"
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:673
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:727
+#@ cmb
+msgid "Add or Upload File"
+msgstr "Add or Upload File"
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:694
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:757
+#@ cmb
+msgid "Remove Image"
+msgstr "Remove Image"
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:705
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+#@ cmb
+msgid "File:"
+msgstr "File:"
+
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:705
+#: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+#@ cmb
+msgid "Download"
+msgstr "Download"
+
+#: includes/cmb/init.php:251
+#@ default
+msgid "Clear"
+msgstr "Clear"
+
+#: includes/cmb/init.php:252
+#@ default
+msgid "Default"
+msgstr "Default"
+
+#: includes/cmb/init.php:253
+#@ default
+msgid "Select Color"
+msgstr "Select Color"
+
+#: includes/cmb/init.php:254
+#@ default
+msgid "Current Color"
+msgstr "Current Color"
+
+#: includes/cmb/init.php:1155
+#@ default
+msgid "Save"
+msgstr "Save"
+
+#: includes/admin/register-settings.php:184
+#@ ldd-directory-lite
+msgid "Please tell us a little bit about the organization you would like to see listed in our directory. Try to include as much information as you can, and be as descriptive as possible where asked."
+msgstr "Please tell us a little bit about the organization you would like to see listed in our directory. Try to include as much information as you can, and be as descriptive as possible where asked."
+
+#: includes/admin/register-settings.php:191
+#@ ldd-directory-lite
+msgid "Congratulations!"
+msgstr "Congratulations!"
+
+#: includes/admin/register-settings.php:191
+#@ ldd-directory-lite
+msgid "Your listing has been successfully submitted for review. Please allow us sufficient time to review the listing and approve it for public display in our directory."
+msgstr "Your listing has been successfully submitted for review. Please allow us sufficient time to review the listing and approve it for public display in our directory."
+
+#: includes/setup.php:72
+#@ ldd-directory-lite
+msgid "Directory Listings"
+msgstr "Directory Listings"
+
+#: includes/setup.php:73
+#@ ldd-directory-lite
+msgid "Directory Listing"
+msgstr "Directory Listing"
+
+#: includes/setup.php:75
+#@ ldd-directory-lite
+msgid "Add New Listing"
+msgstr "Add New Listing"
+
+#: includes/setup.php:76
+#@ ldd-directory-lite
+msgid "Edit Listing"
+msgstr "Edit Listing"
+
+#: includes/setup.php:77
+#@ ldd-directory-lite
+msgid "New Listing"
+msgstr "New Listing"
+
+#: includes/setup.php:78
+#@ ldd-directory-lite
+msgid "View Listing"
+msgstr "View Listing"
+
+#: includes/setup.php:79
+#@ ldd-directory-lite
+msgid "Search Listings"
+msgstr "Search Listings"
+
+#: includes/setup.php:80
+#@ ldd-directory-lite
+msgid "No listings found"
+msgstr "No listings found"
+
+#: includes/setup.php:81
+#@ ldd-directory-lite
+msgid "No listings found in Trash"
+msgstr "No listings found in Trash"
+
+#: includes/setup.php:82
+#@ ldd-directory-lite
+msgid "Parent Listing"
+msgstr "Parent Listing"
+
+#: includes/listings.php:118
+#: includes/setup.php:83
+#: ldd-directory-lite.php:57
+#@ ldd-directory-lite
+msgid "Directory"
+msgstr "Directory"
+
+#: includes/shortcodes/_manage.php:80
+#: includes/shortcodes/_submit.php:327
+#@ ldd-directory-lite
+msgid "There was a problem uploading your logo. Please try again!"
+msgstr "There was a problem uploading your logo. Please try again!"
+
+#: includes/shortcodes/_submit.php:299
+#@ ldd-directory-lite
+msgid "There was a problem creating your user account. Please try again later."
+msgstr "There was a problem creating your user account. Please try again later."
+
+#: includes/shortcodes/_submit.php:306
+#@ ldd-directory-lite
+msgid "There was a problem creating your listing. Please try again later."
+msgstr "There was a problem creating your listing. Please try again later."
+
+#: ldd-directory-lite.php:66
+#@ ldd-directory-lite
+msgid "Submit a Listing"
+msgstr "Submit a Listing"
+
+#: templates/contact-sidebar.php:2
+#: templates/contact-sidebar.php:12
+#: templates/contact-sidebar.php:15
+#: templates/contact-sidebar.php:21
+#: templates/contact-sidebar.php:24
+#: templates/contact-sidebar.php:31
+#: templates/contact-sidebar.php:34
+#@ ldd-directory-lite
+msgid "What is this in regards to?"
+msgstr "What is this in regards to?"
+
+#: templates/contact-sidebar.php:40
+#@ ldd-directory-lite
+msgid "Message"
+msgstr "Message"
+
+#: templates/contact-sidebar.php:41
+#@ ldd-directory-lite
+msgid "Enter your message here."
+msgstr "Enter your message here."
+
+#: templates/contact-sidebar.php:46
+#@ ldd-directory-lite
+msgid "What is 7 + seven?"
+msgstr "What is 7 + seven?"
+
+#: templates/contact-sidebar.php:49
+#@ ldd-directory-lite
+msgid "What is seven &#43; s&#101;v&#101;n?"
+msgstr "What is seven &#43; s&#101;v&#101;n?"
+
+#: templates/contact-sidebar.php:54
+#@ ldd-directory-lite
+msgid "Send"
+msgstr "Send"
+
+#: templates/contact-sidebar.php:70
+#@ ldd-directory-lite
+msgid "Please enter a valid name."
+msgstr "Please enter a valid name."
+
+#: templates/contact-sidebar.php:76
+#@ ldd-directory-lite
+msgid "Please enter a valid email address."
+msgstr "Please enter a valid email address."
+
+#: templates/contact-sidebar.php:81
+#@ ldd-directory-lite
+msgid "Please enter a valid subject."
+msgstr "Please enter a valid subject."
+
+#: templates/contact-sidebar.php:87
+#@ ldd-directory-lite
+msgid "Please enter a longer message."
+msgstr "Please enter a longer message."
+
+#: templates/contact-sidebar.php:93
+#@ ldd-directory-lite
+msgid "That doesn't appear correct."
+msgstr "That doesn't appear correct."
+
+#: templates/edit-details.php:16
+#: templates/panel-general.php:12
+#@ ldd-directory-lite
+msgid "Title"
+msgstr "Title"
+
+#: templates/edit-details.php:23
+#: templates/panel-general.php:19
+#@ ldd-directory-lite
+msgid "Category"
+msgstr "Category"
+
+#: templates/edit-details.php:32
+#: templates/panel-general.php:37
+#@ ldd-directory-lite
+msgid "Description"
+msgstr "Description"
+
+#: templates/edit-details.php:35
+#, php-format
+#@ ldd-directory-lite
+msgid "The description you include here will make up a major portion of your listing when viewed individually. You may use <a href=\"%s\">markdown</a> to format your description, though we reserve the right to remove excess formatting before approving your listing."
+msgstr "The description you include here will make up a major portion of your listing when viewed individually. You may use <a href=\"%s\">markdown</a> to format your description, though we reserve the right to remove excess formatting before approving your listing."
+
+#: templates/edit-details.php:45
+#: templates/panel-general.php:49
+#@ ldd-directory-lite
+msgid "Please provide a short summary of your listing that will appear in search results."
+msgstr "Please provide a short summary of your listing that will appear in search results."
+
+#: templates/edit-location.php:17
+#: templates/panel-geography.php:17
+#@ ldd-directory-lite
+msgid "Address"
+msgstr "Address"
+
+#: templates/edit-location.php:18
+#: templates/panel-geography.php:18
+#@ ldd-directory-lite
+msgid "2101 Massachusetts Ave, NW"
+msgstr "2101 Massachusetts Ave, NW"
+
+#: templates/edit-location.php:19
+#: templates/panel-geography.php:19
+#@ ldd-directory-lite
+msgid "Washington, DC"
+msgstr "Washington, DC"
+
+#: templates/edit-location.php:27
+#: templates/panel-geography.php:27
+#@ ldd-directory-lite
+msgid "Zip / Postal Code"
+msgstr "Zip / Postal Code"
+
+#: templates/edit-location.php:28
+#: templates/panel-geography.php:28
+#@ ldd-directory-lite
+msgid "20008"
+msgstr "20008"
+
+#: templates/edit-location.php:34
+#: templates/panel-geography.php:34
+#@ ldd-directory-lite
+msgid "Country"
+msgstr "Country"
+
+#: templates/edit-location.php:35
+#: templates/panel-geography.php:35
+#@ ldd-directory-lite
+msgid "United States"
+msgstr "United States"
+
+#: templates/edit-location.php:43
+#@ ldd-directory-lite
+msgid "To set a marker, use the location field to search the address. If the search is unable to find the exact address, you can drag the marker anywhere on the map."
+msgstr "To set a marker, use the location field to search the address. If the search is unable to find the exact address, you can drag the marker anywhere on the map."
+
+#: templates/edit-location.php:50
+#: templates/panel-geography.php:48
+#@ ldd-directory-lite
+msgid "Set Marker"
+msgstr "Set Marker"
+
+#: templates/edit-logo.php:20
+#@ ldd-directory-lite
+msgid "Select New Logo:"
+msgstr "Select New Logo:"
+
+#: templates/edit-social.php:18
+#: templates/panel-meta.php:38
+#@ ldd-directory-lite
+msgid "Examples include; 'http://www.yoursite.com', 'mysite.org'"
+msgstr "Examples include; 'http://www.yoursite.com', 'mysite.org'"
+
+#: templates/edit-social.php:26
+#: templates/panel-meta.php:46
+#@ ldd-directory-lite
+msgid "Help locating and customizing your <a href=\"https://www.facebook.com/help/www/329992603752372\" title=\"Your Facebook Web Address | Facebook Help Center\">Facebook profile URL</a>"
+msgstr "Help locating and customizing your <a href=\"https://www.facebook.com/help/www/329992603752372\" title=\"Your Facebook Web Address | Facebook Help Center\">Facebook profile URL</a>"
+
+#: templates/edit-social.php:34
+#: templates/panel-meta.php:54
+#@ ldd-directory-lite
+msgid "This will always be similar to 'https://twitter.com/<strong>username</strong>'"
+msgstr "This will always be similar to 'https://twitter.com/<strong>username</strong>'"
+
+#: templates/edit-social.php:40
+#: templates/panel-meta.php:60
+#@ ldd-directory-lite
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#: templates/edit-social.php:42
+#: templates/panel-meta.php:62
+#@ ldd-directory-lite
+msgid "Help locating and customizing your <a href=\"http://help.linkedin.com/app/answers/detail/a_id/85/~/promoting-your-public-profile\" title=\"Promoting Your Public Profile | LinkedIn Help Center\">LinkedIn profile URL</a>"
+msgstr "Help locating and customizing your <a href=\"http://help.linkedin.com/app/answers/detail/a_id/85/~/promoting-your-public-profile\" title=\"Promoting Your Public Profile | LinkedIn Help Center\">LinkedIn profile URL</a>"
+
+#: templates/edit-submit.php:4
+#@ ldd-directory-lite
+msgid "Update Listing"
+msgstr "Update Listing"
+
+#: templates/edit-submit.php:5
+#@ ldd-directory-lite
+msgid "Cancel"
+msgstr "Cancel"
+
+#: templates/header.php:6
+#@ ldd-directory-lite
+msgid "Toggle navigation"
+msgstr "Toggle navigation"
+
+#: templates/header.php:15
+#: templates/submit.php:34
+#@ ldd-directory-lite
+msgid "Submit Listing"
+msgstr "Submit Listing"
+
+#: ldd-directory-lite.php:76
+#: templates/header.php:16
+#@ ldd-directory-lite
+msgid "Manage Listings"
+msgstr "Manage Listings"
+
+#: templates/header.php:21
+#: templates/header.php:23
+#@ ldd-directory-lite
+msgid "Search"
+msgstr "Search"
+
+#: templates/home.php:18
+#@ ldd-directory-lite
+msgid "Featured Listings"
+msgstr "Featured Listings"
+
+#: templates/login.php:9
+#@ ldd-directory-lite
+msgid "A password has been sent to your email address. Thank you for registering!"
+msgstr "A password has been sent to your email address. Thank you for registering!"
+
+#: templates/login.php:15
+#@ ldd-directory-lite
+msgid "An email with information on how to reset your password has been sent."
+msgstr "An email with information on how to reset your password has been sent."
+
+#: templates/login.php:20
+#@ ldd-directory-lite
+msgid "Please log in, or register a new user account."
+msgstr "Please log in, or register a new user account."
+
+#: templates/login.php:23
+#@ ldd-directory-lite
+msgid "Login"
+msgstr "Login"
+
+#: templates/login.php:24
+#: templates/login.php:85
+#: templates/login.php:109
+#@ ldd-directory-lite
+msgid "Register"
+msgstr "Register"
+
+#: templates/login.php:25
+#@ ldd-directory-lite
+msgid "Lost Password"
+msgstr "Lost Password"
+
+#: templates/login.php:37
+#: templates/login.php:72
+#@ ldd-directory-lite
+msgid "Username"
+msgstr "Username"
+
+#: templates/login.php:43
+#@ ldd-directory-lite
+msgid "Password"
+msgstr "Password"
+
+#: templates/login.php:52
+#@ ldd-directory-lite
+msgid "Remember me"
+msgstr "Remember me"
+
+#: templates/login.php:59
+#@ ldd-directory-lite
+msgid "Sign in"
+msgstr "Sign in"
+
+#: templates/login.php:78
+#: templates/login.php:102
+#@ ldd-directory-lite
+msgid "Your Email"
+msgstr "Your Email"
+
+#: templates/panel-geography.php:11
+#@ ldd-directory-lite
+msgid "Providing an address for your listing is optional."
+msgstr "Providing an address for your listing is optional."
+
+#: templates/panel-geography.php:43
+#@ ldd-directory-lite
+msgid "If you would like to include a Google map with your listing, set a marker on this map for your address. Type in part of your address to use the autocomplete feature, or drag the marker on the map directly to your location."
+msgstr "If you would like to include a Google map with your listing, set a marker on this map for your address. Type in part of your address to use the autocomplete feature, or drag the marker on the map directly to your location."
+
+#: templates/panel-meta.php:5
+#@ ldd-directory-lite
+msgid "The following information will help generate more traffic for your organization, the more the better. Your email address is not publicly available, instead a contact form will be embedded with your listing."
+msgstr "The following information will help generate more traffic for your organization, the more the better. Your email address is not publicly available, instead a contact form will be embedded with your listing."
+
+#: templates/submit-tos.php:4
+#@ ldd-directory-lite
+msgid "By submitting, you agree your listing abides by our terms of service."
+msgstr "By submitting, you agree your listing abides by our terms of service."
+
+#: templates/submit.php:8
+#@ ldd-directory-lite
+msgid "We're sorry!"
+msgstr "We're sorry!"
+
+#: templates/submit.php:8
+#@ ldd-directory-lite
+msgid "There were some errors with the information you provided. Please check your submission and try again."
+msgstr "There were some errors with the information you provided. Please check your submission and try again."
+
+#: templates/submit.php:32
+#@ ldd-directory-lite
+msgid "Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service."
+msgstr "Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service."
+
+#. translators: plugin header field 'Name'
+#: ldd-directory-lite.php:0
+#@ ldd-directory-lite
+msgid "LDD Directory Lite"
+msgstr "LDD Directory Lite"
+
+#. translators: plugin header field 'PluginURI'
+#: ldd-directory-lite.php:0
+#@ ldd-directory-lite
+msgid "http://wordpress.org/plugins/ldd-directory-lite"
+msgstr "http://wordpress.org/plugins/ldd-directory-lite"
+
+#. translators: plugin header field 'Description'
+#: ldd-directory-lite.php:0
+#@ ldd-directory-lite
+msgid "Powerful and simple to use, add a directory of business or other organizations to your web site."
+msgstr "Powerful and simple to use, add a directory of business or other organizations to your web site."
+
+#. translators: plugin header field 'Author'
+#: ldd-directory-lite.php:0
+#@ ldd-directory-lite
+msgid "LDD Web Design"
+msgstr "LDD Web Design"
+
+#. translators: plugin header field 'AuthorURI'
+#: ldd-directory-lite.php:0
+#@ ldd-directory-lite
+msgid "http://www.lddwebdesign.com"
+msgstr "http://www.lddwebdesign.com"
+
+#: import-lddbd.php:59
+#@ ldd-directory-lite
+msgid "Running Import for LDD Business Directory"
+msgstr "Running Import for LDD Business Directory"
+
+#: import-lddbd.php:59
+#@ ldd-directory-lite
+msgid "LDD Import"
+msgstr "LDD Import"
+
+#: import-lddbd.php:110
+#@ ldd-directory-lite
+msgid "Collecting data from original plugin..."
+msgstr "Collecting data from original plugin..."
+
+#: import-lddbd.php:184
+#, php-format
+#@ ldd-directory-lite
+msgid "Failed to import category %s"
+msgstr "Failed to import category %s"
+
+#: import-lddbd.php:193
+#, php-format
+#@ ldd-directory-lite
+msgid "Added %d listing categories."
+msgstr "Added %d listing categories."
+
+#: includes/admin/metaboxes.php:166
+#@ ldd-directory-lite
+msgid "Skype"
+msgstr "Skype"
+
+#: includes/admin/register-settings.php:34
+#@ ldd-directory-lite
+msgid "Submit Listing Page"
+msgstr "Submit Listing Page"
+
+#: includes/admin/register-settings.php:41
+#@ ldd-directory-lite
+msgid "Manage Listings Page"
+msgstr "Manage Listings Page"
+
+#: includes/admin/register-settings.php:78
+#@ ldd-directory-lite
+msgid "Other"
+msgstr "Other"
+
+#: includes/admin/register-settings.php:84
+#@ ldd-directory-lite
+msgid "Allow anonymous usage tracking"
+msgstr "Allow anonymous usage tracking"
+
+#: includes/admin/register-settings.php:89
+#@ ldd-directory-lite
+msgid "Google Maps"
+msgstr "Google Maps"
+
+#: includes/admin/register-settings.php:107
+#: includes/admin/register-settings.php:114
+#@ ldd-directory-lite
+msgid "From Email"
+msgstr "From Email"
+
+#: includes/admin/register-settings.php:115
+#@ ldd-directory-lite
+msgid "Email to send purchase receipts from. This will act as the \"from\" and \"reply-to\" address."
+msgstr "Email to send purchase receipts from. This will act as the \"from\" and \"reply-to\" address."
+
+#: includes/admin/register-settings.php:121
+#@ ldd-directory-lite
+msgid "Email Templates"
+msgstr "Email Templates"
+
+#: includes/admin/register-settings.php:126
+#: includes/admin/register-settings.php:139
+#: includes/admin/register-settings.php:152
+#@ ldd-directory-lite
+msgid "Admin Notification"
+msgstr "Admin Notification"
+
+#: includes/admin/register-settings.php:127
+#@ ldd-directory-lite
+msgid "The subject line for email notifications sent to the site administrator."
+msgstr "The subject line for email notifications sent to the site administrator."
+
+#: includes/admin/register-settings.php:129
+#@ ldd-directory-lite
+msgid "A new listing has been submitted for review!"
+msgstr "A new listing has been submitted for review!"
+
+#: includes/admin/register-settings.php:133
+#: includes/admin/register-settings.php:146
+#: includes/admin/register-settings.php:159
+#@ ldd-directory-lite
+msgid "Notification Message"
+msgstr "Notification Message"
+
+#: includes/admin/register-settings.php:135
+#@ ldd-directory-lite
+msgid "A new listing is pending review!"
+msgstr "A new listing is pending review!"
+
+#: includes/admin/register-settings.php:135
+#@ ldd-directory-lite
+msgid "This submission is awaiting approval. Please visit the link to view and approve the new listing:"
+msgstr "This submission is awaiting approval. Please visit the link to view and approve the new listing:"
+
+#: includes/admin/register-settings.php:135
+#: includes/admin/register-settings.php:148
+#@ ldd-directory-lite
+msgid "Listing Name:"
+msgstr "Listing Name:"
+
+#: includes/admin/register-settings.php:135
+#: includes/admin/register-settings.php:148
+#@ ldd-directory-lite
+msgid "Listing Description:"
+msgstr "Listing Description:"
+
+#: includes/admin/register-settings.php:135
+#: includes/admin/register-settings.php:148
+#: includes/admin/register-settings.php:161
+#@ ldd-directory-lite
+msgid "This is an automated message from"
+msgstr "This is an automated message from"
+
+#: includes/admin/register-settings.php:135
+#: includes/admin/register-settings.php:148
+#: includes/admin/register-settings.php:161
+#@ ldd-directory-lite
+msgid "Please do not respond directly to this email"
+msgstr "Please do not respond directly to this email"
+
+#: includes/admin/register-settings.php:140
+#@ ldd-directory-lite
+msgid "Sent to the author after they submit a new listing. Use this to remind them of your terms, inform them of average wait times or other important information."
+msgstr "Sent to the author after they submit a new listing. Use this to remind them of your terms, inform them of average wait times or other important information."
+
+#: includes/admin/register-settings.php:142
+#, php-format
+#@ ldd-directory-lite
+msgid "Your listing on %s is pending review!"
+msgstr "Your listing on %s is pending review"
+
+#: includes/admin/register-settings.php:148
+#: includes/admin/register-settings.php:161
+#@ ldd-directory-lite
+msgid "Thank you for submitting a listing to"
+msgstr "Thank you for submitting a listing to"
+
+#: includes/admin/register-settings.php:148
+#@ ldd-directory-lite
+msgid "Your listing is pending approval."
+msgstr "Your listing is pending approval."
+
+#: includes/admin/register-settings.php:148
+#@ ldd-directory-lite
+msgid "Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at"
+msgstr "Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at"
+
+#: includes/admin/register-settings.php:153
+#@ ldd-directory-lite
+msgid "Sent to the author when their listing has been approved and is available publicly."
+msgstr "Sent to the author when their listing has been approved and is available publicly."
+
+#: includes/admin/register-settings.php:155
+#, php-format
+#@ ldd-directory-lite
+msgid "Your listing on %s has been approved!"
+msgstr "Your listing on %s has been approved!"
+
+#: includes/admin/register-settings.php:161
+#@ ldd-directory-lite
+msgid "Your listing has been approved! You can now view it online:"
+msgstr "Your listing has been approved! You can now view it online:"
+
+#: includes/admin/register-settings.php:170
+#@ ldd-directory-lite
+msgid "Require TOS"
+msgstr "Require TOS"
+
+#: includes/admin/register-settings.php:181
+#@ ldd-directory-lite
+msgid "Introduction"
+msgstr "Introduction"
+
+#: includes/admin/register-settings.php:188
+#@ ldd-directory-lite
+msgid "Success Message"
+msgstr "Success Message"
+
+#: includes/admin/register-settings.php:206
+#@ ldd-directory-lite
+msgid "Enable Featured Listings"
+msgstr "Enable Featured Listings"
+
+#: includes/admin/register-settings.php:207
+#@ ldd-directory-lite
+msgid "If checked, listings tagged with <code>featured</code> will be shown on your directory home page."
+msgstr "If checked, listings tagged with <code>featured</code> will be shown on your directory home page."
+
+#: includes/admin/register-settings.php:213
+#@ ldd-directory-lite
+msgid "Primary Normal"
+msgstr "Primary Normal"
+
+#: includes/admin/register-settings.php:219
+#@ ldd-directory-lite
+msgid "Primary Hover"
+msgstr "Primary Hover"
+
+#: includes/admin/register-settings.php:225
+#@ ldd-directory-lite
+msgid "Primary Foreground"
+msgstr "Primary Foreground"
+
+#: includes/admin/register-settings.php:354
+#@ ldd-directory-lite
+msgid "Emails"
+msgstr "Emails"
+
+#: includes/admin/register-settings.php:355
+#@ ldd-directory-lite
+msgid "Submit"
+msgstr "Submit"
+
+#: includes/admin/register-settings.php:492
+#, php-format
+#@ ldd-directory-lite
+msgid "The callback function used for the <strong>%s</strong> setting is missing."
+msgstr "The callback function used for the <strong>%s</strong> setting is missing."
+
+#: includes/admin/register-settings.php:544
+#@ ldd-directory-lite
+msgid "Upload File"
+msgstr "Upload File"
+
+#. translators: plugin header field 'Version'
+#: ldd-directory-lite.php:0
+#@ ldd-directory-lite
+msgid "0.8.4-beta"
+msgstr "0.8.4-beta"
+
+#: templates/login.php:91
+#@ ldd-directory-lite
+msgid "Sorry!"
+msgstr "Sorry!"
+
+#: templates/login.php:91
+#@ ldd-directory-lite
+msgid "User registration on this site is currently disabled."
+msgstr "User registration on this site is currently disabled."
+

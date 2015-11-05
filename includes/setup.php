@@ -11,7 +11,6 @@
  * @copyright 2014 LDD Consulting, Inc
  */
 
-
 add_image_size('directory-listing', 300, 300);
 
 
@@ -42,16 +41,9 @@ spl_autoload_register('ldl_autoload');
  */
 function ldl_register_post_type() {
 
-    $taxonomy_slug = ldl_get_setting('directory_taxonomy_slug', 1);
-    $post_type_slug = ldl_get_setting('directory_post_type_slug', 1);
-
-    if (!$taxonomy_slug) {
-        $taxonomy_slug = 'listings';
-    }
-    if (!$post_type_slug) {
-        $post_type_slug = 'listing';
-    }
-
+    $taxonomy_slug = ldl()->get_option('directory_taxonomy_slug', 'listings');
+    $post_type_slug = ldl()->get_option('directory_post_type_slug', 'listing');
+//mdd(array($taxonomy_slug,$post_type_slug));
     register_taxonomy(LDDLITE_TAX_CAT, LDDLITE_POST_TYPE, array(
         'hierarchical'      => true,
         'show_ui'           => true,
@@ -130,6 +122,11 @@ function ldl_register_scripts() {
     wp_register_script('lddlite-contact', LDDLITE_URL . '/public/js/contact.js', array('jquery'), LDDLITE_VERSION, true);
     wp_register_script('lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array('jquery-ui-dialog'), LDDLITE_VERSION, 1);
 
+    /*
+     * Adding plugins assets
+     * */
+    wp_enqueue_style('chosen', LDDLITE_URL . '/public/plugins/chosen/chosen.css', false, "1.4.2");
+    wp_enqueue_script('chosen', LDDLITE_URL . '/public/plugins/chosen/chosen.jquery.min.js', array('jquery'), "1.4.2", false);
 }
 
 add_action('init', 'ldl_register_scripts', 5);
@@ -140,12 +137,13 @@ add_action('init', 'ldl_register_scripts', 5);
  * will cascade in favor of the theme.
  */
 function ldl_enqueue_bootstrap() {
-
-    if (ldl_get_setting('disable_bootstrap') || is_admin())
-        return;
-
+	
+	//wp_enqueue_style('lddlite-directory', LDDLITE_URL . '/public/css/directory.min.css', array(), LDDLITE_VERSION);
+		
+    if (ldl()->get_option('disable_bootstrap') || is_admin()) { return; }
+	 
     wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', array(), LDDLITE_VERSION);
-    wp_enqueue_script('lddlite-bootstrap', LDDLITE_URL . '/public/js/bootstrap.min.js', array('jquery'), '3.2.0', true);
+	wp_enqueue_script('lddlite-bootstrap', LDDLITE_URL . '/public/js/bootstrap.min.js', array('jquery'), '3.2.0', false);
 
 }
 
@@ -161,9 +159,9 @@ function ldl_enqueue($force = false) {
         return;
 
     if (LDDLITE_POST_TYPE == get_post_type() || $force) {
+		
         wp_enqueue_style('lddlite');
         wp_enqueue_style('font-awesome');
-
         wp_enqueue_script('lddlite-happy');
     }
 

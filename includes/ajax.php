@@ -112,10 +112,9 @@ function ldl_store_tracking_response() {
     if (!wp_verify_nonce($_POST['nonce'], 'lddlite-allow-tracking-nonce'))
         die();
 
-    ldl()->update_setting('allow_tracking_popup_done', true);
-    ldl()->update_setting('allow_tracking', $_POST['allow_tracking'] == 'yes' ? true : false);
+    ldl()->update_option('allow_tracking_popup_done', true);
+    ldl()->update_option('allow_tracking', $_POST['allow_tracking'] == 'yes' ? true : false);
 
-    ldl()->save_settings();
     die;
 
 }

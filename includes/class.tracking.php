@@ -18,19 +18,20 @@
 function ldl_tracking_additions($options) {
 
     $options['directory_lite'] = array(
-        'directory_page'         => ldl_get_setting('directory_page'),
-        'disable_bootstrap'      => ldl_get_setting('disable_bootstrap'),
-        'google_maps'            => ldl_get_setting('google_maps'),
-        'submit_use_tos'         => ldl_get_setting('submit_use_tos'),
-        'submit_use_locale'      => ldl_get_setting('submit_use_locale'),
-        'submit_locale'          => ldl_get_setting('submit_locale'),
-        'submit_require_address' => ldl_get_setting('submit_require_address'),
+        'directory_page'         => ldl()->get_option('directory_page'),
+        'disable_bootstrap'      => ldl()->get_option('disable_bootstrap'),
+        'google_maps'            => ldl()->get_option('google_maps'),
+        'submit_use_tos'         => ldl()->get_option('submit_use_tos'),
+        'submit_use_locale'      => ldl()->get_option('submit_use_locale'),
+        'submit_locale'          => ldl()->get_option('submit_locale'),
+        'submit_require_address' => ldl()->get_option('submit_require_address'),
     );
 
     return $options;
 }
 
 add_filter('lite_tracking_filters', 'ldl_tracking_additions');
+
 
 class ldd_directory_lite_tracking {
 
@@ -43,11 +44,8 @@ class ldd_directory_lite_tracking {
      * Class constructor
      */
     function __construct() {
-
-        if (current_filter('init')) {
+        if (current_filter('init'))
             $this->tracking();
-        }
-
     }
 
     /**
@@ -170,10 +168,6 @@ class ldd_directory_lite_tracking {
 }
 
 
-/** END OF FILE */
-?><?php
-
-/** ldd-directory-lite/includes/admin/settings.php */
 add_action('admin_enqueue_scripts', 'custom_admin_pointers_header');
 
 function custom_admin_pointers_header() {
@@ -184,6 +178,7 @@ function custom_admin_pointers_header() {
         wp_enqueue_style('wp-pointer');
     }
 }
+
 
 function custom_admin_pointers_check() {
     $admin_pointers = custom_admin_pointers();
@@ -197,7 +192,6 @@ function custom_admin_pointers_footer() {
     $admin_pointers = custom_admin_pointers();
     ?>
     <script type="text/javascript">
-        /* <![CDATA[ */
         (function ($) {
             <?php
             foreach ( $admin_pointers as $pointer => $array ) {
@@ -221,7 +215,6 @@ function custom_admin_pointers_footer() {
       }
       ?>
         })(jQuery);
-        /* ]]> */
     </script>
 <?php
 }
@@ -257,7 +250,7 @@ class ldd_directory_lite_pointers {
      * Class constructor.
      */
     private function __construct() {
-        if (current_user_can('manage_options') && !ldl_get_setting('allow_tracking_pointer_done')) {
+        if (current_user_can('manage_options') && !ldl()->get_option('allow_tracking_pointer_done')) {
             wp_enqueue_style('wp-pointer');
             wp_enqueue_script('jquery-ui');
             wp_enqueue_script('wp-pointer');
@@ -293,7 +286,6 @@ class ldd_directory_lite_pointers {
 
         ?>
         <script type="text/javascript">
-            //<![CDATA[
             (function ($) {
                 var lite_pointer_options = <?php echo json_encode( $opt_arr ); ?>, setup;
 
@@ -310,7 +302,7 @@ class ldd_directory_lite_pointers {
 
                 lite_pointer_options = $.extend(lite_pointer_options, {
                     buttons: function (event, t) {
-                        var button = jQuery('<a id="pointer-close" style="margin-left:5px;" class="button-secondary">' + '<?php _e( 'Do not allow tracking', 'lddlite' ) ?>' + '</a>');
+                        var button = jQuery('<a id="pointer-close" style="margin-left:5px;" class="button-secondary">' + '<?php _e( 'Do not allow tracking', 'ldd-directory-lite' ) ?>' + '</a>');
                         button.bind('click.pointer', function () {
                             t.element.pointer('close');
                         });
@@ -322,7 +314,7 @@ class ldd_directory_lite_pointers {
 
                 setup = function () {
                     $('#wpadminbar').pointer(lite_pointer_options).pointer('open');
-                    jQuery('#pointer-close').after('<a id="pointer-primary" class="button-primary">' + '<?php _e( 'Allow tracking', 'lddlite' ) ?>' + '</a>');
+                    jQuery('#pointer-close').after('<a id="pointer-primary" class="button-primary">' + '<?php _e( 'Allow tracking', 'ldd-directory-lite' ) ?>' + '</a>');
                     jQuery('#pointer-primary').click(function () {
                         ldl_store_answer("yes", "<?php echo $nonce ?>")
                     });
@@ -336,7 +328,6 @@ class ldd_directory_lite_pointers {
                 else
                     $(document).ready(setup);
             })(jQuery);
-            //]]>
         </script>
     <?php
     }

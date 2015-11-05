@@ -1,9 +1,9 @@
 === Plugin Name ===
-Contributors: lddwebdesign, delayedinsanity
-Tags: directory, listings, listing directory, business, business directory, custom directory, catalog, index, yellow pages, white pages, 411, company listing
+Contributors: lddwebdesign
+Tags: directory, listings, listing directory, business, business directory
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 0.8-beta
+Stable tag: 0.8.4-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -17,12 +17,6 @@ The ldd directory lite plugin is the best way to add a powerful, fully functiona
 Within minutes you can install and configure ldd directory lite and start accepting submissions, or populating the content with your own listings. This is the best and easiest way to start any kind of directory you can think of, be it of local businesses (restaurants, coffee shops, craft stores, etc), or any other type of organization you would like to build around.
 
 The Directory is extremely user friendly, ready to go pretty much out of the box. One of our primary focuses is ensuring that it integrates with almost any theme, anywhere, anytime, and we have utilized the power of Bootstrap to ensure that the Directory is 100% mobile ready and responsive. It won't break all that hard work you've put into making sure your site works on any medium.
-
-We are also very developer friendly! Our plugin has another home on [GitHub](https://github.com/mwaterous/ldd-directory-lite), where you can get involved in making it even better.
-
-= This plugin is a beta release. =
-
-**Please be aware of this before installing, and see the [Other Notes](http://wordpress.org/plugins/ldd-directory-lite/other_notes/) tab if you encounter problems. **
 
 = Here are just a few of the many features =
 
@@ -51,17 +45,12 @@ We have a variety of premium extensions in the works for further extending the c
 
 == Installation ==
 
-*You should always back up your data and/or test on a staging site before making major changes to the way your production web site functions.*
-
 Installation is easiest when done through your WordPress Dashboard:
 1. Select **Plugins >> Add New** from your sites WordPress dashboard.
 2. Type **ldd directory lite** into the search field and press enter.
 3. Click **Install Now** when you see ldd directory lite appear in the search results.
 4. Select **Activate Plugin** after you see *Successfully installed the plugin ldd directory lite* appear on your screen.
 
-If you prefer to install manually, [see the guide on Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
-
-If you have any questions or are unsure about any part of the process, don't hesitate to ask for help in our [Support Forum](http://wordpress.org/support/plugin/ldd-directory-lite).
 
 = Upgrading from LDD Business Directory =
 
@@ -79,10 +68,6 @@ This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/pl
 
 == Frequently Asked Questions ==
 
-= Where can I suggest a new feature or report a bug? =
-
-Please use our [issue tracker](https://github.com/mwaterous/ldd-directory-lite/issues) on the plugins [GitHub repo](https://github.com/mwaterous/ldd-directory-lite).
-
 = How can I avoid having my template customizations overwritten when the plugin is updated? =
 
 All the template files found in `/ldd-directory-lite/templates` can be copied to a directory in your theme called *lddlite_templates*.
@@ -98,11 +83,18 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 0.8-beta =
-This latest version includes the ability for users to edit their own listings. Include the [directory_manage] shortcode on any page!
+= 0.8.4-beta =
+Fixes a major issue with the submission process, and other minor updates.
 
 
 == Changelog ==
+
+= 0.8.4-beta =
+
+* Fixed an issue with the submission processor not verifying the correct nonce
+* Added a notice to the registration form if registration is disabled
+* Using EDD as a guide, rebuilt the settings API to allow for future extension development
+* Fixed a bug in the Featured Listings query that was displaying listings regardless of how they were tagged
 
 = 0.8-beta =
 
@@ -141,18 +133,6 @@ This latest version includes the ability for users to edit their own listings. I
 = 0.5.1-beta =
 * Initial commit of the forked [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin.
 
-
-== Issues & Bugs ==
-
-**Please direct all bug reports to our [GitHub Issue Tracker](https://github.com/mwaterous/ldd-directory-lite/issues)**
-
-You are more than welcome to post problems and questions in the [WordPress.org Support Forums](http://wordpress.org/support/plugin/ldd-directory-lite), and we will do our best to respond in a timely fashion. Most posts will be answered within 3-5 business days.
-
-If you have discovered an issue that you feel needs our attention, please take a look at our [GitHub Issues](https://github.com/mwaterous/ldd-directory-lite/issues) page. You can open a New Issue to let us know what you found.
-
-Please try to include as much information as possible, including steps that we can take to reproduce the issue and any other information that may be pertinent to your particular situation. If you can, include a list of other plugins you are running (in case it may be a conflict), what version of WordPress you're using, and any error messages or notices you saw.
-
-**Feature requests can also be posted on the [GitHub Issue Tracker](https://github.com/mwaterous/ldd-directory-lite/issues).**
 
 == Credits ==
 

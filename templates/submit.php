@@ -5,7 +5,7 @@
     <?php if ( ldl_has_errors() ): ?>
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong><?php _e("We're sorry!", 'lddlite'); ?></strong> <?php _e('There were some errors with the information you provided. Please check your submission and try again.', 'lddlite'); ?><br>
+            <strong><?php _e("We're sorry!", 'ldd-directory-lite'); ?></strong> <?php _e('There were some errors with the information you provided. Please check your submission and try again.', 'ldd-directory-lite'); ?><br>
         </div>
     <?php endif; ?>
 
@@ -18,12 +18,9 @@
 
 
     <form id="submit-listing" name="submit-listing" method="post" enctype="multipart/form-data" novalidate>
-        <input type="hidden" name="action" value="submit_form">
+        <input type="hidden" name="action" value="submit-listing">
         <?php echo wp_nonce_field( 'submit-listing','nonce_field', 0, 0 ); ?>
         <?php do_action( 'lddlite_submit_listing_hidden_fields' ); ?>
-
-        <!-- TESTING ONLY -->
-        <a id="sample-data" href="" style="padding:.5em;background:#fff;position:fixed;top:50px;left:20px;">Sample Data</a>
 
         <?php ldl_get_template_part( 'panel', 'general' ); ?>
         <?php ldl_get_template_part( 'panel', 'meta' ); ?>
@@ -32,41 +29,12 @@
         <div class="container-fluid">
             <div class="row bump-down-more">
                 <div class="col-md-12">
-                    <p class="text-success"><?php _e('Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.', 'lddlite'); ?></p>
+                    <p class="text-success"><?php _e('Please verify all information on this form before submitting. Your listing will not appear immediately as we review all submissions for accuracy and content, to ensure that listings fall within our terms of service.', 'ldd-directory-lite'); ?></p>
                     <?php ldl_the_tos(); ?>
-                    <button type="submit" class="btn btn-primary"><?php _e('Submit Listing', 'lddlite'); ?></button>
+                    <button type="submit" class="btn btn-primary"><?php _e('Submit Listing', 'ldd-directory-lite'); ?></button>
                 </div>
             </div>
         </div>
     </form>
 
 </div>
-
-
-<script>
-    jQuery("#sample-data").click(function(e) {
-        e.preventDefault()
-
-        var sampleData = {
-            f_title: "Sample Listing",
-            f_category: 143,
-            f_description: "Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem.",
-            f_summary: "Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
-            f_contact_email: "mark@watero.us",
-            f_contact_phone: "505.123.4567",
-            f_url_website: "http://mark.watero.us",
-            f_url_facebook: "facebook.com/mwaterous",
-            f_url_twitter: "markwaterous",
-            f_address_one: "450 Michelle Cir",
-            f_address_two: "Bernalillo NM",
-            f_postal_code: "87004",
-            f_country: "United States",
-            geo: "450 Michelle Cir",
-        }
-
-        jQuery.each( sampleData, function( key, value) {
-            jQuery('#' + key).val( value )
-        })
-
-    })
-</script>

@@ -46,10 +46,10 @@ class ldd_directory_lite_processor {
     public function __construct() {
 
         // Check if the form has been submitted
-        if (!array_key_exists(self::NONCE_FIELD, $_POST))
+        if (!array_key_exists(self::NONCE_FIELD, $_POST) || !array_key_exists('action', $_POST))
             return;
 
-        $nonce = apply_filters('lddlite_processor_nonce_action', '' );
+        $nonce = $_POST['action'];
 
         if ($nonce) {
             $this->_verify_nonce($nonce);
@@ -57,7 +57,7 @@ class ldd_directory_lite_processor {
             // If everything checks out, process and validate
             $this->processing = true;
             $this->_process_data();
-            $this->_validate();
+            //$this->_validate();
         }
 
     }
@@ -112,11 +112,14 @@ class ldd_directory_lite_processor {
         $required = apply_filters('lddlite_submit_required_fields', $this->required_fields);
         $required_errmsg = __('This field is required.', 'ldd-directory-lite');
 
-        // Loop through and check for required fields first
+        // Loop through and check for required fields first		
         foreach ($required as $field) {
+
             if (array_key_exists($field, $this->data) && '' == $this->data[ $field ]) {
                 $this->errors[ $field ] = apply_filters('lddlite_presentation_required_errmsg', $required_errmsg, $field);
-            }
+            }else if($field == "tos" && '' == $this->data[ $field ] )  {
+				$this->errors[ $field ] = apply_filters('lddlite_presentation_required_errmsg', $required_errmsg, $field);
+			}
         }
 
         // Any additional validation gets run now
@@ -153,6 +156,7 @@ class ldd_directory_lite_processor {
      *
      */
     public function push_data(array $data) {
+
         if (!$this->processing)
             $this->data = $data;
     }
@@ -245,7 +249,7 @@ function ldl_validate_fields($error, $field, $value) {
     switch ($field) {
         case 'contact_email':
             if (!is_email($value)) {
-                $error = __("The email address provided doesn't appear to be valid.", 'lddlite');
+                $error = __("The email address provided doesn't appear to be valid.", 'ldd-directory-lite');
             }
             break;
         case 'url_website':
@@ -270,19 +274,18 @@ add_filter('lddlite_validate_fields', 'ldl_validate_fields', 10, 3);
 
 function ldl_require_tos($required) {
 
-    if (ldl_get_setting('submit_use_tos'))
+    if (ldl()->get_option('submit_use_tos')) {
         $required[] = 'tos';
-
+	}
     return $required;
 }
 add_filter('lddlite_submit_required_fields', 'ldl_require_tos');
 
 
 function ldl_require_tos_errmsg($errmsg, $field) {
-
+	
     if ('tos' == $field)
         $errmsg = __('Please verify that you have read and agree to our terms of service before continuing.', 'ldd-directory-lite');
-
     return $errmsg;
 }
 add_filter('lddlite_presentation_required_errmsg', 'ldl_require_tos_errmsg', 10, 2);

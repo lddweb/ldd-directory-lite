@@ -35,7 +35,7 @@ function ldl_get_template_dir_name() {
  * @return string The template filename if one is located.
  */
 function ldl_locate_template($templates, $load = false, $require_once = true) {
-
+	
     // No template found yet
     $located = false;
 
@@ -71,10 +71,10 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
             break;
         }
     }
-
+	
     if (true == $load && false != $located)
-        load_template($located, $require_once);
-
+       load_template($located, $require_once);
+	
     return $located;
 }
 
@@ -89,7 +89,7 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
  * @param string $slug The parent template we're looking for
  * @param string $name The specific type of a particular parent template, if any
  */
-function ldl_get_template_part($slug, $name = null) {
+function ldl_get_template_part($slug, $name = null, $load = true) {
 
     do_action('get_template_part_' . $slug, $slug, $name);
 
@@ -101,7 +101,7 @@ function ldl_get_template_part($slug, $name = null) {
     $templates[] = "{$slug}.php";
 
     // Using the array, locate a template and return it
-    return ldl_locate_template($templates, true, false);
+    return ldl_locate_template($templates, $load, false);
 }
 
 
@@ -113,11 +113,20 @@ function ldl_get_template_part($slug, $name = null) {
  * @since 0.6.0
  */
 function ldl_get_submit_link() {
-    $post_id = ldl_get_setting('directory_submit_page');
+    $post_id = ldl()->get_option('directory_submit_page');
 
     return ($post_id) ? get_permalink($post_id) : '';
 }
 
+/**
+ * Get the link to the directory page
+ *
+ */
+function ldl_get_directory_link() {
+    $post_id = ldl()->get_option('directory_front_page');
+
+    return ($post_id) ? get_permalink($post_id) : '';
+}
 
 /**
  * Get the link to the management page
@@ -126,34 +135,9 @@ function ldl_get_submit_link() {
  * @TODO Code repetitititition, single function in the future? url helper class?
  */
 function ldl_get_manage_link() {
-    $post_id = ldl_get_setting('directory_manage_page');
+    $post_id = ldl()->get_option('directory_manage_page');
 
     return ($post_id) ? get_permalink($post_id) : '';
-}
-
-
-/**
- * Similar to WordPress core home_url(), this uses the directory_page setting to return a permalink
- * to the directory home page.
- *
- * @param string $path   Optional path relative to the home url.
- * @param string $scheme Optional scheme to use
- *
- * @return string Full permalink to the home page of our directory
- */
-function ldl_get_home_url($path = '', $scheme = null) {
-
-    $url = get_permalink(ldl_get_setting('directory_page'));
-
-    if (!in_array($scheme, array('http', 'https', 'relative')))
-        $scheme = is_ssl() ? 'https' : parse_url($url, PHP_URL_SCHEME);
-
-    $url = set_url_scheme($url, $scheme);
-
-    if ($path && is_string($path))
-        $url .= '/' . ltrim($path, '/');
-
-    return apply_filters('ldl_home_url', $url, $path);
 }
 
 
@@ -169,13 +153,13 @@ function ldl_use_google_maps() {
     if (is_single()) {
         global $geo;
 
-        if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl_get_setting('google_maps'))
+        if (!isset($geo) || !is_array($geo) || in_array('', $geo) || !ldl()->get_option('google_maps'))
             return false;
 
         return true;
     }
 
-    return ldl_get_setting('google_maps');
+    return ldl()->get_option('google_maps');
 }
 
 
@@ -213,8 +197,8 @@ function ldl_get_contact_form() {
 /**
  * An alias for ldl_get_categories that defaults to the top level categories.
  */
-function ldl_get_parent_categories() {
-    return ldl_get_categories(0);
+function ldl_get_parent_categories($attr = array()) {
+    return ldl_get_categories(0,$attr);
 }
 
 /**
@@ -225,25 +209,161 @@ function ldl_get_parent_categories() {
  *
  * @return string Return a formatted string containing all category elements
  */
-function ldl_get_categories($parent = 0) {
+function ldl_get_categories($parent = 0,$attr = array()) {
+	
+	$args_arr = array('parent' => $parent);
 
-    $terms = get_terms(LDDLITE_TAX_CAT, array(
-        'parent' => $parent,
-    ));
+	$sort_by 	= ldl()->get_option('directory_category_sort', 'business_name');
+	$sort_order = ldl()->get_option('directory_category_sort_order','asc');
+		
+	if(isset($attr["cat_order_by"]) and !empty($attr["cat_order_by"])):
+		$sort_by 	= $attr["cat_order_by"];
+	endif;
 
-    $mask = '<a href="%1$s" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
+	if(isset($attr["cat_order"]) and !empty($attr["cat_order"])):
+		$sort_order = $attr["cat_order"];
+	endif;	
+
+	
+	if($sort_by == "title"):
+		$args_arr = array(
+					  'orderby'	=> 'name', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 
+	elseif ($sort_by == "id"):		
+		$args_arr = array(
+					  'orderby'	=> 'id', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 						
+	elseif ($sort_by == "slug"):
+		$args_arr = array(
+					  'orderby'	=> 'slug', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 					
+	elseif ($sort_by == "count"):	
+		$args_arr = array(
+					  'orderby'	=> 'count', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 
+	endif;				
+
+	$custom_url = "";
+	$custom_url_para = array();
+	
+	if(isset($attr["list_order_by"]) and !empty($attr["list_order_by"])):
+		$ls_sort_by 				 = $attr["list_order_by"];
+		$custom_url_para["order_by"] = $ls_sort_by;
+	endif;
+
+	if(isset($attr["list_order"]) and !empty($attr["list_order"])):
+		$ls_sort_order  	 	  = $attr["list_order"];
+		$custom_url_para["order"] = $ls_sort_order;
+	endif;	
+
+	if(isset($custom_url_para) and !empty($custom_url_para)):
+		$custom_url = "?".http_build_query($custom_url_para);
+	endif;
+		
+    $terms = get_terms(LDDLITE_TAX_CAT, $args_arr);
+
+    $mask = '<a href="%1$s'.$custom_url.'" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
 
     $categories = array();
+	if(!empty($terms)) {
     foreach ($terms as $category) {
         $term_link = get_term_link($category);
         $categories[] = sprintf($mask, $term_link, $category->name, $category->count);
     }
 
     $categories = apply_filters('lddlite_filter_presentation_categories', $categories, $terms, $mask);
-
+	}
     return implode(' ', $categories);
 }
 
+/**
+ * Obtain a list of categories based on the provided parent ID, and return a formatted list for display
+ * via one of the plugin templates.
+ *
+ * @param int $parent The term ID to retrieve categories from
+ *
+ * @return string Return a formatted string containing all category elements
+ */
+function ldl_get_categories_li($parent = 0) {
+	
+	$args_arr = array('parent' => $parent);
+
+	$sort_by 	= ldl()->get_option('directory_category_sort', 'business_name');
+	$sort_order = ldl()->get_option('directory_category_sort_order','asc');
+		
+	if(isset($attr["cat_order_by"]) and !empty($attr["cat_order_by"])):
+		$sort_by 	= $attr["cat_order_by"];
+	endif;
+
+	if(isset($attr["cat_order"]) and !empty($attr["cat_order"])):
+		$sort_order = $attr["cat_order"];
+	endif;	
+
+	
+	if($sort_by == "title"):
+		$args_arr = array(
+					  'orderby'	=> 'name', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 
+	elseif ($sort_by == "id"):		
+		$args_arr = array(
+					  'orderby'	=> 'id', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 						
+	elseif ($sort_by == "slug"):
+		$args_arr = array(
+					  'orderby'	=> 'slug', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 					
+	elseif ($sort_by == "count"):	
+		$args_arr = array(
+					  'orderby'	=> 'count', 
+					  'order'	=> $sort_order,
+					  'parent'	=> $parent
+				  	); 
+	endif;				
+
+	$custom_url = "";
+	$custom_url_para = array();
+	
+	if(isset($attr["list_order_by"]) and !empty($attr["list_order_by"])):
+		$ls_sort_by 				 = $attr["list_order_by"];
+		$custom_url_para["order_by"] = $ls_sort_by;
+	endif;
+
+	if(isset($attr["list_order"]) and !empty($attr["list_order"])):
+		$ls_sort_order  	 	  = $attr["list_order"];
+		$custom_url_para["order"] = $ls_sort_order;
+	endif;	
+
+	if(isset($custom_url_para) and !empty($custom_url_para)):
+		$custom_url = "?".http_build_query($custom_url_para);
+	endif;
+		
+    $terms = get_terms(LDDLITE_TAX_CAT, $args_arr);
+
+    $mask = '<li><a href="%1$s'.$custom_url.'">%2$s</a></li>';
+
+    $categories = array();
+	if(!empty($terms)) {
+	  foreach ($terms as $category) {
+		  $term_link = get_term_link($category);
+		  $categories[] = sprintf($mask, $term_link, $category->name);
+	  }
+	}
+    return implode(' ', $categories);
+}
 
 /**
  * Returns a post thumbnail/logo for the provided ID. If none is found, a default image is returned.
@@ -252,7 +372,7 @@ function ldl_get_categories($parent = 0) {
  *
  * @return string
  */
-function ldl_get_thumbnail($post_id, $size = 'directory-listing', $class = 'img-rounded') {
+function ldl_get_thumbnail($post_id, $size = 'directory-listing', $class = 'img-rounded img-responsive') {
 
     if (has_post_thumbnail($post_id)) {
         $thumbnail = get_the_post_thumbnail($post_id, $size, array('class' => $class));
@@ -269,7 +389,7 @@ function ldl_get_thumbnail($post_id, $size = 'directory-listing', $class = 'img-
  * set to true and content has been provided, get the appropriate template part.
  */
 function ldl_the_tos() {
-    if (!ldl_get_setting('submit_use_tos') || '' == ldl_get_setting('submit_tos')) {
+    if (!ldl()->get_option('submit_use_tos') || '' == ldl()->get_option('submit_tos')) {
         return;
     }
 
@@ -365,21 +485,95 @@ function ldl_get_social($post_id) {
 /**
  * Get Featured Posts
  */
-function ldl_get_featured_posts($args = null) {
+function ldl_get_featured_posts($args = null, $attr = array()) {
 
-    $defaults = array(
-        'post_type'      => LDDLITE_POST_TYPE,
-        'tax_query'      => array(
-            'taxonomy' => LDDLITE_TAX_TAG,
-            'field'    => 'slug',
-            'terms'    => 'featured',
-        ),
-        'orderby'        => 'rand',
-        'posts_per_page' => '3'
-    );
+	$sort_by 	= ldl()->get_option('directory_featured_sort', 'business_name');
+	$sort_order = ldl()->get_option('directory_featured_sort_order','asc');
+		
+	if(isset($attr["fl_order_by"]) and !empty($attr["fl_order_by"])):
+		$sort_by 	= $attr["fl_order_by"];
+	endif;
+
+	if(isset($attr["fl_order"]) and !empty($attr["fl_order"])):
+		$sort_order = $attr["fl_order"];
+	endif;	
+
+
+
+				if($sort_by == "business_name"):
+					$defaults = array(
+						'post_type'      => LDDLITE_POST_TYPE,
+						'tax_query'      => array(
+							array(
+								'taxonomy' => LDDLITE_TAX_TAG,
+								'field'    => 'slug',
+								'terms'    => 'featured',
+							),
+						),
+						'orderby'        => 'title',
+						'order' 		 => $sort_order,
+						'posts_per_page' => '3'
+					);				
+				elseif ($sort_by == "zip"):		
+					$defaults = array(
+						'post_type'      => LDDLITE_POST_TYPE,
+						'tax_query'      => array(
+							array(
+								'taxonomy' => LDDLITE_TAX_TAG,
+								'field'    => 'slug',
+								'terms'    => 'featured',
+							),
+						),
+						'meta_key'       => '_lddlite_postal_code',
+						'orderby'        => 'meta_value',
+						'order' 		 => $sort_order,
+						'posts_per_page' => '3'
+					);
+				elseif ($sort_by == "area"):	
+					$defaults = array(
+						'post_type'      => LDDLITE_POST_TYPE,
+						'tax_query'      => array(
+							array(
+								'taxonomy' => LDDLITE_TAX_TAG,
+								'field'    => 'slug',
+								'terms'    => 'featured',
+							),
+						),
+						'meta_key'       => '_lddlite_country',
+						'orderby'        => 'meta_value',
+						'order' 		 => $sort_order,
+						'posts_per_page' => '3'
+					);				
+				elseif ($sort_by == "category"):	
+					$defaults = array(
+						'post_type'      => LDDLITE_POST_TYPE,
+						'tax_query'      => array(
+							array(
+								'taxonomy' => LDDLITE_TAX_TAG,
+								'field'    => 'slug',
+								'terms'    => 'featured',
+							),
+						),
+						'order' 		 => $sort_order,
+						'posts_per_page' => '3'
+					);						
+				elseif ($sort_by == "random"):	
+					$defaults = array(
+						'post_type'      => LDDLITE_POST_TYPE,
+						'tax_query'      => array(
+							array(
+								'taxonomy' => LDDLITE_TAX_TAG,
+								'field'    => 'slug',
+								'terms'    => 'featured',
+							),
+						),
+						'orderby'        => 'rand',
+						'order' 		 => $sort_order,
+						'posts_per_page' => '3'
+					);				
+				endif;
 
     $args = wp_parse_args($args, $defaults);
-
     return new WP_Query($args);
 }
 
@@ -411,4 +605,13 @@ function ldl_edit_link($post_id, $action) {
         ),
         remove_query_arg('msg')
     );
+}
+
+function get_tag_ID($tag_name) {
+	$tag = get_term_by('name', $tag_name, 'listing_tag');
+	if ($tag) {
+		return $tag->term_id;
+	} else {
+		return 0;
+	}
 }

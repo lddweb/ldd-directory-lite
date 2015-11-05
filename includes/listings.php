@@ -11,7 +11,6 @@
  * @copyright 2014 LDD Consulting, Inc
  */
 
-
 /**
  * Intercept the template_include string and replace it with our own built in templates of the same (or similar) name.
  *
@@ -22,7 +21,7 @@
  * @return string The new template location if found, original if not
  */
 function ldl_template_include($template) {
-
+		
     if (LDDLITE_POST_TYPE == get_post_type()) {
 
         $templates = array();
@@ -57,13 +56,13 @@ function ldl_customize_appearance() {
     $primary_defaults = array(
         'normal'     => '#3bafda',
         'hover'      => '#3071a9',
-        'foreground' => '#fff',
+        'foreground' => '#ffffff',
     );
 
     $primary_custom = array(
-        'normal'     => ldl_get_setting('appearance_primary_normal'),
-        'hover'      => ldl_get_setting('appearance_primary_hover'),
-        'foreground' => ldl_get_setting('appearance_primary_foreground'),
+        'normal'     => ldl()->get_option('appearance_primary_normal', '#3bafda'),
+        'hover'      => ldl()->get_option('appearance_primary_hover', '#3071a9'),
+        'foreground' => ldl()->get_option('appearance_primary_foreground', '#ffffff'),
     );
 
     if (array_diff($primary_defaults, $primary_custom)) {
@@ -110,3 +109,21 @@ function ldl_filter_post_class($classes) {
     return $classes;
 }
 add_filter('post_class', 'ldl_filter_post_class');
+
+
+function ldl_count_pending() {
+    global $menu;
+
+    $label = __('Directory', 'ldd-directory-lite');
+    $listing_count = wp_count_posts(LDDLITE_POST_TYPE, 'readable');
+
+    if (!empty($menu) && is_array($menu)) {
+        foreach ($menu as $key => $menu_item) {
+            if (0 === strpos($menu_item[0], $label)) {
+                $menu[$key][0] .= ' <span class="awaiting-mod update-plugins count-' . $listing_count->pending . '"><span class="pending-count">' . number_format_i18n($listing_count->pending) . '</span></span>';
+                break;
+            }
+        }
+    }
+}
+add_filter('admin_head', 'ldl_count_pending');

@@ -21,6 +21,13 @@
  */
 function ldl_edit_update_post($post_id, $title, $description, $summary, $cat_id) {
 
+    if(is_array($cat_id)):
+        $cat_id = array_map( 'intval', $cat_id );
+        $cat_id = array_unique( $cat_id );
+    else:
+        $cat_id = (int) $cat_id;
+    endif;
+
     $args = array(
         'ID'           => $post_id,
         'post_title'   => $title,
@@ -29,26 +36,9 @@ function ldl_edit_update_post($post_id, $title, $description, $summary, $cat_id)
     );
 
     wp_update_post($args);
-    wp_set_object_terms($post_id, (int) $cat_id, LDDLITE_TAX_CAT);
+    wp_set_object_terms($post_id, $cat_id, LDDLITE_TAX_CAT);
 
 }
-
-
-/**
- * Generate a nonce name for the processor based on the edit action taking place.
- *
- * @param string $nonce_action The filter should alway send an empty string
- *
- * @return string The nonce name
- */
-function ldl_edit_listing_nonces($nonce_action) {
-
-    if (!isset($_GET['edit']))
-        return;
-
-    return 'edit-' . $_GET['edit'];
-}
-add_filter('lddlite_processor_nonce_action', 'ldl_edit_listing_nonces');
 
 
 /**
@@ -146,7 +136,7 @@ function ldl_shortcode_directory_manage() {
                     $cat_id = wp_get_post_terms($listing->ID, LDDLITE_TAX_CAT, array('fields' => 'ids'));
                     $data = array(
                         'title'       => $listing->post_title,
-                        'category'    => $cat_id[0],
+                        'category'    => $cat_id,
                         'description' => $listing->post_content,
                         'summary'     => $listing->post_excerpt,
                     );
@@ -185,15 +175,17 @@ function ldl_shortcode_directory_manage() {
                 case 'location':
                     // @TODO Repetitious code alert, here and _submit.php
                     wp_enqueue_script('jquery-ui-autocomplete');
-                    wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=3.9.1');
+                    wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=4.3.1');
                     wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
                     $data = array(
-                        'title' => get_the_title($listing->ID),
-                        'geo'   => get_metadata('post', $listing->ID, ldl_pfx('geo'), true),
+                        'title'       => get_the_title($listing->ID),
+                        'geo'         => get_metadata('post', $listing->ID, ldl_pfx('geo'), true),
                         'address_one' => get_metadata('post', $listing->ID, ldl_pfx('address_one'), true),
                         'address_two' => get_metadata('post', $listing->ID, ldl_pfx('address_two'), true),
                         'postal_code' => get_metadata('post', $listing->ID, ldl_pfx('postal_code'), true),
-                        'country' => get_metadata('post', $listing->ID, ldl_pfx('country'), true),
+                        'city'        => get_metadata('post', $listing->ID, ldl_pfx('city'), true),
+                        'state'       => get_metadata('post', $listing->ID, ldl_pfx('state'), true),
+                        'country'     => get_metadata('post', $listing->ID, ldl_pfx('country'), true),
                     );
                     $lddlite_submit_processor->push_data($data);
                     break;

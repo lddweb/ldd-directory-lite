@@ -2,9 +2,9 @@
 
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, ldd directory lite.
 
-* **Working Version**: 0.8-beta
+* **Working Version**: 0.8.4-beta
 * **Latest Stable**: 
-* **Contributors**: [@mwaterous](https://github.com/mwaterous)
+* **Contributors**: [@lddweb](https://github.com/lddweb/)
 
 The ldd directory lite plugin is a great way to add a powerful, feature rich and completely free custom directory to your WordPress web site.
 
@@ -14,6 +14,10 @@ Installation and configuration takes mere moments, and you can quickly start bui
 
 * Easy to install, easy to configure
 * Add the `[directory]` and `[directory_submit]` shortcode to any page (automatically installed for you, but feel free to change them)
+* Default list sorting options for *Categories*,*Featured* and *Listings* in dashboard.
+* Sort using shortcodes, i.e. `[directory cat_order_by="xxx" cat_order="asc" fl_order_by="xxx" fl_order="asc" list_order_by="xxx" list_order="asc"]`
+* Ability to change Taxonomy and Post type slugs.
+* Added new fields for listings.
 * Customize the look and feel as much, or as little as you want
 * Features can easily be enabled or disabled on the dashboard
 * Users can easily maintain their listings through a front end control panel
@@ -66,15 +70,15 @@ A future version of ldd directory lite will scan for this leftover data and ask 
 
 ## Issues & Bug Reports
 
-**Please direct all bug reports to our [GitHub Issue Tracker](https://github.com/mwaterous/ldd-directory-lite/issues)**
+**Please direct all bug reports to our [GitHub Issue Tracker](https://github.com/lddweb/ldd-directory-lite/issues)**
 
 You are more than welcome to post problems and questions in the [WordPress.org Support Forums](http://wordpress.org/support/plugin/ldd-directory-lite), and we will do our best to respond in a timely fashion. Most posts will be answered within 3-5 business days.
 
-If you have discovered an issue that you feel needs our attention, please take a look at our [GitHub Issues](https://github.com/mwaterous/ldd-directory-lite/issues) page. You can open a New Issue to let us know what you found.
+If you have discovered an issue that you feel needs our attention, please take a look at our [GitHub Issues](https://github.com/lddweb/ldd-directory-lite/issues) page. You can open a New Issue to let us know what you found.
 
 Please try to include as much information as possible, including steps that we can take to reproduce the issue and any other information that may be pertinent to your particular situation. If you can, include a list of other plugins you are running (in case it may be a conflict), what version of WordPress you're using, and any error messages or notices you saw.
 
-**Feature requests can also be posted on the [GitHub Issue Tracker](https://github.com/mwaterous/ldd-directory-lite/issues).**
+**Feature requests can also be posted on the [GitHub Issue Tracker](https://github.com/lddweb/ldd-directory-lite/issues).**
 
 ## Credits
 

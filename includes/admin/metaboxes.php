@@ -74,28 +74,44 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
         'show_names' => true,
         'fields'     => array(
             array(
-                'name' => 'Address One',
-                'id'   => ldl_pfx('address_one'),
-                'type' => 'text',
+                'name'  => 'Address One',
+                'id'    => ldl_pfx('address_one'),
+                'type'  => 'text',
+                'class' => 'geo_address_1',
             ),
             array(
-                'name' => 'Address Two',
-                'id'   => ldl_pfx('address_two'),
-                'type' => 'text',
+                'name'  => 'Address Two',
+                'id'    => ldl_pfx('address_two'),
+                'type'  => 'text',
+                'class' => 'geo_address_2',
             ),
             array(
-                'name' => 'Zip / Postal Code',
-                'id'   => ldl_pfx('postal_code'),
-                'type' => 'text_medium',
+                'name'  => 'City',
+                'id'    => ldl_pfx('city'),
+                'type'  => 'text_medium',
+                'class' => 'geo_city',
+            ),			
+            array(
+                'name'  => 'Zip / Postal Code',
+                'id'    => ldl_pfx('postal_code'),
+                'type'  => 'text_medium',
+                'class' => 'geo_zip',
             ),
             array(
-                'name' => 'Country',
-                'id'   => ldl_pfx('country'),
-                'type' => 'text_medium',
+                'name'  => 'Country',
+                'id'    => ldl_pfx('country'),
+                'type'  => 'text_medium',
+                'class' => 'geo_country',
             ),
             array(
-                'name' => 'Set Map Marker',
-                'desc' => __('Use the map above to set the location for this listing. The text field will attempt to autocomplete any address you enter, or you can drag the marker directly on the map to set the location.', 'ldd-directory-lite'),
+                'name'  => 'State / Province',
+                'id'    => ldl_pfx('state'),
+                'type'  => 'text_medium',
+                'class' => 'geo_state',
+            ),			
+            array(
+                'name' => 'Map Location',
+                'desc' => __('Please provide the address above for adding map.', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('geo'),
                 'type' => 'geo_location',
             ),
@@ -147,7 +163,7 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
         'priority'   => 'core',
         'show_names' => true,
         'fields'     => array(
-            array(
+			array(
                 'name' => __('Email', 'ldd-directory-lite'),
                 'id'   => ldl_pfx('contact_email'),
                 'type' => 'text_medium',
@@ -162,6 +178,11 @@ function ldl_metaboxes_setup_cmb(array $meta_boxes) {
                 'id'   => ldl_pfx('contact_fax'),
                 'type' => 'text_small',
             ),
+            array(
+                'name' => __('Skype', 'ldd-directory-lite'),
+                'id'   => ldl_pfx('contact_skype'),
+                'type' => 'text_small',
+            ),			
         ),
     );
 
@@ -184,11 +205,11 @@ function ldl_render_geo_location_field($field, $meta) {
     wp_enqueue_script('lddlite-admin');
 
     wp_enqueue_style('lddlite-admin');
-
-    echo '<input type="text" class="autocomplete" id="' . $field['id'] . '">';
+    echo '<i class="full_address_i"></i>';
+    echo '<input type="text" style="display:none;" class="autocomplete full_address_geo" id="' . $field['id'] . '">';
     echo '<input type="hidden" class="lat" name="' . $field['id'] . '[lat]" value="' . (isset($meta['lat']) ? $meta['lat'] : '') . '">';
     echo '<input type="hidden" class="lng" name="' . $field['id'] . '[lng]" value="' . (isset($meta['lng']) ? $meta['lng'] : '') . '">';
-    echo '<div class="map-canvas"></div>';
+    echo '<div class="map-canvas" id="map_canvas"></div>';
 
     if (!empty($field['desc']))
         echo '<p class="cmb_metabox_description">' . $field['desc'] . '</p>';

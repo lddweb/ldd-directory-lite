@@ -1,0 +1,142 @@
+.form-table {
+	border-collapse: collapse;
+	margin-top: 0.5em;
+	width: 100%;
+	margin-bottom: -8px;
+	clear: both;
+}
+
+.form-table td {
+	margin-bottom: 9px;
+	padding: 8px 10px;
+	line-height: 20px;
+	font-size: 11px;
+}
+
+.form-table th,
+.form-wrap label {
+	font-weight: normal;
+	text-shadow: rgba(255,255,255,1) 0 1px 0;
+}
+
+.form-table th {
+	vertical-align: top;
+	text-align: left;
+	padding: 10px;
+	width: 200px;
+}
+
+.form-table th.th-full {
+	width: auto;
+}
+
+.form-table div.color-option {
+	display: block;
+	clear: both;
+	margin-top: 12px;
+}
+
+.form-table input.tog {
+	margin-top: 2px;
+	margin-right: 2px;
+	float: left;
+}
+
+.form-table table.color-palette {
+	vertical-align: bottom;
+	float: left;
+	margin: -12px 3px 11px;
+}
+
+.form-table .color-palette td {
+	border-width: 1px 1px 0;
+	border-style: solid solid none;
+	height: 10px;
+	line-height: 20px;
+	width: 10px;
+}
+
+input.large-text,
+textarea.large-text {
+	width: 99%;
+}
+
+.form-table input.regular-text,
+#adduser .form-field input {
+	width: 25em;
+}
+
+.form-table input.small-text {
+	width: 50px;
+}
+
+#profile-page .form-table textarea {
+	width: 500px;
+	margin-bottom: 6px;
+}
+
+#profile-page .form-table #rich_editing {
+	margin-right: 5px
+}
+
+.form-table .pre {
+	padding: 8px;
+	margin: 0;
+}
+
+.pre {
+	/* http://www.longren.org/2006/09/27/wrapping-text-inside-pre-tags/ */
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+table.form-table td .updated {
+	font-size: 13px;
+}
+
+.fep-message-error, 
+.fep-message-success{
+	font-size: 1.6em;
+	padding: 6px;
+	width: 99%;
+	display: block;	
+}
+
+.fep-message-error{
+	border-left: #EF1D25 4px solid;
+}
+
+.fep-message-success{
+	border-left: #5FDF37 4px solid;
+}
+
+.fep tr#password{
+	border-top: #EFEFEF 8px solid;
+}
+
+#pass-strength{
+	background-color:#eee;border-color:#ddd!important;
+	width: 200px;
+	padding: 5px 5px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+#pass-strength.bad{
+	background-color:#ffb78c;
+	border-color:#ff853c!important;
+}
+#pass-strength.good{
+	background-color:#ffec8b;
+	border-color:#fc0!important;
+}
+#pass-strength.short{
+	background-color:#ffa0a0;
+	border-color:#f04040!important;
+}
+#pass-strength.strong{
+	background-color:#c3ff88;border-color:#8dff1c!important;
+}

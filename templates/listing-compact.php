@@ -1,4 +1,4 @@
-<article id="listing-<?php get_the_ID(); ?>" class="listing-<?php get_the_ID(); ?> type-listing compact">
+<article id="listing-<?php get_the_ID(); ?>" class="listing-<?php get_the_ID(); ?> type-listing compact clearfix">
 
     <div class="container-fluid">
         <div class="row">
