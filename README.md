@@ -2,7 +2,7 @@
 
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, ldd directory lite.
 
-* **Working Version**: 0.8.4-beta
+* **Working Version**: 0.8.5-beta
 * **Latest Stable**: 
 * **Contributors**: [@lddweb](https://github.com/lddweb/)
 
@@ -82,7 +82,7 @@ Please try to include as much information as possible, including steps that we c
 
 ## Credits
 
-I tend to spend a lot of time coding; not only is it my day job, but it's also one of the things I like to do in my spare time. No matter how much time I spend however, I'm just one person. This plugin is where it is thanks to the hard work and open source beliefs of more people than just myself. While I always try to make sure they are credited in the code itself, I would like to take the time to include them here as well. In no particular order:
+This plugin is where it is thanks to the hard work and open source beliefs of more people than just myself. While I always try to make sure they are credited in the code itself, I would like to take the time to include them here as well. In no particular order:
 
 **Who:** [WebDevStudios](http://webdevstudios.com/)<br>
 **Where:** [Custom Metaboxes and Fields for WordPress](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)<br>

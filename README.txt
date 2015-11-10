@@ -2,8 +2,8 @@
 Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Requires at least: 3.9.1
-Tested up to: 3.9.1
-Stable tag: 0.8.4-beta
+Tested up to: 4.3.1
+Stable tag: 0.8.5-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -22,6 +22,10 @@ The Directory is extremely user friendly, ready to go pretty much out of the box
 
 * Easy to install, easy to configure
 * Add the `[directory]` and `[directory_submit]` shortcode to any page (automatically installed for you, but feel free to change them)
+* Default list sorting options for *Categories*,*Featured* and *Listings* in dashboard.
+* Sort using shortcodes, i.e. `[directory cat_order_by="xxx" cat_order="asc" fl_order_by="xxx" fl_order="asc" list_order_by="xxx" list_order="asc"]`
+* Ability to change Taxonomy and Post type slugs.
+* Added new fields for listings.
 * Customize the look and feel as much, or as little as you want
 * Features can easily be enabled or disabled on the dashboard
 * Users can easily maintain their listings through a front end control panel
@@ -68,6 +72,32 @@ This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/pl
 
 == Frequently Asked Questions ==
 
+= How to sort categories, listings and featured listings using shortcode? =
+
+You can sort categories using *cat_order_by*, listings using *list_order_by* and featured listings using *fl_order_by* attribute with shortcode.
+
+e.g. [directory cat_order_by="**xxx**" cat_order="asc" fl_order_by="**xxx**" fl_order="asc" list_order_by="**xxx**" list_order="asc"]
+
+**cat_order_by="xxx" :**
+* id
+* slug
+* title
+* count
+
+**fl_order_by="**xxx**"**
+* business_name
+* zip
+* area
+* category
+* random
+
+**list_order_by="**xxx**"**
+* business_name
+* zip
+* area
+* category
+* random
+
 = How can I avoid having my template customizations overwritten when the plugin is updated? =
 
 All the template files found in `/ldd-directory-lite/templates` can be copied to a directory in your theme called *lddlite_templates*.
@@ -83,11 +113,21 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 0.8.4-beta =
-Fixes a major issue with the submission process, and other minor updates.
+= 0.8.5-beta =
+Added new features, fixed a major issue with the submission process, and other minor updates.
 
 
 == Changelog ==
+
+= 0.8.5-beta =
+
+* Added multiple categories section support for front-end users.
+* Added an admin notice if wrong/same post types are used.
+* Updated google maps for auto fetching locations based on user provided address.
+* Added default sorting options in admin panel.
+* Added sorting support using shortcodes.
+* Added new fields for company listings.
+* Fixed few bugs.
 
 = 0.8.4-beta =
 
@@ -136,7 +176,7 @@ Fixes a major issue with the submission process, and other minor updates.
 
 == Credits ==
 
-I tend to spend a lot of time coding; not only is it my day job, but it's also one of the things I like to do in my spare time. No matter how much time I spend however, I'm just one person. This plugin is where it is thanks to the hard work and open source beliefs of a great many people. While I always try to make sure they are credited in the code itself, I would like to take the time to include them here as well. In no particular order:
+This plugin is where it is thanks to the hard work and open source beliefs of a great many people. While I always try to make sure they are credited in the code itself, I would like to take the time to include them here as well. In no particular order:
 
 **Who:** [WebDevStudios](http://webdevstudios.com/)<br>
 **Where:** [Custom Metaboxes and Fields for WordPress](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)<br>
