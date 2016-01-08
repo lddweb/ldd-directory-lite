@@ -2,8 +2,8 @@
 Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Requires at least: 3.9.1
-Tested up to: 4.3.1
-Stable tag: 0.8.5-beta
+Tested up to: 4.4.1
+Stable tag: 0.8.51
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -112,6 +112,10 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 
 == Upgrade Notice ==
+
+= 0.8.51 =
+* Fixed list importing issue while updating from older version.
+* Added support for wordpress 4.4.1 
 
 = 0.8.5-beta =
 Added new features, fixed a major issue with the submission process, and other minor updates.

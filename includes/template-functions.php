@@ -273,7 +273,7 @@ function ldl_get_categories($parent = 0,$attr = array()) {
     $mask = '<a href="%1$s'.$custom_url.'" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
 
     $categories = array();
-	if(!empty($terms)) {
+	if(!empty($terms) and !is_wp_error($terms)) {
     foreach ($terms as $category) {
         $term_link = get_term_link($category);
         $categories[] = sprintf($mask, $term_link, $category->name, $category->count);
@@ -356,7 +356,7 @@ function ldl_get_categories_li($parent = 0) {
     $mask = '<li><a href="%1$s'.$custom_url.'">%2$s</a></li>';
 
     $categories = array();
-	if(!empty($terms)) {
+	if(!empty($terms) and !is_wp_error($terms)) {
 	  foreach ($terms as $category) {
 		  $term_link = get_term_link($category);
 		  $categories[] = sprintf($mask, $term_link, $category->name);
