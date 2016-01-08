@@ -41,9 +41,21 @@
 													   )
 										) );
 								
-				elseif ($sort_by == "featured"):	
-					 $featured = ldl_get_featured_posts(); 
-					 
+				elseif ($sort_by == "featured"):
+
+					$cat_args = array();
+					if($cat_id):
+					 $cat_args = array('tax_query' => array(
+						 				array(
+											'taxonomy' => LDDLITE_TAX_CAT,
+											'field' 	 => 'id',
+											'terms' 	 => $cat_id
+										)
+					 			));
+					endif;
+
+					 $featured = ldl_get_featured_posts($cat_args);
+
 					  while ($featured->have_posts()): $featured->the_post();
 						  ldl_get_template_part('listing', 'compact');
 					 endwhile;

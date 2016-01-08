@@ -114,17 +114,16 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 == Upgrade Notice ==
 
 = 0.8.51 =
+
 * Fixed list importing issue while updating from older version.
+* Fixed sort issue for featured listings.
 * Added support for wordpress 4.4.1 
-
-= 0.8.5-beta =
-Added new features, fixed a major issue with the submission process, and other minor updates.
-
 
 == Changelog ==
 
 = 0.8.5-beta =
 
+* Added new features, fixed a major issue with the submission process, and other minor updates.
 * Added multiple categories section support for front-end users.
 * Added an admin notice if wrong/same post types are used.
 * Updated google maps for auto fetching locations based on user provided address.
