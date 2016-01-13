@@ -55,7 +55,7 @@ function ldl_get_registered_settings() {
                     'name' => __( 'Post Type Slug', 'ldd-directory-lite'),
                     'type' => 'text',
                     'size' => 'medium',
-                    'std' => 'listings',
+                    'std' => 'listing',
                 ),
 				/* Category Sort Options */
                 'category_sort_separator' => array(
