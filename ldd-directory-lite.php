@@ -54,8 +54,9 @@ register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 
 
 function install_ldd_directory_lite() {
-
+	global $wp_rewrite;
     flush_rewrite_rules(true);
+	$wp_rewrite->flush_rules( false );
 
     $ldl_settings = get_option('lddlite_settings', array());
 

@@ -356,7 +356,7 @@ function ldl_get_categories_li($parent = 0) {
     $mask = '<li><a href="%1$s'.$custom_url.'">%2$s</a></li>';
 
     $categories = array();
-	if(!empty($terms) and !is_wp_error($terms)) {
+	if(!empty($terms) and !is_wp_error( $terms )) {
 	  foreach ($terms as $category) {
 		  $term_link = get_term_link($category);
 		  $categories[] = sprintf($mask, $term_link, $category->name);
