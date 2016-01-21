@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php define( 'WP_USE_THEMES', false ); get_header(); ?>
 
 <section id="primary" class="site-content directory-lite">
     <div id="content" role="main">
@@ -21,6 +21,4 @@
     </div>
 </section>
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>
-

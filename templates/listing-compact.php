@@ -1,8 +1,8 @@
-<article id="listing-<?php get_the_ID(); ?>" class="listing-<?php get_the_ID(); ?> type-listing compact clearfix">
+<article id="listing-<?php get_the_ID(); ?>" class="ldd-listing listing-<?php get_the_ID(); ?> type-listing compact clearfix">
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-2 ldd-thumbnail-left">
                 <?php echo ldl_get_thumbnail( get_the_ID() ); ?>
             </div>
             <div class="col-sm-10">

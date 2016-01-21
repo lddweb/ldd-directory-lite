@@ -2,7 +2,7 @@
 global $geo;
 // ldl_use_google_maps() will always return false if this isn't an array containing our lat and lng
 $geo = ldl_get_meta('geo');
-
+define( 'WP_USE_THEMES', false );
 get_header(); ?>
 
 <div id="primary" class="site-content directory-lite">

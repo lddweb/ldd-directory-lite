@@ -1,4 +1,4 @@
-<div class="directory-lite">
+<div class="directory-lite ldd-directory-home">
 
     <?php 
 		echo ldl_get_header(); 
@@ -19,9 +19,9 @@
             <?php if (ldl()->get_option('appearance_display_featured')):
                 $featured = ldl_get_featured_posts(array(),$pass_attr); if ($featured->have_posts()):
                 ?>
-            <div class="col-md-12">
+            <div class="col-md-12 ldd-featured-listings-container">
 
-                <h2><?php _e('Featured Listings', 'ldd-directory-lite'); ?></h2>
+                <h2 class="ldd-featured-listings-title"><?php _e('Featured Listings', 'ldd-directory-lite'); ?></h2>
 
                 <?php while ($featured->have_posts()): $featured->the_post(); ?>
                     <?php ldl_get_template_part('listing', 'compact'); ?>

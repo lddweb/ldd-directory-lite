@@ -36,7 +36,8 @@ function ldl_060_address_format($post_ids) {
             'country'     => $country,
             'post_code'   => $post_code,
             'address_one' => $address,
-            'address_two' => $city . (empty($subdivision) ? '' : ' ' . $subdivision),
+            'address_two' => "",
+			'city' 		  => $city . (empty($subdivision) ? '' : ' ' . $subdivision),
             'geo'         => array(
                 'lat'       => '',
                 'lng'       => '',

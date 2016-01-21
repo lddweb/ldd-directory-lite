@@ -16,7 +16,7 @@ function ldl_admin_enqueue_scripts($hook_suffix) {
         return;
 
     wp_enqueue_style('wp-color-picker');
-    wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', array(), LDDLITE_VERSION);
+    //wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', array(), LDDLITE_VERSION);
 
     wp_enqueue_script('wp-color-picker');
     wp_enqueue_script('lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array('wp-color-picker'), false, true);

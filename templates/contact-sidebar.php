@@ -1,5 +1,5 @@
-<div id="contact-form-wrap">
-    <h3><?php _e('What is this in regards to?', 'ldd-directory-lite'); ?></h3>
+<div id="contact-form-wrap" class="ldd-rightbar-single">
+    <h3><?php echo sprintf(__( 'Contact %s', 'ldd-directory-lite' ), get_the_title( get_the_ID() ) ); ?> </h3>
 
     <form id="contact-form" method="post" novalidate>
         <?php wp_nonce_field( 'contact-form-nonce', 'nonce' ); ?>
@@ -9,29 +9,29 @@
 
         <div class="row bump-down">
             <div class="col-xs-12">
-                <label for="senders_name" class="sr-only"><?php _e('What is this in regards to?', 'ldd-directory-lite'); ?></label>
+                <label for="senders_name" class="sr-only"><?php _e('Your Name', 'ldd-directory-lite'); ?></label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                    <input id="senders_name" name="senders_name" type="text" class="form-control" placeholder="<?php _e('What is this in regards to?', 'ldd-directory-lite'); ?>" required>
+                    <input id="senders_name" name="senders_name" type="text" class="form-control" placeholder="<?php _e('Your Name', 'ldd-directory-lite'); ?>" required>
                 </div>
             </div>
         </div>
         <div class="row bump-down">
             <div class="col-xs-12">
-                <label for="email" class="sr-only"><?php _e('What is this in regards to?', 'ldd-directory-lite'); ?></label>
+                <label for="email" class="sr-only"><?php _e('Email Address', 'ldd-directory-lite'); ?></label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-                    <input id="email" name="email" type="email" class="form-control" placeholder="<?php _e('What is this in regards to?', 'ldd-directory-lite'); ?>" required>
+                    <input id="email" name="email" type="email" class="form-control" placeholder="<?php _e('Email Address', 'ldd-directory-lite'); ?>" required>
                 </div>
             </div>
         </div>
 
         <div class="row bump-down">
             <div class="col-xs-12">
-                <label for="subject" class="sr-only"><?php _e('What is this in regards to?', 'ldd-directory-lite'); ?></label>
+                <label for="subject" class="sr-only"><?php _e('Subject', 'ldd-directory-lite'); ?></label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
-                    <input id="subject" name="subject" type="text" class="form-control" placeholder="<?php _e('What is this in regards to?', 'ldd-directory-lite'); ?>" required>
+                    <input id="subject" name="subject" type="text" class="form-control" placeholder="<?php _e('Subject', 'ldd-directory-lite'); ?>" required>
                 </div>
             </div>
         </div>

@@ -539,15 +539,10 @@ class USER_EDIT_FONT_PROFILE{
 	function build_form( $data="" ){
 		
 		$current_user = wp_get_current_user();
-		
 		$user_id = $current_user->ID;
-		
 		$profileuser = get_user_to_edit($user_id);
-		
 		$show_pass_hint = (get_option('fep_pass_hint')=="on")? true:false;
-		
 		$show_pass_indicator = (get_option('fep_pass_indicator')=="on")? true:false;
-		
 		$show_biographical = (get_option('fep_biographical')=="on")? true:false;
 		
 		ob_start();
@@ -680,6 +675,45 @@ class USER_EDIT_FONT_PROFILE{
  */
 function ldl() {
     return ldd_directory_lite::get_instance();
+}
+
+
+/*
+ * =====================================
+ * Custom Pagination for inner listings
+ * =====================================
+ * */
+
+function ldd_pagination($pages = '', $range = 4) {
+	global $paged;
+
+	$showitems = ($range * 2)+1;
+
+	if(empty($paged)) $paged = 1;
+
+	if($pages == '')  {
+		global $wp_query;
+		$pages = $wp_query->max_num_pages;
+		if(!$pages)  {
+			$pages = 1;
+		}
+	}
+
+	if(1 != $pages)  {
+		echo "<div class=\" ldd_listing_pagination clearfix \"><span>Page ".$paged." of ".$pages."</span>";
+		if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<a href='".get_pagenum_link(1)."'>&laquo; First</a>";
+		if($paged > 1 && $showitems < $pages) echo "<a href='".get_pagenum_link($paged - 1)."'>&lsaquo; Previous</a>";
+
+		for ($i=1; $i <= $pages; $i++) {
+			if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )) {
+				echo ($paged == $i)? "<span class=\"current\">".$i."</span>":"<a href='".get_pagenum_link($i)."' class=\"inactive\">".$i."</a>";
+			}
+		}
+
+		if ($paged < $pages && $showitems < $pages) echo "<a href=\"".get_pagenum_link($paged + 1)."\">Next &rsaquo;</a>";
+		if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo "<a href='".get_pagenum_link($pages)."'>Last &raquo;</a>";
+		echo "</div>\n";
+	}
 }
 
 function validate_dyn_slugs() {
