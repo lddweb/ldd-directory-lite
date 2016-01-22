@@ -3,7 +3,7 @@ Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Requires at least: 3.9.1
 Tested up to: 4.4.1
-Stable tag: 0.8.51
+Stable tag: 0.8.52
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -117,7 +117,8 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 * Fixed list importing issue while updating from older version.
 * Fixed sort issue for featured listings.
-* Added support for wordpress 4.4.1 
+* Added support for wordpress 4.4.1. 
+* Added pagination for inner pages.
 
 == Changelog ==
 
@@ -125,6 +126,9 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 * Fixed list importing issue while updating from older version.
 * Fixed sort issue for featured listings.
+* Added custom pagination support.
+* Fixed css related issues.
+* Fixed layout template issues.
 * Added support for wordpress 4.4.1 
 
 = 0.8.5-beta =
