@@ -11,6 +11,10 @@
     height: 340px;
 }
 
+.ldd_hidden {
+    display: none;
+}
+
 .ldd-btn-fix:hover {
     background-image: none;
 }

@@ -12,15 +12,17 @@
         </div>
 
         <div id="navbar-directory" class="collapse navbar-collapse">
-            <form role="search" method="get" action="<?php echo site_url(); ?>" class=" visible-sm ldd-sm-search-form">
-                <input type="hidden" name="post_type" value="<?php echo LDDLITE_POST_TYPE; ?>">
-                <div class="input-group">
-                    <input id="directory-search" class="form-control" name="s" type="search" value="<?php echo get_search_query(); ?>" placeholder="<?php _e('Search listings...', 'ldd-directory-lite'); ?>">
+            <div class="ldd_top_search_form col-md-12 clearfix" style="display: none;">
+                <form role="search" method="get" action="<?php echo site_url(); ?>" class="ldd-sm-search-form">
+                    <input type="hidden" name="post_type" value="<?php echo LDDLITE_POST_TYPE; ?>">
+                    <div class="input-group">
+                        <input id="directory-search" class="form-control" name="s" type="search" value="<?php echo get_search_query(); ?>" placeholder="<?php _e('Search listings...', 'ldd-directory-lite'); ?>">
                         <span class="input-group-btn">
                             <button type="submit" class="btn ldd-search-btn ldd-btn-fix btn-primary"><?php _e('Search', 'ldd-directory-lite'); ?></button>
                         </span>
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
             <ul class="nav navbar-nav">
                 	<li class="ldd-home-link"><a href="<?php echo ldl_get_directory_link(); ?>"><?php _e('Home', 'ldd-directory-lite'); ?></a></li>
                 <?php if (ldl()->get_option('directory_submit_page')): ?>
@@ -39,7 +41,7 @@
                     </ul>
                   </li>
             </ul>
-                <form role="search" method="get" action="<?php echo site_url(); ?>" class="navbar-form navbar-right hidden-sm visible-xs visible-md visible-lg ldd-search-form">
+            <form role="search" method="get" style="display: none;" action="<?php echo site_url(); ?>" class="navbar-form ldd_right_search_form navbar-right ldd-search-form">
                     <input type="hidden" name="post_type" value="<?php echo LDDLITE_POST_TYPE; ?>">
                     <div class="input-group">
                         <input id="directory-search" class="form-control" name="s" type="search" value="<?php echo get_search_query(); ?>" placeholder="<?php _e('Search listings...', 'ldd-directory-lite'); ?>">

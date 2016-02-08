@@ -164,3 +164,21 @@ var happy = {
 
     }
 };
+
+/*
+* For plugin's header search adjustment
+* */
+function ldd_search_from_setter() {
+    if(jQuery(".ldd-directory-navbar").length > 0) {
+        var ldd_header_width = jQuery(".ldd-directory-navbar").width();
+        if (ldd_header_width < 850) {
+            jQuery(".ldd_top_search_form").show();
+            jQuery(".ldd_right_search_form").hide();
+        } else {
+            jQuery(".ldd_right_search_form").show();
+            jQuery(".ldd_top_search_form").hide();
+        }
+    }
+}
+ldd_search_from_setter();
+window.addEventListener('resize', ldd_search_from_setter);
