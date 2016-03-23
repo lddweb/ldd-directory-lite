@@ -2,20 +2,22 @@
 
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, ldd directory lite.
 
-* **Working Version**: 0.8.53
+* **Working Version**: 0.8.60
 * **Latest Stable**: 
 * **Contributors**: [@lddweb](https://github.com/lddweb/)
 
-The ldd directory lite plugin is a great way to add a powerful, feature rich and completely free custom directory to your WordPress web site.
+The LDD Directory Lite plugin is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
 
-Installation and configuration takes mere moments, and you can quickly start building a content rich directory of local businesses, restaurants, municipal services, non-profit organizations, or almost any other type of listing you can think of. Set your location, and build a completely local list of organizations or events, or leave it open and have an international directory.
+Within minutes you can install and configure LDD Directory Lite and start accepting submissions, or populating the content with your own listings. This is the best and easiest way to start any kind of directory you can think of, be it of local businesses (restaurants, coffee shops, craft stores, etc), or any other type of organization you would like to build around.
+
+The Directory is extremely user friendly, ready to go pretty much out of the box. One of our primary focuses is ensuring that it integrates with almost any theme, anywhere, anytime, and we have utilized the power of Bootstrap to ensure that the Directory is 100% mobile ready and responsive. It won't break all that hard work you've put into making sure your site works on any medium.
 
 ### Here are just a few of the many features:
 
 * Easy to install, easy to configure
-* Add the `[directory]` and `[directory_submit]` shortcode to any page (automatically installed for you, but feel free to change them)
-* Default list sorting options for *Categories*,*Featured* and *Listings* in dashboard.
-* Sort using shortcodes, i.e. `[directory cat_order_by="xxx" cat_order="asc" fl_order_by="xxx" fl_order="asc" list_order_by="xxx" list_order="asc"]`
+* Add the [directory] and [directory_submit] shortcode to any page (automatically installed for you, but feel free to change them)
+* Default list sorting options for Categories,Featured and Listings in dashboard.
+* Sort using shortcodes, i.e. [directory cat_order_by="xxx" cat_order="asc" fl_order_by="xxx" fl_order="asc" list_order_by="xxx" list_order="asc"]
 * Ability to change Taxonomy and Post type slugs.
 * Added new fields for listings.
 * Customize the look and feel as much, or as little as you want
@@ -27,14 +29,18 @@ Installation and configuration takes mere moments, and you can quickly start bui
 * Social media integration, build traffic for your users
 * Google Maps integration
 * Lightweight but still powerful
+* Supported Views: grid , compact
 
-### Coming soon:
+More information at [plugins.lddwebdesign.com](http://plugins.lddwebdesign.com)
 
-* **Our web site! This will be the home of extended documentation, community forums, premium support and much more!**
-* Premium modules, extend the capabilities of the Directory with features like import/export
-* Shortcodes to display single categories or listings where ever you want
+### Extensions
 
+* [Directory Reports & Exports.](http://plugins.lddwebdesign.com/extensions/directory-reports-exports/) The LDD Directory Lite Reports and Exports extension allows a user to create reports and to export listings in multiple formats e.g XML, CSV, HTML, PDF.
+* [Directory Import.](http://plugins.lddwebdesign.com/extensions/directory-import/) The LDD Directory Lite Import extension allows a user to import listings directly to their directory via CSV files that can be edited by hand or in applications such as Microsoft Excel.
 
+### Tags:
+
+[business](https://wordpress.org/plugins/tags/business), [business-directory](https://wordpress.org/plugins/tags/business-directory), [directory](https://wordpress.org/plugins/tags/directory), [listing directory](https://wordpress.org/plugins/tags/listing-directory), listings, business listings
 
 ## Installation
 

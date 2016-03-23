@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.8.53
+ * Version:           0.8.60
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '0.8.53');
+define('LDDLITE_VERSION', '0.8.60');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -55,8 +55,6 @@ register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 
 function install_ldd_directory_lite() {
 	global $wp_rewrite;
-    flush_rewrite_rules(true);
-	$wp_rewrite->flush_rules( false );
 
     $ldl_settings = get_option('lddlite_settings', array());
 
@@ -90,7 +88,7 @@ function install_ldd_directory_lite() {
                                      'comment_status' => 'closed',
                                  ));
 
-        $ldl_settings['directory_front_page'] = $directory;
+        $ldl_settings['directory_front_page']  = $directory;
         $ldl_settings['directory_submit_page'] = $submit;
         $ldl_settings['directory_manage_page'] = $manage;
     }
@@ -106,6 +104,9 @@ function install_ldd_directory_lite() {
     }
 
     update_option('lddlite_settings', $ldl_settings);
+
+	flush_rewrite_rules(true);
+	$wp_rewrite->flush_rules( false );
 }
 
 
@@ -778,3 +779,250 @@ function ldd_meta_search_groupby($groupby) {
 add_filter('posts_join', 'ldd_meta_search_join' );
 add_filter('posts_where', 'ldd_meta_search_where' );
 add_filter('posts_groupby', 'ldd_meta_search_groupby' );
+
+/*
+ * ==============================================================
+ * Login , Registration, Forgot Password and Account Activation
+ * Shortcodes
+ * ==============================================================
+ * */
+
+// user registration login form
+function ldd_registration_form() {
+	// only show the registration form to non-logged-in members
+	if(!is_user_logged_in()) {
+		// check to make sure user registration is enabled
+		$registration_enabled = get_option('users_can_register');
+		// only show the registration form if allowed
+		if($registration_enabled) {
+			$output = ldd_registration_form_fields();
+		} else {
+			$output = __('User registration is not enabled');
+		}
+		return $output;
+	}
+}
+add_shortcode('ldd_register_form', 'ldd_registration_form');
+
+// user login form
+function ldd_login_form() {
+
+	if(!is_user_logged_in()) {
+		$output = ldd_login_form_fields();
+	} else {
+		// could show some logged in user info here
+		// $output = 'user info here';
+	}
+	return $output;
+}
+add_shortcode('ldd_login_form', 'ldd_login_form');
+
+
+// registration form fields
+function ldd_registration_form_fields() {
+
+	ob_start(); ?>
+	<h3 class="pippin_header"><?php _e('Register New Account'); ?></h3>
+	<?php
+	// show any error messages after form submission
+	pippin_show_error_messages(); ?>
+
+	<form id="pippin_registration_form" class="pippin_form" action="" method="POST">
+		<fieldset>
+			<p>
+				<label for="pippin_user_Login"><?php _e('Username'); ?></label>
+				<input name="pippin_user_login" id="pippin_user_login" class="required" type="text"/>
+			</p>
+			<p>
+				<label for="pippin_user_email"><?php _e('Email'); ?></label>
+				<input name="pippin_user_email" id="pippin_user_email" class="required" type="email"/>
+			</p>
+			<p>
+				<label for="pippin_user_first"><?php _e('First Name'); ?></label>
+				<input name="pippin_user_first" id="pippin_user_first" type="text"/>
+			</p>
+			<p>
+				<label for="pippin_user_last"><?php _e('Last Name'); ?></label>
+				<input name="pippin_user_last" id="pippin_user_last" type="text"/>
+			</p>
+			<p>
+				<label for="password"><?php _e('Password'); ?></label>
+				<input name="pippin_user_pass" id="password" class="required" type="password"/>
+			</p>
+			<p>
+				<label for="password_again"><?php _e('Password Again'); ?></label>
+				<input name="pippin_user_pass_confirm" id="password_again" class="required" type="password"/>
+			</p>
+			<p>
+				<input type="hidden" name="pippin_register_nonce" value="<?php echo wp_create_nonce('pippin-register-nonce'); ?>"/>
+				<input type="submit" value="<?php _e('Register Your Account'); ?>"/>
+			</p>
+		</fieldset>
+	</form>
+	<?php
+	return ob_get_clean();
+}
+
+// login form fields
+function ldd_login_form_fields() {
+
+	ob_start(); ?>
+	<h3 class="pippin_header"><?php _e('Login'); ?></h3>
+
+	<?php
+	// show any error messages after form submission
+	pippin_show_error_messages(); ?>
+
+	<form id="pippin_login_form"  class="pippin_form"action="" method="post">
+		<fieldset>
+			<p>
+				<label for="pippin_user_Login">Username</label>
+				<input name="pippin_user_login" id="pippin_user_login" class="required" type="text"/>
+			</p>
+			<p>
+				<label for="pippin_user_pass">Password</label>
+				<input name="pippin_user_pass" id="pippin_user_pass" class="required" type="password"/>
+			</p>
+			<p>
+				<input type="hidden" name="pippin_login_nonce" value="<?php echo wp_create_nonce('pippin-login-nonce'); ?>"/>
+				<input id="pippin_login_submit" type="submit" value="Login"/>
+			</p>
+		</fieldset>
+	</form>
+	<?php
+	return ob_get_clean();
+}
+
+// logs a member in after submitting a form
+function ldd_login_member() {
+
+	if(isset($_POST['pippin_user_login']) && wp_verify_nonce($_POST['pippin_login_nonce'], 'pippin-login-nonce')) {
+
+		// this returns the user ID and other info from the user name
+		$user = get_user_by( 'login', $_POST['pippin_user_login'] );
+
+		if(!$user) {
+			// if the user name doesn't exist
+			pippin_errors()->add('empty_username', __('Invalid username'));
+		}
+
+		if(!isset($_POST['pippin_user_pass']) || $_POST['pippin_user_pass'] == '') {
+			// if no password was entered
+			pippin_errors()->add('empty_password', __('Please enter a password'));
+		}
+
+		// check the user's login with their password
+		if(!wp_check_password($_POST['pippin_user_pass'], $user->user_pass, $user->ID)) {
+			// if the password is incorrect for the specified user
+			pippin_errors()->add('empty_password', __('Incorrect password'));
+		}
+
+		// retrieve all error messages
+		$errors = pippin_errors()->get_error_messages();
+
+		// only log the user in if there are no errors
+		if(empty($errors)) {
+			wp_set_auth_cookie($user->ID,true);
+			wp_set_current_user($user->ID, $_POST['pippin_user_login']);
+			do_action('wp_login', $_POST['pippin_user_login']);
+
+			wp_redirect(home_url()); exit;
+		}
+	}
+}
+add_action('init', 'ldd_login_member');
+
+// register a new user
+function ldd_add_new_member() {
+	if (isset( $_POST["pippin_user_login"] ) && wp_verify_nonce($_POST['pippin_register_nonce'], 'pippin-register-nonce')) {
+		$user_login		= $_POST["pippin_user_login"];
+		$user_email		= $_POST["pippin_user_email"];
+		$user_first 	= $_POST["pippin_user_first"];
+		$user_last	 	= $_POST["pippin_user_last"];
+		$user_pass		= $_POST["pippin_user_pass"];
+		$pass_confirm 	= $_POST["pippin_user_pass_confirm"];
+
+		// this is required for username checks
+		require_once(ABSPATH . WPINC . '/registration.php');
+
+		if(username_exists($user_login)) {
+			// Username already registered
+			pippin_errors()->add('username_unavailable', __('Username already taken'));
+		}
+		if(!validate_username($user_login)) {
+			// invalid username
+			pippin_errors()->add('username_invalid', __('Invalid username'));
+		}
+		if($user_login == '') {
+			// empty username
+			pippin_errors()->add('username_empty', __('Please enter a username'));
+		}
+		if(!is_email($user_email)) {
+			//invalid email
+			pippin_errors()->add('email_invalid', __('Invalid email'));
+		}
+		if(email_exists($user_email)) {
+			//Email address already registered
+			pippin_errors()->add('email_used', __('Email already registered'));
+		}
+		if($user_pass == '') {
+			// passwords do not match
+			pippin_errors()->add('password_empty', __('Please enter a password'));
+		}
+		if($user_pass != $pass_confirm) {
+			// passwords do not match
+			pippin_errors()->add('password_mismatch', __('Passwords do not match'));
+		}
+
+		$errors = pippin_errors()->get_error_messages();
+
+		// only create the user in if there are no errors
+		if(empty($errors)) {
+
+			$new_user_id = wp_insert_user(array(
+							'user_login'		=> $user_login,
+							'user_pass'	 		=> $user_pass,
+							'user_email'		=> $user_email,
+							'first_name'		=> $user_first,
+							'last_name'			=> $user_last,
+							'user_registered'	=> date('Y-m-d H:i:s'),
+							'role'				=> 'subscriber'
+					)
+			);
+			if($new_user_id) {
+				// send an email to the admin alerting them of the registration
+				wp_new_user_notification($new_user_id);
+
+				// log the new user in
+				wp_set_auth_cookie($new_user_id,true);
+				wp_set_current_user($new_user_id, $user_login);
+				do_action('wp_login', $user_login);
+
+				// send the newly created user to the home page after logging them in
+				wp_redirect(home_url()); exit;
+			}
+
+		}
+
+	}
+}
+add_action('init', 'ldd_add_new_member');
+
+// used for tracking error messages
+function pippin_errors(){
+	static $wp_error; // Will hold global variable safely
+	return isset($wp_error) ? $wp_error : ($wp_error = new WP_Error(null, null, null));
+}
+
+// displays error messages from form submissions
+function pippin_show_error_messages() {
+	if($codes = pippin_errors()->get_error_codes()) {
+		echo '<div class="pippin_errors">';
+		// Loop error codes and display errors
+		foreach($codes as $code){
+			$message = pippin_errors()->get_error_message($code);
+			echo '<span class="error"><strong>' . __('Error') . '</strong>: ' . $message . '</span><br/>';
+		}
+		echo '</div>';
+	}
+}

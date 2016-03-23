@@ -6,19 +6,19 @@ jQuery(document).ready(function ($) {
     uninstallCheck.change(function () {
         var closestTD = $(this).closest('td');
         if (uninstallCheck.is(":checked")) {
-            closestTD.css('background-color', '#DA4453')
+            closestTD.css('background-color', '#DA4453');
             warningStack.css({
                 'color': '#fff',
                 'font-weight': '700'
-            })
+            });
         } else {
-            closestTD.css('background-color', 'transparent')
+            closestTD.css('background-color', 'transparent');
             warningStack.css({
                 'color': 'inherit',
                 'font-weight': 'inherit'
-            })
+            });
         }
-    })
+    });
 });
 
 function initialize(address) {
@@ -43,7 +43,7 @@ function initialize(address) {
         center: latLng,
         zoom: zoom,
         mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    };
 
     var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
@@ -54,7 +54,7 @@ function initialize(address) {
     };
     var marker = new google.maps.Marker(markerOptions);
 
-    if (geocoder && address != 0) {
+    if (geocoder && address !== 0) {
         geocoder.geocode({
             'address': address
         }, function(results, status) {
@@ -88,18 +88,18 @@ function initialize(address) {
             }
         });
 
-/*        google.maps.event.addListener(marker, 'drag', function () {
-            geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        jQuery(".full_address_geo").val(results[0].formatted_address);
-                        jQuery(".full_address_i").html("<strong><u>Address:</u></strong> "+results[0].formatted_address);
-                    }
-                }
-            });
-            $lat.val(marker.getPosition().lat());
-            $lng.val(marker.getPosition().lng());
-        });*/
+        /*        google.maps.event.addListener(marker, 'drag', function () {
+         geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
+         if (status == google.maps.GeocoderStatus.OK) {
+         if (results[0]) {
+         jQuery(".full_address_geo").val(results[0].formatted_address);
+         jQuery(".full_address_i").html("<strong><u>Address:</u></strong> "+results[0].formatted_address);
+         }
+         }
+         });
+         $lat.val(marker.getPosition().lat());
+         $lng.val(marker.getPosition().lng());
+         });*/
     }
 }
 

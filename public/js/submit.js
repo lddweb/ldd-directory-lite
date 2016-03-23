@@ -24,14 +24,14 @@ function initialize(address) {
 
     var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-  /*  var markerOptions = {
-        position: latLng,
-        map: map,
-        draggable: true
-    };
-    var marker = new google.maps.Marker(markerOptions);*/
+    /*  var markerOptions = {
+     position: latLng,
+     map: map,
+     draggable: true
+     };
+     var marker = new google.maps.Marker(markerOptions);*/
 
-    if (geocoder && address != 0) {
+    if (geocoder && address !== 0) {
 
         geocoder.geocode({
             'address': address
@@ -54,7 +54,7 @@ function initialize(address) {
                     $lat.val(marker.getPosition().lat());
                     $lng.val(marker.getPosition().lng());
 
-                   google.maps.event.addListener(marker, 'click', function() {
+                    google.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
                     });
 

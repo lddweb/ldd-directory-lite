@@ -21,9 +21,9 @@
  * @return string The new template location if found, original if not
  */
 function ldl_template_include($template) {
-		
-    if (LDDLITE_POST_TYPE == get_post_type()) {
+    global $wp_query;
 
+    if (LDDLITE_POST_TYPE == get_post_type() or (isset($_GET["post_type"]) and $_GET["post_type"] == LDDLITE_POST_TYPE)) {
         $templates = array();
 
         if (is_single()) {

@@ -29,7 +29,11 @@ function ldl_shortcode_directory($atts) {
 	
     ldl_enqueue(1);
     $home_template_path = ldl_get_template_part('home',null,false);
+
+	ob_start();
 	include($home_template_path);
-	
+	$contents = ob_get_contents();
+	ob_end_clean();
+	return $contents;
 }
 add_shortcode('directory', 'ldl_shortcode_directory');

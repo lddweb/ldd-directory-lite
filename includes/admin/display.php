@@ -12,10 +12,20 @@
 
 function ldl_add_settings_menu() {
     add_submenu_page('edit.php?post_type=' . LDDLITE_POST_TYPE, 'Directory Lite Configuration', 'Settings', 'manage_options', 'lddlite-settings', 'ldl_settings_page');
+    add_submenu_page('edit.php?post_type=' . LDDLITE_POST_TYPE, 'LDD Directory Add-ons', 'Add-ons', 'manage_options', 'lddlite-addons', 'ldl_addons_page');
 }
 
 add_action('admin_menu', 'ldl_add_settings_menu');
 
+
+/*
+ * Addons Page.
+ * */
+function ldl_addons_page() {
+    wp_enqueue_style('lddlite-admin');
+    wp_enqueue_style('font-awesome');
+    include(LDDLITE_PATH."/templates/addon-page.php");
+}
 
 /**
  * Options Page
@@ -40,7 +50,7 @@ function ldl_settings_page() {
         <div class="sub-heading">
             <p><?php _e('Customize your Directory using the settings found on the following pages. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.', 'ldd-directory-lite'); ?></p>
             <ul id="directory-links">
-                <li><a href="https://github.com/mwaterous/ldd-directory-lite/issues"
+                <li><a href="https://github.com/lddweb/ldd-directory-lite/issues"
                        title="Submit a bug or feature request on GitHub" class="bold-link"><i
                             class="fa fa-exclamation-triangle fa-fw"></i> <?php _e('Submit an Issue', 'ldd-directory-lite'); ?>
                     </a></li>
@@ -52,7 +62,7 @@ function ldl_settings_page() {
                        title="Visit the LDD Directory Lite Support Forums on WordPress.org" class="bold-link"><i
                             class="fa fa-comments fa-fw"></i> <?php _e('Support Forums', 'ldd-directory-lite'); ?></a></li>
                 <li class="right"><i class="fa fa-github-alt fa-fw"></i> Visit us on <a
-                        href="https://github.com/mwaterous/ldd-directory-lite"
+                        href="https://github.com/lddweb/ldd-directory-lite"
                         title="We do most of our development from GitHub, come join us!"><?php _e('GitHub.com', 'ldd-directory-lite'); ?></a>
                 </li>
             </ul>

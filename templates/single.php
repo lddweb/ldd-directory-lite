@@ -2,9 +2,8 @@
 global $geo;
 // ldl_use_google_maps() will always return false if this isn't an array containing our lat and lng
 $geo = ldl_get_meta('geo');
-define( 'WP_USE_THEMES', false );
-get_header(); ?>
-
+get_header();
+?>
 <div id="primary" class="site-content directory-lite">
     <div id="content" role="main">
         <?php while (have_posts()) : the_post(); ?>
@@ -50,9 +49,16 @@ get_header(); ?>
 
                     </div>
                     <div class="col-md-4">
-                        <?php echo ldl_get_thumbnail( $post->ID ); ?>
+                        <?php
+                        echo ldl_get_thumbnail( $post->ID );
 
-                        <?php ldl_get_contact_form(); ?>
+                        $sidebar_shortcode = ldl()->get_option('appearance_sidebar_shortcode', '');
+                        if(isset($sidebar_shortcode) and !empty($sidebar_shortcode)) {
+                            echo do_shortcode($sidebar_shortcode);
+                        }else {
+                            ldl_get_contact_form();
+                        }
+                        ?>
                     </div>
                 </div>
 
@@ -64,35 +70,28 @@ get_header(); ?>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbaw0hFglsihePOsFpMnLQwJZtOChIoDg&sensor=false"></script>
         <script>
             function initialize() {
-                var mapLatLng = new google.maps.LatLng(<?php echo $geo['lat']; ?>, <?php echo $geo['lng']; ?>)
+                var mapLatLng = new google.maps.LatLng(<?php echo $geo['lat']; ?>, <?php echo $geo['lng']; ?>);
                 var mapOptions = {
                     center: mapLatLng,
                     zoom: 16,
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     panControl: false
-                }
-                var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions)
+                };
+                var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
                 var marker = new google.maps.Marker({
                     position: mapLatLng,
                     map: map,
                     animation: google.maps.Animation.DROP,
-                })
+                });
             }
-
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
-
         <?php endif; ?>
-
-        <?php comments_template( '', true ); ?>
-
+            <?php comments_template( '', true ); ?>
         <?php endwhile; // end of the loop. ?>
-
     </div><!-- #content -->
 </div><!-- #primary -->
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>
-
-

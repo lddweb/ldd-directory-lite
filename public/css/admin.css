@@ -73,3 +73,53 @@ table.cmb_metabox input[type=text].autocomplete {
 .form-table td .wp-editor-wrap + p {
     margin-bottom: 1em;
 }
+
+/* ----------------------   */
+/* ---------------------------------
+/  Generic styles & classes
+----------------------------------*/
+.ldd-box {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.ldd-box .ldd-addons-image {
+    max-width: 100%;
+}
+.ldd-box h2 {
+    font-size: 22px !important;
+    padding-left: 0 !important;
+}
+/* ---------------------------------
+/  Styles for specific admin pages
+----------------------------------*/
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.ldd-extend {
+    float: left;
+    margin: 0 20px 20px 0;
+    width: 300px;
+    position: relative;
+}
+.ldd-extend img {
+    margin-bottom: 10px;
+    max-width: 100%;
+    height: auto;
+}
+
+.ldd-extend-content p {
+    min-height: 60px;
+}
+
+.ldd-extend .nf-button {
+    float: right;
+}
+
+.ldd-extend .nf-doc-button {
+    float: left;
+}

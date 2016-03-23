@@ -3,27 +3,27 @@ Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Requires at least: 3.9.1
 Tested up to: 4.4.2
-Stable tag: 0.8.53
+Stable tag: 0.8.60
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 
-The ldd directory lite plugin allows you to add a powerful directory listing of local businesses or other organizations to your WordPress web site.
+The LDD Directory Lite plugin is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
 
 == Description ==
 
-The ldd directory lite plugin is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
+The LDD Directory Lite plugin is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
 
-Within minutes you can install and configure ldd directory lite and start accepting submissions, or populating the content with your own listings. This is the best and easiest way to start any kind of directory you can think of, be it of local businesses (restaurants, coffee shops, craft stores, etc), or any other type of organization you would like to build around.
+Within minutes you can install and configure LDD Directory Lite and start accepting submissions, or populating the content with your own listings. This is the best and easiest way to start any kind of directory you can think of, be it of local businesses (restaurants, coffee shops, craft stores, etc), or any other type of organization you would like to build around.
 
 The Directory is extremely user friendly, ready to go pretty much out of the box. One of our primary focuses is ensuring that it integrates with almost any theme, anywhere, anytime, and we have utilized the power of Bootstrap to ensure that the Directory is 100% mobile ready and responsive. It won't break all that hard work you've put into making sure your site works on any medium.
 
 = Here are just a few of the many features =
 
 * Easy to install, easy to configure
-* Add the `[directory]` and `[directory_submit]` shortcode to any page (automatically installed for you, but feel free to change them)
-* Default list sorting options for *Categories*,*Featured* and *Listings* in dashboard.
-* Sort using shortcodes, i.e. `[directory cat_order_by="xxx" cat_order="asc" fl_order_by="xxx" fl_order="asc" list_order_by="xxx" list_order="asc"]`
+* Add the [directory] and [directory_submit] shortcode to any page (automatically installed for you, but feel free to change them)
+* Default list sorting options for Categories,Featured and Listings in dashboard.
+* Sort using shortcodes, i.e. [directory cat_order_by="xxx" cat_order="asc" fl_order_by="xxx" fl_order="asc" list_order_by="xxx" list_order="asc"]
 * Ability to change Taxonomy and Post type slugs.
 * Added new fields for listings.
 * Customize the look and feel as much, or as little as you want
@@ -35,17 +35,14 @@ The Directory is extremely user friendly, ready to go pretty much out of the box
 * Social media integration, build traffic for your users
 * Google Maps integration
 * Lightweight but still powerful
+* Supported Views: grid , compact
 
-= Coming soon =
-
-* **Our web site! This will be the home of extended documentation, community forums, premium support and much more!**
-* Premium modules, extend the capabilities of the Directory with features like import/export
-* Shortcodes to display single categories or listings where ever you want
+More information at [plugins.lddwebdesign.com](http://plugins.lddwebdesign.com)
 
 = Extensions =
 
-We have a variety of premium extensions in the works for further extending the capabilities of ldd directory lite. If you're a developer interested in working on premium extensions for the Directory, please contact us at [web@lddconsulting.com](mailto:web@lddconsulting.com)
-
+* [Directory Reports & Exports.](http://plugins.lddwebdesign.com/extensions/directory-reports-exports/) The LDD Directory Lite Reports and Exports extension allows a user to create reports and to export listings in multiple formats e.g XML, CSV, HTML, PDF.
+* [Directory Import.](http://plugins.lddwebdesign.com/extensions/directory-import/) The LDD Directory Lite Import extension allows a user to import listings directly to their directory via CSV files that can be edited by hand or in applications such as Microsoft Excel.
 
 == Installation ==
 
@@ -113,13 +110,29 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 0.8.53 =
+= 0.8.6 =
 
-* Fixed search menu for creating responsive view.
+* Added grid and compact view support.
+* Fixed Pagination issue.
+* Resolved wp_query global errors.
+* Added support for displaying shortcodes in listings sidebar.
+* Added add-ons support.
+* Fixed shortcode overlapping issue.
+* Fixed search issue.
 * Minor bug fixes
-* Added support for wordpress 4.4.2
 
 == Changelog ==
+
+= 0.8.6 =
+
+* Added grid and compact view support.
+* Fixed Pagination issue.
+* Resolved wp_query global errors.
+* Added support for displaying shortcodes in listings sidebar.
+* Added add-ons support.
+* Fixed shortcode overlapping issue.
+* Fixed search issue.
+* Minor bug fixes
 
 = 0.8.53 =
 

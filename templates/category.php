@@ -1,5 +1,6 @@
-<?php define( 'WP_USE_THEMES', false ); get_header(); ?>
-
+<?php
+get_header();
+?>
     <section id="primary" class="page-content directory-lite">
         <div id="content" role="main">
 
@@ -13,7 +14,7 @@
 
             <?php
 			$paged 			= ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-			$posts_per_page = 10;
+			$posts_per_page = get_option('posts_per_page');
 
 			if (have_posts()) :
 				global $wp_query;
@@ -142,14 +143,20 @@
 													   )
 								) );
 				endif;
-
+				$listing_view = ldl()->get_option('directory_view_type', 'compact');
+                if($listing_view == "grid") {
+                    echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+                }
 				while (have_posts()) { the_post();
-
-					ldl_get_template_part('listing', 'compact');
+					ldl_get_template_part('listing', $listing_view);
+                }
+                if($listing_view == "grid") {
+                    echo "</div>";
+                    wp_enqueue_script('isotope-pkgd', LDDLITE_URL.'/public/js/isotope.pkgd.min.js');
                 }
 				wp_reset_postdata();
                 ?>
-
+			<div class="clearfix"></div>
             <?php else :?>
             <?php endif; ?>
 			<?php if (function_exists("ldd_pagination")) { ldd_pagination($wp_query->max_num_pages); } ?>

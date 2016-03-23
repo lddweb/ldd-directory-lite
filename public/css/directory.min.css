@@ -33,6 +33,20 @@
     font-size: 18px;
 }
 
+.type-grid {
+    margin-bottom: 10px;
+}
+
+.listing-title.grid-title {
+    padding-bottom: 10px;
+    clear: both;
+    display: block;
+}
+.grid_socials a{
+    font-size: 24px;
+    margin: 5px 5px 5px 0;
+}
+
 /* ====================== *
  * Pagination Css Starts  *
  * ====================== */

@@ -43,6 +43,13 @@ function ldl_get_registered_settings() {
                     'type' => 'select',
                     'options' => ldl_get_pages()
                 ),
+				'directory_view_type' => array(
+						'id' => 'directory_view_type',
+						'name' => __( 'Listing View', 'ldd-directory-lite'),
+						'desc' => __( 'Set the default listing view.', 'ldd-directory-lite'),
+						'type' => 'select',
+						'options' => ldl_get_listing_views()
+				),
                 'directory_taxonomy_slug' => array(
                     'id' => 'directory_taxonomy_slug',
                     'name' => __( 'Taxonomy Slug', 'ldd-directory-lite'),
@@ -302,6 +309,18 @@ function ldl_get_registered_settings() {
                     'type' => 'color',
                     'std' => '#ffffff',
                 ),
+				'sidebar_separator' => array(
+						'id' => 'directory_sidebar',
+						'name' => '<h3 class="title">' . __( 'Sidebar Shortcode', 'ldd-directory-lite') . '</h3>',
+						'type' => 'header'
+				),
+				'appearance_sidebar_shortcode' => array(
+						'id' => 'appearance_sidebar_shortcode',
+						'name' => __( 'Shortcode', 'ldd-directory-lite'),
+						'type' => 'text',
+						'size' => 'medium',
+						'desc' => __('If provided, Default sidebar contact form will be replaced with provided shortcode.', 'ldd-directory-lite'),
+				),
             )
         ),
     );
@@ -487,6 +506,13 @@ function ldl_get_pages( $force = false ) {
 	return $pages_options;
 }
 
+function ldl_get_listing_views() {
+
+	$pages_options[ "compact" ] = "Compact View";
+	$pages_options[ "grid" ] 	= "Grid View";
+
+	return $pages_options;
+}
 
 function ldl_header_callback( $args ) {
 	echo '<hr/>';

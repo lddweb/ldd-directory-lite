@@ -15,7 +15,6 @@
             ?>
 
         <?php else : ?>
-
         <?php endif; ?>
 
     </div>

@@ -415,12 +415,16 @@ function ldl_get_address() {
     $address_one = get_post_meta($post_id, ldl_pfx('address_one'), true);
     $address_two = get_post_meta($post_id, ldl_pfx('address_two'), true);
     $postal_code = get_post_meta($post_id, ldl_pfx('postal_code'), true);
-    $country = get_post_meta($post_id, ldl_pfx('country'), true);
-
+    $country 	 = get_post_meta($post_id, ldl_pfx('country'), true);
+	$city 		 = get_post_meta($post_id, ldl_pfx('city'), true);
+	$state 		 = get_post_meta($post_id, ldl_pfx('state'), true);
+	
     $output = '';
     $output .= empty($address_one) ? '' : $address_one;
     $output .= empty($address_two) ? '' : ', ' . $address_two;
     $output .= empty($postal_code) ? '' : ', ' . $postal_code;
+	$output .= empty($city) ? '' : ', ' . $city;
+	$output .= empty($state) ? '' : ', ' . $state;
     $output .= empty($country) ? '' : ', ' . $country;
 
     $output = apply_filters('lddlite_presentation_get_address', $output, $post_id, compact('address_one', 'address_two', 'postal_code', 'country'));
