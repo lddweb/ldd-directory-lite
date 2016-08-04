@@ -131,25 +131,25 @@ function ldl_metaboxes_setup_cmb()
         'name' => __('Website', 'ldd-directory-lite'),
         'desc' => __('Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', 'ldd-directory-lite'),
         'id'   => ldl_pfx('url_website'),
-        'type' => 'text',
+        'type' => 'text_url',
     ));
     $listings_web->add_field(array(
         'name' => __('Facebook', 'ldd-directory-lite'),
         'desc' => __('This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', 'ldd-directory-lite'),
         'id'   => ldl_pfx('url_facebook'),
-        'type' => 'text',
+        'type' => 'text_url',
     ));
     $listings_web->add_field(array(
         'name' => __('Twitter', 'ldd-directory-lite'),
         'desc' => __('Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', 'ldd-directory-lite'),
         'id'   => ldl_pfx('url_twitter'),
-        'type' => 'text',
+        'type' => 'text_url',
     ));
     $listings_web->add_field(array(
         'name' => __('LinkedIn', 'ldd-directory-lite'),
         'desc' => __('This should start with <code>www.linkedin.com</code>', 'ldd-directory-lite'),
         'id'   => ldl_pfx('url_linkedin'),
-        'type' => 'text',
+        'type' => 'text_url',
     ));
 
     // Groups together all contact information for a listing
@@ -164,7 +164,7 @@ function ldl_metaboxes_setup_cmb()
     $listings_contact->add_field(array(
         'name' => __('Email', 'ldd-directory-lite'),
         'id'   => ldl_pfx('contact_email'),
-        'type' => 'text_medium',
+        'type' => 'text_email',
     ));
     $listings_contact->add_field(array(
         'name' => __('Phone', 'ldd-directory-lite'),
