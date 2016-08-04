@@ -2,8 +2,8 @@
 Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Requires at least: 3.9.1
-Tested up to: 4.4.2
-Stable tag: 0.8.60
+Tested up to: 4.5.3
+Stable tag: 0.8.7
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
@@ -95,6 +95,27 @@ e.g. [directory cat_order_by="**xxx**" cat_order="asc" fl_order_by="**xxx**" fl_
 * category
 * random
 
+= How to show listings from specific category(s) using shortcode? =
+
+You can display category specify listings using the following shortcode.
+
+[directory_category slug="my-category,my-other-category" view="compact" list_order_by="title" list_order="ASC" limit="8"]
+
+**view="xxx" :**
+* grid
+* compact
+
+**list_order_by="**xxx**"**
+* business_name
+* zip
+* area
+* category
+* random
+
+**list_order="**xxx**"**
+* ASC
+* DESC
+
 = How can I avoid having my template customizations overwritten when the plugin is updated? =
 
 All the template files found in `/ldd-directory-lite/templates` can be copied to a directory in your theme called *lddlite_templates*.
@@ -110,18 +131,43 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 0.8.6 =
+= 0.8.7 =
 
-* Added grid and compact view support.
-* Fixed Pagination issue.
-* Resolved wp_query global errors.
-* Added support for displaying shortcodes in listings sidebar.
-* Added add-ons support.
-* Fixed shortcode overlapping issue.
-* Fixed search issue.
+* Added support for admin to enable/disable public submissions.
+* Added support for admin to select number of featured listings to display.
+* Social links will open in new tab.
+* Allow admin to hide/show default image placeholder.
+* Added support to auto approve listings.
+* Added help page for listing all available plugin options.
+* Fixed plugin's template files.
+* Fixed address format.
+* Fixed grid view layout.
+* Fixed pagination error.
+* Added a new shortcode  [directory_category slug='xxx'] for displaying category specific listings.
+* Fixed approval email template.
+* Added support for adding Google Map API for removing javascript "noapi" notification issue.
+* Updated CMB to CMB2.
 * Minor bug fixes
 
 == Changelog ==
+
+= 0.8.7 =
+
+* Added support for admin to enable/disable public submissions.
+* Added support for admin to select number of featured listings to display.
+* Social links will open in new tab.
+* Allow admin to hide/show default image placeholder.
+* Added support to auto approve listings.
+* Added help page for listing all available plugin options.
+* Fixed plugin's template files.
+* Fixed address format.
+* Fixed grid view layout.
+* Fixed pagination error.
+* Added a new shortcode  [directory_category slug='xxx'] for displaying category specific listings.
+* Fixed approval email template.
+* Added support for adding Google Map API for removing javascript "noapi" notification issue.
+* Updated CMB to CMB2.
+* Minor bug fixes
 
 = 0.8.6 =
 

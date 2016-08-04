@@ -116,7 +116,11 @@ add_action('init', 'ldl_process_edit_form');
  * with related links to edit the content.
  */
 function ldl_shortcode_directory_manage() {
-    global $lddlite_submit_processor;
+    global $lddlite_submit_processor, $google_api_src;
+
+    if(ldl()->get_option('general_allow_public_submissions','yes') === 'no') {
+        return;
+    }
 
     ldl_enqueue(1);
 
@@ -175,7 +179,7 @@ function ldl_shortcode_directory_manage() {
                 case 'location':
                     // @TODO Repetitious code alert, here and _submit.php
                     wp_enqueue_script('jquery-ui-autocomplete');
-                    wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=4.3.1');
+                    wp_enqueue_script('maps-autocomplete', $google_api_src);
                     wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
                     $data = array(
                         'title'       => get_the_title($listing->ID),

@@ -25,10 +25,10 @@
             </div>
             <ul class="nav navbar-nav">
                 	<li class="ldd-home-link"><a href="<?php echo ldl_get_directory_link(); ?>"><?php _e('Home', 'ldd-directory-lite'); ?></a></li>
-                <?php if (ldl()->get_option('directory_submit_page')): ?>
+                <?php if (ldl()->get_option('directory_submit_page') && ldl()->get_option('general_allow_public_submissions','yes') === 'yes'): ?>
                 	<li class="ldd-submit-listings"><a href="<?php echo ldl_get_submit_link(); ?>"><?php _e('Submit Listing', 'ldd-directory-lite'); ?></a></li>
 				<?php endif; ?>
-                <?php if (ldl()->get_option('directory_manage_page')): ?>
+                <?php if (ldl()->get_option('directory_manage_page') && ldl()->get_option('general_allow_public_submissions','yes') === 'yes'): ?>
                 	<li class="ldd-manage-directory"><a href="<?php echo ldl_get_manage_link(); ?>"><?php _e('Manage Listings', 'ldd-directory-lite'); ?></a></li>
 				<?php endif; ?>
                 	<li class="dropdown ldd-categories-dropdown">

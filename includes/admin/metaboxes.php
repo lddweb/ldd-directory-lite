@@ -15,7 +15,8 @@
  *
  * @param $post The WP_Post object
  */
-function ldl_excerpt_meta_box($post) {
+function ldl_excerpt_meta_box($post)
+{
     echo '<label class="screen-reader-text" for="excerpt">' . __('Summary', 'ldd-directory-lite') . '</label><textarea rows="1" cols="40" name="excerpt" id="excerpt">' . $post->post_excerpt . '</textarea>';
 }
 
@@ -25,7 +26,8 @@ function ldl_excerpt_meta_box($post) {
  *
  * @since 0.5.0
  */
-function ldl_metaboxes__swap() {
+function ldl_metaboxes__swap()
+{
     if (LDDLITE_POST_TYPE == get_post_type()) {
         remove_meta_box('postimagediv', LDDLITE_POST_TYPE, 'side');
         remove_meta_box('authordiv', LDDLITE_POST_TYPE, 'side');
@@ -44,9 +46,9 @@ add_action('add_meta_boxes', 'ldl_metaboxes__swap', 5);
  *
  * @see https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress Custom Metaboxes awesomeness
  */
-function ldl_metaboxes_init_cmb() {
-    if (!class_exists('cmb_Meta_Box'))
-        require_once(LDDLITE_PATH . '/includes/cmb/init.php');
+function ldl_metaboxes_init_cmb()
+{
+    require_once(LDDLITE_PATH . '/includes/cmb/init.php');
 }
 
 add_action('init', 'ldl_metaboxes_init_cmb');
@@ -61,134 +63,128 @@ add_action('init', 'ldl_metaboxes_init_cmb');
  *
  * @return array Updated array with our new metaboxes attached
  */
-function ldl_metaboxes_setup_cmb(array $meta_boxes) {
-
+function ldl_metaboxes_setup_cmb()
+{
 
     // Set up a custom meta box to display a google map for visually defining a listings geographical location
-    $meta_boxes['listings_geo'] = array(
-        'id'         => 'listings_geo',
-        'title'      => __('Location', 'ldd-directory-lite'),
-        'pages'      => array(LDDLITE_POST_TYPE),
-        'context'    => 'normal',
-        'priority'   => 'core',
-        'show_names' => true,
-        'fields'     => array(
-            array(
-                'name'  => 'Address One',
-                'id'    => ldl_pfx('address_one'),
-                'type'  => 'text',
-                'class' => 'geo_address_1',
-            ),
-            array(
-                'name'  => 'Address Two',
-                'id'    => ldl_pfx('address_two'),
-                'type'  => 'text',
-                'class' => 'geo_address_2',
-            ),
-            array(
-                'name'  => 'City',
-                'id'    => ldl_pfx('city'),
-                'type'  => 'text_medium',
-                'class' => 'geo_city',
-            ),			
-            array(
-                'name'  => 'Zip / Postal Code',
-                'id'    => ldl_pfx('postal_code'),
-                'type'  => 'text_medium',
-                'class' => 'geo_zip',
-            ),
-            array(
-                'name'  => 'Country',
-                'id'    => ldl_pfx('country'),
-                'type'  => 'text_medium',
-                'class' => 'geo_country',
-            ),
-            array(
-                'name'  => 'State / Province',
-                'id'    => ldl_pfx('state'),
-                'type'  => 'text_medium',
-                'class' => 'geo_state',
-            ),			
-            array(
-                'name' => 'Map Location',
-                'desc' => __('Please provide the address above for adding map.', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('geo'),
-                'type' => 'geo_location',
-            ),
-        ),
-    );
+    $listings_geo = new_cmb2_box(array(
+        'id'           => 'listings_geo',
+        'title'        => __('Location', 'ldd-directory-lite'),
+        'object_types' => array(LDDLITE_POST_TYPE),
+        'context'      => 'normal',
+        'priority'     => 'core',
+        'show_names'   => TRUE,
+    ));
+    $listings_geo->add_field(array(
+        'name'  => 'Address One',
+        'id'    => ldl_pfx('address_one'),
+        'type'  => 'text',
+        'class' => 'geo_address_1',
+    ));
+    $listings_geo->add_field(array(
+        'name'  => 'Address Two',
+        'id'    => ldl_pfx('address_two'),
+        'type'  => 'text',
+        'class' => 'geo_address_2',
+    ));
+    $listings_geo->add_field(array(
+        'name'  => 'City',
+        'id'    => ldl_pfx('city'),
+        'type'  => 'text_medium',
+        'class' => 'geo_city',
+    ));
+    $listings_geo->add_field(array(
+        'name'  => 'Zip / Postal Code',
+        'id'    => ldl_pfx('postal_code'),
+        'type'  => 'text_medium',
+        'class' => 'geo_zip',
+    ));
+    $listings_geo->add_field(array(
+        'name'  => 'Country',
+        'id'    => ldl_pfx('country'),
+        'type'  => 'text_medium',
+        'class' => 'geo_country',
+    ));
+    $listings_geo->add_field(array(
+        'name'  => 'State / Province',
+        'id'    => ldl_pfx('state'),
+        'type'  => 'text_medium',
+        'class' => 'geo_state',
+    ));
+    $listings_geo->add_field(array(
+        'name' => 'Map Location',
+        'desc' => __('Please provide the address above for adding map.', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('geo'),
+        'type' => 'geo_location',
+    ));
 
     // Set up a custom meta box to encapsulate all URLs related to this listing
-    $meta_boxes['listings_web'] = array(
-        'id'         => 'listings_web',
-        'title'      => __('Web Addresses', 'ldd-directory-lite'),
-        'pages'      => array(LDDLITE_POST_TYPE),
-        'context'    => 'normal',
-        'priority'   => 'core',
-        'show_names' => true,
-        'fields'     => array(
-            array(
-                'name' => __('Website', 'ldd-directory-lite'),
-                'desc' => __('Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('url_website'),
-                'type' => 'text',
-            ),
-            array(
-                'name' => __('Facebook', 'ldd-directory-lite'),
-                'desc' => __('This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('url_facebook'),
-                'type' => 'text',
-            ),
-            array(
-                'name' => __('Twitter', 'ldd-directory-lite'),
-                'desc' => __('Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('url_twitter'),
-                'type' => 'text',
-            ),
-            array(
-                'name' => __('LinkedIn', 'ldd-directory-lite'),
-                'desc' => __('This should start with <code>www.linkedin.com</code>', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('url_linkedin'),
-                'type' => 'text',
-            ),
-        ),
-    );
+    $listings_web = new_cmb2_box(array(
+        'id'           => 'listings_web',
+        'title'        => __('Web Addresses', 'ldd-directory-lite'),
+        'object_types' => array(LDDLITE_POST_TYPE),
+        'context'      => 'normal',
+        'priority'     => 'core',
+        'show_names'   => TRUE,
+    ));
+    $listings_web->add_field(array(
+        'name' => __('Website', 'ldd-directory-lite'),
+        'desc' => __('Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</code>, or <code>www.hosting.com/mysite/mypage.html</code>', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_website'),
+        'type' => 'text',
+    ));
+    $listings_web->add_field(array(
+        'name' => __('Facebook', 'ldd-directory-lite'),
+        'desc' => __('This should always start with <code>facebook.com/</code> or <code>www.facebook.com</code>.', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_facebook'),
+        'type' => 'text',
+    ));
+    $listings_web->add_field(array(
+        'name' => __('Twitter', 'ldd-directory-lite'),
+        'desc' => __('Enter the entire url (<code>www.twitter.com/username</code>) or just the username.', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_twitter'),
+        'type' => 'text',
+    ));
+    $listings_web->add_field(array(
+        'name' => __('LinkedIn', 'ldd-directory-lite'),
+        'desc' => __('This should start with <code>www.linkedin.com</code>', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_linkedin'),
+        'type' => 'text',
+    ));
 
     // Groups together all contact information for a listing
-    $meta_boxes['listings_contact'] = array(
-        'id'         => 'listings_contact',
-        'title'      => __('Contact Information', 'ldd-directory-lite'),
-        'pages'      => array(LDDLITE_POST_TYPE),
-        'context'    => 'side',
-        'priority'   => 'core',
-        'show_names' => true,
-        'fields'     => array(
-			array(
-                'name' => __('Email', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('contact_email'),
-                'type' => 'text_medium',
-            ),
-            array(
-                'name' => __('Phone', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('contact_phone'),
-                'type' => 'text_small',
-            ),
-            array(
-                'name' => __('Fax', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('contact_fax'),
-                'type' => 'text_small',
-            ),
-            array(
-                'name' => __('Skype', 'ldd-directory-lite'),
-                'id'   => ldl_pfx('contact_skype'),
-                'type' => 'text_small',
-            ),			
-        ),
-    );
+    $listings_contact = new_cmb2_box(array(
+        'id'           => 'listings_contact',
+        'title'        => __('Contact Information', 'ldd-directory-lite'),
+        'object_types' => array(LDDLITE_POST_TYPE),
+        'context'      => 'side',
+        'priority'     => 'core',
+        'show_names'   => TRUE,
+    ));
+    $listings_contact->add_field(array(
+        'name' => __('Email', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('contact_email'),
+        'type' => 'text_medium',
+    ));
+    $listings_contact->add_field(array(
+        'name' => __('Phone', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('contact_phone'),
+        'type' => 'text_small',
+    ));
+    $listings_contact->add_field(array(
+        'name' => __('Fax', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('contact_fax'),
+        'type' => 'text_small',
+    ));
+    $listings_contact->add_field(array(
+        'name' => __('Skype', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('contact_skype'),
+        'type' => 'text_small',
+    ));
 
-    return $meta_boxes;
 }
-add_filter('cmb_meta_boxes', 'ldl_metaboxes_setup_cmb');
+
+add_action('cmb2_admin_init', 'ldl_metaboxes_setup_cmb');
 
 
 /**
@@ -196,38 +192,40 @@ add_filter('cmb_meta_boxes', 'ldl_metaboxes_setup_cmb');
  * current listing. Stores an array with the formatted address (as provided by the Google Maps Autocomplete &
  * Geocoder API), latitude and longitude.
  *
- * @param array $field Information pertaining to the field
- * @param array $meta Saved values for this field
  */
-function ldl_render_geo_location_field($field, $meta) {
+function ldl_render_geo_location_field($field, $escaped_value, $object_id, $object_type, $field_type_object)
+{
+    global $google_api_src;
 
-    wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
+    wp_enqueue_script('google-maps', $google_api_src);
     wp_enqueue_script('lddlite-admin');
-
     wp_enqueue_style('lddlite-admin');
+
     echo '<i class="full_address_i"></i>';
-    echo '<input type="text" style="display:none;" class="autocomplete full_address_geo" id="' . $field['id'] . '">';
-    echo '<input type="hidden" class="lat" name="' . $field['id'] . '[lat]" value="' . (isset($meta['lat']) ? $meta['lat'] : '') . '">';
-    echo '<input type="hidden" class="lng" name="' . $field['id'] . '[lng]" value="' . (isset($meta['lng']) ? $meta['lng'] : '') . '">';
+    echo '<input type="text" style="display:none;" class="autocomplete full_address_geo" id="' . $field->args["id"] . '">';
+    echo '<input type="hidden" class="lat" name="' . $field->args["id"] . '[lat]" value="' . (isset($escaped_value['lat']) ? $escaped_value['lat'] : '') . '">';
+    echo '<input type="hidden" class="lng" name="' . $field->args["id"] . '[lng]" value="' . (isset($escaped_value['lng']) ? $escaped_value['lng'] : '') . '">';
     echo '<div class="map-canvas" id="map_canvas"></div>';
 
-    if (!empty($field['desc']))
-        echo '<p class="cmb_metabox_description">' . $field['desc'] . '</p>';
+    if (!empty($field->args["desc"]))
+        echo '<p class="cmb_metabox_description">' . $field->args["desc"] . '</p>';
 
 }
-add_action('cmb_render_geo_location', 'ldl_render_geo_location_field', 10, 2);
+
+add_action('cmb2_render_geo_location', 'ldl_render_geo_location_field', 10, 5);
 
 
 /**
  * Runs through the `gettext` filter to change labels on our custom post type add/edit screen
  *
  * @param string $translations Translated text.
- * @param string $text         Text to translate.
- * @param string $domain       Text domain. Unique identifier for retrieving translated strings.
+ * @param string $text Text to translate.
+ * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  *
  * @return mixed
  */
-function ldl_relabel($translation, $text, $domain) {
+function ldl_relabel($translation, $text, $domain)
+{
 
     if (LDDLITE_POST_TYPE != get_post_type()) {
         return $translation;
@@ -253,4 +251,5 @@ function ldl_relabel($translation, $text, $domain) {
 
     return $translation;
 }
+
 add_filter('gettext', 'ldl_relabel', 10, 3);

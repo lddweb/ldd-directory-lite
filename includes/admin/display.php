@@ -13,6 +13,7 @@
 function ldl_add_settings_menu() {
     add_submenu_page('edit.php?post_type=' . LDDLITE_POST_TYPE, 'Directory Lite Configuration', 'Settings', 'manage_options', 'lddlite-settings', 'ldl_settings_page');
     add_submenu_page('edit.php?post_type=' . LDDLITE_POST_TYPE, 'LDD Directory Add-ons', 'Add-ons', 'manage_options', 'lddlite-addons', 'ldl_addons_page');
+    add_submenu_page('edit.php?post_type=' . LDDLITE_POST_TYPE, 'LDD Directory Help', 'Help', 'manage_options', 'lddlite-help', 'ldl_help_page');
 }
 
 add_action('admin_menu', 'ldl_add_settings_menu');
@@ -25,6 +26,15 @@ function ldl_addons_page() {
     wp_enqueue_style('lddlite-admin');
     wp_enqueue_style('font-awesome');
     include(LDDLITE_PATH."/templates/addon-page.php");
+}
+
+/*
+ * Help Page.
+ * */
+function ldl_help_page() {
+    wp_enqueue_style('lddlite-admin');
+    wp_enqueue_style('font-awesome');
+    include(LDDLITE_PATH."/templates/help-page.php");
 }
 
 /**
@@ -91,7 +101,7 @@ function ldl_settings_page() {
         <div id="tab_container">
 
             <form method="post" action="options.php">
-                <table class="form-table">
+                <table class="form-table ldd-settings-table">
                     <?php
                     settings_fields('lddlite_settings');
                     do_settings_fields( 'lddlite_settings_' . $active_tab, 'lddlite_settings_' . $active_tab );

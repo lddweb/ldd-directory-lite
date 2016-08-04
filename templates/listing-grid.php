@@ -1,7 +1,11 @@
     <div id="listing-<?php echo get_the_ID(); ?>" class="col-xs-12 col-sm-6 col-md-4 type-grid grid-item">
         <div class="thumbnail">
-            <?php echo ldl_get_thumbnail( get_the_ID() ); ?>
-            <hr />
+            <?php
+            $thumbnail_src = ldl_get_thumbnail( get_the_ID() );
+            if($thumbnail_src) {
+                echo $thumbnail_src." <hr /> ";
+            }
+            ?>
             <div class="caption text-left">
                 <h3 class="listing-title grid-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h3>
                 <div class="listing-meta meta-column">
@@ -10,6 +14,11 @@
                         <?php if (ldl_get_address()): ?><li><i class="fa fa-globe fa-li"></i> <?php echo ldl_get_address(); ?></li><?php endif; ?>
                         <li class="grid_socials"><?php echo ldl_get_social( get_the_ID() ); ?></li>
                     </ul>
+                    <?php
+                    if(class_exists("LDDReviewscore")){
+                       LDDReviewscore::show_ratings(get_the_ID());
+                    }
+                    ?>
                 </div>
             </div>
         </div>

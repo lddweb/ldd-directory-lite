@@ -374,9 +374,11 @@ function ldl_get_categories_li($parent = 0) {
  */
 function ldl_get_thumbnail($post_id, $size = 'directory-listing', $class = 'img-rounded img-responsive') {
 
+	$allow_image_placeholder = ldl()->get_option('general_display_img_placeholder','yes');
+
     if (has_post_thumbnail($post_id)) {
         $thumbnail = get_the_post_thumbnail($post_id, $size, array('class' => $class));
-    } else {
+    } else if(isset($allow_image_placeholder) and $allow_image_placeholder === 'yes') {
         $thumbnail = '<img src="' . LDDLITE_NOLOGO . '" class="' . $class . '">';
     }
 
@@ -414,20 +416,20 @@ function ldl_get_address() {
 
     $address_one = get_post_meta($post_id, ldl_pfx('address_one'), true);
     $address_two = get_post_meta($post_id, ldl_pfx('address_two'), true);
-    $postal_code = get_post_meta($post_id, ldl_pfx('postal_code'), true);
-    $country 	 = get_post_meta($post_id, ldl_pfx('country'), true);
 	$city 		 = get_post_meta($post_id, ldl_pfx('city'), true);
 	$state 		 = get_post_meta($post_id, ldl_pfx('state'), true);
-	
+    $postal_code = get_post_meta($post_id, ldl_pfx('postal_code'), true);
+    $country 	 = get_post_meta($post_id, ldl_pfx('country'), true);
+
     $output = '';
     $output .= empty($address_one) ? '' : $address_one;
     $output .= empty($address_two) ? '' : ', ' . $address_two;
-    $output .= empty($postal_code) ? '' : ', ' . $postal_code;
 	$output .= empty($city) ? '' : ', ' . $city;
 	$output .= empty($state) ? '' : ', ' . $state;
+	$output .= empty($postal_code) ? '' : ', ' . $postal_code;
     $output .= empty($country) ? '' : ', ' . $country;
 
-    $output = apply_filters('lddlite_presentation_get_address', $output, $post_id, compact('address_one', 'address_two', 'postal_code', 'country'));
+    $output = apply_filters('lddlite_presentation_get_address', $output, $post_id, compact('address_one', 'address_two', 'city', 'state', 'postal_code', 'country'));
 
     return $output ? $output : false;
 }
@@ -471,7 +473,7 @@ function ldl_get_social($post_id) {
             $title_key = array_key_exists($key, $titles) ? $titles[ $key ] : $titles['default'];
             $title = sprintf($title_key, $name, $key);
 
-            $output[] = '<a href="' . $url . '" title="' . $title . '"><i class="fa fa-' . $key . '-square"></i></a>';
+            $output[] = '<a target="_blank" href="' . $url . '" title="' . $title . '"><i class="fa fa-' . $key . '-square"></i></a>';
         }
     }
 
@@ -491,9 +493,10 @@ function ldl_get_social($post_id) {
  */
 function ldl_get_featured_posts($args = null, $attr = array()) {
 
-	$sort_by 	= ldl()->get_option('directory_featured_sort', 'business_name');
-	$sort_order = ldl()->get_option('directory_featured_sort_order','asc');
-		
+	$featured_listings_limit = (int) ldl()->get_option('featured_listings_limit', '3');
+	$sort_by 	             = ldl()->get_option('directory_featured_sort', 'business_name');
+	$sort_order              = ldl()->get_option('directory_featured_sort_order','asc');
+
 	if(isset($attr["fl_order_by"]) and !empty($attr["fl_order_by"])):
 		$sort_by 	= $attr["fl_order_by"];
 	endif;
@@ -516,7 +519,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 						),
 						'orderby'        => 'title',
 						'order' 		 => $sort_order,
-						'posts_per_page' => '3'
+						'posts_per_page' => $featured_listings_limit
 					);				
 				elseif ($sort_by == "zip"):		
 					$defaults = array(
@@ -531,7 +534,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 						'meta_key'       => '_lddlite_postal_code',
 						'orderby'        => 'meta_value',
 						'order' 		 => $sort_order,
-						'posts_per_page' => '3'
+						'posts_per_page' => $featured_listings_limit
 					);
 				elseif ($sort_by == "area"):	
 					$defaults = array(
@@ -546,7 +549,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 						'meta_key'       => '_lddlite_country',
 						'orderby'        => 'meta_value',
 						'order' 		 => $sort_order,
-						'posts_per_page' => '3'
+						'posts_per_page' => $featured_listings_limit
 					);				
 				elseif ($sort_by == "category"):	
 					$defaults = array(
@@ -559,7 +562,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 							),
 						),
 						'order' 		 => $sort_order,
-						'posts_per_page' => '3'
+						'posts_per_page' => $featured_listings_limit
 					);						
 				elseif ($sort_by == "random"):	
 					$defaults = array(
@@ -573,7 +576,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 						),
 						'orderby'        => 'rand',
 						'order' 		 => $sort_order,
-						'posts_per_page' => '3'
+						'posts_per_page' => $featured_listings_limit
 					);				
 				endif;
 

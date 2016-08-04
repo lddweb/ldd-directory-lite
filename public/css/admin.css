@@ -1,3 +1,73 @@
+.ldd-help-container {
+    margin: 20px 0;
+}
+.ldd-logo-help-section{
+    float: right;
+    background: #607db8;
+    padding: 20px;
+    margin: 0 0 20px 20px;
+    border: 2px solid #5668b8;
+}
+.ldd_plugin_note {
+    font-style: italic;
+    border-top: 1px solid #cccccc;
+    margin-top: 30px;
+    padding-top: 5px;
+}
+#post-body-content h2.shortcode-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: left;
+}
+.shortcode_example_div {
+    border: 1px solid #e6e6e6;
+    padding: 1em;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.085);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.085);
+    background: #fff9c0;
+    margin-bottom: 1.618em;
+    overflow: auto;
+    max-width: 100%;
+}
+.shortcode_example_div h4 {
+    margin: 10px 0 10px 0;
+    font-size: 14px;
+    text-decoration: underline;
+}
+.shortcode_example_options {
+    font-size: 13px;
+    margin-top: 20px;
+}
+.shortcode_example_options ol li > strong {
+    text-decoration: underline;
+}
+.form-table.ldd-settings-table h4.ldd-admin-title {
+    color: #000;
+    font-weight: bold;
+    margin: 1em 0;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+.form-table.ldd-settings-table th,
+.form-table.ldd-settings-table .form-wrap label{
+    color: #444 !important;
+}
+
+.form-table.ldd-settings-table td,
+.form-table.ldd-settings-table td p,
+.form-table.ldd-settings-table label {
+    font-size: 13px;
+    color: #444 !important;
+}
+
 .wrap.directory-lite > h2.heading {
     background-color: rgba(160, 160, 160, 0.05);
 }
@@ -122,4 +192,8 @@ table.cmb_metabox input[type=text].autocomplete {
 
 .ldd-extend .nf-doc-button {
     float: left;
+}
+
+.wrap.directory-lite .regular-text {
+    margin: 0 !important;
 }

@@ -31,25 +31,25 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label" for="f_postal_code"><?php _e('Zip / Postal Code', 'ldd-directory-lite'); ?></label>
-                        <input type="text" id="f_postal_code" class="form-control" name="n_postal_code" value="<?php echo ldl_get_value('postal_code'); ?>" placeholder="<?php _e('20008', 'ldd-directory-lite'); ?>">
-                        <?php echo ldl_get_error('postal_code'); ?>
+                        <label class="control-label" for="f_state"><?php _e('State/province', 'ldd-directory-lite'); ?></label>
+                        <input type="text" id="f_state" class="form-control" name="n_state" value="<?php echo ldl_get_value('state'); ?>" placeholder="<?php _e('United Kingdom', 'ldd-directory-lite'); ?>">
+                        <?php echo ldl_get_error('state'); ?>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label class="control-label" for="f_postal_code"><?php _e('Zip / Postal Code', 'ldd-directory-lite'); ?></label>
+                        <input type="text" id="f_postal_code" class="form-control" name="n_postal_code" value="<?php echo ldl_get_value('postal_code'); ?>" placeholder="<?php _e('20008', 'ldd-directory-lite'); ?>">
+                        <?php echo ldl_get_error('postal_code'); ?>
+                    </div>
+                </div>            
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label class="control-label" for="f_country"><?php _e('Country', 'ldd-directory-lite'); ?></label>
                         <input type="text" id="f_country" class="form-control" name="n_country" value="<?php echo ldl_get_value('country'); ?>" placeholder="<?php _e('United States', 'ldd-directory-lite'); ?>">
                         <?php echo ldl_get_error('country'); ?>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label" for="f_state"><?php _e('State/province', 'ldd-directory-lite'); ?></label>
-                        <input type="text" id="f_state" class="form-control" name="n_state" value="<?php echo ldl_get_value('state'); ?>" placeholder="<?php _e('United Kingdom', 'ldd-directory-lite'); ?>">
-                        <?php echo ldl_get_error('state'); ?>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, ldd directory lite.
 
-* **Working Version**: 0.8.60
+* **Working Version**: 0.8.7
 * **Latest Stable**: 
 * **Contributors**: [@lddweb](https://github.com/lddweb/)
 
@@ -18,6 +18,7 @@ The Directory is extremely user friendly, ready to go pretty much out of the box
 * Add the [directory] and [directory_submit] shortcode to any page (automatically installed for you, but feel free to change them)
 * Default list sorting options for Categories,Featured and Listings in dashboard.
 * Sort using shortcodes, i.e. [directory cat_order_by="xxx" cat_order="asc" fl_order_by="xxx" fl_order="asc" list_order_by="xxx" list_order="asc"]
+* Display category(s) specific listing using [directory_category slug="my-category,my-other-category" view="compact" list_order_by="title" list_order="ASC" limit="8"]
 * Ability to change Taxonomy and Post type slugs.
 * Added new fields for listings.
 * Customize the look and feel as much, or as little as you want

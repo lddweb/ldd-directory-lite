@@ -1,5 +1,7 @@
 jQuery(document).ready(function ($) {
-    $('.lddlite-color-picker').wpColorPicker();
+    if($('.lddlite-color-picker').length > 0) {
+        $('.lddlite-color-picker').wpColorPicker();
+    }
 
     var uninstallCheck = $("input[id=lite-debug_uninstall]");
     var warningStack = $("p.warning");
@@ -22,6 +24,11 @@ jQuery(document).ready(function ($) {
 });
 
 function initialize(address) {
+
+    if(address === 0 || address === "") {
+        return;
+    }
+
     var latLng;
     var zoom = 16;
 
@@ -106,26 +113,26 @@ function initialize(address) {
 function update_user_address() {
     var address = "";
 
-    if(jQuery("#_lddlite_address_one").val().length > 0) {
+    if(jQuery("#_lddlite_address_one").length > 0) {
         address = jQuery("#_lddlite_address_one").val();
     }
-    if(jQuery("#_lddlite_address_two").val().length > 0) {
-        if(jQuery("#_lddlite_address_one").val().length > 0) {
+    if(jQuery("#_lddlite_address_two").length > 0) {
+        if(jQuery("#_lddlite_address_one").length > 0) {
             address = address + ", " + jQuery("#_lddlite_address_two").val();
         }else{
             address = address + jQuery("#_lddlite_address_two").val();
         }
     }
-    if(jQuery("#_lddlite_city").val().length > 0) {
+    if(jQuery("#_lddlite_city").length > 0) {
         address = address +", "+ jQuery("#_lddlite_city").val();
     }
     /* if(jQuery("#_lddlite_postal_code").val().length > 0) {
      address = address +", "+ jQuery("#_lddlite_postal_code").val();
      }*/
-    if(jQuery("#_lddlite_state").val().length > 0) {
+    if(jQuery("#_lddlite_state").length > 0) {
         address = address +", "+ jQuery("#_lddlite_state").val();
     }
-    if(jQuery("#_lddlite_country").val().length > 0) {
+    if(jQuery("#_lddlite_country").length > 0) {
         address = address +", "+ jQuery("#_lddlite_country").val();
     }
     if(address) {

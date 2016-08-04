@@ -110,12 +110,13 @@ function get_child_categories($parent_id,$tax,$indent = 1){
         'hierarchical'  => 1,
         'parent'        => $parent_id
     );
-
     $child_terms = get_terms($tax, $args_arr);
-    foreach ( $child_terms as $child_term ) {
-        $child_cat_name = str_repeat("&nbsp&nbsp&nbsp", $indent).$child_term->name;
-        $result .= '<option value="' . $child_term->term_id . '">' . $child_cat_name . '</option>';
-        $result .= get_child_categories($child_term->term_id,$tax,$indent+1);
+    if ( ! empty( $child_terms ) && ! is_wp_error( $child_terms ) ){
+        foreach ( $child_terms as $child_term ) {
+            $child_cat_name = str_repeat("&nbsp&nbsp&nbsp", $indent).$child_term->name;
+            $result .= '<option value="' . $child_term->term_id . '">' . $child_cat_name . '</option>';
+            $result .= get_child_categories($child_term->term_id,$tax,$indent+1);
+        }
     }
     return $result;
 }
@@ -238,6 +239,10 @@ function ldl_submit_create_post($name, $description, $summary, $cat_id, $user_id
         'post_date'    => date('Y-m-d H:i:s'),
     );
 
+    if(ldl()->get_option('submit_auto_approve_submission') === "yes"){
+        $args["post_status"] = "publish";
+    }
+
     $post_id = wp_insert_post($args);
 
     if (!is_wp_error($post_id)) {
@@ -279,9 +284,10 @@ function ldl_notify_admin($data, $post_id) {
     $subject = ldl()->get_option('email_toadmin_subject');
 
     $message = ldl()->get_option('email_toadmin_body');
-    $message = str_replace('{aprove_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
+    $message = str_replace('{approve_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
     $message = str_replace('{title}', $data['title'], $message);
     $message = str_replace('{description}', $data['description'], $message);
+    $message = str_replace('{site_title}', get_bloginfo('name'), $message);
 
     ldl_mail($to, $subject, $message);
 }
@@ -438,7 +444,11 @@ function ldl_submit_generate_listing() {
  * @since 0.6.0
  */
 function ldl_shortcode_directory_submit() {
-    global $lddlite_submit_processor;
+    global $lddlite_submit_processor , $google_api_src;
+
+    if(ldl()->get_option('general_allow_public_submissions','yes') === 'no') {
+        return;
+    }
 
     ldl_enqueue(1);
 
@@ -468,7 +478,7 @@ function ldl_shortcode_directory_submit() {
     }
 
     wp_enqueue_script('jquery-ui-autocomplete');
-    wp_enqueue_script('maps-autocomplete', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&ver=3.9.1');
+    wp_enqueue_script('maps-autocomplete', $google_api_src);
     wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
 
     ldl_get_template_part('submit');

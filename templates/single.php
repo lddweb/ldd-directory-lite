@@ -27,17 +27,16 @@ get_header();
                         <div class="entry-content">
                             <?php the_content(); ?>
                         </div><!-- .entry-content -->
-
                         <div class="listing-meta">
                             <ul class="fa-ul">
                                 <?php if (ldl_has_meta('contact_phone')): ?><li><i class="fa fa-phone fa-fw fa-li"></i> <?php echo ldl_get_meta('contact_phone'); ?></li><?php endif; ?>
                                 <?php if (ldl_get_address()): ?><li><i class="fa fa-globe fa-fw fa-li"></i> <?php echo ldl_get_address(); ?></li><?php endif; ?>
                             </ul>
                             <ul class="fa-ul">
-                                <?php if (ldl_has_meta('url_website')): ?><li><i class="fa fa-link fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_website' ); ?>"><?php echo ldl_get_meta( 'url_website' ); ?></a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_facebook')): ?><li><i class="fa fa-facebook fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_facebook' ); ?>"><?php echo ldl_get_meta( 'url_facebook' ); ?></a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_twitter')): ?><li><i class="fa fa-twitter fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_twitter' ); ?>"><?php echo ldl_get_meta( 'url_twitter' ); ?></a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_linkedin')): ?><li><i class="fa fa-linkedin fa-lg fa-li"></i> <a href="<?php echo ldl_get_meta( 'url_linkedin' ); ?>"><?php echo ldl_get_meta( 'url_linkedin' ); ?></a></li><?php endif; ?>
+                                <?php if (ldl_has_meta('url_website')): ?><li><i class="fa fa-link fa-lg fa-li"></i> <a target="_blank" href="<?php echo ldl_get_meta( 'url_website' ); ?>"><?php echo ldl_get_meta( 'url_website' ); ?></a></li><?php endif; ?>
+                                <?php if (ldl_has_meta('url_facebook')): ?><li><i class="fa fa-facebook fa-lg fa-li"></i> <a target="_blank" href="<?php echo ldl_get_meta( 'url_facebook' ); ?>"><?php echo ldl_get_meta( 'url_facebook' ); ?></a></li><?php endif; ?>
+                                <?php if (ldl_has_meta('url_twitter')): ?><li><i class="fa fa-twitter fa-lg fa-li"></i> <a target="_blank" href="<?php echo ldl_get_meta( 'url_twitter' ); ?>"><?php echo ldl_get_meta( 'url_twitter' ); ?></a></li><?php endif; ?>
+                                <?php if (ldl_has_meta('url_linkedin')): ?><li><i class="fa fa-linkedin fa-lg fa-li"></i> <a target="_blank" href="<?php echo ldl_get_meta( 'url_linkedin' ); ?>"><?php echo ldl_get_meta( 'url_linkedin' ); ?></a></li><?php endif; ?>
                             </ul>
                         </div>
 
@@ -46,6 +45,14 @@ get_header();
                                 <div id="map_canvas"></div>
                             </div>
                         <?php endif; ?>
+
+                        <!--START-->
+                        <?php
+                           if(class_exists("LDDReviewscore")){
+                                 LDDReviewscore::show_ratings_single_page_content(get_the_ID());
+                           }
+                        ?>
+                        <!--END-->
 
                     </div>
                     <div class="col-md-4">
@@ -67,7 +74,7 @@ get_header();
         </article>
             
         <?php if ( ldl_use_google_maps() ): ?>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbaw0hFglsihePOsFpMnLQwJZtOChIoDg&sensor=false"></script>
+        <script src="<?php echo $google_api_src;?>"></script>
         <script>
             function initialize() {
                 var mapLatLng = new google.maps.LatLng(<?php echo $geo['lat']; ?>, <?php echo $geo['lng']; ?>);
