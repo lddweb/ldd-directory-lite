@@ -1,12 +1,12 @@
-=== Plugin Name ===
+=== LDD Directory Lite ===
 Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 3.9.1
 Tested up to: 4.5.3
-Stable tag: 0.8.7
+Stable tag: 0.8.70
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 
 The LDD Directory Lite plugin is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
 
@@ -47,10 +47,11 @@ More information at [plugins.lddwebdesign.com](http://plugins.lddwebdesign.com)
 == Installation ==
 
 Installation is easiest when done through your WordPress Dashboard:
+
 1. Select **Plugins >> Add New** from your sites WordPress dashboard.
-2. Type **ldd directory lite** into the search field and press enter.
-3. Click **Install Now** when you see ldd directory lite appear in the search results.
-4. Select **Activate Plugin** after you see *Successfully installed the plugin ldd directory lite* appear on your screen.
+1. Type **ldd directory lite** into the search field and press enter.
+1. Click **Install Now** when you see ldd directory lite appear in the search results.
+1. Select **Activate Plugin** after you see *Successfully installed the plugin ldd directory lite* appear on your screen.
 
 
 = Upgrading from LDD Business Directory =
@@ -60,9 +61,9 @@ This plugin is a rewrite of the [LDD Business Directory](http://wordpress.org/pl
 *You do not need to deactivate or uninstall the LDD Business Directory plugin before activating ldd directory lite.*
 
 1. Install and activate the plugin using the above instructions.
-2. Once installed, if data is detected from the original plugin it will automatically notify you with a rather large message at the top of your Directory Lite dashboard screens.
-3. Press the "Import Data" button, and you will be taken to the upgrade page.
-4. All done!
+1. Once installed, if data is detected from the original plugin it will automatically notify you with a rather large message at the top of your Directory Lite dashboard screens.
+1. Press the "Import Data" button, and you will be taken to the upgrade page.
+1. All done!
 
 **The plugin only imports this data, it does nothing to alter or remove it. If you decide to revert to the original plugin because of errors encountered while using this beta release, you will have all you original content waiting for you.**
 
@@ -131,7 +132,7 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 0.8.7 =
+= 0.8.70 =
 
 * Added support for admin to enable/disable public submissions.
 * Added support for admin to select number of featured listings to display.
@@ -151,7 +152,7 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Changelog ==
 
-= 0.8.7 =
+= 0.8.70 =
 
 * Added support for admin to enable/disable public submissions.
 * Added support for admin to select number of featured listings to display.

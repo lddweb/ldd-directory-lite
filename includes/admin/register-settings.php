@@ -89,7 +89,7 @@ function ldl_get_registered_settings()
                 'general_allow_public_submissions' => array(
                     'id'      => 'general_allow_public_submissions',
                     'name'    => __('Public Submissions', 'ldd-directory-lite'),
-                    'desc'    => __('Wound you like to allow public submissions?', 'ldd-directory-lite'),
+                    'desc'    => __('Would you like to allow public submissions?', 'ldd-directory-lite'),
                     'type'    => 'radio_inline',
                     'options' => array(
                         "yes" => "Yes",
