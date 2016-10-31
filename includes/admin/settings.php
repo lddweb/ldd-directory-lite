@@ -360,6 +360,10 @@ class ldd_directory_lite_admin {
                             href="https://github.com/mwaterous/ldd-directory-lite"
                             title="We do most of our development from GitHub, come join us!"><?php _e('GitHub.com', 'lddlite'); ?></a>
                     </li>
+                    <li><a href="https://wordpress.org/support/plugin/ldd-directory-lite/reviews/#new-topic-0"
+                           title="Rate this plugin on WordPress.org" class="bold-link"><i
+                                class="fa fa-star fa-fw"></i> <?php _e('Rate this Plugin', 'lddlite'); ?>
+                        </a></li>
                 </ul>
             </div>
 

@@ -2,9 +2,9 @@
 Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
-Requires at least: 3.9.1
-Tested up to: 4.5.3
-Stable tag: 0.8.70
+Requires at least: 3.9.1 or higher
+Tested up to: 4.6.1
+Stable tag: 1.0.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -132,25 +132,21 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 0.8.70 =
+= 1.0.0 =
 
-* Added support for admin to enable/disable public submissions.
-* Added support for admin to select number of featured listings to display.
-* Social links will open in new tab.
-* Allow admin to hide/show default image placeholder.
-* Added support to auto approve listings.
-* Added help page for listing all available plugin options.
-* Fixed plugin's template files.
-* Fixed address format.
-* Fixed grid view layout.
-* Fixed pagination error.
-* Added a new shortcode  [directory_category slug='xxx'] for displaying category specific listings.
-* Fixed approval email template.
-* Added support for adding Google Map API for removing javascript "noapi" notification issue.
-* Updated CMB to CMB2.
-* Minor bug fixes
+* Added rate this plugin link to header of settings page with other links.
+* Added ability to auto-request a review after user has had the plugin activated for one week.
+* Changed placeholder text for address/location fields.
+* Added markup for telephone number to link to action (i.e. make phone call).
 
 == Changelog ==
+
+= 1.0.0 =
+
+* Added rate this plugin link to header of settings page with other links.
+* Added ability to auto-request a review after user has had the plugin activated for one week.
+* Changed placeholder text for address/location fields.
+* Added markup for telephone number to link to action (i.e. make phone call).
 
 = 0.8.70 =
 

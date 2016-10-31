@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           0.8.70
+ * Version:           1.0.0
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '0.8.70');
+define('LDDLITE_VERSION', '1.0.0');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -37,6 +37,10 @@ define('LDDLITE_TAX_TAG', 'listing_tag');
 
 define('LDDLITE_PFX', 'lddlite');
 define('LDDLITE_NOLOGO', plugin_dir_url(__FILE__) . 'public/images/noimage.png');
+
+define('LDDLITE_INSTALL_DATE', 'lddlite-install-date');
+define('LDDLITE_HIDE_NOTICE_KEY', 'lddlite-hide-notice');
+define('LDDLITE_DELAY_NOTICE_KEY', 'lddlite-dalay-notice');
 /*
  * Google Map Api Key Global
  * */
@@ -113,6 +117,9 @@ function install_ldd_directory_lite() {
     }
 
     update_option('lddlite_settings', $ldl_settings);
+
+	/* Insert install date */
+	LDD_Nag::insert_install_date();
 
 	flush_rewrite_rules(true);
 	$wp_rewrite->flush_rules( false );
@@ -211,6 +218,7 @@ class ldd_directory_lite {
     public function include_files() {
 
         require(LDDLITE_PATH . '/includes/admin/register-settings.php');
+        require(LDDLITE_PATH . '/includes/admin/review.php');
 
         require(LDDLITE_PATH . '/includes/functions.php');
         require(LDDLITE_PATH . '/includes/setup.php');
@@ -289,14 +297,14 @@ class ldd_directory_lite {
 
 }
 
-/**
- * An alias for the ldd_directory_lite get_instance() method.
- *
- * @return ldd_directory_lite The controller singleton
- */
-function ldl() {
-    return ldd_directory_lite::get_instance();
-}
+	/**
+	 * An alias for the ldd_directory_lite get_instance() method.
+	 *
+	 * @return ldd_directory_lite The controller singleton
+	 */
+	function ldl() {
+	    return ldd_directory_lite::get_instance();
+	}
 
 
 /*
@@ -361,7 +369,12 @@ function google_error_notice() {
 	$message = "Error: Google Map API is missing. Please go to <a href='".admin_url()."edit.php?post_type=directory_listings&page=lddlite-settings#lddlite_settings[googlemap_api_key]'>settings</a> and provide the Google Map API Key.";
 	echo"<div class=\"$class\"> <p>$message</p></div>";
 }
-
+add_action( 'admin_init', 'ldd_admin_hooks' );
+function ldd_admin_hooks() {
+	// setup nag
+	$nag = new LDD_Nag();
+	$nag->setup();
+}
 
 /** Das boot */
 if (!defined('WP_UNINSTALL_PLUGIN'))
