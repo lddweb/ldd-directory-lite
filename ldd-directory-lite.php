@@ -119,7 +119,8 @@ function install_ldd_directory_lite() {
     update_option('lddlite_settings', $ldl_settings);
 
 	/* Insert install date */
-	LDD_Nag::insert_install_date();
+	$nag = new LDD_Nag();
+	$nag->insert_install_date();
 
 	flush_rewrite_rules(true);
 	$wp_rewrite->flush_rules( false );

@@ -1,21 +1,26 @@
 <?php
 
 class LDD_Nag {
-	/*
+	/**
 	 * Assign Current User
 	 */
 	private $current_user;
-	/*
+	/**
 	 * Assign Current DateTime
 	 */
 	private $datetime_now;
 	/**
+	 * Constructor for class
+	 */
+	public function __construct() {
+		$this->current_user = wp_get_current_user();
+		$this->datetime_now = new DateTime();
+	}
+
+	/**
 	 * Setup the class
 	 */
 	public function setup() {
-
-		$this->current_user = wp_get_current_user();
-		$this->datetime_now = new DateTime();
 
 		// catch nag hide
 		$this->catch_delay_notice();
@@ -135,7 +140,7 @@ class LDD_Nag {
 		$date_string = get_site_option( LDDLITE_INSTALL_DATE, '' );
 		if ( $date_string == '' ) {
 			// There is no install date, plugin was installed before version 1.2.0. Add it now.
-			$date_string = self::insert_install_date();
+			$date_string = $this->insert_install_date();
 		}
 
 		return new DateTime( $date_string );
