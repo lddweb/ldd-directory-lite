@@ -40,20 +40,6 @@ function ldl_metaboxes__swap()
 
 add_action('add_meta_boxes', 'ldl_metaboxes__swap', 5);
 
-
-/**
- * Make sure another plugin hasn't already done this, then initialize the CMB library.
- *
- * @see https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress Custom Metaboxes awesomeness
- */
-function ldl_metaboxes_init_cmb()
-{
-    require_once(LDDLITE_PATH . '/includes/cmb/init.php');
-}
-
-add_action('init', 'ldl_metaboxes_init_cmb');
-
-
 /**
  * Setup an array of of meta boxes to be used by the directory_listings custom post type
  *

@@ -233,7 +233,13 @@ class ldd_directory_lite {
         require(LDDLITE_PATH . '/includes/shortcodes/categories.php');
 
         if (is_admin()) {
-            require(LDDLITE_PATH . '/includes/admin/setup.php');
+	        /**
+	         * Make sure another plugin hasn't already done this, then initialize the CMB library.
+	         */
+	        if (  !defined( 'CMB2_LOADED') ){
+		        require(LDDLITE_PATH . '/includes/cmb/init.php');
+	        }
+	        require(LDDLITE_PATH . '/includes/admin/setup.php');
             require(LDDLITE_PATH . '/includes/admin/metaboxes.php');
             require(LDDLITE_PATH . '/includes/admin/help.php');
             require(LDDLITE_PATH . '/includes/admin/display.php');
