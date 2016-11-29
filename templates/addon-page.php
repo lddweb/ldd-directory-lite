@@ -21,6 +21,10 @@
                         href="https://github.com/lddweb/ldd-directory-lite"
                         title="We do most of our development from GitHub, come join us!"><?php _e('GitHub.com', 'ldd-directory-lite'); ?></a>
                 </li>
+                <li><a href="https://wordpress.org/support/plugin/ldd-directory-lite/reviews/#new-topic-0"
+                       title="Rate this plugin on WordPress.org" class="bold-link"><i
+                            class="fa fa-star fa-fw"></i> <?php _e('Rate this Plugin', 'lddlite'); ?>
+                    </a></li>
             </ul>
         </div>
 
@@ -31,10 +35,55 @@
             <div id="post-body">
                 <div id="post-body-content">
                     <div class="ldd-extend ldd-box">
+                        <img src="<?php echo LDDLITE_URL; ?>/public/images/LDD-Directory-Review.png"
+                             class="ldd-addons-image" alt="Directory Imports">
+                        <hr/>
+                        <h2>Directory Reviews</h2>
+
+                        <div class="ldd-extend-content">
+                            <p>Add a powerful user review system to your online directory with star ratings, comments and filterable/searchable review content.</p>
+
+                            <div class="ldd-extend-buttons">
+                                <a href="https://plugins.lddwebdesign.com/extensions/directory-listing-reviews/" target="_blank" class="button-secondary nf-doc-button">Learn More</a>
+                                <a href="https://plugins.lddwebdesign.com/extensions/?edd_action=add_to_cart&download_id=1659" target="_blank" title="Multi-Part Forms" class="button-primary nf-button">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ldd-extend ldd-box">
+                        <img src="<?php echo LDDLITE_URL; ?>/public/images/LDD-Directory-Social-Login.png"
+                             class="ldd-addons-image" alt="Directory Imports">
+                        <hr/>
+                        <h2>Directory Social Login</h2>
+
+                        <div class="ldd-extend-content">
+                            <p>The LDD Directory Social Login extension that allow with the ability to login with facebook, google+, linkedin logins.</p>
+
+                            <div class="ldd-extend-buttons">
+                                <a href="https://plugins.lddwebdesign.com/extensions/directory-social-login/" target="_blank" class="button-secondary nf-doc-button">Learn More</a>
+                                <a href="https://plugins.lddwebdesign.com/extensions/?edd_action=add_to_cart&download_id=1680" target="_blank" title="Multi-Part Forms" class="button-primary nf-button">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ldd-extend ldd-box">
+                        <img src="<?php echo LDDLITE_URL; ?>/public/images/LDD-Directory-Social-Share.png"
+                             class="ldd-addons-image" alt="Directory Imports">
+                        <hr/>
+                        <h2>Directory Social Share</h2>
+
+                        <div class="ldd-extend-content">
+                            <p>Add the ability to share your directory listings on popular social networks like Facebook, Twitter, Google+, LinkedIn, Pinterest and via E-mail.</p>
+
+                            <div class="ldd-extend-buttons">
+                                <a href="https://plugins.lddwebdesign.com/extensions/directory-social-share/" target="_blank" class="button-secondary nf-doc-button">Learn More</a>
+                                <a href="https://plugins.lddwebdesign.com/extensions/?edd_action=add_to_cart&download_id=1684" target="_blank" title="Multi-Part Forms" class="button-primary nf-button">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ldd-extend ldd-box">
                         <img src="<?php echo LDDLITE_URL; ?>/public/images/LDD-Directory-Export-logo-notext.png"
                              class="ldd-addons-image" alt="Exports & Reports">
                         <hr/>
-                        <h2>Exports & Reports</h2>
+                        <h2>Directory Exports & Reports</h2>
 
                         <div class="ldd-extend-content">
                             <p>The LDD Directory Reports and Exports extension allows a user to create reports and to
