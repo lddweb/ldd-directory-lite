@@ -65,22 +65,6 @@ function ldl_get_registered_settings()
                     'size' => 'medium',
                     'std'  => 'listing',
                 ),
-                'information_separator'            => array(
-                    'id'   => 'information_separator',
-                    'name' => '<h4 class="title ldd-admin-title">' . __('Directory Information', 'ldd-directory-lite') . '</h4>',
-                    'type' => 'header'
-                ),
-                'directory_label'                  => array(
-                    'id'   => 'directory_label',
-                    'name' => __('Directory Label', 'ldd-directory-lite'),
-                    'desc' => __('Name your directory; "My Business Directory", "Local Restaurant Feed", "John\'s List of Links", etc.', 'ldd-directory-lite'),
-                    'type' => 'text',
-                ),
-                'directory_description'            => array(
-                    'id'   => 'directory_description',
-                    'name' => __('Directory Description', 'ldd-directory-lite'),
-                    'type' => 'rich_editor'
-                ),
                 'other_separator'                  => array(
                     'id'   => 'directory_information',
                     'name' => '<h4 class="title ldd-admin-title">' . __('Other', 'ldd-directory-lite') . '</h4>',
@@ -494,6 +478,30 @@ function ldl_settings_sanitize($input = array())
     return $output;
 }
 
+function lddlite_settings_after_update( $lddlite_setting_old_values, $lddlite_setting_new_value ){
+
+	if ( $lddlite_setting_old_values['directory_taxonomy_slug'] != $lddlite_setting_new_value['directory_taxonomy_slug']
+		|| $lddlite_setting_old_values['directory_post_type_slug'] != $lddlite_setting_old_values['directory_post_type_slug'] ){
+
+		update_site_option( 'lddlite_settings_have_changed', 'yes' );
+
+		if ( wp_get_referer() ){
+			wp_safe_redirect( wp_get_referer() );
+		}else{
+			wp_safe_redirect( admin_url( 'edit.php?post_type=directory_listings&page=lddlite-settings&tab=general' ) );
+		}
+		exit;
+	}
+}
+add_action( 'update_option_lddlite_settings', 'lddlite_settings_after_update', 10, 2 );
+
+function lddlite_settings_flush_rewrite(){
+    if ( get_site_option('lddlite_settings_have_changed') == true ) {
+        flush_rewrite_rules();
+	    update_site_option('lddlite_settings_have_changed', false);
+    }
+}
+add_action('admin_init', 'lddlite_settings_flush_rewrite');
 
 function ldl_sanitize_text_field($input)
 {
