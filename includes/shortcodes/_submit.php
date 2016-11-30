@@ -309,7 +309,6 @@ function ldl_notify_author($data) {
 
     $message = ldl()->get_option('email_onsubmit_body');
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
-    $message = str_replace('{directory_title}', ldl()->get_option('directory_label'), $message);
     $message = str_replace('{directory_email}', ldl()->get_option('email_from_address'), $message);
     $message = str_replace('{title}', $data['title'], $message);
 
@@ -337,7 +336,6 @@ function ldl_notify_when_approved($post) {
 
     $message = ldl()->get_option('email_onapprove_body');
     $message = str_replace('{site_title}', get_bloginfo('name'), $message);
-    $message = str_replace('{directory_title}', ldl()->get_option('directory_label'), $message);
     $message = str_replace('{title}', $title, $message);
     $message = str_replace('{link}', $permalink, $message);
 
