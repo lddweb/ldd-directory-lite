@@ -32,7 +32,7 @@
                 	<li class="ldd-manage-directory"><a href="<?php echo ldl_get_manage_link(); ?>"><?php _e('Manage Listings', 'ldd-directory-lite'); ?></a></li>
 				<?php endif; ?>
                 	<li class="dropdown ldd-categories-dropdown">
-                    	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	<a href="#" class="ldd-dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 							<?php _e('Categories', 'ldd-directory-lite'); ?>
                             <span class="caret"></span>
                         </a>
