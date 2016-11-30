@@ -122,7 +122,8 @@ function install_ldd_directory_lite() {
 	$nag = new LDD_Nag();
 	$nag->insert_install_date();
 
-	flush_rewrite_rules(true);
+	// register post type before flushing
+	ldl_register_post_type();
 	$wp_rewrite->flush_rules( false );
 }
 
