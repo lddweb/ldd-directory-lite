@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 3.9.1 or higher
 Tested up to: 4.6.1
-Stable tag: 1.0.0
+Stable tag: 1.0.01
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,8 +41,12 @@ More information at [plugins.lddwebdesign.com](http://plugins.lddwebdesign.com)
 
 = Extensions =
 
-* [Directory Reports & Exports.](http://plugins.lddwebdesign.com/extensions/directory-reports-exports/) The LDD Directory Lite Reports and Exports extension allows a user to create reports and to export listings in multiple formats e.g XML, CSV, HTML, PDF.
-* [Directory Import.](http://plugins.lddwebdesign.com/extensions/directory-import/) The LDD Directory Lite Import extension allows a user to import listings directly to their directory via CSV files that can be edited by hand or in applications such as Microsoft Excel.
+* [Directory Reports & Exports.](https://plugins.lddwebdesign.com/extensions/directory-reports-exports/) The LDD Directory Lite Reports and Exports extension allows a user to create reports and to export listings in multiple formats e.g XML, CSV, HTML, PDF.
+* [Directory Import.](https://plugins.lddwebdesign.com/extensions/directory-import/) The LDD Directory Lite Import extension allows a user to import listings directly to their directory via CSV files that can be edited by hand or in applications such as Microsoft Excel.
+* [Directory Reviews.](https://plugins.lddwebdesign.com/extensions/directory-listing-reviews/) The LDD Directory Lite Reviews extension add a powerful user review system to your online directory with star ratings, comments and filterable/searchable review content.
+* [Directory Social Login.](https://plugins.lddwebdesign.com/extensions/directory-social-login/) The LDD Directory Lite Social Login extension that allow with the ability to login with facebook, google+, linkedin logins.
+* [Directory Social Share.](https://plugins.lddwebdesign.com/extensions/directory-social-share/) The LDD Directory Lite Social Share extension add the ability to share your directory listings on popular social networks like Facebook, Twitter, Google+, LinkedIn, Pinterest and via E-mail.
+
 
 == Installation ==
 
@@ -132,14 +136,27 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.0.01 =
 
-* Added rate this plugin link to header of settings page with other links.
-* Added ability to auto-request a review after user has had the plugin activated for one week.
-* Changed placeholder text for address/location fields.
-* Added markup for telephone number to link to action (i.e. make phone call).
+* Added links to newest premium addons available
+* Removed legacy shortcode and admin settigns for "Directory Information" (These can be added to the page editor in which the main shortcode for the directory is placed if the user wishes)
+* Corrected issue with Fax and Skype contact fields not output to listings view.
+* Corrected 404 error issue after installation and updating url slugs in settings.
+* Corrected common theme conflict in directory navigation header dropdown for categories.
+* Corrected conflict with CMB2 library if used by another installed plugin.
+* Corrected install date issue when plugin is activated.
 
 == Changelog ==
+
+= 1.0.01 =
+
+* Added links to newest premium addons available
+* Removed legacy shortcode and admin settigns for "Directory Information" (These can be added to the page editor in which the main shortcode for the directory is placed if the user wishes)
+* Corrected issue with Fax and Skype contact fields not output to listings view.
+* Corrected 404 error issue after installation and updating url slugs in settings.
+* Corrected common theme conflict in directory navigation header dropdown for categories.
+* Corrected conflict with CMB2 library if used by another installed plugin.
+* Corrected install date issue when plugin is activated.
 
 = 1.0.0 =
 

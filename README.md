@@ -2,7 +2,7 @@
 
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, ldd directory lite.
 
-* **Working Version**: 1.0.0
+* **Working Version**: 1.0.01
 * **Latest Stable**: 
 * **Contributors**: [@lddweb](https://github.com/lddweb/)
 
@@ -36,8 +36,11 @@ More information at [plugins.lddwebdesign.com](http://plugins.lddwebdesign.com)
 
 ### Extensions
 
-* [Directory Reports & Exports.](http://plugins.lddwebdesign.com/extensions/directory-reports-exports/) The LDD Directory Lite Reports and Exports extension allows a user to create reports and to export listings in multiple formats e.g XML, CSV, HTML, PDF.
-* [Directory Import.](http://plugins.lddwebdesign.com/extensions/directory-import/) The LDD Directory Lite Import extension allows a user to import listings directly to their directory via CSV files that can be edited by hand or in applications such as Microsoft Excel.
+* [Directory Reports & Exports.](https://plugins.lddwebdesign.com/extensions/directory-reports-exports/) The LDD Directory Lite Reports and Exports extension allows a user to create reports and to export listings in multiple formats e.g XML, CSV, HTML, PDF.
+* [Directory Import.](https://plugins.lddwebdesign.com/extensions/directory-import/) The LDD Directory Lite Import extension allows a user to import listings directly to their directory via CSV files that can be edited by hand or in applications such as Microsoft Excel.
+* [Directory Reviews.](https://plugins.lddwebdesign.com/extensions/directory-listing-reviews/) The LDD Directory Lite Reviews extension add a powerful user review system to your online directory with star ratings, comments and filterable/searchable review content.
+* [Directory Social Login.](https://plugins.lddwebdesign.com/extensions/directory-social-login/) The LDD Directory Lite Social Login extension that allow with the ability to login with facebook, google+, linkedin logins.
+* [Directory Social Share.](https://plugins.lddwebdesign.com/extensions/directory-social-share/) The LDD Directory Lite Social Share extension add the ability to share your directory listings on popular social networks like Facebook, Twitter, Google+, LinkedIn, Pinterest and via E-mail.
 
 ### Tags:
 
