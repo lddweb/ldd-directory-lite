@@ -8,6 +8,14 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="form-group">
+				<label class="control-label" for=""><?php _e('Contact Name', 'ldd-directory-lite'); ?></label>
+				<input type="text" id="f_contact_name" class="form-control" name="n_contact_name" value="<?php echo ldl_get_value('contact_name'); ?>">
+				<p class="help-block"><?php _e("Name of person to contact", 'ldd-directory-lite'); ?></p>
+				<?php echo ldl_get_error('contact_name'); ?>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
 				<label class="control-label" for=""><?php _e('Email', 'ldd-directory-lite'); ?></label>
 				<input type="text" id="f_contact_email" class="form-control" name="n_contact_email" value="<?php echo ldl_get_value('contact_email'); ?>">
                 <?php echo ldl_get_error('contact_email'); ?>
@@ -61,6 +69,14 @@
 				<input type="text" id="f_url_linkedin" class="form-control" name="n_url_linkedin" value="<?php echo ldl_get_value( 'url_linkedin' ); ?>">
 				<p class="help-block"><?php _e('Help locating and customizing your <a href="http://help.linkedin.com/app/answers/detail/a_id/85/~/promoting-your-public-profile" title="Promoting Your Public Profile | LinkedIn Help Center">LinkedIn profile URL</a>', 'ldd-directory-lite'); ?></p>
                 <?php echo ldl_get_error('url_linkedin'); ?>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<label class="control-label" for=""><?php _e('Skype', 'ldd-directory-lite'); ?></label>
+				<input type="text" id="f_contact_skype" class="form-control" name="n_contact_skype" value="<?php echo ldl_get_value('contact_skype'); ?>">
+				<p class="help-block"><?php _e("Your Skype Username", 'ldd-directory-lite'); ?></p>
+				<?php echo ldl_get_error('contact_skype'); ?>
 			</div>
 		</div>
 	</div>

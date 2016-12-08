@@ -148,6 +148,11 @@ function ldl_metaboxes_setup_cmb()
         'show_names'   => TRUE,
     ));
     $listings_contact->add_field(array(
+        'name' => __('Contact Name', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('contact_name'),
+        'type' => 'text_small',
+    ));
+    $listings_contact->add_field(array(
         'name' => __('Email', 'ldd-directory-lite'),
         'id'   => ldl_pfx('contact_email'),
         'type' => 'text_email',

@@ -14,10 +14,18 @@ if (!is_array($geo)) {
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label class="control-label" for="f_title"><?php _e('Address', 'ldd-directory-lite'); ?></label>
-                <input type="text" id="f_address_one" class="form-control" name="n_address_one" value="<?php echo ldl_get_value('address_one'); ?>" placeholder="<?php _e('2101 Massachusetts Ave, NW', 'ldd-directory-lite'); ?>">
-                <input type="text" id="f_address_two" class="form-control bump-down" name="n_address_two" value="<?php echo ldl_get_value('address_two'); ?>" placeholder="<?php _e('Washington, DC', 'ldd-directory-lite'); ?>">
+                <label class="control-label" for="f_address_one"><?php _e('Address Line One', 'ldd-directory-lite'); ?></label>
+                <input type="text" id="f_address_one" class="form-control" name="n_address_one" value="<?php echo ldl_get_value('address_one'); ?>" placeholder="<?php _e('Address Line 1', 'ldd-directory-lite'); ?>">
                 <?php echo ldl_get_error('address_one'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label" for="f_address_two"><?php _e('Address Line Two', 'ldd-directory-lite'); ?></label>
+                <input type="text" id="f_address_two" class="form-control bump-down" name="n_address_two" value="<?php echo ldl_get_value('address_two'); ?>" placeholder="<?php _e('Address Line 2', 'ldd-directory-lite'); ?>">
+                <?php echo ldl_get_error('address_two'); ?>
             </div>
         </div>
     </div>
@@ -25,30 +33,30 @@ if (!is_array($geo)) {
         <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label" for="f_city"><?php _e('City', 'ldd-directory-lite'); ?></label>
-                <input type="text" id="f_city" class="form-control" name="n_city" value="<?php echo ldl_get_value('city'); ?>" placeholder="<?php _e('London', 'ldd-directory-lite'); ?>">
+                <input type="text" id="f_city" class="form-control" name="n_city" value="<?php echo ldl_get_value('city'); ?>" placeholder="<?php _e('City or Town', 'ldd-directory-lite'); ?>">
                 <?php echo ldl_get_error('city'); ?>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label class="control-label" for="f_state"><?php _e('State/province', 'ldd-directory-lite'); ?></label>
-                <input type="text" id="f_state" class="form-control" name="n_state" value="<?php echo ldl_get_value('state'); ?>" placeholder="<?php _e('United Kingdom', 'ldd-directory-lite'); ?>">
+                <label class="control-label" for="f_state"><?php _e('State / Province', 'ldd-directory-lite'); ?></label>
+                <input type="text" id="f_state" class="form-control" name="n_state" value="<?php echo ldl_get_value('state'); ?>" placeholder="<?php _e('State, Province or Region', 'ldd-directory-lite'); ?>">
                 <?php echo ldl_get_error('state'); ?>
             </div>
         </div>
-        </div>
+    </div>
     <div class="row">
     	<div class="col-md-6">
             <div class="form-group">
                 <label class="control-label" for="f_postal_code"><?php _e('Zip / Postal Code', 'ldd-directory-lite'); ?></label>
-                <input type="text" id="f_postal_code" class="form-control" name="n_postal_code" value="<?php echo ldl_get_value('postal_code'); ?>" placeholder="<?php _e('20008', 'ldd-directory-lite'); ?>">
+                <input type="text" id="f_postal_code" class="form-control" name="n_postal_code" value="<?php echo ldl_get_value('postal_code'); ?>" placeholder="<?php _e('Zip or Postal Code', 'ldd-directory-lite'); ?>">
                 <?php echo ldl_get_error('postal_code'); ?>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label" for="f_country"><?php _e('Country', 'ldd-directory-lite'); ?></label>
-                <input type="text" id="f_country" class="form-control" name="n_country" value="<?php echo ldl_get_value('country'); ?>" placeholder="<?php _e('United States', 'ldd-directory-lite'); ?>">
+                <input type="text" id="f_country" class="form-control" name="n_country" value="<?php echo ldl_get_value('country'); ?>" placeholder="<?php _e('Country or Region', 'ldd-directory-lite'); ?>">
                 <?php echo ldl_get_error('country'); ?>
             </div>
         </div>
