@@ -3,7 +3,7 @@
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, ldd directory lite.
 
 * **Working Version**: 1.0.1
-* **Latest Stable**: 
+* **Latest Stable**: 1.0.0
 * **Contributors**: [@lddweb](https://github.com/lddweb/)
 
 The LDD Directory Lite plugin is the best way to add a powerful, fully functional and free custom directory to your WordPress powered web site.
