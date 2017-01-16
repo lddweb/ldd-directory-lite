@@ -622,3 +622,40 @@ function get_tag_ID($tag_name) {
 		return 0;
 	}
 }
+
+/**
+ * Global functions for hooks
+ */
+
+if ( ! function_exists( 'ldd_output_content_wrapper' ) ) {
+
+	/**
+	 * Output the start of the page wrapper.
+	 *
+	 */
+	function ldd_output_content_wrapper() {
+		ldl_get_template_part( 'global/wrapper-start' );
+	}
+}
+if ( ! function_exists( 'ldd_output_content_wrapper_end' ) ) {
+
+	/**
+	 * Output the end of the page wrapper.
+	 *
+	 */
+	function ldd_output_content_wrapper_end() {
+		ldl_get_template_part( 'global/wrapper-end' );
+	}
+}
+
+if ( ! function_exists( 'ldd_default_pagination' ) ) {
+
+	/**
+	 * Output the pagination.
+	 *
+	 * @subpackage	Loop
+	 */
+	function ldd_default_pagination() {
+		ldl_get_template_part( 'loop/pagination' );
+	}
+}

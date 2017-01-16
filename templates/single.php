@@ -4,8 +4,14 @@ global $geo;
 $geo = ldl_get_meta('geo');
 get_header();
 ?>
-<div id="primary" class="site-content directory-lite">
-    <div id="content" role="main">
+    <?php
+        /**
+         * ldd_before_main_content hook.
+         *
+         * @hooked ldd_output_content_wrapper - 10 (outputs opening divs for the content)
+         */
+        do_action( 'ldd_before_main_content' );
+    ?>
         <?php while (have_posts()) : the_post(); ?>
 
         <header class="entry-header">
@@ -100,8 +106,14 @@ get_header();
         <?php endif; ?>
             <?php comments_template( '', true ); ?>
         <?php endwhile; // end of the loop. ?>
-    </div><!-- #content -->
-</div><!-- #primary -->
+    <?php
+        /**
+         * ldd_after_main_content hook.
+         *
+         * @hooked ldd_output_content_wrapper_end - 10 (outputs closing divs for the content)
+         */
+        do_action( 'ldd_after_main_content' );
+    ?>
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

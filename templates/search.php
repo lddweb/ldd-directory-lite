@@ -1,7 +1,13 @@
 <?php get_header(); ?>
 
-<section id="primary" class="site-content directory-lite">
-    <div id="content" role="main">
+    <?php
+        /**
+         * ldd_before_main_content hook.
+         *
+         * @hooked ldd_output_content_wrapper - 10 (outputs opening divs for the content)
+         */
+        do_action( 'ldd_before_main_content' );
+    ?>
 
         <?php echo ldl_get_header(); ?>
 
@@ -15,9 +21,15 @@
             ?>
 
         <?php else : ?>
+            <?php ldl_get_template_part( 'loop/no-listings-found.php' ); ?>
         <?php endif; ?>
 
-    </div>
-</section>
-
+    <?php
+        /**
+         * ldd_after_main_content hook.
+         *
+         * @hooked ldd_output_content_wrapper_end - 10 (outputs closing divs for the content)
+         */
+        do_action( 'ldd_after_main_content' );
+    ?>
 <?php get_footer(); ?>

@@ -1,1640 +1,2097 @@
-# Copyright (C) 2014 LDD Directory Lite
+# Copyright (C) 2017 LDD Directory Lite
 # This file is distributed under the same license as the LDD Directory Lite package.
 msgid ""
 msgstr ""
-"Project-Id-Version: LDD Directory Lite 0.9\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/ldd-directory-lite\n"
-"POT-Creation-Date: 2014-07-28 18:20:02+00:00\n"
+"Project-Id-Version: LDD Directory Lite 1.0.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ldd-directory-"
+"lite\n"
+"POT-Creation-Date: 2017-01-03 20:43:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-01-01 01:26+0500\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LDD Web Design <info@lddwebdesign.com>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: en\n"
-"X-Generator: Poedit 1.7.1\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: import-lddbd.php:59 import-lddbd.php:110 import-lddbd.php:113
-#: import-lddbd.php:184 import-lddbd.php:193 import-lddbd.php:233
-msgid "Failed to import owner %s"
-msgstr "Failed to import owner %s"
+#: import-lddbd.php:59
+msgid "Running Import for LDD Business Directory"
+msgstr ""
+
+#: import-lddbd.php:59
+msgid "LDD Import"
+msgstr ""
 
 #: import-lddbd.php:80
 msgid "Importing content from LDD Business Directory"
-msgstr "Importing content from LDD Business Directory"
+msgstr ""
+
+#: import-lddbd.php:110
+msgid "Collecting data from original plugin..."
+msgstr ""
+
+#: import-lddbd.php:113 import-lddbd.php:384 import-lddbd.php:450
+#: import-lddbd.php:527
+msgid "done."
+msgstr ""
+
+#: import-lddbd.php:184
+msgid "Failed to import category %s"
+msgstr ""
+
+#: import-lddbd.php:193
+msgid "Added %d listing categories."
+msgstr ""
+
+#: import-lddbd.php:233
+msgid "Failed to import owner %s"
+msgstr ""
 
 #: import-lddbd.php:243
 msgid "Added %d listing owners."
-msgstr "Added %d listing owners."
+msgstr ""
 
 #: import-lddbd.php:279
 msgid "Listing already exists"
-msgstr "Listing already exists"
+msgstr ""
 
 #: import-lddbd.php:294
 msgid "Failed to add listing %s"
-msgstr "Failed to add listing %s"
+msgstr ""
 
 #: import-lddbd.php:320
 msgid "Added listing"
-msgstr "Added listing"
+msgstr ""
 
 #: import-lddbd.php:327
 msgid "Added a total of %d new listings."
-msgstr "Added a total of %d new listings."
+msgstr ""
 
 #: import-lddbd.php:337
 msgid "Adding listing meta information..."
-msgstr "Adding listing meta information..."
+msgstr ""
 
-#: import-lddbd.php:383 import-lddbd.php:449 import-lddbd.php:526
-msgid "done."
-msgstr "done."
-
-#: import-lddbd.php:393
+#: import-lddbd.php:394
 msgid "Importing logo's..."
-msgstr "Importing logo's..."
+msgstr ""
 
-#: import-lddbd.php:461
+#: import-lddbd.php:462
 msgid "Updating file attachments..."
-msgstr "Updating file attachments..."
-
-#: import-lddbd.php:548
-msgid "All done!"
-msgstr "All done!"
-
-#: import-lddbd.php:548
-msgid "Passwords have been reset for security purposes, please notify your users!"
-msgstr "Passwords have been reset for security purposes, please notify your users!"
+msgstr ""
 
 #: import-lddbd.php:549
+msgid "All done!"
+msgstr ""
+
+#: import-lddbd.php:549
+msgid ""
+"Passwords have been reset for security purposes, please notify your users!"
+msgstr ""
+
+#: import-lddbd.php:550
 msgid "Return to WordPress Dashboard"
-msgstr "Return to WordPress Dashboard"
+msgstr ""
 
-#: import-lddbd.php:550 includes/admin/settings.php:343
+#: import-lddbd.php:551 includes/admin/display.php:58
+#: includes/admin/settings.php:343
 msgid "Directory Settings"
-msgstr "Directory Settings"
-
-#: import-lddbd.php:615
-msgid "Existing data has been detected!"
-msgstr "Existing data has been detected!"
+msgstr ""
 
 #: import-lddbd.php:616
-msgid ""
-"It looks like you have data from the LDD Business Directory plugin! Would you "
-"like to import this?"
+msgid "Existing data has been detected!"
 msgstr ""
-"It looks like you have data from the LDD Business Directory plugin! Would you "
-"like to import this?"
 
 #: import-lddbd.php:617
+msgid ""
+"It looks like you have data from the LDD Business Directory plugin! Would "
+"you like to import this?"
+msgstr ""
+
+#: import-lddbd.php:618
 msgid "Import Data."
-msgstr "Import Data."
+msgstr ""
 
-#: import-lddbd.php:618
+#: import-lddbd.php:619
 msgid "If you do not wish to import your existing data, you can"
-msgstr "If you do not wish to import your existing data, you can"
+msgstr ""
 
-#: import-lddbd.php:618
+#: import-lddbd.php:619
 msgid "dismiss"
-msgstr "dismiss"
+msgstr ""
 
-#: import-lddbd.php:618
+#: import-lddbd.php:619
 msgid "this notice."
-msgstr "this notice."
+msgstr ""
 
-#: includes/admin/filters.php:45
+#: includes/admin/display.php:61 includes/admin/settings.php:346
+msgid ""
+"Customize your Directory using the settings found on the following pages. If "
+"you require support or would like to make a suggestion for improving this "
+"plugin, please refer to the following links."
+msgstr ""
+
+#: includes/admin/display.php:65 includes/admin/settings.php:350
+#: templates/addon-page.php:11 templates/help-page.php:27
+msgid "Submit an Issue"
+msgstr ""
+
+#: includes/admin/display.php:69 includes/admin/settings.php:354
+#: templates/addon-page.php:15 templates/help-page.php:31
+msgid "WordPress.org"
+msgstr ""
+
+#: includes/admin/display.php:73 includes/admin/settings.php:358
+#: templates/addon-page.php:19 templates/help-page.php:35
+msgid "Support Forums"
+msgstr ""
+
+#: includes/admin/display.php:76 includes/admin/settings.php:361
+#: templates/addon-page.php:22 templates/help-page.php:40
+msgid "GitHub.com"
+msgstr ""
+
+#: includes/admin/display.php:80 includes/admin/settings.php:365
+#: templates/addon-page.php:26
+msgid "Rate this Plugin"
+msgstr ""
+
+#: includes/admin/filters.php:45 includes/admin/setup.php:61
 msgid "Listing Name"
-msgstr "Listing Name"
+msgstr ""
 
-#: includes/admin/filters.php:62
+#: includes/admin/filters.php:62 includes/admin/setup.php:78
 msgid "Set featured image"
-msgstr "Set featured image"
+msgstr ""
 
-#: includes/admin/filters.php:62
+#: includes/admin/filters.php:62 includes/admin/setup.php:78
 msgid "Upload A Logo"
-msgstr "Upload A Logo"
+msgstr ""
 
-#: includes/admin/filters.php:63
+#: includes/admin/filters.php:63 includes/admin/setup.php:79
 msgid "Remove featured image"
-msgstr "Remove featured image"
+msgstr ""
 
-#: includes/admin/filters.php:63
+#: includes/admin/filters.php:63 includes/admin/setup.php:79
 msgid "Remove Logo"
-msgstr "Remove Logo"
+msgstr ""
 
 #: includes/admin/help.php:18
 msgid "Helpful Links:"
-msgstr "Helpful Links:"
+msgstr ""
 
 #: includes/admin/help.php:18
 msgid ""
-"Please visit us on <a href=\"%s\">WordPress.org</a> for help, faqs, and other "
-"documentation."
+"Please visit us on <a href=\"%s\">WordPress.org</a> for help, faqs, and "
+"other documentation."
 msgstr ""
-"Please visit us on <a href=\"%s\">WordPress.org</a> for help, faqs, and other "
-"documentation."
 
 #: includes/admin/help.php:18
 msgid "Found a bug?"
-msgstr "Found a bug?"
+msgstr ""
 
 #: includes/admin/help.php:18
 msgid "<a href=\"%s\">Submit issues</a> on <a href=\"%s\">GitHub</a>."
-msgstr "<a href=\"%s\">Submit issues</a> on <a href=\"%s\">GitHub</a>."
+msgstr ""
 
 #: includes/admin/help.php:20
 msgid ""
-"The general settings tab is where you'll configure most of the primary operations "
-"for your directory. This includes identifying pages where the shortcodes have "
-"been embedded, defining permalink slugs, and more."
+"The general settings tab is where you'll configure most of the primary "
+"operations for your directory. This includes identifying pages where the "
+"shortcodes have been embedded, defining permalink slugs, and more."
 msgstr ""
-"The general settings tab is where you'll configure most of the primary operations "
-"for your directory. This includes identifying pages where the shortcodes have "
-"been embedded, defining permalink slugs, and more."
 
 #: includes/admin/help.php:20
 msgid "Page Settings"
-msgstr "Page Settings"
+msgstr ""
 
 #: includes/admin/help.php:20
 msgid ""
 "The first two settings on this tab tell the plugin where you've placed the "
-"shortcodes <code>[directory]</code> and <code>[directory_submit]</code>. Don't "
-"forget to set these, as a few functions rely on them to return proper permalinks."
+"shortcodes <code>[directory]</code> and <code>[directory_submit]</code>. "
+"Don't forget to set these, as a few functions rely on them to return proper "
+"permalinks."
 msgstr ""
-"The first two settings on this tab tell the plugin where you've placed the "
-"shortcodes <code>[directory]</code> and <code>[directory_submit]</code>. Don't "
-"forget to set these, as a few functions rely on them to return proper permalinks."
 
 #: includes/admin/help.php:20
 msgid "Custom Slugs"
-msgstr "Custom Slugs"
+msgstr ""
 
 #: includes/admin/help.php:20
 msgid ""
-"The taxonomy and post type slugs determine how a URL will appear when viewing "
-"either the category display pages or an individual listing. Remember that you "
-"probably want these to be different from the page slugs where you placed the "
-"shortcodes."
+"The taxonomy and post type slugs determine how a URL will appear when "
+"viewing either the category display pages or an individual listing. Remember "
+"that you probably want these to be different from the page slugs where you "
+"placed the shortcodes."
 msgstr ""
-"The taxonomy and post type slugs determine how a URL will appear when viewing "
-"either the category display pages or an individual listing. Remember that you "
-"probably want these to be different from the page slugs where you placed the "
-"shortcodes."
-
-#: includes/admin/help.php:20 includes/admin/settings.php:91
-msgid "Directory Information"
-msgstr "Directory Information"
-
-#: includes/admin/help.php:20
-msgid ""
-"Tell us a little about your directory here. The information you provide can be "
-"displyed by using the <code>[directory_info]</code> shortcode, or via macros in "
-"email notifications."
-msgstr ""
-"Tell us a little about your directory here. The information you provide can be "
-"displyed by using the <code>[directory_info]</code> shortcode, or via macros in "
-"email notifications."
 
 #: includes/admin/help.php:20 includes/admin/settings.php:94
 msgid "Other Settings"
-msgstr "Other Settings"
+msgstr ""
 
 #: includes/admin/help.php:20
 msgid ""
-"Most of the settings found under the \"Other\" heading are set once and forget "
-"type features. From here you can enable or disable anonymous usage tracking (we "
-"recommend enabling it, this information helps us improve future versions of the "
-"plugin), determine whether your directory accepts public submissions and more."
+"Most of the settings found under the \"Other\" heading are set once and "
+"forget type features. From here you can enable or disable anonymous usage "
+"tracking (we recommend enabling it, this information helps us improve future "
+"versions of the plugin), determine whether your directory accepts public "
+"submissions and more."
 msgstr ""
-"Most of the settings found under the \"Other\" heading are set once and forget "
-"type features. From here you can enable or disable anonymous usage tracking (we "
-"recommend enabling it, this information helps us improve future versions of the "
-"plugin), determine whether your directory accepts public submissions and more."
 
 #: includes/admin/help.php:23
 msgid "General Settings"
-msgstr "General Settings"
+msgstr ""
 
 #: includes/admin/help.php:28
 msgid ""
-"The settings available on the Email tab of your directory plugin settings allows "
-"you to control how email notifications appear."
+"The settings available on the Email tab of your directory plugin settings "
+"allows you to control how email notifications appear."
 msgstr ""
-"The settings available on the Email tab of your directory plugin settings allows "
-"you to control how email notifications appear."
 
 #: includes/admin/help.php:29 includes/admin/settings.php:180
 msgid "New Listing Notification"
-msgstr "New Listing Notification"
+msgstr ""
 
 #: includes/admin/help.php:29
 msgid ""
-"This is sent to the administrative email (will default to WordPress settings if "
-"not configured) and is to notify site owners that a new listing is pending their "
-"review. Available macros include:"
+"This is sent to the administrative email (will default to WordPress settings "
+"if not configured) and is to notify site owners that a new listing is "
+"pending their review. Available macros include:"
 msgstr ""
-"This is sent to the administrative email (will default to WordPress settings if "
-"not configured) and is to notify site owners that a new listing is pending their "
-"review. Available macros include:"
 
 #: includes/admin/help.php:30
 msgid ""
-"This will provide a clickable link straight to the dashboard for reviewing and "
-"approving listings."
+"This will provide a clickable link straight to the dashboard for reviewing "
+"and approving listings."
 msgstr ""
-"This will provide a clickable link straight to the dashboard for reviewing and "
-"approving listings."
 
 #: includes/admin/help.php:31
 msgid "This is the title of the newly submitted listing."
-msgstr "This is the title of the newly submitted listing."
+msgstr ""
 
 #: includes/admin/help.php:32
 msgid "This is an excerpt of the the listing description."
-msgstr "This is an excerpt of the the listing description."
+msgstr ""
 
 #: includes/admin/help.php:33 includes/admin/settings.php:182
 msgid "Author Receipt"
-msgstr "Author Receipt"
+msgstr ""
 
 #: includes/admin/help.php:33
 msgid ""
-"This is a receipt sent to the author of a new listing, and a good place to keep "
-"them informed of your terms, and approval times. Available macros include:"
+"This is a receipt sent to the author of a new listing, and a good place to "
+"keep them informed of your terms, and approval times. Available macros "
+"include:"
 msgstr ""
-"This is a receipt sent to the author of a new listing, and a good place to keep "
-"them informed of your terms, and approval times. Available macros include:"
 
-#: includes/admin/help.php:34 includes/admin/help.php:39
+#: includes/admin/help.php:34 includes/admin/help.php:38
 msgid "The site title as defined in your WordPress settings."
-msgstr "The site title as defined in your WordPress settings."
+msgstr ""
 
-#: includes/admin/help.php:35 includes/admin/help.php:40
-msgid "The directory label, set on the General tab."
-msgstr "The directory label, set on the General tab."
-
-#: includes/admin/help.php:36
+#: includes/admin/help.php:35
 msgid "The from email address set on the Email tab."
-msgstr "The from email address set on the Email tab."
+msgstr ""
 
-#: includes/admin/help.php:37 includes/admin/help.php:41
+#: includes/admin/help.php:36 includes/admin/help.php:39
 msgid "The title of the listing they submitted."
-msgstr "The title of the listing they submitted."
+msgstr ""
 
-#: includes/admin/help.php:38 includes/admin/settings.php:184
+#: includes/admin/help.php:37 includes/admin/settings.php:184
 msgid "Listing Approved"
-msgstr "Listing Approved"
+msgstr ""
 
-#: includes/admin/help.php:38
+#: includes/admin/help.php:37
 msgid ""
 "Sent to the listing author when their listing status is updated from Pending "
 "Review to Approved. This will only be sent once, so if a listing status is "
-"changed and later set back to Approved a second email will not be sent. Available "
-"macros include:"
+"changed and later set back to Approved a second email will not be sent. "
+"Available macros include:"
 msgstr ""
-"Sent to the listing author when their listing status is updated from Pending "
-"Review to Approved. This will only be sent once, so if a listing status is "
-"changed and later set back to Approved a second email will not be sent. Available "
-"macros include:"
 
-#: includes/admin/help.php:42
+#: includes/admin/help.php:40
 msgid "A clickable link to view the newly approved listing."
-msgstr "A clickable link to view the newly approved listing."
+msgstr ""
 
-#: includes/admin/help.php:45
+#: includes/admin/help.php:43 includes/admin/register-settings.php:523
 msgid "Email Settings"
-msgstr "Email Settings"
+msgstr ""
 
-#: includes/admin/help.php:50
+#: includes/admin/help.php:48
 msgid ""
 "In most directories the submission process will play an integral role in "
 "developing relationships and generating quality content."
 msgstr ""
-"In most directories the submission process will play an integral role in "
-"developing relationships and generating quality content."
 
-#: includes/admin/help.php:50
+#: includes/admin/help.php:48
 msgid ""
-"As mentioned in the help section for the Appearance tab, there is a template that "
-"you can modify to more closely match the Submit Form with your sites look and "
-"feel. This template is <code>/templates/submit.php</code> and can be placed in "
-"your theme directory under <code>/lddlite_templates/submit.php</code> to ensure "
-"your edits aren't overwritten."
+"As mentioned in the help section for the Appearance tab, there is a template "
+"that you can modify to more closely match the Submit Form with your sites "
+"look and feel. This template is <code>/templates/submit.php</code> and can "
+"be placed in your theme directory under <code>/lddlite_templates/submit.php</"
+"code> to ensure your edits aren't overwritten."
 msgstr ""
-"As mentioned in the help section for the Appearance tab, there is a template that "
-"you can modify to more closely match the Submit Form with your sites look and "
-"feel. This template is <code>/templates/submit.php</code> and can be placed in "
-"your theme directory under <code>/lddlite_templates/submit.php</code> to ensure "
-"your edits aren't overwritten."
 
-#: includes/admin/help.php:50 includes/admin/settings.php:242
+#: includes/admin/help.php:48 includes/admin/register-settings.php:306
+#: includes/admin/settings.php:242
 msgid "Terms of Service"
-msgstr "Terms of Service"
+msgstr ""
 
-#: includes/admin/help.php:50
+#: includes/admin/help.php:48
 msgid ""
 "A default terms of service agreement isn't included with the plugin since it "
-"would be too difficult to craft one that covered every individual situation. If "
-"you wish to include an agreement that your users must accept prior to submitting "
-"new listings, configure it here."
+"would be too difficult to craft one that covered every individual situation. "
+"If you wish to include an agreement that your users must accept prior to "
+"submitting new listings, configure it here."
 msgstr ""
-"A default terms of service agreement isn't included with the plugin since it "
-"would be too difficult to craft one that covered every individual situation. If "
-"you wish to include an agreement that your users must accept prior to submitting "
-"new listings, configure it here."
 
-#: includes/admin/help.php:53
+#: includes/admin/help.php:51
 msgid "Submit Form Settings"
-msgstr "Submit Form Settings"
+msgstr ""
+
+#: includes/admin/help.php:55
+msgid ""
+"The Appearance tab allows you to customize some basic presentation features "
+"to help match the look and feel of the directory with your WordPress theme."
+msgstr ""
+
+#: includes/admin/help.php:56
+msgid ""
+"We tried to design the plugin in such a way that it would fit in with most "
+"themes straight out of the box, but given the sheer number of available "
+"themes or the fact that you may be using this plugin within a completely "
+"bespoke design, it is impossible to anticipate every situation."
+msgstr ""
+
+#: includes/admin/help.php:57
+msgid "Colors"
+msgstr ""
 
 #: includes/admin/help.php:57
 msgid ""
-"The Appearance tab allows you to customize some basic presentation features to "
-"help match the look and feel of the directory with your WordPress theme."
+"Unless otherwise noted, these will always be in the order of normal state, "
+"hover state, and foreground. In some cases these will affect multiple "
+"elements with and without hover states, so always be sure to check after "
+"making changes."
 msgstr ""
-"The Appearance tab allows you to customize some basic presentation features to "
-"help match the look and feel of the directory with your WordPress theme."
+
+#: includes/admin/help.php:58
+msgid "Template Files"
+msgstr ""
 
 #: includes/admin/help.php:58
 msgid ""
-"We tried to design the plugin in such a way that it would fit in with most themes "
-"straight out of the box, but given the sheer number of available themes or the "
-"fact that you may be using this plugin within a completely bespoke design, it is "
-"impossible to anticipate every situation."
+"Most of the presentation is generated through the use of template files, "
+"just like those used in a WordPress theme."
 msgstr ""
-"We tried to design the plugin in such a way that it would fit in with most themes "
-"straight out of the box, but given the sheer number of available themes or the "
-"fact that you may be using this plugin within a completely bespoke design, it is "
-"impossible to anticipate every situation."
 
 #: includes/admin/help.php:59
-msgid "Colors"
-msgstr "Colors"
-
-#: includes/admin/help.php:59
-msgid ""
-"Unless otherwise noted, these will always be in the order of normal state, hover "
-"state, and foreground. In some cases these will affect multiple elements with and "
-"without hover states, so always be sure to check after making changes."
-msgstr ""
-"Unless otherwise noted, these will always be in the order of normal state, hover "
-"state, and foreground. In some cases these will affect multiple elements with and "
-"without hover states, so always be sure to check after making changes."
-
-#: includes/admin/help.php:60
-msgid "Template Files"
-msgstr "Template Files"
-
-#: includes/admin/help.php:60
-msgid ""
-"Most of the presentation is generated through the use of template files, just "
-"like those used in a WordPress theme."
-msgstr ""
-"Most of the presentation is generated through the use of template files, just "
-"like those used in a WordPress theme."
-
-#: includes/admin/help.php:61
 msgid ""
 "These are all located in the <code>/templates</code> sub-directory of your "
 "directory plugin files. To avoid losing any customizations the next time the "
 "plugin updates, you can copy these (in whole or part) to a <code>/"
-"lddlite_templates</code> sub-directory of your theme. Only copy the files you "
-"need to customize!"
+"lddlite_templates</code> sub-directory of your theme. Only copy the files "
+"you need to customize!"
 msgstr ""
-"These are all located in the <code>/templates</code> sub-directory of your "
-"directory plugin files. To avoid losing any customizations the next time the "
-"plugin updates, you can copy these (in whole or part) to a <code>/"
-"lddlite_templates</code> sub-directory of your theme. Only copy the files you "
-"need to customize!"
 
-#: includes/admin/help.php:62
+#: includes/admin/help.php:60
 msgid ""
 "Any presentation not controlled by a template should have a WordPress filter "
 "attached to it. These will always be in the format of "
 "'lddlite_filter_presentation_{name}' and developer documentation will be "
 "available on our web site soon."
 msgstr ""
-"Any presentation not controlled by a template should have a WordPress filter "
-"attached to it. These will always be in the format of "
-"'lddlite_filter_presentation_{name}' and developer documentation will be "
-"available on our web site soon."
 
-#: includes/admin/help.php:65
+#: includes/admin/help.php:63
 msgid "Appearance Settings"
-msgstr "Appearance Settings"
+msgstr ""
 
-#: includes/admin/metaboxes.php:19 includes/admin/metaboxes.php:35
+#: includes/admin/metaboxes.php:20 includes/admin/metaboxes.php:37
 #: templates/edit-details.php:42 templates/panel-general.php:46
 msgid "Summary"
-msgstr "Summary"
+msgstr ""
 
-#: includes/admin/metaboxes.php:33 templates/panel-general.php:28
+#: includes/admin/metaboxes.php:35 templates/panel-general.php:28
 msgid "Logo"
-msgstr "Logo"
+msgstr ""
 
-#: includes/admin/metaboxes.php:34
+#: includes/admin/metaboxes.php:36
 msgid "Owner"
-msgstr "Owner"
+msgstr ""
 
-#: includes/admin/metaboxes.php:70
+#: includes/admin/metaboxes.php:58
 msgid "Location"
-msgstr "Location"
-
-#: includes/admin/metaboxes.php:98
-msgid ""
-"Use the map above to set the location for this listing. The text field will "
-"attempt to autocomplete any address you enter, or you can drag the marker "
-"directly on the map to set the location."
 msgstr ""
-"Use the map above to set the location for this listing. The text field will "
-"attempt to autocomplete any address you enter, or you can drag the marker "
-"directly on the map to set the location."
 
-#: includes/admin/metaboxes.php:108
+#: includes/admin/metaboxes.php:102
+msgid "Please provide the address above for adding map."
+msgstr ""
+
+#: includes/admin/metaboxes.php:110
 msgid "Web Addresses"
-msgstr "Web Addresses"
-
-#: includes/admin/metaboxes.php:115 templates/edit-social.php:16
-#: templates/panel-meta.php:36
-msgid "Website"
-msgstr "Website"
-
-#: includes/admin/metaboxes.php:116
-msgid ""
-"Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</"
-"code>, or <code>www.hosting.com/mysite/mypage.html</code>"
 msgstr ""
-"Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</"
-"code>, or <code>www.hosting.com/mysite/mypage.html</code>"
 
-#: includes/admin/metaboxes.php:121 templates/edit-social.php:24
+#: includes/admin/metaboxes.php:117 templates/edit-social.php:16
 #: templates/panel-meta.php:44
-msgid "Facebook"
-msgstr "Facebook"
-
-#: includes/admin/metaboxes.php:122
-msgid ""
-"This should always start with <code>facebook.com/</code> or <code>www.facebook."
-"com</code>."
+msgid "Website"
 msgstr ""
-"This should always start with <code>facebook.com/</code> or <code>www.facebook."
-"com</code>."
 
-#: includes/admin/metaboxes.php:127 templates/edit-social.php:32
+#: includes/admin/metaboxes.php:118
+msgid ""
+"Valid examples include; <code>mywebsite.net</code>, <code>www.business.com</"
+"code>, or <code>www.hosting.com/mysite/mypage.html</code>"
+msgstr ""
+
+#: includes/admin/metaboxes.php:123 templates/edit-social.php:24
 #: templates/panel-meta.php:52
-msgid "Twitter"
-msgstr "Twitter"
-
-#: includes/admin/metaboxes.php:128
-msgid ""
-"Enter the entire url (<code>www.twitter.com/username</code>) or just the username."
+msgid "Facebook"
 msgstr ""
-"Enter the entire url (<code>www.twitter.com/username</code>) or just the username."
 
-#: includes/admin/metaboxes.php:133
+#: includes/admin/metaboxes.php:124
+msgid ""
+"This should always start with <code>facebook.com/</code> or <code>www."
+"facebook.com</code>."
+msgstr ""
+
+#: includes/admin/metaboxes.php:129 templates/edit-social.php:32
+#: templates/panel-meta.php:60
+msgid "Twitter"
+msgstr ""
+
+#: includes/admin/metaboxes.php:130
+msgid ""
+"Enter the entire url (<code>www.twitter.com/username</code>) or just the "
+"username."
+msgstr ""
+
+#: includes/admin/metaboxes.php:135
 msgid "LinkedIn"
-msgstr "LinkedIn"
+msgstr ""
 
-#: includes/admin/metaboxes.php:134
+#: includes/admin/metaboxes.php:136
 msgid "This should start with <code>www.linkedin.com</code>"
-msgstr "This should start with <code>www.linkedin.com</code>"
+msgstr ""
 
 #: includes/admin/metaboxes.php:144
 msgid "Contact Information"
-msgstr "Contact Information"
+msgstr ""
 
-#: includes/admin/metaboxes.php:151 includes/admin/settings.php:372
-#: templates/edit-contact.php:16 templates/panel-meta.php:11
+#: includes/admin/metaboxes.php:151 templates/edit-contact.php:16
+#: templates/panel-meta.php:11
+msgid "Contact Name"
+msgstr ""
+
+#: includes/admin/metaboxes.php:156 includes/admin/settings.php:376
+#: templates/edit-contact.php:24 templates/panel-meta.php:19
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
-#: includes/admin/metaboxes.php:156 templates/edit-contact.php:23
-#: templates/panel-meta.php:20
+#: includes/admin/metaboxes.php:161 templates/edit-contact.php:33
+#: templates/panel-meta.php:28
 msgid "Phone"
-msgstr "Phone"
+msgstr ""
 
-#: includes/admin/metaboxes.php:161 templates/edit-contact.php:30
-#: templates/panel-meta.php:27
+#: includes/admin/metaboxes.php:166 templates/edit-contact.php:40
+#: templates/panel-meta.php:35
 msgid "Fax"
-msgstr "Fax"
+msgstr ""
 
-#: includes/admin/metaboxes.php:217
+#: includes/admin/metaboxes.php:171 templates/edit-contact.php:49
+#: templates/panel-meta.php:76
+msgid "Skype"
+msgstr ""
+
+#: includes/admin/metaboxes.php:227
 msgid "Approve"
-msgstr "Approve"
+msgstr ""
 
-#: includes/admin/metaboxes.php:220
+#: includes/admin/metaboxes.php:230
 msgid "Approved"
-msgstr "Approved"
+msgstr ""
 
-#: includes/admin/metaboxes.php:223
+#: includes/admin/metaboxes.php:233
 msgid "Approved on: <b>%1$s</b>"
-msgstr "Approved on: <b>%1$s</b>"
+msgstr ""
 
-#: includes/admin/metaboxes.php:226
+#: includes/admin/metaboxes.php:236
 msgid "Approve <b>immediately</b>"
-msgstr "Approve <b>immediately</b>"
+msgstr ""
 
-#: includes/admin/metaboxes.php:229
+#: includes/admin/metaboxes.php:239
 msgid "Approve on: <b>%1$s</b>"
-msgstr "Approve on: <b>%1$s</b>"
+msgstr ""
+
+#: includes/admin/register-settings.php:28 includes/admin/settings.php:86
+msgid "Front Page"
+msgstr ""
+
+#: includes/admin/register-settings.php:29 includes/admin/settings.php:109
+msgid ""
+"This is the page where the <code>[directory]</code> shortcode has been "
+"placed."
+msgstr ""
+
+#: includes/admin/register-settings.php:35
+msgid "Submit Listing Page"
+msgstr ""
+
+#: includes/admin/register-settings.php:36 includes/admin/settings.php:121
+msgid ""
+"This is the page where the <code>[directory_submit]</code> shortcode has "
+"been placed."
+msgstr ""
+
+#: includes/admin/register-settings.php:42
+msgid "Manage Listings Page"
+msgstr ""
+
+#: includes/admin/register-settings.php:43 includes/admin/settings.php:133
+msgid ""
+"This is the page where the <code>[directory_manage]</code> shortcode has "
+"been placed."
+msgstr ""
+
+#: includes/admin/register-settings.php:49
+msgid "Listing View"
+msgstr ""
+
+#: includes/admin/register-settings.php:50
+msgid "Set the default listing view."
+msgstr ""
+
+#: includes/admin/register-settings.php:56 includes/admin/settings.php:89
+msgid "Taxonomy Slug"
+msgstr ""
+
+#: includes/admin/register-settings.php:63 includes/admin/settings.php:90
+msgid "Post Type Slug"
+msgstr ""
+
+#: includes/admin/register-settings.php:70
+msgid "Other"
+msgstr ""
+
+#: includes/admin/register-settings.php:75
+msgid "Public Submissions"
+msgstr ""
+
+#: includes/admin/register-settings.php:76
+msgid "Would you like to allow public submissions?"
+msgstr ""
+
+#: includes/admin/register-settings.php:86
+msgid "Show Image Placeholder"
+msgstr ""
+
+#: includes/admin/register-settings.php:87
+msgid "Shows a default image if no logo is uploaded for listing."
+msgstr ""
+
+#: includes/admin/register-settings.php:97
+msgid "Google API Key"
+msgstr ""
+
+#: includes/admin/register-settings.php:98
+msgid ""
+"You can get the API Key from here <a href=\"https://developers.google.com/"
+"maps/documentation/javascript/get-api-key#get-an-api-key\" target=\"_blank"
+"\">here</a>."
+msgstr ""
+
+#: includes/admin/register-settings.php:103 includes/admin/settings.php:95
+msgid "Allow Tracking"
+msgstr ""
+
+#: includes/admin/register-settings.php:104
+msgid "Allow anonymous usage tracking"
+msgstr ""
+
+#: includes/admin/register-settings.php:109
+msgid "Google Maps"
+msgstr ""
+
+#: includes/admin/register-settings.php:110 includes/admin/settings.php:165
+msgid ""
+"This toggles the display of Google Maps for listings that have an address "
+"set."
+msgstr ""
+
+#: includes/admin/register-settings.php:120
+msgid "Enable Featured Listings"
+msgstr ""
+
+#: includes/admin/register-settings.php:121
+msgid ""
+"If checked, listings tagged with <code>featured</code> will be shown on your "
+"directory home page."
+msgstr ""
+
+#: includes/admin/register-settings.php:127
+msgid "Listings Limit"
+msgstr ""
+
+#: includes/admin/register-settings.php:128
+msgid "You can choose how many featured listings should be displayed."
+msgstr ""
+
+#: includes/admin/register-settings.php:135
+msgid "Default Sort order"
+msgstr ""
+
+#: includes/admin/register-settings.php:140
+#: includes/admin/register-settings.php:170
+#: includes/admin/register-settings.php:195
+msgid "Default Sort"
+msgstr ""
+
+#: includes/admin/register-settings.php:141
+msgid ""
+"you can change sort for shortcodes too, <code>[directory fl_order_by=\"xxx\" "
+"fl_order=\"asc\"]</code>."
+msgstr ""
+
+#: includes/admin/register-settings.php:148
+#: includes/admin/register-settings.php:178
+#: includes/admin/register-settings.php:203
+msgid "Sort Order"
+msgstr ""
+
+#: includes/admin/register-settings.php:149
+#: includes/admin/register-settings.php:179
+#: includes/admin/register-settings.php:204
+msgid "Please choose [ASC/DESC] sort order."
+msgstr ""
+
+#: includes/admin/register-settings.php:152
+#: includes/admin/register-settings.php:182
+#: includes/admin/register-settings.php:207
+msgid "ASC"
+msgstr ""
+
+#: includes/admin/register-settings.php:153
+#: includes/admin/register-settings.php:183
+#: includes/admin/register-settings.php:208
+msgid "DESC"
+msgstr ""
+
+#: includes/admin/register-settings.php:165
+msgid "Category Sort Order"
+msgstr ""
+
+#: includes/admin/register-settings.php:171
+msgid ""
+"you can change sort for shortcodes too, <code>[directory cat_order_by=\"xxx"
+"\" cat_order=\"asc\"]</code>."
+msgstr ""
+
+#: includes/admin/register-settings.php:190
+msgid "Listings Sort Order"
+msgstr ""
+
+#: includes/admin/register-settings.php:196
+msgid ""
+"you can change sort for shortcodes too, <code>[directory list_order_by=\"xxx"
+"\" list_order=\"asc\"]</code>."
+msgstr ""
+
+#: includes/admin/register-settings.php:219 includes/admin/settings.php:176
+msgid "From Name"
+msgstr ""
+
+#: includes/admin/register-settings.php:220 includes/admin/settings.php:189
+msgid "This forms the first part of outgoing messages, "
+msgstr ""
+
+#: includes/admin/register-settings.php:226
+#: includes/admin/register-settings.php:233
+msgid "From Email"
+msgstr ""
+
+#: includes/admin/register-settings.php:227 includes/admin/settings.php:194
+msgid "This forms the second part of outgoing messages, "
+msgstr ""
+
+#: includes/admin/register-settings.php:234
+msgid ""
+"Email to send purchase receipts from. This will act as the \"from\" and "
+"\"reply-to\" address."
+msgstr ""
+
+#: includes/admin/register-settings.php:240
+msgid "Email Templates"
+msgstr ""
+
+#: includes/admin/register-settings.php:245
+#: includes/admin/register-settings.php:258
+#: includes/admin/register-settings.php:271
+msgid "Admin Notification"
+msgstr ""
+
+#: includes/admin/register-settings.php:246
+msgid ""
+"The subject line for email notifications sent to the site administrator."
+msgstr ""
+
+#: includes/admin/register-settings.php:248
+msgid "A new listing has been submitted for review!"
+msgstr ""
+
+#: includes/admin/register-settings.php:252
+#: includes/admin/register-settings.php:265
+#: includes/admin/register-settings.php:278
+msgid "Notification Message"
+msgstr ""
+
+#: includes/admin/register-settings.php:254
+msgid "A new listing is pending review!"
+msgstr ""
+
+#: includes/admin/register-settings.php:254
+msgid ""
+"This submission is awaiting approval. Please visit the link to view and "
+"approve the new listing:"
+msgstr ""
+
+#: includes/admin/register-settings.php:254
+#: includes/admin/register-settings.php:267
+msgid "Listing Name:"
+msgstr ""
+
+#: includes/admin/register-settings.php:254
+#: includes/admin/register-settings.php:267
+msgid "Listing Description:"
+msgstr ""
+
+#: includes/admin/register-settings.php:254
+#: includes/admin/register-settings.php:267
+#: includes/admin/register-settings.php:280
+msgid "This is an automated message from"
+msgstr ""
+
+#: includes/admin/register-settings.php:254
+#: includes/admin/register-settings.php:267
+#: includes/admin/register-settings.php:280
+msgid "Please do not respond directly to this email"
+msgstr ""
+
+#: includes/admin/register-settings.php:259
+msgid ""
+"Sent to the author after they submit a new listing. Use this to remind them "
+"of your terms, inform them of average wait times or other important "
+"information."
+msgstr ""
+
+#: includes/admin/register-settings.php:261
+msgid "Your listing on %s is pending review!"
+msgstr ""
+
+#: includes/admin/register-settings.php:267
+#: includes/admin/register-settings.php:280
+msgid "Thank you for submitting a listing to"
+msgstr ""
+
+#: includes/admin/register-settings.php:267
+msgid "Your listing is pending approval."
+msgstr ""
+
+#: includes/admin/register-settings.php:267
+msgid ""
+"Please review the following information for accuracy, as this is what will "
+"appear on our web site. If you see any errors, please contact us immediately "
+"at"
+msgstr ""
+
+#: includes/admin/register-settings.php:272
+msgid ""
+"Sent to the author when their listing has been approved and is available "
+"publicly."
+msgstr ""
+
+#: includes/admin/register-settings.php:274
+msgid "Your listing on %s has been approved!"
+msgstr ""
+
+#: includes/admin/register-settings.php:280
+msgid "Your listing has been approved! You can now view it online:"
+msgstr ""
+
+#: includes/admin/register-settings.php:289
+msgid "Auto Publish listings?"
+msgstr ""
+
+#: includes/admin/register-settings.php:290
+msgid "Would you like to publish listings without approval?"
+msgstr ""
+
+#: includes/admin/register-settings.php:300
+msgid "Require TOS"
+msgstr ""
+
+#: includes/admin/register-settings.php:301 includes/admin/settings.php:248
+msgid ""
+"Check this to require users agree to your terms of service (defined below) "
+"before submitting a listing."
+msgstr ""
+
+#: includes/admin/register-settings.php:311
+msgid "Introduction"
+msgstr ""
+
+#: includes/admin/register-settings.php:312 includes/admin/settings.php:263
+msgid "This will be displayed at the top of the submit listing form."
+msgstr ""
+
+#: includes/admin/register-settings.php:314
+msgid ""
+"Please tell us a little bit about the organization you would like to see "
+"listed in our directory. Try to include as much information as you can, and "
+"be as descriptive as possible where asked."
+msgstr ""
+
+#: includes/admin/register-settings.php:318
+msgid "Success Message"
+msgstr ""
+
+#: includes/admin/register-settings.php:319 includes/admin/settings.php:271
+msgid "Displayed following a successful listing submission."
+msgstr ""
+
+#: includes/admin/register-settings.php:321
+msgid "Congratulations!"
+msgstr ""
+
+#: includes/admin/register-settings.php:321
+msgid ""
+"Your listing has been successfully submitted for review. Please allow us "
+"sufficient time to review the listing and approve it for public display in "
+"our directory."
+msgstr ""
+
+#: includes/admin/register-settings.php:330 includes/admin/settings.php:277
+msgid "Disable Bootstrap"
+msgstr ""
+
+#: includes/admin/register-settings.php:331 includes/admin/settings.php:287
+msgid ""
+"You can disable the Bootstrap CSS library if your theme already loads a "
+"copy, or if you want to use entirely custom CSS."
+msgstr ""
+
+#: includes/admin/register-settings.php:336
+msgid "Primary Normal"
+msgstr ""
+
+#: includes/admin/register-settings.php:342
+msgid "Primary Hover"
+msgstr ""
+
+#: includes/admin/register-settings.php:348
+msgid "Primary Foreground"
+msgstr ""
+
+#: includes/admin/register-settings.php:354
+msgid "Sidebar Shortcode"
+msgstr ""
+
+#: includes/admin/register-settings.php:359
+msgid "Shortcode"
+msgstr ""
+
+#: includes/admin/register-settings.php:362
+msgid ""
+"If provided, Default sidebar contact form will be replaced with provided "
+"shortcode."
+msgstr ""
+
+#: includes/admin/register-settings.php:475 includes/admin/settings.php:320
+msgid "Settings updated."
+msgstr ""
+
+#: includes/admin/register-settings.php:520 includes/admin/settings.php:374
+msgid "General"
+msgstr ""
+
+#: includes/admin/register-settings.php:521 templates/home.php:25
+msgid "Featured Listings"
+msgstr ""
+
+#: includes/admin/register-settings.php:522
+msgid "Listings Sort Options"
+msgstr ""
+
+#: includes/admin/register-settings.php:524
+msgid "Submit"
+msgstr ""
+
+#: includes/admin/register-settings.php:525 includes/admin/settings.php:380
+msgid "Appearance"
+msgstr ""
+
+#: includes/admin/register-settings.php:740
+msgid ""
+"The callback function used for the <strong>%s</strong> setting is missing."
+msgstr ""
+
+#: includes/admin/register-settings.php:795
+msgid "Upload File"
+msgstr ""
+
+#: includes/admin/review.php:193
+msgid ""
+"<h3 style='color:#1C346F;margin:1em 0 0;'>Thank you for using the LDD "
+"Business Directory Directory Lite</h3><span style='font-size: 15px;'>Please "
+"consider taking a moment to rate or review this plugin.</span> <br /><br /"
+"><a id='ldd-review' class=\"button\" style='background: #1C346F;border-"
+"color: #1C346F;-webkit-box-shadow: 0 1px 0 #1C346F;box-shadow: 0 1px 0 "
+"#1C346F;text-shadow: none;color: #fff;font-weight: bold;' href='%s' "
+"target='_blank'>Rate this Plugin</a>    <a class=\"button\" "
+"style='background: #bdcdec;border-color: #bdcdec;-webkit-box-shadow: 0 1px 0 "
+"#bdcdec;box-shadow: 0 1px 0 #bdcdec;text-shadow: none;color: #1C346F;font-"
+"weight: bold;margin-left: 14em;' href='%s'>Not Now - Maybe Later</a><br />"
+msgstr ""
 
 #: includes/admin/settings.php:75
 msgid "Settings"
-msgstr "Settings"
+msgstr ""
 
-#: includes/admin/settings.php:76 includes/setup.php:81
+#: includes/admin/settings.php:76 includes/setup.php:73
 msgid "Add Listing"
-msgstr "Add Listing"
-
-#: includes/admin/settings.php:86
-msgid "Front Page"
-msgstr "Front Page"
+msgstr ""
 
 #: includes/admin/settings.php:87
 msgid "Submit Page"
-msgstr "Submit Page"
+msgstr ""
 
 #: includes/admin/settings.php:88
 msgid "Management Page"
-msgstr "Management Page"
+msgstr ""
 
-#: includes/admin/settings.php:89
-msgid "Taxonomy Slug"
-msgstr "Taxonomy Slug"
-
-#: includes/admin/settings.php:90
-msgid "Post Type Slug"
-msgstr "Post Type Slug"
+#: includes/admin/settings.php:91
+msgid "Directory Information"
+msgstr ""
 
 #: includes/admin/settings.php:92
 msgid "Directory Label"
-msgstr "Directory Label"
+msgstr ""
 
 #: includes/admin/settings.php:93
 msgid "Directory Description"
-msgstr "Directory Description"
-
-#: includes/admin/settings.php:95
-msgid "Allow Tracking"
-msgstr "Allow Tracking"
+msgstr ""
 
 #: includes/admin/settings.php:96
 msgid "Use Google Maps"
-msgstr "Use Google Maps"
+msgstr ""
 
 #: includes/admin/settings.php:97
 msgid "Debug Tools"
-msgstr "Debug Tools"
-
-#: includes/admin/settings.php:109
-msgid ""
-"This is the page where the <code>[directory]</code> shortcode has been placed."
 msgstr ""
-"This is the page where the <code>[directory]</code> shortcode has been placed."
-
-#: includes/admin/settings.php:121
-msgid ""
-"This is the page where the <code>[directory_submit]</code> shortcode has been "
-"placed."
-msgstr ""
-"This is the page where the <code>[directory_submit]</code> shortcode has been "
-"placed."
-
-#: includes/admin/settings.php:133
-msgid ""
-"This is the page where the <code>[directory_manage]</code> shortcode has been "
-"placed."
-msgstr ""
-"This is the page where the <code>[directory_manage]</code> shortcode has been "
-"placed."
 
 #: includes/admin/settings.php:138
 msgid "This is the first part of the URL for category display pages."
-msgstr "This is the first part of the URL for category display pages."
+msgstr ""
 
 #: includes/admin/settings.php:143
 msgid "Same as above, but for the listing pages."
-msgstr "Same as above, but for the listing pages."
+msgstr ""
 
 #: includes/admin/settings.php:148
 msgid ""
 "Name your directory; \"My Business Directory\", \"Local Restaurant Feed\", "
 "\"John's List of Links\", etc."
 msgstr ""
-"Name your directory; \"My Business Directory\", \"Local Restaurant Feed\", "
-"\"John's List of Links\", etc."
-
-#: includes/admin/settings.php:165
-msgid ""
-"This toggles the display of Google Maps for listings that have an address set."
-msgstr ""
-"This toggles the display of Google Maps for listings that have an address set."
-
-#: includes/admin/settings.php:176
-msgid "From Name"
-msgstr "From Name"
 
 #: includes/admin/settings.php:177
 msgid "From Email Address"
-msgstr "From Email Address"
+msgstr ""
 
 #: includes/admin/settings.php:178
 msgid "Notify"
-msgstr "Notify"
+msgstr ""
 
 #: includes/admin/settings.php:179
 msgid "Message Contents"
-msgstr "Message Contents"
+msgstr ""
 
 #: includes/admin/settings.php:181 includes/admin/settings.php:183
 #: includes/admin/settings.php:185
 msgid "Email Body"
-msgstr "Email Body"
-
-#: includes/admin/settings.php:189
-msgid "This forms the first part of outgoing messages, "
-msgstr "This forms the first part of outgoing messages, "
-
-#: includes/admin/settings.php:194
-msgid "This forms the second part of outgoing messages, "
-msgstr "This forms the second part of outgoing messages, "
+msgstr ""
 
 #: includes/admin/settings.php:199
 msgid ""
 "This is the email where you want notifications sent. Use a comma to separate "
 "multipl email addresses."
 msgstr ""
-"This is the email where you want notifications sent. Use a comma to separate "
-"multipl email addresses."
 
 #: includes/admin/settings.php:204
 msgid "Sent to the email(s) listed above when a listing is awaiting approval."
-msgstr "Sent to the email(s) listed above when a listing is awaiting approval."
+msgstr ""
 
 #: includes/admin/settings.php:216
 msgid ""
-"Sent to the author after they submit a new listing. Use this to remind them of "
-"your terms, inform them of average wait times or other important information. "
+"Sent to the author after they submit a new listing. Use this to remind them "
+"of your terms, inform them of average wait times or other important "
+"information. "
 msgstr ""
-"Sent to the author after they submit a new listing. Use this to remind them of "
-"your terms, inform them of average wait times or other important information. "
 
 #: includes/admin/settings.php:228
 msgid ""
 "Sent to the author when their listing has been approved and is available "
 "publicly.."
 msgstr ""
-"Sent to the author when their listing has been approved and is available "
-"publicly.."
 
 #: includes/admin/settings.php:241
 msgid "Include Terms"
-msgstr "Include Terms"
+msgstr ""
 
 #: includes/admin/settings.php:243
 msgid "Submit Introduction"
-msgstr "Submit Introduction"
+msgstr ""
 
 #: includes/admin/settings.php:244
 msgid "Submit Success"
-msgstr "Submit Success"
-
-#: includes/admin/settings.php:248
-msgid ""
-"Check this to require users agree to your terms of service (defined below) before "
-"submitting a listing."
 msgstr ""
-"Check this to require users agree to your terms of service (defined below) before "
-"submitting a listing."
-
-#: includes/admin/settings.php:263
-msgid "This will be displayed at the top of the submit listing form."
-msgstr "This will be displayed at the top of the submit listing form."
-
-#: includes/admin/settings.php:271
-msgid "Displayed following a successful listing submission."
-msgstr "Displayed following a successful listing submission."
-
-#: includes/admin/settings.php:277
-msgid "Disable Bootstrap"
-msgstr "Disable Bootstrap"
 
 #: includes/admin/settings.php:278
 msgid "Display Featured Listings"
-msgstr "Display Featured Listings"
+msgstr ""
 
 #: includes/admin/settings.php:279
 msgid "Primary Set"
-msgstr "Primary Set"
+msgstr ""
 
 #: includes/admin/settings.php:282
 msgid ""
-"This section is small at the moment, but will grow with the plugin to accommodate "
-"ease of integration with your chosen theme. If you have any suggestions for "
-"visual elements you would like to see configurable here, please use one of the "
-"links above to let us know."
+"This section is small at the moment, but will grow with the plugin to "
+"accommodate ease of integration with your chosen theme. If you have any "
+"suggestions for visual elements you would like to see configurable here, "
+"please use one of the links above to let us know."
 msgstr ""
-"This section is small at the moment, but will grow with the plugin to accommodate "
-"ease of integration with your chosen theme. If you have any suggestions for "
-"visual elements you would like to see configurable here, please use one of the "
-"links above to let us know."
-
-#: includes/admin/settings.php:287
-msgid ""
-"You can disable the Bootstrap CSS library if your theme already loads a copy, or "
-"if you want to use entirely custom CSS."
-msgstr ""
-"You can disable the Bootstrap CSS library if your theme already loads a copy, or "
-"if you want to use entirely custom CSS."
 
 #: includes/admin/settings.php:291
 msgid ""
 "If checked, listings tagged with <code>featured</code> will be shown on your "
 "directory home page"
 msgstr ""
-"If checked, listings tagged with <code>featured</code> will be shown on your "
-"directory home page"
 
 #: includes/admin/settings.php:298
 msgid ""
-"Set the <strong>normal / hover / foreground</strong> state for primary elements, "
-"including various buttons, labels and badges."
+"Set the <strong>normal / hover / foreground</strong> state for primary "
+"elements, including various buttons, labels and badges."
 msgstr ""
-"Set the <strong>normal / hover / foreground</strong> state for primary elements, "
-"including various buttons, labels and badges."
 
-#: includes/admin/settings.php:320
-msgid "Settings updated."
-msgstr "Settings updated."
-
-#: includes/admin/settings.php:346
-msgid ""
-"Customize your Directory using the settings found on the following pages. If you "
-"require support or would like to make a suggestion for improving this plugin, "
-"please refer to the following links."
-msgstr ""
-"Customize your Directory using the settings found on the following pages. If you "
-"require support or would like to make a suggestion for improving this plugin, "
-"please refer to the following links."
-
-#: includes/admin/settings.php:350
-msgid "Submit an Issue"
-msgstr "Submit an Issue"
-
-#: includes/admin/settings.php:354
-msgid "WordPress.org"
-msgstr "WordPress.org"
-
-#: includes/admin/settings.php:358
-msgid "Support Forums"
-msgstr "Support Forums"
-
-#: includes/admin/settings.php:361
-msgid "GitHub.com"
-msgstr "GitHub.com"
-
-#: includes/admin/settings.php:370
-msgid "General"
-msgstr "General"
-
-#: includes/admin/settings.php:374
+#: includes/admin/settings.php:378
 msgid "Submit Form"
-msgstr "Submit Form"
-
-#: includes/admin/settings.php:376
-msgid "Appearance"
-msgstr "Appearance"
+msgstr ""
 
 #: includes/ajax.php:33
 msgid ""
 "Your message has been successfully sent to the email address we have on file!"
 msgstr ""
-"Your message has been successfully sent to the email address we have on file!"
 
 #: includes/ajax.php:59
 msgid "You must enter your name"
-msgstr "You must enter your name"
+msgstr ""
 
 #: includes/ajax.php:61
 msgid "Please enter a valid email address"
-msgstr "Please enter a valid email address"
+msgstr ""
 
 #: includes/ajax.php:63
 msgid "You must enter a subject"
-msgstr "You must enter a subject"
+msgstr ""
 
 #: includes/ajax.php:65
 msgid "Please enter a longer message"
-msgstr "Please enter a longer message"
+msgstr ""
 
 #: includes/ajax.php:67
 msgid "Your math is wrong"
-msgstr "Your math is wrong"
+msgstr ""
 
 #: includes/ajax.php:73
 msgid "There were errors with your form submission. Please try again."
-msgstr "There were errors with your form submission. Please try again."
+msgstr ""
 
 #: includes/ajax.php:88
 msgid "Your message has been successfully sent to <em>%s</em>!"
-msgstr "Your message has been successfully sent to <em>%s</em>!"
+msgstr ""
 
 #: includes/ajax.php:93
 msgid ""
-"There were unknown errors with your form submission.</p><p>Please wait a while "
-"and then try again."
+"There were unknown errors with your form submission.</p><p>Please wait a "
+"while and then try again."
 msgstr ""
-"There were unknown errors with your form submission.</p><p>Please wait a while "
-"and then try again."
 
 #: includes/class.processor.php:113
 msgid "This field is required."
-msgstr "This field is required."
+msgstr ""
 
-#: includes/class.processor.php:248
+#: includes/class.processor.php:252
 msgid "The email address provided doesn't appear to be valid."
-msgstr "The email address provided doesn't appear to be valid."
+msgstr ""
 
-#: includes/class.processor.php:256
+#: includes/class.processor.php:260
 msgid "We were unable to verify that URL, please check it and try again."
-msgstr "We were unable to verify that URL, please check it and try again."
+msgstr ""
 
-#: includes/class.processor.php:261
+#: includes/class.processor.php:265
 msgid "Something went wrong validating that location, please try again."
-msgstr "Something went wrong validating that location, please try again."
+msgstr ""
 
-#: includes/class.processor.php:284
+#: includes/class.processor.php:288
 msgid ""
 "Please verify that you have read and agree to our terms of service before "
 "continuing."
 msgstr ""
-"Please verify that you have read and agree to our terms of service before "
-"continuing."
 
-#: includes/class.tracking.php:235
+#: includes/class.tracking.php:228
 msgid ""
-"Thank you for updating to the latest LDD Directory version! You can add, edit or "
-"remove listings from this menu. Some new features have been added since last "
-"time, so be sure to review your settings!"
+"Thank you for updating to the latest LDD Directory version! You can add, "
+"edit or remove listings from this menu. Some new features have been added "
+"since last time, so be sure to review your settings!"
 msgstr ""
-"Thank you for updating to the latest LDD Directory version! You can add, edit or "
-"remove listings from this menu. Some new features have been added since last "
-"time, so be sure to review your settings!"
 
-#: includes/class.tracking.php:286
+#: includes/class.tracking.php:279
 msgid "Help improve LDD Directory Lite"
-msgstr "Help improve LDD Directory Lite"
-
-#: includes/class.tracking.php:287
-msgid ""
-"Usage tracking is completely anonymous and allows us to know what configurations, "
-"plugins and themes we should be testing future versions of our plugin with."
 msgstr ""
-"Usage tracking is completely anonymous and allows us to know what configurations, "
-"plugins and themes we should be testing future versions of our plugin with."
 
-#: includes/class.tracking.php:313
+#: includes/class.tracking.php:280
+msgid ""
+"Usage tracking is completely anonymous and allows us to know what "
+"configurations, plugins and themes we should be testing future versions of "
+"our plugin with."
+msgstr ""
+
+#: includes/class.tracking.php:305
 msgid "Do not allow tracking"
-msgstr "Do not allow tracking"
+msgstr ""
 
-#: includes/class.tracking.php:325
+#: includes/class.tracking.php:317
 msgid "Allow tracking"
-msgstr "Allow tracking"
+msgstr ""
 
-#: includes/cmb/example-functions.php:28
+#: includes/cmb/example-functions.php:117
 msgid "Test Metabox"
-msgstr "Test Metabox"
-
-#: includes/cmb/example-functions.php:36 includes/cmb/example-functions.php:269
-msgid "Test Text"
-msgstr "Test Text"
-
-#: includes/cmb/example-functions.php:37 includes/cmb/example-functions.php:47
-#: includes/cmb/example-functions.php:54 includes/cmb/example-functions.php:61
-#: includes/cmb/example-functions.php:69 includes/cmb/example-functions.php:76
-#: includes/cmb/example-functions.php:88 includes/cmb/example-functions.php:94
-#: includes/cmb/example-functions.php:101 includes/cmb/example-functions.php:116
-#: includes/cmb/example-functions.php:124 includes/cmb/example-functions.php:131
-#: includes/cmb/example-functions.php:137 includes/cmb/example-functions.php:143
-#: includes/cmb/example-functions.php:155 includes/cmb/example-functions.php:166
-#: includes/cmb/example-functions.php:177 includes/cmb/example-functions.php:188
-#: includes/cmb/example-functions.php:196 includes/cmb/example-functions.php:203
-#: includes/cmb/example-functions.php:211 includes/cmb/example-functions.php:217
-#: includes/cmb/example-functions.php:229 includes/cmb/example-functions.php:270
-#: includes/cmb/example-functions.php:335 includes/cmb/example-functions.php:342
-#: includes/cmb/example-functions.php:349 includes/cmb/example-functions.php:355
-#: includes/cmb/example-functions.php:361 includes/cmb/example-functions.php:367
-#: includes/cmb/example-functions.php:373 includes/cmb/example-functions.php:391
-msgid "field description (optional)"
-msgstr "field description (optional)"
-
-#: includes/cmb/example-functions.php:46
-msgid "Test Text Small"
-msgstr "Test Text Small"
-
-#: includes/cmb/example-functions.php:53
-msgid "Test Text Medium"
-msgstr "Test Text Medium"
-
-#: includes/cmb/example-functions.php:60
-msgid "Website URL"
-msgstr "Website URL"
-
-#: includes/cmb/example-functions.php:68
-msgid "Test Text Email"
-msgstr "Test Text Email"
-
-#: includes/cmb/example-functions.php:75
-msgid "Test Time"
-msgstr "Test Time"
-
-#: includes/cmb/example-functions.php:81 includes/cmb/example-functions.php:82
-msgid "Time zone"
-msgstr "Time zone"
-
-#: includes/cmb/example-functions.php:87
-msgid "Test Date Picker"
-msgstr "Test Date Picker"
-
-#: includes/cmb/example-functions.php:93
-msgid "Test Date Picker (UNIX timestamp)"
-msgstr "Test Date Picker (UNIX timestamp)"
-
-#: includes/cmb/example-functions.php:100
-msgid "Test Date/Time Picker Combo (UNIX timestamp)"
-msgstr "Test Date/Time Picker Combo (UNIX timestamp)"
-
-#: includes/cmb/example-functions.php:115
-msgid "Test Money"
-msgstr "Test Money"
-
-#: includes/cmb/example-functions.php:123
-msgid "Test Color Picker"
-msgstr "Test Color Picker"
+msgstr ""
 
 #: includes/cmb/example-functions.php:130
-msgid "Test Text Area"
-msgstr "Test Text Area"
-
-#: includes/cmb/example-functions.php:136
-msgid "Test Text Area Small"
-msgstr "Test Text Area Small"
-
-#: includes/cmb/example-functions.php:142
-msgid "Test Text Area for Code"
-msgstr "Test Text Area for Code"
-
-#: includes/cmb/example-functions.php:148
-msgid "Test Title Weeeee"
-msgstr "Test Title Weeeee"
-
-#: includes/cmb/example-functions.php:149
-msgid "This is a title description"
-msgstr "This is a title description"
-
-#: includes/cmb/example-functions.php:154
-msgid "Test Select"
-msgstr "Test Select"
-
-#: includes/cmb/example-functions.php:159 includes/cmb/example-functions.php:170
-#: includes/cmb/example-functions.php:181
-msgid "Option One"
-msgstr "Option One"
-
-#: includes/cmb/example-functions.php:160 includes/cmb/example-functions.php:171
-#: includes/cmb/example-functions.php:182
-msgid "Option Two"
-msgstr "Option Two"
-
-#: includes/cmb/example-functions.php:161 includes/cmb/example-functions.php:172
-#: includes/cmb/example-functions.php:183
-msgid "Option Three"
-msgstr "Option Three"
-
-#: includes/cmb/example-functions.php:165
-msgid "Test Radio inline"
-msgstr "Test Radio inline"
-
-#: includes/cmb/example-functions.php:176
-msgid "Test Radio"
-msgstr "Test Radio"
-
-#: includes/cmb/example-functions.php:187
-msgid "Test Taxonomy Radio"
-msgstr "Test Taxonomy Radio"
-
-#: includes/cmb/example-functions.php:195
-msgid "Test Taxonomy Select"
-msgstr "Test Taxonomy Select"
-
-#: includes/cmb/example-functions.php:202
-msgid "Test Taxonomy Multi Checkbox"
-msgstr "Test Taxonomy Multi Checkbox"
-
-#: includes/cmb/example-functions.php:210
-msgid "Test Checkbox"
-msgstr "Test Checkbox"
-
-#: includes/cmb/example-functions.php:216
-msgid "Test Multi Checkbox"
-msgstr "Test Multi Checkbox"
-
-#: includes/cmb/example-functions.php:221
-msgid "Check One"
-msgstr "Check One"
-
-#: includes/cmb/example-functions.php:222
-msgid "Check Two"
-msgstr "Check Two"
-
-#: includes/cmb/example-functions.php:223
-msgid "Check Three"
-msgstr "Check Three"
-
-#: includes/cmb/example-functions.php:228
-msgid "Test wysiwyg"
-msgstr "Test wysiwyg"
-
-#: includes/cmb/example-functions.php:235
-msgid "Test Image"
-msgstr "Test Image"
-
-#: includes/cmb/example-functions.php:236
-msgid "Upload an image or enter a URL."
-msgstr "Upload an image or enter a URL."
-
-#: includes/cmb/example-functions.php:241
-msgid "Multiple Files"
-msgstr "Multiple Files"
-
-#: includes/cmb/example-functions.php:242
-msgid "Upload or add multiple images/attachments."
-msgstr "Upload or add multiple images/attachments."
-
-#: includes/cmb/example-functions.php:248
-msgid "oEmbed"
-msgstr "oEmbed"
-
-#: includes/cmb/example-functions.php:249
-msgid ""
-"Enter a youtube, twitter, or instagram URL. Supports services listed at <a href="
-"\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/Embeds</a>."
+#: includes/cmb/example-functions.php:436
+msgid "Test Text"
 msgstr ""
-"Enter a youtube, twitter, or instagram URL. Supports services listed at <a href="
-"\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/Embeds</a>."
 
-#: includes/cmb/example-functions.php:261
-msgid "About Page Metabox"
-msgstr "About Page Metabox"
-
-#: includes/cmb/example-functions.php:282
-msgid "Repeating Field Group"
-msgstr "Repeating Field Group"
-
+#: includes/cmb/example-functions.php:131
+#: includes/cmb/example-functions.php:144
+#: includes/cmb/example-functions.php:157
+#: includes/cmb/example-functions.php:165
+#: includes/cmb/example-functions.php:173
+#: includes/cmb/example-functions.php:182
+#: includes/cmb/example-functions.php:190
+#: includes/cmb/example-functions.php:205
+#: includes/cmb/example-functions.php:213
+#: includes/cmb/example-functions.php:221
+#: includes/cmb/example-functions.php:238
+#: includes/cmb/example-functions.php:247
+#: includes/cmb/example-functions.php:260
+#: includes/cmb/example-functions.php:267
+#: includes/cmb/example-functions.php:274
 #: includes/cmb/example-functions.php:288
-msgid "Generates reusable form entries"
-msgstr "Generates reusable form entries"
+#: includes/cmb/example-functions.php:301
+#: includes/cmb/example-functions.php:314
+#: includes/cmb/example-functions.php:326
+#: includes/cmb/example-functions.php:335
+#: includes/cmb/example-functions.php:343
+#: includes/cmb/example-functions.php:352
+#: includes/cmb/example-functions.php:359
+#: includes/cmb/example-functions.php:373
+#: includes/cmb/example-functions.php:437
+#: includes/cmb/example-functions.php:528
+#: includes/cmb/example-functions.php:536
+#: includes/cmb/example-functions.php:543
+#: includes/cmb/example-functions.php:550
+#: includes/cmb/example-functions.php:557
+#: includes/cmb/example-functions.php:564
+#: includes/cmb/example-functions.php:571
+#: includes/cmb/example-functions.php:598
+#: includes/cmb/example-functions.php:606
+#: includes/cmb/example-functions.php:613
+#: includes/cmb/example-functions.php:650
+msgid "field description (optional)"
+msgstr ""
 
-#: includes/cmb/example-functions.php:290
-msgid "Add Another Entry"
-msgstr "Add Another Entry"
+#: includes/cmb/example-functions.php:143
+msgid "Test Text Small"
+msgstr ""
 
-#: includes/cmb/example-functions.php:291
-msgid "Remove Entry"
-msgstr "Remove Entry"
+#: includes/cmb/example-functions.php:156
+msgid "Test Text Medium"
+msgstr ""
 
-#: includes/cmb/example-functions.php:328
-msgid "User Profile Metabox"
-msgstr "User Profile Metabox"
+#: includes/cmb/example-functions.php:164
+msgid "Custom Rendered Field"
+msgstr ""
+
+#: includes/cmb/example-functions.php:172
+msgid "Website URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:181
+msgid "Test Text Email"
+msgstr ""
+
+#: includes/cmb/example-functions.php:189
+msgid "Test Time"
+msgstr ""
+
+#: includes/cmb/example-functions.php:197
+#: includes/cmb/example-functions.php:198
+msgid "Time zone"
+msgstr ""
+
+#: includes/cmb/example-functions.php:204
+msgid "Test Date Picker"
+msgstr ""
+
+#: includes/cmb/example-functions.php:212
+msgid "Test Date Picker (UNIX timestamp)"
+msgstr ""
+
+#: includes/cmb/example-functions.php:220
+msgid "Test Date/Time Picker Combo (UNIX timestamp)"
+msgstr ""
+
+#: includes/cmb/example-functions.php:237
+msgid "Test Money"
+msgstr ""
+
+#: includes/cmb/example-functions.php:246
+msgid "Test Color Picker"
+msgstr ""
+
+#: includes/cmb/example-functions.php:259
+msgid "Test Text Area"
+msgstr ""
+
+#: includes/cmb/example-functions.php:266
+msgid "Test Text Area Small"
+msgstr ""
+
+#: includes/cmb/example-functions.php:273
+msgid "Test Text Area for Code"
+msgstr ""
+
+#: includes/cmb/example-functions.php:280
+msgid "Test Title Weeeee"
+msgstr ""
+
+#: includes/cmb/example-functions.php:281
+msgid "This is a title description"
+msgstr ""
+
+#: includes/cmb/example-functions.php:287
+msgid "Test Select"
+msgstr ""
+
+#: includes/cmb/example-functions.php:293
+#: includes/cmb/example-functions.php:306
+#: includes/cmb/example-functions.php:318
+msgid "Option One"
+msgstr ""
+
+#: includes/cmb/example-functions.php:294
+#: includes/cmb/example-functions.php:307
+#: includes/cmb/example-functions.php:319
+msgid "Option Two"
+msgstr ""
+
+#: includes/cmb/example-functions.php:295
+#: includes/cmb/example-functions.php:308
+#: includes/cmb/example-functions.php:320
+msgid "Option Three"
+msgstr ""
+
+#: includes/cmb/example-functions.php:300
+msgid "Test Radio inline"
+msgstr ""
+
+#: includes/cmb/example-functions.php:313
+msgid "Test Radio"
+msgstr ""
+
+#: includes/cmb/example-functions.php:325
+msgid "Test Taxonomy Radio"
+msgstr ""
 
 #: includes/cmb/example-functions.php:334
-msgid "Extra Info"
-msgstr "Extra Info"
+msgid "Test Taxonomy Select"
+msgstr ""
 
-#: includes/cmb/example-functions.php:341
-msgid "Avatar"
-msgstr "Avatar"
+#: includes/cmb/example-functions.php:342
+msgid "Test Taxonomy Multi Checkbox"
+msgstr ""
 
-#: includes/cmb/example-functions.php:348
-msgid "Facebook URL"
-msgstr "Facebook URL"
+#: includes/cmb/example-functions.php:351
+msgid "Test Checkbox"
+msgstr ""
 
-#: includes/cmb/example-functions.php:354
-msgid "Twitter URL"
-msgstr "Twitter URL"
+#: includes/cmb/example-functions.php:358
+msgid "Test Multi Checkbox"
+msgstr ""
 
-#: includes/cmb/example-functions.php:360
-msgid "Google+ URL"
-msgstr "Google+ URL"
+#: includes/cmb/example-functions.php:364
+msgid "Check One"
+msgstr ""
+
+#: includes/cmb/example-functions.php:365
+msgid "Check Two"
+msgstr ""
 
 #: includes/cmb/example-functions.php:366
-msgid "Linkedin URL"
-msgstr "Linkedin URL"
+msgid "Check Three"
+msgstr ""
 
 #: includes/cmb/example-functions.php:372
+msgid "Test wysiwyg"
+msgstr ""
+
+#: includes/cmb/example-functions.php:380
+msgid "Test Image"
+msgstr ""
+
+#: includes/cmb/example-functions.php:381
+msgid "Upload an image or enter a URL."
+msgstr ""
+
+#: includes/cmb/example-functions.php:387
+msgid "Multiple Files"
+msgstr ""
+
+#: includes/cmb/example-functions.php:388
+msgid "Upload or add multiple images/attachments."
+msgstr ""
+
+#: includes/cmb/example-functions.php:395
+msgid "oEmbed"
+msgstr ""
+
+#: includes/cmb/example-functions.php:396
+msgid ""
+"Enter a youtube, twitter, or instagram URL. Supports services listed at <a "
+"href=\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/"
+"Embeds</a>."
+msgstr ""
+
+#: includes/cmb/example-functions.php:427
+msgid "About Page Metabox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:456
+msgid "Repeating Field Group"
+msgstr ""
+
+#: includes/cmb/example-functions.php:464
+msgid "Generates reusable form entries"
+msgstr ""
+
+#: includes/cmb/example-functions.php:466
+msgid "Entry {#}"
+msgstr ""
+
+#: includes/cmb/example-functions.php:467
+msgid "Add Another Entry"
+msgstr ""
+
+#: includes/cmb/example-functions.php:468
+msgid "Remove Entry"
+msgstr ""
+
+#: includes/cmb/example-functions.php:481
+msgid "Entry Title"
+msgstr ""
+
+#: includes/cmb/example-functions.php:488 templates/edit-details.php:32
+#: templates/panel-general.php:37
+msgid "Description"
+msgstr ""
+
+#: includes/cmb/example-functions.php:489
+msgid "Write a short description for this entry"
+msgstr ""
+
+#: includes/cmb/example-functions.php:495
+msgid "Entry Image"
+msgstr ""
+
+#: includes/cmb/example-functions.php:501
+msgid "Image Caption"
+msgstr ""
+
+#: includes/cmb/example-functions.php:520
+msgid "User Profile Metabox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:527
+#: includes/cmb/example-functions.php:597
+msgid "Extra Info"
+msgstr ""
+
+#: includes/cmb/example-functions.php:535
+msgid "Avatar"
+msgstr ""
+
+#: includes/cmb/example-functions.php:542
+msgid "Facebook URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:549
+msgid "Twitter URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:556
+msgid "Google+ URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:563
+msgid "Linkedin URL"
+msgstr ""
+
+#: includes/cmb/example-functions.php:570
 msgid "User Field"
-msgstr "User Field"
+msgstr ""
 
-#: includes/cmb/example-functions.php:386
+#: includes/cmb/example-functions.php:590
+msgid "Category Metabox"
+msgstr ""
+
+#: includes/cmb/example-functions.php:605
+msgid "Term Image"
+msgstr ""
+
+#: includes/cmb/example-functions.php:612
+msgid "Arbitrary Term Field"
+msgstr ""
+
+#: includes/cmb/example-functions.php:634
 msgid "Theme Options Metabox"
-msgstr "Theme Options Metabox"
+msgstr ""
 
-#: includes/cmb/example-functions.php:390
+#: includes/cmb/example-functions.php:649
 msgid "Site Background Color"
-msgstr "Site Background Color"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_ajax.php:47
+#: includes/cmb/includes/CMB2_Ajax.php:71
 msgid "Please Try Again"
-msgstr "Please Try Again"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_ajax.php:131
+#: includes/cmb/includes/CMB2_Ajax.php:173
 msgid "Remove Embed"
-msgstr "Remove Embed"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_ajax.php:134
+#: includes/cmb/includes/CMB2_Ajax.php:177
 msgid "No oEmbed Results Found for %s. View more info at"
-msgstr "No oEmbed Results Found for %s. View more info at"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_field.php:449
+#: includes/cmb/includes/CMB2_Field.php:1186
 msgid "Add Group"
-msgstr "Add Group"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_field.php:450
+#: includes/cmb/includes/CMB2_Field.php:1187
 msgid "Remove Group"
-msgstr "Remove Group"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:249
+#: includes/cmb/includes/CMB2_Types.php:194
 msgid "Add Row"
-msgstr "Add Row"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:305
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:705
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+#: includes/cmb/includes/CMB2_JS.php:138
+#: includes/cmb/includes/CMB2_Types.php:257
+#: includes/cmb/includes/types/CMB2_Type_File_Base.php:80
 msgid "Remove"
-msgstr "Remove"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:600
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:634
+#: includes/cmb/includes/types/CMB2_Type_Taxonomy_Multicheck.php:27
+#: includes/cmb/includes/types/CMB2_Type_Taxonomy_Radio.php:25
 msgid "No terms"
-msgstr "No terms"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:673
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:727
+#: includes/cmb/includes/types/CMB2_Type_File.php:36
 msgid "Add or Upload File"
-msgstr "Add or Upload File"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:694
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:757
+#: includes/cmb/includes/CMB2_JS.php:137
+#: includes/cmb/includes/types/CMB2_Type_File_Base.php:61
 msgid "Remove Image"
-msgstr "Remove Image"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:705
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+#: includes/cmb/includes/CMB2_Field_Display.php:408
+#: includes/cmb/includes/CMB2_JS.php:139
+#: includes/cmb/includes/types/CMB2_Type_File_Base.php:75
 msgid "File:"
-msgstr "File:"
+msgstr ""
 
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:705
 #: includes/cmb/helpers/cmb_Meta_Box_types.php:765
+#: includes/cmb/includes/CMB2_JS.php:140
+#: includes/cmb/includes/types/CMB2_Type_File_Base.php:78
 msgid "Download"
-msgstr "Download"
+msgstr ""
 
-#: includes/cmb/init.php:251
+#: includes/cmb/includes/CMB2.php:129
+msgid "Metabox configuration is required to have an ID parameter"
+msgstr ""
+
+#: includes/cmb/includes/CMB2.php:418
+msgid "Click to toggle"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_Field.php:1209
+#: includes/cmb/includes/CMB2_Field.php:1213
+msgid "None"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_Field.php:1269
+msgid "Sorry, this field does not have a cmb_id specified."
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:86 includes/cmb/includes/CMB2_JS.php:119
 msgid "Clear"
-msgstr "Clear"
+msgstr ""
 
-#: includes/cmb/init.php:252
+#: includes/cmb/includes/CMB2_JS.php:87
 msgid "Default"
-msgstr "Default"
+msgstr ""
 
-#: includes/cmb/init.php:253
+#: includes/cmb/includes/CMB2_JS.php:88
 msgid "Select Color"
-msgstr "Select Color"
+msgstr ""
 
-#: includes/cmb/init.php:254
+#: includes/cmb/includes/CMB2_JS.php:89
 msgid "Current Color"
-msgstr "Current Color"
+msgstr ""
 
-#: includes/cmb/init.php:1155
+#: includes/cmb/includes/CMB2_JS.php:109
+msgctxt "Valid formatDate string for jquery-ui datepicker"
+msgid "mm/dd/yy"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:110
+msgid "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:111
+msgid "Su, Mo, Tu, We, Th, Fr, Sa"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:112
+msgid "Sun, Mon, Tue, Wed, Thu, Fri, Sat"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:113
+msgid ""
+"January, February, March, April, May, June, July, August, September, "
+"October, November, December"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:114
+msgid "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:115
+msgid "Next"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:116
+msgid "Prev"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:117
+msgid "Today"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:118 includes/cmb/includes/CMB2_JS.php:128
+msgid "Done"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:122
+msgid "Choose Time"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:123
+msgid "Time"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:124
+msgid "Hour"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:125
+msgid "Minute"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:126
+msgid "Second"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:127
+msgid "Now"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:129
+msgctxt ""
+"Valid formatting string, as per http://trentrichardson.com/examples/"
+"timepicker/"
+msgid "hh:mm TT"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:135
+msgid "Use this file"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:136
+msgid "Use these files"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_JS.php:141
+msgid "Select / Deselect All"
+msgstr ""
+
+#: includes/cmb/includes/CMB2_hookup.php:143
+msgid ""
+"Term Metadata is a WordPress > 4.4 feature. Please upgrade your WordPress "
+"install."
+msgstr ""
+
+#: includes/cmb/includes/CMB2_hookup.php:147
+msgid "Term metaboxes configuration requires a 'taxonomies' parameter"
+msgstr ""
+
+#: includes/cmb/includes/helper-functions.php:93
+msgid "No oEmbed Results Found for %s. View more info at %s."
+msgstr ""
+
+#: includes/cmb/includes/helper-functions.php:279
 msgid "Save"
-msgstr "Save"
-
-#: includes/functions.php:102
-msgid ""
-"Please tell us a little bit about the organization you would like to see listed "
-"in our directory. Try to include as much information as you can, and be as "
-"descriptive as possible where asked."
 msgstr ""
-"Please tell us a little bit about the organization you would like to see listed "
-"in our directory. Try to include as much information as you can, and be as "
-"descriptive as possible where asked."
 
-#: includes/functions.php:103
-msgid "Congratulations!"
-msgstr "Congratulations!"
-
-#: includes/functions.php:103
-msgid ""
-"Your listing has been successfully submitted for review. Please allow us "
-"sufficient time to review the listing and approve it for public display in our "
-"directory."
+#: includes/cmb/includes/types/CMB2_Type_File_List.php:36
+msgid "Add or Upload Files"
 msgstr ""
-"Your listing has been successfully submitted for review. Please allow us "
-"sufficient time to review the listing and approve it for public display in our "
-"directory."
+
+#: includes/listings.php:117 includes/setup.php:82 ldd-directory-lite.php:76
+msgid "Directory"
+msgstr ""
+
+#: includes/setup.php:71
+msgid "Directory Listings"
+msgstr ""
+
+#: includes/setup.php:72
+msgid "Directory Listing"
+msgstr ""
+
+#: includes/setup.php:74
+msgid "Add New Listing"
+msgstr ""
+
+#: includes/setup.php:75
+msgid "Edit Listing"
+msgstr ""
+
+#: includes/setup.php:76
+msgid "New Listing"
+msgstr ""
+
+#: includes/setup.php:77
+msgid "View Listing"
+msgstr ""
+
+#: includes/setup.php:78
+msgid "Search Listings"
+msgstr ""
 
 #: includes/setup.php:79
-msgid "Directory Listings"
-msgstr "Directory Listings"
+msgid "No listings found"
+msgstr ""
 
 #: includes/setup.php:80
-msgid "Directory Listing"
-msgstr "Directory Listing"
-
-#: includes/setup.php:82
-msgid "Add New Listing"
-msgstr "Add New Listing"
-
-#: includes/setup.php:83
-msgid "Edit Listing"
-msgstr "Edit Listing"
-
-#: includes/setup.php:84
-msgid "New Listing"
-msgstr "New Listing"
-
-#: includes/setup.php:85
-msgid "View Listing"
-msgstr "View Listing"
-
-#: includes/setup.php:86
-msgid "Search Listings"
-msgstr "Search Listings"
-
-#: includes/setup.php:87
-msgid "No listings found"
-msgstr "No listings found"
-
-#: includes/setup.php:88
 msgid "No listings found in Trash"
-msgstr "No listings found in Trash"
-
-#: includes/setup.php:89
-msgid "Parent Listing"
-msgstr "Parent Listing"
-
-#: includes/setup.php:90 ldd-directory-lite.php:173
-msgid "Directory"
-msgstr "Directory"
-
-#: includes/shortcodes/_manage.php:97 includes/shortcodes/_submit.php:332
-msgid "There was a problem uploading your logo. Please try again!"
-msgstr "There was a problem uploading your logo. Please try again!"
-
-#: includes/shortcodes/_submit.php:304
-msgid "There was a problem creating your user account. Please try again later."
-msgstr "There was a problem creating your user account. Please try again later."
-
-#: includes/shortcodes/_submit.php:311
-msgid "There was a problem creating your listing. Please try again later."
-msgstr "There was a problem creating your listing. Please try again later."
-
-#: ldd-directory-lite.php:183
-msgid "Submit a Listing"
-msgstr "Submit a Listing"
-
-#: ldd-directory-lite.php:201
-msgid "[ldd directory lite installation notice]"
-msgstr "[ldd directory lite installation notice]"
-
-#: ldd-directory-lite.php:202
-msgid ""
-"Required directory pages have been installed for you, please visit the <a href="
-"\"%s\">Edit Pages</a> screen to make any necessary adjustments."
 msgstr ""
-"Required directory pages have been installed for you, please visit the <a href="
-"\"%s\">Edit Pages</a> screen to make any necessary adjustments."
+
+#: includes/setup.php:81
+msgid "Parent Listing"
+msgstr ""
+
+#: includes/shortcodes/_manage.php:87 includes/shortcodes/_submit.php:419
+msgid "There was a problem uploading your logo. Please try again!"
+msgstr ""
+
+#: includes/shortcodes/_submit.php:391
+msgid "There was a problem creating your user account. Please try again later."
+msgstr ""
+
+#: includes/shortcodes/_submit.php:398
+msgid "There was a problem creating your listing. Please try again later."
+msgstr ""
+
+#: ldd-directory-lite.php:85
+msgid "Submit a Listing"
+msgstr ""
+
+#: ldd-directory-lite.php:95 templates/header.php:32
+msgid "Manage Listings"
+msgstr ""
+
+#: templates/addon-page.php:4
+msgid "Directory Add-ons"
+msgstr ""
+
+#: templates/addon-page.php:7 templates/help-page.php:23
+msgid ""
+"Add new add-ons support to your LDD Directory Lite. If you require support "
+"or would like to make a suggestion for improving this plugin, please refer "
+"to the following links."
+msgstr ""
 
 #: templates/contact-sidebar.php:2
-msgid "Send a Message"
-msgstr "Send a Message"
+msgid "Contact %s"
+msgstr ""
 
-#: templates/contact-sidebar.php:12
+#: templates/contact-sidebar.php:12 templates/contact-sidebar.php:15
 msgid "Your Name"
-msgstr "Your Name"
+msgstr ""
 
-#: templates/contact-sidebar.php:15
-msgid "Your name..."
-msgstr "Your name..."
+#: templates/contact-sidebar.php:21 templates/contact-sidebar.php:24
+msgid "Email Address"
+msgstr ""
 
-#: templates/contact-sidebar.php:21
-msgid "Your Email Address"
-msgstr "Your Email Address"
-
-#: templates/contact-sidebar.php:24
-msgid "Your email..."
-msgstr "Your email..."
-
-#: templates/contact-sidebar.php:31
-msgid "Message Subject"
-msgstr "Message Subject"
-
-#: templates/contact-sidebar.php:34
-msgid "What is this in regards to?"
-msgstr "What is this in regards to?"
+#: templates/contact-sidebar.php:31 templates/contact-sidebar.php:34
+msgid "Subject"
+msgstr ""
 
 #: templates/contact-sidebar.php:40
 msgid "Message"
-msgstr "Message"
+msgstr ""
 
 #: templates/contact-sidebar.php:41
 msgid "Enter your message here."
-msgstr "Enter your message here."
+msgstr ""
 
 #: templates/contact-sidebar.php:46
 msgid "What is 7 + seven?"
-msgstr "What is 7 + seven?"
+msgstr ""
 
 #: templates/contact-sidebar.php:49
 msgid "What is seven &#43; s&#101;v&#101;n?"
-msgstr "What is seven &#43; s&#101;v&#101;n?"
+msgstr ""
 
 #: templates/contact-sidebar.php:54
 msgid "Send"
-msgstr "Send"
+msgstr ""
 
 #: templates/contact-sidebar.php:70
 msgid "Please enter a valid name."
-msgstr "Please enter a valid name."
+msgstr ""
 
 #: templates/contact-sidebar.php:76
 msgid "Please enter a valid email address."
-msgstr "Please enter a valid email address."
+msgstr ""
 
 #: templates/contact-sidebar.php:81
 msgid "Please enter a valid subject."
-msgstr "Please enter a valid subject."
+msgstr ""
 
 #: templates/contact-sidebar.php:87
 msgid "Please enter a longer message."
-msgstr "Please enter a longer message."
+msgstr ""
 
 #: templates/contact-sidebar.php:93
 msgid "That doesn't appear correct."
-msgstr "That doesn't appear correct."
+msgstr ""
+
+#: templates/edit-contact.php:18 templates/panel-meta.php:13
+msgid "Name of person to contact"
+msgstr ""
+
+#: templates/edit-contact.php:51 templates/panel-meta.php:78
+msgid "Your Skype Username"
+msgstr ""
 
 #: templates/edit-details.php:16 templates/panel-general.php:12
 msgid "Title"
-msgstr "Title"
+msgstr ""
 
 #: templates/edit-details.php:23 templates/panel-general.php:19
 msgid "Category"
-msgstr "Category"
-
-#: templates/edit-details.php:32 templates/panel-general.php:37
-msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #: templates/edit-details.php:35
 msgid ""
-"The description you include here will make up a major portion of your listing "
-"when viewed individually. You may use <a href=\"%s\">markdown</a> to format your "
-"description, though we reserve the right to remove excess formatting before "
-"approving your listing."
+"The description you include here will make up a major portion of your "
+"listing when viewed individually. You may use <a href=\"%s\">markdown</a> to "
+"format your description, though we reserve the right to remove excess "
+"formatting before approving your listing."
 msgstr ""
-"The description you include here will make up a major portion of your listing "
-"when viewed individually. You may use <a href=\"%s\">markdown</a> to format your "
-"description, though we reserve the right to remove excess formatting before "
-"approving your listing."
 
 #: templates/edit-details.php:45 templates/panel-general.php:49
 msgid ""
-"Please provide a short summary of your listing that will appear in search results."
+"Please provide a short summary of your listing that will appear in search "
+"results."
 msgstr ""
-"Please provide a short summary of your listing that will appear in search results."
 
 #: templates/edit-location.php:17 templates/panel-geography.php:17
-msgid "Address"
-msgstr "Address"
+msgid "Address Line One"
+msgstr ""
 
 #: templates/edit-location.php:18 templates/panel-geography.php:18
-msgid "2101 Massachusetts Ave, NW"
-msgstr "2101 Massachusetts Ave, NW"
+msgid "Address Line 1"
+msgstr ""
 
-#: templates/edit-location.php:19 templates/panel-geography.php:19
-msgid "Washington, DC"
-msgstr "Washington, DC"
-
-#: templates/edit-location.php:27 templates/panel-geography.php:27
-msgid "Zip / Postal Code"
-msgstr "Zip / Postal Code"
-
-#: templates/edit-location.php:28 templates/panel-geography.php:28
-msgid "20008"
-msgstr "20008"
-
-#: templates/edit-location.php:34 templates/panel-geography.php:34
-msgid "Country"
-msgstr "Country"
+#: templates/edit-location.php:26 templates/edit-location.php:27
+#: templates/panel-geography.php:26
+msgid "Address Line Two"
+msgstr ""
 
 #: templates/edit-location.php:35 templates/panel-geography.php:35
-msgid "United States"
-msgstr "United States"
-
-#: templates/edit-location.php:43
-msgid ""
-"To set a marker, use the location field to search the address. If the search is "
-"unable to find the exact address, you can drag the marker anywhere on the map."
+msgid "City"
 msgstr ""
-"To set a marker, use the location field to search the address. If the search is "
-"unable to find the exact address, you can drag the marker anywhere on the map."
 
-#: templates/edit-location.php:50 templates/panel-geography.php:48
-msgid "Set Marker"
-msgstr "Set Marker"
+#: templates/edit-location.php:36 templates/panel-geography.php:36
+msgid "City or Town"
+msgstr ""
+
+#: templates/edit-location.php:42 templates/panel-geography.php:42
+msgid "State / Province"
+msgstr ""
+
+#: templates/edit-location.php:43 templates/panel-geography.php:43
+msgid "State, Province or Region"
+msgstr ""
+
+#: templates/edit-location.php:51 templates/panel-geography.php:51
+msgid "Zip / Postal Code"
+msgstr ""
+
+#: templates/edit-location.php:52 templates/panel-geography.php:52
+msgid "Zip or Postal Code"
+msgstr ""
+
+#: templates/edit-location.php:58 templates/panel-geography.php:58
+msgid "Country"
+msgstr ""
+
+#: templates/edit-location.php:59 templates/panel-geography.php:59
+msgid "Country or Region"
+msgstr ""
+
+#: templates/edit-location.php:74 templates/panel-geography.php:72
+msgid "Location:"
+msgstr ""
 
 #: templates/edit-logo.php:20
 msgid "Select New Logo:"
-msgstr "Select New Logo:"
+msgstr ""
 
-#: templates/edit-social.php:18 templates/panel-meta.php:38
+#: templates/edit-social.php:18 templates/panel-meta.php:46
 msgid "Examples include; 'http://www.yoursite.com', 'mysite.org'"
-msgstr "Examples include; 'http://www.yoursite.com', 'mysite.org'"
+msgstr ""
 
-#: templates/edit-social.php:26 templates/panel-meta.php:46
+#: templates/edit-social.php:26 templates/panel-meta.php:54
 msgid ""
 "Help locating and customizing your <a href=\"https://www.facebook.com/help/"
-"www/329992603752372\" title=\"Your Facebook Web Address | Facebook Help Center"
-"\">Facebook profile URL</a>"
+"www/329992603752372\" title=\"Your Facebook Web Address | Facebook Help "
+"Center\">Facebook profile URL</a>"
 msgstr ""
-"Help locating and customizing your <a href=\"https://www.facebook.com/help/"
-"www/329992603752372\" title=\"Your Facebook Web Address | Facebook Help Center"
-"\">Facebook profile URL</a>"
 
-#: templates/edit-social.php:34 templates/panel-meta.php:54
+#: templates/edit-social.php:34 templates/panel-meta.php:62
 msgid ""
-"This will always be similar to 'https://twitter.com/<strong>username</strong>'"
+"This will always be similar to 'https://twitter.com/<strong>username</"
+"strong>'"
 msgstr ""
-"This will always be similar to 'https://twitter.com/<strong>username</strong>'"
 
-#: templates/edit-social.php:40 templates/panel-meta.php:60
+#: templates/edit-social.php:40 templates/panel-meta.php:68
 msgid "Linkedin"
-msgstr "Linkedin"
-
-#: templates/edit-social.php:42 templates/panel-meta.php:62
-msgid ""
-"Help locating and customizing your <a href=\"http://help.linkedin.com/app/answers/"
-"detail/a_id/85/~/promoting-your-public-profile\" title=\"Promoting Your Public "
-"Profile | LinkedIn Help Center\">LinkedIn profile URL</a>"
 msgstr ""
-"Help locating and customizing your <a href=\"http://help.linkedin.com/app/answers/"
-"detail/a_id/85/~/promoting-your-public-profile\" title=\"Promoting Your Public "
-"Profile | LinkedIn Help Center\">LinkedIn profile URL</a>"
+
+#: templates/edit-social.php:42 templates/panel-meta.php:70
+msgid ""
+"Help locating and customizing your <a href=\"http://help.linkedin.com/app/"
+"answers/detail/a_id/85/~/promoting-your-public-profile\" title=\"Promoting "
+"Your Public Profile | LinkedIn Help Center\">LinkedIn profile URL</a>"
+msgstr ""
 
 #: templates/edit-submit.php:4
 msgid "Update Listing"
-msgstr "Update Listing"
+msgstr ""
 
 #: templates/edit-submit.php:5
 msgid "Cancel"
-msgstr "Cancel"
+msgstr ""
 
 #: templates/header.php:6
 msgid "Toggle navigation"
-msgstr "Toggle navigation"
+msgstr ""
 
-#: templates/header.php:15 templates/submit.php:37
-msgid "Submit Listing"
-msgstr "Submit Listing"
+#: templates/header.php:19 templates/header.php:47
+msgid "Search listings..."
+msgstr ""
 
-#: templates/header.php:16
-msgid "Manage Listings"
-msgstr "Manage Listings"
-
-#: templates/header.php:21 templates/header.php:23
+#: templates/header.php:21 templates/header.php:49
 msgid "Search"
-msgstr "Search"
+msgstr ""
 
-#: templates/home.php:16
-msgid "Featured Listings"
-msgstr "Featured Listings"
+#: templates/header.php:27
+msgid "Home"
+msgstr ""
+
+#: templates/header.php:29 templates/submit.php:34
+msgid "Submit Listing"
+msgstr ""
+
+#: templates/header.php:36
+msgid "Categories"
+msgstr ""
+
+#: templates/help-page.php:6
+msgid "About the plugin"
+msgstr ""
+
+#: templates/help-page.php:7
+msgid "Shortcodes"
+msgstr ""
+
+#: templates/help-page.php:8
+msgid "Template Overriding"
+msgstr ""
 
 #: templates/login.php:9
-msgid "A password has been sent to your email address. Thank you for registering!"
-msgstr "A password has been sent to your email address. Thank you for registering!"
+msgid ""
+"A password has been sent to your email address. Thank you for registering!"
+msgstr ""
 
 #: templates/login.php:15
 msgid "An email with information on how to reset your password has been sent."
-msgstr "An email with information on how to reset your password has been sent."
+msgstr ""
 
 #: templates/login.php:20
 msgid "Please log in, or register a new user account."
-msgstr "Please log in, or register a new user account."
+msgstr ""
 
 #: templates/login.php:23
 msgid "Login"
-msgstr "Login"
+msgstr ""
 
-#: templates/login.php:24 templates/login.php:84 templates/login.php:103
+#: templates/login.php:24 templates/login.php:85 templates/login.php:109
 msgid "Register"
-msgstr "Register"
+msgstr ""
 
 #: templates/login.php:25
 msgid "Lost Password"
-msgstr "Lost Password"
+msgstr ""
 
-#: templates/login.php:37 templates/login.php:71
+#: templates/login.php:37 templates/login.php:72
 msgid "Username"
-msgstr "Username"
+msgstr ""
 
 #: templates/login.php:43
 msgid "Password"
-msgstr "Password"
+msgstr ""
 
 #: templates/login.php:52
 msgid "Remember me"
-msgstr "Remember me"
+msgstr ""
 
 #: templates/login.php:59
 msgid "Sign in"
-msgstr "Sign in"
+msgstr ""
 
-#: templates/login.php:77 templates/login.php:96
+#: templates/login.php:78 templates/login.php:102
 msgid "Your Email"
-msgstr "Your Email"
+msgstr ""
+
+#: templates/login.php:91
+msgid "Sorry!"
+msgstr ""
+
+#: templates/login.php:91
+msgid "User registration on this site is currently disabled."
+msgstr ""
 
 #: templates/panel-geography.php:11
 msgid "Providing an address for your listing is optional."
-msgstr "Providing an address for your listing is optional."
-
-#: templates/panel-geography.php:43
-msgid ""
-"If you would like to include a Google map with your listing, set a marker on this "
-"map for your address. Type in part of your address to use the autocomplete "
-"feature, or drag the marker on the map directly to your location."
 msgstr ""
-"If you would like to include a Google map with your listing, set a marker on this "
-"map for your address. Type in part of your address to use the autocomplete "
-"feature, or drag the marker on the map directly to your location."
+
+#: templates/panel-geography.php:27
+msgid "Address Line 2"
+msgstr ""
+
+#: templates/panel-geography.php:67
+msgid ""
+"If you would like to include a Google map with your listing, set a marker on "
+"this map for your address. Type in part of your address to use the "
+"autocomplete feature, or drag the marker on the map directly to your "
+"location."
+msgstr ""
 
 #: templates/panel-meta.php:5
 msgid ""
-"The following information will help generate more traffic for your organization, "
-"the more the better. Your email address is not publicly available, instead a "
-"contact form will be embedded with your listing."
+"The following information will help generate more traffic for your "
+"organization, the more the better. Your email address is not publicly "
+"available, instead a contact form will be embedded with your listing."
 msgstr ""
-"The following information will help generate more traffic for your organization, "
-"the more the better. Your email address is not publicly available, instead a "
-"contact form will be embedded with your listing."
 
 #: templates/submit-tos.php:4
 msgid "By submitting, you agree your listing abides by our terms of service."
-msgstr "By submitting, you agree your listing abides by our terms of service."
+msgstr ""
 
 #: templates/submit.php:8
 msgid "We're sorry!"
-msgstr "We're sorry!"
+msgstr ""
 
 #: templates/submit.php:8
 msgid ""
 "There were some errors with the information you provided. Please check your "
 "submission and try again."
 msgstr ""
-"There were some errors with the information you provided. Please check your "
-"submission and try again."
 
-#: templates/submit.php:35
+#: templates/submit.php:32
 msgid ""
-"Please verify all information on this form before submitting. Your listing will "
-"not appear immediately as we review all submissions for accuracy and content, to "
-"ensure that listings fall within our terms of service."
+"Please verify all information on this form before submitting. Your listing "
+"will not appear immediately as we review all submissions for accuracy and "
+"content, to ensure that listings fall within our terms of service."
 msgstr ""
-"Please verify all information on this form before submitting. Your listing will "
-"not appear immediately as we review all submissions for accuracy and content, to "
-"ensure that listings fall within our terms of service."
 
 #. Plugin Name of the plugin/theme
 msgid "LDD Directory Lite"
-msgstr "LDD Directory Lite"
+msgstr ""
 
 #. Plugin URI of the plugin/theme
 msgid "http://wordpress.org/plugins/ldd-directory-lite"
-msgstr "http://wordpress.org/plugins/ldd-directory-lite"
+msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Powerful and simple to use, add a directory of business or other organizations to "
-"your web site."
+"Powerful and simple to use, add a directory of business or other "
+"organizations to your web site."
 msgstr ""
-"Powerful and simple to use, add a directory of business or other organizations to "
-"your web site."
 
 #. Author of the plugin/theme
 msgid "LDD Web Design"
-msgstr "LDD Web Design"
+msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://www.lddwebdesign.com"
-msgstr "http://www.lddwebdesign.com"
+msgstr ""
