@@ -91,7 +91,7 @@ function initialize(address) {
                     alert("No results Found.");
                 }
             } else {
-                alert("Geocode was not successful for the following reason: " + status);
+                console.log("Geocode was not successful for the following reason: " + status);
             }
         });
 
