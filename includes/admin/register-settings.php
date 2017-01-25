@@ -209,6 +209,19 @@ function ldl_get_registered_settings()
                     ),
                     'default' => 'asc',
                 ),
+                /* Prevent items entered in subcategory from being displayed in parent category listing view */
+                'listings_display_separator'       => array(
+                    'id'   => 'listings_display_separator',
+                    'name' => '<h4 class="title ldd-admin-title">' . __('Subcategory Listing Behavior', 'ldd-directory-lite') . '</h4>',
+                    'type' => 'header'
+                ),
+                'subcategory_listings'   => array(
+	                'id'   => 'subcategory_listings',
+	                'name' => __('Subcategory Listings', 'ldd-directory-lite'),
+	                'desc' => __('Do not show child category listings in their parent category pages.', 'ldd-directory-lite'),
+	                'type' => 'checkbox',
+	                'std'  => 1,
+                ),
             )
         ),
 

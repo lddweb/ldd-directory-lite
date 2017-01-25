@@ -98,10 +98,11 @@ function ldl_metaboxes_setup_cmb()
         'class' => 'geo_state',
     ));
     $listings_geo->add_field(array(
-        'name' => 'Map Location',
-        'desc' => __('Please provide the address above for adding map.', 'ldd-directory-lite'),
-        'id'   => ldl_pfx('geo'),
-        'type' => 'geo_location',
+        'name'       => 'Map Location',
+        'desc'       => __('Please provide the address above for adding map.', 'ldd-directory-lite'),
+        'id'         => ldl_pfx('geo'),
+        'type'       => 'geo_location',
+        'show_on_cb' => 'geo_location_field_condition'
     ));
 
     // Set up a custom meta box to encapsulate all URLs related to this listing
@@ -202,9 +203,19 @@ function ldl_render_geo_location_field($field, $escaped_value, $object_id, $obje
         echo '<p class="cmb_metabox_description">' . $field->args["desc"] . '</p>';
 
 }
-
 add_action('cmb2_render_geo_location', 'ldl_render_geo_location_field', 10, 5);
 
+/**
+ * Return true or false based on toggles to display of Google Maps for listings that have an address set.
+ *
+ * @return bool
+ */
+function geo_location_field_condition() {
+    if ( ldl_use_google_maps() ){
+        return true;
+    }
+    return false;
+}
 
 /**
  * Runs through the `gettext` filter to change labels on our custom post type add/edit screen

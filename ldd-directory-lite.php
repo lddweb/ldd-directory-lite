@@ -63,7 +63,7 @@ if(!(function_exists('_wp_get_user_contactmethods'))){
  * Flush the rewrites for custom post types
  */
 register_activation_hook(__FILE__, 'install_ldd_directory_lite');
-register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
+register_deactivation_hook(__FILE__, 'deactivate_ldd_directory_lite');
 
 
 function install_ldd_directory_lite() {
@@ -125,6 +125,21 @@ function install_ldd_directory_lite() {
 	// register post type before flushing
 	ldl_register_post_type();
 	$wp_rewrite->flush_rules( false );
+}
+
+/**
+ * Fire functions after plugin deactivated
+ */
+function deactivate_ldd_directory_lite() {
+	flush_rewrite_rules();
+	/** @var  $ldl_settings */
+	$ldl_settings = get_option('lddlite_settings', array());
+	/**
+	 * Force delete all listings pages created while plugin activation.
+	 */
+	wp_delete_post( $ldl_settings['directory_front_page'], true );
+	wp_delete_post( $ldl_settings['directory_submit_page'], true );
+	wp_delete_post( $ldl_settings['directory_manage_page'], true );
 }
 
 
@@ -374,6 +389,7 @@ function validate_google_api_key() {
 	endif;
 }
 function google_error_notice() {
+	if ( !ldl_use_google_maps() ) return false;
 	$class = "error";
 	$message = "Error: Google Map API is missing. Please go to <a href='".admin_url()."edit.php?post_type=directory_listings&page=lddlite-settings#lddlite_settings[googlemap_api_key]'>settings</a> and provide the Google Map API Key.";
 	echo"<div class=\"$class\"> <p>$message</p></div>";
