@@ -8,7 +8,7 @@
     <?php if (isset($_GET['msg'])): ?>
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            Your listing was successfully updated.
+            <?php _e( 'Your listing was successfully updated.', 'ldd-directory-lite' ); ?>
         </div>
     <?php endif; ?>
 
@@ -17,7 +17,7 @@
             <thead>
             <tr>
                 <th></th>
-                <th>Title</th>
+                <th><?php _e( 'Title', 'ldd-directory-lite' ); ?></th>
             </tr>
             </thead>
             <tbody>
@@ -27,20 +27,20 @@
                     <td><div style="width: 40px;"><?php echo ldl_get_thumbnail(get_the_ID(), array(32, 32)); ?></div></td>
                     <td>
                         <strong><a href="<?php the_permalink(get_the_ID()); ?>"><?php the_title(); ?></a></strong><br>
-                        <a href="<?php ldl_edit_link(get_the_ID(), 'details'); ?>">Edit Details</a> |
-                        <a href="<?php ldl_edit_link(get_the_ID(), 'contact'); ?>">Edit Contact</a> |
-                        <a href="<?php ldl_edit_link(get_the_ID(), 'social'); ?>">Edit Social</a> |
-                        <a href="<?php ldl_edit_link(get_the_ID(), 'logo'); ?>">Update Logo</a> |
-                        <a href="<?php ldl_edit_link(get_the_ID(), 'location'); ?>">Change Location</a>
+                        <a href="<?php ldl_edit_link(get_the_ID(), 'details'); ?>"><?php _e( 'Edit Details', 'ldd-directory-lite' ); ?></a> |
+                        <a href="<?php ldl_edit_link(get_the_ID(), 'contact'); ?>"><?php _e( 'Edit Contact', 'ldd-directory-lite' ); ?></a> |
+                        <a href="<?php ldl_edit_link(get_the_ID(), 'social'); ?>"><?php _e( 'Edit Social', 'ldd-directory-lite' ); ?></a> |
+                        <a href="<?php ldl_edit_link(get_the_ID(), 'logo'); ?>"><?php _e( 'Update Logo', 'ldd-directory-lite' ); ?></a> |
+                        <a href="<?php ldl_edit_link(get_the_ID(), 'location'); ?>"><?php _e( 'Change Location', 'ldd-directory-lite' ); ?></a>
                     </td>
                 </tr>
             <?php endwhile; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <h2>No Listings Found</h2>
+        <h2><?php _e( 'No Listings Found', 'ldd-directory-lite' ); ?></h2>
 
-        <p>It appears you haven't submitted any listings to the directory. If you would like to submit a listing, please <a href="<?php echo ldl_get_submit_link() ?>">go here</a>.</p>
+        <p><?php printf( __( "It appears you haven't submitted any listings to the directory. If you would like to submit a listing, please <a href='%s'>go here</a>.</p>", 'ldd-directory-lite' ), ldl_get_submit_link() ); ?>
     <?php endif; ?>
 
 </div>
