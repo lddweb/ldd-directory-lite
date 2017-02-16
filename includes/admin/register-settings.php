@@ -26,21 +26,21 @@ function ldl_get_registered_settings()
                 'directory_front_page'             => array(
                     'id'      => 'directory_front_page',
                     'name'    => __('Front Page', 'ldd-directory-lite'),
-                    'desc'    => __('This is the page where the <code>[directory]</code> shortcode has been placed.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('This is the page where the <code>%1$s</code> shortcode has been placed.', 'ldd-directory-lite'), '[directory]'),
                     'type'    => 'select',
                     'options' => ldl_get_pages()
                 ),
                 'directory_submit_page'            => array(
                     'id'      => 'directory_submit_page',
                     'name'    => __('Submit Listing Page', 'ldd-directory-lite'),
-                    'desc'    => __('This is the page where the <code>[directory_submit]</code> shortcode has been placed.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('This is the page where the <code>%1$s</code> shortcode has been placed.', 'ldd-directory-lite'), '[directory_submit]'),
                     'type'    => 'select',
                     'options' => ldl_get_pages()
                 ),
                 'directory_manage_page'            => array(
                     'id'      => 'directory_manage_page',
                     'name'    => __('Manage Listings Page', 'ldd-directory-lite'),
-                    'desc'    => __('This is the page where the <code>[directory_manage]</code> shortcode has been placed.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('This is the page where the <code>%1$s</code> shortcode has been placed.', 'ldd-directory-lite'), '[directory_manage]'),
                     'type'    => 'select',
                     'options' => ldl_get_pages()
                 ),
@@ -95,7 +95,7 @@ function ldl_get_registered_settings()
                 'googlemap_api_key'                => array(
                     'id'   => 'googlemap_api_key',
                     'name' => __('Google API Key', 'ldd-directory-lite'),
-                    'desc' => __('You can get the API Key from here <a href="https://developers.google.com/maps/documentation/javascript/get-api-key#get-an-api-key" target="_blank">here</a>.', 'ldd-directory-lite'),
+                    'desc' => sprintf(__('You can get the API Key from here <a href="%1$s" target="_blank">here</a>.', 'ldd-directory-lite'), esc_url('https://developers.google.com/maps/documentation/javascript/get-api-key#get-an-api-key') ),
                     'type' => 'text',
                 ),
                 'allow_tracking'                   => array(
@@ -118,7 +118,7 @@ function ldl_get_registered_settings()
                 'appearance_display_featured'   => array(
                     'id'   => 'appearance_display_featured',
                     'name' => __('Enable Featured Listings', 'ldd-directory-lite'),
-                    'desc' => __('If checked, listings tagged with <code>featured</code> will be shown on your directory home page.', 'ldd-directory-lite'),
+                    'desc' => sprintf(__('If checked, listings tagged with <code>%1$s</code> will be shown on your directory home page.', 'ldd-directory-lite'), 'featured'),
                     'type' => 'checkbox',
                     'std'  => 1,
                 ),
@@ -138,7 +138,7 @@ function ldl_get_registered_settings()
                 'directory_featured_sort'       => array(
                     'id'      => 'directory_featured_sort',
                     'name'    => __('Default Sort', 'ldd-directory-lite'),
-                    'desc'    => __('you can change sort for shortcodes too, <code>[directory fl_order_by="xxx" fl_order="asc"]</code>.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('you can change sort for shortcodes too, <code>%1$s</code>.', 'ldd-directory-lite'), '[directory fl_order_by="xxx" fl_order="asc"]'),
                     'type'    => 'select',
                     'options' => ldl_get_featured_sort_options(),
                     'default' => 'business_name',
@@ -146,7 +146,7 @@ function ldl_get_registered_settings()
                 'directory_featured_sort_order' => array(
                     'id'      => 'directory_featured_sort_order',
                     'name'    => __('Sort Order', 'ldd-directory-lite'),
-                    'desc'    => __('Please choose [ASC/DESC] sort order.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('Please choose %1$s sort order.', 'ldd-directory-lite'), '[ASC/DESC]'),
                     'type'    => 'select',
                     'options' => array(
                         'asc'  => __('ASC', 'ldd-directory-lite'),
@@ -168,7 +168,7 @@ function ldl_get_registered_settings()
                 'directory_category_sort'       => array(
                     'id'      => 'directory_category_sort',
                     'name'    => __('Default Sort', 'ldd-directory-lite'),
-                    'desc'    => __('you can change sort for shortcodes too, <code>[directory cat_order_by="xxx" cat_order="asc"]</code>.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('you can change sort for shortcodes too, <code>%1$s</code>.', 'ldd-directory-lite'), '[directory cat_order_by="xxx" cat_order="asc"]'),
                     'type'    => 'select',
                     'options' => ldl_get_cat_sort_options(),
                     'default' => 'title',
@@ -176,7 +176,7 @@ function ldl_get_registered_settings()
                 'directory_category_sort_order' => array(
                     'id'      => 'directory_category_sort_order',
                     'name'    => __('Sort Order', 'ldd-directory-lite'),
-                    'desc'    => __('Please choose [ASC/DESC] sort order.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('Please choose %1$s sort order.', 'ldd-directory-lite'), '[ASC/DESC]'),
                     'type'    => 'select',
                     'options' => array(
                         'asc'  => __('ASC', 'ldd-directory-lite'),
@@ -193,7 +193,7 @@ function ldl_get_registered_settings()
                 'directory_listings_sort'       => array(
                     'id'      => 'directory_listings_sort',
                     'name'    => __('Default Sort', 'ldd-directory-lite'),
-                    'desc'    => __('you can change sort for shortcodes too, <code>[directory list_order_by="xxx" list_order="asc"]</code>.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('you can change sort for shortcodes too, <code>%1$s</code>.', 'ldd-directory-lite'), '[directory list_order_by="xxx" list_order="asc"]'),
                     'type'    => 'select',
                     'options' => ldl_get_sort_options(),
                     'default' => 'business_name',
@@ -201,7 +201,7 @@ function ldl_get_registered_settings()
                 'directory_listings_sort_order' => array(
                     'id'      => 'directory_listings_sort_order',
                     'name'    => __('Sort Order', 'ldd-directory-lite'),
-                    'desc'    => __('Please choose [ASC/DESC] sort order.', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('Please choose %1$s sort order.', 'ldd-directory-lite'), '[ASC/DESC]'),
                     'type'    => 'select',
                     'options' => array(
                         'asc'  => __('ASC', 'ldd-directory-lite'),
@@ -244,7 +244,7 @@ function ldl_get_registered_settings()
                 'email_notification_address' => array(
                     'id'   => 'email_notification_address',
                     'name' => __('From Email', 'ldd-directory-lite'),
-                    'desc' => __('Email to send purchase receipts from. This will act as the "from" and "reply-to" address.', 'ldd-directory-lite'),
+                    'desc' => sprintf(__('Email to send purchase receipts from. This will act as the "%1$s" and "%2$s" address.', 'ldd-directory-lite'), 'from', 'reply-to'),
                     'type' => 'text',
                     'std'  => get_bloginfo('admin_email')
                 ),
@@ -543,10 +543,10 @@ function ldl_get_settings_tabs()
 function ldl_get_cat_sort_options()
 {
 
-    $pages_options["id"] = "ID";
-    $pages_options["slug"] = "Slug";
-    $pages_options["title"] = "Title";
-    $pages_options["count"] = "Count";
+    $pages_options['id']    = __('ID', 'ldd-directory-lite');
+    $pages_options['slug']  = __('Slug', 'ldd-directory-lite');
+    $pages_options['title'] = __('Title', 'ldd-directory-lite');
+    $pages_options['count'] = __('Count', 'ldd-directory-lite');
 
     return $pages_options;
 }
@@ -554,11 +554,11 @@ function ldl_get_cat_sort_options()
 function ldl_get_featured_sort_options()
 {
 
-    $pages_options["business_name"] = "Business name";
-    $pages_options["zip"] = "Zip";
-    $pages_options["area"] = "Area";
-    $pages_options["category"] = "Category";
-    $pages_options["random"] = "Random";
+    $pages_options['business_name'] = __('Business name', 'ldd-directory-lite');
+    $pages_options['zip']           = __('Zip', 'ldd-directory-lite');
+    $pages_options['area']          = __('Area', 'ldd-directory-lite');
+    $pages_options['category']      = __('Category', 'ldd-directory-lite');
+    $pages_options['random']        = __('Random', 'ldd-directory-lite');
 
     return $pages_options;
 }
@@ -566,14 +566,12 @@ function ldl_get_featured_sort_options()
 function ldl_get_sort_options()
 {
 
-    $pages_options["business_name"] = "Business name";
-    $pages_options["featured"] = "Featured listing";
-    //$pages_options[ "contact_name" ]  = "Contact name";
-    //$pages_options[ "city" ] 		  = "City";
-    $pages_options["zip"] = "Zip";
-    $pages_options["area"] = "Area";
-    $pages_options["category"] = "Category";
-    $pages_options["random"] = "Random";
+    $pages_options['business_name'] = __('Business name', 'ldd-directory-lite');
+    $pages_options['featured']      = __('Featured listing', 'ldd-directory-lite');
+    $pages_options['zip']           = __('Zip', 'ldd-directory-lite');
+    $pages_options['area']          = __('Area', 'ldd-directory-lite');
+    $pages_options['category']      = __('Category', 'ldd-directory-lite');
+    $pages_options['random']        = __('Random', 'ldd-directory-lite');
 
     return $pages_options;
 }
@@ -600,8 +598,8 @@ function ldl_get_pages($force = FALSE)
 function ldl_get_listing_views()
 {
 
-    $pages_options["compact"] = "Compact View";
-    $pages_options["grid"] = "Grid View";
+    $pages_options["compact"]   = __('Compact View', 'ldd-directory-lite');
+    $pages_options["grid"]      = __('Grid View', 'ldd-directory-lite');
 
     return $pages_options;
 }

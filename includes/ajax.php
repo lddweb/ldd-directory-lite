@@ -23,7 +23,7 @@
 function ldl_ajax_contact_form() {
 
     if (!wp_verify_nonce($_POST['nonce'], 'contact-form-nonce'))
-        die('You shall not pass!');
+        die( __('You shall not pass!', 'ldd-directory-lite') );
 
     $hpt_field = 'last_name';
 
@@ -79,7 +79,7 @@ function ldl_ajax_contact_form() {
     $contact_email = get_post_meta($post_id, ldl_pfx('contact_email'), 1);
     $listing_title = get_the_title($post_id);
 
-    $headers = sprintf("From: %s <%s>\r\n", $name, $email);
+    $headers = sprintf(__('From: %s <%s>\r\n', 'ldd-directory-lite'), $name, $email);
 
 
     if (wp_mail($contact_email, $subject, $message, $headers)) {

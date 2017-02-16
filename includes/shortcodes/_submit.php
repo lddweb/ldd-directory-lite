@@ -459,7 +459,7 @@ function ldl_shortcode_directory_submit() {
     $lddlite_submit_processor = new ldd_directory_lite_processor;
 
     if (!is_user_logged_in()) {
-        ldl_get_template_part('login');
+        ldl_get_template_part('global/login');
         return;
     }
 
@@ -467,7 +467,7 @@ function ldl_shortcode_directory_submit() {
         do_action('lddlite_submit_pre_process', $lddlite_submit_processor);
 
         if (ldl_submit_generate_listing()) {
-            ldl_get_template_part('submit', 'success');
+            ldl_get_template_part('frontend/submit', 'success');
             do_action('lddlite_submit_post_process', $lddlite_submit_processor);
 
             return;
@@ -479,7 +479,7 @@ function ldl_shortcode_directory_submit() {
     wp_enqueue_script('maps-autocomplete', $google_api_src);
     wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
 
-    ldl_get_template_part('submit');
+    ldl_get_template_part('frontend/submit');
 
 }
 add_shortcode('directory_submit', 'ldl_shortcode_directory_submit');

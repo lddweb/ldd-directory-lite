@@ -25,7 +25,7 @@
                         <h2 class="ldd-featured-listings-title"><?php _e('Featured Listings', 'ldd-directory-lite'); ?></h2>
 
                         <?php while ($featured->have_posts()): $featured->the_post(); ?>
-                            <?php ldl_get_template_part('listing', 'compact'); ?>
+                            <?php ldl_get_template_part('loop/listing', 'compact'); ?>
                         <?php endwhile; ?>
 
                     </div>

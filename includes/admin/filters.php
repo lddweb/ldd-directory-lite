@@ -59,8 +59,8 @@ add_filter('enter_title_here', 'ldl_filter_enter_title_here');
 function ldl_filter_admin_post_thumbnail_html($content) {
 
     if (LDDLITE_POST_TYPE == get_post_type()) {
-        $content = str_replace(__('Set featured image'), __('Upload A Logo', 'ldd-directory-lite'), $content);
-        $content = str_replace(__('Remove featured image'), __('Remove Logo', 'ldd-directory-lite'), $content);
+        $content = str_replace(__('Set featured image', 'ldd-directory-lite'), __('Upload A Logo', 'ldd-directory-lite'), $content);
+        $content = str_replace(__('Remove featured image', 'ldd-directory-lite'), __('Remove Logo', 'ldd-directory-lite'), $content);
     }
 
     return $content;

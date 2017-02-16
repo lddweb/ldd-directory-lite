@@ -125,7 +125,7 @@ function ldl_shortcode_directory_manage() {
     ldl_enqueue(1);
 
     if (!is_user_logged_in()) {
-        ldl_get_template_part('login');
+        ldl_get_template_part('global/login');
         return false;
     }
 
@@ -197,7 +197,7 @@ function ldl_shortcode_directory_manage() {
             }
         }
 
-        ldl_get_template_part('edit', $_GET['edit']);
+        ldl_get_template_part('frontend/edit', $_GET['edit']);
 
     } else {
         ldl_get_template_part('manage');

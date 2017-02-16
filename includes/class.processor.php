@@ -68,7 +68,7 @@ class ldd_directory_lite_processor {
      */
     private function _verify_nonce($nonce) {
         if (!wp_verify_nonce($_POST[self::NONCE_FIELD], $nonce))
-            die("No, kitty! That's a bad kitty!");
+            die(__("No, kitty! That's a bad kitty!", 'ldd-directory-lite'));
     }
 
 

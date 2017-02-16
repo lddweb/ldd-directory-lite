@@ -30,7 +30,7 @@ get_header();
                 <div class="row">
                     <div class="col-md-8">
 
-                        <div class="entry-content">
+                        <div class="listing-content"><!--entry-content-->
                             <?php the_content(); ?>
                         </div><!-- .entry-content -->
                         <div class="listing-meta">

@@ -55,7 +55,7 @@ function ldl_shortcode_cat_directory($atts)
             echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
         }
         while ($query1->have_posts()) { $query1->the_post();
-            ldl_get_template_part('listing', $atts["view"]);
+            ldl_get_template_part('loop/listing', $atts["view"]);
         }
         if ($atts["view"] == "grid") {
             echo "</div>";

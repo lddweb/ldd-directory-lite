@@ -169,7 +169,7 @@ function ldl_mail($to, $subject, $message, $headers = '') {
     if (empty($headers)) {
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= sprintf('From: %s <%s>', $from_name, $from_email) . "\r\n";
+        $headers .= sprintf(__('From: %s <%s>', 'ldd-directory-lite'), $from_name, $from_email) . "\r\n";
     }
 
     ob_start();

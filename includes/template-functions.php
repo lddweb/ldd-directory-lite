@@ -63,8 +63,13 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
             if (file_exists(trailingslashit($path) . $template)) {
                 $located = trailingslashit($path) . $template;
                 break;
+            }else{ //backward compatibility for old plugin version
+	            $old_template = explode( '/', $template );
+	            if (file_exists(trailingslashit($path) . $old_template[1]) && isset($old_template[1]) ) {
+		            $located = trailingslashit($path) . $old_template[1];
+		            break;
+	            }
             }
-
         }
 
         if ($located) {
@@ -171,7 +176,7 @@ function ldl_use_google_maps() {
 function ldl_get_header() {
     $show_header = apply_filters('lddlite_filter_presentation_header', true);
     if ($show_header)
-        ldl_get_template_part('header');
+        ldl_get_template_part('global/header');
 }
 
 
@@ -190,7 +195,7 @@ function ldl_get_contact_form() {
     echo '<script>var ajaxurl = "' . admin_url('admin-ajax.php') . '"</script>';
 
     wp_enqueue_script('lddlite-contact');
-    ldl_get_template_part('contact', 'sidebar');
+    ldl_get_template_part('global/contact', 'sidebar');
 }
 
 
@@ -395,7 +400,7 @@ function ldl_the_tos() {
         return;
     }
 
-    ldl_get_template_part('submit', 'tos');
+    ldl_get_template_part('frontend/submit', 'tos');
 }
 
 /** LISTING META UTILITES */
@@ -471,7 +476,7 @@ function ldl_get_social($post_id) {
     foreach ($social as $key => $url) {
         if (!empty($url)) {
             $title_key = array_key_exists($key, $titles) ? $titles[ $key ] : $titles['default'];
-            $title = sprintf($title_key, $name, $key);
+            $title = sprintf(__($title_key, 'ldd-directory-lite'), $name, $key);
 
             $output[] = '<a target="_blank" href="' . $url . '" title="' . $title . '"><i class="fa fa-' . $key . '-square"></i></a>';
         }
