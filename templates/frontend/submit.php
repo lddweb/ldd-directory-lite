@@ -22,9 +22,9 @@
         <?php echo wp_nonce_field( 'submit-listing','nonce_field', 0, 0 ); ?>
         <?php do_action( 'lddlite_submit_listing_hidden_fields' ); ?>
 
-        <?php ldl_get_template_part( 'panel', 'general' ); ?>
-        <?php ldl_get_template_part( 'panel', 'meta' ); ?>
-        <?php ldl_get_template_part( 'panel', 'geography' ); ?>
+        <?php ldl_get_template_part( 'frontend/panel', 'general' ); ?>
+        <?php ldl_get_template_part( 'frontend/panel', 'meta' ); ?>
+        <?php ldl_get_template_part( 'frontend/panel', 'geography' ); ?>
 
         <div class="container-fluid">
             <div class="row bump-down-more">

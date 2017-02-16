@@ -62,43 +62,43 @@ function ldl_metaboxes_setup_cmb()
         'show_names'   => TRUE,
     ));
     $listings_geo->add_field(array(
-        'name'  => 'Address One',
+        'name'  => __('Address One', 'ldd-directory-lite'),
         'id'    => ldl_pfx('address_one'),
         'type'  => 'text',
         'class' => 'geo_address_1',
     ));
     $listings_geo->add_field(array(
-        'name'  => 'Address Two',
+        'name'  => __('Address Two', 'ldd-directory-lite'),
         'id'    => ldl_pfx('address_two'),
         'type'  => 'text',
         'class' => 'geo_address_2',
     ));
     $listings_geo->add_field(array(
-        'name'  => 'City',
+        'name'  => __('City', 'ldd-directory-lite'),
         'id'    => ldl_pfx('city'),
         'type'  => 'text_medium',
         'class' => 'geo_city',
     ));
     $listings_geo->add_field(array(
-        'name'  => 'Zip / Postal Code',
+        'name'  => __('Zip / Postal Code', 'ldd-directory-lite'),
         'id'    => ldl_pfx('postal_code'),
         'type'  => 'text_medium',
         'class' => 'geo_zip',
     ));
     $listings_geo->add_field(array(
-        'name'  => 'Country',
+        'name'  => __('Country', 'ldd-directory-lite'),
         'id'    => ldl_pfx('country'),
         'type'  => 'text_medium',
         'class' => 'geo_country',
     ));
     $listings_geo->add_field(array(
-        'name'  => 'State / Province',
+        'name'  => __('State / Province', 'ldd-directory-lite'),
         'id'    => ldl_pfx('state'),
         'type'  => 'text_medium',
         'class' => 'geo_state',
     ));
     $listings_geo->add_field(array(
-        'name'       => 'Map Location',
+        'name'       => __('Map Location', 'ldd-directory-lite'),
         'desc'       => __('Please provide the address above for adding map.', 'ldd-directory-lite'),
         'id'         => ldl_pfx('geo'),
         'type'       => 'geo_location',

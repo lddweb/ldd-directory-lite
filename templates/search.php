@@ -16,7 +16,7 @@
             <?php
             while (have_posts()) {
                 the_post();
-                ldl_get_template_part('listing', 'compact');
+                ldl_get_template_part('loop/listing', 'compact');
             }
             ?>
 

@@ -87,6 +87,12 @@
     background: #428BCA; /* Current page background */
     color:#fff;
 }
+/*** Default Theme fixes ***/
+.archive:not(.page-one-column):not(.has-sidebar) #primary.twentyseventeen article{
+    float: none;
+    width: 100%;
+}
+
 /* ====================== *
  * Pagination Css Ends    *
  * ====================== */

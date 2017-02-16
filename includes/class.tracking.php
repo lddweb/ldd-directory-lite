@@ -225,7 +225,7 @@ function custom_admin_pointers() {
     $prefix = 'custom_admin_pointers' . $version . '_';
 
     $new_pointer_content = '<h3>' . __('LDD Directory version' . LDDLITE_VERSION) . '</h3>';
-    $new_pointer_content .= '<p>' . __('Thank you for updating to the latest LDD Directory version! You can add, edit or remove listings from this menu. Some new features have been added since last time, so be sure to review your settings!') . '</p>';
+    $new_pointer_content .= '<p>' . __('Thank you for updating to the latest LDD Directory version! You can add, edit or remove listings from this menu. Some new features have been added since last time, so be sure to review your settings!', 'ldd-directory-lite') . '</p>';
 
     return array(
         $prefix . 'new_items' => array(

@@ -110,7 +110,7 @@ get_header();
 			}
 			while ( have_posts() ) {
 				the_post();
-				ldl_get_template_part( 'listing', $listing_view );
+				ldl_get_template_part( 'loop/listing', $listing_view );
 			}
 			if ( $listing_view == "grid" ) {
 				echo "</div>";

@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 3.9.1 or higher
 Tested up to: 4.7
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,14 +136,31 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 1.0.2 =
+= 1.1.0 =
 
-* Added Skype field to front-end submission for contact info.
-* Corrected issue with Address field in placeholder text.
-* Updated banner for WordPress Repo.
-* Fixed warning in search template.
+* Corrected issue with subcategories not showing in the parent category view.
+* Added hooks for start and end of the page wrapper in templates for third party theme compatibility.
+* Added support for WordPress default themes.
+* Updated plugin strings for translation.
+* Restructured template structure in sub folders.
+* Fixed Google Maps API - if user selects not to use Google Maps the API should not be required at all and Maps should not show on editor or front-end submission form.
+* Fixed Google Maps GEO Code Error.
+* Fixed issue when directory creates multiple pages upon deactivation and re-activation.
+* Fixed Add-ons page to change the button from "Buy now" to "Installed" if add-on is already present.
 
 == Changelog ==
+
+= 1.1.0 =
+
+* Corrected issue with subcategories not showing in the parent category view.
+* Added hooks for start and end of the page wrapper in templates for third party theme compatibility.
+* Added support for WordPress default themes.
+* Updated plugin strings for translation.
+* Restructured template structure in sub folders.
+* Fixed Google Maps API - if user selects not to use Google Maps the API should not be required at all and Maps should not show on editor or front-end submission form.
+* Fixed Google Maps GEO Code Error.
+* Fixed issue when directory creates multiple pages upon deactivation and re-activation.
+* Fixed Add-ons page to change the button from "Buy now" to "Installed" if add-on is already present.
 
 = 1.0.2 =
 

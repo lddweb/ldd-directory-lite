@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <?php ldl_get_template_part('edit', 'submit'); ?>
+        <?php ldl_get_template_part('frontend/edit', 'submit'); ?>
     </form>
 
 </div>
