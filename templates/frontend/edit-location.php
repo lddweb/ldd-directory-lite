@@ -4,7 +4,7 @@
 
     <?php ldl_get_header(); ?>
 
-    <h2>Edit location for &ldquo;<?php echo ldl_get_value('title'); ?>&rdquo;</h2>
+    <h2><?php printf( __( 'Edit location for &ldquo;%s&rdquo;', 'ldd-directory-lite' ), ldl_get_value('title') ); ?>&rdquo;</h2>
 
     <form id="submit-listing" name="submit-listing" method="post" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="action" value="edit-location">
