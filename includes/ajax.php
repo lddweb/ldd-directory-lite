@@ -79,8 +79,7 @@ function ldl_ajax_contact_form() {
     $contact_email = get_post_meta($post_id, ldl_pfx('contact_email'), 1);
     $listing_title = get_the_title($post_id);
 
-    $headers = sprintf(__('From: %s <%s>\r\n', 'ldd-directory-lite'), $name, $email);
-
+    $headers = sprintf("From: %s <%s>\r\n", $name, $email);
 
     if (wp_mail($contact_email, $subject, $message, $headers)) {
         $response = array(
