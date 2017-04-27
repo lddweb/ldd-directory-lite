@@ -31,7 +31,7 @@ if ( $wp_query->max_num_pages <= 1 ) {
 <nav class="ldd_listing_pagination clearfix">
 	<?php
 	echo paginate_links( apply_filters( 'ldd_pagination_args', array(
-		//'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
+		'base'         => esc_url_raw( str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ) ),
 		'format'       => '',
 		'add_args'     => false,
 		'current'      => max( 1, get_query_var( 'paged' ) ),
