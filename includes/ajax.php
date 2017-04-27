@@ -78,10 +78,21 @@ function ldl_ajax_contact_form() {
     $post_id = intval($_POST['post_id']);
     $contact_email = get_post_meta($post_id, ldl_pfx('contact_email'), 1);
     $listing_title = get_the_title($post_id);
+    $listing_url   = get_the_permalink( $post_id );
+    $site_name     = get_bloginfo( 'name' );
+    $headers       = array();
 
-    $headers = sprintf("From: %s <%s>\r\n", $name, $email);
+    $headers[]     = "Content-Type: text/html; charset=UTF-8";
+    $headers[]     = sprintf("From: %s <%s>", $name, $email);
 
-    if (wp_mail($contact_email, $subject, $message, $headers)) {
+    $body = sprintf( __( "<h1>New contact from %s : <a href='%s'>%s</a></h1><hr/>", 'ldd-directory-lite' ), $site_name, $listing_url, $listing_title );
+
+    $body .= sprintf( __( "<strong>NAME:</strong> %s", 'ldd-directory-lite' ), $name ) . "<br>";
+    $body .= sprintf( __( "<strong>EMAIL:</strong> %s", 'ldd-directory-lite' ), $email ) . "<br>";
+    $body .= sprintf( __( "<strong>SUBJECT:</strong> %s", 'ldd-directory-lite' ), $subject ) . "<br>";
+    $body .= sprintf( __( "<strong>MESSAGE:</strong> %s", 'ldd-directory-lite' ), $message ) . "<br>";
+
+    if (wp_mail($contact_email, $subject, $body, $headers)) {
         $response = array(
             'success' => 1,
             'msg'     => '<p>' . sprintf(__('Your message has been successfully sent to <em>%s</em>!', 'ldd-directory-lite'), $listing_title) . '</p>',
