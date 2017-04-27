@@ -215,50 +215,33 @@ function ldl_get_parent_categories($attr = array()) {
  * @return string Return a formatted string containing all category elements
  */
 function ldl_get_categories($parent = 0,$attr = array()) {
-	
-	$args_arr = array('parent' => $parent);
-
-	$sort_by 	= ldl()->get_option('directory_category_sort', 'business_name');
-	$sort_order = ldl()->get_option('directory_category_sort_order','asc');
-		
-	if(isset($attr["cat_order_by"]) and !empty($attr["cat_order_by"])):
-		$sort_by 	= $attr["cat_order_by"];
-	endif;
-
-	if(isset($attr["cat_order"]) and !empty($attr["cat_order"])):
-		$sort_order = $attr["cat_order"];
-	endif;	
-
-	
-	if($sort_by == "title"):
-		$args_arr = array(
-					  'orderby'	=> 'name', 
-					  'order'	=> $sort_order,
-					  'parent'	=> $parent
-				  	); 
-	elseif ($sort_by == "id"):		
-		$args_arr = array(
-					  'orderby'	=> 'id', 
-					  'order'	=> $sort_order,
-					  'parent'	=> $parent
-				  	); 						
-	elseif ($sort_by == "slug"):
-		$args_arr = array(
-					  'orderby'	=> 'slug', 
-					  'order'	=> $sort_order,
-					  'parent'	=> $parent
-				  	); 					
-	elseif ($sort_by == "count"):	
-		$args_arr = array(
-					  'orderby'	=> 'count', 
-					  'order'	=> $sort_order,
-					  'parent'	=> $parent
-				  	); 
-	endif;				
 
 	$custom_url = "";
 	$custom_url_para = array();
-	
+
+	$sort_by 	= ldl()->get_option( 'directory_category_sort', 'business_name' );
+	$sort_order = ldl()->get_option( 'directory_category_sort_order','asc' );
+	$sub_check  = ldl()->get_option( 'subcategory_listings', 0 );
+	$subcategory_listings = ($sub_check == 0) ? true : false;
+
+	$args_arr = array(
+		'order'		=> $sort_order,
+		'orderby' 	=> $sort_by,
+		'pad_counts'=> $subcategory_listings,
+	);
+
+	if(isset($parent) and !empty($parent)):
+		$args_arr['parent'] 	= $parent;
+	endif;
+
+	if(isset($attr["cat_order_by"]) and !empty($attr["cat_order_by"])):
+		$args_arr['orderby'] 	= $attr["cat_order_by"];
+	endif;
+
+	if(isset($attr["cat_order"]) and !empty($attr["cat_order"])):
+		$args_arr['order'] 		= $attr["cat_order"];
+	endif;
+
 	if(isset($attr["list_order_by"]) and !empty($attr["list_order_by"])):
 		$ls_sort_by 				 = $attr["list_order_by"];
 		$custom_url_para["order_by"] = $ls_sort_by;
@@ -267,26 +250,27 @@ function ldl_get_categories($parent = 0,$attr = array()) {
 	if(isset($attr["list_order"]) and !empty($attr["list_order"])):
 		$ls_sort_order  	 	  = $attr["list_order"];
 		$custom_url_para["order"] = $ls_sort_order;
-	endif;	
+	endif;
 
 	if(isset($custom_url_para) and !empty($custom_url_para)):
 		$custom_url = "?".http_build_query($custom_url_para);
 	endif;
-		
-    $terms = get_terms(LDDLITE_TAX_CAT, $args_arr);
 
-    $mask = '<a href="%1$s'.$custom_url.'" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
+	$terms = get_terms(LDDLITE_TAX_CAT, $args_arr);
 
-    $categories = array();
+	$mask = '<a href="%1$s'.$custom_url.'" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
+
+	$categories = array();
 	if(!empty($terms) and !is_wp_error($terms)) {
-    foreach ($terms as $category) {
-        $term_link = get_term_link($category);
-        $categories[] = sprintf($mask, $term_link, $category->name, $category->count);
-    }
 
-    $categories = apply_filters('lddlite_filter_presentation_categories', $categories, $terms, $mask);
+		foreach ($terms as $category) {
+			$term_link = get_term_link($category);
+			$categories[] = sprintf($mask, $term_link, $category->name, $category->count);
+		}
+
+		$categories = apply_filters('lddlite_filter_presentation_categories', $categories, $terms, $mask);
 	}
-    return implode(' ', $categories);
+	return implode(' ', $categories);
 }
 
 /**

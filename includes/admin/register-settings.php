@@ -218,7 +218,7 @@ function ldl_get_registered_settings()
                 'subcategory_listings'   => array(
 	                'id'   => 'subcategory_listings',
 	                'name' => __('Subcategory Listings', 'ldd-directory-lite'),
-	                'desc' => __('Do not show child category listings in their parent category pages.', 'ldd-directory-lite'),
+	                'desc' => __('Do not show child category listings in their parent category pages & counts.', 'ldd-directory-lite'),
 	                'type' => 'checkbox',
 	                'std'  => 1,
                 ),
