@@ -13,16 +13,31 @@ function initialize(address) {
         has_points = true;
     } else {
         latLng = new google.maps.LatLng(39.97712028761926, -102.70019568750001);
-        zoom = 4;
+        zoom   = 4;
+
+        var mapOptions = {
+            center: latLng,
+            zoom: zoom,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(pos);
+            }, function() {
+                console.log("Error: The Geolocation service failed.");
+            });
+        } else {
+            console.log("Error: Your browser doesn\'t support geolocation.");
+        }
     }
 
-    var mapOptions = {
-        center: latLng,
-        zoom: zoom,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
     /*  var markerOptions = {
      position: latLng,
