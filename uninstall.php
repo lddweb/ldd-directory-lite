@@ -33,22 +33,21 @@ function ldl_uninstall_attachments() {
     if (!$post_ids)
         return;
 
-    $post_ids = implode(',', $post_ids);
-
-    $attachments = get_posts(array(
+    $attachments = new WP_Query(array(
         'post_type'      => 'attachment',
         'posts_per_page' => -1,
         'post_status'    => 'any',
-        'post_parent_in' => $post_ids,
+        'post_parent__in' => $post_ids,
         'no_found_rows'  => true,
+        'fields'         => 'ids'
     ));
+    $attachments = $attachments->posts;
 
     if ($attachments) {
         foreach ($attachments as $attachment) {
-            wp_delete_attachment($attachment->ID);
+            wp_delete_attachment( $attachment );
         }
     }
-
 }
 
 
