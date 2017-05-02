@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 3.9.1 or higher
 Tested up to: 4.7
-Stable tag: 1.1.01
+Stable tag: 1.1.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,19 +136,23 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 1.1.0 =
+= 1.1.1 =
 
-* Corrected issue with subcategories not showing in the parent category view.
-* Added hooks for start and end of the page wrapper in templates for third party theme compatibility.
-* Added support for WordPress default themes.
-* Updated plugin strings for translation.
-* Restructured template structure in sub folders.
-* Fixed Google Maps API - if user selects not to use Google Maps the API should not be required at all and Maps should not show on editor or front-end submission form.
-* Fixed Google Maps GEO Code Error.
-* Fixed issue when directory creates multiple pages upon deactivation and re-activation.
-* Fixed Add-ons page to change the button from "Buy now" to "Installed" if add-on is already present.
+* Added option for changeing behavior of category listings count (include or exclude sub categories).
+* Fixed bug with listings pagination on some themes.
+* Corrected output for contact form messages.
+* Corrected major bug/conflict with Child Theme Configurator plugin causing all media files to be delted upan removal of LDD Directory Lite.
+* Added GEO Location support for localizing map for users.
 
 == Changelog ==
+
+= 1.1.1 =
+
+* Added option for changeing behavior of category listings count (include or exclude sub categories).
+* Fixed bug with listings pagination on some themes.
+* Corrected output for contact form messages.
+* Corrected major bug/conflict with Child Theme Configurator plugin causing all media files to be delted upan removal of LDD Directory Lite.
+* Added GEO Location support for localizing map for users.
 
 = 1.1.0 =
 
