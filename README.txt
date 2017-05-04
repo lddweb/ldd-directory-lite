@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 3.9.1 or higher
 Tested up to: 4.7
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,7 +136,7 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
-= 1.1.1 =
+= 1.1.2 =
 
 * Added option for changeing behavior of category listings count (include or exclude sub categories).
 * Fixed bug with listings pagination on some themes.
@@ -146,7 +146,7 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Changelog ==
 
-= 1.1.1 =
+= 1.1.2 =
 
 * Added option for changeing behavior of category listings count (include or exclude sub categories).
 * Fixed bug with listings pagination on some themes.
