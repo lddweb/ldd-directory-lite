@@ -70,6 +70,18 @@ function ldl_get_registered_settings()
                     'name' => '<h4 class="title ldd-admin-title">' . __('Other', 'ldd-directory-lite') . '</h4>',
                     'type' => 'header'
                 ),
+
+                 'home_page_listing' => array(
+                    'id'      => 'home_page_listing',
+                    'name'    => __('Home page default listing', 'ldd-directory-lite'),
+                    'desc'    => __('Home page default listing', 'ldd-directory-lite'),
+                    'type'    => 'radio_inline',
+                    'options' => array(
+                        "category" => "Categories",
+                        "listing"  => "Listing"
+                    ),
+                    "std"     => "category",
+                 ),
                 'general_allow_public_submissions' => array(
                     'id'      => 'general_allow_public_submissions',
                     'name'    => __('Public Submissions', 'ldd-directory-lite'),
@@ -121,6 +133,13 @@ function ldl_get_registered_settings()
                     'desc' => sprintf(__('If checked, listings tagged with <code>%1$s</code> will be shown on your directory home page.', 'ldd-directory-lite'), 'featured'),
                     'type' => 'checkbox',
                     'std'  => 1,
+                ),
+                'featured_listings_tags'       => array(
+                    'id'   => 'featured_listings_tags',
+                    'name' => __('Feature tags', 'ldd-directory-lite'),
+                    'desc' => __('You can choose tags (comma separated) to show on directory home page.', 'ldd-directory-lite'),
+                    'type' => 'text',
+                    'std'  => '',
                 ),
                 'featured_listings_limit'       => array(
                     'id'   => 'featured_listings_limit',

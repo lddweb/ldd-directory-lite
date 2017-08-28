@@ -264,8 +264,11 @@ function ldl_get_categories($parent = 0,$attr = array()) {
 	if(!empty($terms) and !is_wp_error($terms)) {
 
 		foreach ($terms as $category) {
+
 			$term_link = get_term_link($category);
-			$categories[] = sprintf($mask, $term_link, $category->name, $category->count);
+			$count = get_term_post_count( "listing_category", $category->term_id );
+			//$categories[] = sprintf($mask, $term_link, $category->name, $category->count);
+			$categories[] = sprintf($mask, $term_link, $category->name, $count);
 		}
 
 		$categories = apply_filters('lddlite_filter_presentation_categories', $categories, $terms, $mask);
@@ -485,6 +488,8 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 	$featured_listings_limit = (int) ldl()->get_option('featured_listings_limit', '3');
 	$sort_by 	             = ldl()->get_option('directory_featured_sort', 'business_name');
 	$sort_order              = ldl()->get_option('directory_featured_sort_order','asc');
+	$f_terms               = ldl()->get_option('featured_listings_tags');
+	$ldd_terms          = explode(",",$f_terms);
 
 	if(isset($attr["fl_order_by"]) and !empty($attr["fl_order_by"])):
 		$sort_by 	= $attr["fl_order_by"];
@@ -503,7 +508,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 							array(
 								'taxonomy' => LDDLITE_TAX_TAG,
 								'field'    => 'slug',
-								'terms'    => 'featured',
+								'terms'    => $ldd_terms,
 							),
 						),
 						'orderby'        => 'title',
@@ -517,7 +522,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 							array(
 								'taxonomy' => LDDLITE_TAX_TAG,
 								'field'    => 'slug',
-								'terms'    => 'featured',
+								'terms'    => $ldd_terms,
 							),
 						),
 						'meta_key'       => '_lddlite_postal_code',
@@ -532,7 +537,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 							array(
 								'taxonomy' => LDDLITE_TAX_TAG,
 								'field'    => 'slug',
-								'terms'    => 'featured',
+								'terms'    => $ldd_terms,
 							),
 						),
 						'meta_key'       => '_lddlite_country',
@@ -547,7 +552,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 							array(
 								'taxonomy' => LDDLITE_TAX_TAG,
 								'field'    => 'slug',
-								'terms'    => 'featured',
+								'terms'    => $ldd_terms,
 							),
 						),
 						'order' 		 => $sort_order,
@@ -560,7 +565,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 							array(
 								'taxonomy' => LDDLITE_TAX_TAG,
 								'field'    => 'slug',
-								'terms'    => 'featured',
+								'terms'    => $ldd_terms,
 							),
 						),
 						'orderby'        => 'rand',
@@ -573,6 +578,24 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
     return new WP_Query($args);
 }
 
+
+/*
+* Get Directory listing for home page
+*/
+
+function ldl_get_directory_listing() {
+
+	$defaults = array(
+						'post_type'      => LDDLITE_POST_TYPE,
+						
+						'orderby'        => 'date',
+						
+						'posts_per_page' => 10
+					);			
+	$args = wp_parse_args($args, $defaults);
+    return new WP_Query($args);
+
+}
 
 /**
  * Get listings by user
@@ -647,4 +670,44 @@ if ( ! function_exists( 'ldd_default_pagination' ) ) {
 	function ldd_default_pagination() {
 		ldl_get_template_part( 'loop/pagination' );
 	}
+}
+
+/**
+	 * Show tags on listing detail page
+	 *
+	 * @subpackage	
+	 */
+
+function ldd_custom_taxonomies_terms_links() {
+    // Get post by post ID.
+    $post = get_post( $post->ID );
+ 
+    // Get post type by post.
+    $post_type = $post->post_type;
+ 
+    // Get post type taxonomies.
+    $taxonomies = get_object_taxonomies( $post_type, 'objects' );
+ 
+    $out = array();
+ 
+    foreach ( $taxonomies as $taxonomy_slug => $taxonomy ){
+        if($taxonomy_slug == 'listing_category'){
+            continue;
+        }
+        // Get the terms related to post.
+        $terms = get_the_terms( $post->ID, $taxonomy_slug );
+ 
+        if ( ! empty( $terms ) ) {
+            $out[] = '<img src="'.LDDLITE_URL.'/public/images/tags.png">  ';
+            foreach ( $terms as $term ) {
+                $out[] = sprintf( '<a href="%1$s">%2$s</a> ',
+                    //esc_url( get_term_link( $term->slug, $taxonomy_slug ) ),
+                    esc_url( get_bloginfo('url')."?post_type=directory_listings&s=".$term->name),
+                    esc_html( $term->name )
+                );
+            }
+            $out[] = "";
+        }
+    }
+    return implode( '', $out );
 }

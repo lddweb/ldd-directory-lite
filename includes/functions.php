@@ -200,4 +200,52 @@ function ldl_force_scheme($url, $scheme = 'https') {
     return set_url_scheme($url, $scheme);
 }
 
+function get_term_post_count( $taxonomy = 'category', $term = '', $args = [] )
+{
+	// Lets first validate and sanitize our parameters, on failure, just return false
+	if ( !$term )
+		return false;
+
+	if ( $term !== 'all' ) {
+		if ( !is_array( $term ) ) {
+			$term = filter_var(       $term, FILTER_VALIDATE_INT );
+		} else {
+			$term = filter_var_array( $term, FILTER_VALIDATE_INT );
+		}
+	}
+
+	if ( $taxonomy !== 'category' ) {
+		$taxonomy = filter_var( $taxonomy, FILTER_SANITIZE_STRING );
+		if ( !taxonomy_exists( $taxonomy ) )
+			return false;
+	}
+
+	if ( $args ) {
+		if ( !is_array )
+			return false;
+	}
+
+	// Now that we have come this far, lets continue and wrap it up
+	// Set our default args
+	$defaults = [
+		'posts_per_page' => 1,
+		'fields'         => 'ids'
+	];
+
+	if ( $term !== 'all' ) {
+		$defaults['tax_query'] = [
+			[
+				'taxonomy' => $taxonomy,
+				'terms'    => $term
+			]
+		];
+	}
+	$combined_args = wp_parse_args( $args, $defaults );
+	$q = new WP_Query( $combined_args );
+
+	// Return the post count
+	return $q->found_posts;
+}
+
+
 
