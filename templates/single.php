@@ -30,8 +30,12 @@ get_header();
                 <div class="row">
                     <div class="col-md-8">
 
-                        <div class="listing-content"><!--entry-content-->
+                        <div class="listing-content ab"><!--entry-content-->
                             <?php the_content(); ?>
+                            <p class="tags"><?php the_tags();  echo ldd_custom_taxonomies_terms_links();
+                            ?> </p>
+ 
+   
                         </div><!-- .entry-content -->
                         <div class="listing-meta">
                             <ul class="fa-ul">

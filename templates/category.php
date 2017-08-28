@@ -29,7 +29,7 @@ get_header();
 			$sort_order = ldl()->get_option( 'directory_listings_sort_order', 'asc' );
 			$sub_check  = ldl()->get_option( 'subcategory_listings', 0 );
 			$subcategory_listings = ($sub_check == 0) ? true : false;
-			
+
 			if ( isset( $_GET["order_by"] ) and ! empty( $_GET["order_by"] ) ):
 				$sort_by = $_GET["order_by"];
 			endif;

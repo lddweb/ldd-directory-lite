@@ -17,7 +17,7 @@
     <?php endif; ?>
 
 
-    <p><?php _e('Please log in, or register a new user account.', 'ldd-directory-lite' ); ?></p>
+    <p><?php _e('Please log in, or register a new user account...', 'ldd-directory-lite' ); ?></p>
 
     <ul class="nav nav-tabs bump-up-more" role="tablist">
         <li class="active"><a href="#login" role="tab" data-toggle="tab"><?php _e('Login', 'ldd-directory-lite'); ?></a></li>
@@ -26,7 +26,8 @@
     </ul>
 
     <!-- Tab panes -->
-    <div class="tab-content">
+    <div class="col-lg-6">
+    <div class="tab-content abc">
         <div class="tab-pane active" id="login">
 
             <form method="post" action="<?php echo site_url('wp-login.php') ?>" class="form-horizontal">
@@ -34,14 +35,14 @@
                 <input type="hidden" name="user-cookie" value="1">
 
                 <div class="form-group">
-                    <label for="user_login" class="col-sm-3 control-label"><?php _e('Username', 'ldd-directory-lite'); ?></label>
-                    <div class="col-sm-6">
+                    <label for="user_login" class="col-sm-4 control-label"><?php _e('Username', 'ldd-directory-lite'); ?></label>
+                    <div class="col-sm-8">
                         <input id="user_login" class="form-control" type="text" name="log">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="user_pass" class="col-sm-3 control-label"><?php _e('Password', 'ldd-directory-lite'); ?></label>
-                    <div class="col-sm-6">
+                    <label for="user_pass" class="col-sm-4 control-label"><?php _e('Password', 'ldd-directory-lite'); ?></label>
+                    <div class="col-sm-8">
                         <input id="user_pass" class="form-control" type="password" name="pwd">
                     </div>
                 </div>
@@ -69,14 +70,14 @@
                     <input type="hidden" name="redirect_to" value="<?php echo add_query_arg('registered', true); ?>">
                     <input type="hidden" name="user-cookie" value="1">
                     <div class="form-group">
-                        <label for="user_login" class="col-sm-3 control-label"><?php _e('Username', 'ldd-directory-lite'); ?></label>
-                        <div class="col-sm-6">
+                        <label for="user_login" class="col-sm-4 control-label"><?php _e('Username', 'ldd-directory-lite'); ?></label>
+                        <div class="col-sm-8">
                             <input id="user_login" class="form-control" type="text" name="user_login">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="user_email" class="col-sm-3 control-label"><?php _e('Your Email', 'ldd-directory-lite'); ?></label>
-                        <div class="col-sm-6">
+                        <label for="user_email" class="col-sm-4 control-label"><?php _e('Your Email', 'ldd-directory-lite'); ?></label>
+                        <div class="col-sm-8">
                             <input id="user_email" class="form-control" type="email" name="user_email">
                         </div>
                     </div>
@@ -113,6 +114,11 @@
 
         </div>
     </div>
-
-
+    </div>
+     <div class="col-lg-6">
+<?php if(function_exists('lddsocialLoginLinks')){
+    lddsocialLoginLinks();
+}
+?>
+</div>
 </div>
