@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           1.1.2
+ * Version:           1.2.0
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -422,6 +422,15 @@ function ldd_meta_search_join ($join){
 	return $join;
 }
 
+function ldd_taxonomy_search_join ($join){
+    global $wpdb;
+	
+		if( is_search() and $_REQUEST["post_type"] == "directory_listings") {
+        	$join .= "LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id=tr.term_taxonomy_id INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id";
+		}
+	return $join;
+}
+
 function ldd_meta_search_where( $where ){
     global $wpdb;
 		if( is_search() and $_REQUEST["post_type"] == "directory_listings") {
@@ -429,6 +438,13 @@ function ldd_meta_search_where( $where ){
 		   						 "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
 		}
 	return $where;
+}
+
+function atom_search_where($where){
+  global $wpdb;
+  if (is_search())
+    $where .= "OR (t.name LIKE '%".get_search_query()."%' AND {$wpdb->posts}.post_status = 'publish')";
+  return $where;
 }
 
 function ldd_meta_search_groupby($groupby) {
@@ -448,5 +464,7 @@ function ldd_meta_search_groupby($groupby) {
 }
 
 add_filter('posts_join', 'ldd_meta_search_join' );
+add_filter('posts_join', 'ldd_taxonomy_search_join' );
 add_filter('posts_where', 'ldd_meta_search_where' );
+add_filter('posts_where', 'atom_search_where' );
 add_filter('posts_groupby', 'ldd_meta_search_groupby' );
