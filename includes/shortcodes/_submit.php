@@ -479,7 +479,7 @@ function ldl_shortcode_directory_submit() {
 			ldl_get_template_part('frontend/submit', 'success');
 			do_action('lddlite_submit_post_process', $lddlite_submit_processor);
 
-			return ob_get_clean();;
+			return ob_get_clean();
 		}
 
 	}
