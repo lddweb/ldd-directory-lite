@@ -117,6 +117,7 @@ add_action('init', 'ldl_process_edit_form');
  */
 function ldl_shortcode_directory_manage() {
     global $lddlite_submit_processor, $google_api_src;
+    ob_start();
 
     if(ldl()->get_option('general_allow_public_submissions','yes') === 'no') {
         return;
@@ -202,6 +203,7 @@ function ldl_shortcode_directory_manage() {
     } else {
         ldl_get_template_part('manage');
     }
+    return ob_get_clean();
 
 }
 add_shortcode('directory_manage', 'ldl_shortcode_directory_manage');
