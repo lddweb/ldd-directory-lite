@@ -144,7 +144,8 @@ function ldl_enqueue_bootstrap() {
         return;
     }
 	 
-    wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', array(), LDDLITE_VERSION);
+    //wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.min.css', array(), LDDLITE_VERSION);
+	wp_enqueue_style('lddlite-bootstrap', LDDLITE_URL . '/public/css/bootstrap.css', array(), LDDLITE_VERSION);
 	wp_enqueue_script('lddlite-bootstrap', LDDLITE_URL . '/public/js/bootstrap.min.js', array('jquery'), '3.2.0', false);
 
 }

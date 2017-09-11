@@ -585,14 +585,89 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 
 function ldl_get_directory_listing() {
 
+		$sort_by    = ldl()->get_option( 'directory_listings_sort', 'business_name' );
+		$sort_order = ldl()->get_option( 'directory_listings_sort_order', 'asc' );
+		$posts_per_page = get_option( 'posts_per_page' );
+
+		if ( $sort_by == "business_name" ):
+				$args= array(
+					'orderby'        => 'title',
+					'order'          => $sort_order,
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					
+				);
+				elseif ( $sort_by == "id" ):
+				$args= array(
+					'orderby'        => 'ID',
+					'order'          => $sort_order,
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					
+				 );
+			
+			
+			elseif ( $sort_by == "zip" ):
+				$args= array(
+					'meta_key'       => '_lddlite_postal_code',
+					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					
+				 );
+			
+				elseif ( $sort_by == "country" ):
+				$args== array(
+					'meta_key'       => '_lddlite_country',
+					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					
+
+				 );
+				elseif ( $sort_by == "city" ):
+				$args= array(
+					'meta_key'       => '_lddlite_city',
+					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					
+
+				 );
+				elseif ( $sort_by == "state" ):
+				$args= array(
+					'meta_key'       => '_lddlite_state',
+					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					
+
+				 );
+			
+			elseif ( $sort_by == "random" ):
+				$args= array(
+					'orderby'        => 'rand',
+					'order'          => $sort_order,
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					
+				 );
+			endif;
+
 	$defaults = array(
 						'post_type'      => LDDLITE_POST_TYPE,
 						
 						'orderby'        => 'date',
 						
 						'posts_per_page' => 10
-					);			
-	$args = wp_parse_args($args, $defaults);
+					);		
+					
+	//$args = wp_parse_args($args, $defaults);
+	
     return new WP_Query($args);
 
 }

@@ -586,10 +586,11 @@ function ldl_get_sort_options()
 {
 
     $pages_options['business_name'] = __('Business name', 'ldd-directory-lite');
-    $pages_options['featured']      = __('Featured listing', 'ldd-directory-lite');
-    $pages_options['zip']           = __('Zip', 'ldd-directory-lite');
-    $pages_options['area']          = __('Area', 'ldd-directory-lite');
-    $pages_options['category']      = __('Category', 'ldd-directory-lite');
+    $pages_options['city']      = __('City', 'ldd-directory-lite');
+    $pages_options['zip']           = __('Zip/Postal Code', 'ldd-directory-lite');
+     $pages_options['country']          = __('Country', 'ldd-directory-lite');
+    $pages_options['state']          = __('State/Province', 'ldd-directory-lite');
+    $pages_options['id']      = __('ID', 'ldd-directory-lite');
     $pages_options['random']        = __('Random', 'ldd-directory-lite');
 
     return $pages_options;
