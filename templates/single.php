@@ -4,6 +4,7 @@ global $geo;
 $geo = ldl_get_meta('geo');
 get_header();
 ?>
+<div class=" bootstrap-wrapper">
     <?php
         /**
          * ldd_before_main_content hook.
@@ -120,4 +121,5 @@ get_header();
     ?>
 
 <?php get_sidebar(); ?>
+</div>
 <?php get_footer(); ?>

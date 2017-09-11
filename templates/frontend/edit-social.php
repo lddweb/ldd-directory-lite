@@ -1,5 +1,5 @@
 
-<div class="directory-lite edit-details">
+<div class="directory-lite edit-details bootstrap-wrapper">
 
     <?php ldl_get_header(); ?>
 

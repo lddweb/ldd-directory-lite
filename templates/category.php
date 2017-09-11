@@ -1,6 +1,7 @@
 <?php
 get_header();
 ?>
+<div class=" bootstrap-wrapper">
 	<?php
 		/**
 		 * ldd_before_main_content hook.
@@ -57,6 +58,15 @@ get_header();
 					'paged'          => $paged,
 					'tax_query'      => $tax_query
 				) );
+				elseif ( $sort_by == "id" ):
+				query_posts( array(
+					'orderby'        => 'ID',
+					'order'          => $sort_order,
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					'paged'          => $paged,
+					'tax_query'      => $tax_query
+				) );
 			/* Featured Listings and other listings combination with pagination */
 			elseif ( $sort_by == "featured" ):
 				query_posts( array(
@@ -71,15 +81,40 @@ get_header();
 				query_posts( array(
 					'meta_key'       => '_lddlite_postal_code',
 					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
 					'post_type'      => LDDLITE_POST_TYPE,
 					'posts_per_page' => $posts_per_page,
 					'paged'          => $paged,
 					'tax_query'      => $tax_query
 				) );
-			elseif ( $sort_by == "area" ):
+			
+				elseif ( $sort_by == "country" ):
 				query_posts( array(
 					'meta_key'       => '_lddlite_country',
 					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					'paged'          => $paged,
+					'tax_query'      => $tax_query
+
+				) );
+				elseif ( $sort_by == "city" ):
+				query_posts( array(
+					'meta_key'       => '_lddlite_city',
+					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
+					'post_type'      => LDDLITE_POST_TYPE,
+					'posts_per_page' => $posts_per_page,
+					'paged'          => $paged,
+					'tax_query'      => $tax_query
+
+				) );
+				elseif ( $sort_by == "state" ):
+				query_posts( array(
+					'meta_key'       => '_lddlite_state',
+					'order'          => $sort_order,
+					'orderby'        => 'meta_value',
 					'post_type'      => LDDLITE_POST_TYPE,
 					'posts_per_page' => $posts_per_page,
 					'paged'          => $paged,
@@ -139,4 +174,5 @@ get_header();
 		 */
 		do_action( 'ldd_after_main_content' );
 	?>
+	</div>
 <?php get_footer(); ?>

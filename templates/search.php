@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-
+<div class=" bootstrap-wrapper ">
     <?php
         /**
          * ldd_before_main_content hook.
@@ -9,11 +9,16 @@
         do_action( 'ldd_before_main_content' );
     ?>
 
-        <?php echo ldl_get_header(); ?>
+        <?php echo ldl_get_header(); 
+    ?>
+
+    
 
         <?php if (have_posts()) : ?>
 				
             <?php
+
+            
             while (have_posts()) {
                 the_post();
                 ldl_get_template_part('loop/listing', 'compact');
@@ -32,4 +37,5 @@
          */
         do_action( 'ldd_after_main_content' );
     ?>
+    </div>
 <?php get_footer(); ?>

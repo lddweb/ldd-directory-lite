@@ -55,3 +55,4 @@ switch( $template ) {
 		echo '</section></div>';
 		break;
 }
+?>

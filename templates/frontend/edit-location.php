@@ -1,6 +1,6 @@
 <?php $geo = ldl_get_value('geo'); ?>
 
-<div class="directory-lite edit-location">
+<div class="directory-lite edit-location bootstrap-wrapper">
 
     <?php ldl_get_header(); ?>
 

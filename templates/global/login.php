@@ -1,5 +1,5 @@
 <?php add_filter('wp_login_failed','something'); ?>
-<div class="directory-lite">
+<div class="directory-lite bootstrap-wrapper">
 
     <?php ldl_get_header(); ?>
 

@@ -1,5 +1,5 @@
 
-<div class="directory-lite manage-listings">
+<div class="directory-lite manage-listings bootstrap-wrapper">
 
     <?php ldl_get_header(); ?>
 

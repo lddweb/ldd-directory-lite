@@ -1,4 +1,4 @@
-<div class="directory-lite ldd-directory-home">
+<div class="directory-lite ldd-directory-home bootstrap-wrapper">
 
     <?php
     echo ldl_get_header();

@@ -21,7 +21,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+?>
 
+<?php
 $template = get_option( 'template' );
 
 switch( $template ) { 
@@ -44,7 +46,7 @@ switch( $template ) {
 		echo '<div id="primary" class="content-area twentysixteen"><main id="main" class="site-main" role="main">';
 		break;
 	case 'twentyseventeen' :
-		echo '<div class="wrap"><div id="primary" class="content-area twentyseventeen"><main id="main" class="site-main" role="main">';
+		echo '<div class="wrap bc"><div id="primary" class="content-area twentyseventeen"><main id="main" class="site-main" role="main">';
 		break;
 	default :
 		echo '<section id="primary" class="page-content directory-lite"><div id="content" role="main">';
