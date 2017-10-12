@@ -17,12 +17,12 @@ Thumbs.db
 .settings
 .tmproj
 nbproject
-cmb/
+
 
 # Folders to ignore
 .svn
 .CVS
 .idea
-
+includes/cmb/
 *.json
 

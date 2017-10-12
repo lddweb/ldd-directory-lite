@@ -30,9 +30,15 @@ function ldl_template_include($template) {
             $templates[] = 'single.php';
         } else if (is_search()) {
             $templates[] = 'search.php';
-        } else if (is_archive()) {
+        }
+		else if (is_tax( 'listing_tag' ) ) {
+            $templates[] = 'tag.php';
+        }
+		
+		 else if (is_archive() && !is_tax( 'tag' ) ) {
             $templates[] = 'category.php';
         }
+		
 
         $located = ldl_locate_template($templates, false, false);
 

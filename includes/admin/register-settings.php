@@ -203,6 +203,13 @@ function ldl_get_registered_settings()
                     ),
                     'default' => 'asc',
                 ),
+                 'listings_category_number'       => array(
+                    'id'   => 'listings_category_number',
+                    'name' => __('Category pages show at most:', 'ldd-directory-lite'),
+                    'desc' => __('Leave empty if you want to show all categroies', 'ldd-directory-lite'),
+                    'type' => 'text',
+                    'std'  => '10',
+                ),
                 /* Listings Sort Options */
                 'listings_sort_separator'       => array(
                     'id'   => 'listings_sort_separator',
@@ -228,12 +235,33 @@ function ldl_get_registered_settings()
                     ),
                     'default' => 'asc',
                 ),
+                'listings_display_number'       => array(
+                    'id'   => 'listings_display_number',
+                    'name' => __('Listings pages show at most:', 'ldd-directory-lite'),
+                    'desc' => __('-1 for all listing.', 'ldd-directory-lite'),
+                    'type' => 'text',
+                    'std'  => '10',
+                ),
+
+                 'search_display_separator'       => array(
+                    'id'   => 'search_display_separator',
+                    'name' => '<h4 class="title ldd-admin-title">' . __('Search Page', 'ldd-directory-lite') . '</h4>',
+                    'type' => 'header'
+                ),
+                 'listings_search_number'       => array(
+                    'id'   => 'listings_search_number',
+                    'name' => __('Search result pages show at most:', 'ldd-directory-lite'),
+                    'desc' => __('-1 for all listing.', 'ldd-directory-lite'),
+                    'type' => 'text',
+                    'std'  => '10',
+                ),
                 /* Prevent items entered in subcategory from being displayed in parent category listing view */
                 'listings_display_separator'       => array(
                     'id'   => 'listings_display_separator',
                     'name' => '<h4 class="title ldd-admin-title">' . __('Subcategory Listing Behavior', 'ldd-directory-lite') . '</h4>',
                     'type' => 'header'
                 ),
+                
                 'subcategory_listings'   => array(
 	                'id'   => 'subcategory_listings',
 	                'name' => __('Subcategory Listings', 'ldd-directory-lite'),

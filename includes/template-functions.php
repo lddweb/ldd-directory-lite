@@ -214,6 +214,7 @@ function ldl_get_parent_categories($attr = array()) {
  *
  * @return string Return a formatted string containing all category elements
  */
+ 
 function ldl_get_categories($parent = 0,$attr = array()) {
 
 	$custom_url = "";
@@ -224,10 +225,14 @@ function ldl_get_categories($parent = 0,$attr = array()) {
 	$sub_check  = ldl()->get_option( 'subcategory_listings', 0 );
 	$subcategory_listings = ($sub_check == 0) ? true : false;
 
+
+
 	$args_arr = array(
 		'order'		=> $sort_order,
 		'orderby' 	=> $sort_by,
+		'offset'       => $offset,
 		'pad_counts'=> $subcategory_listings,
+		
 	);
 
 	if(isset($parent) and !empty($parent)):
@@ -272,7 +277,9 @@ function ldl_get_categories($parent = 0,$attr = array()) {
 		}
 
 		$categories = apply_filters('lddlite_filter_presentation_categories', $categories, $terms, $mask);
+		
 	}
+	
 	return implode(' ', $categories);
 }
 
@@ -587,7 +594,8 @@ function ldl_get_directory_listing() {
 
 		$sort_by    = ldl()->get_option( 'directory_listings_sort', 'business_name' );
 		$sort_order = ldl()->get_option( 'directory_listings_sort_order', 'asc' );
-		$posts_per_page = get_option( 'posts_per_page' );
+		$posts_per_page = ldl()->get_option( 'listings_display_number', 10 );//get_option( 'posts_per_page' );
+		$paged          = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
 		if ( $sort_by == "business_name" ):
 				$args= array(
@@ -602,6 +610,7 @@ function ldl_get_directory_listing() {
 					'orderby'        => 'ID',
 					'order'          => $sort_order,
 					'post_type'      => LDDLITE_POST_TYPE,
+					'paged'          => $paged,
 					'posts_per_page' => $posts_per_page,
 					
 				 );
@@ -613,6 +622,7 @@ function ldl_get_directory_listing() {
 					'order'          => $sort_order,
 					'orderby'        => 'meta_value',
 					'post_type'      => LDDLITE_POST_TYPE,
+					'paged'          => $paged,
 					'posts_per_page' => $posts_per_page,
 					
 				 );
@@ -623,6 +633,7 @@ function ldl_get_directory_listing() {
 					'order'          => $sort_order,
 					'orderby'        => 'meta_value',
 					'post_type'      => LDDLITE_POST_TYPE,
+					'paged'          => $paged,
 					'posts_per_page' => $posts_per_page,
 					
 
@@ -634,6 +645,7 @@ function ldl_get_directory_listing() {
 					'orderby'        => 'meta_value',
 					'post_type'      => LDDLITE_POST_TYPE,
 					'posts_per_page' => $posts_per_page,
+					'paged'          => $paged,
 					
 
 				 );
@@ -643,6 +655,7 @@ function ldl_get_directory_listing() {
 					'order'          => $sort_order,
 					'orderby'        => 'meta_value',
 					'post_type'      => LDDLITE_POST_TYPE,
+					'paged'          => $paged,
 					'posts_per_page' => $posts_per_page,
 					
 
@@ -653,6 +666,7 @@ function ldl_get_directory_listing() {
 					'orderby'        => 'rand',
 					'order'          => $sort_order,
 					'post_type'      => LDDLITE_POST_TYPE,
+					'paged'          => $paged,
 					'posts_per_page' => $posts_per_page,
 					
 				 );
@@ -663,7 +677,7 @@ function ldl_get_directory_listing() {
 						
 						'orderby'        => 'date',
 						
-						'posts_per_page' => 10
+						'posts_per_page' => $posts_per_page
 					);		
 					
 	//$args = wp_parse_args($args, $defaults);
@@ -785,4 +799,100 @@ function ldd_custom_taxonomies_terms_links() {
         }
     }
     return implode( '', $out );
+}
+
+
+
+function show_all_cat(){
+
+
+
+	$sort_by 	= ldl()->get_option( 'directory_category_sort', 'business_name' );
+	$sort_order = ldl()->get_option( 'directory_category_sort_order','asc' );
+	$sub_check  = ldl()->get_option( 'subcategory_listings', 0 );
+	$subcategory_listings = ($sub_check == 0) ? true : false;
+	$per_page   = ldl()->get_option( 'listings_category_number', 10 );
+	
+
+if ( get_query_var( 'paged' ) )
+$paged = get_query_var('paged');
+else if ( get_query_var( 'page' ) )
+$paged = get_query_var( 'page' );
+else
+$paged = 1;
+
+//$per_page    = 2;
+$number_of_series = count( get_terms( LDDLITE_TAX_CAT,array('hide_empty'=>'0') ) );
+$offset      = $per_page * ( $paged -1) ;
+
+	$args_arr = array(
+		'order'		=> $sort_order,
+		'orderby' 	=> $sort_by,
+		'offset'       => $offset,
+		'pad_counts'=> $subcategory_listings,
+		'number'       => $per_page,
+		'hide_empty'=>'0'
+		
+	);
+
+	if(isset($parent) and !empty($parent)):
+		$args_arr['parent'] 	= $parent;
+	endif;
+
+	if(isset($attr["cat_order_by"]) and !empty($attr["cat_order_by"])):
+		$args_arr['orderby'] 	= $attr["cat_order_by"];
+	endif;
+
+	if(isset($attr["cat_order"]) and !empty($attr["cat_order"])):
+		$args_arr['order'] 		= $attr["cat_order"];
+	endif;
+
+	if(isset($attr["list_order_by"]) and !empty($attr["list_order_by"])):
+		$ls_sort_by 				 = $attr["list_order_by"];
+		$custom_url_para["order_by"] = $ls_sort_by;
+	endif;
+
+	if(isset($attr["list_order"]) and !empty($attr["list_order"])):
+		$ls_sort_order  	 	  = $attr["list_order"];
+		$custom_url_para["order"] = $ls_sort_order;
+	endif;
+
+	if(isset($custom_url_para) and !empty($custom_url_para)):
+		$custom_url = "?".http_build_query($custom_url_para);
+	endif;
+
+
+
+	
+
+// Setup the arguments to pass in
+/*$args_arr = array(
+'offset'       => $offset,
+'number'       => $per_page,
+'hide_empty'=>'0'
+);*/
+
+// Gather the series
+$mycategory = get_terms( LDDLITE_TAX_CAT, $args_arr );
+
+// Loop through and display the series
+foreach($mycategory as $s)
+{
+$theurl = get_term_link($s, 'mycategory');
+$count = get_term_post_count( "listing_category", $s->term_id );
+echo "<div class=\"ser-img img\" ><a class='list-group-item' href=\"" . $theurl  . "\"><span class=\"label label-primary pull-right\">".$count."</span>". $s->name ."</a>";
+
+}
+echo "<nav class='ldd_listing_pagination clearfix'>";
+$big = 999999;
+echo paginate_links(apply_filters( 'ldd_pagination_args', array(
+'base'    => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+'format'  => '?paged=%#%',
+'current' => $paged,
+'prev_text'    => '&larr;',
+		'next_text'    => '&rarr;',
+		'type'         => 'list',
+'total'   => ceil( $number_of_series / $per_page ) // 3 items per page
+) ));
+echo "</nav>";
 }
