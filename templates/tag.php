@@ -11,23 +11,19 @@ get_header();
 		do_action( 'ldd_before_main_content' );
 	?>
 
-	<?php echo ldl_get_header(); ?>
+	<?php echo ldl_get_header();  ?>
 
 	<div class="col-md-12 abcd">
 		<div class="list-group">
-			<?php   echo ldl_get_categories( get_queried_object()->term_id );
-		
-
-			
-			 ?>
+			<?php echo ldl_get_categories( get_queried_object()->term_id ); ?>
 		</div>
 	</div>
 
 	<?php
 		$paged          = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		$posts_per_page  = ldl()->get_option( 'listings_display_number', 10 );
+		$posts_per_page = get_option( 'posts_per_page' );
 
-		
+		if ( have_posts() ) :
 			global $wp_query;
 
 			$sort_by    = ldl()->get_option( 'directory_listings_sort', 'business_name' );
@@ -35,30 +31,22 @@ get_header();
 			$sub_check  = ldl()->get_option( 'subcategory_listings', 0 );
 			$subcategory_listings = ($sub_check == 0) ? true : false;
 
-			if ( isset( $_GET["order_by"] ) and ! empty( $_GET["order_by"] ) ):
-				$sort_by = $_GET["order_by"];
-			endif;
-			if ( isset( $_GET["order"] ) and ! empty( $_GET["order"] ) ):
-				$sort_order = $_GET["order"];
-			endif;
+		
 
-
+           
 			$term_array = $wp_query->get_queried_object();
-			$cat_id     = $term_array->term_id;
-
+			$tag_id     = $term_array->term_id;
 			$tax_query  = array(
 				array(
-					'taxonomy' => LDDLITE_TAX_CAT,
+					'taxonomy' => LDDLITE_TAX_TAG,
 					'field'    => 'id',
-					'terms'    => $cat_id,
-					'include_children' => $subcategory_listings
+					'terms'    => $tag_id,
+					
 				)
 			);
-
-			
-
-			if ( $sort_by == "business_name" ):
-				$cat_query =new WP_Query( array(
+            
+           	if ( $sort_by == "business_name" ):
+				query_posts( array(
 					'orderby'        => 'title',
 					'order'          => $sort_order,
 					'post_type'      => LDDLITE_POST_TYPE,
@@ -67,7 +55,7 @@ get_header();
 					'tax_query'      => $tax_query
 				) );
 				elseif ( $sort_by == "id" ):
-				$cat_query =new WP_Query( array(
+				query_posts( array(
 					'orderby'        => 'ID',
 					'order'          => $sort_order,
 					'post_type'      => LDDLITE_POST_TYPE,
@@ -77,7 +65,7 @@ get_header();
 				) );
 			/* Featured Listings and other listings combination with pagination */
 			elseif ( $sort_by == "featured" ):
-				$cat_query = new WP_Query( array(
+				query_posts( array(
 					'tax_query'      => $tax_query,
 					'orderby'        => 'menu_order',
 					'order'          => $sort_order,
@@ -86,7 +74,7 @@ get_header();
 					'post_type'      => LDDLITE_POST_TYPE,
 				) );
 			elseif ( $sort_by == "zip" ):
-				$cat_query = new WP_Query( array(
+				query_posts( array(
 					'meta_key'       => '_lddlite_postal_code',
 					'order'          => $sort_order,
 					'orderby'        => 'meta_value',
@@ -97,7 +85,7 @@ get_header();
 				) );
 			
 				elseif ( $sort_by == "country" ):
-				$cat_query = new WP_Query( array(
+				query_posts( array(
 					'meta_key'       => '_lddlite_country',
 					'order'          => $sort_order,
 					'orderby'        => 'meta_value',
@@ -108,19 +96,18 @@ get_header();
 
 				) );
 				elseif ( $sort_by == "city" ):
-			$cat_query = 	new WP_Query( array(
+				query_posts( array(
 					'meta_key'       => '_lddlite_city',
 					'order'          => $sort_order,
 					'orderby'        => 'meta_value',
 					'post_type'      => LDDLITE_POST_TYPE,
-					'paged'          =>  get_query_var( 'paged' ),
 					'posts_per_page' => $posts_per_page,
-					
+					'paged'          => $paged,
 					'tax_query'      => $tax_query
 
 				) );
 				elseif ( $sort_by == "state" ):
-			$cat_query = 	new WP_Query( array(
+				query_posts( array(
 					'meta_key'       => '_lddlite_state',
 					'order'          => $sort_order,
 					'orderby'        => 'meta_value',
@@ -131,7 +118,7 @@ get_header();
 
 				) );
 			elseif ( $sort_by == "category" ):
-				$cat_query = new WP_Query( array(
+				query_posts( array(
 					'order'          => $sort_order,
 					'post_type'      => LDDLITE_POST_TYPE,
 					'posts_per_page' => $posts_per_page,
@@ -139,7 +126,7 @@ get_header();
 					'tax_query'      => $tax_query
 				) );
 			elseif ( $sort_by == "random" ):
-				$cat_query = new WP_Query( array(
+				query_posts( array(
 					'orderby'        => 'rand',
 					'order'          => $sort_order,
 					'post_type'      => LDDLITE_POST_TYPE,
@@ -148,22 +135,20 @@ get_header();
 					'tax_query'      => $tax_query
 				) );
 			endif;
-
-			if ( $cat_query->have_posts() ) :
+			
 			$listing_view = ldl()->get_option( 'directory_view_type', 'compact' );
 			if ( $listing_view == "grid" ) {
 				echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
 			}
-			while ( $cat_query->have_posts() ) {
-				$cat_query->the_post();
+			while ( have_posts() ) {
+				the_post();
 				ldl_get_template_part( 'loop/listing', $listing_view );
 			}
 			if ( $listing_view == "grid" ) {
 				echo "</div>";
 				wp_enqueue_script( 'isotope-pkgd', LDDLITE_URL . '/public/js/isotope.pkgd.min.js' );
 			}
-			wp_reset_postdata(); 
-			 
+			wp_reset_postdata();
 			?>
 			<div class="clearfix"></div>
 		<?php else : ?>
@@ -176,14 +161,8 @@ get_header();
 		 *
 		 * @hooked ldd_default_pagination - 10
 		 */
-		  the_posts_pagination( array(
-    'mid_size' => 2,
-    'prev_text' => __( 'Previous', 'textdomain' ),
-    'next_text' => __( 'Next', 'textdomain' ),
-) ); 
-		//do_action( 'ldd_after_directory_loop' );
+		do_action( 'ldd_after_directory_loop' );
 	?>
-
 	<?php
 		/**
 		 * ldd_after_main_content hook.

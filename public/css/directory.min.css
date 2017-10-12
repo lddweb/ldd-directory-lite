@@ -102,3 +102,9 @@
  * ====================== */
 
 /*# sourceMappingURL=directory.min.css.map */
+
+/*p.tags a+a:before{content:', ';}*/
+p.tags a:not(:last-child):after{content:' , ';}
+p.tags a {margin-left:7px}
+
+p.tags img {width:25px;height:25px; }

@@ -30,6 +30,7 @@
         <?php endif; ?>
 
     <?php
+    do_action( 'ldd_after_directory_loop' );
         /**
          * ldd_after_main_content hook.
          *
