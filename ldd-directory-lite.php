@@ -7,9 +7,9 @@
  * @copyright 2014 LDD Consulting, Inc
  * @wordpress-plugin
  * Plugin Name:       LDD Directory Lite
- * Plugin URI:        http://wordpress.org/plugins/ldd-directory-lite
+ * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           1.2.1
+ * Version:           1.3.0
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '1.2.1');
+define('LDDLITE_VERSION', '1.3.0');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -464,6 +464,22 @@ function ldd_meta_search_groupby($groupby) {
 
   return $groupby . ", " . $customgroupby;
 }
+function myprefix_search_posts_per_page($query) {
+    if ( $query->is_search ) {
+        $posts_per_page  = ldl()->get_option( 'listings_search_number', 10 );
+        $query->set( 'posts_per_page', $posts_per_page );
+    }
+    return $query;
+}
+function add_blog_post_to_query( $query ) {
+    if (  $query->is_main_query() && is_tax('listing_category') ) {
+        $query->set( 'post_type', array('directory_listings') );
+        $query->set( 'posts_per_page', ldl()->get_option( 'listings_display_number', 10 ) );
+    }
+}
+add_action( 'pre_get_posts', 'add_blog_post_to_query' );
+
+add_filter( 'pre_get_posts','myprefix_search_posts_per_page', 99 );
 
 
 add_filter('posts_join', 'ldd_meta_search_join' );

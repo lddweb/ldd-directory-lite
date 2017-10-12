@@ -3,8 +3,8 @@ Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 3.9.1 or higher
-Tested up to: 4.8.1
-Stable tag: 1.2.1
+Tested up to: 4.8.2
+Stable tag: 1.3.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,6 +136,16 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
+= 1.3.0 =
+* Added limit options and pagination for search page
+* Added pagination option and limit for home pages categories
+* Updated basic queries for category listing page
+
+= 1.2.2 =
+* Fixed tag listing issue
+* Added new template for listing_tag
+
+
 = 1.2.1 =
 * Updated sort order function and fixed bugs
 * Fixed bug with css overwriting site theme fonts and structure
@@ -159,7 +169,16 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Changelog ==
 
-== 1.2.1 ==
+= 1.3.0 =
+* Added limit options and pagination for search page
+* Added pagination option and limit for home pages categories
+* Updated basic queries for category listing page
+
+= 1.2.2 =
+* Fixed tag listing issue
+* Added new template for listing_tag
+
+= 1.2.1 =
 * Updated sort order function and fixed bugs
 * Fixed bug with css overwriting site theme fonts and structure
 * Added support for content to display on Directory pages above and/or below Directory shortcodes
@@ -171,6 +190,8 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 * Append to count child categories listings
 * Add GEO Location for localizing map for users (not supported on http)
 * Other minor bug fixes
+
+
 = 1.1.2 =
 
 * Added option for changeing behavior of category listings count (include or exclude sub categories).
