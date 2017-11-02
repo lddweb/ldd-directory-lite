@@ -452,12 +452,18 @@ function ldl_get_social($post_id) {
         'facebook' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_facebook'), 1)),
         'linkedin' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_linkedin'), 1)),
         'twitter'  => ldl_sanitize_twitter(get_post_meta($post_id, ldl_pfx('url_twitter'), 1)),
+		'instagram' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_instagram'), 1)),
+        'google-plus' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_googleplus'), 1)),
+        'youtube'  => ldl_sanitize_twitter(get_post_meta($post_id, ldl_pfx('url_youtube'), 1)),
     );
 
     $titles = array(
         'facebook' => 'Visit %1$s on Facebook',
         'linkedin' => 'Connect with %1$s on LinkedIn',
         'twitter'  => 'Follow %1$s on Twitter',
+		 'instagram' => 'Visit %1$s on Instagram',
+        'google-plus' => 'Connect with %1$s on Google +',
+        'youtube'  => 'Follow %1$s on Youtube',
         'default'  => 'Visit %1$s on %2$s',
     );
 
@@ -471,8 +477,11 @@ function ldl_get_social($post_id) {
         if (!empty($url)) {
             $title_key = array_key_exists($key, $titles) ? $titles[ $key ] : $titles['default'];
             $title = sprintf(__($title_key, 'ldd-directory-lite'), $name, $key);
-
+			if($key=="instagram"){
+			 $output[] = '<a target="_blank" href="' . $url . '" title="' . $title . '"><i class="fa fa-' . $key . '"></i></a>';
+				} else {
             $output[] = '<a target="_blank" href="' . $url . '" title="' . $title . '"><i class="fa fa-' . $key . '-square"></i></a>';
+				}
         }
     }
 

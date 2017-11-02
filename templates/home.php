@@ -14,8 +14,16 @@
         <?php if (ldl()->get_option('home_page_listing') !='listing'):?>
             <div class="col-md-12">
                 <div class="list-group">
-                    <?php echo ldl_get_parent_categories($pass_attr); ?>
+                <?php
+               
+               ?>
+                    <?php //echo ldl_get_parent_categories($pass_attr); 
+                    
+                  show_all_cat();
+
+                    ?>
                 </div>
+                
             </div>
         <?php endif; ?>
             <?php if (ldl()->get_option('appearance_display_featured')):
@@ -39,6 +47,9 @@
                 
 // Directory Listing
    if (ldl()->get_option('home_page_listing') =='listing'):
+
+   
+   
                 $dir_list = ldl_get_directory_listing();
                 if ($dir_list->have_posts()):
                     ?>
@@ -52,10 +63,13 @@
                         <?php endwhile;  ?>
 
                     </div>
-                    <?php
+                    <?php ldl_get_template_part( 'loop/pagination' ); do_action( 'ldd_after_directory_loop' );
                 endif;
+               
                 wp_reset_postdata();
+                
            endif;
+            
             ?>
 
             

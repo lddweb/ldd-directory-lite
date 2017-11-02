@@ -138,7 +138,30 @@ function ldl_metaboxes_setup_cmb()
         'id'   => ldl_pfx('url_linkedin'),
         'type' => 'text_url',
     ));
-
+ $listings_web->add_field(array(
+        'name' => __('Google+', 'ldd-directory-lite'),
+        'desc' => __('This should start with <code>plus.google.com</code>', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_googleplus'),
+        'type' => 'text_url',
+    ));
+     $listings_web->add_field(array(
+        'name' => __('Instagram', 'ldd-directory-lite'),
+        'desc' => __('This should start with <code>www.instagram.com</code>', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_instagram'),
+        'type' => 'text_url',
+    ));
+     $listings_web->add_field(array(
+        'name' => __('YouTube', 'ldd-directory-lite'),
+        'desc' => __('This should start with <code>www.youtube.com</code>', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_youtube'),
+        'type' => 'text_url',
+    ));
+    $listings_web->add_field(array(
+        'name' => __('Custom Link', 'ldd-directory-lite'),
+        'desc' => __('This should start with <code>www.yourdomain.com</code>', 'ldd-directory-lite'),
+        'id'   => ldl_pfx('url_custom'),
+        'type' => 'text_url',
+    ));
     // Groups together all contact information for a listing
     $listings_contact = new_cmb2_box(array(
         'id'           => 'listings_contact',

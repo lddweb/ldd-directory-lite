@@ -1524,3 +1524,14 @@
 }
 @media print{.hidden-print{display:none !important}
 }
+.fa-facebook,.fa-twitter, .fa-linkedin, .fa-google-plus, .listing-single .fa-instagram ,.fa-youtube, .fa-link {margin-left:15px; pointer:cursor}
+.fa-ul-social li {float:left; 
+}
+.listing-single  .listing-meta{float:left}
+.fa-ul.fa-ul-social {
+     border-top: 1px solid #eee;
+     padding-top: 20px;
+     padding-bottom: 15px;
+}
+.type-listing.compact .meta-column .social-meta{text-align:left !important}
+#submit-tos {height:200px; overflow-y:scroll; background:#eee; padding:9px}

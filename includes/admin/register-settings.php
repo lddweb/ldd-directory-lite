@@ -12,7 +12,7 @@
 
 /**
  * Return the settings array
- *
+ *  1.3.0
  * @since 0.8.7
  * @return array
  */
@@ -206,7 +206,7 @@ function ldl_get_registered_settings()
                  'listings_category_number'       => array(
                     'id'   => 'listings_category_number',
                     'name' => __('Category pages show at most:', 'ldd-directory-lite'),
-                    'desc' => __('Leave empty if you want to show all categroies', 'ldd-directory-lite'),
+                    'desc' => __('Leave empty to show all categories.', 'ldd-directory-lite'),
                     'type' => 'text',
                     'std'  => '10',
                 ),
@@ -237,8 +237,8 @@ function ldl_get_registered_settings()
                 ),
                 'listings_display_number'       => array(
                     'id'   => 'listings_display_number',
-                    'name' => __('Listings pages show at most:', 'ldd-directory-lite'),
-                    'desc' => __('-1 for all listing.', 'ldd-directory-lite'),
+                    'name' => __('Listings pages show at most', 'ldd-directory-lite'),
+                    'desc' => __('Leave empty to show all listings.', 'ldd-directory-lite'),
                     'type' => 'text',
                     'std'  => '10',
                 ),
@@ -248,10 +248,29 @@ function ldl_get_registered_settings()
                     'name' => '<h4 class="title ldd-admin-title">' . __('Search Page', 'ldd-directory-lite') . '</h4>',
                     'type' => 'header'
                 ),
+                 'search_listings_sort'       => array(
+                    'id'      => 'search_listings_sort',
+                    'name'    => __('Default Sort', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('you can change sort for shortcodes too, <code>%1$s</code>.', 'ldd-directory-lite'), '[directory list_order_by="xxx" list_order="asc"]'),
+                    'type'    => 'select',
+                    'options' => ldl_search_sort_options(),
+                    'default' => 'business_name',
+                ),
+                'search_listings_sort_order' => array(
+                    'id'      => 'search_listings_sort_order',
+                    'name'    => __('Sort Order', 'ldd-directory-lite'),
+                    'desc'    => sprintf(__('Please choose %1$s sort order.', 'ldd-directory-lite'), '[ASC/DESC]'),
+                    'type'    => 'select',
+                    'options' => array(
+                        'asc'  => __('ASC', 'ldd-directory-lite'),
+                        'desc' => __('DESC', 'ldd-directory-lite'),
+                    ),
+                    'default' => 'asc',
+                ),
                  'listings_search_number'       => array(
                     'id'   => 'listings_search_number',
                     'name' => __('Search result pages show at most:', 'ldd-directory-lite'),
-                    'desc' => __('-1 for all listing.', 'ldd-directory-lite'),
+                    'desc' => __('Leave empty to show all search results.', 'ldd-directory-lite'),
                     'type' => 'text',
                     'std'  => '10',
                 ),
@@ -620,6 +639,17 @@ function ldl_get_sort_options()
     $pages_options['state']          = __('State/Province', 'ldd-directory-lite');
     $pages_options['id']      = __('ID', 'ldd-directory-lite');
     $pages_options['random']        = __('Random', 'ldd-directory-lite');
+
+    return $pages_options;
+}
+
+function ldl_search_sort_options()
+{
+
+    $pages_options['business_name'] = __('Business name', 'ldd-directory-lite');
+    $pages_options['id']      = __('ID', 'ldd-directory-lite');
+    $pages_options['date']           = __('Date', 'ldd-directory-lite');
+    
 
     return $pages_options;
 }

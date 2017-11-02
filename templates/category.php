@@ -25,7 +25,13 @@ get_header();
 
 	<?php
 		$paged          = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		$posts_per_page  = ldl()->get_option( 'listings_display_number', 10 );
+		if(ldl()->get_option( 'listings_display_number') > 0){
+			
+			$posts_per_page  = ldl()->get_option( 'listings_display_number', 10 );
+		}
+		else {
+		$posts_per_page = 100;
+		}
 
 		
 			global $wp_query;
@@ -176,11 +182,13 @@ get_header();
 		 *
 		 * @hooked ldd_default_pagination - 10
 		 */
+		 if(ldl()->get_option( 'listings_display_number') >0){
 		  the_posts_pagination( array(
     'mid_size' => 2,
     'prev_text' => __( 'Previous', 'textdomain' ),
     'next_text' => __( 'Next', 'textdomain' ),
 ) ); 
+		 }
 		//do_action( 'ldd_after_directory_loop' );
 	?>
 

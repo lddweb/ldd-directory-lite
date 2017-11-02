@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           1.3.0
+ * Version:           1.4
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '1.3.0');
+define('LDDLITE_VERSION', '1.4');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -419,10 +419,11 @@ function ldd_meta_search_join ($join){
     global $wpdb;
 	
 		if( is_search() and $_REQUEST["post_type"] == "directory_listings") {
-        	$join .=' LEFT JOIN '.$wpdb->postmeta.' ON '.$wpdb->posts.'.ID = '.$wpdb->postmeta.'.post_id ';
+        	$join .=' LEFT JOIN '.$wpdb->postmeta.' wm ON '.$wpdb->posts.'.ID = wm.post_id ';
 		}
 	return $join;
 }
+
 
 function ldd_taxonomy_search_join ($join){
     global $wpdb;
@@ -437,7 +438,7 @@ function ldd_meta_search_where( $where ){
     global $wpdb;
 		if( is_search() and $_REQUEST["post_type"] == "directory_listings") {
 		  $where = preg_replace( "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-		   						 "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+		   						 "(".$wpdb->posts.".post_title LIKE $1) OR (wm.meta_value LIKE $1)", $where );
 		}
 	return $where;
 }
@@ -445,7 +446,7 @@ function ldd_meta_search_where( $where ){
 function atom_search_where($where){
   global $wpdb;
   if (is_search() and $_REQUEST["post_type"] == "directory_listings")
-    $where .= "OR (t.name LIKE '%".get_search_query()."%' AND {$wpdb->posts}.post_type= 'directory_listings' AND  {$wpdb->posts}.post_status = 'publish')";
+    $where .= "OR (t.name LIKE '%".get_search_query()."%' AND {$wpdb->posts}.post_type= 'directory_listings'  AND  {$wpdb->posts}.post_status = 'publish')";
   return $where;
 }
 
@@ -474,17 +475,49 @@ function myprefix_search_posts_per_page($query) {
 function add_blog_post_to_query( $query ) {
     if (  $query->is_main_query() && is_tax('listing_category') ) {
         $query->set( 'post_type', array('directory_listings') );
-        $query->set( 'posts_per_page', ldl()->get_option( 'listings_display_number', 10 ) );
+        if(ldl()->get_option( 'listings_display_number') >0){
+			
+            $posts_per_page  = ldl()->get_option( 'listings_display_number', 10 );
+		}
+		else {
+		$posts_per_page = 100;
+		}
+        $query->set( 'posts_per_page', $posts_per_page );
     }
 }
+function ldd_sort_custom( $orderby){
+     if (!is_search() or $_REQUEST["post_type"] != "directory_listings"){
+         return  $orderby;
+     }
+        
+     
+    global $wpdb;
+    $sort_order = ldl()->get_option( 'search_listings_sort_order', 'asc' );
+    $sort_by    = ldl()->get_option( 'search_listings_sort', 'business_name' );
+    if($sort_by == "business_name"){
+        $orderby = 'post_title';
+    }
+    elseif($sort_by == "date"){
+        $orderby = 'post_date';
+    }
+    elseif($sort_by == "id"){
+        $orderby = 'ID';
+    }
+   
+        $orderby =  $wpdb->prefix."posts.post_type ASC, {$wpdb->prefix}posts.{$orderby} {$sort_order}";
+        
+return  $orderby;
+    
+     
+}
+//add_filter('pre_get_posts', 'laudes_order',99);
 add_action( 'pre_get_posts', 'add_blog_post_to_query' );
-
 add_filter( 'pre_get_posts','myprefix_search_posts_per_page', 99 );
 
-
-add_filter('posts_join', 'ldd_meta_search_join' );
 add_filter('posts_join', 'ldd_taxonomy_search_join' );
 add_filter('posts_where', 'ldd_meta_search_where' );
+add_filter('posts_join', 'ldd_meta_search_join' );
 add_filter('posts_where', 'atom_search_where' );
 add_filter('posts_groupby', 'ldd_meta_search_groupby' );
-//add_filter('posts_orderby','ldd_sort_custom',10,2);
+add_filter('posts_orderby','ldd_sort_custom',10,2);
+

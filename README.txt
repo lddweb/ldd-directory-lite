@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 3.9.1 or higher
 Tested up to: 4.8.2
-Stable tag: 1.3.0
+Stable tag: 1.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,6 +168,22 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 * Added GEO Location support for localizing map for users.
 
 == Changelog ==
+
+= 1.4 =
+* Updated request for review notification behavior
+* Corrected issue with Terms of Service notice on front end
+* Updated social media links
+
+= 1.3.3 =
+* Fixed issues in listing sorts
+* updates search filters
+
+= 1.3.2 =
+* Fixed issues on plugin activation
+
+= 1.3.1 =
+* Added Search sort option
+
 
 = 1.3.0 =
 * Added limit options and pagination for search page

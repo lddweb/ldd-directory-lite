@@ -24,6 +24,7 @@ class LDD_Nag {
 
 		// catch nag hide
 		$this->catch_delay_notice();
+		$this->catch_remove_perm();
 
 		// bind nag
 		$this->bind();
@@ -63,6 +64,37 @@ class LDD_Nag {
 		}
 	}
 
+/*
+* Remove notice permenantly
+*/
+	private function catch_remove_perm() {
+		if ( isset( $_GET['LDDLITE_REMOVE_NOTICE_KEY' ] ) && current_user_can( 'install_plugins' ) ) {
+			// Add user meta
+
+		
+			update_user_meta( $this->current_user->ID, 'LDDLITE_REMOVE_NOTICE_KEY', '1' );
+			
+
+			// Build redirect URL
+			$query_params = $this->get_admin_querystring_array();
+			unset( $query_params[ LDDLITE_REMOVE_NOTICE_KEY ] );
+			$query_string = http_build_query( $query_params );
+			if ( $query_string != '' ) {
+				$query_string = '?' . $query_string;
+			}
+
+			$redirect_url = 'http';
+			if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) {
+				$redirect_url .= 's';
+			}
+			$redirect_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . $query_string;
+
+			// Redirect
+			wp_redirect( $redirect_url );
+			exit;
+		}
+	}
+
 	/**
 	 * Dismiss the notice when the review link is clicked
 	 */
@@ -81,9 +113,10 @@ class LDD_Nag {
 		// Is admin notice hidden?
 		$hide_notice  = get_user_meta( $this->current_user->ID, LDDLITE_HIDE_NOTICE_KEY, true );
 		$delay_notice = get_user_meta( $this->current_user->ID, LDDLITE_DELAY_NOTICE_KEY, true );
+		$romove_notice = get_user_meta( $this->current_user->ID, 'LDDLITE_REMOVE_NOTICE_KEY', true );
 
 		// Check if we need to display the notice
-		if ( current_user_can( 'install_plugins' ) && '' == $hide_notice ) { //good
+		if ( current_user_can( 'install_plugins' ) && $romove_notice !=1 ) { //good
 			// Get installation date
 			$datetime_install = $this->get_install_date();
 			$datetime_past    = new DateTime( '-7 days' );
@@ -93,11 +126,11 @@ class LDD_Nag {
 				$datetime_delay      = $this->get_delay_date();
 				$datetime_delay_past = new DateTime( '-14 days' );
 
-				if ( $datetime_delay_past >= $datetime_delay ) {
+				if ( $datetime_delay_past >= $datetime_delay  && $romove_notice !=1) {
 					// 14 or more days ago, show admin notice
 					add_action( 'admin_notices', array( $this, 'display_admin_notice' ) );
 				}
-			}elseif ( $datetime_past >= $datetime_install ) {
+			}elseif ( $datetime_past >= $datetime_install  && '' == $hide_notice) {
 				// 7 or more days ago, show admin notice
 				add_action( 'admin_notices', array( $this, 'display_admin_notice' ) );
 			}
@@ -188,9 +221,11 @@ class LDD_Nag {
 		$query_params = $this->get_admin_querystring_array();
 		$query_string = '?' . http_build_query( array_merge( $query_params, array( LDDLITE_DELAY_NOTICE_KEY => '1' ) ) );
 
+		$hide_string = '?'. http_build_query( array_merge( $query_params, array( 'LDDLITE_REMOVE_NOTICE_KEY' => '1' ) ) );
+
 		echo '<div class="notice is-dismissible" style="border-left: 15px solid #1C346F;">';
-		echo '<img src="'.LDDLITE_URL.'/public/images/ldd-logo-review.png" style="float: left;    margin: 1.5em 1em 1.5em 0;">';
-		printf( __('<h3 style="color:#1C346F;margin:1em 0 0;">Thank you for using the LDD Directory Lite</h3><span style="font-size: 15px;">Please consider taking a moment to rate or review this plugin.</span> <br /><br /><a id="ldd-review" class="button" style="background: #1C346F;border-color: #1C346F;-webkit-box-shadow: 0 1px 0 #1C346F;box-shadow: 0 1px 0 #1C346F;text-shadow: none;color: #fff;font-weight: bold;" href="%1$s" target="_blank">Rate this Plugin</a>    <a class="button" style="background: #bdcdec;border-color: #bdcdec;-webkit-box-shadow: 0 1px 0 #bdcdec;box-shadow: 0 1px 0 #bdcdec;text-shadow: none;color: #1C346F;font-weight: bold;margin-left: 14em;" href="%2$s">Not Now - Maybe Later</a><br />', 'ldd-directory-lite'), esc_url('https://wordpress.org/support/plugin/ldd-directory-lite/reviews/#new-topic-0'), $query_string );
+		echo '<img src="'.LDDLITE_URL.'/public/images/ldd-logo-review.png" style="float: left;    margin: 1.5em 5em 1.5em 0;">';
+		printf( __('<h3 style="color:#1C346F;margin:1em 0 0;">Thank you for using the LDD Directory Lite</h3><span style="font-size: 15px;">Please consider taking a moment to rate or review this plugin.</span> <br /><br /><a id="ldd-review" class="button" style="background: #1C346F;border-color: #1C346F;-webkit-box-shadow: 0 1px 0 #1C346F;box-shadow: 0 1px 0 #1C346F;text-shadow: none;color: #fff;font-weight: bold;" href="%1$s" target="_blank">Rate this Plugin</a>    <a class="button" style="background: #bdcdec;border-color: #bdcdec;-webkit-box-shadow: 0 1px 0 #bdcdec;box-shadow: 0 1px 0 #bdcdec;text-shadow: none;color: #1C346F;font-weight: bold;margin-left: 5em;" href="%2$s">Not Now - Maybe Later</a>     <a id="ldd-review-remove" class="button" style="border-color: #bdcdec;-webkit-box-shadow: 0 1px 0 #bdcdec;box-shadow: 0 1px 0 #bdcdec;text-shadow: none;color: #bdcdec;font-weight: bold;float:right;background:#fff" href="%3$s" target="">No thanks (don\'t ask again)</a><br />', 'ldd-directory-lite'), esc_url('https://wordpress.org/support/plugin/ldd-directory-lite/reviews/#new-topic-0'), $query_string,$hide_string ).'';
 		echo "<div class='clear'></div></div>";
 	}
 }
