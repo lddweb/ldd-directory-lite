@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           1.4
+ * Version:           1.4.1
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '1.4');
+define('LDDLITE_VERSION', '1.4.1');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));

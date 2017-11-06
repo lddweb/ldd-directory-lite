@@ -43,6 +43,39 @@
                         <?php echo ldl_get_error('url_linkedin'); ?>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label" for=""><?php _e('Google +', 'ldd-directory-lite'); ?></label>
+                        <input type="text" id="f_url_googleplus" class="form-control" name="n_url_googleplus" value="<?php echo ldl_get_value( 'url_linkedin' ); ?>">
+                        <p class="help-block"><?php _e('https://plus.google.com', 'ldd-directory-lite'); ?></p>
+                        <?php echo ldl_get_error('url_googleplus'); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label" for=""><?php _e('Instagram', 'ldd-directory-lite'); ?></label>
+                        <input type="text" id="f_url_instagram" class="form-control" name="n_url_instagram" value="<?php echo ldl_get_value( 'url_linkedin' ); ?>">
+                        <p class="help-block"><?php _e('https://www.instagram.com/?hl=en', 'ldd-directory-lite'); ?></p>
+                        <?php echo ldl_get_error('url_instagram'); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label" for=""><?php _e('YouTube', 'ldd-directory-lite'); ?></label>
+                        <input type="text" id="f_url_youtube" class="form-control" name="n_url_youtube" value="<?php echo ldl_get_value( 'url_linkedin' ); ?>">
+                        <p class="help-block"><?php _e('https://www.youtube.com/', 'ldd-directory-lite'); ?></p>
+                        <?php echo ldl_get_error('url_youtube'); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label" for=""><?php _e('Custom Link', 'ldd-directory-lite'); ?></label>
+                        <input type="text" id="f_url_custom" class="form-control" name="n_url_custom" value="<?php echo ldl_get_value( 'url_linkedin' ); ?>">
+                        <p class="help-block"><?php _e('www.yourdomain.com', 'ldd-directory-lite'); ?></p>
+                        <?php echo ldl_get_error('url_custom'); ?>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
