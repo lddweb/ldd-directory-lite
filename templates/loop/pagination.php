@@ -23,10 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $wp_query;
-
+ $wp_query->set('posts_per_page', 5);
+ $wp_query->query($wp_query->query_vars);
 if ( $wp_query->max_num_pages <= 1 ) {
 	return;
 }
+
+
 ?>
 <nav class="ldd_listing_pagination clearfix">
 	<?php
@@ -42,5 +45,8 @@ if ( $wp_query->max_num_pages <= 1 ) {
 		'end_size'     => 3,
 		'mid_size'     => 3
 	) ) );
+
+	
+	
 	?>
 </nav>

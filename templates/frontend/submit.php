@@ -1,6 +1,6 @@
 <div class="directory-lite bootstrap-wrapper">
 
-    <?php ldl_get_header(); ?>
+    <?php ldl_get_header(); ?>plug
 
     <?php if ( ldl_has_errors() ): ?>
         <div class="alert alert-danger">

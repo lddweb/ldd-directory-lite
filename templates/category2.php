@@ -1,9 +1,4 @@
-<?php
-/*
- File version: 1
-*/
-get_header();
-?>
+
 <div class=" bootstrap-wrapper">
 	<?php
 		/**
@@ -205,4 +200,3 @@ get_header();
 		do_action( 'ldd_after_main_content' );
 	?>
 	</div>
-<?php get_footer(); ?>

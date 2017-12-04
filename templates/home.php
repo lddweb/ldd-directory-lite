@@ -1,11 +1,13 @@
+<?php
+/*
+* File version: 1
+*/
+?>
 <div class="directory-lite ldd-directory-home bootstrap-wrapper">
 
     <?php
     echo ldl_get_header();
-    $pass_attr = array();
-    if (isset($atts) and !empty($atts)):
-        $pass_attr = array_filter($atts);
-    endif;
+ 
     ?>
 
     <div class="container-fluid">
@@ -17,7 +19,7 @@
                 <?php
                
                ?>
-                    <?php //echo ldl_get_parent_categories($pass_attr); 
+                     <?php //echo ldl_get_parent_categories($pass_attr); 
                     
                   show_all_cat();
 

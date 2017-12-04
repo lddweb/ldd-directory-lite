@@ -966,15 +966,5 @@ function get_custom_post_type_template($content) {
 
 //add_filter( 'the_content', 'get_custom_post_type_template' );
 
-function check_template_version(){
-
-	 $filedata = get_file_data(plugin_dir_url('ldd-directory-lite') . 'ldd-directory-lite/templates/category.php', array(
-    'version' => 'File version'
-    
-        ));
-    print_r($filedata);
-	//return "here";
-
-}
 
 

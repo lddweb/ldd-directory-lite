@@ -44,13 +44,7 @@ function ldl_get_registered_settings()
                     'type'    => 'select',
                     'options' => ldl_get_pages()
                 ),
-                'directory_view_type'              => array(
-                    'id'      => 'directory_view_type',
-                    'name'    => __('Listing View', 'ldd-directory-lite'),
-                    'desc'    => __('Set the default listing view.', 'ldd-directory-lite'),
-                    'type'    => 'select',
-                    'options' => ldl_get_listing_views()
-                ),
+                
                 'directory_taxonomy_slug'          => array(
                     'id'   => 'directory_taxonomy_slug',
                     'name' => __('Taxonomy Slug', 'ldd-directory-lite'),
@@ -65,6 +59,20 @@ function ldl_get_registered_settings()
                     'size' => 'medium',
                     'std'  => 'listing',
                 ),
+
+                'sidebar_separator'             => array(
+                    'id'   => 'directory_sidebar',
+                    'name' => '<h4 class="title ldd-admin-title">' . __('Sidebar Shortcode', 'ldd-directory-lite') . '</h4>',
+                    'type' => 'header'
+                ),
+                'appearance_sidebar_shortcode'  => array(
+                    'id'   => 'appearance_sidebar_shortcode',
+                    'name' => __('Shortcode', 'ldd-directory-lite'),
+                    'type' => 'text',
+                    'size' => 'medium',
+                    'desc' => __('If provided, Default sidebar contact form will be replaced with provided shortcode.', 'ldd-directory-lite'),
+                ),
+
                 'other_separator'                  => array(
                     'id'   => 'directory_information',
                     'name' => '<h4 class="title ldd-admin-title">' . __('Other', 'ldd-directory-lite') . '</h4>',
@@ -81,7 +89,9 @@ function ldl_get_registered_settings()
                         "listing"  => "Listing"
                     ),
                     "std"     => "category",
-                 ),
+                 ), 
+                   
+                 
                 'general_allow_public_submissions' => array(
                     'id'      => 'general_allow_public_submissions',
                     'name'    => __('Public Submissions', 'ldd-directory-lite'),
@@ -410,43 +420,97 @@ function ldl_get_registered_settings()
                     'desc' => __('You can disable the Bootstrap CSS library if your theme already loads a copy, or if you want to use entirely custom CSS.', 'ldd-directory-lite'),
                     'type' => 'checkbox',
                 ),
+
+                 'directory_view_type'              => array(
+                    'id'      => 'directory_view_type',
+                    'name'    => __('Listing View', 'ldd-directory-lite'),
+                    'desc'    => __('Set the default listing view.', 'ldd-directory-lite'),
+                    'type'    => 'select',
+                    'options' => ldl_get_listing_views()
+                ),
+
+                
+               'appearance_header_background'     => array(
+                    'id'   => 'appearance_header_background',
+                    'name' => __('Header Background Color', 'ldd-directory-lite'),
+                    'type' => 'color',
+                    'std'  => '#222',
+                ),
+                'appearance_header_text'      => array(
+                    'id'   => 'appearance_header_text',
+                    'name' => __('Header Text Color', 'ldd-directory-lite'),
+                    'type' => 'color',
+                    'std'  => '#ffffff',
+                ),
                 'appearance_primary_normal'     => array(
                     'id'   => 'appearance_primary_normal',
-                    'name' => __('Primary Normal', 'ldd-directory-lite'),
+                    'name' => __('Button Color', 'ldd-directory-lite'),
                     'type' => 'color',
                     'std'  => '#3bafda',
                 ),
                 'appearance_primary_hover'      => array(
                     'id'   => 'appearance_primary_hover',
-                    'name' => __('Primary Hover', 'ldd-directory-lite'),
+                    'name' => __('Button Hover', 'ldd-directory-lite'),
                     'type' => 'color',
                     'std'  => '#3071a9',
                 ),
                 'appearance_primary_foreground' => array(
                     'id'   => 'appearance_primary_foreground',
-                    'name' => __('Primary Foreground', 'ldd-directory-lite'),
+                    'name' => __('Button Text Color', 'ldd-directory-lite'),
                     'type' => 'color',
                     'std'  => '#ffffff',
                 ),
-                'sidebar_separator'             => array(
-                    'id'   => 'directory_sidebar',
-                    'name' => '<h4 class="title ldd-admin-title">' . __('Sidebar Shortcode', 'ldd-directory-lite') . '</h4>',
-                    'type' => 'header'
+
+                'link_text_color'      => array(
+                    'id'   => 'link_text_color',
+                    'name' => __('Text Link Color', 'ldd-directory-lite'),
+                    'type' => 'color',
+                    'std'  => '#337ab7',
                 ),
-                'appearance_sidebar_shortcode'  => array(
-                    'id'   => 'appearance_sidebar_shortcode',
-                    'name' => __('Shortcode', 'ldd-directory-lite'),
-                    'type' => 'text',
-                    'size' => 'medium',
-                    'desc' => __('If provided, Default sidebar contact form will be replaced with provided shortcode.', 'ldd-directory-lite'),
+                'link_text_hover' => array(
+                    'id'   => 'link_text_hover',
+                    'name' => __('Text Link Hover', 'ldd-directory-lite'),
+                    'type' => 'color',
+                    'std'  => '#337ab7',
                 ),
+               
             )
         ),
+        'template' => apply_filters('lddlite_settings_template',
+       
+            array(
+
+                  'single_page_listing' => array(
+                    'id'      => 'single_page_listing',
+                    'name'    => __('Single Listing Template', 'ldd-directory-lite'),
+                    'desc'    => __('Single Listing Template', 'ldd-directory-lite'),
+                    'type'    => 'select',
+                    'options' => ldl_single_temp_options()
+         
+        ),
+        'template_display_separator'       => array(
+                    'id'   => 'template_display_separator',
+                    'name' => '<h4 class="title ldd-admin-title">' . __('ADVANCED TEMPLATE MODIFICATIONS', 'ldd-directory-lite') . '</h4>',
+                    'type' => 'header'
+                ),
+                'template_override' => array(
+                    'id'   => 'template_override',
+                    //'name' => '<h4 class="title ldd-admin-title">' . __('Template Overriding', 'ldd-directory-lite') . '</h4>',
+                    'type' => 'desc',
+                    'desc' => __('If provided, Default sidebar contact form will be replaced with provided shortcode.', 'ldd-directory-lite'),
+                    'callback'=> 'myprefix_setting_callback_function'
+                ),
+                
+                
+                
+                
+            )
+        ),
+
     );
 
     return $settings;
 }
-
 
 /**
  * Register the default settings and sections
@@ -602,6 +666,7 @@ function ldl_get_settings_tabs()
     $tabs['emails']         = __('Email Settings', 'ldd-directory-lite');
     $tabs['submit']         = __('Submit', 'ldd-directory-lite');
     $tabs['appearance']     = __('Appearance', 'ldd-directory-lite');
+    $tabs['template']     = __('Template Overriding', 'ldd-directory-lite');
 
     return apply_filters('ldl_settings_tabs', $tabs);
 }
@@ -649,6 +714,17 @@ function ldl_search_sort_options()
     $pages_options['business_name'] = __('Business name', 'ldd-directory-lite');
     $pages_options['id']      = __('ID', 'ldd-directory-lite');
     $pages_options['date']           = __('Date', 'ldd-directory-lite');
+    
+
+    return $pages_options;
+}
+
+function ldl_single_temp_options()
+{
+
+    $pages_options['theme_default'] = __('Theme Default', 'ldd-directory-lite');
+    $pages_options['plugin_default']      = __('Plugin Default', 'ldd-directory-lite');
+   
     
 
     return $pages_options;
@@ -827,6 +903,27 @@ function ldl_password_callback($args)
 function ldl_missing_callback($args)
 {
     printf(__('The callback function used for the <strong>%s</strong> setting is missing.', 'ldd-directory-lite'), $args['id']);
+}
+
+function ldl_desc_callback($args)
+{
+    ?>
+    
+            <p><?php printf( __('The LDD Directory Lite template files which are responsible for the markup and structure for the frontend of your directory are located here:</p>
+     ', 'lddlite_templates' )); ?> </p>
+     <?php printf( __(' <code>/ldd-directory-lite/templates/</code>', 'lddlite_templates' )); ?>
+           <p>
+                <?php printf( __('In order to modify the look and feel of your directory, you will need to copy the specific file(s) to a folder in your theme called <code>lddlite_templates</code>', 'ldd-directory-lite') ); ?>
+            </p>
+            <p class=''><?php printf( __('Do not edit these files within the core plugin itself as they will be overwritten during the upgrade process and any customization will be lost.', 'ldd-directory-lite') );?></p>
+            <hr />
+            <p class="">
+                <?php printf( __(' <em>NOTE: If you wish to modify a file in one of the subfolders of the /ldd-directory-lite/templates/, then you will need to maintain the folder structure in your theme as well.</em>', 'ldd-directory-lite') ); ?>
+            </p>
+            <p class="">
+                <?php printf( __(' For example: <code>/yourtheme/lddlite_templates/global/header.php</code', 'ldd-directory-lite') ); ?>
+            </p>
+    <?php
 }
 
 

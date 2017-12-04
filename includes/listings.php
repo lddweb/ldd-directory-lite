@@ -27,7 +27,13 @@ function ldl_template_include($template) {
         $templates = array();
 
         if (is_single()) {
+            if(ldl()->get_option('single_page_listing','theme_default')=='theme_default'){
+                add_filter( 'the_content', 'get_custom_post_type_template' );
+            } else {
             $templates[] = 'single.php';
+            }
+			
+	
         } else if (is_search()) {
             $templates[] = 'search.php';
         }
@@ -36,7 +42,11 @@ function ldl_template_include($template) {
         }
 		
 		 else if (is_archive() && !is_tax( 'tag' ) ) {
-            $templates[] = 'category.php';
+             
+           $templates[] = 'category.php';
+           // get_template_directory_uri().'/ldd/category_ldd.php';
+            //echo get_template_part('ldd','category_ldd');
+             
         }
 		
 

@@ -6,10 +6,10 @@
  * @link      http://lddwebdesign.com
  * @copyright 2014 LDD Consulting, Inc
  * @wordpress-plugin
- * Plugin Name:       LDD Directory Lite
+ * Plugin Name:       LDD Directory Lite Beta
  * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           1.4.1
+ * Version:           2.0
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '1.4.1');
+define('LDDLITE_VERSION', '2.0');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -167,6 +167,7 @@ class ldd_directory_lite {
             self::$_instance->load_plugin_textdomain();
             self::$_instance->include_files();
             self::$_instance->init();
+           // self::$_instance->change_directory_user();
         }
 
         return self::$_instance;
@@ -182,6 +183,7 @@ class ldd_directory_lite {
     public function init() {
 
         add_action('init', array($this, 'load_plugin_textdomain'));
+        add_action('init', array($this, 'change_directory_user'));
 
         // ldd business directory import
         $plugin = 'ldd-business-directory/lddbd_core.php';
@@ -223,6 +225,16 @@ class ldd_directory_lite {
         if (ldl()->get_option('allow_tracking')) {
             add_action('init', array('ldd_directory_lite_tracking', 'get_instance'));
         }
+         
+$editor =wp_roles()->is_role( 'directory_contributor' );
+if(!$editor){ add_role( 'directory_contributor', 'Directory Contributor', array(
+        'read'         => true,  // true allows this capability
+        'edit_posts'   => true,
+        'delete_posts' => true, // Use false to explicitly deny
+    ));} 
+    $role = get_role( 'directory_contributor' );
+    $role->add_cap( 'edit_published_posts' );
+   
 
     }
 
@@ -248,6 +260,7 @@ class ldd_directory_lite {
         require(LDDLITE_PATH . '/includes/shortcodes/_submit.php');
         require(LDDLITE_PATH . '/includes/shortcodes/_manage.php');
         require(LDDLITE_PATH . '/includes/shortcodes/categories.php');
+        
 
         if (is_admin()) {
 	        /**
@@ -318,6 +331,33 @@ class ldd_directory_lite {
         return update_option('lddlite_settings', $this->settings);
 
     }
+   public  function change_directory_user(){
+        global $wpdb;
+
+            $sql = "SELECT `post_type`, `post_author`".
+                " FROM {$wpdb->posts}".
+                " WHERE `post_type` ='directory_listings'".
+                " AND `post_status` IN ('publish', 'pending')";
+                
+                
+
+            $posts = $wpdb->get_results( $sql );
+        
+
+        foreach( $posts as $post ) {
+            $user_id = $post->post_author;
+            $user_meta=get_userdata($user_id);
+
+            $user_roles=$user_meta->roles[0];
+            if($user_roles=='subscriber'){
+                $u = new WP_User( $user_id );
+                $u->remove_role( 'subscriber' );
+                $u->add_role( 'directory_contributor' );
+             }
+            
+        }
+
+}
 
 }
 
@@ -520,4 +560,51 @@ add_filter('posts_join', 'ldd_meta_search_join' );
 add_filter('posts_where', 'atom_search_where' );
 add_filter('posts_groupby', 'ldd_meta_search_groupby' );
 add_filter('posts_orderby','ldd_sort_custom',10,2);
+
+
+
+function wpse28782_remove_menu_items() {
+    if( current_user_can( 'contributor' ) ):
+        remove_menu_page( 'edit.php?post_type=directory_listings' );
+    endif;
+}
+add_action( 'admin_menu', 'wpse28782_remove_menu_items' );
+
+add_filter('wp_dropdown_users', 'MySwitchUser');
+function MySwitchUser($output)
+{
+    if(get_post_type()!="directory_listings"){ return $output;}
+
+    //global $post is available here, hence you can check for the post type here
+    $users = get_users(array('role__in'=>array("administrator",'editor','author','directory_contributor')));
+
+    $output = "<select id=\"post_author_override\" name=\"post_author_override\" class=\"\">";
+
+    //Leave the admin in the list
+    //$output .= "<option value=\"1\">Admin</option>";
+    foreach($users as $user)
+    {
+        $sel = ($post->post_author == $user->ID)?"selected='selected'":'';
+       $user_roles = $user->roles;
+
+        
+        $output .= '<option value="'.$user->ID.'"'.$sel.'>'.$user->display_name.' ('. $user_roles[0].')</option>';
+    }
+    $output .= "</select>";
+
+    return $output;
+    
+}
+
+// add new user as directory contributor if he logs in from directory page
+add_filter('pre_option_default_role','create_directory_user');
+
+ function create_directory_user($default_role){
+     if(isset($_GET['pt']) && $_GET['pt']=="directory_listing"){
+    
+    return 'directory_contributor'; // This is changed
+     } else {
+    return $default_role; // This allows default
+     }
+}
 

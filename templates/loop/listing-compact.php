@@ -26,6 +26,7 @@
                             LDDReviewscore::show_ratings(get_the_ID());
                         }
                         ?>
+
                         <span class="social-meta clearfix">
                             <?php echo ldl_get_social( get_the_ID() ); ?>
                         </span>

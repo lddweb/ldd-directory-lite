@@ -470,6 +470,14 @@ function ldl_shortcode_directory_submit() {
 		ldl_get_template_part('global/login');
 		return;
 	}
+	if (is_user_logged_in()) {
+		$user = new WP_User(get_current_user_id());
+		if($user->roles[0]=="subscriber"){
+		
+		ldl_get_template_part('global/notallowed');
+		return;
+		}
+	}
 	ob_start();
 	if ($lddlite_submit_processor->is_processing() && !$lddlite_submit_processor->has_errors()) {
 		ob_start();

@@ -10,6 +10,11 @@
     ?>
 
         <?php echo ldl_get_header(); 
+	global $wp_query;
+  //print_r($wp_query);
+
+	
+
     ?>
 
     
@@ -18,11 +23,13 @@
 				
             <?php
 
-            
+           
             while (have_posts()) {
                 the_post();
+              
                 ldl_get_template_part('loop/listing', 'compact');
             }
+            wp_reset_postdata(); 
             ?>
 
         <?php else : ?>

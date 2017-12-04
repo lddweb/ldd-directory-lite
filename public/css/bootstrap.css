@@ -1535,3 +1535,4 @@
 }
 .type-listing.compact .meta-column .social-meta{text-align:left !important}
 #submit-tos {height:200px; overflow-y:scroll; background:#eee; padding:9px}
+.directory_listings.listing-single #map_wrapper{clear:both}

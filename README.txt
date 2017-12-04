@@ -174,6 +174,14 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Changelog ==
 
+= 2.0 =
+* Major template structure changes to accommodate user theme templates
+* Template Overidding
+* Introduction of new user role (Directory Contributor) for easier user management
+* Added ability to assign individual Listings to users with Directory Contributor user role
+* Updated directory appearance settings and controls
+* Minor bug fixes
+
 = 1.4.1 =
 * Added new social media options on front end submission
 

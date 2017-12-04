@@ -66,7 +66,7 @@
         <div class="tab-pane" id="register">
 
             <?php if (get_option('users_can_register')): ?>
-                <form method="post" action="<?php echo site_url('wp-login.php?action=register', 'login_post') ?>" class="form-horizontal">
+                <form method="post" action="<?php echo site_url('wp-login.php?action=register&pt=directory_listing', 'login_post') ?>" class="form-horizontal">
                     <input type="hidden" name="redirect_to" value="<?php echo add_query_arg('registered', true); ?>">
                     <input type="hidden" name="user-cookie" value="1">
                     <div class="form-group">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
-                            <button type="submit" class="btn btn-default"><?php _e('Register', 'ldd-directory-lite'); ?></button>
+                            <button type="submit" class="btn btn-primary"><?php _e('Register', 'ldd-directory-lite'); ?></button>
                         </div>
                     </div>
                 </form>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-default"><?php _e('Register', 'ldd-directory-lite'); ?></button>
+                        <button type="submit" class="btn btn-primary"><?php _e('Register', 'ldd-directory-lite'); ?></button>
                     </div>
                 </div>
             </form>
