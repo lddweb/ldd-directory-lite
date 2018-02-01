@@ -91,7 +91,7 @@ $geo = ldl_get_meta('geo');
             </div>
 
         </article>
-            fgfgf
+           
         <?php if ( ldl_use_google_maps() ): ?>
         <script src="<?php echo $google_api_src;?>"></script>
         <script>

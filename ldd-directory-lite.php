@@ -8,8 +8,8 @@
  * @wordpress-plugin
  * Plugin Name:       LDD Directory Lite Beta
  * Plugin URI:        https://plugins.lddwebdesign.com
- * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site.
- * Version:           2.0
+ * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site. 
+ * Version:           2.2
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '2.0');
+define('LDDLITE_VERSION', '2.2');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -227,13 +227,15 @@ class ldd_directory_lite {
         }
          
 $editor =wp_roles()->is_role( 'directory_contributor' );
-if(!$editor){ add_role( 'directory_contributor', 'Directory Contributor', array(
+if(!$editor){ 
+    add_role( 'directory_contributor', 'Directory Contributor', array(
         'read'         => true,  // true allows this capability
         'edit_posts'   => true,
         'delete_posts' => true, // Use false to explicitly deny
     ));} 
     $role = get_role( 'directory_contributor' );
-    $role->add_cap( 'edit_published_posts' );
+    $role->remove_cap( 'edit_published_posts' );
+   
    
 
     }
@@ -563,14 +565,19 @@ add_filter('posts_orderby','ldd_sort_custom',10,2);
 
 
 
-function wpse28782_remove_menu_items() {
+function ldd_remove_menu_items() {
     if( current_user_can( 'contributor' ) ):
         remove_menu_page( 'edit.php?post_type=directory_listings' );
     endif;
 }
-add_action( 'admin_menu', 'wpse28782_remove_menu_items' );
+add_action( 'admin_menu', 'ldd_remove_menu_items' );
 
-add_filter('wp_dropdown_users', 'MySwitchUser');
+
+
+
+
+
+//add_filter('wp_dropdown_users', 'MySwitchUser');
 function MySwitchUser($output)
 {
     if(get_post_type()!="directory_listings"){ return $output;}
@@ -608,3 +615,15 @@ add_filter('pre_option_default_role','create_directory_user');
      }
 }
 
+// Remove admin menus from directory contributors
+add_action( 'admin_init', 'ldd_remove_menu_pages' );
+function ldd_remove_menu_pages() {
+    
+   global $user_ID;
+    
+   if ( current_user_can( 'directory_contributor' ) ) {
+   remove_menu_page( 'edit.php' );
+   remove_menu_page( 'edit-comments.php' );
+   
+   }
+}
