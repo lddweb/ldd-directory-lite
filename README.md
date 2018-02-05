@@ -2,7 +2,7 @@
 
 > This is a fork of the [LDD Business Directory](http://wordpress.org/plugins/ldd-business-directory/) plugin. Going forward the original plugin is considered unsupported and all active development will occur under the new name, ldd directory lite.
 
-* **Working Version**: 2.2
+* **Working Version**: 2.3
 * **Latest Stable**: 1.4.3
 * **Contributors**: [@lddweb](https://github.com/lddweb/)
 

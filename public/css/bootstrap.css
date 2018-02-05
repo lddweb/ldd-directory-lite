@@ -1536,3 +1536,5 @@
 .type-listing.compact .meta-column .social-meta{text-align:left !important}
 #submit-tos {height:200px; overflow-y:scroll; background:#eee; padding:9px}
 .directory_listings.listing-single #map_wrapper{clear:both}
+.logout_link{position:absolute; background:#333; right:0; top:0; color:#fff; opacity:0.8; z-index:9999; padding:10px}
+.logout_link a {color:#fff}

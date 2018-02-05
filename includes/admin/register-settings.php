@@ -114,6 +114,18 @@ function ldl_get_registered_settings()
                     ),
                     "std"     => "yes",
                 ),
+
+                    'directory_contributor_access'  => array(
+                        'id'      => 'directory_contributor_access',
+                        'name'    => __('Dashboard access to Directory Contributor', 'ldd-directory-lite'),
+                        'desc'    => __('should directory contributor user be allowed to access dashboard', 'ldd-directory-lite'),
+                        'type'    => 'radio_inline',
+                        'options' => array(
+                            "yes" => "Yes",
+                            "no"  => "No"
+                        ),
+                        "std"     => "yes",
+                ),
                 'googlemap_api_key'                => array(
                     'id'   => 'googlemap_api_key',
                     'name' => __('Google API Key', 'ldd-directory-lite'),
@@ -317,13 +329,7 @@ function ldl_get_registered_settings()
                     'type' => 'text',
                     'std'  => get_bloginfo('admin_email')
                 ),
-                'email_notification_address' => array(
-                    'id'   => 'email_notification_address',
-                    'name' => __('From Email', 'ldd-directory-lite'),
-                    'desc' => sprintf(__('Email to send purchase receipts from. This will act as the "%1$s" and "%2$s" address.', 'ldd-directory-lite'), 'from', 'reply-to'),
-                    'type' => 'text',
-                    'std'  => get_bloginfo('admin_email')
-                ),
+                
                 'message_separator'          => array(
                     'id'   => 'message_separator',
                     'name' => '<strong>' . __('Email Templates', 'ldd-directory-lite') . '</strong>',
@@ -379,8 +385,8 @@ function ldl_get_registered_settings()
                     'desc'    => __('Would you like to publish listings without approval?', 'ldd-directory-lite'),
                     'type'    => 'radio_inline',
                     'options' => array(
-                        "yes" => "Yes",
-                        "no"  => "No"
+                        "no" => "No",
+                        "yes"  => "Yes"
                     ),
                     "std"     => "no",
                 ),

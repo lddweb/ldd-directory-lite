@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite Beta
  * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site. 
- * Version:           2.3
+ * Version:           2.2
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '2.3');
+define('LDDLITE_VERSION', '2.2');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -627,23 +627,3 @@ function ldd_remove_menu_pages() {
    
    }
 }
-
-// restrict directory contributor from dashboard
-
-function ldd_contributor_redirect(){
-    if(ldl()->get_option( 'directory_contributor_access', 'yes' )=="no"){
-        if( is_admin() && !defined('DOING_AJAX') && ( current_user_can('directory_contributor') ) ){
-            wp_redirect(home_url());
-            exit;
-        }
-        if(current_user_can('directory_contributor')){
-           
-            add_action('wp_footer','show_prof');
-                    
-        add_filter('show_admin_bar', '__return_false');
-        }
-    }
-  }
-  add_action('init','ldd_contributor_redirect');
-
-  

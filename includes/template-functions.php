@@ -884,10 +884,16 @@ $offset      = $per_page * ( $paged -1) ;
 // Gather the series
 $mycategory = get_terms( LDDLITE_TAX_CAT, $args_arr );
 
+
 // Loop through and display the series
 foreach($mycategory as $s)
 {
 $theurl = get_term_link($s, 'mycategory');
+if ( is_wp_error( $theurl ) ) {
+    // something went wrong
+   // echo $theurl->get_error_message();
+   continue;
+}
 $count = get_term_post_count( "listing_category", $s->term_id );
 echo "<div class=\"ser-img img\" ><a class='list-group-item' href=\"" . $theurl  . "\"><span class=\"label label-primary pull-right\">".$count."</span>". $s->name ."</a>";
 
@@ -975,6 +981,13 @@ function check_template_version(){
     print_r($filedata);
 	//return "here";
 
+}
+
+function show_prof(){
+	$current_user = wp_get_current_user();
+	?>
+	<div class="logout_link">Hi <?php echo $current_user->display_name;?><br> <a href="<?php echo wp_logout_url( home_url() ); ?> ">  Logout</a></div>
+	<?php
 }
 
 
