@@ -115,7 +115,7 @@ add_action('init', 'ldl_register_post_type', 5);
 function ldl_register_scripts() {
 
     wp_register_style('lddlite-site', LDDLITE_URL . '/public/css/directory.min.css', false, LDDLITE_VERSION);
-    wp_register_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', false, '4.1.0');
+    wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', false, '4.1.0');
     wp_register_style('lddlite-admin', LDDLITE_URL . '/public/css/admin.css', false, LDDLITE_VERSION);
 
     wp_register_script('lddlite-happy', LDDLITE_URL . '/public/js/happy.js', array('jquery'), LDDLITE_VERSION, true);
