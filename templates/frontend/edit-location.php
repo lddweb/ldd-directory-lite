@@ -1,4 +1,8 @@
-<?php $geo = ldl_get_value('geo'); ?>
+<?php
+/*
+* File version: 2
+*/
+$geo = ldl_get_value('geo'); ?>
 
 <div class="directory-lite edit-location bootstrap-wrapper">
 

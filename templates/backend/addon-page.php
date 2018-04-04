@@ -1,5 +1,8 @@
 <?php
 /*
+* File version: 2
+*/
+/*
  * Fetch records from LDD Plugins for Addons.
  */
 $addons     = array();

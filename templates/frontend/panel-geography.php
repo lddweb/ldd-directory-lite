@@ -1,4 +1,7 @@
 <?php
+/*
+* File version: 2
+*/
 $geo = ldl_get_value('geo');
 if (!is_array($geo)) {
     $geo = array('lat'=>'','lng'=>'');

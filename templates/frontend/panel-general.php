@@ -1,3 +1,8 @@
+<?php
+/*
+* File version: 2
+*/
+?>
 <div class="container-fluid">
 	<?php if (ldl()->get_option('submit_intro')): ?>
     <div class="row">

@@ -1,13 +1,13 @@
 <?php
 /*
-* File version: 1
+* File version: 2
 */
 ?>
 <div class="directory-lite ldd-directory-home bootstrap-wrapper">
 
     <?php
     echo ldl_get_header();
- 
+ $version = 2;
     ?>
 
     <div class="container-fluid">

@@ -1,4 +1,8 @@
-    <div id="listing-<?php echo get_the_ID(); ?>" class="col-xs-12 col-sm-6 col-md-4 type-grid grid-item">
+    <?php
+    /*
+* File version: 2
+*/
+?><div id="listing-<?php echo get_the_ID(); ?>" class="col-xs-12 col-sm-6 col-md-4 type-grid grid-item">
         <div class="thumbnail">
             <?php
             $thumbnail_src = ldl_get_thumbnail( get_the_ID() );

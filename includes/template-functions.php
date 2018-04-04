@@ -207,6 +207,7 @@ function ldl_get_parent_categories($attr = array()) {
 }
 
 /**
+ * Deprecated. will be removed in future releases
  * Obtain a list of categories based on the provided parent ID, and return a formatted list for display
  * via one of the plugin templates.
  *

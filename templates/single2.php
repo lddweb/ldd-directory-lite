@@ -93,7 +93,8 @@ $geo = ldl_get_meta('geo');
         </article>
            
         <?php if ( ldl_use_google_maps() ): ?>
-        <script src="<?php echo $google_api_src;?>"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo LDDLITE_GOOGLE_SCRIPT; ?>"></script>
+        
         <script>
             function initialize() {
                 var mapLatLng = new google.maps.LatLng(<?php echo $geo['lat']; ?>, <?php echo $geo['lng']; ?>);

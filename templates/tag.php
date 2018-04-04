@@ -1,4 +1,7 @@
 <?php
+/*
+* File version: 2
+*/
 get_header();
 ?>
 <div class=" bootstrap-wrapper">
@@ -9,6 +12,7 @@ get_header();
 		 * @hooked ldd_output_content_wrapper - 10 (outputs opening divs for the content)
 		 */
 		do_action( 'ldd_before_main_content' );
+		$version = 2;
 	?>
 
 	<?php echo ldl_get_header();  ?>

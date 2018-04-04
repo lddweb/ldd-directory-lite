@@ -1,4 +1,7 @@
 <?php
+/*
+* File version: 2
+*/
 global $geo;
 // ldl_use_google_maps() will always return false if this isn't an array containing our lat and lng
 $geo = ldl_get_meta('geo');
@@ -12,6 +15,7 @@ get_header();
          * @hooked ldd_output_content_wrapper - 10 (outputs opening divs for the content)
          */
         do_action( 'ldd_before_main_content' );
+        $version = 2;
     ?>
         <?php while (have_posts()) : the_post(); ?>
 
@@ -93,7 +97,8 @@ get_header();
         </article>
             
         <?php if ( ldl_use_google_maps() ): ?>
-        <script src="<?php echo $google_api_src;?>"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo LDDLITE_GOOGLE_SCRIPT; ?>"></script>
+        
         <script>
             function initialize() {
                 var mapLatLng = new google.maps.LatLng(<?php echo $geo['lat']; ?>, <?php echo $geo['lng']; ?>);

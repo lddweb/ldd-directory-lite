@@ -1,3 +1,8 @@
+<?php
+/*
+* File version: 2
+*/
+?>
 <div id="poststuff" class="ldd-help-container">
     <div id="post-body">
         <div id="post-body-content">

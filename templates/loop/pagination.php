@@ -1,4 +1,7 @@
 <?php
+/*
+* File version: 2
+*/
 /**
  * Pagination - Show numbered pagination for category pages
  *

@@ -6,10 +6,10 @@
  * @link      http://lddwebdesign.com
  * @copyright 2014 LDD Consulting, Inc
  * @wordpress-plugin
- * Plugin Name:       LDD Directory Lite Beta
+ * Plugin Name:       LDD Directory Lite
  * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site. 
- * Version:           2.3
+ * Version:           2.0
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '2.3');
+define('LDDLITE_VERSION', '2.0');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));

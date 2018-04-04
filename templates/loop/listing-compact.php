@@ -1,3 +1,7 @@
+<?php/*
+* File version: 2
+*/
+?>
 <article id="listing-<?php echo get_the_ID(); ?>" class="ldd-listing listing-<?php echo get_the_ID(); ?> type-listing compact clearfix">
     <div class="container-fluid">
         <div class="row">

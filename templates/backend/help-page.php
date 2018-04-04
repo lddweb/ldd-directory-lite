@@ -1,4 +1,7 @@
 <?php
+/*
+* File version: 2
+*/
 $tab = (!empty($_GET['tab']))? esc_attr($_GET['tab']) : 'about';
 function help_page_tabs($current = 'about')
 {
