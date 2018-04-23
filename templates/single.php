@@ -7,7 +7,7 @@ global $geo;
 $geo = ldl_get_meta('geo');
 get_header();
 ?>
-<div class=" bootstrap-wrapper">
+<div class=" bootstrap-wrapper single">
     <?php
         /**
          * ldd_before_main_content hook.

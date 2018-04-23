@@ -32,7 +32,7 @@ $geo = ldl_get_meta('geo');
                     <div class="col-md-8">
 
                         <div class="listing-content ab"><!--entry-content-->
-                            <?php echo get_the_content(); ?>
+                            <?php echo  do_shortcode(get_the_content()); ?>
                             <p class="tags"><?php the_tags();  echo ldd_custom_taxonomies_terms_links();
                             ?> </p>
  

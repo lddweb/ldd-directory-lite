@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site. 
- * Version:           2.0
+ * Version:           2.0.2
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -26,7 +26,7 @@ if (!defined('WPINC'))
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '2.0');
+define('LDDLITE_VERSION', '2.0.2');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -71,7 +71,7 @@ function install_ldd_directory_lite() {
 
     $ldl_settings = get_option('lddlite_settings', array());
 
-    if (!isset($settings['directory_front_page'])) {
+    if (!isset($ldl_settings['directory_front_page'])) {
         $directory = wp_insert_post(array(
                                         'post_title'     => __('Directory', 'ldd-directory-lite'),
                                         'post_name'      => 'directory',
@@ -566,9 +566,11 @@ add_filter('posts_orderby','ldd_sort_custom',10,2);
 
 
 function ldd_remove_menu_items() {
-    if( current_user_can( 'contributor' ) ):
-        remove_menu_page( 'edit.php?post_type=directory_listings' );
-    endif;
+    if ( !is_multisite() ){
+        if( current_user_can( 'contributor' ) ):
+            remove_menu_page( 'edit.php?post_type=directory_listings' );
+        endif;
+    }
 }
 add_action( 'admin_menu', 'ldd_remove_menu_items' );
 
@@ -619,13 +621,20 @@ add_filter('pre_option_default_role','create_directory_user');
 add_action( 'admin_init', 'ldd_remove_menu_pages' );
 function ldd_remove_menu_pages() {
     
-   global $user_ID;
     
-   if ( current_user_can( 'directory_contributor' ) ) {
-   remove_menu_page( 'edit.php' );
-   remove_menu_page( 'edit-comments.php' );
-   
-   }
+   global $user_ID;
+
+   if ( !is_multisite() ){
+       
+    
+        if ( current_user_can( 'directory_contributor' ) ) {
+            
+            remove_menu_page( 'edit.php' );
+            remove_menu_page( 'edit-comments.php' );
+        
+        }
+    }
+    
 }
 
 // restrict directory contributor from dashboard

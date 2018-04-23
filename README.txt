@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 4.6 or higher
 Tested up to: 4.9
-Stable tag: 2.0
+Stable tag: 2.0.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,6 +135,11 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 
 == Upgrade Notice ==
+
+= 2.0.2 =
+* Fixed shortcode issues with Theme default single template
+* Fixed admin menu issues for multisite.
+
 
 = 2.0 =
 * Updated main queries
