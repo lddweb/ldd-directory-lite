@@ -1538,3 +1538,19 @@
 .directory_listings.listing-single #map_wrapper{clear:both}
 .logout_link{position:absolute; background:#333; right:0; top:0; color:#fff; opacity:0.8; z-index:9999; padding:10px}
 .logout_link a {color:#fff}
+.ldd_main_search_box{display:none}
+.bootstrap-wrapper .navbar-toggle{float:left}
+.bootstrap-wrapper .navbar-toggle.ldd_search{float:right !important; padding:10px 5px 0 0 }
+.ldd_search{float:right !important; padding:15px 5px 0 0;cursor: pointer; }
+.view_controls{min-height:80px}
+.ldd_list_grid{min-height:100px !important; margin:10px}
+@media screen and(max-width:990px){
+.text-right{text-align:right}
+.text-left{text-align:left}
+}
+
+.view_controls {font-size: 13px;
+  padding-left: 30px;
+  padding-right: 30px;
+margin-left:0p !important
+}

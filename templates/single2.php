@@ -16,7 +16,7 @@ $geo = ldl_get_meta('geo');
       
 
         <header class="entry-header">
-            <h1 class="entry-title"><?php the_title(); ?></h1>
+           <!-- <h1 class="entry-title"><?php the_title(); ?></h1>-->
         </header><!-- .entry-header -->
 
         <?php ldl_get_header(); ?>
@@ -80,9 +80,12 @@ $geo = ldl_get_meta('geo');
 
                         $sidebar_shortcode = ldl()->get_option('appearance_sidebar_shortcode', '');
                         if(isset($sidebar_shortcode) and !empty($sidebar_shortcode)) {
+                            
                             echo do_shortcode($sidebar_shortcode);
                         }else {
-                            ldl_get_contact_form();
+                            echo ldl_get_contact_form();
+                            
+                            
                         }
                         ?>
                     </div>

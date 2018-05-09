@@ -78,18 +78,6 @@ function ldl_get_registered_settings()
                     'name' => '<h4 class="title ldd-admin-title">' . __('Other', 'ldd-directory-lite') . '</h4>',
                     'type' => 'header'
                 ),
-
-                 'home_page_listing' => array(
-                    'id'      => 'home_page_listing',
-                    'name'    => __('Home page default listing', 'ldd-directory-lite'),
-                    'desc'    => __('Home page default listing', 'ldd-directory-lite'),
-                    'type'    => 'radio_inline',
-                    'options' => array(
-                        "category" => "Categories",
-                        "listing"  => "Listing"
-                    ),
-                    "std"     => "category",
-                 ), 
                    
                  
                 'general_allow_public_submissions' => array(
@@ -103,17 +91,7 @@ function ldl_get_registered_settings()
                     ),
                     "std"     => "yes",
                 ),
-                'general_display_img_placeholder'  => array(
-                    'id'      => 'general_display_img_placeholder',
-                    'name'    => __('Show Image Placeholder', 'ldd-directory-lite'),
-                    'desc'    => __('Shows a default image if no logo is uploaded for listing.', 'ldd-directory-lite'),
-                    'type'    => 'radio_inline',
-                    'options' => array(
-                        "yes" => "Yes",
-                        "no"  => "No"
-                    ),
-                    "std"     => "yes",
-                ),
+                
 
                     'directory_contributor_access'  => array(
                         'id'      => 'directory_contributor_access',
@@ -156,6 +134,27 @@ function ldl_get_registered_settings()
                     'type' => 'checkbox',
                     'std'  => 1,
                 ),
+
+                'feature_lisitng_position' => array(
+                    'id'      => 'feature_lisitng_position',
+                    'name'    => __('Featured Listing Position', 'ldd-directory-lite'),
+                    'desc'    => __('Show featured listings before or after category/Listiing', 'ldd-directory-lite'),
+                    'type'    => 'radio_inline',
+                    'options' => array(
+                        "top" => "Top",
+                        "bottom"  => "Bottom"
+                    ),
+                    "std"     => "top",
+                ),
+
+                'featured_listings_text'       => array(
+                    'id'   => 'featured_listings_text',
+                    'name' => __('Featured Listings Title', 'ldd-directory-lite'),
+                    'desc' => __('Title to display above Featured Listings.', 'ldd-directory-lite'),
+                    'type' => 'text',
+                    'std'  => 'Feature Listings',
+                ),
+
                 'featured_listings_tags'       => array(
                     'id'   => 'featured_listings_tags',
                     'name' => __('Feature tags', 'ldd-directory-lite'),
@@ -344,33 +343,33 @@ function ldl_get_registered_settings()
                 ),
                 'email_toadmin_body'         => array(
                     'id'   => 'email_toadmin_body',
-                    'name' => __('Notification Message', 'ldd-directory-lite'),
+                    'name' => __('Admin Message', 'ldd-directory-lite'),
                     'type' => 'rich_editor',
                     'std'  => __('A new listing is pending review!', 'ldd-directory-lite') . "\n\n" . __('This submission is awaiting approval. Please visit the link to view and approve the new listing:', 'ldd-directory-lite') . "\n\n{approve_link}\n\n" . __('Listing Name:', 'ldd-directory-lite') . " {title}\n" . __('Listing Description:', 'ldd-directory-lite') . " {description}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
                 ),
                 'email_onsubmit_subject'     => array(
                     'id'   => 'email_onsubmit_subject',
-                    'name' => __('Admin Notification', 'ldd-directory-lite'),
+                    'name' => __('Author Notification', 'ldd-directory-lite'),
                     'desc' => __('Sent to the author after they submit a new listing. Use this to remind them of your terms, inform them of average wait times or other important information.', 'ldd-directory-lite'),
                     'type' => 'text',
                     'std'  => sprintf(__('Your listing on %s is pending review!', 'ldd-directory-lite'), get_bloginfo('name')),
                 ),
                 'email_onsubmit_body'        => array(
                     'id'   => 'email_onsubmit_body',
-                    'name' => __('Notification Message', 'ldd-directory-lite'),
+                    'name' => __('Author Message', 'ldd-directory-lite'),
                     'type' => 'rich_editor',
                     'std'  => __('Thank you for submitting a listing to', 'ldd-directory-lite') . " {site_title}!\n\n" . __('Your listing is pending approval.', 'ldd-directory-lite') . "\n\n" . __('Please review the following information for accuracy, as this is what will appear on our web site. If you see any errors, please contact us immediately at', 'ldd-directory-lite') . " {directory_email}.\n\n" . __('Listing Name:', 'ldd-directory-lite') . " {title}\n" . __('Listing Description:', 'ldd-directory-lite') . " {description}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
                 ),
                 'email_onapprove_subject'    => array(
                     'id'   => 'email_onapprove_subject',
-                    'name' => __('Admin Notification', 'ldd-directory-lite'),
+                    'name' => __('Approval Notification', 'ldd-directory-lite'),
                     'desc' => __('Sent to the author when their listing has been approved and is available publicly.', 'ldd-directory-lite'),
                     'type' => 'text',
                     'std'  => sprintf(__('Your listing on %s has been approved!', 'ldd-directory-lite'), get_bloginfo('name')),
                 ),
                 'email_onapprove_body'       => array(
                     'id'   => 'email_onapprove_body',
-                    'name' => __('Notification Message', 'ldd-directory-lite'),
+                    'name' => __('Approval Message', 'ldd-directory-lite'),
                     'type' => 'rich_editor',
                     'std'  => __('Thank you for submitting a listing to', 'ldd-directory-lite') . " {site_title}!\n\n" . __('Your listing has been approved! You can now view it online:', 'ldd-directory-lite') . "\n\n{link}\n\n*****************************************\n" . __('This is an automated message from', 'ldd-directory-lite') . " {site_title}\n" . __('Please do not respond directly to this email', 'ldd-directory-lite') . "\n\n",
                 ),
@@ -427,9 +426,33 @@ function ldl_get_registered_settings()
                     'type' => 'checkbox',
                 ),
 
+                'view_controls' => array(
+                    'id'      => 'view_controls',
+                    'name'    => __('Show Front End View Controls', 'ldd-directory-lite'),
+                    'desc'    => __('Show Front End View Controls', 'ldd-directory-lite'),
+                    'type'    => 'radio_inline',
+                    'options' => array(
+                        "yes" => "Yes",
+                        "no"  => "No"
+                    ),
+                    "std"     => "yes",
+                 ), 
+
+                'home_page_listing' => array(
+                    'id'      => 'home_page_listing',
+                    'name'    => __('Default Homepage Display', 'ldd-directory-lite'),
+                    'desc'    => __('Home page default listing', 'ldd-directory-lite'),
+                    'type'    => 'radio_inline',
+                    'options' => array(
+                        "category" => "Categories",
+                        "listing"  => "Listing"
+                    ),
+                    "std"     => "category",
+                 ), 
+
                  'directory_view_type'              => array(
                     'id'      => 'directory_view_type',
-                    'name'    => __('Listing View', 'ldd-directory-lite'),
+                    'name'    => __('Default View', 'ldd-directory-lite'),
                     'desc'    => __('Set the default listing view.', 'ldd-directory-lite'),
                     'type'    => 'select',
                     'options' => ldl_get_listing_views()
@@ -479,6 +502,50 @@ function ldl_get_registered_settings()
                     'type' => 'color',
                     'std'  => '#337ab7',
                 ),
+
+                'general_display_img_placeholder'  => array(
+                    'id'      => 'general_display_img_placeholder',
+                    'name'    => __('Show Image Placeholder', 'ldd-directory-lite'),
+                    'desc'    => __('Removes logo images from category view and only shows logos on single listing pages.', 'ldd-directory-lite'),
+                    'type'    => 'radio_inline',
+                    'options' => array(
+                        "yes" => "Yes",
+                        "no"  => "No"
+                    ),
+                    "std"     => "yes",
+                ),
+
+                'ldd_placeholder_image'              => array(
+                    'id'      => 'ldd_placeholder_image',
+                    
+                    'name'    => __('', 'ldd-directory-lite'),
+                    'desc'    => __('', 'ldd-directory-lite'),
+                    'type'    => 'hidden',
+                    'size'     => 'appreance'
+                    
+                ),
+
+                'ldd_placeholder_image_div'              => array(
+                    'id'      => 'ldd_placeholder_image_div',
+                    
+                    'name'    => __('Placeholder image', 'ldd-directory-lite'),
+                    'desc'    => __('image ideal size is 525px by 421px', 'ldd-directory-lite'),
+                    'type'    => 'div',
+                    'size'     => ''
+                    
+                ),
+
+                'ldd_placeholder_image_button'              => array(
+                    'id'      => 'ldd_placeholder_image_button',
+                    
+                    'name'    => __('', 'ldd-directory-lite'),
+                    'desc'    => __('', 'ldd-directory-lite'),
+                    'type'    => 'button',
+                    'size'     => 'appreance-button'
+                    
+                ),
+
+               
                
             )
         ),
@@ -851,6 +918,82 @@ function ldl_text_callback($args)
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
     echo $html;
+}
+function ldl_hidden_callback($args)
+{
+
+    if (ldl()->has_option($args['id']))
+        $value = ldl()->get_option($args['id']);
+    else
+        $value = isset($args['std']) ? $args['std'] : '';
+
+    $size = (isset($args['size']) && !is_null($args['size'])) ? $args['size'] : 'regular';
+    $html = '<input type="hidden" class="' . $size . '-text" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="' . esc_attr(stripslashes($value)) . '">';
+    $html .= '<p class="description"> ' . $args['desc'] . '</p>';
+
+    echo $html;
+}
+
+function ldl_div_callback($args)
+{
+
+    if (ldl()->get_option('ldd_placeholder_image')){
+        $src = ldl()->get_option('ldd_placeholder_image');
+        $placeholder = '<img src="'.$src.'"> ';
+        $class= "ldd_pl_image";
+    }
+    else{
+        $placeholder = '<apan> No image selected ';
+        $class= "ldd_pl_noimage";
+    }
+
+    $size = (isset($args['size']) && !is_null($args['size'])) ? $args['size'] : 'regular';
+    $html = '<div class="' . $class . '" id="lddlite_settings[' . $args['id'] . ']" >';
+    $html .= $placeholder;
+    $html .= '</div>';
+    $html .= '<p class="description"> ' . $args['desc'] . '</p>';
+
+    echo $html;
+}
+
+function ldl_button_callback($args)
+{
+
+    if (ldl()->has_option($args['id']))
+        $value = ldl()->get_option($args['id']);
+    else
+        $value = isset($args['std']) ? $args['std'] : '';
+
+    $size = (isset($args['size']) && !is_null($args['size'])) ? $args['size'] : 'regular';
+    $html = '<input type="button" class="placeholder_button button button-primary" name="lddlite_settings[' . $args['id'] . ']" value="Upload image"></button>';
+    if (ldl()->get_option('ldd_placeholder_image')){
+    $html .= ' <input type="button" class="placeholder_button_delete button button-primary" name="lddlite_settings_de_img" value="Delete image"></button>';
+    }
+    $html .= '<p class="description"> ' . $args['desc'] . '</p>';
+
+    echo $html;
+}
+
+
+function ldl_file_callback($args)
+{
+
+    $urls = wp_handle_upload($_FILES["lddlite_settings[" . $args['id'] . "]"], array('test_form' => FALSE));
+    
+    $temp = $urls["url"]; 
+
+    if (ldl()->has_option($args['id']))
+        $value = ldl()->get_option($args['id']);
+    else
+        $value = isset($args['std']) ? $args['std'] : '';
+
+    $size = (isset($args['size']) && !is_null($args['size'])) ? $args['size'] : 'regular';
+    $html = '<input type="button" class="' . $size . '-text" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="Upload">';
+    $html = '<input type="hidden" name="image_attachment_id" id="image_attachment_id" value="">';
+    $html .= '<p class="description"> ' . $args['desc'] . '</p>';
+
+    echo $html;
+    
 }
 
 

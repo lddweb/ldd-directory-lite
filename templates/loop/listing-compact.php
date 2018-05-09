@@ -5,9 +5,12 @@
 <article id="listing-<?php echo get_the_ID(); ?>" class="ldd-listing listing-<?php echo get_the_ID(); ?> type-listing compact clearfix">
     <div class="container-fluid">
         <div class="row">
+        <?php
+        $featured = ldl_get_thumbnail(get_the_ID());
+        if(ldl()->get_option("general_display_img_placeholder")!="no" ) { ?>
             <div class="col-sm-2 ldd-thumbnail-left">
                 <?php echo ldl_get_thumbnail( get_the_ID() ); ?>
-            </div>
+        </div> <?php } ?>
             <div class="col-sm-10">
                 <div class="listing-header row">
                     <div class="col-sm-8">

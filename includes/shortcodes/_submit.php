@@ -288,14 +288,53 @@ function ldl_submit_create_meta($data, $post_id) {
 function ldl_notify_admin($data, $post_id) {
 
 	//$to = ldl()->get_option('email_notification_address');
+	$auth = get_post($post_ID);
+	$user = get_userdata($auth->post_author);
 	$to = get_bloginfo('admin_email');
 	$subject = ldl()->get_option('email_toadmin_subject');
+
+	$user_email = $user->data->user_email;
+	$user_name = $user->data->user_nicename;
+
+	$all_fields = "Listing Title: ".$data['title']."<br>
+	Description: ".$data['description']."<br> 
+	Address: ".get_post_meta($post_id,"_lddlite_address_one",true)."<br>
+	City: ".get_post_meta($post_id,"_lddlite_city",true)."<br>
+	Zip Code: ".get_post_meta($post_id,"_lddlite_postal_code",true)."<br>
+	State: ".get_post_meta($post_id,"_lddlite_state",true)."<br>
+	Country: ".get_post_meta($post_id,"_lddlite_country",true)."<br>
+	Contact Name: ".get_post_meta($post_id,"_lddlite_contact_name",true)."<br>
+	Contact Email: ".get_post_meta($post_id,"_lddlite_contact_email",true)."<br>
+	Contact Phone: ".get_post_meta($post_id,"_lddlite_contact_phone",true)."<br>
+	Contact Fax: ".get_post_meta($post_id,"_lddlite_contact_fax",true)."<br>
+	Contact Skype: ".get_post_meta($post_id,"_lddlite_contact_skype",true)."<br>
+	Website: ".get_post_meta($post_id,"_lddlite_url_website",true)."<br>
+	Facebook: ".get_post_meta($post_id,"_lddlite_url_facebook",true)."<br>
+	Twitter: ".get_post_meta($post_id,"_lddlite_url_twitter",true)."<br>
+	LinkedIn: ".get_post_meta($post_id,"_lddlite_url_linkedin",true)."<br>
+	Google +: ".get_post_meta($post_id,"_lddlite_url_googleplus",true)."<br>
+	Instagram: ".get_post_meta($post_id,"_lddlite_url_instagram",true)."<br>
+	Youtube: ".get_post_meta($post_id,"_lddlite_url_youtube",true)."<br>
+	Custom Link: ".get_post_meta($post_id,"_lddlite_url_custom",true)."<br>
+	";
+
 
 	$message = ldl()->get_option('email_toadmin_body');
 	$message = str_replace('{approve_link}', admin_url('post.php?post=' . $post_id . '&action=edit'), $message);
 	$message = str_replace('{title}', $data['title'], $message);
 	$message = str_replace('{description}', $data['description'], $message);
 	$message = str_replace('{site_title}', get_bloginfo('name'), $message);
+	$message = str_replace('{site_link}', get_bloginfo('url'), $message);
+	$message = str_replace('{author}', $user_nicename, $message);
+	$message = str_replace('{author_email}', $user_email, $message);
+	$message = str_replace('{directory_link}', get_bloginfo('url')."?page_id=".ldl()->get_option('directory_front_page'), $message);
+
+	$message = str_replace('{contact_email}', get_post_meta($post_id,"_lddlite_contact_name",true), $message);
+	$message = str_replace('{contact_name}', get_post_meta($post_id,"_lddlite_contact_email",true), $message);
+	
+	$terms = wp_get_post_terms( $post_id, 'listing_category');
+	$message = str_replace('{listing_category}', $terms[0]->name, $message);
+	$message = str_replace('{all_fields}', $all_fields, $message);
 
 	ldl_mail($to, $subject, $message);
 }
@@ -308,17 +347,62 @@ function ldl_notify_admin($data, $post_id) {
  * @param array $data    The processed data provided by the $lddlite_submit_processor object
  * @param int   $post_id The post ID returned by ldl_submit_create_post()
  */
-function ldl_notify_author($data) {
+function ldl_notify_author($data,$post_id) {
 	global $lddlite_submit_processor;
+
+
+
+	$all_fields = "Listing Title: ".$data['title']."<br>
+	Description: ".$data['description']."<br> 
+	Address: ".get_post_meta($post_id,"_lddlite_address_one",true)."<br>
+	City: ".get_post_meta($post_id,"_lddlite_city",true)."<br>
+	Zip Code: ".get_post_meta($post_id,"_lddlite_postal_code",true)."<br>
+	State: ".get_post_meta($post_id,"_lddlite_state",true)."<br>
+	Country: ".get_post_meta($post_id,"_lddlite_country",true)."<br>
+	Contact Name: ".get_post_meta($post_id,"_lddlite_contact_name",true)."<br>
+	Contact Email: ".get_post_meta($post_id,"_lddlite_contact_email",true)."<br>
+	Contact Phone: ".get_post_meta($post_id,"_lddlite_contact_phone",true)."<br>
+	Contact Fax: ".get_post_meta($post_id,"_lddlite_contact_fax",true)."<br>
+	Contact Skype: ".get_post_meta($post_id,"_lddlite_contact_skype",true)."<br>
+	Website: ".get_post_meta($post_id,"_lddlite_url_website",true)."<br>
+	Facebook: ".get_post_meta($post_id,"_lddlite_url_facebook",true)."<br>
+	Twitter: ".get_post_meta($post_id,"_lddlite_url_twitter",true)."<br>
+	LinkedIn: ".get_post_meta($post_id,"_lddlite_url_linkedin",true)."<br>
+	Google +: ".get_post_meta($post_id,"_lddlite_url_googleplus",true)."<br>
+	Instagram: ".get_post_meta($post_id,"_lddlite_url_instagram",true)."<br>
+	Youtube: ".get_post_meta($post_id,"_lddlite_url_youtube",true)."<br>
+	Custom Link: ".get_post_meta($post_id,"_lddlite_url_custom",true)."<br>
+	";
+
+	$auth = get_post($post_ID);
+	$user = get_userdata($auth->post_author);
+	
+	
+
+	$user_email = $user->data->user_email;
+	$user_name = $user->data->user_nicename;
 
 	$to = $lddlite_submit_processor->get_value('contact_email');
 
 	$subject = ldl()->get_option('email_onsubmit_subject');
+	
 
 	$message = ldl()->get_option('email_onsubmit_body');
 	$message = str_replace('{site_title}', get_bloginfo('name'), $message);
 	$message = str_replace('{directory_email}', ldl()->get_option('email_from_address'), $message);
 	$message = str_replace('{title}', $data['title'], $message);
+
+	$message = str_replace('{author}', $user_name, $message);
+	$message = str_replace('{author_email}', $user_email, $message);
+	$message = str_replace('{site_link}', get_bloginfo('url'), $message);
+	$message = str_replace('{directory_link}', get_bloginfo('url')."?page_id=".ldl()->get_option('directory_front_page'), $message);
+
+	$message = str_replace('{contact_email}', get_post_meta($post_id,"_lddlite_contact_name",true), $message);
+	$message = str_replace('{contact_name}', get_post_meta($post_id,"_lddlite_contact_email",true), $message);
+	
+	$terms = wp_get_post_terms( $post_id, 'listing_category');
+	$message = str_replace('{listing_category}', $terms[0]->name, $message);
+	$message = str_replace('{all_fields}', $all_fields, $message);
 
 	ldl_mail($to, $subject, $message);
 }
@@ -335,9 +419,37 @@ function ldl_notify_when_approved($post) {
 	if (LDDLITE_POST_TYPE != get_post_type() || 1 == get_post_meta($post->ID, '_approved', true))
 		return;
 
+
+
 	$user = get_userdata($post->post_author);
 	$permalink = get_permalink($post->ID);
 	$title = get_the_title($post->ID);
+	$description = get_the_content($post->ID);
+
+
+	
+	$all_fields = "Listing Title: ".$title."<br>
+	Description: ".$description."<br> 
+	Address: ".get_post_meta($post->ID,"_lddlite_address_one",true)."<br>
+	City: ".get_post_meta($post->ID,"_lddlite_city",true)."<br>
+	Zip Code: ".get_post_meta($post->ID,"_lddlite_postal_code",true)."<br>
+	State: ".get_post_meta($post->ID,"_lddlite_state",true)."<br>
+	Country: ".get_post_meta($post->ID,"_lddlite_country",true)."<br>
+	Contact Name: ".get_post_meta($post->ID,"_lddlite_contact_name",true)."<br>
+	Contact Email: ".get_post_meta($post->ID,"_lddlite_contact_email",true)."<br>
+	Contact Phone: ".get_post_meta($post->ID,"_lddlite_contact_phone",true)."<br>
+	Contact Fax: ".get_post_meta($post->ID,"_lddlite_contact_fax",true)."<br>
+	Contact Skype: ".get_post_meta($post->ID,"_lddlite_contact_skype",true)."<br>
+	Website: ".get_post_meta($post->ID,"_lddlite_url_website",true)."<br>
+	Facebook: ".get_post_meta($post->ID,"_lddlite_url_facebook",true)."<br>
+	Twitter: ".get_post_meta($post->ID,"_lddlite_url_twitter",true)."<br>
+	LinkedIn: ".get_post_meta($post->ID,"_lddlite_url_linkedin",true)."<br>
+	Google +: ".get_post_meta($post->ID,"_lddlite_url_googleplus",true)."<br>
+	Instagram: ".get_post_meta($post->ID,"_lddlite_url_instagram",true)."<br>
+	Youtube: ".get_post_meta($post->ID,"_lddlite_url_youtube",true)."<br>
+	Custom Link: ".get_post_meta($post->ID,"_lddlite_url_custom",true)."<br>
+	";
+
 
 	$to = $user->data->user_email;
 	$subject = ldl()->get_option('email_onapprove_subject');
@@ -345,7 +457,21 @@ function ldl_notify_when_approved($post) {
 	$message = ldl()->get_option('email_onapprove_body');
 	$message = str_replace('{site_title}', get_bloginfo('name'), $message);
 	$message = str_replace('{title}', $title, $message);
+	$message = str_replace('{description}', $description, $message);
 	$message = str_replace('{link}', $permalink, $message);
+	$author_obj = get_user_by('id', $post->ID);
+	$message = str_replace('{directory_link}', get_bloginfo('url')."?page_id=".ldl()->get_option('directory_front_page'), $message);
+	$message = str_replace('{site_link}', get_bloginfo('url'), $message);
+	$message = str_replace('{author}', $user->data->user_nicename, $message);
+	$message = str_replace('{author_email}', $user->data->user_email, $message);
+	$message = str_replace('{contact_email}', get_post_meta($post->ID,"_lddlite_contact_name",true), $message);
+	$message = str_replace('{contact_name}', get_post_meta($post->ID,"_lddlite_contact_email",true), $message);
+
+	$terms = wp_get_post_terms( $post->ID, 'listing_category');
+	$message = str_replace('{listing_category}', $terms[0]->name, $message);
+	$message = str_replace('{all_fields}', $all_fields, $message);
+	
+
 
 	ldl_mail($to, $subject, $message);
 	update_post_meta($post->ID, '_approved', 1);
@@ -437,7 +563,7 @@ function ldl_submit_generate_listing() {
 	}
 
 	ldl_notify_admin($data, $post_id); // Notification of new listing
-	ldl_notify_author($data); // Receipt of submission
+	ldl_notify_author($data,$post_id); // Receipt of submission
 
 	return true;
 }

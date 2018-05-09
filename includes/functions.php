@@ -248,4 +248,120 @@ function get_term_post_count( $taxonomy = 'category', $term = '', $args = [] )
 }
 
 
+/********* TinyMCE Email Button ***********/
+add_action( 'after_setup_theme', 'ldd_theme_setup' );
 
+if ( ! function_exists( 'ldd_theme_setup' ) ) {
+   function ldd_theme_setup() {
+
+       add_action( 'init', 'ldd_buttons' );
+
+   }
+}
+
+if ( ! function_exists( 'ldd_buttons' ) ) {
+    function ldd_buttons() {
+        if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
+            return;
+        }
+ 
+        if ( get_user_option( 'rich_editing' ) !== 'true' ) {
+            return;
+        }
+        if ( !isset($_GET['post_type']) && $_GET['post_type'] !="directory_listings" ) {
+            return;
+        }
+ 
+        add_filter( 'mce_external_plugins', 'ldd_add_buttons' );
+        add_filter( 'mce_buttons', 'ldd_register_buttons' );
+    }
+}
+ 
+if ( ! function_exists( 'ldd_add_buttons' ) ) {
+    function ldd_add_buttons( $plugin_array ) {
+        $plugin_array['mybutton'] = plugins_url( '../public/js/tinymce_buttons.js', __FILE__ );//get_template_directory_uri().'/assets/tinymce_buttons.js';
+        return $plugin_array;
+    }
+}
+ 
+if ( ! function_exists( 'ldd_register_buttons' ) ) {
+    function ldd_register_buttons( $buttons ) {
+        array_push( $buttons, 'mybutton' );
+        return $buttons;
+    }
+}
+ 
+add_action ( 'after_wp_tiny_mce', 'ldd_tinymce_extra_vars' );
+ 
+if ( !function_exists( 'ldd_tinymce_extra_vars' ) ) {
+	function ldd_tinymce_extra_vars() { ?>
+		<script type="text/javascript">
+			var tinyMCE_object = <?php echo json_encode(
+				array(
+					'button_name' => esc_html__('{...}', 'lddslug'),
+                    'button_title' => esc_html__('Available shortcode', 'lddslug'),
+					'image_title' => esc_html__('Image', 'lddslug'),
+					'image_button_title' => esc_html__('Upload image', 'lddslug'),
+				)
+				);
+			?>;
+		</script><?php
+	}
+}
+/********* TinyMCE Email Button End ***********/
+
+/*
+*Adding styles to admin area
+*/
+
+add_action('admin_head', 'my_custom_fonts');
+
+function my_custom_fonts() {
+  echo '<style>
+    .mce-i-main:before{}
+        .mce-menu-item-normal.mce-active {background:#fff !important; color:#333  !important}
+        .mce-menu-item-normal.mce-active .mce-text{color:#333  !important}
+        .ldd_pl_noimage{border: 1px dashed #333;
+            width: 350px;
+            padding: 8px;
+            font-weight: bold;}
+
+  </style>';
+}
+
+/* for admin script*/
+add_action( 'admin_enqueue_scripts', 'shortcodejs' );
+function shortcodejs(){
+    ?>
+    <script>
+    
+    </script>
+    <?php
+}
+
+/*
+* Delete placeholder image from diecoty settings
+*/
+function delet_placeholder()
+{
+	if(isset($_GET['ldd_act'])){
+        if(ldl()->get_option('ldd_placeholder_image')){
+		
+            if($_GET['ldd_act'] == "del_ph"){
+                
+                
+                $opt_array = get_option('lddlite_settings'); 
+                
+                $arr2 = $opt_array['ldd_placeholder_image']='';
+                
+                
+                if(update_option('lddlite_settings',$opt_array)){
+                    wp_redirect(admin_url()."edit.php?post_type=directory_listings&page=lddlite-settings&tab=appearance");
+                    exit;
+                }
+                
+            }
+        }
+    }
+}
+add_action('admin_init','delet_placeholder');

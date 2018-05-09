@@ -4,8 +4,8 @@
 */
 get_header();
 ?>
-<div class=" bootstrap-wrapper">
-	<?php
+<div class=" bootstrap-wrapper ac">
+	<?php 
 		/**
 		 * ldd_before_main_content hook.
 		 *
@@ -16,6 +16,31 @@ get_header();
 	?>
 
 	<?php echo ldl_get_header(); ?>
+	<?php if(ldl()->get_option( 'view_controls' )=="yes"){
+		if($listing_view = ldl()->get_option( 'directory_view_type') =="compact"){
+			$compact = "compact";
+		}
+		if($listing_view = ldl()->get_option( 'directory_view_type') =="grid"){
+			$grid = "grid";
+		}
+		if($listing_view = ldl()->get_option( 'home_page_listing') =="category"){
+			$category = "category";
+		}
+		if($listing_view = ldl()->get_option( 'home_page_listing') =="listing"){
+			$listing = "listing";
+		}
+		
+		?>
+  <div class="row view_controls">
+<div class="col-md-4">&nbsp;</div>
+
+<div class="col-md-4">&nbsp;</div>
+
+
+<div class="col-md-4 text-right"><a class="<?php echo $grid;?>" href="?ldd_view=grid">Grid View</a> | <a class="<?php echo $compact;?>" href="?ldd_view=compact">Compact View</a></div>
+</div>
+<?php } ?>
+
 
 	<div class="col-md-12 abcd">
 		<div class="list-group">
@@ -26,7 +51,7 @@ get_header();
 			 ?>
 		</div>
 	</div>
-
+	<div class="col-md-12" style="margin-top:20px">
 	<?php
 		$paged          = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		if(ldl()->get_option( 'listings_display_number') > 0){
@@ -205,5 +230,6 @@ get_header();
 		 */
 		do_action( 'ldd_after_main_content' );
 	?>
+	</div>
 	</div>
 <?php get_footer(); ?>

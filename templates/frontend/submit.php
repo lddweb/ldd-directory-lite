@@ -5,7 +5,7 @@
 ?>
 <div class="directory-lite bootstrap-wrapper">
 
-    <?php ldl_get_header(); ?>plug
+    <?php ldl_get_header(); ?>
 
     <?php if ( ldl_has_errors() ): ?>
         <div class="alert alert-danger">

@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 4.6 or higher
 Tested up to: 4.9
-Stable tag: 2.0.2
+Stable tag: 2.5.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,6 +136,10 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
+= 2.5.0 =
+* fixed template issues
+* Added new settings options.
+
 = 2.0.2 =
 * Fixed shortcode issues with Theme default single template
 * Fixed admin menu issues for multisite.
@@ -183,6 +187,33 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 * Added GEO Location support for localizing map for users.
 
 == Changelog ==
+
+= 2.5.0 =
+<h2> BUG FIXES</h2>
+* Removed transient word 'plug' text from single listing header
+* Fixed issue with listing title displaying twice in some themes
+<h2> ENHANCEMENTS</h2>
+<h4> SETTINGS</h4>
+* General Settings => Moved  "Show Image Placeholder" to bottom of Appearance tab
+* Featured Listings => (i) Added option to control where the featured listings are displayed on the Directory Homepage (top/bottom)
+* Featured Listings => (ii) Added option for changing the title text of the Directory Featured Listings
+* Email Settings => (i) Added shortcode selector for notification messages with directory form fields
+* Email Settings => (ii) Updated labels for notification message fields so they are less confusing
+* Submit Settings => (i) Added shortcode selector for terms of service, introduction, and success message editors with directory form fields
+* Appearance Settings => (i) Improved controls for default view of listings on front end (compact view /grid view)
+* Appearance Settings => (ii) Added controls on front end for compact/grid view
+* Appearance Settings => (iii) Added controls on directory home page for showing categories or directory listings
+* Appearance Settings => (iv) Show Image Placeholder option now removes all images from category view in directory
+* Appearance Settings => (v) Added image upload option for default placeholder image
+<h4>FRONT END VIEWS</h4>
+* Added controls for directory homepage views (Category View / Listing View)
+* Added controls for category views (Grid View / Compact View)
+* Redesigned search field for better responsive views on mobile and tablet
+
+
+= 2.0.2 =
+* Fixed shortcode issues with Theme default single template
+* Fixed admin menus issues for multisite.
 
 = 2.0 =
 * Major template structure changes to accommodate user theme templates

@@ -184,17 +184,19 @@ function ldl_get_header() {
  * This will check if we need a contact form, and if so enqueues the scripts and retrieves the appropriate template.
  */
 function ldl_get_contact_form() {
+	
     $post_id = get_the_ID();
 
     if (!$post_id)
         return;
 
     if (!get_post_meta($post_id, ldl_pfx('contact_email'), 1))
-        return;
+	return;
 
     echo '<script>var ajaxurl = "' . admin_url('admin-ajax.php') . '"</script>';
 
     wp_enqueue_script('lddlite-contact');
+	
     ldl_get_template_part('global/contact', 'sidebar');
 }
 
@@ -263,8 +265,12 @@ function ldl_get_categories($parent = 0,$attr = array()) {
 	endif;
 
 	$terms = get_terms(LDDLITE_TAX_CAT, $args_arr);
+	$listing_view = ldl()->get_option( 'directory_view_type', 'compact' );
+if($listing_view=='grid'){
+	$gridclass= "col-xs-12 col-sm-6 col-md-4 type-grid grid-item ldd_list_grid";
+}
 
-	$mask = '<a href="%1$s'.$custom_url.'" class="list-group-item"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
+	$mask = '<a href="%1$s'.$custom_url.'" class="list-group-item '.$gridclass.'"><span class="label label-primary pull-right">%3$d</span>%2$s</a>';
 
 	$categories = array();
 	if(!empty($terms) and !is_wp_error($terms)) {
@@ -378,6 +384,8 @@ function ldl_get_thumbnail($post_id, $size = 'directory-listing', $class = 'img-
 
     if (has_post_thumbnail($post_id)) {
         $thumbnail = get_the_post_thumbnail($post_id, $size, array('class' => $class));
+    } else if(ldl()->get_option('ldd_placeholder_image') and $allow_image_placeholder === 'yes') {
+        $thumbnail = '<img src="' . ldl()->get_option('ldd_placeholder_image') . '" class="' . $class . '">';
     } else if(isset($allow_image_placeholder) and $allow_image_placeholder === 'yes') {
         $thumbnail = '<img src="' . LDDLITE_NOLOGO . '" class="' . $class . '">';
     }
@@ -604,7 +612,11 @@ function ldl_get_directory_listing() {
 
 		$sort_by    = ldl()->get_option( 'directory_listings_sort', 'business_name' );
 		$sort_order = ldl()->get_option( 'directory_listings_sort_order', 'asc' );
-		$posts_per_page = ldl()->get_option( 'listings_display_number', 10 );//get_option( 'posts_per_page' );
+		$posts_per_page = ldl()->get_option( 'listings_display_number' );//get_option( 'posts_per_page' );
+		
+		if($posts_per_page == ''){
+			$posts_per_page = -1;
+			}
 		$paged          = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
 		if ( $sort_by == "business_name" ):
@@ -895,8 +907,12 @@ if ( is_wp_error( $theurl ) ) {
    // echo $theurl->get_error_message();
    continue;
 }
+$listing_view = ldl()->get_option( 'directory_view_type', 'compact' );
+if($listing_view=='grid'){
+	$gridclass= "col-xs-12 col-sm-6 col-md-4 type-grid grid-item ldd_list_grid";
+}
 $count = get_term_post_count( "listing_category", $s->term_id );
-echo "<div class=\"ser-img img\" ><a class='list-group-item' href=\"" . $theurl  . "\"><span class=\"label label-primary pull-right\">".$count."</span>". $s->name ."</a>";
+echo "<div class=\"ser-img img\" ><a class='list-group-item ".$gridclass."' href=\"" . $theurl  . "\"><span class=\"label label-primary pull-right\">".$count."</span>". $s->name ."</a>";
 
 }
 echo "<nav class='ldd_listing_pagination clearfix'>";
@@ -925,10 +941,22 @@ function plugin_css(){
  $button_color_txt = ldl()->get_option( 'appearance_primary_foreground',"#fff" ); 
  $txt_color_link = ldl()->get_option( 'link_text_color',"#337ab7" ); 
  $txt_color_hover = ldl()->get_option( 'link_text_hover',"#337ab7" ); 
+ if($listing_view = ldl()->get_option( 'directory_view_type') =="compact"){
+	 $underline = "underline";
+ }
+ if($listing_view = ldl()->get_option( 'directory_view_type') =="grid"){
+	 $underline = "underline";
+ }
+ if($listing_view = ldl()->get_option( 'home_page_listing') =="category"){
+	 $underline = "underline";
+ }
+ if($listing_view = ldl()->get_option( 'home_page_listing') =="lisitng"){
+	 $underline = "underline";
+ }
  ?>
 .bootstrap-wrapper .navbar-inverse{background-color:<?php echo $hbcolor;?> !important}
 .bootstrap-wrapper .navbar-inverse{border-color:<?php echo $hbcolor;?> !important}
-.bootstrap-wrapper .navbar-inverse .navbar-nav > li > a{color:<?php echo $bac_txt_color;?> !important}
+.bootstrap-wrapper .navbar-inverse .navbar-nav > li > a, .show_search{color:<?php echo $bac_txt_color;?> !important}
 .bootstrap-wrapper .btn-primary, .label-primary,.ldd_listing_pagination a,.social-meta .fa {
     color: <?php echo $button_color_txt;?> !important;
     background-color: <?php echo $button_color;?> !important;
@@ -949,6 +977,7 @@ function plugin_css(){
 #navbar-directory{border:none !important}
 .bootstrap-wrapper  a{color:<?php echo $txt_color_link;?> !important}
 .bootstrap-wrapper  a:hover{color:<?php echo $txt_color_hover;?> !important}
+.view_controls .category,.view_controls .listing,.view_controls .grid,.view_controls .compact{text-decoration:underline;}
 </style>
 
 	<?php
@@ -991,4 +1020,63 @@ function show_prof(){
 	<?php
 }
 
+/*
+* Directory Listing View
+*/
+function ldd_directory_layout()
+{
+	if(isset($_GET['ldd_view'])){
+		$page_id= ldl()->get_option('directory_front_page'); 
+		if($_GET['ldd_view'] == "listing"){
+			 ldl()->get_option('directory_front_page'); 
+			$opt_array = get_option('lddlite_settings'); 
+			
+			$arr2 = $opt_array['home_page_listing']='listing';
+			
+			
+			if(update_option('lddlite_settings',$opt_array)){
+				wp_redirect(get_bloginfo('url').'?page_id='.$page_id);
+				exit;
+			}
+			
+		}
+		if($_GET['ldd_view'] == "category"){
+			$opt_array = get_option('lddlite_settings'); 
+			
+			$arr2 = $opt_array['home_page_listing']='category';
+			
+			
+			if(update_option('lddlite_settings',$opt_array)){
+				wp_redirect(get_bloginfo('url').'?page_id='.$page_id);
+				exit;
+			}
+			
+		}
+		if($_GET['ldd_view'] == "compact"){
+			$opt_array = get_option('lddlite_settings'); 
+			global $post;
+			$arr2 = $opt_array['directory_view_type']='compact';
+			
+			
+			if(update_option('lddlite_settings',$opt_array)){
+				wp_redirect("http://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+				exit;
+			}
+			
+		}
+		if($_GET['ldd_view'] == "grid"){
+			$opt_array = get_option('lddlite_settings'); 
+			
+			$arr2 = $opt_array['directory_view_type']='grid';
+			
+			
+			if(update_option('lddlite_settings',$opt_array)){
+				wp_redirect("http://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+				exit;
+			}
+			
+		}
+	}
 
+}
+add_action('init','ldd_directory_layout');
