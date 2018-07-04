@@ -67,4 +67,5 @@
          </form>
     </div>
 </nav>
+<?php wp_enqueue_script('lddlite-masonry');?>
 <?php wp_enqueue_script('lddlite-main');?>

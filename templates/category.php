@@ -188,7 +188,9 @@ get_header();
 			if ( $cat_query->have_posts() ) :
 			$listing_view = ldl()->get_option( 'directory_view_type', 'compact' );
 			if ( $listing_view == "grid" ) {
-				echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+				echo "<div class='grid js-isotope2 masonry-cols3' >";
+				
+				//echo '<div class="grid" data-isotope=\'{ "grid-item": ".grid-item", "getSortData": { "name": "lddmas", "category": "[data-category]" }, "masonry": { "columnWidth": 200 } }\'>';
 			}
 			while ( $cat_query->have_posts() ) {
 				$cat_query->the_post();
@@ -196,7 +198,7 @@ get_header();
 			}
 			if ( $listing_view == "grid" ) {
 				echo "</div>";
-				wp_enqueue_script( 'isotope-pkgd', LDDLITE_URL . '/public/js/isotope.pkgd.min.js' );
+				//wp_enqueue_script( 'isotope-pkgd', LDDLITE_URL . '/public/js/isotope.pkgd.min.js' );
 			}
 			wp_reset_postdata(); 
 			 
@@ -231,5 +233,5 @@ get_header();
 		do_action( 'ldd_after_main_content' );
 	?>
 	</div>
-	</div>
+</div>
 <?php get_footer(); ?>

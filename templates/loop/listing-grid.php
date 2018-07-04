@@ -2,7 +2,17 @@
     /*
 * File version: 2
 */
-?><div id="listing-<?php echo get_the_ID(); ?>" class="col-xs-12 col-sm-6 col-md-4 type-grid grid-item">
+$cols = "col-md-4";
+if(ldl()->get_option( 'directory_col_row' )=="2"){
+    $cols = "col-md-6";
+}
+if(ldl()->get_option( 'directory_col_row' )=="3"){
+    $cols = "col-md-4";
+}
+if(ldl()->get_option( 'directory_col_row' )=="4"){
+    $cols = "col-md-3";
+}
+?><div  id="listing-<?php echo get_the_ID(); ?>" class="type-grid grid-item">
         <div class="thumbnail">
             <?php
             $thumbnail_src = ldl_get_thumbnail( get_the_ID() );

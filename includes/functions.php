@@ -330,14 +330,14 @@ function my_custom_fonts() {
 }
 
 /* for admin script*/
-add_action( 'admin_enqueue_scripts', 'shortcodejs' );
-function shortcodejs(){
-    ?>
-    <script>
-    
-    </script>
-    <?php
+function add_placeholderjs($hook){
+    if($hook !="lddlite-settings")
+    return; 
+
+    wp_enqueue_script('lddlite-placeholder');
 }
+add_action( 'admin_enqueue_scripts', 'add_placeholderjs' );
+
 
 /*
 * Delete placeholder image from diecoty settings

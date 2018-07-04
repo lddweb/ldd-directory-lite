@@ -25,3 +25,36 @@ jQuery(document).ready(function(){
 
 });
 
+
+
+var heights = jQuery(".type-grid.grid-item").map(function ()
+{
+    return jQuery(this).height();
+}).get(),
+
+ maxHeight = Math.max.apply(null, heights);
+ maxdiv = maxHeight+10;
+//alert(maxHeight);
+
+//jQuery(".js-isotope2 .grid-item").css("height",maxHeight+"px");
+//Remove height attribute for 2 column
+jQuery(".js-isotope2 .col-md-6").removeAttr("style");
+
+jQuery(".masonry-cols3").mpmansory({
+    childrenClass: 'type-grid', // default is a div
+    columnClasses: 'padding', //add classes to items
+    breakpoints: {
+        lg: 4,
+        md: 4,
+        sm: 6,
+        xs: 12
+    },
+    distributeBy: {
+        order: false,
+        height: false,
+        attr: 'data-order',
+        attrOrder: 'asc'
+    },
+    onload: function(items) {}
+});
+

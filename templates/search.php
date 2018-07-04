@@ -3,7 +3,7 @@
 * File version: 2
 */
 get_header(); ?>
-<div class=" bootstrap-wrapper ">
+<div class=" bootstrap-wrapper">
     <?php
         /**
          * ldd_before_main_content hook.

@@ -11,7 +11,7 @@ $geo = ldl_get_meta('geo');
          *
          * @hooked ldd_output_content_wrapper - 10 (outputs opening divs for the content)
          */
-        //do_action( 'ldd_before_main_content' );
+        do_action( 'ldd_before_main_content' );
     ?>
       
 
@@ -32,7 +32,20 @@ $geo = ldl_get_meta('geo');
                     <div class="col-md-8">
 
                         <div class="listing-content ab"><!--entry-content-->
-                            <?php echo  do_shortcode(get_the_content()); ?>
+                            <?php 
+                            
+                            if(class_exists('LDD_SS_Public')){
+                                $opts = ss_get_options();
+                                $ldd_share = new LDD_SS_Public();
+                            }
+                            if($opts['social_icon_position'] == 'before'){
+                                echo $ldd_share->social_sharing();
+                            }
+
+                           
+                            echo  do_shortcode(wpautop(get_the_content())); 
+
+                            ?>
                             <p class="tags"><?php the_tags();  echo ldd_custom_taxonomies_terms_links();
                             ?> </p>
  
@@ -67,6 +80,10 @@ $geo = ldl_get_meta('geo');
 
                         <!--START-->
                         <?php
+                        //do_action('ldd_after_main_content_filter');
+                        if($opts['social_icon_position'] == 'after'){
+                            echo $ldd_share->social_sharing();
+                        }
                            if(class_exists("LDDReviewscore")){
                                  LDDReviewscore::show_ratings_single_page_content(get_the_ID());
                            }
@@ -74,9 +91,11 @@ $geo = ldl_get_meta('geo');
                         <!--END-->
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 s2">
                         <?php
+                       if(!ldl()->get_option('directory_featured_img')){
                         echo ldl_get_thumbnail( $post->ID );
+                        }
 
                         $sidebar_shortcode = ldl()->get_option('appearance_sidebar_shortcode', '');
                         if(isset($sidebar_shortcode) and !empty($sidebar_shortcode)) {
@@ -126,7 +145,10 @@ $geo = ldl_get_meta('geo');
          *
          * @hooked ldd_output_content_wrapper_end - 10 (outputs closing divs for the content)
          */
-        //do_action( 'ldd_after_main_content' );
+        
+        do_action( 'ldd_after_main_content' );
+        
+       
     ?>
 
 <?php //get_sidebar(); ?>

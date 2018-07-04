@@ -51,7 +51,8 @@ if(ldl()->get_option( 'view_controls' )=="yes"){?>
                     </div>
                         <div class="col-md-12 ldd-featured-listings-container">
                         <?php if ( $listing_view == "grid" ) { 
-                        echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+                        //echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+                        echo "<div class='grid js-isotope2 masonry-cols3'>";
                     } ?>
                         <?php while ($featured->have_posts()): $featured->the_post(); ?>
                             <?php ldl_get_template_part( 'loop/listing', $listing_view ); ?>
@@ -102,7 +103,8 @@ if(ldl()->get_option( 'view_controls' )=="yes"){?>
                     </div>
                         <div class="col-md-12 ldd-featured-listings-container">
                         <?php if ( $listing_view == "grid" ) { 
-                        echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+                        //echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+                        echo "<div class='grid js-isotope2 masonry-cols3'>";
                     } ?>
                         <?php while ($dir_list->have_posts()): $dir_list->the_post(); ?>
                             <?php ldl_get_template_part( 'loop/listing', $listing_view ); ?>
@@ -140,7 +142,8 @@ if(ldl()->get_option( 'view_controls' )=="yes"){?>
                     </div>
                         <div class="col-md-12 ldd-featured-listings-container">
                         <?php if ( $listing_view == "grid" ) { 
-                        echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+                        //echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
+                        echo "<div class='grid js-isotope2'>";
                     } ?>
                         <?php while ($featured->have_posts()): $featured->the_post(); ?>
                             <?php ldl_get_template_part( 'loop/listing', $listing_view ); ?>

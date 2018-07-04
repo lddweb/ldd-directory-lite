@@ -4,7 +4,7 @@ Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
 Requires at least: 4.6 or higher
 Tested up to: 4.9
-Stable tag: 2.5.0
+Stable tag: 2.6.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,18 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 * Added GEO Location support for localizing map for users.
 
 == Changelog ==
+
+= 2.6.0 =
+* Added new masonry grid to grid layout
+* Updated listing detail page, added featured image control
+
+
+= 2.5.3 =
+* Fixed media upload issue for ldd listing
+
+= 2.5.2 =
+* Fixed listing formatting issue
+* Fixed user login issue with multisite
 
 = 2.5.0 =
 <h2> BUG FIXES</h2>

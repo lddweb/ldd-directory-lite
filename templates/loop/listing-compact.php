@@ -1,4 +1,4 @@
-<?php/*
+<?php /*
 * File version: 2
 */
 ?>

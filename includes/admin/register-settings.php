@@ -458,6 +458,14 @@ function ldl_get_registered_settings()
                     'options' => ldl_get_listing_views()
                 ),
 
+                'directory_featured_img'              => array(
+                    'id'      => 'directory_featured_img',
+                    'name'    => __('Hide featured image from listing detail page ', 'ldd-directory-lite'),
+                    'desc'    => __('Select this option if your theme already displays each post\'s featured image.', 'ldd-directory-lite'),
+                    'type'    => 'checkbox',
+                    
+                ),
+
                 
                'appearance_header_background'     => array(
                     'id'   => 'appearance_header_background',
@@ -831,6 +839,16 @@ function ldl_get_listing_views()
     return $pages_options;
 }
 
+function ldl_get_cols()
+{
+
+    $pages_options["2"]   = __('2', 'ldd-directory-lite');
+    $pages_options["3"]      = __('3', 'ldd-directory-lite');
+    $pages_options["4"]      = __('4', 'ldd-directory-lite');
+
+    return $pages_options;
+}
+
 function ldl_header_callback($args)
 {
     echo '<hr/>';
@@ -977,7 +995,7 @@ function ldl_button_callback($args)
 
 function ldl_file_callback($args)
 {
-
+    
     $urls = wp_handle_upload($_FILES["lddlite_settings[" . $args['id'] . "]"], array('test_form' => FALSE));
     
     $temp = $urls["url"]; 

@@ -122,6 +122,8 @@ function ldl_register_scripts() {
     wp_register_script('lddlite-contact', LDDLITE_URL . '/public/js/contact.js', array('jquery'), LDDLITE_VERSION, true);
     wp_register_script('lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array('jquery-ui-dialog'), LDDLITE_VERSION, 1);
 	wp_register_script('lddlite-main', LDDLITE_URL . '/public/js/main.js', array('jquery'), LDDLITE_VERSION, 1);
+	wp_register_script('lddlite-masonry', LDDLITE_URL . '/public/js/masonry2.js', array('jquery'), LDDLITE_VERSION, 1);
+	wp_register_script('lddlite-placeholder', LDDLITE_URL . '/public/js/placeholder.js', array('jquery'), LDDLITE_VERSION, 1);
 
     /*
      * Adding plugins assets

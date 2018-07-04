@@ -71,6 +71,13 @@ get_header();
 
                         <!--START-->
                         <?php
+                        if(class_exists('LDD_SS_Public')){
+                            $opts = ss_get_options();
+                            $ldd_share = new LDD_SS_Public();
+                        }
+                         if($opts['social_icon_position'] == 'after'){
+                            echo $ldd_share->social_sharing();
+                        }
                            if(class_exists("LDDReviewscore")){
                                  LDDReviewscore::show_ratings_single_page_content(get_the_ID());
                            }
@@ -78,9 +85,11 @@ get_header();
                         <!--END-->
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 s">
                         <?php
+                       
                         echo ldl_get_thumbnail( $post->ID );
+                        
 
                         $sidebar_shortcode = ldl()->get_option('appearance_sidebar_shortcode', '');
                         if(isset($sidebar_shortcode) and !empty($sidebar_shortcode)) {
@@ -127,7 +136,9 @@ get_header();
          *
          * @hooked ldd_output_content_wrapper_end - 10 (outputs closing divs for the content)
          */
+       
         do_action( 'ldd_after_main_content' );
+        
     ?>
 
 <?php get_sidebar(); ?>

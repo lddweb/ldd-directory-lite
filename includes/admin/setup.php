@@ -20,6 +20,7 @@ function ldl_admin_enqueue_scripts($hook_suffix) {
 
     wp_enqueue_script('wp-color-picker');
     wp_enqueue_script('lddlite-admin', LDDLITE_URL . '/public/js/admin.js', array('wp-color-picker'), false, true);
+	 wp_enqueue_script('lddlite-placeholder', LDDLITE_URL . '/public/js/placeholder.js', array('jquery'), false, true);
 
 }
 
