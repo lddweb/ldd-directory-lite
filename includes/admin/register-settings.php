@@ -122,6 +122,18 @@ function ldl_get_registered_settings()
                     'desc' => __('This toggles the display of Google Maps for listings that have an address set.', 'ldd-directory-lite'),
                     'type' => 'checkbox'
                 ),
+                'google_recaptcha_site'                      => array(
+                    'id'   => 'google_recaptcha_site',
+                    'name' => __('Recaptcha Site Key (v2)', 'ldd-directory-lite'),
+                    'desc' => __('Google Recaptcha Site key.', 'ldd-directory-lite'),
+                    'type' => 'text'
+                ),
+                'google_recaptcha_secret'                      => array(
+                    'id'   => 'google_recaptcha_secret',
+                    'name' => __('Recaptcha Secret Key (v2)', 'ldd-directory-lite'),
+                    'desc' => __('Google Recaptcha Secret key.', 'ldd-directory-lite'),
+                    'type' => 'text'
+                ),
             )
         ),
 
@@ -445,7 +457,8 @@ function ldl_get_registered_settings()
                     'type'    => 'radio_inline',
                     'options' => array(
                         "category" => "Categories",
-                        "listing"  => "Listing"
+                        "listing"  => "Listing",
+						"map"	   => "Map"
                     ),
                     "std"     => "category",
                  ), 
@@ -658,10 +671,10 @@ function ldl_settings_sanitize($input = array())
         return $input;
     }
 
-    parse_str($_POST['_wp_http_referer'], $referrer);
+    parse_str(sanitize_url($_POST['_wp_http_referer']), $referrer);
 
     $settings = ldl_get_registered_settings();
-    $tab = isset($referrer['tab']) ? $referrer['tab'] : 'general';
+    $tab = isset($referrer['tab']) ? sanitize_text_field($referrer['tab']) : 'general';
 
     $input = $input ? $input : array();
     $input = apply_filters('lddlite_settings_' . $tab . '_sanitize', $input);
@@ -861,13 +874,23 @@ function ldl_checkbox_callback($args)
     $checked = checked(1, ldl()->get_option($args['id']), FALSE);
     $html = '<input type="checkbox" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="1" ' . $checked . '>';
     $html .= '<label for="lddlite_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
+$allowed_html = array(
+		'input' => array(
+		'type' => array(),
+		'id' => array(),
+		'name' => array(),
+		'value' => array(),
+		'checked' => array(),
 
-    echo $html;
+	));
+    echo wp_kses($html,$allowed_html);
 }
 
 
 function ldl_multicheck_callback($args)
 {
+	
+	$html = '';
 
     if (!empty($args['options'])) {
         foreach ($args['options'] as $key => $option):
@@ -876,17 +899,28 @@ function ldl_multicheck_callback($args)
             } else {
                 $enabled = null;
             }
-            echo '<input name="lddlite_settings[' . $args['id'] . '][' . $key . ']" id="lddlite_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked($option, $enabled, FALSE) . '>&nbsp;';
-            echo '<label for="lddlite_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+            $html .= '<input name="lddlite_settings[' . $args['id'] . '][' . $key . ']" id="lddlite_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked($option, $enabled, FALSE) . '>&nbsp;';
+            $html .= '<label for="lddlite_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
         endforeach;
-        echo '<p class="description">' . $args['desc'] . '</p>';
+        $html .= '<p class="description">' . wp_kses_post($args['desc']) . '</p>';
     }
+	
+	$allowed_html = array(
+		'input' => array(
+		'type' => array(),
+		'id' => array(),
+		'name' => array(),
+		'checked' => array(),
+		'value' => array(),
+		),'p'=> array()
+		); 
+echo wp_kses($html, $allowed_html);
 }
 
 
 function ldl_radio_callback($args)
 {
-
+	$html = '';
     foreach ($args['options'] as $key => $option) :
         $checked = FALSE;
 
@@ -895,16 +929,28 @@ function ldl_radio_callback($args)
         elseif (isset($args['std']) && $args['std'] == $key && !isset($ldl_options[ $args['id'] ]))
             $checked = TRUE;
 
-        echo '<input name="lddlite_settings[' . $args['id'] . ']"" id="lddlite_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(TRUE, $checked, FALSE) . '>&nbsp;';
-        echo '<label for="lddlite_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+       $html .= '<input name="lddlite_settings[' . $args['id'] . ']"" id="lddlite_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(TRUE, $checked, FALSE) . '> ';
+        $html .= '<label for="lddlite_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
     endforeach;
 
-    echo '<p class="description">' . $args['desc'] . '</p>';
+    $html .= '<p class="description">' . wp_kses_post($args['desc']) . '</p>';
+	
+	$allowed_html = array(
+		'input' => array(
+		'type' => array(),
+		'id' => array(),
+		'name' => array(),
+		'checked' => array(),
+		'value' => array(),
+		),'p'=> array()
+		); 
+echo wp_kses($html, $allowed_html);
 }
 
 function ldl_radio_inline_callback($args)
 {
 
+	$html = '';
     foreach ($args['options'] as $key => $option) :
         $checked = FALSE;
 
@@ -913,14 +959,28 @@ function ldl_radio_inline_callback($args)
         elseif (isset($args['std']) && $args['std'] == $key && !isset($ldl_options[ $args['id'] ]))
             $checked = TRUE;
 
-        echo "<div style='display:inline-block;'>";
-        echo '<input name="lddlite_settings[' . $args['id'] . ']"" id="lddlite_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(TRUE, $checked, FALSE) . '>&nbsp;';
-        echo '<label for="lddlite_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label>&nbsp&nbsp';
-        echo "</div>";
+        //$html .=  "<div style='display:inline-block;'>";
+       $html .=  '<input name="lddlite_settings[' . $args['id'] . ']" id="lddlite_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(TRUE, $checked, FALSE).'>' ;
+        $html .=  '<label for="lddlite_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label> ';
+       // $html .=  "</div>";
 
     endforeach;
 
-    echo '<p class="description">' . $args['desc'] . '</p>';
+    $html .=  '<p class="description">' . $args['desc'] . '</p>';
+	
+	$allowed_html = array(
+		'input' => array(
+		'type' => array(),
+		'id' => array(),
+		'name' => array(),
+		'checked' => array(),
+		'value' => array(),
+		),'p'=> array()
+		); 
+echo wp_kses($html, $allowed_html);
+//echo $html;
+	
+	
 }
 
 function ldl_text_callback($args)
@@ -935,7 +995,14 @@ function ldl_text_callback($args)
     $html = '<input type="text" class="' . $size . '-text" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="' . esc_attr(stripslashes($value)) . '">';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+   $allowed_html = array(
+'input' => array(
+'type' => array(),
+'id' => array(),
+'name' => array(),
+'name' => array(),
+'value' => array(),
+) ,'p'=> array()); echo wp_kses($html,$allowed_html);
 }
 function ldl_hidden_callback($args)
 {
@@ -947,9 +1014,17 @@ function ldl_hidden_callback($args)
 
     $size = (isset($args['size']) && !is_null($args['size'])) ? $args['size'] : 'regular';
     $html = '<input type="hidden" class="' . $size . '-text" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="' . esc_attr(stripslashes($value)) . '">';
-    $html .= '<p class="description"> ' . $args['desc'] . '</p>';
+    $html .= '<p class="description"> ' . wp_kses_post($args['desc']) . '</p>';
+	
 
-    echo $html;
+       $allowed_html = array(
+'input' => array(
+'type' => array(),
+'id' => array(),
+'name' => array(),
+'name' => array(),
+'value' => array(),
+) ,'p'=> array()); echo wp_kses($html,$allowed_html);
 }
 
 function ldl_div_callback($args)
@@ -971,7 +1046,7 @@ function ldl_div_callback($args)
     $html .= '</div>';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+    echo wp_kses_post($html);
 }
 
 function ldl_button_callback($args)
@@ -988,8 +1063,17 @@ function ldl_button_callback($args)
     $html .= ' <input type="button" class="placeholder_button_delete button button-primary" name="lddlite_settings_de_img" value="Delete image"></button>';
     }
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
+	
+	   $allowed_html = array(
+'input' => array(
+'type' => array(),
+'id' => array(),
+'name' => array(),
+'name' => array(),
+'value' => array(),
+) ,'p'=> array()); echo wp_kses($html,$allowed_html);
 
-    echo $html;
+   
 }
 
 
@@ -1010,7 +1094,7 @@ function ldl_file_callback($args)
     $html = '<input type="hidden" name="image_attachment_id" id="image_attachment_id" value="">';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+    echo wp_kses_post($html);
     
 }
 
@@ -1031,7 +1115,14 @@ function ldl_number_callback($args)
     $html = '<input type="number" step="' . esc_attr($step) . '" max="' . esc_attr($max) . '" min="' . esc_attr($min) . '" class="' . $size . '-text" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="' . esc_attr(stripslashes($value)) . '">';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+       $allowed_html = array(
+'input' => array(
+'type' => array(),
+'id' => array(),
+'name' => array(),
+'name' => array(),
+'value' => array(),
+) ,'p'=> array()); echo wp_kses($html,$allowed_html);
 }
 
 
@@ -1047,7 +1138,7 @@ function ldl_textarea_callback($args)
     $html = '<textarea class="large-text" cols="50" rows="5" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']">' . esc_textarea(stripslashes($value)) . '</textarea>';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+    echo wp_kses_post($html);
 }
 
 
@@ -1063,7 +1154,7 @@ function ldl_password_callback($args)
     $html = '<input type="password" class="' . $size . '-text" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="' . esc_attr($value) . '">';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+    echo wp_kses_post($html);
 }
 
 
@@ -1112,7 +1203,20 @@ function ldl_select_callback($args)
     $html .= '</select>';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+       $allowed_html = array(
+'select' => array(
+
+'id' => array(),
+'name' => array(),
+'name' => array(),
+'value' => array(),
+),
+'option' => array( 'value' => array(),
+'selected' => array()
+)
+,'p'=> array()
+); echo wp_kses($html,$allowed_html);
+
 }
 
 
@@ -1131,7 +1235,7 @@ function ldl_rich_editor_callback($args)
 
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+    echo wp_kses_post($html);
 }
 
 
@@ -1148,7 +1252,7 @@ function ldl_upload_callback($args)
     $html .= '<span>&nbsp;<input type="button" class="ldl_settings_upload_button button-secondary" value="' . __('Upload File', 'ldd-directory-lite') . '"/></span>';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+    echo wp_kses_post($html);
 }
 
 
@@ -1166,7 +1270,20 @@ function ldl_color_callback($args)
     $html = '<input type="text" class="lddlite-color-picker" id="lddlite_settings[' . $args['id'] . ']" name="lddlite_settings[' . $args['id'] . ']" value="' . esc_attr($value) . '" data-default-color="' . esc_attr($default) . '">';
     $html .= '<p class="description"> ' . $args['desc'] . '</p>';
 
-    echo $html;
+       $allowed_html = array(
+
+'button' => array(
+'type' => array(),
+'id' => array(),
+'aria-expanded' => array(),
+'style' => array(),
+),
+'div' => array(),
+'span' => array( 'class' => array()),
+);
+ //echo wp_kses($html,$allowed_html);
+ echo $html;
+
 }
 
 

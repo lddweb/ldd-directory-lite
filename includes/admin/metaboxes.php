@@ -138,12 +138,7 @@ function ldl_metaboxes_setup_cmb()
         'id'   => ldl_pfx('url_linkedin'),
         'type' => 'text_url',
     ));
- $listings_web->add_field(array(
-        'name' => __('Google+', 'ldd-directory-lite'),
-        'desc' => __('This should start with <code>plus.google.com</code>', 'ldd-directory-lite'),
-        'id'   => ldl_pfx('url_googleplus'),
-        'type' => 'text_url',
-    ));
+
      $listings_web->add_field(array(
         'name' => __('Instagram', 'ldd-directory-lite'),
         'desc' => __('This should start with <code>www.instagram.com</code>', 'ldd-directory-lite'),
@@ -196,6 +191,20 @@ function ldl_metaboxes_setup_cmb()
         'id'   => ldl_pfx('contact_skype'),
         'type' => 'text_small',
     ));
+	
+	$cmb_term = new_cmb2_box( array( 
+ 		'id'               =>  'edit', 
+ 		'title'            => esc_html__( 'Category Metabox', 'cmb2' ), // Doesn't output for term boxes 
+ 		'object_types'     => array( 'term' ), // Tells CMB2 to use term_meta vs post_meta 
+ 		'taxonomies'       => array( 'listing_category' ), // Tells CMB2 which taxonomies should have these fields 
+ 		// 'new_term_section' => true, // Will display in the "Add New Category" section 
+ 	) ); 
+	$cmb_term->add_field( array( 
+ 		'name' => esc_html__( 'Term Image', 'cmb2' ), 
+ 		'desc' => esc_html__( 'field description (optional)', 'cmb2' ), 
+ 		'id'   => 'avatar', 
+ 		'type' => 'file', 
+ 	) ); 
 
 }
 
@@ -212,7 +221,7 @@ function ldl_render_geo_location_field($field, $escaped_value, $object_id, $obje
 {
     global $google_api_src;
 
-    wp_enqueue_script('google-maps', $google_api_src);
+    wp_enqueue_script('google-maps','https://maps.googleapis.com/maps/api/js?key='.LDDLITE_GOOGLE_SCRIPT);
     wp_enqueue_script('lddlite-admin');
     wp_enqueue_style('lddlite-admin');
 

@@ -2,13 +2,13 @@
 /*
 * File version: 2
 */
-$tab = (!empty($_GET['tab']))? esc_attr($_GET['tab']) : 'about';
+$tab = (!empty($_GET['tab']))? sanitize_text_field(($_GET['tab'])) : 'about';
 function help_page_tabs($current = 'about')
 {
     $tabs = array(
-        'about'       => __("About the plugin", 'ldd-directory-lite'),
-        'shortcodes'  => __("Shortcodes", 'ldd-directory-lite'),
-        'templates'   => __("Template Overriding", 'ldd-directory-lite')
+        'about'       => esc_html("About the plugin", 'ldd-directory-lite'),
+        'shortcodes'  => esc_html("Shortcodes", 'ldd-directory-lite'),
+        'templates'   => esc_html("Template Overriding", 'ldd-directory-lite')
     );
     $html = '<h2 class="nav-tab-wrapper">';
     foreach ($tabs as $tab => $name) {
@@ -21,9 +21,9 @@ function help_page_tabs($current = 'about')
 ?>
     <form id="ldd_directory_lite_addon_admin" enctype="multipart/form-data" method="post">
     <div class="wrap about-wrap">
-    <h3><?php _e('Welcome to LDD Directory Lite (' . LDDLITE_VERSION . ')', 'ldd-directory-lite'); ?></h3>
+    <h3><?php esc_html_e('Welcome to LDD Directory Lite (' . LDDLITE_VERSION . ')', 'ldd-directory-lite'); ?></h3>
         <div class="sub-heading">
-            <p><?php _e('Add new add-ons support to your LDD Directory Lite. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.', 'ldd-directory-lite'); ?></p>
+            <p><?php esc_html_e('Add new add-ons support to your LDD Directory Lite. If you require support or would like to make a suggestion for improving this plugin, please refer to the following links.', 'ldd-directory-lite'); ?></p>
             <ul id="directory-links">
                 <li><?php printf( __( '<a href="%1$s" title="Submit a bug or feature request on GitHub" class="bold-link"><i class="fa fa-exclamation-triangle fa-fw"></i>Submit an Issue</a>', 'ldd-directory-lite' ), esc_url('https://github.com/lddweb/ldd-directory-lite/issues') ); ?></li>
                 <li class="right"><?php printf( __( '<i class="fa fa-wordpress fa-fw"></i>Visit us on <a href="%1$s" title="Come visit the plugin homepage on WordPress.org">%2$s</a>', 'ldd-directory-lite' ), esc_url('https://wordpress.org/support/plugin/ldd-directory-lite'), 'WordPress.org' ); ?></li>

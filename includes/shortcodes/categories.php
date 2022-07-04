@@ -17,6 +17,7 @@
  */
 function ldl_shortcode_cat_directory($atts)
 {
+    //require(plugin_dir_path( __DIR__ )."/setup.php");
     $paged 			= ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
     $posts_per_page = get_option('posts_per_page');
 
@@ -50,20 +51,16 @@ function ldl_shortcode_cat_directory($atts)
     }
 
     $query1 = new WP_Query($args);
-    if ( $query1->have_posts() ) {
-        if ($atts["view"] == "grid") {
-            echo "<div class='grid js-isotope' data-isotope-options='{ \"itemSelector\": \".grid-item\", \"layoutMode\": \"fitRows\" }'>";
-        }
-        while ($query1->have_posts()) { $query1->the_post();
-            ldl_get_template_part('loop/listing', $atts["view"]);
-        }
-        if ($atts["view"] == "grid") {
-            echo "</div>";
-            wp_enqueue_script('isotope-pkgd', LDDLITE_URL . '/public/js/isotope.pkgd.min.js');
-        }
-        echo "<div class='clearfix'></div>";
-        wp_reset_postdata();
-    }
+    
+    
+            //ldl_get_template_part('loop/listing', $atts["view"]);
+            $home_template_path = ldl_get_template_part('loop/listingshortcode', $atts["view"],null,false);
+            ob_start();
+            include($home_template_path);
+            $contents = ob_get_contents();
+            ob_end_clean();
+            return $contents;
+           
 }
 
 add_shortcode('directory_category', 'ldl_shortcode_cat_directory');

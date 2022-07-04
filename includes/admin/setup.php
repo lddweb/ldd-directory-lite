@@ -41,9 +41,12 @@ add_action('_admin_menu', 'ldl_action_submenu_title');
  * Custom icon for the menu item.
  */
 function ldl_action_admin_menu_icon() {
-    echo "\n\t<style>";
-    echo '#adminmenu .menu-icon-' . LDDLITE_POST_TYPE . ' div.wp-menu-image:before { content: \'\\f307\'; }';
-    echo '</style>';
+    $html = "\n\t<style>";
+    $html .= '#adminmenu .menu-icon-' . LDDLITE_POST_TYPE . ' div.wp-menu-image:before { content: \'\\f307\'; }';
+    $html .= '</style>';
+	$allowed = array(
+	'style' => array());
+	echo wp_kses($html , $allowed);
 }
 add_action('admin_head', 'ldl_action_admin_menu_icon');
 

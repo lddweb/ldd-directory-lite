@@ -1,5 +1,19 @@
 jQuery(document).ready(function(){    
 
+/*jQuery(function(){
+    jQuery('.ldd_header_view').hover(
+	function(){
+		
+            jQuery(this+ '.ldd_tooltip').show();
+        },
+        function(){
+            jQuery(this+ '.ldd_tooltip').hide();   
+        }
+    )   
+});
+*/
+
+
 
     jQuery(".ldd_search .show_search").click(function(){
 

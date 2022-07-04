@@ -40,10 +40,10 @@
 			$subcategory_listings = ($sub_check == 0) ? true : false;
 
 			if ( isset( $_GET["order_by"] ) and ! empty( $_GET["order_by"] ) ):
-				$sort_by = $_GET["order_by"];
+				$sort_by = sanitize_text_field($_GET["order_by"]);
 			endif;
 			if ( isset( $_GET["order"] ) and ! empty( $_GET["order"] ) ):
-				$sort_order = $_GET["order"];
+				$sort_order = sanitize_text_field($_GET["order"]);
 			endif;
 
 

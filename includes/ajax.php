@@ -21,6 +21,7 @@
  * @since 5.3.0
  */
 function ldl_ajax_contact_form() {
+    $response = '';
 
     if (!wp_verify_nonce($_POST['nonce'], 'contact-form-nonce'))
         die( __('You shall not pass!', 'ldd-directory-lite') );
@@ -51,6 +52,25 @@ function ldl_ajax_contact_form() {
     } else {
         $answer = intval($answer);
     }
+    
+    
+   
+	$captcha=$_POST['g-recaptcha-response'];
+		$secretkey = ldl()->get_option('google_recaptcha_secret');					
+	$data = array(
+            'secret' => ldl()->get_option('google_recaptcha_secret'),
+            'response' => $captcha
+        );
+
+$verify = curl_init();
+curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+curl_setopt($verify, CURLOPT_POST, true);
+curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+$response = json_decode(curl_exec($verify));
+
+
 
 
     $errors = array();
@@ -63,8 +83,13 @@ function ldl_ajax_contact_form() {
         $errors['subject'] = __('You must enter a subject', 'ldd-directory-lite');
     if (empty($message) || strlen($message) < 10)
         $errors['message'] = __('Please enter a longer message', 'ldd-directory-lite');
-    if (empty($answer) || !in_array($answer, $answers))
-        $errors['math'] = __('Your math is wrong', 'ldd-directory-lite');
+   /* if ($response->success !=1 )
+        $errors['captcha'] = __('Invalid Captcha', 'ldd-directory-lite');*/
+        
+       /* if (empty($answer) || !in_array($answer, $answers))
+        $errors['math'] = __('Your math is wrong', 'ldd-directory-lite');*/
+		
+		
 
     if (!empty($errors)) {
         echo json_encode(array(
@@ -74,6 +99,8 @@ function ldl_ajax_contact_form() {
         ));
         die;
     }
+    
+    
 
     $post_id = intval($_POST['post_id']);
     $contact_email = get_post_meta($post_id, ldl_pfx('contact_email'), 1);

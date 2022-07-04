@@ -268,7 +268,7 @@ if ( ! function_exists( 'ldd_buttons' ) ) {
         if ( get_user_option( 'rich_editing' ) !== 'true' ) {
             return;
         }
-        if ( !isset($_GET['post_type']) && $_GET['post_type'] !="directory_listings" ) {
+        if ( !isset($_GET['post_type']) || $_GET['post_type'] !="directory_listings" ) {
             return;
         }
  
@@ -314,9 +314,9 @@ if ( !function_exists( 'ldd_tinymce_extra_vars' ) ) {
 *Adding styles to admin area
 */
 
-add_action('admin_head', 'my_custom_fonts');
+add_action('admin_head', 'ldd_my_custom_fonts');
 
-function my_custom_fonts() {
+function ldd_my_custom_fonts() {
   echo '<style>
     .mce-i-main:before{}
         .mce-menu-item-normal.mce-active {background:#fff !important; color:#333  !important}
@@ -330,19 +330,19 @@ function my_custom_fonts() {
 }
 
 /* for admin script*/
-function add_placeholderjs($hook){
+function ldd_add_placeholderjs($hook){
     if($hook !="lddlite-settings")
     return; 
 
     wp_enqueue_script('lddlite-placeholder');
 }
-add_action( 'admin_enqueue_scripts', 'add_placeholderjs' );
+add_action( 'admin_enqueue_scripts', 'ldd_add_placeholderjs' );
 
 
 /*
 * Delete placeholder image from diecoty settings
 */
-function delet_placeholder()
+function ldd_delet_placeholder()
 {
 	if(isset($_GET['ldd_act'])){
         if(ldl()->get_option('ldd_placeholder_image')){
@@ -364,4 +364,4 @@ function delet_placeholder()
         }
     }
 }
-add_action('admin_init','delet_placeholder');
+add_action('admin_init','ldd_delet_placeholder');

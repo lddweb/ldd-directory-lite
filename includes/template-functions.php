@@ -65,7 +65,10 @@ function ldl_locate_template($templates, $load = false, $require_once = true) {
                 break;
             }else{ //backward compatibility for old plugin version
 	            $old_template = explode( '/', $template );
+				
+				
 	            if (file_exists(trailingslashit($path) . $old_template[1]) && isset($old_template[1]) ) {
+					
 		            $located = trailingslashit($path) . $old_template[1];
 		            break;
 	            }
@@ -131,6 +134,16 @@ function ldl_get_directory_link() {
     $post_id = ldl()->get_option('directory_front_page');
 
     return ($post_id) ? get_permalink($post_id) : '';
+}
+
+/*
+* Get directory page title
+*/
+
+function ldl_get_directory_title() {
+    $post_id = ldl()->get_option('directory_front_page');
+
+    return ($post_id) ? get_the_title($post_id) : '';
 }
 
 /**
@@ -463,7 +476,7 @@ function ldl_get_social($post_id) {
         'twitter'  => ldl_sanitize_twitter(get_post_meta($post_id, ldl_pfx('url_twitter'), 1)),
 		'instagram' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_instagram'), 1)),
         'google-plus' => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_googleplus'), 1)),
-        'youtube'  => ldl_sanitize_twitter(get_post_meta($post_id, ldl_pfx('url_youtube'), 1)),
+        'youtube'  => ldl_force_scheme(get_post_meta($post_id, ldl_pfx('url_youtube'), 1)),
     );
 
     $titles = array(
@@ -534,6 +547,7 @@ function ldl_get_featured_posts($args = null, $attr = array()) {
 								'taxonomy' => LDDLITE_TAX_TAG,
 								'field'    => 'slug',
 								'terms'    => $ldd_terms,
+								'paged'          => $paged,
 							),
 						),
 						'orderby'        => 'title',
@@ -625,6 +639,7 @@ function ldl_get_directory_listing() {
 					'order'          => $sort_order,
 					'post_type'      => LDDLITE_POST_TYPE,
 					'posts_per_page' => $posts_per_page,
+					'paged'          => $paged,
 					
 				);
 				elseif ( $sort_by == "id" ):
@@ -737,7 +752,7 @@ function ldl_edit_link($post_id, $action) {
     );
 }
 
-function get_tag_ID($tag_name) {
+function ldd_get_tag_ID($tag_name) {
 	$tag = get_term_by('name', $tag_name, 'listing_tag');
 	if ($tag) {
 		return $tag->term_id;
@@ -825,7 +840,7 @@ function ldd_custom_taxonomies_terms_links() {
 
 
 
-function show_all_cat(){
+function ldd_show_all_cat(){
 
 
 
@@ -910,9 +925,24 @@ if ( is_wp_error( $theurl ) ) {
 $listing_view = ldl()->get_option( 'directory_view_type', 'compact' );
 if($listing_view=='grid'){
 	$gridclass= "col-xs-12 col-sm-6 col-md-4 type-grid grid-item ldd_list_grid";
+	$cls2 = "grid_image";
+	
+} else{
+	$cls2="col-xs-2";
+	$cls10 = "col-xs-10";
+}
+$cat_img ="";
+$img_url = get_term_meta($s->term_id,'avatar',true);
+if($img_url){
+$cat_img = "<img src='".$img_url."' width='80px'>";
 }
 $count = get_term_post_count( "listing_category", $s->term_id );
-echo "<div class=\"ser-img img\" ><a class='list-group-item ".$gridclass."' href=\"" . $theurl  . "\"><span class=\"label label-primary pull-right\">".$count."</span>". $s->name ."</a>";
+echo "<div class=\"ser-img img\" >
+<a class='list-group-item ".$gridclass."' href=\"" . $theurl  . "\">
+<div class='".$cls2."'>".$cat_img."</div>
+<div class='".$cls10."'>". $s->name."<span class=\"label label-primary pull-right\">".$count."</span><br>".$s->description ."
+</div>
+</a></div>";
 
 }
 echo "<nav class='ldd_listing_pagination clearfix'>";
@@ -930,7 +960,7 @@ echo "</nav>";
 }
 
 // this function adds css from directoy setting->appearance
-function plugin_css(){
+function ldd_plugin_css(){
 	
 	?>
 <style>
@@ -985,24 +1015,24 @@ function plugin_css(){
 	
 }
 
-add_action( 'wp_enqueue_scripts', 'plugin_css' );
-function inc_temp(){
+add_action( 'wp_enqueue_scripts', 'ldd_plugin_css' );
+function ldd_inc_temp(){
 	ldl_get_template_part('single2');
 }
 
 
-function get_custom_post_type_template($content) {
+function ldd_get_custom_post_type_template($content) {
      if (is_singular('directory_listings') && in_the_loop()) {
 		 $content='';
-		$content.= inc_temp();
+		$content.= ldd_inc_temp();
 	 }
 	
 	 return $content;
 }
 
-//add_filter( 'the_content', 'get_custom_post_type_template' );
+//add_filter( 'the_content', 'ldd_get_custom_post_type_template' );
 
-function check_template_version(){
+function ldd_check_template_version(){
 
 	 $filedata = get_file_data(plugin_dir_url('ldd-directory-lite') . 'ldd-directory-lite/templates/category.php', array(
     'version' => 'File version'
@@ -1013,7 +1043,7 @@ function check_template_version(){
 
 }
 
-function show_prof(){
+function ldd_show_prof(){
 	$current_user = wp_get_current_user();
 	?>
 	<div class="logout_link">Hi <?php echo $current_user->display_name;?><br> <a href="<?php echo wp_logout_url( home_url() ); ?> ">  Logout</a></div>
@@ -1050,6 +1080,18 @@ function ldd_directory_layout()
 				wp_redirect(get_bloginfo('url').'?page_id='.$page_id);
 				exit;
 			}
+		}
+			
+			if($_GET['ldd_view'] == "map"){
+			$opt_array = get_option('lddlite_settings'); 
+			
+			$arr2 = $opt_array['home_page_listing']='map';
+			
+			
+			if(update_option('lddlite_settings',$opt_array)){
+				wp_redirect(get_bloginfo('url').'?page_id='.$page_id);
+				exit;
+			}
 			
 		}
 		if($_GET['ldd_view'] == "compact"){
@@ -1059,7 +1101,7 @@ function ldd_directory_layout()
 			
 			
 			if(update_option('lddlite_settings',$opt_array)){
-				wp_redirect("http://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+				wp_redirect(wp_sanitize_redirect("http://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']));
 				exit;
 			}
 			
@@ -1071,7 +1113,7 @@ function ldd_directory_layout()
 			
 			
 			if(update_option('lddlite_settings',$opt_array)){
-				wp_redirect("http://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+				wp_redirect(wp_sanitize_redirect("http://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']));
 				exit;
 			}
 			

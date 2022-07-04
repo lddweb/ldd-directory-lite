@@ -2,9 +2,9 @@
 Contributors: lddwebdesign
 Tags: directory, listings, listing directory, business, business directory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EUP56RH7E8RJ
-Requires at least: 4.6 or higher
-Tested up to: 4.9
-Stable tag: 2.6.0
+Requires at least: 5.0 or higher
+Tested up to: 6
+Stable tag: 3.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,6 +136,38 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 
 == Upgrade Notice ==
 
+= 3.2 =
+* Upgraded bootstrap js file
+
+
+= 3.0 =
+* fixed issue with manage listing
+* Updated chosen js library
+* fixed issue with placeholder image
+
+
+= 2.7.4 =
+* fixed archive page pagination issue
+
+= 2.7.3 =
+* fixed issues with teplate override
+
+
+= 2.7 =
+* fixed single template and home page issue
+* Removed google plus option
+* added support for map extension
+* fixed home page and single page notices
+
+= 2.6.4 =
+* fixed new tab issue for website URL
+
+= 2.6.2 =
+* fixed directory shortcode issue in gutenberg block
+
+= 2.6.1 =
+* fixed social contact issue on front end listing management
+
 = 2.5.0 =
 * fixed template issues
 * Added new settings options.
@@ -187,6 +219,23 @@ For example, if you need to edit `/wp-content/plugins/ldd-directory-lite/templat
 * Added GEO Location support for localizing map for users.
 
 == Changelog ==
+= 2.7.1 =
+* fixed notice for undefined variable $prefix
+
+= 2.7 =
+* fixed single template and home page issue
+* Removed google plus option
+* added support for map extension
+* fixed home page and single page notices
+
+= 2.6.4 =
+* fixed new tab issue for website URL
+
+= 2.6.2 =
+* fixed directory shortcode issue in gutenberg block
+
+= 2.6.1 =
+* Fixed social contact issue on front end listing management
 
 = 2.6.0 =
 * Added new masonry grid to grid layout

@@ -4,7 +4,7 @@ global $geo;
 $geo = ldl_get_meta('geo');
 //get_header();
 ?>
-<div class=" bootstrap-wrapper">
+<div class=" bootstrap-wrapper single2">
     <?php
         /**
          * ldd_before_main_content hook.
@@ -15,9 +15,7 @@ $geo = ldl_get_meta('geo');
     ?>
       
 
-        <header class="entry-header">
-           <!-- <h1 class="entry-title"><?php the_title(); ?></h1>-->
-        </header><!-- .entry-header -->
+       
 
         <?php ldl_get_header(); ?>
         <ol class="breadcrumb bc-ldd">
@@ -25,7 +23,9 @@ $geo = ldl_get_meta('geo');
           <li><a href="#"><?php echo get_the_term_list(get_the_id(),LDDLITE_TAX_CAT,"",", "); ?></a></li>
           <li class="active"><?php the_title(); ?></li>
         </ol>
-
+ 		<header class="entry-header">
+           <!-- <h1 class="entry-title"><?php the_title(); ?></h1>-->
+        </header><!-- .entry-header -->
         <article>
             <div class="container-fluid">
                 <div class="row">
@@ -37,17 +37,16 @@ $geo = ldl_get_meta('geo');
                             if(class_exists('LDD_SS_Public')){
                                 $opts = ss_get_options();
                                 $ldd_share = new LDD_SS_Public();
-                            }
+                            
                             if($opts['social_icon_position'] == 'before'){
                                 echo $ldd_share->social_sharing();
-                            }
+                            }}
 
                            
                             echo  do_shortcode(wpautop(get_the_content())); 
 
                             ?>
-                            <p class="tags"><?php the_tags();  echo ldd_custom_taxonomies_terms_links();
-                            ?> </p>
+                            
  
    
                         </div><!-- .entry-content -->
@@ -59,17 +58,7 @@ $geo = ldl_get_meta('geo');
                                 <?php if (ldl_has_meta('contact_skype')): ?><li><i class="fa fa-skype fa-fw fa-li"></i> <?php echo ldl_get_meta('contact_skype'); ?></li><?php endif; ?>
                                 <?php if (ldl_get_address()): ?><li><i class="fa fa-globe fa-fw fa-li"></i> <?php echo ldl_get_address(); ?></li><?php endif; ?>
                             </ul>
-                            <ul class="fa-ul fa-ul-social">
-                                <?php if (ldl_has_meta('url_website')): ?><li> <a target="_blank" href="<?php echo ldl_get_meta( 'url_website' ); ?>" title="Website"><i class="fa fa-home fa-lg "></i></a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_facebook')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_facebook' ); ?>" title="Facebook"><i class="fa fa-facebook fa-lg "></i> </a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_twitter')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_twitter' ); ?>" title="Twitter"><i class="fa fa-twitter fa-lg "> </i></a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_linkedin')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_linkedin' ); ?>" title="LinkedIn"><i class="fa fa-linkedin fa-lg "></i> </a></li><?php endif; ?>
-                                 <?php if (ldl_has_meta('url_googleplus')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_googleplus' ); ?>" title="Google +"><i class="fa fa-google-plus fa-lg "></i> </a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_instagram')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_instagram' ); ?>" title="Instagram"><i class="fa fa-instagram fa-lg "></i> </a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_youtube')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_youtube' ); ?>" title="Youtube"><i class="fa fa-youtube fa-lg "></i> </a></li><?php endif; ?>
-                                <?php if (ldl_has_meta('url_custom')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_custom' ); ?>" title=""><i class="fa fa-link fa-lg "></i> </a></li><?php endif; ?>
-                                
-                            </ul>
+                            
                         </div>
 
                         <?php if ( ldl_use_google_maps() ): ?>
@@ -81,22 +70,39 @@ $geo = ldl_get_meta('geo');
                         <!--START-->
                         <?php
                         //do_action('ldd_after_main_content_filter');
-                        if($opts['social_icon_position'] == 'after'){
-                            echo $ldd_share->social_sharing();
-                        }
-                           if(class_exists("LDDReviewscore")){
-                                 LDDReviewscore::show_ratings_single_page_content(get_the_ID());
-                           }
+                        if(class_exists('LDD_SS_Public')){
+                                $opts = ss_get_options();
+                                $ldd_share = new LDD_SS_Public();
+                            
+                            if($opts['social_icon_position'] == 'after'){
+                                echo $ldd_share->social_sharing();
+                            }}
+                           
                         ?>
                         <!--END-->
 
                     </div>
                     <div class="col-md-4 s2">
-                        <?php
-                       if(!ldl()->get_option('directory_featured_img')){
+                    <p class="tags"><?php the_tags();  echo ldd_custom_taxonomies_terms_links();
+                            ?> </p>
+                            <?php
+                      
                         echo ldl_get_thumbnail( $post->ID );
-                        }
+                        ?>
 
+                        <ul class="fa-ul fa-ul-social">
+                        <?php if (ldl_has_meta('url_website')): ?><li> <a target="_blank" href="<?php echo ldl_get_meta( 'url_website' ); ?>" title="Website"><i class="fa fa-home fa-lg "></i></a></li><?php endif; ?>
+                        <?php if (ldl_has_meta('url_facebook')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_facebook' ); ?>" title="Facebook"><i class="fa fa-facebook fa-lg "></i> </a></li><?php endif; ?>
+                        <?php if (ldl_has_meta('url_twitter')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_twitter' ); ?>" title="Twitter"><i class="fa fa-twitter fa-lg "> </i></a></li><?php endif; ?>
+                        <?php if (ldl_has_meta('url_linkedin')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_linkedin' ); ?>" title="LinkedIn"><i class="fa fa-linkedin fa-lg "></i> </a></li><?php endif; ?>
+                         <?php if (ldl_has_meta('url_googleplus')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_googleplus' ); ?>" title="Google +"><i class="fa fa-google-plus fa-lg "></i> </a></li><?php endif; ?>
+                        <?php if (ldl_has_meta('url_instagram')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_instagram' ); ?>" title="Instagram"><i class="fa fa-instagram fa-lg "></i> </a></li><?php endif; ?>
+                        <?php if (ldl_has_meta('url_youtube')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_youtube' ); ?>" title="Youtube"><i class="fa fa-youtube fa-lg "></i> </a></li><?php endif; ?>
+                        <?php if (ldl_has_meta('url_custom')): ?><li><a target="_blank" href="<?php echo ldl_get_meta( 'url_custom' ); ?>" title=""><i class="fa fa-link fa-lg "></i> </a></li><?php endif; ?>
+                        
+                    </ul>
+                     <div style='float:left'>
+                        <?php
                         $sidebar_shortcode = ldl()->get_option('appearance_sidebar_shortcode', '');
                         if(isset($sidebar_shortcode) and !empty($sidebar_shortcode)) {
                             
@@ -107,6 +113,7 @@ $geo = ldl_get_meta('geo');
                             
                         }
                         ?>
+                        </div>
                     </div>
                 </div>
 
@@ -115,7 +122,7 @@ $geo = ldl_get_meta('geo');
         </article>
            
         <?php if ( ldl_use_google_maps() ): ?>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo LDDLITE_GOOGLE_SCRIPT; ?>"></script>
+       
         
         <script>
             function initialize() {
@@ -148,9 +155,14 @@ $geo = ldl_get_meta('geo');
         
         do_action( 'ldd_after_main_content' );
         
-       
+        if(class_exists("LDDReviewscore")){
+            LDDReviewscore::show_ratings_single_page_content(get_the_ID());
+        }
     ?>
 
 <?php //get_sidebar(); ?>
 </div>
-<?php //get_footer(); ?>
+<?php
+
+
+//get_footer(); ?>

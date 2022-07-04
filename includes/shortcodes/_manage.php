@@ -70,7 +70,7 @@ function ldl_process_edit_form() {
         $data = $lddlite_submit_processor->get_data();
 
         // The data is valid, decide where it goes
-        switch($_GET['edit']) {
+        switch(sanitize_text_field($_GET['edit'])) {
             case 'details':
                 ldl_edit_update_post($post_id, $data['title'], $data['description'], $data['summary'], $data['category']);
                 break;
@@ -136,7 +136,7 @@ function ldl_shortcode_directory_manage() {
     if (isset($_GET['edit']) && $can_edit) {
 
         if (!$lddlite_submit_processor->is_processing()) {
-            switch($_GET['edit']) {
+            switch(sanitize_text_field($_GET['edit'])) {
                 case 'details':
                     $cat_id = wp_get_post_terms($listing->ID, LDDLITE_TAX_CAT, array('fields' => 'ids'));
                     $data = array(
@@ -151,6 +151,7 @@ function ldl_shortcode_directory_manage() {
                 case 'contact':
                     $data = array(
                         'title'         => get_the_title($listing->ID),
+						'contact_name' => get_metadata('post', $listing->ID, ldl_pfx('contact_name'), true),
                         'contact_email' => get_metadata('post', $listing->ID, ldl_pfx('contact_email'), true),
                         'contact_phone' => get_metadata('post', $listing->ID, ldl_pfx('contact_phone'), true),
                         'contact_fax'   => get_metadata('post', $listing->ID, ldl_pfx('contact_fax'), true),
@@ -165,6 +166,10 @@ function ldl_shortcode_directory_manage() {
                         'url_facebook' => get_metadata('post', $listing->ID, ldl_pfx('url_facebook'), true),
                         'url_twitter'  => get_metadata('post', $listing->ID, ldl_pfx('url_twitter'), true),
                         'url_linkedin' => get_metadata('post', $listing->ID, ldl_pfx('url_linkedin'), true),
+						
+						'url_instagram' => get_metadata('post', $listing->ID, ldl_pfx('url_instagram'), true),
+						'url_youtube' => get_metadata('post', $listing->ID, ldl_pfx('url_youtube'), true),
+						'url_custom' => get_metadata('post', $listing->ID, ldl_pfx('url_custom'), true),
                     );
                     $lddlite_submit_processor->push_data($data);
                     break;
@@ -180,7 +185,7 @@ function ldl_shortcode_directory_manage() {
                 case 'location':
                     // @TODO Repetitious code alert, here and _submit.php
                     wp_enqueue_script('jquery-ui-autocomplete');
-                    wp_enqueue_script('maps-autocomplete', $google_api_src);
+                   // wp_enqueue_script('maps-autocomplete', $google_api_src);
                     wp_enqueue_script('lddlite-submit', LDDLITE_URL . '/public/js/submit.js', 'maps-autocomplete', LDDLITE_VERSION);
                     $data = array(
                         'title'       => get_the_title($listing->ID),

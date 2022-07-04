@@ -9,7 +9,7 @@
  * Plugin Name:       LDD Directory Lite
  * Plugin URI:        https://plugins.lddwebdesign.com
  * Description:       Powerful and simple to use, add a directory of business or other organizations to your web site. 
- * Version:           2.6.0
+ * Version:           3.3
  * Author:            LDD Web Design
  * Author URI:        http://www.lddwebdesign.com
  * Author:            LDD Web Design
@@ -23,10 +23,11 @@
 if (!defined('WPINC'))
     die;
 
+
 /**
  * Define constants
  */
-define('LDDLITE_VERSION', '2.6.0');
+define('LDDLITE_VERSION', '3.3');
 
 define('LDDLITE_PATH', dirname(__FILE__));
 define('LDDLITE_URL', rtrim(plugin_dir_url(__FILE__), '/'));
@@ -44,12 +45,7 @@ define('LDDLITE_DELAY_NOTICE_KEY', 'lddlite-dalay-notice');
 /*
  * Google Map Api Key Global
  * */
-$google_api_src = 'https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places';
-$google_api_key = ldl()->get_option('googlemap_api_key');
-if(isset($google_api_key) and !empty($google_api_key)) {
-    define('LDDLITE_GOOGLE_SCRIPT' , $google_api_key);
-    $google_api_src = 'https://maps.googleapis.com/maps/api/js?key='.LDDLITE_GOOGLE_SCRIPT;
-}
+
 
 if(!(function_exists('get_user_to_edit'))){
 	require_once(ABSPATH.'/wp-admin/includes/user.php');
@@ -97,6 +93,7 @@ function install_ldd_directory_lite() {
                                      'post_content'   => '[directory_manage]',
                                      'post_status'    => 'publish',
                                      'post_type'      => 'page',
+
                                      'post_parent'    => $directory,
                                      'comment_status' => 'closed',
                                  ));
@@ -411,20 +408,20 @@ function ldd_pagination($pages = '', $range = 4) {
 	}
 }
 
-function validate_dyn_slugs() {
+function ldd_validate_dyn_slugs() {
 	
 	 $taxonomy_slug = ldl()->get_option('directory_taxonomy_slug', 'listings');
    	 $post_type_slug = ldl()->get_option('directory_post_type_slug', 'listing');
 	 if(strtolower($taxonomy_slug) == strtolower($post_type_slug)):
-		add_action( 'admin_notices', 'slugs_error_notice' ); 
+		add_action( 'admin_notices', 'ldd_slugs_error_notice' ); 
 	 endif;
 }
-function slugs_error_notice() {
+function ldd_slugs_error_notice() {
 	$class = "error";
 	$message = "Error: Taxonomy and Post Type Slugs cannot be same. Please go to <a href='".admin_url()."edit.php?post_type=directory_listings&page=lddlite-settings'>settings</a> and update the slugs.";
-        echo"<div class=\"$class\"> <p>$message</p></div>"; 
+        echo "<div class=\"$class\"> <p>$message</p></div>"; 
 }
-function validate_google_api_key() {
+function ldd_validate_google_api_key() {
 	$google_api_key = ldl()->get_option('googlemap_api_key');
 	if(isset($google_api_key) and empty($google_api_key)):
 		add_action( 'admin_notices', 'google_error_notice' );
@@ -447,8 +444,8 @@ function ldd_admin_hooks() {
 if (!defined('WP_UNINSTALL_PLUGIN'))
     ldl();
 	//$fep = new USER_EDIT_FONT_PROFILE;
-validate_dyn_slugs();
-validate_google_api_key();
+ldd_validate_dyn_slugs();
+ldd_validate_google_api_key();
 
 /*
  *====================================================
@@ -485,7 +482,7 @@ function ldd_meta_search_where( $where ){
 	return $where;
 }
 
-function atom_search_where($where){
+function ldd_atom_search_where($where){
   global $wpdb;
   if (is_search() and $_REQUEST["post_type"] == "directory_listings")
     $where .= "OR (t.name LIKE '%".get_search_query()."%' AND {$wpdb->posts}.post_type= 'directory_listings'  AND  {$wpdb->posts}.post_status = 'publish')";
@@ -508,7 +505,7 @@ function ldd_meta_search_groupby($groupby) {
   return $groupby . ", " . $customgroupby;
 }
 function myprefix_search_posts_per_page($query) {
-    if ( $query->is_search ) {
+    if ( $query->is_search and $_REQUEST["post_type"] == "directory_listings") {
         $posts_per_page  = ldl()->get_option( 'listings_search_number', 10 );
         $query->set( 'posts_per_page', $posts_per_page );
     }
@@ -559,7 +556,7 @@ add_filter( 'pre_get_posts','myprefix_search_posts_per_page', 99 );
 add_filter('posts_join', 'ldd_taxonomy_search_join' );
 add_filter('posts_where', 'ldd_meta_search_where' );
 add_filter('posts_join', 'ldd_meta_search_join' );
-add_filter('posts_where', 'atom_search_where' );
+add_filter('posts_where', 'ldd_atom_search_where' );
 add_filter('posts_groupby', 'ldd_meta_search_groupby' );
 add_filter('posts_orderby','ldd_sort_custom',10,2);
 
@@ -579,36 +576,40 @@ add_action( 'admin_menu', 'ldd_remove_menu_items' );
 
 
 
-//add_filter('wp_dropdown_users', 'MySwitchUser');
-function MySwitchUser($output)
+add_filter('wp_dropdown_users', 'ldd_SwitchUser');
+function ldd_SwitchUser($output)
 {
-    if(get_post_type()!="directory_listings"){ return $output;}
-
-    //global $post is available here, hence you can check for the post type here
-    $users = get_users(array('role__in'=>array("administrator",'editor','author','directory_contributor')));
-
-    $output = "<select id=\"post_author_override\" name=\"post_author_override\" class=\"\">";
-
-    //Leave the admin in the list
-    //$output .= "<option value=\"1\">Admin</option>";
-    foreach($users as $user)
-    {
-        $sel = ($post->post_author == $user->ID)?"selected='selected'":'';
-       $user_roles = $user->roles;
-
-        
-        $output .= '<option value="'.$user->ID.'"'.$sel.'>'.$user->display_name.' ('. $user_roles[0].')</option>';
-    }
-    $output .= "</select>";
-
-    return $output;
+   if(get_post_type()!="directory_listings" ){ return $output;}
+	//if(!isset($_GET['action']) || $_GET['action']!='edit') {return $output;}
+		global $post;
+		//global $post is available here, hence you can check for the post type here
+		$users = get_users(array('role__in'=>array("administrator",'editor','author','directory_contributor')));
+	
+		$output = "<select id=\"post_author_override\" name=\"post_author_override\" class=\"ldd_usr\">";
+	
+		//Leave the admin in the list
+		//$output .= "<option value=\"1\">Admin</option>";
+		foreach($users as $user)
+		{
+			//print_r($post);
+			//echo  "here";
+			$sel = ($post->post_author == $user->ID)?"selected":'';
+		   $user_roles = $user->roles;
+	
+			
+			$output .= '<option  value="'.$user->ID.'"'.$sel.'>'.$user->display_name.' ('. $user_roles[0].')</option>';
+		}
+		$output .= "</select>";
+	
+		return $output;
+	
     
 }
 
 // add new user as directory contributor if he logs in from directory page
-add_filter('pre_option_default_role','create_directory_user');
+add_filter('pre_option_default_role','ldd_create_directory_user');
 
- function create_directory_user($default_role){
+ function ldd_create_directory_user($default_role){
      if(isset($_GET['pt']) && $_GET['pt']=="directory_listing"){
     
     return 'directory_contributor'; // This is changed
@@ -649,7 +650,7 @@ function ldd_contributor_redirect(){
         }
         if(current_user_can('directory_contributor')){
            
-            add_action('wp_footer','show_prof');
+            add_action('wp_footer','ldd_show_prof');
                     
         add_filter('show_admin_bar', '__return_false');
         }

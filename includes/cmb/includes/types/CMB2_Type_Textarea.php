@@ -6,16 +6,17 @@
  *
  * @category  WordPress_Plugin
  * @package   CMB2
- * @author    WebDevStudios
+ * @author    CMB2 team
  * @license   GPL-2.0+
- * @link      http://webdevstudios.com
+ * @link      https://cmb2.io
  */
-class CMB2_Type_Textarea extends CMB2_Type_Base {
+class CMB2_Type_Textarea extends CMB2_Type_Counter_Base {
 
 	/**
 	 * Handles outputting an 'textarea' element
+	 *
 	 * @since  1.1.0
-	 * @param  array  $args Override arguments
+	 * @param  array $args Override arguments
 	 * @return string       Form textarea element
 	 */
 	public function render( $args = array() ) {
@@ -29,6 +30,9 @@ class CMB2_Type_Textarea extends CMB2_Type_Base {
 			'value' => $this->field->escaped_value( 'esc_textarea' ),
 			'desc'  => $this->_desc( true ),
 		), $args );
+
+		// Add character counter?
+		$a = $this->maybe_update_attributes_for_char_counter( $a );
 
 		return $this->rendered(
 			sprintf( '<textarea%s>%s</textarea>%s', $this->concat_attrs( $a, array( 'desc', 'value' ) ), $a['value'], $a['desc'] )

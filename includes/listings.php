@@ -28,7 +28,7 @@ function ldl_template_include($template) {
 
         if (is_single()) {
             if(ldl()->get_option('single_page_listing','theme_default')=='theme_default'){
-                add_filter( 'the_content', 'get_custom_post_type_template' );
+                add_filter( 'the_content', 'ldd_get_custom_post_type_template' );
             } else {
             $templates[] = 'single.php';
             }
@@ -82,7 +82,7 @@ function ldl_customize_appearance() {
     );
 
     if (array_diff($primary_defaults, $primary_custom)) {
-        $css .= <<<CSS
+        $css .= "
     .btn-primary {
         background: {$primary_custom['normal']};
         background-color: {$primary_custom['normal']};
@@ -98,7 +98,7 @@ function ldl_customize_appearance() {
     .label-primary {
         background-color: {$primary_custom['normal']};
     }
-CSS;
+";
     }
 
     if ($css) {

@@ -37,7 +37,7 @@ get_header();
 <div class="col-md-4">&nbsp;</div>
 
 
-<div class="col-md-4 text-right"><a class="<?php echo $grid;?>" href="?ldd_view=grid">Grid View</a> | <a class="<?php echo $compact;?>" href="?ldd_view=compact">Compact View</a></div>
+<div class="col-md-4 text-right"><a class="<?php echo $grid;?>" href="?ldd_view=grid">Grid</a> | <a class="<?php echo $compact;?>" href="?ldd_view=compact">Compact</a></div>
 </div>
 <?php } ?>
 
@@ -71,10 +71,10 @@ get_header();
 			$subcategory_listings = ($sub_check == 0) ? true : false;
 
 			if ( isset( $_GET["order_by"] ) and ! empty( $_GET["order_by"] ) ):
-				$sort_by = $_GET["order_by"];
+				$sort_by = sanitize_text_field($_GET["order_by"]);
 			endif;
 			if ( isset( $_GET["order"] ) and ! empty( $_GET["order"] ) ):
-				$sort_order = $_GET["order"];
+				$sort_order = sanitize_text_field($_GET["order"]);
 			endif;
 
 
@@ -186,6 +186,12 @@ get_header();
 			
 
 			if ( $cat_query->have_posts() ) :
+			
+			
+			
+			
+			
+			
 			$listing_view = ldl()->get_option( 'directory_view_type', 'compact' );
 			if ( $listing_view == "grid" ) {
 				echo "<div class='grid js-isotope2 masonry-cols3' >";
@@ -208,7 +214,7 @@ get_header();
 			<?php ldl_get_template_part( 'loop/no-listings-found.php' ); ?>
 		<?php endif; ?>
 
-	<?php
+	<?php 
 		/**
 		 * ldd_after_directory_loop hook.
 		 *

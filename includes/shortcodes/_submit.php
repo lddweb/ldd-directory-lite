@@ -312,7 +312,8 @@ function ldl_notify_admin($data, $post_id) {
 	Facebook: ".get_post_meta($post_id,"_lddlite_url_facebook",true)."<br>
 	Twitter: ".get_post_meta($post_id,"_lddlite_url_twitter",true)."<br>
 	LinkedIn: ".get_post_meta($post_id,"_lddlite_url_linkedin",true)."<br>
-	Google +: ".get_post_meta($post_id,"_lddlite_url_googleplus",true)."<br>
+	
+	
 	Instagram: ".get_post_meta($post_id,"_lddlite_url_instagram",true)."<br>
 	Youtube: ".get_post_meta($post_id,"_lddlite_url_youtube",true)."<br>
 	Custom Link: ".get_post_meta($post_id,"_lddlite_url_custom",true)."<br>
@@ -368,7 +369,8 @@ function ldl_notify_author($data,$post_id) {
 	Facebook: ".get_post_meta($post_id,"_lddlite_url_facebook",true)."<br>
 	Twitter: ".get_post_meta($post_id,"_lddlite_url_twitter",true)."<br>
 	LinkedIn: ".get_post_meta($post_id,"_lddlite_url_linkedin",true)."<br>
-	Google +: ".get_post_meta($post_id,"_lddlite_url_googleplus",true)."<br>
+	
+	
 	Instagram: ".get_post_meta($post_id,"_lddlite_url_instagram",true)."<br>
 	Youtube: ".get_post_meta($post_id,"_lddlite_url_youtube",true)."<br>
 	Custom Link: ".get_post_meta($post_id,"_lddlite_url_custom",true)."<br>
@@ -444,7 +446,7 @@ function ldl_notify_when_approved($post) {
 	Facebook: ".get_post_meta($post->ID,"_lddlite_url_facebook",true)."<br>
 	Twitter: ".get_post_meta($post->ID,"_lddlite_url_twitter",true)."<br>
 	LinkedIn: ".get_post_meta($post->ID,"_lddlite_url_linkedin",true)."<br>
-	Google +: ".get_post_meta($post->ID,"_lddlite_url_googleplus",true)."<br>
+	
 	Instagram: ".get_post_meta($post->ID,"_lddlite_url_instagram",true)."<br>
 	Youtube: ".get_post_meta($post->ID,"_lddlite_url_youtube",true)."<br>
 	Custom Link: ".get_post_meta($post->ID,"_lddlite_url_custom",true)."<br>

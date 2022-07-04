@@ -51,7 +51,7 @@ function ldl_settings_page() {
     wp_enqueue_style('font-awesome');
     wp_enqueue_style('lddlite-admin');
 
-    $active_tab = isset( $_GET[ 'tab' ] ) && array_key_exists( $_GET['tab'], ldl_get_settings_tabs() ) ? $_GET[ 'tab' ] : 'general';
+    $active_tab = isset( $_GET[ 'tab' ] ) && array_key_exists( $_GET['tab'], ldl_get_settings_tabs() ) ? sanitize_text_field($_GET[ 'tab' ]) : 'general';
 
     ?>
     <div class="wrap directory-lite">

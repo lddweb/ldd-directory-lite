@@ -15,7 +15,7 @@
                 <div class="listing-header row">
                     <div class="col-sm-8">
                         <h2 class="listing-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-                        <span class="website"><a href="<?php echo ldl_get_meta( 'url_website' ); ?>"><?php echo ldl_get_meta( 'url_website' ); ?></a></span>
+                        <span class="website"><a target="_blank" href="<?php echo ldl_get_meta( 'url_website' ); ?>"><?php echo ldl_get_meta( 'url_website' ); ?></a></span>
                         <div class="listing-summary">
                             <?php the_excerpt(); ?>
                         </div>

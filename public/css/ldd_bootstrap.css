@@ -1,9 +1,4 @@
-/*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
 
 .bootstrap-wrapper {font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
 /*.bootstrap-wrapper body{margin:0}*/
@@ -66,8 +61,8 @@
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(')https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.eot');
-  src: url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff') format('woff'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }.bootstrap-wrapper .glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .bootstrap-wrapper .glyphicon-asterisk:before{content:"\002a"}
 .bootstrap-wrapper .glyphicon-plus:before{content:"\002b"}
@@ -1538,7 +1533,7 @@
 .directory_listings.listing-single #map_wrapper{clear:both}
 .logout_link{position:absolute; background:#333; right:0; top:0; color:#fff; opacity:0.8; z-index:9999; padding:10px}
 .logout_link a {color:#fff}
-.ldd_main_search_box{display:none}
+/*.ldd_main_search_box{display:none}*/
 .bootstrap-wrapper .navbar-toggle{float:left}
 .bootstrap-wrapper .navbar-toggle.ldd_search{float:right !important; padding:10px 5px 0 0 }
 .ldd_search{float:right !important; padding:15px 5px 0 0;cursor: pointer; }
@@ -1559,4 +1554,26 @@ margin-left:0p !important
   margin: 10px;
   
 
+}
+a.list-group-item {min-height:90px}
+.ldd_header_view:hover:after{background: red}
+.bootstrap-wrapper .twentysixteen{float:none}
+
+.ldd_header_view {
+    position:relative;
+}
+.ldd_tooltip {
+    width:100px;
+    height:30px;
+    padding:1px;
+    border:1px solid #ccc;
+    box-shadow: 0 0 3px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 3px rgba(0,0,0,.3);
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    position:absolute;
+    top:-30px;
+    left:-5px;
+    display:none;
+	background:#fff
 }
